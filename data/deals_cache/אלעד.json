@@ -1,0 +1,249 @@
+{
+  "cityName": "אלעד",
+  "lastUpdated": "2026-06-22T08:01:21.955Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "הרקפות",
+      "totalDeals": 34,
+      "dealsPerYearAvg": 6,
+      "streets": [
+        {
+          "streetName": "רש\"י",
+          "totalDeals": 9,
+          "sizeBuckets": [
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 85,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 18182,
+                    "totalPrice": 2000000,
+                    "area": 110,
+                    "houseNum": "36.0",
+                    "streetName": "רש\"י",
+                    "blocksAway": 28,
+                    "dealDate": "2020-02-27T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 114,
+              "maxArea": 150,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 22500,
+                    "totalPrice": 2700000,
+                    "area": 120,
+                    "houseNum": "54.0",
+                    "streetName": "רש\"י",
+                    "blocksAway": 46,
+                    "dealDate": "2024-04-10T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~170 מ\"ר",
+              "targetArea": 170,
+              "minArea": 145,
+              "maxArea": 204,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 6922,
+                    "totalPrice": 1412000,
+                    "area": 204,
+                    "houseNum": "8.0",
+                    "streetName": "רש\"י",
+                    "blocksAway": 0,
+                    "dealDate": "2025-11-12T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 17692,
+                    "avgTotalPrice": 2915000,
+                    "avgArea": 165
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "אברהם עמרני",
+          "totalDeals": 5,
+          "sizeBuckets": [
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 85,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 23077,
+                    "totalPrice": 2400000,
+                    "area": 104,
+                    "houseNum": "24.0",
+                    "streetName": "אברהם עמרני",
+                    "blocksAway": 0,
+                    "dealDate": "2022-08-15T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16827,
+                    "totalPrice": 1750000,
+                    "area": 104,
+                    "houseNum": "24.0",
+                    "streetName": "אברהם עמרני",
+                    "blocksAway": 0,
+                    "dealDate": "2020-12-20T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 114,
+              "maxArea": 150,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11720,
+                    "totalPrice": 1383000,
+                    "area": 118,
+                    "houseNum": "16.0",
+                    "streetName": "אברהם עמרני",
+                    "blocksAway": 8,
+                    "dealDate": "2021-01-19T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11720,
+                    "totalPrice": 1383000,
+                    "area": 118,
+                    "houseNum": "16.0",
+                    "streetName": "אברהם עמרני",
+                    "blocksAway": 8,
+                    "dealDate": "2021-01-19T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~170 מ\"ר",
+              "targetArea": 170,
+              "minArea": 145,
+              "maxArea": 204,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 12678,
+                    "totalPrice": 2320000,
+                    "area": 183,
+                    "houseNum": "28.0",
+                    "streetName": "אברהם עמרני",
+                    "blocksAway": 4,
+                    "dealDate": "2020-09-14T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 34,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

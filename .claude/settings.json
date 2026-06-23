@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "computer",
+      "WebFetch",
+      "WebSearch",
+      "Bash(open*)",
+      "Bash(chromium-browser*)",
+      "Bash(google-chrome*)",
+      "Bash(npx playwright*)",
+      "Bash(npx puppeteer*)"
+    ],
+    "deny": []
+  }
+}

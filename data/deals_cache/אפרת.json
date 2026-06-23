@@ -1,0 +1,299 @@
+{
+  "cityName": "אפרת",
+  "lastUpdated": "2026-06-22T08:01:29.437Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "הגפן",
+      "totalDeals": 232,
+      "dealsPerYearAvg": 33,
+      "streets": [
+        {
+          "streetName": "קדושת לוי",
+          "totalDeals": 92,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 29504,
+                    "avgTotalPrice": 2335000,
+                    "avgArea": 82
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 17422,
+                    "totalPrice": 1446000,
+                    "area": 83,
+                    "houseNum": "23.0",
+                    "streetName": "קדושת לוי",
+                    "blocksAway": 7,
+                    "dealDate": "2022-02-16T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 17884,
+                    "avgTotalPrice": 1461750,
+                    "avgArea": 82
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 27230,
+                    "avgTotalPrice": 2630000,
+                    "avgArea": 97
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 25348,
+                    "avgTotalPrice": 2625000,
+                    "avgArea": 104
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 17173,
+                    "avgTotalPrice": 1604800,
+                    "avgArea": 94
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 22799,
+                    "avgTotalPrice": 3175000,
+                    "avgArea": 139
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16552,
+                    "avgTotalPrice": 2122500,
+                    "avgArea": 131
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12475,
+                    "avgTotalPrice": 1676667,
+                    "avgArea": 133
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "פנים מאירים",
+          "totalDeals": 32,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 28765,
+                    "totalPrice": 2330000,
+                    "area": 81,
+                    "houseNum": "24.0",
+                    "streetName": "פנים מאירים",
+                    "blocksAway": 21,
+                    "dealDate": "2025-06-08T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 24527,
+                    "avgTotalPrice": 2060000,
+                    "avgArea": 84
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 20215,
+                    "avgTotalPrice": 1800000,
+                    "avgArea": 89
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 26944,
+                    "totalPrice": 2910000,
+                    "area": 108,
+                    "houseNum": "24.0",
+                    "streetName": "פנים מאירים",
+                    "blocksAway": 21,
+                    "dealDate": "2025-03-18T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 21427,
+                    "avgTotalPrice": 2140000,
+                    "avgArea": 100
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 20215,
+                    "avgTotalPrice": 1800000,
+                    "avgArea": 89
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 22308,
+                    "totalPrice": 2900000,
+                    "area": 130,
+                    "houseNum": "3.0",
+                    "streetName": "פנים מאירים",
+                    "blocksAway": 0,
+                    "dealDate": "2023-07-11T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9480,
+                    "totalPrice": 1185000,
+                    "area": 125,
+                    "houseNum": "16.0",
+                    "streetName": "פנים מאירים",
+                    "blocksAway": 13,
+                    "dealDate": "2021-05-02T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 315,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

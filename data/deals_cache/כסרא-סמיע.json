@@ -1,0 +1,288 @@
+{
+  "cityName": "כסרא-סמיע",
+  "lastUpdated": "2026-06-22T08:06:45.974Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "הגליל",
+      "totalDeals": 315,
+      "dealsPerYearAvg": 45,
+      "streets": [
+        {
+          "streetName": "אשכולות",
+          "totalDeals": 121,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16975,
+                    "avgTotalPrice": 1070000,
+                    "avgArea": 64
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 14131,
+                    "avgTotalPrice": 1010000,
+                    "avgArea": 62
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 10467,
+                    "avgTotalPrice": 676824,
+                    "avgArea": 65
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 14914,
+                    "avgTotalPrice": 1212273,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 11322,
+                    "avgTotalPrice": 907223,
+                    "avgArea": 80
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 8445,
+                    "avgTotalPrice": 591180,
+                    "avgArea": 70
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 11421,
+                    "avgTotalPrice": 1188000,
+                    "avgArea": 106
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12266,
+                    "avgTotalPrice": 1243333,
+                    "avgArea": 101
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11237,
+                    "avgTotalPrice": 1152500,
+                    "avgArea": 103
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "שדמה",
+          "totalDeals": 52,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 19048,
+                    "totalPrice": 1200000,
+                    "area": 63,
+                    "houseNum": "37.0",
+                    "streetName": "שדמה",
+                    "blocksAway": 28,
+                    "dealDate": "2022-11-17T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 17985,
+                    "avgTotalPrice": 1403333,
+                    "avgArea": 78
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13205,
+                    "totalPrice": 1030000,
+                    "area": 78,
+                    "houseNum": "65.0",
+                    "streetName": "שדמה",
+                    "blocksAway": 0,
+                    "dealDate": "2022-03-28T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11444,
+                    "avgTotalPrice": 1030000,
+                    "avgArea": 90
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 14629,
+                    "avgTotalPrice": 1493333,
+                    "avgArea": 103
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15465,
+                    "totalPrice": 1330000,
+                    "area": 86,
+                    "houseNum": "65.0",
+                    "streetName": "שדמה",
+                    "blocksAway": 0,
+                    "dealDate": "2023-05-03T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11403,
+                    "avgTotalPrice": 1086667,
+                    "avgArea": 95
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 315,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "דירות"
+}

@@ -1,0 +1,800 @@
+{
+  "cityName": "אילת",
+  "lastUpdated": "2026-06-22T08:01:11.937Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "שחמון",
+      "totalDeals": 1757,
+      "dealsPerYearAvg": 251,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 274,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 21682,
+                    "avgTotalPrice": 1316667,
+                    "avgArea": 63
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 21983,
+                    "avgTotalPrice": 1750000,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14711,
+                    "avgTotalPrice": 1151250,
+                    "avgArea": 79
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 13403,
+                    "avgTotalPrice": 1337500,
+                    "avgArea": 99
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "עין נטפים",
+          "totalDeals": 132,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 19663,
+                    "avgTotalPrice": 1293000,
+                    "avgArea": 66
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13235,
+                    "totalPrice": 900000,
+                    "area": 68,
+                    "houseNum": "16.0",
+                    "streetName": "עין נטפים",
+                    "blocksAway": 2,
+                    "dealDate": "2023-02-14T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 15186,
+                    "avgTotalPrice": 1025000,
+                    "avgArea": 68
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 17585,
+                    "avgTotalPrice": 1406250,
+                    "avgArea": 81
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 19282,
+                    "avgTotalPrice": 1452143,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 13662,
+                    "avgTotalPrice": 1080000,
+                    "avgArea": 79
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 17484,
+                    "avgTotalPrice": 1827500,
+                    "avgArea": 104
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 17955,
+                    "totalPrice": 1975000,
+                    "area": 110,
+                    "houseNum": "18.0",
+                    "streetName": "עין נטפים",
+                    "blocksAway": 0,
+                    "dealDate": "2022-05-26T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11291,
+                    "avgTotalPrice": 1157500,
+                    "avgArea": 103
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "הערבה",
+      "totalDeals": 448,
+      "dealsPerYearAvg": 64,
+      "streets": [
+        {
+          "streetName": "לוס אנג'לס",
+          "totalDeals": 137,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 26177,
+                    "avgTotalPrice": 1505000,
+                    "avgArea": 58
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 19802,
+                    "avgTotalPrice": 1202500,
+                    "avgArea": 61
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 13565,
+                    "avgTotalPrice": 727500,
+                    "avgArea": 54
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 20999,
+                    "avgTotalPrice": 1630556,
+                    "avgArea": 80
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 18062,
+                    "avgTotalPrice": 1618667,
+                    "avgArea": 85
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 12078,
+                    "totalPrice": 930000,
+                    "area": 77,
+                    "houseNum": "22.0",
+                    "streetName": "לוס אנג'לס",
+                    "blocksAway": 16,
+                    "dealDate": "2021-09-26T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 21591,
+                    "totalPrice": 1900000,
+                    "area": 88,
+                    "houseNum": "6.0",
+                    "streetName": "לוס אנג'לס",
+                    "blocksAway": 0,
+                    "dealDate": "2025-05-19T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 22347,
+                    "avgTotalPrice": 2190000,
+                    "avgArea": 98
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 6696,
+                    "totalPrice": 770000,
+                    "area": 115,
+                    "houseNum": "38.0",
+                    "streetName": "לוס אנג'לס",
+                    "blocksAway": 32,
+                    "dealDate": "2020-08-09T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "צין",
+          "totalDeals": 86,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 17295,
+                    "avgTotalPrice": 938333,
+                    "avgArea": 54
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 16031,
+                    "avgTotalPrice": 916000,
+                    "avgArea": 57
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 9,
+                    "threshold": 5,
+                    "avgPricePerSqm": 13042,
+                    "avgTotalPrice": 710875,
+                    "avgArea": 57
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 12360,
+                    "totalPrice": 1100000,
+                    "area": 89,
+                    "houseNum": "31.0",
+                    "streetName": "צין",
+                    "blocksAway": 2,
+                    "dealDate": "2021-12-13T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 12360,
+                    "totalPrice": 1100000,
+                    "area": 89,
+                    "houseNum": "31.0",
+                    "streetName": "צין",
+                    "blocksAway": 2,
+                    "dealDate": "2021-12-13T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 8455,
+                    "totalPrice": 930000,
+                    "area": 110,
+                    "houseNum": "21.0",
+                    "streetName": "צין",
+                    "blocksAway": 12,
+                    "dealDate": "2025-09-15T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12868,
+                    "avgTotalPrice": 1306667,
+                    "avgArea": 102
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 8579,
+                    "avgTotalPrice": 875000,
+                    "avgArea": 102
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "צאלים",
+      "totalDeals": 382,
+      "dealsPerYearAvg": 55,
+      "streets": [
+        {
+          "streetName": "מקור החסידה",
+          "totalDeals": 51,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14683,
+                    "avgTotalPrice": 956875,
+                    "avgArea": 65
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 17698,
+                    "avgTotalPrice": 1180000,
+                    "avgArea": 67
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 14848,
+                    "totalPrice": 980000,
+                    "area": 66,
+                    "houseNum": "8.0",
+                    "streetName": "מקור החסידה",
+                    "blocksAway": 6,
+                    "dealDate": "2020-01-09T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 17099,
+                    "avgTotalPrice": 1357500,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 16114,
+                    "avgTotalPrice": 1322500,
+                    "avgArea": 82
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 13068,
+                    "avgTotalPrice": 1150000,
+                    "avgArea": 88
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14870,
+                    "avgTotalPrice": 1466667,
+                    "avgArea": 98
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14597,
+                    "avgTotalPrice": 1392500,
+                    "avgArea": 96
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 13237,
+                    "avgTotalPrice": 1336000,
+                    "avgArea": 102
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "סילון",
+          "totalDeals": 28,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 16661,
+                    "avgTotalPrice": 1064167,
+                    "avgArea": 64
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16755,
+                    "avgTotalPrice": 1022500,
+                    "avgArea": 61
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 13497,
+                    "avgTotalPrice": 822500,
+                    "avgArea": 61
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15588,
+                    "totalPrice": 1060000,
+                    "area": 68,
+                    "houseNum": "3.0",
+                    "streetName": "סילון",
+                    "blocksAway": 0,
+                    "dealDate": "2025-03-24T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 2344,
+                    "totalPrice": 175820,
+                    "area": 75,
+                    "houseNum": "3.0",
+                    "streetName": "סילון",
+                    "blocksAway": 0,
+                    "dealDate": "2022-03-16T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11690,
+                    "totalPrice": 830000,
+                    "area": 71,
+                    "houseNum": "3.0",
+                    "streetName": "סילון",
+                    "blocksAway": 0,
+                    "dealDate": "2020-01-15T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 3130,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "דירות"
+}

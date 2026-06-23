@@ -1,0 +1,160 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model City {
+  id                           Int              @id @default(autoincrement())
+  city_name                    String           @unique
+  population_2021              Int?
+  population_2026              Int?
+  people_per_apartment         Float?
+  construction_4y_gross        Int?
+  net_coefficient              Float?
+  price_per_sqm_2023           Int?
+  price_per_sqm_2026           Int?
+  total_apartments             Float?
+  construction_net             Float?
+  population_growth_abs        Int?
+  population_growth_pct        Float?
+  apartments_required          Float?
+  apartment_growth             Float?
+  golden_multiplier            Float?
+  golden_pct                   Float?
+  price_change_pct             Float?
+  last_updated                 DateTime         @default(now())
+  urban_renewal_existing_units Int?
+  urban_renewal_proposed_units Int?
+  urban_renewal_status         String?
+  population_2022              Int?             @map("population_2022")
+  population_2024              Int?             @map("population_2024")
+  households_2022              Int?             @map("households_2022")
+  avgHouseholdSize2022         Float?           @map("avg_household_size_2022")
+  building_permits             BuildingPermit[]
+  cbs_press_data               CbsPressData[]
+  sales                        CitySales?
+
+  @@map("cities")
+}
+
+model CitySales {
+  id                    Int      @id @default(autoincrement())
+  city_name             String   @unique
+  new_sales_2023        Int?
+  new_sales_2024        Int?
+  new_sales_2025        Int?
+  unsold_inventory_2025 Int?
+  avg_sales_3y          Float?
+  years_to_clear_2025   Float?
+  years_to_clear_avg    Float?
+  last_updated          DateTime @default(now())
+  city                  City     @relation(fields: [city_name], references: [city_name])
+
+  @@map("city_sales")
+}
+
+model BuildingPermit {
+  id           Int      @id @default(autoincrement())
+  city_name    String
+  year         Int
+  permits      Int?
+  source       String   @default("CBS_YISHUV")
+  last_updated DateTime @default(now())
+  city         City     @relation(fields: [city_name], references: [city_name])
+
+  @@unique([city_name, year])
+  @@map("building_permits")
+}
+
+model CbsPressData {
+  id                       Int      @id @default(autoincrement())
+  city_name                String
+  year                     Int
+  quarter                  Int?
+  construction_starts      Int?
+  construction_completions Int?
+  source_url               String?
+  publication_title        String?
+  last_updated             DateTime @default(now())
+  city                     City     @relation(fields: [city_name], references: [city_name])
+
+  @@unique([city_name, year, quarter])
+  @@map("cbs_press_data")
+}
+
+model nadlan_deals_summary {
+  id                Int       @id @default(autoincrement())
+  city_name         String
+  year              Int
+  quarter           Int
+  deal_count        Int?      @default(0)
+  avg_price_per_sqm Float?
+  avg_deal_amount   Float?
+  median_rooms      Float?
+  last_updated      DateTime? @default(now())
+
+  @@unique([city_name, year, quarter], map: "sqlite_autoindex_nadlan_deals_summary_1")
+}
+
+model nadlan_price_trends {
+  id           Int     @id @default(autoincrement())
+  city_name    String
+  year         Int
+  quarter      Int
+  median_price Float?
+  source       String? @default("nadlan.gov.il")
+
+  @@unique([city_name, year, quarter], map: "sqlite_autoindex_nadlan_price_trends_1")
+}
+
+model population_by_year {
+  id         Int     @id @default(autoincrement())
+  city_name  String
+  year       Int
+  population Int?
+  source     String? @default("interpolated")
+
+  @@unique([city_name, year], map: "sqlite_autoindex_population_by_year_1")
+}
+
+model yad2_market_data {
+  id                    Int       @id @default(autoincrement())
+  city_name             String    @unique(map: "sqlite_autoindex_yad2_market_data_1")
+  cbs_code              String?
+  region                String?
+  area                  String?
+  new_properties        Int?
+  secondhand_properties Int?
+  avg_days_on_market    Int?
+  buyers_count          Int?
+  new_properties_yoy    Float?
+  secondhand_yoy        Float?
+  days_yoy              Float?
+  buyers_yoy            Float?
+  market_type           String?
+  households            Int?
+  avg_household_size    Float?
+  scraped_at            DateTime? @default(now())
+}
+
+model construction_starts {
+  id        Int     @id @default(autoincrement())
+  city_name String
+  year      Int
+  starts    Int
+  source    String? @default("cbs_press_release_2025")
+
+  @@unique([city_name, year], map: "sqlite_autoindex_construction_starts_1")
+}
+
+model national_construction {
+  id          Int     @id @default(autoincrement())
+  year        Int     @unique(map: "sqlite_autoindex_national_construction_1")
+  permits     Int?
+  starts      Int?
+  completions Int?
+  source      String?
+}

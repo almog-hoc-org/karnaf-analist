@@ -1,0 +1,7684 @@
+{
+  "אבו גוש": {
+    "2016": {
+      "population": 7583,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7762,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7941,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8120,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8299,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8478,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8657,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8752,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8847,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8902,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8956,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אבו סנאן": {
+    "2016": {
+      "population": 13131,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13258,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 13386,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 13513,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 13640,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13768,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13895,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 14219,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 14543,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 14726,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 14908,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אבן יהודה": {
+    "2016": {
+      "population": 14087,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 14237,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 14388,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 14538,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 14688,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 14839,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 14989,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 15180,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 15370,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 15747,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 16124,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אום אל-פחם": {
+    "2016": {
+      "population": 54560,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 55060,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 55560,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 56060,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 56560,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 57060,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 57560,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 58885,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 60210,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 61223,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 62236,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אופקים": {
+    "2016": {
+      "population": 29886,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 30709,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 31532,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 32354,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 33176,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 33999,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 35355,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 37624,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 39894,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 41794,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 43694,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אור יהודה": {
+    "2016": {
+      "population": 38650,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 38283,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 37916,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 37549,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 37182,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 36815,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 36850,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 38990,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 41130,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 41774,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 42418,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אור עקיבא": {
+    "2016": {
+      "population": 20213,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 20540,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 20866,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 21193,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 21520,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 21846,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 22173,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 24048,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 25922,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 26986,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 28049,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אורנית": {
+    "2016": {
+      "population": 9063,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 9216,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 9368,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 9521,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 9674,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 9826,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 9979,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10030,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10080,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 10131,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 10182,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אזור": {
+    "2016": {
+      "population": 13513,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13459,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 13406,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 13352,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 13298,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13245,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13191,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 13129,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 13067,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 13422,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 13776,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אילת": {
+    "2016": {
+      "population": 89060,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 81799,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 74538,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 67276,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 60014,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 52753,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 55213,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 55608,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 56004,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 63108,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 70211,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אכסאל": {
+    "2016": {
+      "population": 15020,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 14958,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 14895,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 14833,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 14771,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 14708,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 14646,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 14890,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 15134,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 15672,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 16209,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אלעד": {
+    "2016": {
+      "population": 44936,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 45867,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 46798,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 47730,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 48662,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 49593,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 48825,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 49835,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 50845,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 51070,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 51295,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אלפי מנשה": {
+    "2016": {
+      "population": 8832,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8705,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8577,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8450,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8323,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8195,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8068,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8209,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8350,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 8492,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8633,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אעבלין": {
+    "2016": {
+      "population": 13167,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13199,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 13230,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 13262,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 13294,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13325,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13357,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 13496,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 13634,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 13946,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 14258,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אפרת": {
+    "2016": {
+      "population": 11218,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 11362,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 11506,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 11650,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 11794,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 11938,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 12082,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 12415,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 12748,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 13082,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 13415,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אריאל": {
+    "2016": {
+      "population": 19498,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 19820,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 20141,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 20463,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 20785,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 21106,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 21428,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 21673,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 21918,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 22162,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 22407,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אשדוד": {
+    "2016": {
+      "population": 298055,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 283144,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 268233,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 253322,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 238411,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 223500,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 227865,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 228214,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 228562,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 244893,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 261224,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "אשקלון": {
+    "2016": {
+      "population": 163728,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 160814,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 157900,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 154987,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 152074,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 149160,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 152370,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 159618,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 166865,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 176310,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 185756,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "באקה אל-גרביה": {
+    "2016": {
+      "population": 29634,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 29673,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 29712,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 29751,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 29790,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 29829,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 29868,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 30572,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 31276,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 32056,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 32836,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "באר יעקב": {
+    "2016": {
+      "population": 20120,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 22066,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 24012,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 25959,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 27906,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 29852,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 31439,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 34466,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 37493,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 38088,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 38683,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "באר שבע": {
+    "2016": {
+      "population": 235766,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 230863,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 225960,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 221057,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 216154,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 211251,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 217577,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 220582,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 223587,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 228372,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 233156,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בועיינה-נוג'ידאת": {
+    "2016": {
+      "population": 10095,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10094,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 10092,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10091,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10090,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 10088,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10087,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10358,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10630,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 10934,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11237,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ביר אל-מכסור": {
+    "2016": {
+      "population": 9540,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 9702,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 9863,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10025,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10187,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 10348,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10510,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10789,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 11068,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 11196,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11325,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בית ג'ן": {
+    "2016": {
+      "population": 12336,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 12286,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 12237,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 12187,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 12137,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 12088,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 12038,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 12242,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 12446,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 12768,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 13089,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בית דגן": {
+    "2016": {
+      "population": 6374,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 6581,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 6788,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 6995,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7202,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 7409,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 7616,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7672,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7727,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 7713,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 7699,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בית שאן": {
+    "2016": {
+      "population": 20823,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 20657,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 20490,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 20324,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 20158,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 19991,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 19825,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 20039,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 20253,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 21012,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 21770,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בית שמש": {
+    "2016": {
+      "population": 108729,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 115336,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 121943,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 128550,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 135157,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 141764,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 145554,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 161170,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 176786,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 186995,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 197204,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ביתר עילית": {
+    "2016": {
+      "population": 56018,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 57625,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 59232,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 60839,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 62446,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 64053,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 65660,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 68023,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 70386,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 72750,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 75113,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בני ברק": {
+    "2016": {
+      "population": 198608,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 201365,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 204122,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 206880,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 209638,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 212395,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 216869,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 223432,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 229995,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 235862,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 241730,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בנימינה-גבעת עדה": {
+    "2016": {
+      "population": 15916,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 15808,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 15700,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 15592,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 15484,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 15376,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 15268,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 15417,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 15566,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 16382,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 17199,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בסמ\"ה": {
+    "2016": {
+      "population": 10440,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10578,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 10715,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10853,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10991,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 11128,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 11266,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 11634,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 12002,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 12002,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 12002,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "בסמת טבעון": {
+    "2016": {
+      "population": 7911,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7933,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7955,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 7977,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7999,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8021,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8043,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8156,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8268,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8394,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8520,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בענה": {
+    "2016": {
+      "population": 8412,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8430,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8447,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8465,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8483,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8500,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8518,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8616,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8713,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8843,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8973,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "בת ים": {
+    "2016": {
+      "population": 209932,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 192826,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 175720,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 158613,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 141506,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 124400,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 128152,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 128824,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 129495,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 145117,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 160739,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ג'דיידה-מכר": {
+    "2016": {
+      "population": 21950,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 21599,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 21247,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 20896,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 20545,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 20193,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 19842,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 20037,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 20232,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 21132,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 22031,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ג'לג'וליה": {
+    "2016": {
+      "population": 10406,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10422,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 10438,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10454,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10470,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 10486,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10502,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10747,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10992,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 11305,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11618,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ג'סר א-זרקא": {
+    "2016": {
+      "population": 14574,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 14715,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 14855,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 14996,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 15137,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 15277,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 15418,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 15620,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 15823,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 15961,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 16099,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ג'ת": {
+    "2016": {
+      "population": 12144,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 12159,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 12173,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 12188,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 12203,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 12217,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 12232,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 12534,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 12835,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 13294,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 13752,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "גבעת זאב": {
+    "2016": {
+      "population": 16753,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 17647,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 18541,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 19435,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 20329,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 21223,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 22117,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 23035,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 23953,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 24871,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 25789,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "גבעת שמואל": {
+    "2016": {
+      "population": 24872,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 25530,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 26188,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 26846,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 27504,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 28162,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 27472,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 28438,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 29405,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 30910,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 32415,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "גבעתיים": {
+    "2016": {
+      "population": 68062,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 66394,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 64725,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 63057,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 61389,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 59720,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 58052,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 58326,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 58600,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 62260,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 65919,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "גדרה": {
+    "2016": {
+      "population": 23992,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 24870,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 25748,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 26626,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 27504,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 28382,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 29260,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 30324,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 31389,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 31654,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 31918,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "גן יבנה": {
+    "2016": {
+      "population": 24684,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 24518,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 24352,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 24186,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 24020,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 23854,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 23688,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 24416,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 25144,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 26328,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 27513,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "גני תקווה": {
+    "2016": {
+      "population": 17936,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 18888,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 19841,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 20793,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 21745,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 22698,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 23650,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 24568,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 25487,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 26009,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 26531,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "דאלית אל-כרמל": {
+    "2016": {
+      "population": 17404,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 17449,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 17493,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 17538,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 17583,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 17627,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 17672,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 18018,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 18363,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 18634,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 18905,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "דבורייה": {
+    "2016": {
+      "population": 9430,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 9605,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 9780,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 9955,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 10130,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 10305,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 10480,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10655,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10830,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 10830,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 10830,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "דייר אל-אסד": {
+    "2016": {
+      "population": 13088,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 12936,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 12784,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 12632,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 12480,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 12328,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 12176,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 12398,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 12620,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 13218,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 13815,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "דייר חנא": {
+    "2016": {
+      "population": 11089,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10955,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 10820,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10686,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10552,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 10417,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10283,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10522,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10762,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 11147,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11532,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "דימונה": {
+    "2016": {
+      "population": 41481,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 40770,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 40058,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 39347,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 38636,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 37924,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 37213,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 38402,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 39590,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 41524,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 43459,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "הוד השרון": {
+    "2016": {
+      "population": 67625,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 66700,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 65775,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 64850,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 63925,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 63000,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 65020,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 65709,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 66398,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 68892,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 71386,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "הרצליה": {
+    "2016": {
+      "population": 113626,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 111564,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 109502,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 107441,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 105380,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 103318,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 105273,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 108079,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 110885,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 119042,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 127199,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "זכרון יעקב": {
+    "2016": {
+      "population": 26019,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 25601,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 25184,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 24766,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 24348,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 23931,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 23513,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 23856,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 24200,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 25698,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 27195,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "זמר": {
+    "2016": {
+      "population": 7030,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7105,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7181,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 7256,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7331,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 7407,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 7482,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7718,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7953,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8138,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8324,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "זרזיר": {
+    "2016": {
+      "population": 8280,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8373,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8465,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8558,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8651,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8743,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8836,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8992,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 9149,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 9304,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 9459,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "חדרה": {
+    "2016": {
+      "population": 107751,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 106327,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 104903,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 103479,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 102055,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 100631,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 103847,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 105910,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 107974,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 111419,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 114864,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "חולון": {
+    "2016": {
+      "population": 234099,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 226772,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 219445,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 212118,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 204791,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 197464,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 192655,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 192242,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 191829,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 201869,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 211909,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "חורה": {
+    "2016": {
+      "population": 13839,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 14978,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 16116,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 17255,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 18394,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 19532,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 20671,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 21853,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 23035,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 23076,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 23118,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "חיפה": {
+    "2016": {
+      "population": 382124,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 362266,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 342408,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 322549,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 302690,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 282832,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 289507,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 293295,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 297083,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 320052,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 343021,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "חצור הגלילית": {
+    "2016": {
+      "population": 10052,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10150,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 10247,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10345,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10443,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 10540,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10638,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10826,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 11013,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 11234,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11454,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "חריש": {
+    "2016": {
+      "population": -13345,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": -5832,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 1681,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 9194,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 16707,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 24220,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 31733,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 36654,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 41574,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 41664,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 41754,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "טבריה": {
+    "2016": {
+      "population": 52463,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 51310,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 50157,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 49004,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 47851,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 46698,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 48509,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 50316,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 52122,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 54404,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 56687,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "טובא-זנגרייה": {
+    "2016": {
+      "population": 6221,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 6340,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 6459,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 6578,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 6697,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 6816,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 6935,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7054,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7173,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 7173,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 7173,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "טורעאן": {
+    "2016": {
+      "population": 14639,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 14599,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 14558,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 14518,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 14478,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 14437,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 14397,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 14664,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 14931,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 15406,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 15882,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "טייבה": {
+    "2016": {
+      "population": 43089,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 43419,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 43750,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 44080,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 44410,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 44741,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 45071,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 45970,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 46870,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 47794,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 48717,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "טירה": {
+    "2016": {
+      "population": 27177,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 27075,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 26974,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 26872,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 26770,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 26669,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 26567,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 27124,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 27680,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 28652,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 29624,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "טירת כרמל": {
+    "2016": {
+      "population": 20297,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 21759,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 23221,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 24683,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 26145,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 27607,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 29069,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 30618,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 32166,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 33084,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 34001,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "טמרה": {
+    "2016": {
+      "population": 33149,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 33516,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 33882,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 34249,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 34616,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 34982,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 35349,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 36134,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 36919,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 37384,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 37850,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "יבנה": {
+    "2016": {
+      "population": 42791,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 44823,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 46854,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 48886,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 50918,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 52949,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 54981,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 56536,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 58090,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 59306,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 60521,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "יהוד-מונוסון": {
+    "2016": {
+      "population": 33382,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 32829,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 32276,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 31724,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 31172,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 30619,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 30977,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 31561,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 32145,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 32791,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 33437,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "יפיע": {
+    "2016": {
+      "population": 20579,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 20168,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 19757,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 19346,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 18935,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 18524,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 18113,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 18475,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 18837,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 19846,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 20855,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "יקנעם עילית": {
+    "2016": {
+      "population": 26909,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 26379,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 25849,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 25319,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 24789,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 24259,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 23729,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 24328,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 24928,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 26283,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 27638,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ירוחם": {
+    "2016": {
+      "population": 10625,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10755,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 10884,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 11014,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 11144,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 11273,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 11403,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 11696,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 11989,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 12406,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 12824,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ירושלים": {
+    "2016": {
+      "population": 1040208,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 1025408,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 1010608,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 995809,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 981010,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 966210,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 1005919,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 1028035,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 1050151,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 1079645,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 1109139,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ירכא": {
+    "2016": {
+      "population": 15544,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 15652,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 15761,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 15869,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 15977,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 16086,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 16194,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 16508,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 16823,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 17034,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 17244,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כאבול": {
+    "2016": {
+      "population": 12469,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 12390,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 12310,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 12231,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 12152,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 12072,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 11993,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 12291,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 12589,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 13082,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 13575,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כוכב יאיר": {
+    "2016": {
+      "population": 11244,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10899,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 10555,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10210,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 9865,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 9521,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 9176,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 9092,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 9007,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 9007,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 9007,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "כוכב יעקב": {
+    "2016": {
+      "population": 7924,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8284,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8645,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 9005,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 9365,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 9726,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10086,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8498,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 6911,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 5324,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 3736,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כסיפה": {
+    "2016": {
+      "population": 15733,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 16255,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 16778,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 17300,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 17822,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 18345,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 18867,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 20358,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 21849,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 22230,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 22610,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כסרא-סמיע": {
+    "2016": {
+      "population": 8632,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8682,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8731,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8781,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8831,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8880,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8930,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 9240,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 9549,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 9717,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 9885,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כפר יאסיף": {
+    "2016": {
+      "population": 11346,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 11217,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 11089,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10960,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10831,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 10703,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10574,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10550,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10527,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 10922,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11316,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כפר יונה": {
+    "2016": {
+      "population": 18427,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 20045,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 21663,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 23281,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 24899,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 26517,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 28135,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 28978,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 29820,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 30158,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 30496,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כפר כנא": {
+    "2016": {
+      "population": 21168,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 21684,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 22199,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 22715,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 23231,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 23746,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 24262,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 24818,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 25375,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 25468,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 25561,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כפר מנדא": {
+    "2016": {
+      "population": 19351,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 19633,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 19914,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 20196,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 20478,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 20759,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 21041,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 21654,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 22267,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 22652,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 23038,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כפר סבא": {
+    "2016": {
+      "population": 119682,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 116445,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 113209,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 109972,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 106735,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 103499,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 100262,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 99836,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 99410,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 105619,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 111828,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כפר קאסם": {
+    "2016": {
+      "population": 21785,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 22552,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 23320,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 24087,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 24854,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 25622,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 26389,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 27193,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 27997,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 27818,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 27638,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כפר קרע": {
+    "2016": {
+      "population": 18464,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 18702,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 18939,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 19177,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 19415,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 19652,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 19890,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 20478,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 21067,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 21446,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 21826,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "כרמיאל": {
+    "2016": {
+      "population": 60038,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 57940,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 55842,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 53744,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 51646,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 49548,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 47450,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 47696,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 47941,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 51691,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 55441,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "להבים": {
+    "2016": {
+      "population": 5630,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 5973,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 6315,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 6658,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7001,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 7343,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 7686,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7857,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8028,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 7958,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 7889,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "לוד": {
+    "2016": {
+      "population": 81634,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 81833,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 82032,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 82231,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 82430,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 82629,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 87430,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 90810,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 94189,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 97138,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 100087,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "לקיה": {
+    "2016": {
+      "population": 12846,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13551,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 14255,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 14960,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 15665,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 16369,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 17074,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 18218,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 19361,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 19481,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 19601,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מבשרת ציון": {
+    "2016": {
+      "population": 26600,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 26413,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 26225,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 26038,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 25851,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 25663,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 25476,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 26005,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 26534,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 28052,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 29569,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מג'ד אל-כרום": {
+    "2016": {
+      "population": 16144,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 15929,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 15713,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 15498,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 15283,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 15067,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 14852,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 15140,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 15429,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 16019,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 16609,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מג'דל שמס": {
+    "2016": {
+      "population": 11627,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 11540,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 11452,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 11365,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 11278,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 11190,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 11103,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 11184,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 11264,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 11625,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11986,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מגאר": {
+    "2016": {
+      "population": 23454,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 23306,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 23157,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 23009,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 22861,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 22712,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 22564,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 23025,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 23486,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 24385,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 25284,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מגדל העמק": {
+    "2016": {
+      "population": 31105,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 30428,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 29752,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 29075,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 28398,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 27722,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 27045,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 27738,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 28431,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 30334,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 32236,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מודיעין עילית": {
+    "2016": {
+      "population": 67845,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 70393,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 72941,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 75489,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 78037,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 80585,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 83133,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 85531,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 87928,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 90326,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 92724,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מודיעין-מכבים-רעות": {
+    "2016": {
+      "population": 97283,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 96454,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 95624,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 94795,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 93966,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 93136,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 92307,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 96180,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 100052,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 105718,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 111384,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מזכרת בתיה": {
+    "2016": {
+      "population": 16166,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 16115,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 16063,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 16012,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 15961,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 15909,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 15858,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 16096,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 16334,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 16908,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 17481,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מיתר": {
+    "2016": {
+      "population": 9323,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 9637,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 9951,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10265,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 10579,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 10893,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 11207,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 11408,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 11609,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 12170,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 12731,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מעלה אדומים": {
+    "2016": {
+      "population": 45786,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 44266,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 42745,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 41225,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 39705,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 38184,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 36664,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 37713,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 38762,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 39811,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 40860,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מעלה עירון": {
+    "2016": {
+      "population": 15467,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 15367,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 15266,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 15166,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 15066,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 14965,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 14865,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 15176,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 15486,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 16149,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 16812,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "מעלות-תרשיחא": {
+    "2016": {
+      "population": 26302,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 25705,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 25108,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 24511,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 23914,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 23317,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 22720,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 22881,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 23042,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 24620,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 26197,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "משהד": {
+    "2016": {
+      "population": 8963,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8886,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8808,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8731,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8654,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8576,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8499,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8660,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8822,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 9182,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 9542,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "נהרייה": {
+    "2016": {
+      "population": 49641,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 51920,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 54200,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 56480,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 58759,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 61038,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 63318,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 65598,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 67877,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 67877,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 67877,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "נוף הגליל": {
+    "2016": {
+      "population": 63402,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 59253,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 55104,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 50955,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 46806,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 42657,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 43479,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 44642,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 45805,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 51028,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 56251,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "נחף": {
+    "2016": {
+      "population": 13330,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13349,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 13369,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 13388,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 13407,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13427,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13446,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 13721,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 13996,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 14378,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 14761,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "נס ציונה": {
+    "2016": {
+      "population": 50864,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 50323,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 49783,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 49242,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 48701,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 48161,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 47620,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 47444,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 47268,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 48444,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 49620,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "נצרת": {
+    "2016": {
+      "population": 86615,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 85062,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 83508,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 81955,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 80402,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 78848,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 77295,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 76500,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 75704,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 78994,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 82285,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "נשר": {
+    "2016": {
+      "population": 27429,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 26676,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 25923,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 25170,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 24417,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 23664,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 22911,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 22904,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 22897,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 24048,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 25199,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "נתיבות": {
+    "2016": {
+      "population": 33159,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 34935,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 36711,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 38487,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 40263,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 42039,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 45024,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 50522,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 56019,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 57971,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 59923,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "נתניה": {
+    "2016": {
+      "population": 285106,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 272898,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 260690,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 248482,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 236274,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 224066,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 223920,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 229366,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 234812,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 261115,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 287418,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "סח'נין": {
+    "2016": {
+      "population": 32629,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 32583,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 32538,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 32492,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 32446,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 32401,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 32355,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 33040,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 33726,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 34862,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 35997,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עומר": {
+    "2016": {
+      "population": 9608,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 9382,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 9155,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8929,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8703,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8476,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8250,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8164,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8077,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8581,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 9085,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עילוט": {
+    "2016": {
+      "population": 8081,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8161,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8241,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8321,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8401,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8481,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8561,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8819,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 9077,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 9264,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 9450,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עין מאהל": {
+    "2016": {
+      "population": 13563,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13550,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 13537,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 13524,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 13511,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13498,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13485,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 13757,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 14029,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 14466,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 14904,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עכו": {
+    "2016": {
+      "population": 66554,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 63166,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 59778,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 56390,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 53002,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 49614,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 50555,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 51720,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 52884,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 56670,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 60455,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עספיא": {
+    "2016": {
+      "population": 12144,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 12297,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 12449,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 12602,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 12755,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 12907,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13060,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 13232,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 13403,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 13382,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 13360,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עפולה": {
+    "2016": {
+      "population": 51032,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 52641,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 54250,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 55858,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 57466,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 59075,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 60828,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 63595,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 66362,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 69223,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 72084,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עראבה": {
+    "2016": {
+      "population": 26433,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 26381,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 26328,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 26276,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 26224,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 26171,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 26119,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 26647,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 27175,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 28170,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 29165,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ערד": {
+    "2016": {
+      "population": 34640,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 33464,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 32289,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 31113,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 29937,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 28762,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 27586,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 28546,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 29505,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 32495,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 35485,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ערערה": {
+    "2016": {
+      "population": 20313,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 20247,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 20182,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 20116,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 20050,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 19985,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 19919,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 20326,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 20733,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 21453,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 22173,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ערערה-בנגב": {
+    "2016": {
+      "population": 16089,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 16665,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 17240,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 17816,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 18392,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 18967,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 19543,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 20401,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 21259,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 21806,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 22354,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "עתלית": {
+    "2016": {
+      "population": 5934,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 6721,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7509,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8296,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 9083,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 9871,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10658,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 11134,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 11611,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 11942,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 12272,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "פוריידיס": {
+    "2016": {
+      "population": 13500,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13435,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 13369,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 13304,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 13239,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13173,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13108,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 13328,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 13548,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 13917,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 14286,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "פרדס חנה-כרכור": {
+    "2016": {
+      "population": 44495,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 44439,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 44384,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 44328,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 44272,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 44217,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 44161,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 45381,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 46601,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 48724,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 50848,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "פרדסייה": {
+    "2016": {
+      "population": 7056,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7170,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7285,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 7400,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 7514,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 7628,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 7743,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7858,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7972,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 7972,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 7972,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "פתח תקווה": {
+    "2016": {
+      "population": 292238,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 284244,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 276250,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 268257,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 260264,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 252270,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 264046,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 267224,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 270403,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 276878,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 283354,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "צור הדסה": {
+    "2016": {
+      "population": 7531,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8011,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8490,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8970,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 9450,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 9929,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10409,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10434,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10458,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 10708,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 10958,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "צור יצחק": {
+    "2016": {
+      "population": 5065,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 5438,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 5811,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 6184,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 6557,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 6930,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 7303,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7542,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7780,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 7818,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 7855,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "צפת": {
+    "2016": {
+      "population": 39523,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 39236,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 38949,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 38662,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 38375,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 38088,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 37801,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 38244,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 38687,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 40276,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 41866,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "קדימה-צורן": {
+    "2016": {
+      "population": 23335,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 23138,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 22941,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 22744,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 22547,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 22350,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 22153,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 22404,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 22655,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 23268,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 23882,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "קלנסווה": {
+    "2016": {
+      "population": 22589,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 22816,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 23043,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 23270,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 23497,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 23724,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 23951,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 24559,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 25167,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 25434,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 25701,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "קצרין": {
+    "2016": {
+      "population": 9346,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8998,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8650,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8302,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7954,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 7606,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 7633,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7822,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8012,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8784,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 9557,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "קריית אונו": {
+    "2016": {
+      "population": 31004,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 32760,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 34515,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 36270,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 38026,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 39782,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 41537,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 43292,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 45048,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 45048,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 45048,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית ארבע": {
+    "2016": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2017": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2018": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2019": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2020": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2021": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2022": {
+      "population": 7442,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2024": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2025": {
+      "population": 7442,
+      "source": "estimated"
+    },
+    "2026": {
+      "population": 7442,
+      "source": "estimated"
+    }
+  },
+  "קריית אתא": {
+    "2016": {
+      "population": 58287,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 58650,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 59013,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 59376,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 59739,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 60102,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 60465,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 61524,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 62584,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 62292,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 62000,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית ביאליק": {
+    "2016": {
+      "population": 35572,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 37111,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 38650,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 40189,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 41728,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 43267,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 44806,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 45939,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 47072,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 47768,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 48465,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית גת": {
+    "2016": {
+      "population": 46562,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 49366,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 52170,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 54974,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 57778,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 60582,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 63386,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 67762,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 72139,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 73270,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 74400,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית טבעון": {
+    "2016": {
+      "population": 14305,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 14912,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 15518,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 16124,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 16731,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 17338,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 17944,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 18550,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 19157,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 19157,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 19157,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית ים": {
+    "2016": {
+      "population": 29747,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 31274,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 32800,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 34326,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 35853,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 37380,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 38906,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 40432,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 41959,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 41959,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 41959,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית יערים": {
+    "2016": {
+      "population": 5127,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 5466,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 5805,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 6144,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 6483,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 6822,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 7161,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7500,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7839,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 7839,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 7839,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית מוצקין": {
+    "2016": {
+      "population": 41764,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 42980,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 44195,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 45410,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 46626,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 47842,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 49057,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 50272,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 51488,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 51488,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 51488,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית מלאכי": {
+    "2016": {
+      "population": 21577,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 22374,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 23172,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 23970,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 24767,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 25564,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 26362,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 27160,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 27957,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 27957,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 27957,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית עקרון": {
+    "2016": {
+      "population": 11851,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 11780,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 11709,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 11638,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 11567,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 11496,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 11425,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 11354,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 11283,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 11283,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11283,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קריית שמונה": {
+    "2016": {
+      "population": 19021,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 19698,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 20375,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 21052,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 21729,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 22406,
+      "source": "extrapolated"
+    },
+    "2022": {
+      "population": 23083,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 23760,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 24437,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 24437,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 24437,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "קרני שומרון": {
+    "2016": {
+      "population": 6764,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7320,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7877,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8433,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8989,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 9546,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 10102,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 10384,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 10667,
+      "source": "interpolated"
+    },
+    "2025": {
+      "population": 10950,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 11232,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ראמה": {
+    "2016": {
+      "population": 8924,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 8849,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 8773,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 8698,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 8623,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 8547,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 8472,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 8439,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8406,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8562,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8718,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ראש העין": {
+    "2016": {
+      "population": 42760,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 48062,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 53364,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 58666,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 63968,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 69270,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 74572,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 76798,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 79023,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 79866,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 80710,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ראשון לציון": {
+    "2016": {
+      "population": 287313,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 281276,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 275239,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 269202,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 263165,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 257128,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 252413,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 255844,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 259275,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 273816,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 288356,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רהט": {
+    "2016": {
+      "population": 60175,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 62038,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 63902,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 65765,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 67628,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 69492,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 71355,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 74676,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 77996,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 80461,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 82926,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רחובות": {
+    "2016": {
+      "population": 154441,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 153779,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 153118,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 152456,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 151794,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 151133,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 150471,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 152760,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 155050,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 160972,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 166894,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "ריינה": {
+    "2016": {
+      "population": 16644,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 16711,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 16778,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 16845,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 16912,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 16979,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 17046,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 18850,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 20654,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 19284,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 17913,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רכסים": {
+    "2016": {
+      "population": 10408,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 10992,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 11575,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 12159,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 12743,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13326,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 13910,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 14498,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 15087,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 15363,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 15639,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רמלה": {
+    "2016": {
+      "population": 81392,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 81348,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 81303,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 81259,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 81215,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 81170,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 81126,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 83589,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 86052,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 87584,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 89116,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רמת גן": {
+    "2016": {
+      "population": 163756,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 164946,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 166136,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 167326,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 168516,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 169706,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 165155,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 168698,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 172242,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 181066,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 189890,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רמת השרון": {
+    "2016": {
+      "population": 56072,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 54452,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 52832,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 51211,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 49590,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 47970,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 48986,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 48923,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 48860,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 51337,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 53814,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רמת ישי": {
+    "2016": {
+      "population": 7858,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7862,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7865,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 7869,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7873,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 7876,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 7880,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7916,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7953,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8270,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8587,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "רעננה": {
+    "2016": {
+      "population": 103852,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 98794,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 93736,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 88678,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 83620,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 78562,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 80155,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 81559,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 82963,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 91763,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 100563,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "שגב-שלום": {
+    "2016": {
+      "population": 6516,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7872,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 9229,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 10585,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 11941,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 13298,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 14654,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 15695,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 16736,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 15473,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 14210,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "שדרות": {
+    "2016": {
+      "population": 25440,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 26385,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 27329,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 28274,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 29219,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 30163,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 31108,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 34174,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 37239,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 38978,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 40718,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "שוהם": {
+    "2016": {
+      "population": 22401,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 22196,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 21991,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 21786,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 21581,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 21376,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 21171,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 22382,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 23592,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 24322,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 25051,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "שלומי": {
+    "2016": {
+      "population": 6669,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 6807,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 6945,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 7083,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7221,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 7359,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 7497,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7862,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 8226,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 8338,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8450,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "שעב": {
+    "2016": {
+      "population": 7107,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 7163,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 7220,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 7276,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 7332,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 7389,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 7445,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 7618,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 7790,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 7976,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 8161,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "שפרעם": {
+    "2016": {
+      "population": 40461,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 40836,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 41212,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 41587,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 41962,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 42338,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 42713,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 43286,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 43858,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 44287,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 44716,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "תל אביב-יפו": {
+    "2016": {
+      "population": 342890,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 367887,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 392884,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 417881,
+      "source": "extrapolated"
+    },
+    "2020": {
+      "population": 442878,
+      "source": "extrapolated"
+    },
+    "2021": {
+      "population": 467875,
+      "source": "cbs_original"
+    },
+    "2022": {
+      "population": 492872,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 493886,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 494900,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 479600,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 464300,
+      "source": "cbs_projection_2026"
+    }
+  },
+  "תל מונד": {
+    "2016": {
+      "population": 13471,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 13578,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 13686,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 13793,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 13900,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 14008,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 14115,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 14443,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 14771,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 15664,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 16557,
+      "source": "data.gov.il_registry_2026"
+    }
+  },
+  "תל שבע": {
+    "2016": {
+      "population": 17548,
+      "source": "extrapolated"
+    },
+    "2017": {
+      "population": 18417,
+      "source": "extrapolated"
+    },
+    "2018": {
+      "population": 19285,
+      "source": "extrapolated"
+    },
+    "2019": {
+      "population": 20154,
+      "source": "data.gov.il_registry_2019"
+    },
+    "2020": {
+      "population": 21023,
+      "source": "interpolated"
+    },
+    "2021": {
+      "population": 21891,
+      "source": "interpolated"
+    },
+    "2022": {
+      "population": 22760,
+      "source": "census_2022"
+    },
+    "2023": {
+      "population": 23770,
+      "source": "interpolated"
+    },
+    "2024": {
+      "population": 24781,
+      "source": "cbs_permits_2024"
+    },
+    "2025": {
+      "population": 24714,
+      "source": "interpolated"
+    },
+    "2026": {
+      "population": 24646,
+      "source": "data.gov.il_registry_2026"
+    }
+  }
+}

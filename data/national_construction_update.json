@@ -1,0 +1,85 @@
+[
+  {
+    "year": 2016,
+    "permits": null,
+    "starts": null,
+    "completions": 59744,
+    "source": "cbs_completions_pdf",
+    "last_updated": "2026-04-13",
+    "notes": "CBS permit/starts data for 2016 not available in accessible summaries"
+  },
+  {
+    "year": 2017,
+    "permits": null,
+    "starts": 55145,
+    "completions": 54434,
+    "source": "cbs_090_2021_summary_2020",
+    "last_updated": "2026-04-13",
+    "notes": "CBS permit data for 2017 not available in accessible summaries"
+  },
+  {
+    "year": 2018,
+    "permits": null,
+    "starts": 55570,
+    "completions": 53273,
+    "source": "cbs_094_2022_summary_2021",
+    "last_updated": "2026-04-13",
+    "notes": "CBS permit data for 2018 not available in accessible summaries"
+  },
+  {
+    "year": 2019,
+    "permits": 56030,
+    "starts": 56450,
+    "completions": 52060,
+    "source": "cbs_090_2021_summary_2020+cbs_093_2023_summary_2022",
+    "last_updated": "2026-04-13"
+  },
+  {
+    "year": 2020,
+    "permits": 51660,
+    "starts": 56420,
+    "completions": 47920,
+    "source": "cbs_090_2021_summary_2020+cbs_093_2023_summary_2022",
+    "last_updated": "2026-04-13"
+  },
+  {
+    "year": 2021,
+    "permits": 76340,
+    "starts": 64560,
+    "completions": 46780,
+    "source": "cbs_094_2022_summary_2021+cbs_091_2025_summary_2024",
+    "last_updated": "2026-04-13"
+  },
+  {
+    "year": 2022,
+    "permits": 77690,
+    "starts": 69580,
+    "completions": 51930,
+    "source": "cbs_093_2023_summary_2022+cbs_091_2025_summary_2024",
+    "last_updated": "2026-04-13"
+  },
+  {
+    "year": 2023,
+    "permits": 72780,
+    "starts": 64080,
+    "completions": 57895,
+    "source": "cbs_089_2024_summary_2023+cbs_091_2025_summary_2024",
+    "last_updated": "2026-04-13"
+  },
+  {
+    "year": 2024,
+    "permits": 77060,
+    "starts": 65530,
+    "completions": 53420,
+    "source": "cbs_091_2025_summary_2024",
+    "last_updated": "2026-04-13"
+  },
+  {
+    "year": 2025,
+    "permits": 81230,
+    "starts": 80010,
+    "completions": 59750,
+    "source": "cbs_089_2026_summary_2025",
+    "last_updated": "2026-04-13"
+  }
+]

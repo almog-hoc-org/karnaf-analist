@@ -1,0 +1,532 @@
+{
+  "cityName": "קריית ביאליק",
+  "lastUpdated": "2026-06-22T08:11:07.900Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "מרכז העיר",
+      "totalDeals": 2776,
+      "dealsPerYearAvg": 463,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 362,
+          "sizeBuckets": [
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 15012,
+                    "avgTotalPrice": 1757000,
+                    "avgArea": 119
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 37,
+                    "threshold": 15,
+                    "avgPricePerSqm": 12053,
+                    "avgTotalPrice": 1401351,
+                    "avgArea": 112
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 26,
+                    "threshold": 15,
+                    "avgPricePerSqm": 17227,
+                    "avgTotalPrice": 2379385,
+                    "avgArea": 138
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 95,
+                    "threshold": 15,
+                    "avgPricePerSqm": 12427,
+                    "avgTotalPrice": 1693173,
+                    "avgArea": 135
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "סוקולוב",
+          "totalDeals": 156,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 14935,
+                    "avgTotalPrice": 1211250,
+                    "avgArea": 82
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 9984,
+                    "avgTotalPrice": 860625,
+                    "avgArea": 87
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 7987,
+                    "totalPrice": 615000,
+                    "area": 77,
+                    "houseNum": "38.0",
+                    "streetName": "סוקולוב",
+                    "blocksAway": 1,
+                    "dealDate": "2021-11-16T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 17,
+                    "threshold": 15,
+                    "avgPricePerSqm": 16032,
+                    "avgTotalPrice": 1592375,
+                    "avgArea": 106
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 10227,
+                    "avgTotalPrice": 1166667,
+                    "avgArea": 108
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 12028,
+                    "totalPrice": 1275000,
+                    "area": 106,
+                    "houseNum": "39.0",
+                    "streetName": "סוקולוב",
+                    "blocksAway": 2,
+                    "dealDate": "2021-06-15T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 15255,
+                    "avgTotalPrice": 1947000,
+                    "avgArea": 125
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 9421,
+                    "avgTotalPrice": 1210000,
+                    "avgArea": 130
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11000,
+                    "totalPrice": 1650000,
+                    "area": 150,
+                    "houseNum": "30.0",
+                    "streetName": "סוקולוב",
+                    "blocksAway": 7,
+                    "dealDate": "2021-05-19T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "קרית בנימין",
+      "totalDeals": 345,
+      "dealsPerYearAvg": 49,
+      "streets": [
+        {
+          "streetName": "שטיינברג",
+          "totalDeals": 55,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12438,
+                    "avgTotalPrice": 908750,
+                    "avgArea": 73
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 8662,
+                    "avgTotalPrice": 668333,
+                    "avgArea": 77
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 5223,
+                    "avgTotalPrice": 404648,
+                    "avgArea": 77
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16901,
+                    "avgTotalPrice": 1810000,
+                    "avgArea": 107
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 13960,
+                    "avgTotalPrice": 1683750,
+                    "avgArea": 121
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11514,
+                    "totalPrice": 1255000,
+                    "area": 109,
+                    "houseNum": "31.0",
+                    "streetName": "שטיינברג",
+                    "blocksAway": 0,
+                    "dealDate": "2021-08-26T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13252,
+                    "totalPrice": 1630000,
+                    "area": 123,
+                    "houseNum": "31.0",
+                    "streetName": "שטיינברג",
+                    "blocksAway": 0,
+                    "dealDate": "2024-06-20T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14178,
+                    "avgTotalPrice": 1721667,
+                    "avgArea": 122
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "לילינבלום",
+          "totalDeals": 38,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13333,
+                    "totalPrice": 960000,
+                    "area": 72,
+                    "houseNum": "17.0",
+                    "streetName": "לילינבלום",
+                    "blocksAway": 0,
+                    "dealDate": "2024-10-13T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 8277,
+                    "avgTotalPrice": 612500,
+                    "avgArea": 74
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 15333,
+                    "avgTotalPrice": 1255000,
+                    "avgArea": 83
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16667,
+                    "totalPrice": 1750000,
+                    "area": 105,
+                    "houseNum": "9.0",
+                    "streetName": "לילינבלום",
+                    "blocksAway": 8,
+                    "dealDate": "2024-12-09T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 14174,
+                    "totalPrice": 1630000,
+                    "area": 115,
+                    "houseNum": "2.0",
+                    "streetName": "לילינבלום",
+                    "blocksAway": 15,
+                    "dealDate": "2023-03-09T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12268,
+                    "avgTotalPrice": 1476667,
+                    "avgArea": 120
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 20148,
+                    "totalPrice": 2720000,
+                    "area": 135,
+                    "houseNum": "23.0",
+                    "streetName": "לילינבלום",
+                    "blocksAway": 6,
+                    "dealDate": "2025-10-20T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14902,
+                    "avgTotalPrice": 2125000,
+                    "avgArea": 143
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12908,
+                    "avgTotalPrice": 1610000,
+                    "avgArea": 125
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 3123,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

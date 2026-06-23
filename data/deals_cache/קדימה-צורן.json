@@ -1,0 +1,446 @@
+{
+  "cityName": "קדימה-צורן",
+  "lastUpdated": "2026-06-22T08:10:43.510Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "קריית יצחק רבין",
+      "totalDeals": 298,
+      "dealsPerYearAvg": 43,
+      "streets": [
+        {
+          "streetName": "האלונים",
+          "totalDeals": 99,
+          "sizeBuckets": [
+            {
+              "label": "~90 מ\"ר",
+              "targetArea": 90,
+              "minArea": 77,
+              "maxArea": 103,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 26859,
+                    "avgTotalPrice": 2095000,
+                    "avgArea": 78
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 24000,
+                    "totalPrice": 1968000,
+                    "area": 82,
+                    "houseNum": "1.0",
+                    "streetName": "האלונים",
+                    "blocksAway": 0,
+                    "dealDate": "2022-02-14T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 18535,
+                    "totalPrice": 1835000,
+                    "area": 99,
+                    "houseNum": "28.0",
+                    "streetName": "האלונים",
+                    "blocksAway": 27,
+                    "dealDate": "2020-07-28T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~120 מ\"ר",
+              "targetArea": 120,
+              "minArea": 106,
+              "maxArea": 138,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 19,
+                    "threshold": 15,
+                    "avgPricePerSqm": 27526,
+                    "avgTotalPrice": 3321579,
+                    "avgArea": 121
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 13,
+                    "threshold": 10,
+                    "avgPricePerSqm": 21940,
+                    "avgTotalPrice": 2708231,
+                    "avgArea": 123
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16821,
+                    "avgTotalPrice": 1911667,
+                    "avgArea": 114
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 28102,
+                    "totalPrice": 3850000,
+                    "area": 137,
+                    "houseNum": "26.0",
+                    "streetName": "האלונים",
+                    "blocksAway": 25,
+                    "dealDate": "2025-02-18T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 26176,
+                    "totalPrice": 4450000,
+                    "area": 170,
+                    "houseNum": "1.0",
+                    "streetName": "האלונים",
+                    "blocksAway": 0,
+                    "dealDate": "2021-07-20T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 26176,
+                    "totalPrice": 4450000,
+                    "area": 170,
+                    "houseNum": "1.0",
+                    "streetName": "האלונים",
+                    "blocksAway": 0,
+                    "dealDate": "2021-07-20T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "הפארק",
+          "totalDeals": 40,
+          "sizeBuckets": [
+            {
+              "label": "~120 מ\"ר",
+              "targetArea": 120,
+              "minArea": 106,
+              "maxArea": 138,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 24978,
+                    "avgTotalPrice": 3046250,
+                    "avgArea": 122
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 23007,
+                    "avgTotalPrice": 2889000,
+                    "avgArea": 125
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 18263,
+                    "avgTotalPrice": 2298000,
+                    "avgArea": 125
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25472,
+                    "totalPrice": 4050000,
+                    "area": 159,
+                    "houseNum": "15.0",
+                    "streetName": "הפארק",
+                    "blocksAway": 10,
+                    "dealDate": "2025-10-30T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16069,
+                    "totalPrice": 2330000,
+                    "area": 145,
+                    "houseNum": "25.0",
+                    "streetName": "הפארק",
+                    "blocksAway": 0,
+                    "dealDate": "2021-06-20T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16315,
+                    "avgTotalPrice": 2263333,
+                    "avgArea": 139
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "רמת פולג",
+      "totalDeals": 176,
+      "dealsPerYearAvg": 25,
+      "streets": [
+        {
+          "streetName": "אמנון ותמר",
+          "totalDeals": 64,
+          "sizeBuckets": [
+            {
+              "label": "~90 מ\"ר",
+              "targetArea": 90,
+              "minArea": 77,
+              "maxArea": 103,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11881,
+                    "totalPrice": 1200000,
+                    "area": 101,
+                    "houseNum": "9.0",
+                    "streetName": "אמנון ותמר",
+                    "blocksAway": 4,
+                    "dealDate": "2025-07-11T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 24341,
+                    "avgTotalPrice": 2215000,
+                    "avgArea": 91
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 20133,
+                    "avgTotalPrice": 1775000,
+                    "avgArea": 89
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~120 מ\"ר",
+              "targetArea": 120,
+              "minArea": 106,
+              "maxArea": 138,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 46799,
+                    "avgTotalPrice": 5325000,
+                    "avgArea": 112
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 21846,
+                    "avgTotalPrice": 2575000,
+                    "avgArea": 119
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 9,
+                    "threshold": 5,
+                    "avgPricePerSqm": 15677,
+                    "avgTotalPrice": 1863333,
+                    "avgArea": 120
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 19643,
+                    "totalPrice": 2750000,
+                    "area": 140,
+                    "houseNum": "21.0",
+                    "streetName": "אמנון ותמר",
+                    "blocksAway": 16,
+                    "dealDate": "2021-11-24T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 19643,
+                    "totalPrice": 2750000,
+                    "area": 140,
+                    "houseNum": "21.0",
+                    "streetName": "אמנון ותמר",
+                    "blocksAway": 16,
+                    "dealDate": "2021-11-24T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 15,
+          "sizeBuckets": [
+            {
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 22509,
+                    "avgTotalPrice": 3792000,
+                    "avgArea": 168
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 474,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

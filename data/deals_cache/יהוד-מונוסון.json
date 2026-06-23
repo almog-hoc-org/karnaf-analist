@@ -1,0 +1,245 @@
+{
+  "cityName": "יהוד-מונוסון",
+  "lastUpdated": "2026-06-07T08:32:00.133Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "קרית גיורא",
+      "totalDeals": 261,
+      "dealsPerYearAvg": 37,
+      "streets": [
+        {
+          "streetName": "יקותיאל אדם",
+          "totalDeals": 43,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 33070,
+                    "totalPrice": 1885000,
+                    "area": 57,
+                    "houseNum": 38,
+                    "streetName": "יקותיאל אדם",
+                    "blocksAway": 1,
+                    "dealDate": "2025-08-10T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 20725,
+                    "totalPrice": 1430000,
+                    "area": 69,
+                    "houseNum": 30,
+                    "streetName": "יקותיאל אדם",
+                    "blocksAway": 7,
+                    "dealDate": "2021-08-19T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 19231,
+                    "totalPrice": 1000000,
+                    "area": 52,
+                    "houseNum": 7,
+                    "streetName": "יקותיאל אדם",
+                    "blocksAway": 30,
+                    "dealDate": "2020-10-25T00:00:00.000Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 22208,
+                    "totalPrice": 1710000,
+                    "area": 77,
+                    "houseNum": 28,
+                    "streetName": "יקותיאל אדם",
+                    "blocksAway": 9,
+                    "dealDate": "2025-02-18T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 19737,
+                    "totalPrice": 1500000,
+                    "area": 76,
+                    "houseNum": 36,
+                    "streetName": "יקותיאל אדם",
+                    "blocksAway": 1,
+                    "dealDate": "2021-12-13T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 17344,
+                    "avgTotalPrice": 1426667,
+                    "avgArea": 83
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 12,
+                    "threshold": 10,
+                    "avgPricePerSqm": 25438,
+                    "avgTotalPrice": 2467500,
+                    "avgArea": 97
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 18468,
+                    "avgTotalPrice": 1817500,
+                    "avgArea": 99
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15632,
+                    "totalPrice": 1360000,
+                    "area": 87,
+                    "houseNum": 22,
+                    "streetName": "יקותיאל אדם",
+                    "blocksAway": 15,
+                    "dealDate": "2020-08-11T00:00:00.000Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "סביון",
+          "totalDeals": 32,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 18,
+                    "threshold": 15,
+                    "avgPricePerSqm": 30208,
+                    "avgTotalPrice": 2506889,
+                    "avgArea": 84
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 26523,
+                    "avgTotalPrice": 2920563,
+                    "avgArea": 111
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16667,
+                    "totalPrice": 1700000,
+                    "area": 102,
+                    "houseNum": 21,
+                    "streetName": "סביון",
+                    "blocksAway": 20,
+                    "dealDate": "2020-01-01T00:00:00.000Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 261,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "דירות"
+}

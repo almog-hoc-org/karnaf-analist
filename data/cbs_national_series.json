@@ -1,0 +1,586 @@
+{
+  "lastUpdated": "2026-05-17",
+  "construction_input_index": [
+    {
+      "year": 2016,
+      "annual_yoy_pct": 1.5,
+      "approx_index": 109.0,
+      "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "confidence": "medium",
+      "note": "Cited as 109.0 with 1.5% YoY by Kantahome historical table; could not be cross-checked against the CBS PDF directly in this run."
+    },
+    {
+      "year": 2017,
+      "annual_yoy_pct": 1.9,
+      "approx_index": 111.1,
+      "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "confidence": "medium"
+    },
+    {
+      "year": 2018,
+      "annual_yoy_pct": 1.5,
+      "approx_index": null,
+      "source_url": "https://www.cbs.gov.il/he/subjects/Pages/מדד-מחירי-תשומה-בבנייה-למגורים.aspx",
+      "confidence": "low",
+      "note": "Approximate; mid-cycle moderate rise consistent with kantahome/Mizrahi historical table."
+    },
+    {
+      "year": 2019,
+      "annual_yoy_pct": 1.1,
+      "approx_index": null,
+      "source_url": "https://www.globes.co.il/news/article.aspx?did=1001502428",
+      "confidence": "high",
+      "note": "Globes explicitly cited 1.1% for 2019."
+    },
+    {
+      "year": 2020,
+      "annual_yoy_pct": 0.5,
+      "approx_index": null,
+      "source_url": "https://www.calcalist.co.il/real-estate/article/byzxa5hpkx",
+      "confidence": "high",
+      "note": "Quoted in multiple outlets as 0.5% — the lowest of the decade, driven by Covid demand drop."
+    },
+    {
+      "year": 2021,
+      "annual_yoy_pct": 5.6,
+      "approx_index": null,
+      "source_url": "https://www.globes.co.il/news/article.aspx?did=1001502428",
+      "confidence": "high",
+      "note": "11x the 2020 rate, attributed to supply-chain shocks. Cross-checked Calcalist & Globes."
+    },
+    {
+      "year": 2022,
+      "annual_yoy_pct": 4.8,
+      "approx_index": null,
+      "source_url": "https://www.mizrahi-tefahot.co.il/brokerage/construction-index/",
+      "confidence": "medium",
+      "note": "Sources differ: 3.3% (one outlet) vs 4.8% (another). 4.8% is the more commonly cited figure for the calendar year."
+    },
+    {
+      "year": 2023,
+      "annual_yoy_pct": 2.0,
+      "approx_index": null,
+      "source_url": "https://www.cbs.gov.il/he/publications/madad/pages/2023/מדד-מחירי-תשומה-בבנייה-למגורים-מאי-2023.aspx",
+      "confidence": "high",
+      "note": "Cumulative change of 2.0% in 2023 quoted by multiple sources; war-related labour shortage emerged late in the year."
+    },
+    {
+      "year": 2024,
+      "annual_yoy_pct": 2.9,
+      "approx_index": null,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/119/10_24_119b.pdf",
+      "confidence": "high",
+      "note": "CBS-reported 2.9% rise (labour +4.8%, materials +1.2%)."
+    },
+    {
+      "year": 2025,
+      "annual_yoy_pct": 5.0,
+      "approx_index": null,
+      "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "confidence": "high",
+      "note": "January 2025 alone +2.6% MoM (5.3% YoY); full-year 2025 +5.0%. Driven by +9.1% wages component."
+    },
+    {
+      "year": 2026,
+      "annual_yoy_pct_ytd": 0.5,
+      "approx_index": null,
+      "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "confidence": "medium",
+      "note": "YTD through Apr 2026 only +0.5%; forecasters expect 4-6% full-year. Trailing-12-month Jan2025→Jan2026 was +2.5%."
+    }
+  ],
+  "housing_price_index_annual": [
+    {
+      "year": 2016,
+      "annual_yoy_pct": 8.0,
+      "source_url": "https://www.ynet.co.il/articles/0,7340,L-4845678,00.html",
+      "confidence": "high",
+      "note": "Press reported 'apartments rose 8% YoY' for calendar 2016."
+    },
+    {
+      "year": 2017,
+      "annual_yoy_pct": 2.0,
+      "source_url": "https://mashcantaman.co.il/מדד-מחירי-הדירות/",
+      "confidence": "high",
+      "note": "Lowest annual rise since 2009; Q4 2017 saw declines in Jerusalem (-5.1%), South (-1.5%), Tel Aviv (-0.8%)."
+    },
+    {
+      "year": 2018,
+      "annual_yoy_pct": -0.7,
+      "source_url": "https://he.wikipedia.org/wiki/משבר_הדיור_בישראל",
+      "confidence": "medium",
+      "note": "Mild decline year — first three quarters showed price falls due to rising supply and weak demand."
+    },
+    {
+      "year": 2019,
+      "annual_yoy_pct": 1.9,
+      "source_url": "https://www.ynet.co.il/articles/0,7340,L-5354850,00.html",
+      "confidence": "medium",
+      "note": "Recovery year; CBS reported ~2% national rise with intermittent monthly falls."
+    },
+    {
+      "year": 2020,
+      "annual_yoy_pct": 4.9,
+      "source_url": "https://www.contact.org.il/index/article-defaults/מדד-מחירי-דירות-2020",
+      "confidence": "high",
+      "note": "Calendar-2020 nationwide +4.9% despite a brief Apr-Jun Covid dip of -0.7%."
+    },
+    {
+      "year": 2021,
+      "annual_yoy_pct": 11.3,
+      "source_url": "https://www.ynet.co.il/economy/article/FLTXJ3HAH",
+      "confidence": "high",
+      "note": "CBS confirmed 11.3% calendar-2021 rise — biggest since 2008 boom; new-builds +11.6%."
+    },
+    {
+      "year": 2022,
+      "annual_yoy_pct": 14.6,
+      "source_url": "https://www.nadlancenter.co.il/article/7359",
+      "confidence": "high",
+      "note": "Peak of cycle: Oct 2021→Oct 2022 ~20% YoY; calendar 2022 closed at +14.6% before BoI rate hikes cooled the market in Q4."
+    },
+    {
+      "year": 2023,
+      "annual_yoy_pct": -1.4,
+      "source_url": "https://klikatnadlan.co.il/housingpricesindex/",
+      "confidence": "high",
+      "note": "First annual decline of the decade: Oct22→Oct23 -1.4%. War's onset froze the market."
+    },
+    {
+      "year": 2024,
+      "annual_yoy_pct": 7.7,
+      "source_url": "https://www.calcalist.co.il/real-estate/article/bjsvfsznke",
+      "confidence": "high",
+      "note": "CBS-confirmed CY2024 +7.7%; led by Tel Aviv district +10.3%, North +9.9%, Haifa +9.5%."
+    },
+    {
+      "year": 2025,
+      "annual_yoy_pct": -0.1,
+      "source_url": "https://klikatnadlan.co.il/cbshousingnov25/",
+      "confidence": "high",
+      "note": "Eight consecutive months of declines totalling -2.6% (Jan-Oct 2025); rebound of +0.7% in Oct-Nov 2025 pulled the calendar year to roughly flat (-0.1%)."
+    }
+  ],
+  "monthly_price_index_recent": [
+    {
+      "period": "2024-03 (mar-apr period)",
+      "mom_pct": null,
+      "yoy_pct": 5.0,
+      "national_index": null,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/120/10_24_120b.pdf",
+      "report_id": "120/2024",
+      "confidence": "medium"
+    },
+    {
+      "period": "2024-12 to 2025-01",
+      "mom_pct": 1.2,
+      "yoy_pct": 7.7,
+      "national_index": null,
+      "source_url": "https://www.broker-re.co.il/madaddirotdecemberjanuary25/",
+      "confidence": "high",
+      "note": "All six districts positive: Jerusalem +3.0, North +1.8, Haifa +0.1, Center +0.2, Tel Aviv +1.8, South +1.1."
+    },
+    {
+      "period": "2025-04 to 2025-05",
+      "mom_pct": null,
+      "yoy_pct": null,
+      "cumulative_pct_since_may": "+0.0 (start of -2.4% slide)",
+      "source_url": "https://www.calcalist.co.il/local_news/article/bktlioee11g",
+      "confidence": "medium",
+      "note": "May 2025 was the peak before the -2.4% cumulative fall through October."
+    },
+    {
+      "period": "2025-08 (jul-aug)",
+      "mom_pct": -0.3,
+      "yoy_pct": null,
+      "source_url": "https://www.facebook.com/hasbaraLamas/posts/...",
+      "confidence": "medium",
+      "note": "CBS Facebook post quoted -0.3% bi-monthly."
+    },
+    {
+      "period": "2025-09 to 2025-10",
+      "mom_pct": -0.5,
+      "yoy_pct": null,
+      "source_url": "https://klikatnadlan.co.il/octhousing2025/",
+      "confidence": "high"
+    },
+    {
+      "period": "2025-10 to 2025-11",
+      "mom_pct": 0.7,
+      "yoy_pct": null,
+      "source_url": "https://www.nadlancenter.co.il/article/13713",
+      "confidence": "high",
+      "note": "End of 8-month slide. District YoY: Jerusalem +9.4, North +5.4, Haifa +0.5, South +1.2, Center -2.9, Tel Aviv -2.8."
+    },
+    {
+      "period": "2025-11 to 2025-12",
+      "mom_pct": 0.0,
+      "yoy_pct": null,
+      "source_url": "https://www.calcalist.co.il/local_news/article/b1cxhd8rwx",
+      "confidence": "high",
+      "note": "December index unchanged after the November rebound."
+    },
+    {
+      "period": "2025-12 to 2026-01",
+      "mom_pct": "approx 0",
+      "yoy_pct": null,
+      "source_url": "https://www.themarker.com/allnews/2026-01-15/ty-article/0000019b-c192-d484-a9bf-cbfa47e60000",
+      "confidence": "medium"
+    },
+    {
+      "period": "2026-01 to 2026-02",
+      "mom_pct": -0.1,
+      "yoy_pct": -1.7,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "report_id": "052/2026",
+      "confidence": "high",
+      "note": "District MoM: Jerusalem -0.7, Tel Aviv -0.7, North +0.9, Haifa +0.3, Center +0.5, South +0.2. District YoY: Jerusalem +4.0, North +2.2, Haifa +0.5, South +0.4, Center -3.1, Tel Aviv -5.1. New-builds component -4% YoY."
+    },
+    {
+      "period": "2026-02 to 2026-03",
+      "mom_pct": 0.8,
+      "yoy_pct": null,
+      "source_url": "https://magdilim.co.il/160220260953/",
+      "confidence": "medium",
+      "note": "Tel Aviv & Jerusalem leading rebound."
+    },
+    {
+      "period": "2026-03 to 2026-04",
+      "mom_pct": "positive (resumed rise)",
+      "yoy_pct": null,
+      "source_url": "https://www.themarker.com/news/2026-05-15/ty-article/.premium/0000019e-2a6a-d1fe-affe-3beef9cb0001",
+      "confidence": "medium",
+      "note": "CPI +1.2% in April; housing prices resumed rising after two flat months."
+    }
+  ],
+  "transactions_summary_by_year": [
+    {
+      "year": 2021,
+      "total_transactions": 145000,
+      "approx": true,
+      "source_url": "https://www.calcalist.co.il/real-estate/article/hkxhxm5ot",
+      "confidence": "medium",
+      "note": "Boom year; press range 140-150K."
+    },
+    {
+      "year": 2022,
+      "total_transactions": 102330,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2023/047/04_23_047b.pdf",
+      "report_id": "047/2023",
+      "confidence": "high"
+    },
+    {
+      "year": 2023,
+      "total_transactions": 66590,
+      "yoy_pct": -35.0,
+      "new_units": 27930,
+      "existing_units": 38660,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2024/047/04_24_047b.pdf",
+      "report_id": "047/2024",
+      "confidence": "high",
+      "note": "War shock — Q4 2023 alone only 12,250 deals."
+    },
+    {
+      "year": 2024,
+      "total_transactions": 103097,
+      "yoy_pct": 54.8,
+      "new_units": 45902,
+      "existing_units": 57195,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/047/04_25_047b.pdf",
+      "report_id": "047/2025",
+      "confidence": "high"
+    },
+    {
+      "year": 2025,
+      "total_transactions": 90690,
+      "yoy_pct": -11.9,
+      "new_units": 34030,
+      "existing_units": 56660,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/pages/2026/דירות-בעסקאות-נדלן-סיכום-שנת-2025.aspx",
+      "report_id": "047/2026",
+      "confidence": "high",
+      "note": "37.5% new, 62.5% existing. Q4 2025 ~21,710 deals (-8.8% QoQ)."
+    }
+  ],
+  "transactions_quarterly_recent": [
+    {
+      "period": "2024-09 to 2024-11",
+      "total_transactions": 24120,
+      "yoy_pct": -14.6,
+      "new_share_pct": null,
+      "source_url": "https://www.calcalist.co.il/real-estate/article/rkoc51rrbl",
+      "source_report": "CBS press release 010/2025",
+      "confidence": "high",
+      "note": "New-build sales -27.2% YoY."
+    },
+    {
+      "period": "2025-05 to 2025-07",
+      "total_transactions": 22030,
+      "yoy_pct": null,
+      "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/",
+      "confidence": "medium",
+      "note": "Computed as base for -9.8% QoQ drop to Aug-Oct."
+    },
+    {
+      "period": "2025-06 to 2025-08",
+      "total_transactions": null,
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/333/04_25_333b.pdf",
+      "source_report": "333/2025",
+      "confidence": "high"
+    },
+    {
+      "period": "2025-08 to 2025-10",
+      "total_transactions": 19870,
+      "yoy_pct": -12.1,
+      "qoq_pct": -9.8,
+      "new_share_pct": 40.2,
+      "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/",
+      "confidence": "high",
+      "note": "Existing apartments -18.6% to ~11,880. Center 24.3% of volume, South 21.3%."
+    },
+    {
+      "period": "2025-11 to 2026-01",
+      "total_transactions": null,
+      "qoq_pct": null,
+      "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/",
+      "confidence": "medium",
+      "note": "Stock of unsold new apartments hit 86,290 by end-Jan 2026 — 31.4 months of inventory at current sales pace."
+    },
+    {
+      "period": "2026-Q1 (Jan-Mar)",
+      "total_transactions": 22350,
+      "yoy_pct": -10.0,
+      "yoy_pct_seasonally_adjusted": -12.7,
+      "new_share_pct": 36.3,
+      "new_subsidized_pct_of_new": 24.7,
+      "existing_units": 14240,
+      "source_url": "https://www.ynet.co.il/economy/article/r1yli1xjzx",
+      "source_report": "CBS Q1 2026 transactions release (approx May 2026)",
+      "confidence": "high"
+    }
+  ],
+  "yearly_avg_prices_by_city": [
+    {
+      "city": "תל אביב-יפו",
+      "year": 2024,
+      "avg_price_apartment": 4880000,
+      "size_class": "4 rooms",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet — quoting CBS Q4 2024 price table",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "year": 2025,
+      "avg_price_apartment": 4160000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "source_name": "ynet — סוף 2025 ערים יקרות וזולות",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "year": 2024,
+      "avg_price_apartment": 3140000,
+      "size_class": "4 rooms",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet — quoting CBS Q4 2024",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "year": 2025,
+      "avg_price_apartment": 3330000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "year": 2024,
+      "avg_price_apartment": 1860000,
+      "size_class": "4 rooms",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "year": 2025,
+      "avg_price_apartment": 1830000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "confidence": "high"
+    },
+    {
+      "city": "אשדוד",
+      "year": 2025,
+      "avg_price_apartment": 2150000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "year": 2024,
+      "avg_price_apartment": 1280000,
+      "size_class": "4 rooms",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "year": 2023,
+      "avg_price_apartment": 1166000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB",
+      "source_name": "Dannus appraisal — CBS Q4 2023",
+      "confidence": "medium"
+    },
+    {
+      "city": "נתניה",
+      "year": 2023,
+      "avg_price_apartment": 2706000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB",
+      "confidence": "medium"
+    },
+    {
+      "city": "פתח תקווה",
+      "year": 2023,
+      "avg_price_apartment": 2513000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB",
+      "confidence": "medium"
+    },
+    {
+      "city": "ראשון לציון",
+      "year": 2023,
+      "avg_price_apartment": 2357000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB",
+      "confidence": "medium"
+    },
+    {
+      "city": "בית שמש",
+      "year": 2024,
+      "avg_price_apartment": 2340000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "confidence": "medium"
+    },
+    {
+      "city": "בת ים",
+      "year": 2024,
+      "avg_price_apartment": 2320000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "confidence": "medium"
+    },
+    {
+      "city": "חדרה",
+      "year": 2024,
+      "avg_price_apartment": 2020000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "confidence": "medium"
+    },
+    {
+      "city": "אשקלון",
+      "year": 2024,
+      "avg_price_apartment": 1710000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "confidence": "medium"
+    },
+    {
+      "city": "הרצליה",
+      "year": 2025,
+      "avg_price_apartment": 3970000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "confidence": "high"
+    },
+    {
+      "city": "רמת גן",
+      "year": 2025,
+      "avg_price_apartment": 3280000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "confidence": "high"
+    },
+    {
+      "city": "כפר סבא",
+      "year": 2025,
+      "avg_price_apartment": 2890000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "confidence": "high"
+    },
+    {
+      "city": "בני ברק",
+      "year": 2025,
+      "avg_price_apartment": 2410000,
+      "size_class": "Q1 2025 mean",
+      "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025",
+      "confidence": "medium"
+    },
+    {
+      "city": "רחובות",
+      "year": 2025,
+      "avg_price_apartment": 2660000,
+      "size_class": "weighted avg",
+      "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025",
+      "confidence": "medium"
+    },
+    {
+      "city": "ארצי",
+      "year": 2026,
+      "avg_price_apartment": 2330000,
+      "size_class": "Q1 2026 national mean",
+      "source_url": "https://www.ynet.co.il/economy/article/r1yli1xjzx",
+      "confidence": "high",
+      "note": "CBS Q1 2026 transactions report — national average sale price 2.33M."
+    },
+    {
+      "city": "ארצי",
+      "year": 2024,
+      "avg_price_apartment": 2230000,
+      "size_class": "national mean",
+      "source_url": "https://magdilim.co.il/160520240923/",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "year": 2020,
+      "avg_price_apartment": 1580000,
+      "size_class": "national mean",
+      "source_url": "https://www.contact.org.il/index/article-defaults/מדד-מחירי-דירות-2020",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "year": 2017,
+      "avg_price_apartment": 1443000,
+      "size_class": "national mean",
+      "source_url": "https://www.ynet.co.il/articles/0,7340,L-4845678,00.html",
+      "confidence": "medium"
+    }
+  ],
+  "stock_unsold_apartments_recent": [
+    {
+      "snapshot_date": "2025-09 (end Q3)",
+      "national_unsold_new": 79000,
+      "source_url": "https://www.nadlancenter.co.il/article/12078",
+      "confidence": "high",
+      "note": "Tel Aviv-Yafo alone held ~10,000 units."
+    },
+    {
+      "snapshot_date": "2026-01 (end of month)",
+      "national_unsold_new": 86290,
+      "months_of_inventory": 31.4,
+      "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/",
+      "confidence": "high",
+      "note": "All-time record; TA-Yafo 10,540, Jerusalem 10,370."
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "cityName": "מגדל העמק",
+  "lastUpdated": "2026-06-22T08:07:39.310Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "שלום עליכם",
+      "totalDeals": 206,
+      "dealsPerYearAvg": 29,
+      "streets": [
+        {
+          "streetName": "קדש",
+          "totalDeals": 65,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 12360,
+                    "avgTotalPrice": 831400,
+                    "avgArea": 68
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 8995,
+                    "avgTotalPrice": 588000,
+                    "avgArea": 64
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 6557,
+                    "avgTotalPrice": 418677,
+                    "avgArea": 64
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 10210,
+                    "avgTotalPrice": 729250,
+                    "avgArea": 72
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 8480,
+                    "avgTotalPrice": 656400,
+                    "avgArea": 77
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9884,
+                    "totalPrice": 850000,
+                    "area": 86,
+                    "houseNum": "26.0",
+                    "streetName": "קדש",
+                    "blocksAway": 4,
+                    "dealDate": "2020-07-16T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15000,
+                    "totalPrice": 1650000,
+                    "area": 110,
+                    "houseNum": "28.0",
+                    "streetName": "קדש",
+                    "blocksAway": 2,
+                    "dealDate": "2025-03-26T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 10706,
+                    "totalPrice": 910000,
+                    "area": 85,
+                    "houseNum": "49.0",
+                    "streetName": "קדש",
+                    "blocksAway": 19,
+                    "dealDate": "2022-09-28T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9884,
+                    "totalPrice": 850000,
+                    "area": 86,
+                    "houseNum": "26.0",
+                    "streetName": "קדש",
+                    "blocksAway": 4,
+                    "dealDate": "2020-07-16T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "העצמאות",
+          "totalDeals": 54,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 11708,
+                    "avgTotalPrice": 709500,
+                    "avgArea": 61
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 9,
+                    "threshold": 5,
+                    "avgPricePerSqm": 7129,
+                    "avgTotalPrice": 410292,
+                    "avgArea": 58
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 7589,
+                    "totalPrice": 425000,
+                    "area": 56,
+                    "houseNum": "50.0",
+                    "streetName": "העצמאות",
+                    "blocksAway": 0,
+                    "dealDate": "2021-07-08T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13043,
+                    "totalPrice": 900000,
+                    "area": 69,
+                    "houseNum": "48.0",
+                    "streetName": "העצמאות",
+                    "blocksAway": 2,
+                    "dealDate": "2025-07-13T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 8696,
+                    "totalPrice": 600000,
+                    "area": 69,
+                    "houseNum": "7.0",
+                    "streetName": "העצמאות",
+                    "blocksAway": 43,
+                    "dealDate": "2022-04-07T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 6301,
+                    "totalPrice": 460000,
+                    "area": 73,
+                    "houseNum": "7.0",
+                    "streetName": "העצמאות",
+                    "blocksAway": 43,
+                    "dealDate": "2020-01-09T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 206,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "דירות"
+}

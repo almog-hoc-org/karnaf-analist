@@ -1,0 +1,772 @@
+{
+  "cityName": "רמת גן",
+  "lastUpdated": "2026-06-22T08:12:09.865Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "פרדס כץ",
+      "totalDeals": 2103,
+      "dealsPerYearAvg": 300,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 402,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 26106,
+                    "avgTotalPrice": 1608750,
+                    "avgArea": 62
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 27105,
+                    "avgTotalPrice": 2368827,
+                    "avgArea": 87
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 29826,
+                    "avgTotalPrice": 2497405,
+                    "avgArea": 83
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 14,
+                    "threshold": 10,
+                    "avgPricePerSqm": 21170,
+                    "avgTotalPrice": 1629167,
+                    "avgArea": 78
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 14,
+                    "threshold": 10,
+                    "avgPricePerSqm": 24006,
+                    "avgTotalPrice": 2352230,
+                    "avgArea": 99
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 14,
+                    "threshold": 10,
+                    "avgPricePerSqm": 30291,
+                    "avgTotalPrice": 3031697,
+                    "avgArea": 100
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 33,
+                    "threshold": 15,
+                    "avgPricePerSqm": 15191,
+                    "avgTotalPrice": 1698355,
+                    "avgArea": 112
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "הירקון",
+          "totalDeals": 275,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 28608,
+                    "avgTotalPrice": 1888159,
+                    "avgArea": 66
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 59,
+                    "threshold": 15,
+                    "avgPricePerSqm": 28251,
+                    "avgTotalPrice": 2259594,
+                    "avgArea": 81
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 50,
+                    "threshold": 15,
+                    "avgPricePerSqm": 29442,
+                    "avgTotalPrice": 2883983,
+                    "avgArea": 100
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "הצפון הישן-החלק הצפוני",
+      "totalDeals": 1959,
+      "dealsPerYearAvg": 280,
+      "streets": [
+        {
+          "streetName": "דיזנגוף",
+          "totalDeals": 183,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 55546,
+                    "avgTotalPrice": 3148300,
+                    "avgArea": 58
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 58921,
+                    "avgTotalPrice": 3679091,
+                    "avgArea": 60
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 49620,
+                    "avgTotalPrice": 2974844,
+                    "avgArea": 61
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 64396,
+                    "avgTotalPrice": 5400000,
+                    "avgArea": 84
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 55490,
+                    "avgTotalPrice": 4250000,
+                    "avgArea": 77
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 54706,
+                    "totalPrice": 3720000,
+                    "area": 68,
+                    "houseNum": "240.0",
+                    "streetName": "דיזנגוף",
+                    "blocksAway": 9,
+                    "dealDate": "2020-03-12T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 67857,
+                    "avgTotalPrice": 6175000,
+                    "avgArea": 91
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 63131,
+                    "totalPrice": 6250000,
+                    "area": 99,
+                    "houseNum": "255.0",
+                    "streetName": "דיזנגוף",
+                    "blocksAway": 6,
+                    "dealDate": "2022-03-28T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 58000,
+                    "totalPrice": 5800000,
+                    "area": 100,
+                    "houseNum": "235.0",
+                    "streetName": "דיזנגוף",
+                    "blocksAway": 14,
+                    "dealDate": "2021-02-04T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "נורדאו",
+          "totalDeals": 105,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 53030,
+                    "totalPrice": 3500000,
+                    "area": 66,
+                    "houseNum": "53.0",
+                    "streetName": "נורדאו",
+                    "blocksAway": 50,
+                    "dealDate": "2026-02-26T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 60798,
+                    "avgTotalPrice": 4168000,
+                    "avgArea": 60
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 48716,
+                    "avgTotalPrice": 2917000,
+                    "avgArea": 60
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 55190,
+                    "avgTotalPrice": 4232500,
+                    "avgArea": 77
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 13,
+                    "threshold": 10,
+                    "avgPricePerSqm": 65384,
+                    "avgTotalPrice": 4941429,
+                    "avgArea": 77
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 22065,
+                    "avgTotalPrice": 1716333,
+                    "avgArea": 79
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 55556,
+                    "totalPrice": 5000000,
+                    "area": 90,
+                    "houseNum": "30.0",
+                    "streetName": "נורדאו",
+                    "blocksAway": 27,
+                    "dealDate": "2024-10-09T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 40495,
+                    "avgTotalPrice": 4165000,
+                    "avgArea": 102
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 47862,
+                    "totalPrice": 4499000,
+                    "area": 94,
+                    "houseNum": "3.0",
+                    "streetName": "נורדאו",
+                    "blocksAway": 0,
+                    "dealDate": "2020-09-07T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "תל גנים",
+      "totalDeals": 1077,
+      "dealsPerYearAvg": 154,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 444,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 47515,
+                    "avgTotalPrice": 3762736,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 78,
+                    "threshold": 15,
+                    "avgPricePerSqm": 46711,
+                    "avgTotalPrice": 3589644,
+                    "avgArea": 77
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 43,
+                    "threshold": 15,
+                    "avgPricePerSqm": 41744,
+                    "avgTotalPrice": 4257116,
+                    "avgArea": 103
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 53,
+                    "threshold": 15,
+                    "avgPricePerSqm": 42549,
+                    "avgTotalPrice": 4406831,
+                    "avgArea": 104
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "ההסתדרות",
+          "totalDeals": 318,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 24701,
+                    "totalPrice": 1655000,
+                    "area": 67,
+                    "houseNum": "20.0",
+                    "streetName": "ההסתדרות",
+                    "blocksAway": 36,
+                    "dealDate": "2024-05-20T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 18294,
+                    "totalPrice": 933000,
+                    "area": 51,
+                    "houseNum": "20.0",
+                    "streetName": "ההסתדרות",
+                    "blocksAway": 36,
+                    "dealDate": "2022-04-28T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 44792,
+                    "totalPrice": 2687500,
+                    "area": 60,
+                    "houseNum": "52.0",
+                    "streetName": "ההסתדרות",
+                    "blocksAway": 4,
+                    "dealDate": "2021-05-24T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 19,
+                    "threshold": 15,
+                    "avgPricePerSqm": 48376,
+                    "avgTotalPrice": 3837545,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 37882,
+                    "totalPrice": 3220000,
+                    "area": 85,
+                    "houseNum": "24.0",
+                    "streetName": "ההסתדרות",
+                    "blocksAway": 32,
+                    "dealDate": "2022-06-23T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 30217,
+                    "totalPrice": 2780000,
+                    "area": 92,
+                    "houseNum": "5.0",
+                    "streetName": "ההסתדרות",
+                    "blocksAway": 51,
+                    "dealDate": "2020-01-21T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 44,
+                    "threshold": 15,
+                    "avgPricePerSqm": 47333,
+                    "avgTotalPrice": 4875028,
+                    "avgArea": 104
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 34470,
+                    "avgTotalPrice": 3362500,
+                    "avgArea": 98
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 30217,
+                    "totalPrice": 2780000,
+                    "area": 92,
+                    "houseNum": "5.0",
+                    "streetName": "ההסתדרות",
+                    "blocksAway": 51,
+                    "dealDate": "2020-01-21T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 7105,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "דירות"
+}

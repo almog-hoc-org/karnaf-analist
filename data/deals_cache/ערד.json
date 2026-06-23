@@ -1,0 +1,519 @@
+{
+  "cityName": "ערד",
+  "lastUpdated": "2026-06-22T08:10:00.841Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "יהושפט",
+      "totalDeals": 419,
+      "dealsPerYearAvg": 60,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 359,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16384,
+                    "avgTotalPrice": 1310000,
+                    "avgArea": 81
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 12125,
+                    "avgTotalPrice": 1019000,
+                    "avgArea": 83
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11329,
+                    "avgTotalPrice": 852500,
+                    "avgArea": 75
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 62,
+                    "threshold": 15,
+                    "avgPricePerSqm": 12869,
+                    "avgTotalPrice": 1454181,
+                    "avgArea": 113
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 34,
+                    "threshold": 15,
+                    "avgPricePerSqm": 12434,
+                    "avgTotalPrice": 1334206,
+                    "avgArea": 107
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 11,
+                    "threshold": 10,
+                    "avgPricePerSqm": 9720,
+                    "avgTotalPrice": 1117818,
+                    "avgArea": 115
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 69,
+                    "threshold": 15,
+                    "avgPricePerSqm": 13358,
+                    "avgTotalPrice": 1706699,
+                    "avgArea": 133
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 19,
+                    "threshold": 15,
+                    "avgPricePerSqm": 12534,
+                    "avgTotalPrice": 1641146,
+                    "avgArea": 132
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "דוד המלך",
+          "totalDeals": 32,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 13872,
+                    "avgTotalPrice": 1095000,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13176,
+                    "totalPrice": 1120000,
+                    "area": 85,
+                    "houseNum": "17.0",
+                    "streetName": "דוד המלך",
+                    "blocksAway": 6,
+                    "dealDate": "2022-04-14T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9455,
+                    "totalPrice": 728000,
+                    "area": 77,
+                    "houseNum": "17.0",
+                    "streetName": "דוד המלך",
+                    "blocksAway": 6,
+                    "dealDate": "2020-07-09T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12120,
+                    "avgTotalPrice": 1283333,
+                    "avgArea": 106
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9643,
+                    "totalPrice": 945000,
+                    "area": 98,
+                    "houseNum": "11.0",
+                    "streetName": "דוד המלך",
+                    "blocksAway": 0,
+                    "dealDate": "2023-09-19T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9787,
+                    "totalPrice": 920000,
+                    "area": 94,
+                    "houseNum": "11.0",
+                    "streetName": "דוד המלך",
+                    "blocksAway": 0,
+                    "dealDate": "2021-05-31T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 10305,
+                    "totalPrice": 1350000,
+                    "area": 131,
+                    "houseNum": "11.0",
+                    "streetName": "דוד המלך",
+                    "blocksAway": 0,
+                    "dealDate": "2026-01-15T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9065,
+                    "totalPrice": 1260000,
+                    "area": 139,
+                    "houseNum": "11.0",
+                    "streetName": "דוד המלך",
+                    "blocksAway": 0,
+                    "dealDate": "2023-07-12T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 7806,
+                    "avgTotalPrice": 1060000,
+                    "avgArea": 136
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "מעוף",
+      "totalDeals": 218,
+      "dealsPerYearAvg": 31,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 70,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11288,
+                    "avgTotalPrice": 955333,
+                    "avgArea": 85
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 10351,
+                    "avgTotalPrice": 1507500,
+                    "avgArea": 147
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "עפרוני",
+          "totalDeals": 25,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11250,
+                    "totalPrice": 900000,
+                    "area": 80,
+                    "houseNum": "23.0",
+                    "streetName": "עפרוני",
+                    "blocksAway": 11,
+                    "dealDate": "2024-02-15T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 10256,
+                    "totalPrice": 800000,
+                    "area": 78,
+                    "houseNum": "8.0",
+                    "streetName": "עפרוני",
+                    "blocksAway": 26,
+                    "dealDate": "2021-01-13T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 10256,
+                    "totalPrice": 800000,
+                    "area": 78,
+                    "houseNum": "8.0",
+                    "streetName": "עפרוני",
+                    "blocksAway": 26,
+                    "dealDate": "2021-01-13T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13529,
+                    "totalPrice": 1380000,
+                    "area": 102,
+                    "houseNum": "14.0",
+                    "streetName": "עפרוני",
+                    "blocksAway": 20,
+                    "dealDate": "2024-04-18T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 12333,
+                    "totalPrice": 1480000,
+                    "area": 120,
+                    "houseNum": "51.0",
+                    "streetName": "עפרוני",
+                    "blocksAway": 17,
+                    "dealDate": "2022-04-04T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 7905,
+                    "totalPrice": 830000,
+                    "area": 105,
+                    "houseNum": "32.0",
+                    "streetName": "עפרוני",
+                    "blocksAway": 2,
+                    "dealDate": "2020-01-13T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11467,
+                    "avgTotalPrice": 1535000,
+                    "avgArea": 135
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 10488,
+                    "totalPrice": 1290000,
+                    "area": 123,
+                    "houseNum": "24.0",
+                    "streetName": "עפרוני",
+                    "blocksAway": 10,
+                    "dealDate": "2021-11-30T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 637,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

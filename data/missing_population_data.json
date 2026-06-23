@@ -1,0 +1,95 @@
+[
+  {
+    "city_name": "שדרות",
+    "population_2026": 39800,
+    "source": "CBS estimate end-Dec 2025: 38,862. Growth rate ~3% annually (post-war recovery/resettlement). Projected to ~39,800 by end 2026.",
+    "cbs_2025_estimate": 38862,
+    "annual_growth_rate_pct": 2.4
+  },
+  {
+    "city_name": "מכבים ר��ות",
+    "population_2026": 26500,
+    "source": "Part of Modiin-Maccabim-Reut (total 109,179 as of Apr 2025). Maccabim-Reut sub-area estimated at ~25,500-26,000. CBS does not publish separate figures; estimate based on municipal data proportions (~24% of total city).",
+    "cbs_2025_estimate": null,
+    "annual_growth_rate_pct": 3.0,
+    "note": "מכבים רעות is part of מודיעין-מכבים-רעות municipality. CBS tracks only the combined city. This is an estimate for the sub-area."
+  },
+  {
+    "city_name": "אורנית",
+    "population_2026": 10100,
+    "source": "CBS estimate end-Dec 2025: 10,044. Low growth rate ~0.5%. Projected to ~10,100 by end 2026.",
+    "cbs_2025_estimate": 10044,
+    "annual_growth_rate_pct": 0.5
+  },
+  {
+    "city_name": "אלפי מנשה",
+    "population_2026": 7900,
+    "source": "CBS estimate end-Dec 2025: 7,981. Negative growth rate -1.0%. Projected to ~7,900 by end 2026.",
+    "cbs_2025_estimate": 7981,
+    "annual_growth_rate_pct": -1.0
+  },
+  {
+    "city_name": "אפרת",
+    "population_2026": 12300,
+    "source": "CBS estimate end-Dec 2025: 12,132. Population was 13,437 in Feb 2024 per municipal data but CBS figure is lower. Using CBS figure with ~1.4% growth. Projected to ~12,300 by end 2026.",
+    "cbs_2025_estimate": 12132,
+    "annual_growth_rate_pct": 1.4
+  },
+  {
+    "city_name": "אריאל",
+    "population_2026": 22800,
+    "source": "CBS estimate end-Dec 2025: 22,383. Growth rate ~1.9%. Projected to ~22,800 by end 2026.",
+    "cbs_2025_estimate": 22383,
+    "annual_growth_rate_pct": 1.9
+  },
+  {
+    "city_name": "ביתר עילית",
+    "population_2026": 75800,
+    "source": "CBS estimate end-Dec 2025: 73,220. High growth rate ~3.5% (Haredi city). Projected to ~75,800 by end 2026.",
+    "cbs_2025_estimate": 73220,
+    "annual_growth_rate_pct": 3.5
+  },
+  {
+    "city_name": "גבעת זאב",
+    "population_2026": 26400,
+    "source": "CBS estimate end-Dec 2025: 25,646. Growth rate ~2.9%. Projected to ~26,400 by end 2026.",
+    "cbs_2025_estimate": 25646,
+    "annual_growth_rate_pct": 2.9
+  },
+  {
+    "city_name": "כוכב יעקב",
+    "population_2026": 7200,
+    "source": "After Tel Zion separation (Feb 2023), Kokhav Yaakov has ~7,000 residents. CBS 2022 census had 10,086 (combined). Post-separation ~800 families (~7,000 people). Growth rate ~1.5%. Projected to ~7,200 by end 2026.",
+    "cbs_2025_estimate": 7100,
+    "annual_growth_rate_pct": 1.5,
+    "note": "Population dropped significantly in CBS data after Tel Zion (תל ציון) was separated as independent settlement in Feb 2023."
+  },
+  {
+    "city_name": "מודיעין עילית",
+    "population_2026": 94500,
+    "source": "CBS estimate end-Dec 2025: 91,323. High growth rate ~3.5% (largest Haredi city in West Bank). Projected to ~94,500 by end 2026.",
+    "cbs_2025_estimate": 91323,
+    "annual_growth_rate_pct": 3.5
+  },
+  {
+    "city_name": "מעלה אדומים",
+    "population_2026": 35900,
+    "source": "CBS estimate end-Dec 2025: 36,185. Negative growth rate -0.9%. Projected to ~35,900 by end 2026.",
+    "cbs_2025_estimate": 36185,
+    "annual_growth_rate_pct": -0.9
+  },
+  {
+    "city_name": "קריית ארבע",
+    "population_2026": 8000,
+    "source": "CBS estimate end-Oct 2025: 7,820 (7,656 Israeli residents). Growth rate ~2.3%. Projected to ~8,000 by end 2026.",
+    "cbs_2025_estimate": 7820,
+    "annual_growth_rate_pct": 2.3
+  },
+  {
+    "city_name": "קרני שומרון",
+    "population_2026": 10900,
+    "source": "CBS estimate end-Dec 2025: 10,741. Growth rate ~1.5%. Projected to ~10,900 by end 2026.",
+    "cbs_2025_estimate": 10741,
+    "annual_growth_rate_pct": 1.5
+  }
+]

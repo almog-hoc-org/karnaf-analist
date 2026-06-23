@@ -1,0 +1,7 @@
+{
+  "fetchedAt": "2026-05-17",
+  "endpoint_used": "https://yadata.yad2.co.il/MarketData/Index?city={cbs_code}",
+  "cities": [],
+  "skipped_cities": [],
+  "notes": "Scrape did not run. The execution environment denied all outbound HTTP requests (both Bash curl and WebFetch returned permission errors), so no live data could be retrieved from Yad2. Per the 'DO NOT invent numbers' rule, no rows were written. Re-run this task in an environment that has network access to yadata.yad2.co.il and yad2.co.il. The 168-city CBS code map is available at data/city_cbs_codes.json and can be iterated directly once network is enabled."
+}

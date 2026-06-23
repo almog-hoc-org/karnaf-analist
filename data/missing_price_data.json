@@ -1,0 +1,358 @@
+{
+  "metadata": {
+    "created": "2026-04-13",
+    "description": "Price per square meter estimates for cities missing price data in the database - Arab/Bedouin towns and settlement cities",
+    "sources": [
+      "https://www.nadlan.gov.il/",
+      "https://www.madlan.co.il/",
+      "https://www.madadirot.co.il/",
+      "https://yadata.yad2.co.il/",
+      "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "https://www.cbs.gov.il/he/subjects/Pages/מדד-מחירי-דירות.aspx",
+      "https://en.globes.co.il/en/article-jisr-az-zarqa-homes-attract-diverse-buyers-at-diverse-prices-1001486437",
+      "https://www.madadirot.co.il/areas/1161/",
+      "https://www.madadirot.co.il/areas/3640/",
+      "https://www.madadirot.co.il/areas/171/"
+    ],
+    "methodology": [
+      "For cities with direct transaction data (from madadirot, madlan, yadata), those values were used",
+      "For Triangle region Arab cities (כפר קאסם, טייבה, קלנסווה, etc.), estimates based on regional comparables and known transaction ranges",
+      "For Galilee Arab cities (סח'נין, טמרה, etc.), benchmarked against Nazareth (8,500-10,000/sqm) and Carmiel (10,500-12,500/sqm)",
+      "For Negev Bedouin cities (רהט, חורה, לקיה, etc.), based on madadirot data showing Rahat at ~3,500/sqm, smaller towns estimated lower",
+      "For Druze towns (עספיא, מג'דל שמס), estimated based on local market characteristics",
+      "For settlement cities (כוכב יעקב, קריית ארבע, קרני שומרון), based on madlan/madadirot transaction data",
+      "2023 values estimated as ~10-15% below 2026 values, reflecting national price growth trends (7.7% in 2024 + moderate 2025-2026 growth)",
+      "Arab sector real estate typically trades 30-60% below Jewish sector in same region due to: limited formal market, lower demand from outside, construction on private/unregistered land, smaller buyer pool",
+      "Bedouin Negev towns have extremely limited formal apartment market - most housing is private construction"
+    ],
+    "confidence_notes": {
+      "high": "Direct transaction data available from madadirot/madlan/yadata",
+      "medium": "Estimated from regional comparables and known market characteristics",
+      "low": "Very limited transaction data; rough estimate based on regional minimums and market knowledge"
+    }
+  },
+  "cities": [
+    {
+      "city_name": "אבו גוש",
+      "price_per_sqm_2023": 14000,
+      "price_per_sqm_2026": 16500,
+      "confidence": "medium",
+      "notes": "Near Jerusalem, touristic village with higher prices than typical Arab towns. Proximity to Jerusalem drives demand. Estimated based on Jerusalem periphery pricing."
+    },
+    {
+      "city_name": "אכסאל",
+      "price_per_sqm_2023": 6000,
+      "price_per_sqm_2026": 7500,
+      "confidence": "low",
+      "notes": "Small Arab village near Nazareth. Limited formal market. Estimated below Nazareth levels."
+    },
+    {
+      "city_name": "בועיינה-נוג'ידאת",
+      "price_per_sqm_2023": 5500,
+      "price_per_sqm_2026": 7000,
+      "confidence": "low",
+      "notes": "Small Arab village in Lower Galilee near Nazareth. Very limited formal transaction data."
+    },
+    {
+      "city_name": "ביר אל-מכסור",
+      "price_per_sqm_2023": 5000,
+      "price_per_sqm_2026": 6500,
+      "confidence": "low",
+      "notes": "Small Bedouin village in Galilee. Very limited formal apartment market."
+    },
+    {
+      "city_name": "בסמ\"ה",
+      "price_per_sqm_2023": 7000,
+      "price_per_sqm_2026": 8500,
+      "confidence": "low",
+      "notes": "Arab town near Wadi Ara/Hadera corridor. Limited data, estimated between Nazareth and Triangle levels."
+    },
+    {
+      "city_name": "בסמת טבעון",
+      "price_per_sqm_2023": 7500,
+      "price_per_sqm_2026": 9000,
+      "confidence": "low",
+      "notes": "Arab village near Kiryat Tivon and Haifa area. Slightly higher than deep Galilee towns due to Haifa proximity."
+    },
+    {
+      "city_name": "בענה",
+      "price_per_sqm_2023": 5500,
+      "price_per_sqm_2026": 7000,
+      "confidence": "low",
+      "notes": "Arab village in Western Galilee near Carmiel. Limited formal market."
+    },
+    {
+      "city_name": "ג'דיידה-מכר",
+      "price_per_sqm_2023": 7500,
+      "price_per_sqm_2026": 9000,
+      "confidence": "medium",
+      "notes": "Larger Arab town near Acre. More active market than smaller villages. Proximity to Acre and Western Galilee drives some demand."
+    },
+    {
+      "city_name": "ג'לג'וליה",
+      "price_per_sqm_2023": 10000,
+      "price_per_sqm_2026": 12000,
+      "confidence": "medium",
+      "notes": "Triangle region, near Kfar Saba. Central location boosts prices above typical Arab town levels. Part of densely populated Triangle corridor."
+    },
+    {
+      "city_name": "ג'סר א-זרקא",
+      "price_per_sqm_2023": 8500,
+      "price_per_sqm_2026": 10500,
+      "confidence": "medium-high",
+      "notes": "Coastal Arab town. Direct data: 81sqm apartment sold for 701K (8,657/sqm) under mechir lamishtaken in 2024. Market prices higher - luxury units near beach sold at 40,000+/sqm. Using mechir shuk estimate excluding subsidized units. Source: Globes 2024."
+    },
+    {
+      "city_name": "דייר אל-אסד",
+      "price_per_sqm_2023": 5500,
+      "price_per_sqm_2026": 7000,
+      "confidence": "low",
+      "notes": "Arab town in Upper Galilee. Limited formal apartment market. Estimated at lower end of Galilee range."
+    },
+    {
+      "city_name": "דייר חנא",
+      "price_per_sqm_2023": 5500,
+      "price_per_sqm_2026": 7000,
+      "confidence": "low",
+      "notes": "Arab town in Galilee near Sakhnin. Similar pricing to neighboring villages."
+    },
+    {
+      "city_name": "זמר",
+      "price_per_sqm_2023": 8000,
+      "price_per_sqm_2026": 9500,
+      "confidence": "low",
+      "notes": "Small Arab village in Triangle region near Tulkarm border. Limited data, estimated below larger Triangle towns."
+    },
+    {
+      "city_name": "זרזיר",
+      "price_per_sqm_2023": 6000,
+      "price_per_sqm_2026": 7500,
+      "confidence": "low",
+      "notes": "Bedouin town in Jezreel Valley near Nazareth. Limited formal market."
+    },
+    {
+      "city_name": "חורה",
+      "price_per_sqm_2023": 3000,
+      "price_per_sqm_2026": 4000,
+      "confidence": "low",
+      "notes": "Bedouin town in Negev. Very limited formal apartment market. Most construction is private/informal. Estimated slightly above Rahat minimum."
+    },
+    {
+      "city_name": "טובא-זנגרייה",
+      "price_per_sqm_2023": 5000,
+      "price_per_sqm_2026": 6500,
+      "confidence": "low",
+      "notes": "Arab village in Upper Galilee near Rosh Pina. Limited formal market."
+    },
+    {
+      "city_name": "טייבה",
+      "price_per_sqm_2023": 10000,
+      "price_per_sqm_2026": 12500,
+      "confidence": "medium",
+      "notes": "Largest Triangle city (~45K residents). Central location between Netanya and Kfar Saba. Active local market with some new construction. Yadata page available. Prices higher than typical Arab towns due to central location and city size."
+    },
+    {
+      "city_name": "טמרה",
+      "price_per_sqm_2023": 7000,
+      "price_per_sqm_2026": 8500,
+      "confidence": "medium",
+      "notes": "Large Arab city (~44K) in Western Galilee near Acre. Active local market. Prices below Jewish cities in same area but above smaller villages."
+    },
+    {
+      "city_name": "כאבול",
+      "price_per_sqm_2023": 6000,
+      "price_per_sqm_2026": 7500,
+      "confidence": "low",
+      "notes": "Arab village in Western Galilee. Limited formal market. Similar to other small Galilee villages."
+    },
+    {
+      "city_name": "כסיפה",
+      "price_per_sqm_2023": 2500,
+      "price_per_sqm_2026": 3500,
+      "confidence": "low",
+      "notes": "Bedouin town in Negev. Minimal formal apartment market. Among the lowest property values in Israel."
+    },
+    {
+      "city_name": "כסרא-סמיע",
+      "price_per_sqm_2023": 7000,
+      "price_per_sqm_2026": 8500,
+      "confidence": "low",
+      "notes": "Druze-Arab village in Western Galilee. Slightly higher than pure Arab villages due to Druze community stability."
+    },
+    {
+      "city_name": "כפר כנא",
+      "price_per_sqm_2023": 7000,
+      "price_per_sqm_2026": 8500,
+      "confidence": "medium",
+      "notes": "Arab town near Nazareth with religious tourism significance. Some new construction activity. Estimated slightly below Nazareth."
+    },
+    {
+      "city_name": "כפר מנדא",
+      "price_per_sqm_2023": 6000,
+      "price_per_sqm_2026": 7500,
+      "confidence": "low",
+      "notes": "Arab village in Lower Galilee. Limited formal market data."
+    },
+    {
+      "city_name": "כפר קאסם",
+      "price_per_sqm_2023": 11000,
+      "price_per_sqm_2026": 13500,
+      "confidence": "medium",
+      "notes": "Triangle city adjacent to Rosh HaAyin. Major new construction planned (1,600 units). Central location near Gush Dan drives higher prices. Active madlan/yad2 market."
+    },
+    {
+      "city_name": "כפר קרע",
+      "price_per_sqm_2023": 9000,
+      "price_per_sqm_2026": 11000,
+      "confidence": "medium",
+      "notes": "Arab town in Wadi Ara corridor near Hadera. Part of Route 65 corridor with reasonable access to Haifa and center."
+    },
+    {
+      "city_name": "לקיה",
+      "price_per_sqm_2023": 2500,
+      "price_per_sqm_2026": 3500,
+      "confidence": "low",
+      "notes": "Bedouin town in Negev near Arad. Very limited formal apartment market. Among lowest property values in Israel."
+    },
+    {
+      "city_name": "מג'דל שמס",
+      "price_per_sqm_2023": 6000,
+      "price_per_sqm_2026": 8000,
+      "confidence": "medium",
+      "notes": "Druze town in Golan Heights. New construction planned. War in Syria (2024) increased interest in Israeli residency. Unique market with limited supply. Source: TheMarker 2024."
+    },
+    {
+      "city_name": "משהד",
+      "price_per_sqm_2023": 7000,
+      "price_per_sqm_2026": 8500,
+      "confidence": "low",
+      "notes": "Arab village near Nazareth. Similar pricing to Nazareth periphery."
+    },
+    {
+      "city_name": "נחף",
+      "price_per_sqm_2023": 5500,
+      "price_per_sqm_2026": 7000,
+      "confidence": "low",
+      "notes": "Arab village in Western Galilee. Limited formal market."
+    },
+    {
+      "city_name": "סח'נין",
+      "price_per_sqm_2023": 7000,
+      "price_per_sqm_2026": 9000,
+      "confidence": "medium",
+      "notes": "Large Arab city (~30K) in Galilee. More developed local market. Mechir lamishtaken projects with 60K grant eligibility. Prices below Carmiel but above smaller villages."
+    },
+    {
+      "city_name": "עילוט",
+      "price_per_sqm_2023": 6500,
+      "price_per_sqm_2026": 8000,
+      "confidence": "low",
+      "notes": "Arab village near Nazareth. Similar pricing to Nazareth periphery."
+    },
+    {
+      "city_name": "עין מאהל",
+      "price_per_sqm_2023": 6500,
+      "price_per_sqm_2026": 8000,
+      "confidence": "low",
+      "notes": "Arab village near Nazareth. Part of Nazareth metropolitan area."
+    },
+    {
+      "city_name": "עספיא",
+      "price_per_sqm_2023": 8500,
+      "price_per_sqm_2026": 10500,
+      "confidence": "medium",
+      "notes": "Druze town on Mount Carmel near Haifa. Daliyat al-Karmel mechir lamishtaken project: 85sqm at 754K (8,870/sqm) and 100sqm at 882K (8,820/sqm) - these are 28-39% below market. Market price estimated ~12,000-14,000/sqm for new; average including older stock ~10,500."
+    },
+    {
+      "city_name": "ערערה",
+      "price_per_sqm_2023": 9000,
+      "price_per_sqm_2026": 11000,
+      "confidence": "medium",
+      "notes": "Arab town in Wadi Ara/Triangle. On Route 65 with good access. Similar to Kafr Qara pricing."
+    },
+    {
+      "city_name": "ערערה-בנגב",
+      "price_per_sqm_2023": 2500,
+      "price_per_sqm_2026": 3500,
+      "confidence": "low",
+      "notes": "Bedouin town in Negev. Very limited formal apartment market, similar to other Bedouin Negev towns."
+    },
+    {
+      "city_name": "פוריידיס",
+      "price_per_sqm_2023": 8000,
+      "price_per_sqm_2026": 10000,
+      "confidence": "low",
+      "notes": "Coastal Arab village near Caesarea/Zikhron Yaakov. Coastal premium but limited market. Near affluent areas but internal market is separate."
+    },
+    {
+      "city_name": "פרדסייה",
+      "price_per_sqm_2023": 21000,
+      "price_per_sqm_2026": 24000,
+      "confidence": "medium-high",
+      "notes": "Jewish suburban community in Sharon area. Direct data from madadirot: 2023 price ~23,630/sqm for 4-room, ~19,083/sqm for 5-room. Weighted average ~21,000. 2026 estimated with ~15% growth. Active madlan market."
+    },
+    {
+      "city_name": "קלנסווה",
+      "price_per_sqm_2023": 9500,
+      "price_per_sqm_2026": 11500,
+      "confidence": "medium",
+      "notes": "Arab city in Triangle near Netanya. Slightly below Taibe due to smaller size and less central location."
+    },
+    {
+      "city_name": "ראמה",
+      "price_per_sqm_2023": 6000,
+      "price_per_sqm_2026": 7500,
+      "confidence": "low",
+      "notes": "Mixed Druze-Christian Arab village in Upper Galilee. Limited formal market."
+    },
+    {
+      "city_name": "רהט",
+      "price_per_sqm_2023": 3000,
+      "price_per_sqm_2026": 3500,
+      "confidence": "medium-high",
+      "notes": "Largest Bedouin city (~78K). Direct madadirot data: avg purchase price 700K, avg 3,500/sqm. Only 4 transactions in past 12 months - extremely limited formal market. Most housing is private construction on unregistered/disputed land."
+    },
+    {
+      "city_name": "שגב-שלום",
+      "price_per_sqm_2023": 2000,
+      "price_per_sqm_2026": 3000,
+      "confidence": "low",
+      "notes": "Bedouin town in Negev. Minimal formal apartment market. Among lowest property values in Israel."
+    },
+    {
+      "city_name": "שעב",
+      "price_per_sqm_2023": 5500,
+      "price_per_sqm_2026": 7000,
+      "confidence": "low",
+      "notes": "Arab village in Galilee near Acre. Limited formal market."
+    },
+    {
+      "city_name": "תל שבע",
+      "price_per_sqm_2023": 2500,
+      "price_per_sqm_2026": 3500,
+      "confidence": "low",
+      "notes": "Bedouin town in Negev near Beer Sheva. Very limited formal apartment market."
+    },
+    {
+      "city_name": "כוכב יעקב",
+      "price_per_sqm_2023": 16000,
+      "price_per_sqm_2026": 19000,
+      "confidence": "medium",
+      "notes": "Religious-Zionist settlement near Jerusalem. Active madlan market. Growing community with new construction. Prices reflect Jerusalem periphery demand plus ideological premium. Below Beit Shemesh but above typical Judea settlements."
+    },
+    {
+      "city_name": "קריית ארבע",
+      "price_per_sqm_2023": 9000,
+      "price_per_sqm_2026": 11000,
+      "confidence": "medium",
+      "notes": "Settlement city adjacent to Hebron. Madlan data shows avg ~1,265K, with sqm range 7,142-16,900. Wide range reflects mix of old and new stock. Using median estimate. Ideological/security factors limit buyer pool."
+    },
+    {
+      "city_name": "קרני שומרון",
+      "price_per_sqm_2023": 10000,
+      "price_per_sqm_2026": 11765,
+      "confidence": "high",
+      "notes": "Settlement city in Samaria. Direct madadirot data: avg purchase price 1,991K, avg 11,765/sqm. 19 sales in past 12 months. 10,924 residents. Avg rent 4,000/month."
+    }
+  ]
+}

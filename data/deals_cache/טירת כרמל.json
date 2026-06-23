@@ -1,0 +1,561 @@
+{
+  "cityName": "טירת כרמל",
+  "lastUpdated": "2026-06-22T08:05:52.865Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "אחוזה",
+      "totalDeals": 1437,
+      "dealsPerYearAvg": 205,
+      "streets": [
+        {
+          "streetName": "יותם",
+          "totalDeals": 122,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 21997,
+                    "avgTotalPrice": 1735386,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 23028,
+                    "avgTotalPrice": 1876667,
+                    "avgArea": 87
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 14141,
+                    "avgTotalPrice": 1149000,
+                    "avgArea": 81
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 26916,
+                    "avgTotalPrice": 2880000,
+                    "avgArea": 106
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 23074,
+                    "avgTotalPrice": 2144286,
+                    "avgArea": 89
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16629,
+                    "totalPrice": 1480000,
+                    "area": 89,
+                    "houseNum": "23.0",
+                    "streetName": "יותם",
+                    "blocksAway": 12,
+                    "dealDate": "2020-07-17T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 25396,
+                    "avgTotalPrice": 3251333,
+                    "avgArea": 129
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 24652,
+                    "avgTotalPrice": 3320000,
+                    "avgArea": 135
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 22405,
+                    "totalPrice": 2755850,
+                    "area": 123,
+                    "houseNum": "41.0",
+                    "streetName": "יותם",
+                    "blocksAway": 6,
+                    "dealDate": "2021-01-11T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "דיזרעאלי",
+          "totalDeals": 117,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 22439,
+                    "avgTotalPrice": 1796000,
+                    "avgArea": 81
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 26282,
+                    "totalPrice": 2050000,
+                    "area": 78,
+                    "houseNum": "12.0",
+                    "streetName": "דיזרעאלי",
+                    "blocksAway": 1,
+                    "dealDate": "2023-02-12T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 20737,
+                    "avgTotalPrice": 1708333,
+                    "avgArea": 81
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 29608,
+                    "avgTotalPrice": 2883333,
+                    "avgArea": 98
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 18396,
+                    "totalPrice": 1950000,
+                    "area": 106,
+                    "houseNum": "61.0",
+                    "streetName": "דיזרעאלי",
+                    "blocksAway": 50,
+                    "dealDate": "2022-02-22T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 20484,
+                    "avgTotalPrice": 2091667,
+                    "avgArea": 102
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 15,
+                    "threshold": 15,
+                    "avgPricePerSqm": 29358,
+                    "avgTotalPrice": 3570769,
+                    "avgArea": 126
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 28413,
+                    "avgTotalPrice": 3437143,
+                    "avgArea": 121
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25167,
+                    "totalPrice": 3020000,
+                    "area": 120,
+                    "houseNum": "33.0",
+                    "streetName": "דיזרעאלי",
+                    "blocksAway": 22,
+                    "dealDate": "2021-01-07T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "רמת התשבי",
+      "totalDeals": 239,
+      "dealsPerYearAvg": 60,
+      "streets": [
+        {
+          "streetName": "עובדיה",
+          "totalDeals": 53,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 18912,
+                    "avgTotalPrice": 1548750,
+                    "avgArea": 83
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25926,
+                    "totalPrice": 2100000,
+                    "area": 81,
+                    "houseNum": "37.0",
+                    "streetName": "עובדיה",
+                    "blocksAway": 0,
+                    "dealDate": "2023-01-25T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 22411,
+                    "avgTotalPrice": 2329167,
+                    "avgArea": 104
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16477,
+                    "totalPrice": 1450000,
+                    "area": 88,
+                    "houseNum": "29.0",
+                    "streetName": "עובדיה",
+                    "blocksAway": 8,
+                    "dealDate": "2023-08-16T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 24163,
+                    "avgTotalPrice": 3220833,
+                    "avgArea": 131
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 22712,
+                    "totalPrice": 2680000,
+                    "area": 118,
+                    "houseNum": "17.0",
+                    "streetName": "עובדיה",
+                    "blocksAway": 20,
+                    "dealDate": "2023-02-15T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "התשבי",
+          "totalDeals": 51,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 25316,
+                    "avgTotalPrice": 1908333,
+                    "avgArea": 75
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 17771,
+                    "totalPrice": 1475000,
+                    "area": 83,
+                    "houseNum": "12.0",
+                    "streetName": "התשבי",
+                    "blocksAway": 8,
+                    "dealDate": "2023-10-15T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 23210,
+                    "avgTotalPrice": 2336250,
+                    "avgArea": 101
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 21429,
+                    "totalPrice": 1950000,
+                    "area": 91,
+                    "houseNum": "102.0",
+                    "streetName": "התשבי",
+                    "blocksAway": 98,
+                    "dealDate": "2023-10-03T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 27455,
+                    "totalPrice": 3075000,
+                    "area": 112,
+                    "houseNum": "4.0",
+                    "streetName": "התשבי",
+                    "blocksAway": 0,
+                    "dealDate": "2024-10-13T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 26452,
+                    "totalPrice": 3280000,
+                    "area": 124,
+                    "houseNum": "4.0",
+                    "streetName": "התשבי",
+                    "blocksAway": 0,
+                    "dealDate": "2023-09-26T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 1676,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

@@ -1,0 +1,567 @@
+{
+  "cityName": "שוהם",
+  "lastUpdated": "2026-06-22T08:12:40.847Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "יובלים",
+      "totalDeals": 90,
+      "dealsPerYearAvg": 13,
+      "streets": [
+        {
+          "streetName": "הזוהר",
+          "totalDeals": 33,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 33013,
+                    "totalPrice": 2575000,
+                    "area": 78,
+                    "houseNum": "16.0",
+                    "streetName": "הזוהר",
+                    "blocksAway": 8,
+                    "dealDate": "2024-09-24T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25309,
+                    "totalPrice": 2050000,
+                    "area": 81,
+                    "houseNum": "8.0",
+                    "streetName": "הזוהר",
+                    "blocksAway": 0,
+                    "dealDate": "2022-04-14T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25000,
+                    "totalPrice": 2050000,
+                    "area": 82,
+                    "houseNum": "8.0",
+                    "streetName": "הזוהר",
+                    "blocksAway": 0,
+                    "dealDate": "2021-12-21T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25000,
+                    "totalPrice": 2850000,
+                    "area": 114,
+                    "houseNum": "21.0",
+                    "streetName": "הזוהר",
+                    "blocksAway": 13,
+                    "dealDate": "2025-04-24T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 23836,
+                    "avgTotalPrice": 2607500,
+                    "avgArea": 110
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 22468,
+                    "avgTotalPrice": 2517500,
+                    "avgArea": 112
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 31846,
+                    "totalPrice": 4140000,
+                    "area": 130,
+                    "houseNum": "8.0",
+                    "streetName": "הזוהר",
+                    "blocksAway": 0,
+                    "dealDate": "2025-04-09T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 18182,
+                    "totalPrice": 2400000,
+                    "area": 132,
+                    "houseNum": "8.0",
+                    "streetName": "הזוהר",
+                    "blocksAway": 0,
+                    "dealDate": "2022-02-03T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 19656,
+                    "totalPrice": 2575000,
+                    "area": 131,
+                    "houseNum": "6.0",
+                    "streetName": "הזוהר",
+                    "blocksAway": 2,
+                    "dealDate": "2020-09-01T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "הסלע",
+          "totalDeals": 23,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 31563,
+                    "totalPrice": 2525000,
+                    "area": 80,
+                    "houseNum": "7.0",
+                    "streetName": "הסלע",
+                    "blocksAway": 0,
+                    "dealDate": "2025-06-25T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25148,
+                    "totalPrice": 2213000,
+                    "area": 88,
+                    "houseNum": "7.0",
+                    "streetName": "הסלע",
+                    "blocksAway": 0,
+                    "dealDate": "2021-09-01T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 22543,
+                    "avgTotalPrice": 1785000,
+                    "avgArea": 80
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 29000,
+                    "totalPrice": 2900000,
+                    "area": 100,
+                    "houseNum": "7.0",
+                    "streetName": "הסלע",
+                    "blocksAway": 0,
+                    "dealDate": "2025-11-04T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 23717,
+                    "avgTotalPrice": 2561667,
+                    "avgArea": 107
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 20667,
+                    "avgTotalPrice": 2237167,
+                    "avgArea": 109
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 21600,
+                    "totalPrice": 2700000,
+                    "area": 125,
+                    "houseNum": "7.0",
+                    "streetName": "הסלע",
+                    "blocksAway": 0,
+                    "dealDate": "2021-07-27T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 21600,
+                    "totalPrice": 2700000,
+                    "area": 125,
+                    "houseNum": "7.0",
+                    "streetName": "הסלע",
+                    "blocksAway": 0,
+                    "dealDate": "2021-07-27T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "ורדים",
+      "totalDeals": 26,
+      "dealsPerYearAvg": 4,
+      "streets": [
+        {
+          "streetName": "המכבים",
+          "totalDeals": 17,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 31425,
+                    "avgTotalPrice": 2310000,
+                    "avgArea": 74
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 23333,
+                    "totalPrice": 1750000,
+                    "area": 75,
+                    "houseNum": "77.0",
+                    "streetName": "המכבים",
+                    "blocksAway": 0,
+                    "dealDate": "2021-05-19T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 23333,
+                    "totalPrice": 1750000,
+                    "area": 75,
+                    "houseNum": "77.0",
+                    "streetName": "המכבים",
+                    "blocksAway": 0,
+                    "dealDate": "2021-05-19T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 21963,
+                    "totalPrice": 2350000,
+                    "area": 107,
+                    "houseNum": "77.0",
+                    "streetName": "המכבים",
+                    "blocksAway": 0,
+                    "dealDate": "2024-12-23T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25338,
+                    "totalPrice": 3750000,
+                    "area": 148,
+                    "houseNum": "63.0",
+                    "streetName": "המכבים",
+                    "blocksAway": 14,
+                    "dealDate": "2022-02-28T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 14897,
+                    "totalPrice": 2175000,
+                    "area": 146,
+                    "houseNum": "77.0",
+                    "streetName": "המכבים",
+                    "blocksAway": 0,
+                    "dealDate": "2020-02-23T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "עמק איילון",
+          "totalDeals": 8,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 31594,
+                    "totalPrice": 2180000,
+                    "area": 69,
+                    "houseNum": "22.0",
+                    "streetName": "עמק איילון",
+                    "blocksAway": 0,
+                    "dealDate": "2024-11-18T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 29630,
+                    "totalPrice": 2400000,
+                    "area": 81,
+                    "houseNum": "18.0",
+                    "streetName": "עמק איילון",
+                    "blocksAway": 4,
+                    "dealDate": "2022-11-09T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 27143,
+                    "totalPrice": 1900000,
+                    "area": 70,
+                    "houseNum": "14.0",
+                    "streetName": "עמק איילון",
+                    "blocksAway": 8,
+                    "dealDate": "2020-10-28T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 97,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 27000,
+                    "totalPrice": 2700000,
+                    "area": 100,
+                    "houseNum": "16.0",
+                    "streetName": "עמק איילון",
+                    "blocksAway": 6,
+                    "dealDate": "2022-06-28T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 168,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 20861,
+                    "totalPrice": 3150000,
+                    "area": 151,
+                    "houseNum": "18.0",
+                    "streetName": "עמק איילון",
+                    "blocksAway": 4,
+                    "dealDate": "2024-04-09T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 116,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

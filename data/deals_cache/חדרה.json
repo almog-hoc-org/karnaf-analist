@@ -1,0 +1,248 @@
+{
+  "cityName": "חדרה",
+  "lastUpdated": "2026-06-22T08:05:04.009Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "בית אליעזר",
+      "totalDeals": 789,
+      "dealsPerYearAvg": 113,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 101,
+          "sizeBuckets": [
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16628,
+                    "avgTotalPrice": 1795000,
+                    "avgArea": 108
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 18043,
+                    "avgTotalPrice": 1847500,
+                    "avgArea": 103
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 17238,
+                    "avgTotalPrice": 2316667,
+                    "avgArea": 134
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 15303,
+                    "avgTotalPrice": 1961667,
+                    "avgArea": 130
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "השקמה",
+          "totalDeals": 54,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 17065,
+                    "totalPrice": 1570000,
+                    "area": 92,
+                    "houseNum": "36.0",
+                    "streetName": "השקמה",
+                    "blocksAway": 0,
+                    "dealDate": "2024-05-02T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15603,
+                    "totalPrice": 1217000,
+                    "area": 78,
+                    "houseNum": "36.0",
+                    "streetName": "השקמה",
+                    "blocksAway": 0,
+                    "dealDate": "2021-07-05T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 16235,
+                    "avgTotalPrice": 1190000,
+                    "avgArea": 76
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15273,
+                    "totalPrice": 1680000,
+                    "area": 110,
+                    "houseNum": "36.0",
+                    "streetName": "השקמה",
+                    "blocksAway": 0,
+                    "dealDate": "2024-08-24T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 18010,
+                    "totalPrice": 1855000,
+                    "area": 103,
+                    "houseNum": "67.0",
+                    "streetName": "השקמה",
+                    "blocksAway": 31,
+                    "dealDate": "2022-05-31T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 10100,
+                    "totalPrice": 1010000,
+                    "area": 100,
+                    "houseNum": "61.0",
+                    "streetName": "השקמה",
+                    "blocksAway": 25,
+                    "dealDate": "2020-02-19T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12411,
+                    "avgTotalPrice": 1532500,
+                    "avgArea": 124
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11958,
+                    "avgTotalPrice": 1667500,
+                    "avgArea": 140
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 12064,
+                    "avgTotalPrice": 1490000,
+                    "avgArea": 124
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 789,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "מעורב"
+}

@@ -1,0 +1,9641 @@
+{
+  "ירושלים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1905100
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1958200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1843600
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1830500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1851700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1940400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2011200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2000900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2123100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2304900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2238300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2358400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2392400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2438500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2334300
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2488400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2544100
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2439100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2501800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2592400
+    }
+  ],
+  "תל אביב-יפו": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2626700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2669400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2615400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2711300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2943700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2990500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 3102700
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 3204500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3272500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 3518500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3411100
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3424200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3114100
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 3399300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3160700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 3302000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3678400
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3434800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3421200
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3405500
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3426200
+    }
+  ],
+  "חיפה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 985000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 955500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1000300
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1023800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1022500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1034800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1063800
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1072400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1097300
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1129100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1118000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1161700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1217400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1260100
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1223500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1232800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1295200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1305000
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1347700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1332000
+    }
+  ],
+  "פתח תקווה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1633300
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1543500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1567700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1579500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1676300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1689700
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1759000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1792800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1912100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2023900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2047900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2195600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2284000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2425000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2335400
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2383200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2497600
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2443600
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2382200
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2488600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2448200
+    }
+  ],
+  "ראשון לציון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1656400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1575600
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1619800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1681300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1827100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1801800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1838900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1899700
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1911700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2045100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1998700
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2016800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1872300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1963600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1999900
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2047500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2043600
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1991200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1945600
+    }
+  ],
+  "אשדוד": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1472100
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1489600
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1549800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1496900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1616200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1609000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1649600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1684800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1675300
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1675500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1775900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1721900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1810800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1755900
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1659800
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1722400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1778200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1981500
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1842900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1806400
+    }
+  ],
+  "באר שבע": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 932000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 934500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 923800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 993100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 913500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 938900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 959500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 937600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 917900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 936600
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 929200
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 931600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 949800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1011600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 946900
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1027500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1138500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1071000
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1111400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1055300
+    }
+  ],
+  "חולון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1572900
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1651500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1536200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1595200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1641800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1687000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1692400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1666200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1749100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1801600
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1900200
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1893200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1869300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1831100
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1997800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2033700
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2144500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2073200
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2145300
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2069900
+    }
+  ],
+  "נתניה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1514700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1578400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1571200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1515500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1676500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1731300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1865300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1935000
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2012000
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2013900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1953900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2279300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2332600
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2273800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2304700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2330200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2532000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2592300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2440400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2552300
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2454400
+    }
+  ],
+  "בני ברק": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1617200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1644000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1614800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1618300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1394900
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1501000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1625200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1782500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1887200
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1946400
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2136700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1853500
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2018200
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2098000
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2112300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2297500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1992400
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2242000
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2272800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2185000
+    }
+  ],
+  "בית שמש": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1504000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1460100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1503700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1460600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1451100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1480900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1577000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1544100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1753500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1782700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1910800
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1959700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2056800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2073400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2204700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1979500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2174600
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2110000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2168900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2125700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2137000
+    }
+  ],
+  "רמת גן": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2055900
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2023800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2025500
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2295800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2181100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2161400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2291400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2351500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2455500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2466500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2429500
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2356300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2461300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2423500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2580500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2696400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2721900
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2715200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2696300
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2763100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2822700
+    }
+  ],
+  "אשקלון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1165700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1225100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1105300
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1200200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1250500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1137600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1234900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1293100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1244400
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1371500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1398300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1196200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1134800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1295000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1171500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1195800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1433200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1545500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1508600
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1412100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1461400
+    }
+  ],
+  "רחובות": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1728300
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1747900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1766900
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1793600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1831200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1883600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1954400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1943500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2067500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2178800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2189800
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2169900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2117900
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2105400
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2272500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2409800
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2394300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2399900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2447900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2349500
+    }
+  ],
+  "בת ים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1379000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1390300
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1343700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1538100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1448500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1460700
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1594000
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1602300
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1676100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1731200
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1751300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1824400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1751900
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1787100
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1767900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1845000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1956100
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2048600
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1981700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1908400
+    }
+  ],
+  "הרצליה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2429000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2284100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2311600
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2503600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2504200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2644400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2609300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2769400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2938800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3027000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2936900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2800300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2937000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2922000
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2899700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2837600
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3120000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3007900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3065800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2622100
+    }
+  ],
+  "חדרה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1260000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1279100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1309800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1371300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1377300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1389900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1478600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1525900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1634900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1536200
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1540300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1616100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1595200
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1466200
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1520300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1740100
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1847600
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1765700
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1989200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1876900
+    }
+  ],
+  "מודיעין-מכבים-רעות": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2217400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1973100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2214400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2260000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2304500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2370500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2273900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2582300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2795600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2958100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3129900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3081400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2937000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2889600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2755500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2780600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3074500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3089600
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3115300
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3077200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3122900
+    }
+  ],
+  "כפר סבא": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2116300
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2073000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1979100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2178800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2169000
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2161400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2169800
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2452600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2476400
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2611300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2440400
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2390100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2401600
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2286300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2481900
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2486100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2572900
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2582800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2693500
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2288700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2611200
+    }
+  ],
+  "לוד": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1092300
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1195000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1072100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1065400
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1078400
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1077800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1130500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1108700
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1160600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1217200
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1142300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1193800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1384200
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1365500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1430900
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1489000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1495200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1605200
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1571000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1708000
+    }
+  ],
+  "רמלה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1212500
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1208500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1276800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1408400
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1264800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1324000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1323900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1404300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1297200
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1313800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1349000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1282300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1309200
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1246900
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1352300
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1333200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1423900
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1460500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1451300
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1513600
+    }
+  ],
+  "מודיעין עילית": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1366500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1381700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1377100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1396500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1461100
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1476700
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1551300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1694200
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1887300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1840800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1907000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1906000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1776800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1770600
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1958200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1971900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1940400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1982800
+    }
+  ],
+  "רעננה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2367600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2380000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2208100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2313700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2525500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2564800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2530900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2691000
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3024400
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 3153400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3142200
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3203100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3263400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 3327300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3164600
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 3218600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3515700
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3586900
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3562900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3600500
+    }
+  ],
+  "ראש העין": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1886200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1882200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1767100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1644500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1636800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1685500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1812600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1736700
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2125500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2229700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2059800
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1515000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2542700
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2225000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1820200
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2278200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2329200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2387700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1783700
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2474700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2403200
+    }
+  ],
+  "נצרת": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 668600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 729100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 703800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 691300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 733400
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 712900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 723600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 663600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 748800
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 770400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 771000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 803900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 745300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 782000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 850100
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 862500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 970400
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1045600
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1066400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1044900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1012700
+    }
+  ],
+  "קריית גת": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 893200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 940200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 861100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 962600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 884000
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 929300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 915800
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 948100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1018100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1073000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1343000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 999400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1113600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1096400
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1067900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1223500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1290300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1305100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1497900
+    }
+  ],
+  "נהרייה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1004200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1116400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 942700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1046700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1051600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1075800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1101200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1115600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1301700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1268600
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1431600
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1412800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1421700
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1411400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1457200
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1488200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1557400
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1589200
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1633200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1563400
+    }
+  ],
+  "הוד השרון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2302400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2252100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2230700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2340500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2380800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2380900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2426900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2687300
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2809800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2936800
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2963300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2855300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2808700
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2897500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 3078600
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2836800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2962300
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2899900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2933600
+    }
+  ],
+  "עפולה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 718500
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 785900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 835000
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 823000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 889100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 857500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 916400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 867200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 996400
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 989600
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1072900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1120700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1046500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1002900
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1091600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1098900
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1210900
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1225700
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1253900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1190500
+    }
+  ],
+  "ביתר עילית": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1619400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1621300
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1652500
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1626100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1728400
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1696500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1750900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1832500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2111700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2232900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2399000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2646800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2545700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2624400
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2476300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2925400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2697000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2827600
+    }
+  ],
+  "קריית אתא": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1045700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1156300
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1039900
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1064800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1259200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1153900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1117400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1085900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1240900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1138200
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1197200
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1343600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1010500
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1091300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 998700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1179700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1344300
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1409800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1541300
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1413500
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1278600
+    }
+  ],
+  "אום אל-פחם": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 274800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 332400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 310500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 417300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 356000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 349800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 309700
+    }
+  ],
+  "גבעתיים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2592900
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2412000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2509600
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2323800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2602100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2706600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2591000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2571800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2848100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2945500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2743800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2817900
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 3166100
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2756000
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 3175300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3096000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3637800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3435400
+    }
+  ],
+  "יבנה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1812600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1790000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1776800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1800100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1910500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1950700
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1967300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2094900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1990700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1948700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1891400
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2025700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2221700
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2089500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1977000
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1972800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2152900
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2250400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2128600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2226800
+    }
+  ],
+  "נתיבות": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 959200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 958800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 874400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 918000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 977700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 890000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 848900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 850300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1061700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1173800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1170700
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1115000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1291600
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1292600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1200100
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1229100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1118500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1196700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1212300
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1253400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1312300
+    }
+  ],
+  "אילת": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1092700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1133500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1083200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1135300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1212600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1173300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1229500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1295500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1280600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1429700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1289700
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1419200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1284400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1269500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1453700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1451800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1583500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1591700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1432900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1462400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1432100
+    }
+  ],
+  "עכו": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 883700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 894400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 940700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 989600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 980900
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1004000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1121300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1060300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1074200
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1002300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 891400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 839000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 828700
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 888100
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 822500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 916000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 913000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 993100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1023000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1089400
+    }
+  ],
+  "טבריה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 734700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 804400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 705700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 759000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 751600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 754800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 814000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 788200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 855600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 886700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 988700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 926600
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 916300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1040800
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 958600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1062700
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1157500
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1156500
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1159700
+    }
+  ],
+  "קריית מוצקין": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1088700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1038800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1125800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1056800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1056300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1056100
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 992100
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 996400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1048400
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1173100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1210500
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1169700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1062400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1273600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1246700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1203100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1356900
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1286300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1314700
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1339600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1520900
+    }
+  ],
+  "אלעד": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1453600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1505800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1528400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1606100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1719600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1694100
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1671300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1707300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1926800
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1915500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1986000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1995600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1771500
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1522400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2294200
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2263000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1925200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1867100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2164900
+    }
+  ],
+  "רמת השרון": [
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2731300
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2799300
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2889700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 3011200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2938800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 3131300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 3779400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3820700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 3857600
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 4088900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3574600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3570700
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 3437600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3338800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3863000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 4118000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3530400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3859200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3903100
+    }
+  ],
+  "כרמיאל": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 909400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1062300
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 912300
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 998000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1077700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1000300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1024000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1011300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 995900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 986900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1075700
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1157100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1103100
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1064800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1210100
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1172000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1153600
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1421800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1443800
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1305100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1367400
+    }
+  ],
+  "נס ציונה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2167800
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2053000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2345800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2012800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2516700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2144600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2214200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2149300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1973400
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2372500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2756600
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2581800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2277500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2091800
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2501300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2299200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2731500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2590100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2173100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2656100
+    }
+  ],
+  "קריית ביאליק": [
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 930400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 941900
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1029200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 945000
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 987400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1001300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1025200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1073500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1069800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1027800
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1045700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1165900
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1070300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1161700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1222800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1203500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1224800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1263500
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1246800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1229700
+    }
+  ],
+  "פרדס חנה-כרכור": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1581200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1520200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1667200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1590900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1629600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1562600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1747400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1654200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1870000
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2099500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2219300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2161400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2216000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2381800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2289300
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1970600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2322000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2245300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2335100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2222800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2454700
+    }
+  ],
+  "נוף הגליל": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 668600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 729100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 703800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 691300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 733400
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 712900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 723600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 663600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 748800
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 770400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 771000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 803900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 745300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 782000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 850100
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 862500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 970400
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1045600
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1066400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1044900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1012700
+    }
+  ],
+  "קריית אונו": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2370600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2401900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2496200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2469000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2472300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2435000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2571400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2600700
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2916600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2937400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3068600
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3171300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3264100
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 3102600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2928700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 3188800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3165000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3137300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3336500
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3223000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3287100
+    }
+  ],
+  "שפרעם": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 502300
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 462000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 513700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 496200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 453100
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 458200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 442500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 444100
+    }
+  ],
+  "קריית ים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 975000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1001200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 952400
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 949000
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 914600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1063000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1013800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1008500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 953600
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1044400
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1128400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1017400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1096300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1041500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1137500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1170800
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1164500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1192900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1211900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1281200
+    }
+  ],
+  "חריש": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1122900
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1132000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1107200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1107500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1105600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1124700
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1200800
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1215000
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1338900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1464800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1584300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1604300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1638100
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1663000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1604200
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1501300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1498500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1552900
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1566100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1510700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1495100
+    }
+  ],
+  "אור יהודה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1379100
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1540800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1588800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1702300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1734100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1796200
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1829400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1891300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1926800
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1984300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2141200
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2257600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2126900
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2233500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2479600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2467300
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2475800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2584100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2361100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2501700
+    }
+  ],
+  "אופקים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 893900
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 828400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 886500
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 905500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 862300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 840900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 884900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 924100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 890000
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 865700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 953100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 966600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1082600
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 963100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1087700
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1098200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1186600
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1272900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1229600
+    }
+  ],
+  "דימונה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 423800
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 404500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 418700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 409800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 369900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 406700
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 395100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 418500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 450400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 467700
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 482000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 525100
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 516300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 513700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 519300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 530200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 548500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 590800
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 564600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 581200
+    }
+  ],
+  "צפת": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 757700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 785400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 827500
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 773000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 772700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 732900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 756800
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 760900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1033900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1221800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1104500
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1178000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1304300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1232700
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1144400
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1375500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1234800
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1216700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1215600
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1167300
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1302400
+    }
+  ],
+  "באר יעקב": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2110000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2064700
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2184100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2176900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2173300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2251300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2183300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1907500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1896100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2772100
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2914300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2676700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2782500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2869900
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2650900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2764100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2830600
+    }
+  ],
+  "שדרות": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 721400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 765600
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 714700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 768100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 789300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 786500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 733900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 801300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 890800
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 811800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 910300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 828400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 804200
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 907800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 918200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1009200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1016100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1021400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1070300
+    }
+  ],
+  "מעלה אדומים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1637100
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1474800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1614300
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1632300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1738300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1643900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1881000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1791300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1849700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1821200
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2006300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1932400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2002800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1954300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1849500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1937100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1803200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1850500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1885700
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1889900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1993000
+    }
+  ],
+  "טירת כרמל": [
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 885400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 875200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 876200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1032400
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 986600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1034200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 903000
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1044200
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 955300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1270400
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1459700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1179800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1204200
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1305900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1525700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1619800
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1564400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1385200
+    }
+  ],
+  "יהוד-מונוסון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2169200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2200900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1946600
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2041400
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1930100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2122700
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1950600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2211100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2231100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2460800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2329100
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2398800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2496400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2566900
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2126700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2345500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2294500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2321200
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2791400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2666200
+    }
+  ],
+  "גדרה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2044700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1952700
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1975600
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1862800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2157400
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2272100
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2122900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2400200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2322300
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2701300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2875400
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2788000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2485700
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2814500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2854400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3014500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3076300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2985900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3301600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3018300
+    }
+  ],
+  "באקה אל-גרביה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 314600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 349000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 397500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 410800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 499400
+    }
+  ],
+  "כפר יונה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1919400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1799000
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1800000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1925900
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2087500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2249700
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2279600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2311900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2113700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2034500
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2442400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2014800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2174300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2665400
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2596100
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2482600
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2504700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2324400
+    }
+  ],
+  "ערד": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 593100
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 657000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 549700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 578900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 659800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 720300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 634900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 738500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 721500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 736500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 800400
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 777600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 711300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 722500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 680300
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 679200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 728500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 679300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 801000
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 854000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 860500
+    }
+  ],
+  "גבעת שמואל": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2266900
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2348700
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2170000
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2148500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2492300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2547900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2544000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2700100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2721700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 3025100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3172500
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3091100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3479100
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 3620300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3520300
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 3564700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3291700
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3353000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3260700
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3188900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3074800
+    }
+  ],
+  "מגדל העמק": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 627300
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 774300
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 753200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 769800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 749700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 684700
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 653700
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 687300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 733500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 693300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 739100
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 706300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 668000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 652300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 791000
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 935700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 873200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 892100
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 956400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 833800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 951300
+    }
+  ],
+  "קריית מלאכי": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 890300
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 973100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 989700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1001500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1022900
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1033600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 993700
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1168600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1052700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1100300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1193100
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1120100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1103500
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1265500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1099800
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1093700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1167300
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1248000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1151400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1304000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1156400
+    }
+  ],
+  "טירה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 586700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 535400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 538200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 608000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 736100
+    }
+  ],
+  "עראבה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 253100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 297500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 375000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 403300
+    }
+  ],
+  "מבשרת ציון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2737200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2730200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2724500
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2806100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2695800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2238400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2837300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2819100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2465600
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2073000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1777600
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2714400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2482100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2875200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2436700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2610200
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3016100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3143100
+    }
+  ],
+  "אור עקיבא": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1321200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1269700
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1373800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1262200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1147200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1258400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1322200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1409400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1455700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1254800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1325000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1367800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1264400
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1308400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1214400
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1262200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1515200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1653500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1494500
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1626500
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1773000
+    }
+  ],
+  "גני תקווה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2575400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2514400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2602500
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2606900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2812700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2716600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2807400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2713500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2806500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2947800
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3008900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3373900
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2886800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2570200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3317400
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3538900
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3017400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3228100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3826200
+    }
+  ],
+  "גן יבנה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2441000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2448300
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2728900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2443200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2692500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2867400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 3118300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3145800
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 3110500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3138800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3446800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3109100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3243700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3369200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3644000
+    }
+  ],
+  "יקנעם עילית": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1391200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1262200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1269300
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1380700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1288600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1287000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1371500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1355400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1311800
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1414900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1580800
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1551100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1508700
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1655100
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1438700
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1830800
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1783100
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1781100
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1817000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2064400
+    }
+  ],
+  "קריית שמונה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 511000
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 472500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 506700
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 504100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 490400
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 521200
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 526200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 540100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 621000
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 550900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 682300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 658200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 635300
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 673900
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 694400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 638200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 601200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 711700
+    }
+  ],
+  "זכרון יעקב": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2053900
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1881100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1950500
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2020700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2059200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2137400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2047400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2039500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2270500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2391400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2205100
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2409800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2538200
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2468300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2773300
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2447000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2969100
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2788700
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2469200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2614600
+    }
+  ],
+  "שוהם": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2856200
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2644200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2893800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2733000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2685000
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2700100
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2914500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2952700
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3235500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3374300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3595300
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3817900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3815500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3877000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3584700
+    }
+  ],
+  "מגאר": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 286300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 216900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 203800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 209600
+    }
+  ],
+  "מעלות-תרשיחא": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 752600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1005200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 804100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 788500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 836300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 795500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 854900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 936800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1027100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1009700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1167000
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1153900
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1141600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1118800
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 867800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1069800
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1061800
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1066100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1298600
+    }
+  ],
+  "נשר": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 969700
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 974200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 887100
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 865100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 997600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1058500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 942100
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 882600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1055300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1018000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1019000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 1220800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1207800
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1234500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1273300
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1202200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1241900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1210300
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1323500
+    }
+  ],
+  "קדימה-צורן": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1944800
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2097900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2085600
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2330000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2509700
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2313900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2410900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2696900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3216000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2855500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3018500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3012200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2896900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3240000
+    }
+  ],
+  "גבעת זאב": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1882400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1890600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1840600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2124900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2329800
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2201200
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2575900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2547200
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2490600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2765100
+    }
+  ],
+  "אריאל": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1299200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1407300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1453000
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1386800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1483300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1429600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1399500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1657500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1597800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1667200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1707700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1799000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1579200
+    }
+  ],
+  "ריינה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 662500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 783600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 748500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 777900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 634500
+    }
+  ],
+  "בית שאן": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 642100
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 662900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 696400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 668500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 600500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 717900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 488200
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 462900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 483200
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 488300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 508500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 581800
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 600100
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 543600
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 639900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 802200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 710500
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 885500
+    }
+  ],
+  "קריית טבעון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1839600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1537700
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1616200
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1664800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1735200
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1909400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1474400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1832100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2014500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2724000
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2349300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1993200
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2043900
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2471800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2068300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2374800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2200300
+    }
+  ],
+  "יפיע": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 586600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 444900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 506300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 418600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 587000
+    }
+  ],
+  "דאלית אל-כרמל": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 241000
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 262800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 332500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 339100
+    }
+  ],
+  "ירכא": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 342900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 323700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 313400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 340000
+    }
+  ],
+  "מזכרת בתיה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2524600
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 2290600
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2885800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2855300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2805800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2730800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2524000
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 3043500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2703000
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 3289900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2968400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3149600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3211200
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3153100
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3350900
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3845900
+    }
+  ],
+  "בנימינה-גבעת עדה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2444800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2003600
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2204000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2365100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2443300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2369200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2648300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2058100
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2558900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2466200
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1961400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1963600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2121400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2130400
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2870000
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2098700
+    }
+  ],
+  "מעלה עירון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 204300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 205100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 360200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 372000
+    }
+  ],
+  "מג'ד אל-כרום": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 156600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 263500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 269300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 278000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 233800
+    }
+  ],
+  "אבן יהודה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 3058200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2621900
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 3078700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 3196100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 3506500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2660300
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2779900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3512900
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 3009900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3314900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 4086000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3699500
+    }
+  ],
+  "רכסים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1181000
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1027900
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1055700
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1133500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1111400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1459700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1379400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1584600
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 1423500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1589800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1563000
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 1781300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1723900
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 1716700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1651400
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 1609600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1521700
+    }
+  ],
+  "טורעאן": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 255200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 290400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 342900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 354400
+    }
+  ],
+  "תל מונד": [
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 3035500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2829400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2885300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2867100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2431600
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2845500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 3369100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3784900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3888100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 4324800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 3326600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3724800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3390300
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 4536400
+    }
+  ],
+  "אבו סנאן": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 440500
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 325500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 459400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 535100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 396800
+    }
+  ],
+  "אעבלין": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 320000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 349000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 323900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 387300
+    }
+  ],
+  "אזור": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1535200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1784100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1512800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1769000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1718600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1450600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1626700
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1851900
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2128300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1883000
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1804100
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 2281700
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2396500
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 2375500
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2322800
+    }
+  ],
+  "ג'ת": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 385800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 295400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 312600
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 504600
+    }
+  ],
+  "בית ג'ן": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 140000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 134300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 144200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 161200
+    }
+  ],
+  "אפרת": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1661300
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1476900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1625300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2220400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2737700
+    }
+  ],
+  "ירוחם": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 577800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 540600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 400100
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 374400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 549500
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 555700
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 556600
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 548400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 468100
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 519000
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 627800
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 660900
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 635900
+    }
+  ],
+  "עתלית": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1752800
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1677900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1945600
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2029500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1949400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1764600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2346400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1950400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2266100
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2201400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2891300
+    }
+  ],
+  "מיתר": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1860100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2000700
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2151000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2308000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2758200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2494200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2580200
+    }
+  ],
+  "קריית עקרון": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1596400
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1752400
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1263400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1438700
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1378300
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 1665900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1836000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 1905600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 1922500
+    }
+  ],
+  "חצור הגלילית": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 660100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 649200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 656900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 705400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 691600
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 687000
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 549100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 648500
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 703600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 769500
+    }
+  ],
+  "דבורייה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 275800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 347100
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 222000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 250500
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 314200
+    }
+  ],
+  "כפר יאסיף": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 834500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 784200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 854000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 829500
+    }
+  ],
+  "צור הדסה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1761100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2207600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2006800
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2230400
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2779800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2564000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2596100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2598700
+    }
+  ],
+  "אורנית": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2237000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2534900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 3390800
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 3454700
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2417000
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2638100
+    }
+  ],
+  "כוכב יאיר": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2785500
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2917000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 3398100
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 3032400
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 3457700
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 4318900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 4026800
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3551900
+    }
+  ],
+  "שלומי": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 688200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 709000
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 784800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 836300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1098300
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1222900
+    }
+  ],
+  "עומר": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2175900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1963900
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2422800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2473700
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2516600
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2114800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2149500
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2325900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2618400
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2304200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2649000
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2764100
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3161400
+    }
+  ],
+  "אלפי מנשה": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1961000
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2310000
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2566900
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2664300
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2931700
+    }
+  ],
+  "להבים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2089200
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2339900
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2471900
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2892000
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3021200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2974600
+    }
+  ],
+  "קצרין": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 761900
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 815400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 731300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 767300
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 731200
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 753300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 843400
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 940600
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 749500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 1025700
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 1110400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 1142300
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 967200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 927100
+    }
+  ],
+  "רמת ישי": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1720700
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1781600
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1838800
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1853200
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1706900
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2179200
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2266400
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2528500
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2556700
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2709300
+    }
+  ],
+  "קריית יערים": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1834800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1799500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2304100
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2184200
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2472500
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2730500
+    }
+  ],
+  "צור יצחק": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 1573200
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 1771800
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 1636800
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 1548300
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 1657400
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 1623500
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 1687500
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 1856600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 1962100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 2061300
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 2037300
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2216800
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2183800
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 2165100
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 2193400
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 2112800
+    }
+  ],
+  "בית דגן": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2496100
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2526800
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2881500
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2786600
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3084400
+    }
+  ],
+  "מכבים רעות": [
+    {
+      "year": 2020,
+      "quarter": 1,
+      "price": 2217400
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "price": 1973100
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "price": 2214400
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "price": 2260000
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "price": 2304500
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "price": 2370500
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "price": 2273900
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "price": 2582300
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "price": 2795600
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "price": 2958100
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "price": 3129900
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "price": 3081400
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "price": 2937000
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "price": 2889600
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "price": 2755500
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "price": 2780600
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "price": 3074500
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "price": 3089600
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "price": 3115300
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "price": 3077200
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "price": 3122900
+    }
+  ]
+}

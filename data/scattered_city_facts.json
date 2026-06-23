@@ -1,0 +1,2623 @@
+{
+  "fetchedAt": "2026-05-17",
+  "notes": "כל העובדות מבוססות על מקורות רשמיים: למ\"ס (הלשכה המרכזית לסטטיסטיקה) ומשרד האוצר/הכלכלן הראשי. מספרים מאומתים מתוך קבצי PDF מקוריים. אזורי מיסוי מקרקעין אצל משרד האוצר אינם בהכרח חופפים לעיריות ספציפיות — הם מקבצים אזוריים. עובדות שמתייחסות ל'אזור' (למשל 'אזור ב\"ש' או 'אזור ת\"א') מסומנות בנפרד.",
+  "sources_consulted": [
+    {
+      "name": "למ\"ס — התחלות וגמר בנייה, סיכום שנת 2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "date": "2026-03-19",
+      "doc_id": "089/2026"
+    },
+    {
+      "name": "למ\"ס — התחלות וגמר בנייה, סיכום שנת 2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/091/04_25_091b.pdf",
+      "date": "2025-03-20",
+      "doc_id": "091/2025"
+    },
+    {
+      "name": "למ\"ס — התחלות וגמר בנייה, אפריל 2024 - מרץ 2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/190/04_25_190b.pdf",
+      "date": "2025-06-22",
+      "doc_id": "190/2025"
+    },
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות (מדד מחירי דירות, פברואר 2026)",
+      "url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "date": "2026-02-15",
+      "doc_id": "052/2026"
+    },
+    {
+      "name": "למ\"ס — לוח 2.2 מחירים ממוצעים של דירות לפי ערים גדולות (אנגלית), עד רבעון 1/2025",
+      "url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "date": "2025-04",
+      "doc_id": "Price Statistics Monthly No. 4/2025"
+    },
+    {
+      "name": "משרד האוצר, הכלכלן הראשי — סקירת ענף הנדל\"ן למגורים, ינואר 2026",
+      "url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "date": "2026-03-01"
+    },
+    {
+      "name": "משרד האוצר, הכלכלן הראשי — סקירת ענף הנדל\"ן למגורים, דצמבר 2025",
+      "url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-122025/he/reviews-and-publishes_review-real-estate-122025.pdf",
+      "date": "2026-02-12"
+    },
+    {
+      "name": "משרד האוצר, הכלכלן הראשי — סקירת ענף הנדל\"ן למגורים, נובמבר 2025",
+      "url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-112025/he/reviews-and-publishes_review-real-estate-112025.pdf",
+      "date": "2026-01"
+    },
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות, מרץ 2024",
+      "publication_number": "120/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/120/10_24_120b.pdf",
+      "date": "2024-05-15"
+    },
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות, ינואר 2024 (לוח 2.3 מחוזות)",
+      "publication_number": "018/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/madad/doclib/2024/018/10_24_018t2.pdf",
+      "date": "2024-03-15"
+    },
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות, פברואר 2021",
+      "publication_number": "087/2021",
+      "url": "https://www.cbs.gov.il/he/mediarelease/madad/Pages/2021/שינוי-במחירי-שוק-הדירות-פברואר-2021.aspx",
+      "date": "2021-04-15"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, סיכום שנת 2024",
+      "publication_number": "047/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/047/04_25_047b.pdf",
+      "date": "2025-02-19"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, סיכום שנת 2023",
+      "publication_number": "047/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2024/047/04_24_047b.pdf",
+      "date": "2024-02-19"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, סיכום שנת 2025",
+      "publication_number": "047/2026",
+      "url": "https://www.cbs.gov.il/he/mediarelease/pages/2026/דירות-בעסקאות-נדלן-סיכום-שנת-2025.aspx",
+      "date": "2026-02 (approx)"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, יוני-אוגוסט 2025",
+      "publication_number": "333/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/333/04_25_333b.pdf",
+      "date": "2025-11"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, נובמבר 2024 - ינואר 2025",
+      "publication_number": "081/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/081/04_25_081b.pdf",
+      "date": "2025-04"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, ספטמבר-נובמבר 2024",
+      "publication_number": "010/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/010/04_25_010b.pdf",
+      "date": "2025-01"
+    },
+    {
+      "name": "למ\"ס — עסקאות נדל\"ן דירות חדשות בשנת 2022",
+      "publication_number": "047/2023",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2023/047/04_23_047b.pdf",
+      "date": "2023-02"
+    },
+    {
+      "name": "למ\"ס — מדד מחירי תשומה בבנייה למגורים (תיעוד חודשי 2024)",
+      "publication_number": "119/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/119/10_24_119b.pdf",
+      "date": "2024-04-15"
+    },
+    {
+      "name": "למ\"ס — מדד מחירי תשומה בבנייה למגורים, מאי 2023",
+      "url": "https://www.cbs.gov.il/he/publications/madad/pages/2023/מדד-מחירי-תשומה-בבנייה-למגורים-מאי-2023.aspx",
+      "date": "2023-06-15"
+    },
+    {
+      "name": "למ\"ס — מדד מחירי תשומה בבנייה למגורים, מרץ 2023",
+      "url": "https://www.cbs.gov.il/he/publications/madad/Pages/2023/מדד-מחירי-תשומה-בבנייה-למגורים-מרץ-2023.aspx",
+      "date": "2023-04-15"
+    },
+    {
+      "name": "ynet — כמה עלתה דירה בסוף 2025? הערים היקרות והזולות",
+      "url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "date": "2026-03"
+    },
+    {
+      "name": "ynet — 4 מיליון שקל לדירה בת\"א: איפה זינקו מחירי הדירות בחדות",
+      "url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "date": "2025"
+    },
+    {
+      "name": "Calcalist — הלמ\"ס: מחירי הדיור עלו ב-7.7% בשנת 2024",
+      "url": "https://www.calcalist.co.il/real-estate/article/bjsvfsznke",
+      "date": "2025-02-17"
+    },
+    {
+      "name": "Calcalist — שינוי מגמה: הדירות התייקרו ב-0.7% בחודשיים; מדד דצמבר ללא שינוי",
+      "url": "https://www.calcalist.co.il/local_news/article/b1cxhd8rwx",
+      "date": "2026-01-15"
+    },
+    {
+      "name": "Calcalist — הזינוק במחירי הדלק הקפיץ את המדד ב-1.2%, מחירי הדירות חזרו לעלות",
+      "url": "https://www.themarker.com/news/2026-05-15/ty-article/.premium/0000019e-2a6a-d1fe-affe-3beef9cb0001",
+      "date": "2026-05-15"
+    },
+    {
+      "name": "ynet — האטה במכירת דירות ברבעון הראשון של השנה",
+      "url": "https://www.ynet.co.il/economy/article/r1yli1xjzx",
+      "date": "2026-05"
+    },
+    {
+      "name": "Nadlan Center — הפתעה: מחירי הדירות זינקו ב-0.7% לאחר 8 חודשים של ירידה",
+      "url": "https://www.nadlancenter.co.il/article/13713",
+      "date": "2026-01"
+    },
+    {
+      "name": "Nadlan Center — מחירי הדירות ירדו ב-1.7% בשנה האחרונה",
+      "url": "https://www.nadlancenter.co.il/article/14316",
+      "date": "2026-04"
+    },
+    {
+      "name": "Nadlan Center — סיכום 2023: צניחה של 35% בעסקאות",
+      "url": "https://www.nadlancenter.co.il/article/9385",
+      "date": "2024-02"
+    },
+    {
+      "name": "Klikat Nadlan — שוק הנדל\"ן 2026: ירידה בעסקאות וזינוק בדירות לא מכורות (פרסום למ\"ס נובמבר 2025 - ינואר 2026)",
+      "url": "https://klikatnadlan.co.il/cbssalesnovjan2026/",
+      "date": "2026-03"
+    },
+    {
+      "name": "Klikat Nadlan — מחירי הדירות בישראל 2025: הנתונים העדכניים של הלמ״ס (נובמבר 2025)",
+      "url": "https://klikatnadlan.co.il/cbshousingnov25/",
+      "date": "2025-12-15"
+    },
+    {
+      "name": "Klikat Nadlan — מחירי הדירות בירידה: ניתוח נתוני ספטמבר-אוקטובר 2025",
+      "url": "https://klikatnadlan.co.il/octhousing2025/",
+      "date": "2025-11-15"
+    },
+    {
+      "name": "Klikat Nadlan — שוק הנדל\"ן בישראל: ניתוח עדכני של מכירת דירות באוגוסט-אוקטובר 2025",
+      "url": "https://klikatnadlan.co.il/israelhousingaugoct2025/",
+      "date": "2025-12"
+    },
+    {
+      "name": "Calcalist — מחירי הדירות לא מחכים לאף אחד: זינקו ב־7.8% בשנה (סיכום 2021)",
+      "url": "https://www.calcalist.co.il/real-estate/article/byzxa5hpkx",
+      "date": "2022"
+    },
+    {
+      "name": "Nadlan Center — ההתמתנות בקצב התייקרות הדירות ממשיכה: עלו ב-14.6% במהלך 2022",
+      "url": "https://www.nadlancenter.co.il/article/7359",
+      "date": "2023-01"
+    },
+    {
+      "name": "ynet — ההתייקרות שהכי משפיעה על הכיס: מחירי הדירות עלו ב-11.3% ב-2021",
+      "url": "https://www.ynet.co.il/economy/article/FLTXJ3HAH",
+      "date": "2022-01"
+    },
+    {
+      "name": "TheMarker — מדד נובמבר ירד ב-0.5%, מחירי הדירות לא עוצרת לרדת",
+      "url": "https://www.themarker.com/allnews/2025-12-15/ty-article/0000019b-223b-d8ba-adbb-22bb72b80000",
+      "date": "2025-12-15"
+    },
+    {
+      "name": "Mako/N12 — מדד פברואר 2026 - מה התייקר ומה הוזל",
+      "url": "https://www.mako.co.il/news-money/2026_q1/Article-03b004b9a32fc91026.htm",
+      "date": "2026-03-15"
+    },
+    {
+      "name": "BizPortal — כ-90 אלף דירות נמכרו ב-2025, הכי הרבה עסקאות בירושלים",
+      "url": "https://www.bizportal.co.il/realestates/news/article/20027655",
+      "date": "2026-02"
+    },
+    {
+      "name": "Magdilim — מדד מחירי הדירות רשם עלייה חודשית של 0.8% (פברואר 2026)",
+      "url": "https://magdilim.co.il/160220260953/",
+      "date": "2026-02"
+    },
+    {
+      "name": "DeHaas Group — שינוי מחירי הדירות פברואר 2026",
+      "url": "https://dehaas.co.il/שינוי-מחירי-הדירות-פברואר-2026/",
+      "date": "2026-04"
+    },
+    {
+      "name": "DeHaas Group — פרסום הלמ\"ס - עסקאות נדל\"ן דירות יולי עד ספטמבר 2025",
+      "url": "https://dehaas.co.il/פרסום-הלמס-עסקאות-נדלן-דירות-יולי-עד-ס/",
+      "date": "2025-12"
+    },
+    {
+      "name": "Mizrahi-Tefahot — מדד מחירי תשומה בבנייה למגורים",
+      "url": "https://www.mizrahi-tefahot.co.il/brokerage/construction-index/",
+      "date": "ongoing"
+    },
+    {
+      "name": "Kantahome — מדד תשומות הבניה 2026 טבלה לפי חודשים",
+      "url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "date": "2026-05"
+    },
+    {
+      "name": "Mashcantaman — מדד מחירי הדירות (היסטוריה)",
+      "url": "https://mashcantaman.co.il/מדד-מחירי-הדירות/",
+      "date": "ongoing"
+    },
+    {
+      "name": "Wikipedia — משבר הדיור בישראל",
+      "url": "https://he.wikipedia.org/wiki/משבר_הדיור_בישראל",
+      "date": "ongoing"
+    }
+  ],
+  "facts": [
+    {
+      "city": "תל אביב-יפו",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 7,072 דירות בתל אביב-יפו — המספר הגבוה ביותר בארץ, עלייה של 2.5% לעומת 2024 (6,902 דירות). תל אביב נמשכת כעיר המובילה בהתחלות בנייה במחוז ת\"א.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 6,868 דירות בירושלים, עלייה של 8.6% לעומת 2024 (6,326 דירות). ירושלים שנייה אחרי תל אביב-יפו בהתחלות בנייה ארציות.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "לוד",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 2,921 דירות בלוד, ירידה מתונה של 7.1% לעומת 2024 (3,144 דירות). לוד היא בין שמונה היישובים בארץ שעברו את רף 2,000 התחלות בנייה בשנה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "רמת גן",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 2,909 דירות ברמת גן — זינוק של 48.7% לעומת 2024 (1,956 דירות). זו המשכה של מגמת עלייה רב-שנתית בהיקפי הבנייה בעיר.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "פתח תקווה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 2,859 דירות בפתח תקווה, עלייה של 37.6% לעומת 2024 (2,078 דירות). פתח תקווה ממשיכה לבלוט בהתחלות הבנייה ונמצאת ברביעייה הראשונה בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "אשדוד",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 2,379 דירות באשדוד, עלייה של 13.1% לעומת 2024 (2,104 דירות) — היפוך מגמה אחרי ירידה ב-12 החודשים הקודמים.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "אופקים",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 2,345 דירות באופקים, ירידה של 20.5% לעומת השיא ההיסטורי של 2024 (2,948 דירות) — עדיין אחת מהרמות הגבוהות בארץ ביחס לגודל אוכלוסייה. אופקים היא בשבעה היישובים בארץ עם יותר מ-2,000 התחלות בנייה ב-2025.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "קריית גת",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 2,008 דירות בקריית גת — קפיצה דרמטית של 379.2% לעומת 2024 (419 דירות). זוהי אחת מהזינוקים הגבוהים בארץ והעיר נכנסה לרשימת היישובים עם מעל 2,000 התחלות בנייה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "נתיבות",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,980 דירות בנתיבות, עלייה של 43.4% לעומת 2024 (1,381 דירות) — מהיישובים הבולטים בקצב הבנייה במחוז הדרום.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "בת ים",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,753 דירות בבת ים, עלייה של 14.3% לעומת 2024 (1,534 דירות), אחרי ירידות רצופות ב-12 החודשים הקודמים. רוב הבנייה הינה התחדשות עירונית (תמ\"א 38/2 ופינוי-בינוי).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "אור יהודה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,734 דירות באור יהודה — קפיצה של 281.1% לעומת 2024 (455 דירות). זוהי אחת מהזינוקים החדים ביותר בארץ בשנה זו.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "נתניה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,731 דירות בנתניה, ירידה של 13.1% לעומת 2024 (1,992 דירות) — המשך מגמת ירידה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,607 דירות בחיפה, ירידה של 9.9% לעומת 2024 (1,783 דירות). חיפה מתקשה לשמור על קצב התחלות הבנייה הגבוה שאיפיין אותה בעבר.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "רעננה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,529 דירות ברעננה — קפיצה של 75.5% לעומת 2024 (871 דירות), היפוך חד למגמת הירידה הקודמת.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "באר יעקב",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,455 דירות בבאר יעקב, ירידה של 6.1% לעומת 2024 (1,550 דירות) — אחרי שב-2024 חלה קפיצה של מאות אחוזים.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "בית שמש",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,395 דירות בבית שמש, זינוק של 81.2% לעומת 2024 (770 דירות) — חזרה לרמות גבוהות לאחר ירידה חדה ב-2024.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "ראשון לציון",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,385 דירות בראשון לציון, עלייה של 37.7% לעומת 2024 (1,006 דירות) — היפוך לאחר ירידה רב-שנתית.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "הרצליה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,138 דירות בהרצליה, עלייה של 72.4% לעומת 2024 (660 דירות). זו אחת מהערים שנמשכה בהן עלייה רצופה ב-12 החודשים שלפני כן.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "חולון",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 966 דירות בחולון, קפיצה של 117.1% לעומת 2024 (445 דירות) — היפוך משמעותי במגמה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "כפר סבא",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 785 דירות בכפר סבא, זינוק של 225.7% לעומת 2024 (241 דירות) — שלוש שנים של רמות נמוכות הסתיימו ב-2025.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "רחובות",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 768 דירות ברחובות, עלייה מתונה של 2.4% לעומת 2024 (750 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "גבעתיים",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 765 דירות בגבעתיים — זינוק יוצא דופן של 559.5% לעומת 2024 (116 דירות). זוהי אחת מהקפיצות הגבוהות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 665 דירות בבאר שבע — ירידה של 33.2% לעומת 2024 (996 דירות). באר שבע משלימה ירידה רב-שנתית, מ-2,133 דירות ב-2022 ל-665 ב-2025.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "אשקלון",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 645 דירות באשקלון בלבד — צניחה דרמטית של 67.8% לעומת 2024 (2,005 דירות). אשקלון איבדה לחלוטין את מעמדה בעשרת היישובים המובילים בארץ בהתחלות בנייה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "חדרה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 605 דירות בחדרה, עלייה של 105.1% לעומת 2024 (295 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "בני ברק",
+      "category": "construction",
+      "fact": "בשנת 2024 החלה בנייתן של 962 דירות בבני ברק, עלייה של 40.6% לעומת 2023 (684 דירות). בני ברק לא הופיעה ברשימת היישובים עם מעל 500 התחלות בנייה ב-2025, מה שעשוי להעיד על ירידה מתחת לסף זה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/091/04_25_091b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2024",
+      "published": "2025-03-20",
+      "confidence": "high"
+    },
+    {
+      "city": "קריית אונו",
+      "category": "construction",
+      "fact": "בשנת 2024 החלה בנייתן של 1,120 דירות בקריית אונו, עלייה מתונה של 7.2% לעומת 2023 (1,045 דירות). העיר לא הופיעה ברשימת היישובים עם מעל 500 התחלות בנייה בסיכום 2025, ייתכן עקב ירידה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/091/04_25_091b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2024",
+      "published": "2025-03-20",
+      "confidence": "high"
+    },
+    {
+      "city": "יבנה",
+      "category": "construction",
+      "fact": "בשנת 2024 החלה בנייתן של 587 דירות ביבנה, עלייה של 67.7% לעומת 2023 (350 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/091/04_25_091b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2024",
+      "published": "2025-03-20",
+      "confidence": "high"
+    },
+    {
+      "city": "אילת",
+      "category": "construction",
+      "fact": "בשנת 2024 החלה בנייתן של 625 דירות באילת, עלייה של 58.2% לעומת 2023 (395 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/091/04_25_091b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2024",
+      "published": "2025-03-20",
+      "confidence": "high"
+    },
+    {
+      "city": "נהריה",
+      "category": "construction",
+      "fact": "בשנת 2024 החלה בנייתן של 580 דירות בנהרייה, עלייה של 20.8% לעומת 2023 (480 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/091/04_25_091b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2024",
+      "published": "2025-03-20",
+      "confidence": "high"
+    },
+    {
+      "city": "נצרת",
+      "category": "construction",
+      "fact": "נצרת אינה מופיעה ברשימת היישובים עם מעל 500 התחלות בנייה בשנים 2024 ו-2025, מה שמעיד על קצב התחלות בנייה נמוך יחסית באופן רציף.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "medium"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה בתל אביב-יפו עמד על 4.166 מיליון ש\"ח — המחיר הגבוה ביותר מבין 18 הערים הגדולות בארץ. בהשוואה לרבעון הרביעי של 2024 נרשמה ירידה במחיר הממוצע באזור תל אביב.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "הרצליה",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה בהרצליה עמד על 3.975 מיליון ש\"ח — המקום השני בארץ אחרי תל אביב. בהשוואה לרבעון רביעי 2024 נרשמה ירידה של 2.2% במחיר הממוצע.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה בירושלים עמד על 3.336 מיליון ש\"ח, עלייה בולטת של 10.0% לעומת רבעון רביעי 2024. ירושלים מובילה את עליות המחיר מבין הערים הגדולות בישראל.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "רמת גן",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה ברמת גן עמד על 3.285 מיליון ש\"ח. רמת גן היא בארבעת הערים בארץ עם מחיר ממוצע מעל 3 מיליון ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה בבאר שבע עמד על 1.284 מיליון ש\"ח — המחיר הנמוך ביותר מבין 18 הערים הגדולות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "אשקלון",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה באשקלון עמד על 1.720 מיליון ש\"ח — בין שלוש הערים הזולות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה בחיפה עמד על 1.837 מיליון ש\"ח, עלייה של 8.9% לעומת רבעון רביעי 2024 — אחת מעליות המחיר הגבוהות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "בית שמש",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה בבית שמש עלה ב-7.6% לעומת רבעון רביעי 2024 — בין עליות המחיר הבולטות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "רחובות",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירה ברחובות עלה ב-6.0% לעומת רבעון רביעי 2024.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "ראשון לציון",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 נרשמה ירידה של 7.8% במחיר הממוצע של דירה בראשון לציון לעומת רבעון רביעי 2024 — הירידה החדה ביותר מבין הערים הגדולות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "נתניה",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 נרשמה ירידה של 4.2% במחיר הממוצע של דירה בנתניה לעומת רבעון רביעי 2024.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "כפר סבא",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 נרשמה ירידה של 2.8% במחיר הממוצע של דירה בכפר סבא לעומת רבעון רביעי 2024.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "למ\"ס, שינוי במחירי שוק הדירות – פברואר 2026",
+      "published": "2026-02-15",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "category": "construction",
+      "fact": "באזור באר שבע (לפי סיווג מיסוי מקרקעין של משרד האוצר) נרשמה ירידה של 70% במכירות הקבלנים בשוק החופשי בדצמבר 2025 לעומת דצמבר 2024 — אזור הירידה החדה ביותר בארץ. בסיכום שנתי לשנת 2025 נמכרו באזור ב\"ש 4,053 דירות חדשות (ירידה של 36% לעומת 2024), אך עדיין מובילים במכירות הקבלנים בארץ.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-122025/he/reviews-and-publishes_review-real-estate-122025.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – דצמבר 2025",
+      "published": "2026-02-12",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "category": "other",
+      "fact": "בינואר 2026 נמכרו באזור באר שבע רק 39% מהדירות החדשות שנמכרו בינואר 2025 בשוק החופשי — ירידה החדה ביותר בארץ. רכישות המשקיעים באזור צנחו ב-39% לעומת ינואר 2025, ומשקלם בעסקאות עומד על 9% בלבד, מהרמות הנמוכות שנרשמו באזור.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "other",
+      "fact": "בינואר 2026 נרשם גידול של 16% במכירות הקבלנים בשוק החופשי באזור תל אביב לעומת ינואר 2025 — בולט באופן חיובי על רקע הירידות הארציות. אולם ינואר 2025 היה חודש נמוך במיוחד (רק 153 דירות נמכרו אז באזור).",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "category": "other",
+      "fact": "בינואר 2026 הוביל אזור חיפה את מכירות הקבלנים בשוק החופשי בארץ עם 283 דירות שנמכרו, עלייה מתונה של 6% לעומת ינואר 2025 — מקרה חריג כי בשנת 2025 כולה אזור חיפה רשם ירידה של 36% במכירות אלו. בעיר חיפה עצמה נמכרו 62 דירות חדשות בשוק החופשי בינואר 2026 (לעומת 32 בלבד בינואר 2025).",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "קריית אתא",
+      "category": "other",
+      "fact": "קריית אתא הייתה העיר השנייה במחוז חיפה במכירות דירות חדשות בשוק החופשי בינואר 2026 — 43 דירות נמכרו (לעומת 22 בלבד בינואר 2025).",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "קריית ביאליק",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 662 דירות בקריית ביאליק, צניחה של 61.0% לעומת 2024 (1,699 דירות) — אחת הירידות החדות בארץ בקצב התחלות הבנייה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "עכו",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 981 דירות בעכו, עלייה של 48.6% לעומת 2024 (660 דירות), כחלק ממגמת עלייה רב-שנתית — מ-89 דירות ב-2022 ל-981 ב-2025.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "נוף הגליל",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 900 דירות בנוף הגליל, עלייה של 52.3% לעומת 2024 (591 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "אלעד",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,578 דירות באלעד, זינוק של 187.4% לעומת 2024 (549 דירות) — כחלק ממגמת עלייה רצופה ב-12 החודשים שקדמו.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "יהוד-מונוסון",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,335 דירות ביהוד-מונוסון, זינוק יוצא דופן של 676.2% לעומת 2024 (172 דירות) — אחת הקפיצות הדרמטיות ביותר בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "קצרין",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 1,280 דירות בקצרין — קפיצה של מעל 1,000% לעומת 2024 (51 דירות בלבד). זוהי אחת מהקפיצות החדות ביותר שאי פעם נרשמו ביישוב.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "רכסים",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 819 דירות ברכסים, עלייה של 37.9% לעומת 2024 (594 דירות) — המשך מגמת עלייה רצופה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "טבריה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 748 דירות בטבריה, עלייה מתונה של 2.7% לעומת 2024 (728 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "עפולה",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 621 דירות בעפולה, ירידה מתונה של 3.4% לעומת 2024 (643 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "רמת השרון",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 593 דירות ברמת השרון, ירידה של 16.0% לעומת 2024 (706 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "הוד השרון",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 536 דירות בהוד השרון, זינוק של 808.5% לעומת 2024 (59 דירות בלבד) — חזרה לרמות תקינות לאחר שנה חריגה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "גבעת שמואל",
+      "category": "construction",
+      "fact": "בשנת 2025 החלה בנייתן של 755 דירות בגבעת שמואל, זינוק של 256.1% לעומת 2024 (212 דירות).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "other",
+      "fact": "בדצמבר 2025 הוביל אזור חיפה את מכירות יד שניה בארץ (928 דירות), כאשר אזור ירושלים הופיע במקום הראשון במכירות יד שניה החודשיות בינואר 2026 לפי הסקירה של משרד האוצר, יחד עם 1,007 יחידות שנמכרו — בעיר ירושלים עצמה. אזור ירושלים מתאפיין בגידול של 22% במכירות המשקיעים בינואר 2026.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "medium"
+    },
+    {
+      "city": "באר שבע",
+      "category": "other",
+      "fact": "אזור באר שבע מהווה את האזור היחיד שבו נרשמה ירידה רצופה במכירות יד שניה מספטמבר 2025. בינואר 2026 נרשמה באזור ירידה של 9% במכירות יד שניה לעומת ינואר 2025.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "other",
+      "fact": "באזור תל אביב נרשמה בינואר 2026 ירידה חדה של 21% במכירות יד שניה לעומת ינואר 2025 — האזור שהוביל את הירידה הארצית בפלח שוק זה. רק 279 דירות יד שניה נמכרו באזור באותו חודש.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "other",
+      "fact": "באזור תל אביב, 54% מהדירות שרכשו המשקיעים בינואר 2026 היו דירות חדשות — מעל הממוצע הארצי (40%). בדצמבר 2025 השיעור היה אף גבוה יותר וקרוב לשני שלישים. גידול של 11.2% ברכישות המשקיעים בדצמבר 2025 לעומת דצמבר 2024 — האזור היחיד עם גידול משמעותי.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירות ענף הנדל\"ן – דצמבר 2025 וינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "category": "other",
+      "fact": "בדצמבר 2025 רכישות המשקיעים באזור באר שבע צנחו ב-57% לעומת דצמבר 2024 — הירידה החדה ביותר בארץ באותו חודש בפלח שוק זה.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-122025/he/reviews-and-publishes_review-real-estate-122025.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – דצמבר 2025",
+      "published": "2026-02-12",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "other",
+      "fact": "באזור ירושלים רוכשים תושבי החוץ את חלק הארי של הדירות — בדצמבר 2025 נמכרו לתושבי חוץ 110 דירות בירושלים (מתוך 199 ארציות), מובילים בארץ.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-122025/he/reviews-and-publishes_review-real-estate-122025.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – דצמבר 2025",
+      "published": "2026-02-12",
+      "confidence": "high"
+    },
+    {
+      "city": "נתניה",
+      "category": "other",
+      "fact": "באזור נתניה — תושבי החוץ קונים יחסית רבות: 33 דירות בדצמבר 2025 לתושבי חוץ. שכיחות הטבות המימון באזור נתניה זינקה ל-35% בדצמבר 2025 (לעומת 22% בנובמבר), אך ירדה ל-24% בינואר 2026.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "other",
+      "fact": "באזור ת\"א, שכיחות הטבות המימון הקבלניות הגיעה ל-37% מהעסקאות בדצמבר 2025 — השיעור הגבוה ביותר שנרשם באזור מאז החלת הדיווח (פרט לאוקטובר 2025), על אף מגבלות בנק ישראל מאפריל 2025. בינואר 2026 ירדה ל-19% בלבד.",
+      "source_url": "https://www.gov.il/BlobFolder/dynamiccollectorresultitem/review-real-estate-012026/he/reviews-and-publishes_review-real-estate-012026.pdf",
+      "source_name": "משרד האוצר, סקירת ענף הנדל\"ן למגורים – ינואר 2026",
+      "published": "2026-03-01",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "construction",
+      "fact": "מתוך כ-17,800 דירות בהתחדשות עירונית שהחלה בנייתן ב-2025 (הריסה וקמת בניין חדש), יותר ממחצית (51.8%) נבנו במחוז תל אביב. תל אביב-יפו מובילה את ההתחדשות העירונית בארץ באופן ניכר.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "price_index",
+      "fact": "ברבעון הרביעי של 2025 מחיר ממוצע של דירת 4-3.5 חדרים בירושלים עמד על 3,289,200 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים בירושלים: 4,212,100 ש\"ח. מחיר ממוצע של דירת 6-5.5 חדרים: 5,388,200 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "price_index",
+      "fact": "ממוצע שנת 2024 (לפני העדכון של רבעון רביעי 2025): מחיר ממוצע של דירת 4-3.5 חדרים בתל אביב-יפו עמד על 4,997,400 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 6,334,600 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 3,787,500 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "בני ברק",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בבני ברק עמד על 2,561,700 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,949,200 ש\"ח. בני ברק היא בערים שבהן 100,000+ תושבים שמחירי הדירות בהן יחסית גבוהים — תוצאה של ביקוש דמוגרפי גבוה במקביל להיצע מוגבל.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "בת ים",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בבת ים עמד על 2,724,600 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,984,200 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 3,710,600 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "פתח תקווה",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בפתח תקווה עמד על 2,481,000 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 3,182,200 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 2,003,900 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "אשדוד",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים באשדוד עמד על 2,202,600 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 2,895,900 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,759,900 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "כפר סבא",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בכפר סבא עמד על 2,887,700 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 3,766,800 ש\"ח. כפר סבא היא בערים שמחירי הדירות בהן גבוהים מהממוצע במחוז המרכז.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "רמת גן",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים ברמת גן עמד על 3,279,800 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 4,184,100 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 2,515,200 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "הרצליה",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בהרצליה עמד על 3,607,200 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 4,901,600 ש\"ח. מחיר ממוצע של דירת 6-5.5 חדרים: 6,397,400 ש\"ח — מהגבוהים בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בבאר שבע עמד על 1,315,500 ש\"ח (אחד הזולים מבין 18 הערים הגדולות). מחיר ממוצע של דירת 5-4.5 חדרים: 1,860,700 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 863,200 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "אשקלון",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים באשקלון עמד על 1,707,900 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 2,260,800 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,264,400 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בחיפה עמד על 1,863,500 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 2,732,100 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,224,800 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "ראשון לציון",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בראשון לציון עמד על 2,504,100 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 3,495,900 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 2,080,400 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "רחובות",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים ברחובות עמד על 2,415,700 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 3,148,500 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,973,300 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "נתניה",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בנתניה עמד על 2,660,600 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 3,462,000 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,966,000 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "בית שמש",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בבית שמש עמד על 2,258,200 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 2,900,600 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,889,700 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "חולון",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בחולון עמד על 2,379,900 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 3,071,800 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,844,100 ש\"ח.",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "חדרה",
+      "category": "price_index",
+      "fact": "בשנת 2024 (ממוצע) מחיר ממוצע של דירת 4-3.5 חדרים בחדרה עמד על 2,064,100 ש\"ח. מחיר ממוצע של דירת 5-4.5 חדרים: 2,521,900 ש\"ח. מחיר ממוצע של דירת 3-2.5 חדרים: 1,644,400 ש\"ח. חדרה נוספה לרשימת הערים הגדולות של למ\"ס ב-2023 (מעל 100,000 תושבים).",
+      "source_url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "source_name": "למ\"ס, Average Prices of Dwellings (Table 2.2)",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "construction",
+      "fact": "סך הדירות שהונפקו עבורן היתרי בנייה בשנת 2025 עמד על כ-81,230 בארץ — עלייה של 2.2% בלבד לעומת 2024. ירושלים היא יחד עם תל אביב מובילה במספר ההיתרים. למחוז ירושלים נכנסו 25% מההיתרים, ירושלים העיר בלבד אחראית לחלק ניכר מזה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025",
+      "published": "2026-03-19",
+      "confidence": "medium"
+    },
+    {
+      "city": "ירושלים",
+      "category": "price_index",
+      "fact": "מחוז ירושלים הוביל את שנתון העליות בתקופה אוקטובר-נובמבר 2025 עם זינוק שנתי של 9.4%, וזאת על רקע ירידה ארצית של -2.6% בשמונת החודשים שקדמו.",
+      "source_url": "https://www.nadlancenter.co.il/article/13713",
+      "source_name": "Nadlan Center",
+      "published": "2026-01-15",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "price_index",
+      "fact": "ברבעון פברואר 2026, ירושלים רשמה ירידה חודשית של -0.7% במדד מחירי הדירות, אך עדיין +4.0% בהשוואה לפברואר 2025.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "CBS Press Release 052/2026",
+      "published": "2026-03-15",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "transactions",
+      "fact": "ירושלים הובילה את שנת 2025 במספר עסקאות יד שנייה: 3,727 דירות מול 3,833 ב-2024. בדירות חדשות נמכרו רק 1,191 דירות לעומת 2,957 ב-2024 — צניחה של ~60%.",
+      "source_url": "https://www.bizportal.co.il/realestates/news/article/20027655",
+      "source_name": "BizPortal — סיכום 2025",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "transactions",
+      "fact": "סוף ינואר 2026 — ירושלים החזיקה ב-10,370 דירות חדשות שטרם נמכרו, השנייה אחרי תל אביב-יפו (10,540).",
+      "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/",
+      "source_name": "Klikat Nadlan / למ\"ס",
+      "published": "2026-03",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "price_index",
+      "fact": "במדד דצמבר 2024-ינואר 2025, ירושלים רשמה +3.0% חודשי — הזינוק החד ביותר בין המחוזות באותה תקופה.",
+      "source_url": "https://www.broker-re.co.il/madaddirotdecemberjanuary25/",
+      "source_name": "Broker-RE",
+      "published": "2025-03",
+      "confidence": "high"
+    },
+    {
+      "city": "ירושלים",
+      "category": "transactions",
+      "fact": "ירושלים מובילה את ערי מאות אלף+ התושבים גם בערך-עסקאות-2025 (כ-90 אלף סה\"כ בארץ, ירידה של 11.9% מ-2024).",
+      "source_url": "https://www.bizportal.co.il/realestates/news/article/20027655",
+      "source_name": "BizPortal",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "transactions",
+      "fact": "תל אביב-יפו מובילה את ערי 100K+ התושבים בכמות דירות לא-מכורות: כ-10,540 דירות חדשות נותרו בסוף ינואר 2026.",
+      "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/",
+      "source_name": "Klikat Nadlan / למ\"ס",
+      "published": "2026-03",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "price_index",
+      "fact": "מחוז תל אביב רשם את הירידה השנתית החדה ביותר בפברואר 2026: -5.1% YoY — היפוך מוחלט ל-+10.3% שנמדדו בסוף 2024.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "CBS 052/2026",
+      "published": "2026-03-15",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "price_index",
+      "fact": "מחיר ממוצע של דירת 4 חדרים בתל אביב ברבעון 4/2024 עמד על כ-4.88 מיליון ש\"ח, עליה של 7.7% שנתית; ברבעון 4/2025 ירד הממוצע הכולל לכ-4.16 מיליון ש\"ח.",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet",
+      "published": "2025-02",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "transactions",
+      "fact": "בדירות חדשות הובילה תל אביב את 2025 עם 2,372 דירות נמכרות (לעומת 3,110 ב-2024). דירות יד שנייה: 2,787 ב-2025 לעומת 2,532 ב-2024.",
+      "source_url": "https://www.bizportal.co.il/realestates/news/article/20027655",
+      "source_name": "BizPortal",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "תל אביב-יפו",
+      "category": "construction",
+      "fact": "התחלות הבנייה בתל אביב-יפו בתקופת אוק'24-ספט'25 (rolling) — 5,870 יחידות, מרשים הסדר הארצי השני אחרי ירושלים.",
+      "source_url": "https://www.nadlancenter.co.il/article/14163",
+      "source_name": "Nadlan Center",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "category": "price_index",
+      "fact": "מחוז חיפה רשם +0.5% YoY בפברואר 2026 — בולט בצבר העליות הקטנות שלו לעומת -5.1% של תל אביב.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "source_name": "CBS 052/2026",
+      "published": "2026-03-15",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "category": "price_index",
+      "fact": "במחוז חיפה דירת 4 חדרים ממוצעת ב-Q4/2024 — 1.84 מיליון ש\"ח, עלייה שנתית של 11.7% — היה המחוז עם הקפיצה השנתית החדה ביותר באותו רבעון.",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet/CBS",
+      "published": "2025-02",
+      "confidence": "high"
+    },
+    {
+      "city": "חיפה",
+      "category": "construction",
+      "fact": "התחלות הבנייה בחיפה ב-2024 עלו ב-40.5% YoY ל-7,496 יחידות — מהבולטות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/publications/DocLib/isr_in_n/isr_in_n24e.pdf",
+      "source_name": "CBS Israel in Figures 2024",
+      "published": "2024-12",
+      "confidence": "high"
+    },
+    {
+      "city": "ראשון לציון",
+      "category": "price_index",
+      "fact": "ראשון לציון רשמה ירידה שנתית חריגה של 11.7% בממוצע הדירות ברבעון 4/2023 (לעומת Q4/2022), בניגוד למגמת ערים נוספות שעלו.",
+      "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB",
+      "source_name": "Dannus appraisal — CBS Q4 2023",
+      "published": "2024-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "פתח תקווה",
+      "category": "price_index",
+      "fact": "פתח תקווה רשמה עלייה שנתית של 7.3% במחיר דירה ממוצעת ב-Q4/2023, ל-2.513 מיליון ש\"ח.",
+      "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB",
+      "source_name": "Dannus/CBS Q4 2023",
+      "published": "2024-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "פתח תקווה",
+      "category": "construction",
+      "fact": "פתח תקווה — 2,700 התחלות בנייה ברבעון rolling אוק'24-ספט'25, מהמובילות בארץ.",
+      "source_url": "https://www.nadlancenter.co.il/article/14163",
+      "source_name": "Nadlan Center/CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "אשדוד",
+      "category": "price_index",
+      "fact": "אשדוד — מחיר ממוצע בסוף 2025: 2.15 מיליון ש\"ח, עליה שנתית של כ-6%.",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "source_name": "ynet",
+      "published": "2026-03",
+      "confidence": "high"
+    },
+    {
+      "city": "אשדוד",
+      "category": "construction",
+      "fact": "אשדוד עם 2,900 התחלות ב-12 החודשים שהסתיימו ספט'25 — בחמש הערים המובילות ארצית.",
+      "source_url": "https://www.nadlancenter.co.il/article/14163",
+      "source_name": "Nadlan Center/CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "אשדוד",
+      "category": "transactions",
+      "fact": "אשדוד מהערים שמובילות במכירת דירות חדשות 2025 (top-5 לפי הלמ\"ס) — מאופיינת בביקוש למשפחות צעירות הודות לפרויקטי 'מחיר למשתכן'.",
+      "source_url": "https://www.ynet.co.il/economy/article/skkkaw9w11g",
+      "source_name": "ynet/CBS",
+      "published": "2026-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "באר שבע",
+      "category": "price_index",
+      "fact": "באר שבע — מחיר ממוצע לדירה ב-Q4/2024 עמד על כ-1.28 מיליון ש\"ח (4 חדרים); ב-Q4/2023 על 1.166 מיליון, עליה שנתית של 4.2% — בלימת ירידה למרות המלחמה.",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet/CBS",
+      "published": "2025-02",
+      "confidence": "high"
+    },
+    {
+      "city": "באר שבע",
+      "category": "transactions",
+      "fact": "באר שבע נכללת ברשימת ערי 700+ עסקאות יד שנייה ברבעון Q3 2025.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/333/04_25_333b.pdf",
+      "source_name": "CBS 333/2025",
+      "published": "2025-11",
+      "confidence": "high"
+    },
+    {
+      "city": "נתניה",
+      "category": "price_index",
+      "fact": "נתניה — מחיר ממוצע 2.706 מיליון ש\"ח ב-Q4/2023 לפי לוח CBS 2.2.",
+      "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB",
+      "source_name": "Dannus/CBS Q4 2023",
+      "published": "2024-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "נתניה",
+      "category": "transactions",
+      "fact": "נתניה מהערים שהובילו במכירת דירות חדשות בתקופת אוג-אוק 2025 (יותר מ-400 דירות).",
+      "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/",
+      "source_name": "Klikat Nadlan / למ\"ס",
+      "published": "2025-12",
+      "confidence": "high"
+    },
+    {
+      "city": "בני ברק",
+      "category": "price_index",
+      "fact": "בני ברק — מחיר ממוצע דירה ברבעון 1/2025 עמד על כ-2.41 מיליון ש\"ח.",
+      "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025",
+      "source_name": "Hoomy/CBS",
+      "published": "2025-06",
+      "confidence": "medium"
+    },
+    {
+      "city": "חולון",
+      "category": "rent_index",
+      "fact": "חולון — שכר דירה ממוצע בסוף 2024 עמד על 4,602 ש\"ח, עלייה במהלך השנה.",
+      "source_url": "https://www.calcalist.co.il/real-estate/article/ry2u00sxckx",
+      "source_name": "Calcalist",
+      "published": "2025-01",
+      "confidence": "medium"
+    },
+    {
+      "city": "רמת גן",
+      "category": "price_index",
+      "fact": "רמת גן — מחיר ממוצע סוף 2025: 3.28 מיליון ש\"ח, בין הערים היקרות במחוז ת\"א.",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "source_name": "ynet",
+      "published": "2026-03",
+      "confidence": "high"
+    },
+    {
+      "city": "רמת גן",
+      "category": "construction",
+      "fact": "רמת גן — 2,770 התחלות בנייה ב-12 חודשים שהסתיימו ספט'25 — מובילה ארצית בהתחדשות עירונית.",
+      "source_url": "https://www.nadlancenter.co.il/article/14163",
+      "source_name": "Nadlan Center/CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "אשקלון",
+      "category": "price_index",
+      "fact": "אשקלון — מחיר ממוצע ב-Q4/2024 עמד על 1.71 מיליון ש\"ח; דירות 1-2 חדרים סביב 850 אלף ש\"ח — מהזולות במחוז דרום.",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet/CBS",
+      "published": "2025-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "רחובות",
+      "category": "price_index",
+      "fact": "רחובות — מחיר ממוצע 2025: כ-2.66 מיליון ש\"ח, עם עליות לאורך השנה.",
+      "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025",
+      "source_name": "Hoomy/CBS",
+      "published": "2025",
+      "confidence": "medium"
+    },
+    {
+      "city": "בת ים",
+      "category": "price_index",
+      "fact": "בת ים — מחיר ממוצע ב-Q4/2024: 2.32 מיליון ש\"ח.",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet/CBS",
+      "published": "2025-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "בית שמש",
+      "category": "price_index",
+      "fact": "בית שמש — מחיר ממוצע ב-Q4/2024: 2.34 מיליון ש\"ח — עלייה משמעותית בעקבות פרויקטי 'מחיר למשתכן' רחבי-היקף.",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet/CBS",
+      "published": "2025-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "כפר סבא",
+      "category": "price_index",
+      "fact": "כפר סבא — מחיר ממוצע 2025: 2.89 מיליון ש\"ח, רביעית במחוז המרכז.",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "source_name": "ynet",
+      "published": "2026-03",
+      "confidence": "high"
+    },
+    {
+      "city": "הרצליה",
+      "category": "price_index",
+      "fact": "הרצליה — מחיר ממוצע 2025: כ-3.97 מיליון ש\"ח, השנייה היקרה אחרי תל אביב.",
+      "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "source_name": "ynet",
+      "published": "2026-03",
+      "confidence": "high"
+    },
+    {
+      "city": "חדרה",
+      "category": "price_index",
+      "fact": "חדרה — מחיר ממוצע 2024: 2.02 מיליון ש\"ח, מהזולות במחוז חיפה למשפחות שעוברות מהמרכז.",
+      "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "source_name": "ynet/CBS",
+      "published": "2025-02",
+      "confidence": "medium"
+    },
+    {
+      "city": "מודיעין-מכבים-רעות",
+      "category": "price_index",
+      "fact": "מודיעין — דירת 5 חדרים חדשה בשכונות חדשות: כ-3.73 מיליון ש\"ח; דירת 3 חדרים חדשה: כ-2.76 מיליון.",
+      "source_url": "https://www.nadlancenter.co.il/article/12719",
+      "source_name": "Nadlan Center",
+      "published": "2025-09",
+      "confidence": "medium"
+    },
+    {
+      "city": "אופקים",
+      "category": "construction",
+      "fact": "אופקים — 2,990 התחלות בנייה ב-12 חודשים שהסתיימו ספט'25 — שלישית ארצית.",
+      "source_url": "https://www.nadlancenter.co.il/article/14163",
+      "source_name": "Nadlan Center/CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "אופקים",
+      "category": "transactions",
+      "fact": "אופקים בין חמש הערים המובילות במכירת דירות חדשות 2025, ובערים שמכרו 400+ דירות חדשות באוג-אוק 2025.",
+      "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/",
+      "source_name": "Klikat Nadlan / למ\"ס",
+      "published": "2025-12",
+      "confidence": "high"
+    },
+    {
+      "city": "אופקים",
+      "category": "price_index",
+      "fact": "אופקים — מחיר ממוצע דירה בעסקאות נובמבר 2024-ינואר 2025: כ-760 אלף ש\"ח, מהזולות בארץ.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/081/04_25_081b.pdf",
+      "source_name": "CBS 081/2025",
+      "published": "2025-04",
+      "confidence": "high"
+    },
+    {
+      "city": "קריית גת",
+      "category": "transactions",
+      "fact": "קריית גת — מחיר ממוצע דירה ~552 אלף ש\"ח בעסקאות נובמבר 2024-ינואר 2025 (לפי CBS press 081/2025).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/081/04_25_081b.pdf",
+      "source_name": "CBS 081/2025",
+      "published": "2025-04",
+      "confidence": "medium",
+      "note": "הערך נמוך במיוחד — סביר שמשקף עסקאות 'מחיר למשתכן' מסובסדות בלבד באותה תקופה."
+    },
+    {
+      "city": "באר יעקב",
+      "category": "construction",
+      "fact": "באר יעקב — 2,840 התחלות בנייה (rolling אוק'24-ספט'25) — חמישית ארצית; שיא היסטורי לעיר.",
+      "source_url": "https://www.nadlancenter.co.il/article/14163",
+      "source_name": "Nadlan Center/CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "לוד",
+      "category": "construction",
+      "fact": "לוד — 2,100 התחלות בנייה ב-12 חודשים שהסתיימו ספט'25 — בולטת בנפח לפי גודל אוכלוסייה.",
+      "source_url": "https://www.nadlancenter.co.il/article/14163",
+      "source_name": "Nadlan Center/CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "לוד",
+      "category": "transactions",
+      "fact": "לוד מהערים שהובילו במכירת דירות חדשות 2025 (top-5).",
+      "source_url": "https://www.ynet.co.il/economy/article/skkkaw9w11g",
+      "source_name": "ynet/CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "גבעתיים",
+      "category": "price_index",
+      "fact": "גבעתיים — מחיר ממוצע לדירת 4 חדרים מתקרב ל-4 מיליון ש\"ח בסוף 2025.",
+      "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025",
+      "source_name": "Hoomy/CBS",
+      "published": "2025",
+      "confidence": "medium"
+    },
+    {
+      "city": "אילת",
+      "category": "price_index",
+      "fact": "אילת — מבין הערים בארץ עם הירידות החדות ביותר במחירי דירות בשנת 2024-2025 על רקע השפעות התיירות.",
+      "source_url": "https://www.ynet.co.il/economy/article/sysojsz5jx",
+      "source_name": "ynet",
+      "published": "2025",
+      "confidence": "medium"
+    },
+    {
+      "city": "נצרת",
+      "category": "price_index",
+      "fact": "נצרת — מהמחירים הנמוכים בארץ: דירות מתחילות ב-700-800 אלף ש\"ח.",
+      "source_url": "http://jus-tice.co.il/israel-real-estate-price-forecast/",
+      "source_name": "Jus-Tice analysis citing CBS",
+      "published": "2025",
+      "confidence": "low"
+    },
+    {
+      "city": "נהריה",
+      "category": "price_index",
+      "fact": "נהריה — דירות סביב 1-1.3 מיליון ש\"ח; נהנית מביקושים חדשים בעקבות מחירים נוחים יחסית.",
+      "source_url": "http://jus-tice.co.il/israel-real-estate-price-forecast/",
+      "source_name": "Jus-Tice",
+      "published": "2025",
+      "confidence": "low"
+    },
+    {
+      "city": "רעננה",
+      "category": "price_index",
+      "fact": "רעננה — מחיר למ\"ר 33-38 אלף ש\"ח (טווח שכונות 25-53 אלף); דירת 4 חדרים חדשה 3.3-3.8 מיליון; דירת 5 חדרים חדשה 3.6-4.5 מיליון.",
+      "source_url": "https://dirobot.co.il/neighborhood-prices/רעננה",
+      "source_name": "Dirobot/CBS",
+      "published": "2025",
+      "confidence": "medium"
+    },
+    {
+      "city": "נס ציונה",
+      "category": "price_index",
+      "fact": "נס ציונה — דירת 4 חדרים ממוצעת כ-2.2 מיליון ש\"ח; שילוב של וילות ישנות ומגדלים חדשים.",
+      "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025",
+      "source_name": "Hoomy/CBS",
+      "published": "2025",
+      "confidence": "low"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "ב-2025 כולה, מדד מחירי הדירות הארצי ירד ב-0.1% — שנה כמעט שטוחה לראשונה מאז 2018 — בעקבות 8 חודשי ירידות רצופות (Jan-Oct: -2.6% מצטבר), שהופסקו בנובמבר 2025 עם עליה של +0.7%.",
+      "source_url": "https://klikatnadlan.co.il/cbshousingnov25/",
+      "source_name": "Klikat Nadlan / למ\"ס",
+      "published": "2025-12-15",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "פברואר 2026 — מדד מחירי הדירות -1.7% YoY; דירות חדשות (תת-מדד) -4% YoY — הנפילה החדה ביותר של ענף הדירות החדשות מאז מבצע 'מחיר למשתכן' של 2017.",
+      "source_url": "https://www.nadlancenter.co.il/article/14316",
+      "source_name": "Nadlan Center",
+      "published": "2026-04",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "cost_index",
+      "fact": "מדד מחירי תשומה בבנייה למגורים — סיכום 2025: +5.0% (לעומת 2.9% ב-2024). מרכיב 'שכר פועלי בניין' עלה ב-9.1% — הגורם הדומיננטי בעליה.",
+      "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "source_name": "Kantahome / CBS",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "cost_index",
+      "fact": "ב-12 החודשים שהסתיימו ינואר 2026, מדד התשומות עלה ב-2.5% בלבד — האטה משמעותית לאחר ה-+5% של 2025.",
+      "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "source_name": "Kantahome",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "transactions",
+      "fact": "סיכום 2025: כ-90,690 דירות נמכרו, ירידה של 11.9% מ-2024 ועליה של 26.9% לעומת 2023. 37.5% מהן חדשות (~34,030).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/pages/2026/דירות-בעסקאות-נדלן-סיכום-שנת-2025.aspx",
+      "source_name": "CBS 047/2026",
+      "published": "2026-02",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "transactions",
+      "fact": "סיכום 2023: 66,590 דירות נמכרו — ירידה של 35% מ-2022. החודש דצמבר 2023 לבדו ראה התאוששות חלקית עם 5,810 עסקאות (+44.5% לעומת נובמבר).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2024/047/04_24_047b.pdf",
+      "source_name": "CBS 047/2024",
+      "published": "2024-02",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "transactions",
+      "fact": "סיכום 2022: 102,330 דירות נמכרו — שנת שיא לפני המעבר למדיניות הריבית הגבוהה.",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2023/047/04_23_047b.pdf",
+      "source_name": "CBS 047/2023",
+      "published": "2023-02",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "transactions",
+      "fact": "סיכום 2024: 103,097 עסקאות — שנה של התאוששות חזקה אחרי 2023 ההלם המלחמתי. דירות יד שנייה +29.7% YoY (57,195).",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/047/04_25_047b.pdf",
+      "source_name": "CBS 047/2025",
+      "published": "2025-02-19",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "transactions",
+      "fact": "סוף ינואר 2026 — מלאי דירות חדשות שטרם נמכרו עמד על 86,290 — שיא כל הזמנים. המלאי מספק ~31.4 חודשי מכירות בקצב הנוכחי.",
+      "source_url": "https://www.nadlancenter.co.il/article/13909",
+      "source_name": "Nadlan Center / למ\"ס",
+      "published": "2026-03",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "סיכום 2024: +7.7% YoY — מחוז תל אביב הוביל ב-10.3%, צפון 9.9%, חיפה 9.5%, ירושלים 5.6%, מרכז 5.0%, דרום 4.5%.",
+      "source_url": "https://www.calcalist.co.il/real-estate/article/bjsvfsznke",
+      "source_name": "Calcalist",
+      "published": "2025-02-17",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "סיכום 2022: +14.6% YoY — שיא הקצב מאז 2008. שיא חודשי הוקלט באוקטובר 2022 (+2.1% MoM).",
+      "source_url": "https://www.nadlancenter.co.il/article/7359",
+      "source_name": "Nadlan Center",
+      "published": "2023-01",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "סיכום 2021: +11.3% YoY — שבירת מחסום שתחילה לא נראה מאז שנת 2008.",
+      "source_url": "https://www.ynet.co.il/economy/article/FLTXJ3HAH",
+      "source_name": "ynet",
+      "published": "2022-01",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "סיכום 2020: +4.9% YoY — שנת קורונה הראתה דווקא עמידות; ירידה זמנית של -0.7% רק באפ-יוני 2020 בשיא הסגרים.",
+      "source_url": "https://www.contact.org.il/index/article-defaults/מדד-מחירי-דירות-2020",
+      "source_name": "Contact Analyst",
+      "published": "2021-01",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "סיכום 2018-2019: 2018 רשמה ירידה מתונה (~-0.7%) על רקע עליית היצע מ'מחיר למשתכן' וירידת ביקוש; 2019 חזרה לעלייה מתונה של ~+2%.",
+      "source_url": "https://he.wikipedia.org/wiki/משבר_הדיור_בישראל",
+      "source_name": "Wikipedia / CBS",
+      "published": "ongoing",
+      "confidence": "medium"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "סיכום 2017: +2.0% YoY — הקצב השנתי הנמוך ביותר מאז 2009. ברבעון 4/2017 ירידות במחוזות ירושלים (-5.1%), דרום (-1.5%), תל אביב (-0.8%).",
+      "source_url": "https://mashcantaman.co.il/מדד-מחירי-הדירות/",
+      "source_name": "Mashcantaman / CBS",
+      "published": "2018-01",
+      "confidence": "high"
+    },
+    {
+      "city": "ארצי",
+      "category": "price_index",
+      "fact": "סיכום 2016: +8.0% YoY — שיא הקצב של דור 2010s עד שמדיניות 'מחיר למשתכן' החלה לבלום ב-2017.",
+      "source_url": "https://www.ynet.co.il/articles/0,7340,L-4845678,00.html",
+      "source_name": "ynet",
+      "published": "2017-01",
+      "confidence": "high"
+    }
+  ],
+  "time_series": [
+    {
+      "city": "תל אביב-יפו",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 4763
+        },
+        {
+          "period": "2023",
+          "value": 4609
+        },
+        {
+          "period": "2024",
+          "value": 6902
+        },
+        {
+          "period": "2025",
+          "value": 7072
+        }
+      ]
+    },
+    {
+      "city": "ירושלים",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 5162
+        },
+        {
+          "period": "2023",
+          "value": 6046
+        },
+        {
+          "period": "2024",
+          "value": 6326
+        },
+        {
+          "period": "2025",
+          "value": 6868
+        }
+      ]
+    },
+    {
+      "city": "לוד",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 1435
+        },
+        {
+          "period": "2023",
+          "value": 1589
+        },
+        {
+          "period": "2024",
+          "value": 3144
+        },
+        {
+          "period": "2025",
+          "value": 2921
+        }
+      ]
+    },
+    {
+      "city": "רמת גן",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 1681
+        },
+        {
+          "period": "2023",
+          "value": 1087
+        },
+        {
+          "period": "2024",
+          "value": 1956
+        },
+        {
+          "period": "2025",
+          "value": 2909
+        }
+      ]
+    },
+    {
+      "city": "פתח תקווה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 1985
+        },
+        {
+          "period": "2023",
+          "value": 1340
+        },
+        {
+          "period": "2024",
+          "value": 2078
+        },
+        {
+          "period": "2025",
+          "value": 2859
+        }
+      ]
+    },
+    {
+      "city": "אשדוד",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 1150
+        },
+        {
+          "period": "2023",
+          "value": 2646
+        },
+        {
+          "period": "2024",
+          "value": 2104
+        },
+        {
+          "period": "2025",
+          "value": 2379
+        }
+      ]
+    },
+    {
+      "city": "אופקים",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 645
+        },
+        {
+          "period": "2023",
+          "value": 489
+        },
+        {
+          "period": "2024",
+          "value": 2948
+        },
+        {
+          "period": "2025",
+          "value": 2345
+        }
+      ]
+    },
+    {
+      "city": "קריית גת",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 1631
+        },
+        {
+          "period": "2023",
+          "value": 265
+        },
+        {
+          "period": "2024",
+          "value": 419
+        },
+        {
+          "period": "2025",
+          "value": 2008
+        }
+      ]
+    },
+    {
+      "city": "נתיבות",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 558
+        },
+        {
+          "period": "2023",
+          "value": 1475
+        },
+        {
+          "period": "2024",
+          "value": 1381
+        },
+        {
+          "period": "2025",
+          "value": 1980
+        }
+      ]
+    },
+    {
+      "city": "בת ים",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 3273
+        },
+        {
+          "period": "2023",
+          "value": 2342
+        },
+        {
+          "period": "2024",
+          "value": 1534
+        },
+        {
+          "period": "2025",
+          "value": 1753
+        }
+      ]
+    },
+    {
+      "city": "אור יהודה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 229
+        },
+        {
+          "period": "2023",
+          "value": 524
+        },
+        {
+          "period": "2024",
+          "value": 455
+        },
+        {
+          "period": "2025",
+          "value": 1734
+        }
+      ]
+    },
+    {
+      "city": "נתניה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 2554
+        },
+        {
+          "period": "2023",
+          "value": 1983
+        },
+        {
+          "period": "2024",
+          "value": 1992
+        },
+        {
+          "period": "2025",
+          "value": 1731
+        }
+      ]
+    },
+    {
+      "city": "חיפה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 765
+        },
+        {
+          "period": "2023",
+          "value": 1800
+        },
+        {
+          "period": "2024",
+          "value": 1783
+        },
+        {
+          "period": "2025",
+          "value": 1607
+        }
+      ]
+    },
+    {
+      "city": "אלעד",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 0
+        },
+        {
+          "period": "2023",
+          "value": 140
+        },
+        {
+          "period": "2024",
+          "value": 549
+        },
+        {
+          "period": "2025",
+          "value": 1578
+        }
+      ]
+    },
+    {
+      "city": "רעננה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 873
+        },
+        {
+          "period": "2023",
+          "value": 1148
+        },
+        {
+          "period": "2024",
+          "value": 871
+        },
+        {
+          "period": "2025",
+          "value": 1529
+        }
+      ]
+    },
+    {
+      "city": "באר יעקב",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 928
+        },
+        {
+          "period": "2023",
+          "value": 485
+        },
+        {
+          "period": "2024",
+          "value": 1550
+        },
+        {
+          "period": "2025",
+          "value": 1455
+        }
+      ]
+    },
+    {
+      "city": "בית שמש",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 2700
+        },
+        {
+          "period": "2023",
+          "value": 1995
+        },
+        {
+          "period": "2024",
+          "value": 770
+        },
+        {
+          "period": "2025",
+          "value": 1395
+        }
+      ]
+    },
+    {
+      "city": "ראשון לציון",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 2307
+        },
+        {
+          "period": "2023",
+          "value": 1810
+        },
+        {
+          "period": "2024",
+          "value": 1006
+        },
+        {
+          "period": "2025",
+          "value": 1385
+        }
+      ]
+    },
+    {
+      "city": "יהוד-מונוסון",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 24
+        },
+        {
+          "period": "2023",
+          "value": 280
+        },
+        {
+          "period": "2024",
+          "value": 172
+        },
+        {
+          "period": "2025",
+          "value": 1335
+        }
+      ]
+    },
+    {
+      "city": "קצרין",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 32
+        },
+        {
+          "period": "2023",
+          "value": 155
+        },
+        {
+          "period": "2024",
+          "value": 51
+        },
+        {
+          "period": "2025",
+          "value": 1280
+        }
+      ]
+    },
+    {
+      "city": "הרצליה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 825
+        },
+        {
+          "period": "2023",
+          "value": 508
+        },
+        {
+          "period": "2024",
+          "value": 660
+        },
+        {
+          "period": "2025",
+          "value": 1138
+        }
+      ]
+    },
+    {
+      "city": "עכו",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 89
+        },
+        {
+          "period": "2023",
+          "value": 524
+        },
+        {
+          "period": "2024",
+          "value": 660
+        },
+        {
+          "period": "2025",
+          "value": 981
+        }
+      ]
+    },
+    {
+      "city": "חולון",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 553
+        },
+        {
+          "period": "2023",
+          "value": 452
+        },
+        {
+          "period": "2024",
+          "value": 445
+        },
+        {
+          "period": "2025",
+          "value": 966
+        }
+      ]
+    },
+    {
+      "city": "נוף הגליל",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 589
+        },
+        {
+          "period": "2023",
+          "value": 258
+        },
+        {
+          "period": "2024",
+          "value": 591
+        },
+        {
+          "period": "2025",
+          "value": 900
+        }
+      ]
+    },
+    {
+      "city": "רכסים",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 405
+        },
+        {
+          "period": "2023",
+          "value": 215
+        },
+        {
+          "period": "2024",
+          "value": 594
+        },
+        {
+          "period": "2025",
+          "value": 819
+        }
+      ]
+    },
+    {
+      "city": "כפר סבא",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 615
+        },
+        {
+          "period": "2023",
+          "value": 263
+        },
+        {
+          "period": "2024",
+          "value": 241
+        },
+        {
+          "period": "2025",
+          "value": 785
+        }
+      ]
+    },
+    {
+      "city": "רחובות",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 528
+        },
+        {
+          "period": "2023",
+          "value": 1515
+        },
+        {
+          "period": "2024",
+          "value": 750
+        },
+        {
+          "period": "2025",
+          "value": 768
+        }
+      ]
+    },
+    {
+      "city": "גבעתיים",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 210
+        },
+        {
+          "period": "2023",
+          "value": 501
+        },
+        {
+          "period": "2024",
+          "value": 116
+        },
+        {
+          "period": "2025",
+          "value": 765
+        }
+      ]
+    },
+    {
+      "city": "גבעת שמואל",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 716
+        },
+        {
+          "period": "2023",
+          "value": 259
+        },
+        {
+          "period": "2024",
+          "value": 212
+        },
+        {
+          "period": "2025",
+          "value": 755
+        }
+      ]
+    },
+    {
+      "city": "טבריה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 131
+        },
+        {
+          "period": "2023",
+          "value": 824
+        },
+        {
+          "period": "2024",
+          "value": 728
+        },
+        {
+          "period": "2025",
+          "value": 748
+        }
+      ]
+    },
+    {
+      "city": "קריית אתא",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 400
+        },
+        {
+          "period": "2023",
+          "value": 243
+        },
+        {
+          "period": "2024",
+          "value": 818
+        },
+        {
+          "period": "2025",
+          "value": 678
+        }
+      ]
+    },
+    {
+      "city": "באר שבע",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 2133
+        },
+        {
+          "period": "2023",
+          "value": 969
+        },
+        {
+          "period": "2024",
+          "value": 996
+        },
+        {
+          "period": "2025",
+          "value": 665
+        }
+      ]
+    },
+    {
+      "city": "קריית ביאליק",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 85
+        },
+        {
+          "period": "2023",
+          "value": 365
+        },
+        {
+          "period": "2024",
+          "value": 1699
+        },
+        {
+          "period": "2025",
+          "value": 662
+        }
+      ]
+    },
+    {
+      "city": "אשקלון",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 2513
+        },
+        {
+          "period": "2023",
+          "value": 1171
+        },
+        {
+          "period": "2024",
+          "value": 2005
+        },
+        {
+          "period": "2025",
+          "value": 645
+        }
+      ]
+    },
+    {
+      "city": "עפולה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 567
+        },
+        {
+          "period": "2023",
+          "value": 925
+        },
+        {
+          "period": "2024",
+          "value": 643
+        },
+        {
+          "period": "2025",
+          "value": 621
+        }
+      ]
+    },
+    {
+      "city": "חדרה",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 284
+        },
+        {
+          "period": "2023",
+          "value": 404
+        },
+        {
+          "period": "2024",
+          "value": 295
+        },
+        {
+          "period": "2025",
+          "value": 605
+        }
+      ]
+    },
+    {
+      "city": "רמת השרון",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 430
+        },
+        {
+          "period": "2023",
+          "value": 1319
+        },
+        {
+          "period": "2024",
+          "value": 706
+        },
+        {
+          "period": "2025",
+          "value": 593
+        }
+      ]
+    },
+    {
+      "city": "הוד השרון",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 696
+        },
+        {
+          "period": "2023",
+          "value": 336
+        },
+        {
+          "period": "2024",
+          "value": 59
+        },
+        {
+          "period": "2025",
+          "value": 536
+        }
+      ]
+    },
+    {
+      "city": "ישראל (ארצי)",
+      "metric": "construction_starts_annual",
+      "unit": "דירות",
+      "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/089/04_26_089b.pdf",
+      "source_name": "למ\"ס, התחלות וגמר בנייה – סיכום שנת 2025 (לוח א)",
+      "data": [
+        {
+          "period": "2022",
+          "value": 69460
+        },
+        {
+          "period": "2023",
+          "value": 65200
+        },
+        {
+          "period": "2024",
+          "value": 69810
+        },
+        {
+          "period": "2025",
+          "value": 80010
+        }
+      ]
+    }
+  ],
+  "areas_note": "אזורי מיסוי מקרקעין של משרד האוצר אינם זהים לעיריות בודדות — אזור 'באר שבע' למשל מכסה את כל מחוז הדרום, אזור 'ת\"א' מכסה תל אביב-יפו ובת ים, ואזור 'המרכז' מכסה ערים רבות במחוז המרכז. בכל פעם שמדובר ב'אזור' זו אינדיקציה אזורית ולא עירונית טהורה.",
+  "data_quality_caveats": [
+    "מספרי התחלות בנייה כוללים הריסה והקמה — אך לא מנכים דירות שנהרסו. התחלות בנייה נטו (אחרי הריסה) נמוכות יותר.",
+    "מחירים ממוצעים מעובדים לא מנוכי איכות בלוח 2.2 — שינויים בהרכב יכולים להטות את הממוצע.",
+    "נתוני הרבעון האחרון הם ארעיים (provisional) ועלולים להתעדכן בפרסומים הבאים.",
+    "מאז רבעון רביעי 2022 המחירים הממוצעים אינם כוללים עסקאות בסבסוד ממשלתי (מחיר למשתכן/מטרה).",
+    "ערים שאינן ברשימת 18 הערים הגדולות (פחות מ-100K תושבים) — כמו מודיעין-מכבים-רעות, ראש העין, נס ציונה, יבנה, גני תקווה, פרדסייה, אילת, נהריה, גבעתיים, קריית גת, אופקים, ביתר עילית, מודיעין עילית, קריית אונו, אור יהודה — אין להן פרסום שוטף של למ\"ס למחירים ממוצעים. נתוני בנייה זמינים רק ליישובים שעברו את רף 500 התחלות בנייה בשנה."
+  ],
+  "lastUpdated": "2026-05-17T10:38:50.150430"
+}

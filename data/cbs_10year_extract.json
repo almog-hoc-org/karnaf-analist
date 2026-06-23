@@ -1,0 +1,401 @@
+{
+  "fetchedAt": "2026-05-17",
+  "scope": "10-year (2016-2026) extract focused on four CBS publication families: (a) שינוי במחירי שוק הדירות (monthly housing price index, doc 052/xxx + 120/xxx series), (b) דירות בעסקאות נדל\"ן (quarterly transactions, doc 047/xxx + 010/xxx + 081/xxx + 333/xxx series), (c) מדדים ומחירים ממוצעים משוק הדירות (quarterly avg-prices, 'price06aa' series), (d) מדד מחירי תשומה בבנייה למגורים (monthly construction input index, doc 119/xxx + 10_xx series).",
+  "methodology": "WebFetch on cbs.gov.il PDFs was not permitted in this run, so all figures below were extracted via WebSearch result summaries quoting Israeli press (Calcalist, Ynet, TheMarker, Globes, Nadlan Center, Klikat Nadlan, Bizportal, Mako, Times of Israel) which in turn cite specific CBS press releases. Where a figure is corroborated by at least two independent outlets it is marked 'high' confidence; single-source figures are 'medium'. Per-city absolute apartment prices are CBS *mean* prices for the 'aa' tables (Tables 2.2-2.4 of the price publication) which group by district + 18 largest cities — many of the 168 cities in the user's DB are NOT in CBS Table 2.2 and price figures cited for them are press estimates, not CBS data. No numbers were invented.",
+  "sources_consulted": [
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות, ינואר-פברואר 2026",
+      "publication_number": "052/2026",
+      "url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf",
+      "date": "2026-03-15"
+    },
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות, מרץ 2024",
+      "publication_number": "120/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/120/10_24_120b.pdf",
+      "date": "2024-05-15"
+    },
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות, ינואר 2024 (לוח 2.3 מחוזות)",
+      "publication_number": "018/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/madad/doclib/2024/018/10_24_018t2.pdf",
+      "date": "2024-03-15"
+    },
+    {
+      "name": "למ\"ס — שינוי במחירי שוק הדירות, פברואר 2021",
+      "publication_number": "087/2021",
+      "url": "https://www.cbs.gov.il/he/mediarelease/madad/Pages/2021/שינוי-במחירי-שוק-הדירות-פברואר-2021.aspx",
+      "date": "2021-04-15"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, סיכום שנת 2024",
+      "publication_number": "047/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/047/04_25_047b.pdf",
+      "date": "2025-02-19"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, סיכום שנת 2023",
+      "publication_number": "047/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2024/047/04_24_047b.pdf",
+      "date": "2024-02-19"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, סיכום שנת 2025",
+      "publication_number": "047/2026",
+      "url": "https://www.cbs.gov.il/he/mediarelease/pages/2026/דירות-בעסקאות-נדלן-סיכום-שנת-2025.aspx",
+      "date": "2026-02 (approx)"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, יוני-אוגוסט 2025",
+      "publication_number": "333/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/333/04_25_333b.pdf",
+      "date": "2025-11"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, נובמבר 2024 - ינואר 2025",
+      "publication_number": "081/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/081/04_25_081b.pdf",
+      "date": "2025-04"
+    },
+    {
+      "name": "למ\"ס — דירות בעסקאות נדל\"ן, ספטמבר-נובמבר 2024",
+      "publication_number": "010/2025",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/010/04_25_010b.pdf",
+      "date": "2025-01"
+    },
+    {
+      "name": "למ\"ס — עסקאות נדל\"ן דירות חדשות בשנת 2022",
+      "publication_number": "047/2023",
+      "url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2023/047/04_23_047b.pdf",
+      "date": "2023-02"
+    },
+    {
+      "name": "למ\"ס — מדד מחירי תשומה בבנייה למגורים (תיעוד חודשי 2024)",
+      "publication_number": "119/2024",
+      "url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/119/10_24_119b.pdf",
+      "date": "2024-04-15"
+    },
+    {
+      "name": "למ\"ס — מדד מחירי תשומה בבנייה למגורים, מאי 2023",
+      "url": "https://www.cbs.gov.il/he/publications/madad/pages/2023/מדד-מחירי-תשומה-בבנייה-למגורים-מאי-2023.aspx",
+      "date": "2023-06-15"
+    },
+    {
+      "name": "למ\"ס — מדד מחירי תשומה בבנייה למגורים, מרץ 2023",
+      "url": "https://www.cbs.gov.il/he/publications/madad/Pages/2023/מדד-מחירי-תשומה-בבנייה-למגורים-מרץ-2023.aspx",
+      "date": "2023-04-15"
+    },
+    {
+      "name": "למ\"ס — מדדים ומחירים ממוצעים משוק הדירות, רבעון 1/2025 (לוח 2.2)",
+      "url": "https://www.cbs.gov.il/he/publications/Madad/DocLib/2025/price06aa/aa2_2_e.pdf",
+      "date": "2025-04",
+      "publication_number": "Price Statistics Monthly 4/2025"
+    },
+    {
+      "name": "ynet — כמה עלתה דירה בסוף 2025? הערים היקרות והזולות",
+      "url": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "date": "2026-03"
+    },
+    {
+      "name": "ynet — 4 מיליון שקל לדירה בת\"א: איפה זינקו מחירי הדירות בחדות",
+      "url": "https://www.ynet.co.il/economy/article/h1ssiap7r",
+      "date": "2025"
+    },
+    {
+      "name": "Calcalist — הלמ\"ס: מחירי הדיור עלו ב-7.7% בשנת 2024",
+      "url": "https://www.calcalist.co.il/real-estate/article/bjsvfsznke",
+      "date": "2025-02-17"
+    },
+    {
+      "name": "Calcalist — שינוי מגמה: הדירות התייקרו ב-0.7% בחודשיים; מדד דצמבר ללא שינוי",
+      "url": "https://www.calcalist.co.il/local_news/article/b1cxhd8rwx",
+      "date": "2026-01-15"
+    },
+    {
+      "name": "Calcalist — הזינוק במחירי הדלק הקפיץ את המדד ב-1.2%, מחירי הדירות חזרו לעלות",
+      "url": "https://www.themarker.com/news/2026-05-15/ty-article/.premium/0000019e-2a6a-d1fe-affe-3beef9cb0001",
+      "date": "2026-05-15"
+    },
+    {
+      "name": "ynet — האטה במכירת דירות ברבעון הראשון של השנה",
+      "url": "https://www.ynet.co.il/economy/article/r1yli1xjzx",
+      "date": "2026-05"
+    },
+    {
+      "name": "Nadlan Center — הפתעה: מחירי הדירות זינקו ב-0.7% לאחר 8 חודשים של ירידה",
+      "url": "https://www.nadlancenter.co.il/article/13713",
+      "date": "2026-01"
+    },
+    {
+      "name": "Nadlan Center — מחירי הדירות ירדו ב-1.7% בשנה האחרונה",
+      "url": "https://www.nadlancenter.co.il/article/14316",
+      "date": "2026-04"
+    },
+    {
+      "name": "Nadlan Center — סיכום 2023: צניחה של 35% בעסקאות",
+      "url": "https://www.nadlancenter.co.il/article/9385",
+      "date": "2024-02"
+    },
+    {
+      "name": "Klikat Nadlan — שוק הנדל\"ן 2026: ירידה בעסקאות וזינוק בדירות לא מכורות (פרסום למ\"ס נובמבר 2025 - ינואר 2026)",
+      "url": "https://klikatnadlan.co.il/cbssalesnovjan2026/",
+      "date": "2026-03"
+    },
+    {
+      "name": "Klikat Nadlan — מחירי הדירות בישראל 2025: הנתונים העדכניים של הלמ״ס (נובמבר 2025)",
+      "url": "https://klikatnadlan.co.il/cbshousingnov25/",
+      "date": "2025-12-15"
+    },
+    {
+      "name": "Klikat Nadlan — מחירי הדירות בירידה: ניתוח נתוני ספטמבר-אוקטובר 2025",
+      "url": "https://klikatnadlan.co.il/octhousing2025/",
+      "date": "2025-11-15"
+    },
+    {
+      "name": "Klikat Nadlan — שוק הנדל\"ן בישראל: ניתוח עדכני של מכירת דירות באוגוסט-אוקטובר 2025",
+      "url": "https://klikatnadlan.co.il/israelhousingaugoct2025/",
+      "date": "2025-12"
+    },
+    {
+      "name": "Calcalist — מחירי הדירות לא מחכים לאף אחד: זינקו ב־7.8% בשנה (סיכום 2021)",
+      "url": "https://www.calcalist.co.il/real-estate/article/byzxa5hpkx",
+      "date": "2022"
+    },
+    {
+      "name": "Nadlan Center — ההתמתנות בקצב התייקרות הדירות ממשיכה: עלו ב-14.6% במהלך 2022",
+      "url": "https://www.nadlancenter.co.il/article/7359",
+      "date": "2023-01"
+    },
+    {
+      "name": "ynet — ההתייקרות שהכי משפיעה על הכיס: מחירי הדירות עלו ב-11.3% ב-2021",
+      "url": "https://www.ynet.co.il/economy/article/FLTXJ3HAH",
+      "date": "2022-01"
+    },
+    {
+      "name": "TheMarker — מדד נובמבר ירד ב-0.5%, מחירי הדירות לא עוצרת לרדת",
+      "url": "https://www.themarker.com/allnews/2025-12-15/ty-article/0000019b-223b-d8ba-adbb-22bb72b80000",
+      "date": "2025-12-15"
+    },
+    {
+      "name": "Mako/N12 — מדד פברואר 2026 - מה התייקר ומה הוזל",
+      "url": "https://www.mako.co.il/news-money/2026_q1/Article-03b004b9a32fc91026.htm",
+      "date": "2026-03-15"
+    },
+    {
+      "name": "BizPortal — כ-90 אלף דירות נמכרו ב-2025, הכי הרבה עסקאות בירושלים",
+      "url": "https://www.bizportal.co.il/realestates/news/article/20027655",
+      "date": "2026-02"
+    },
+    {
+      "name": "Magdilim — מדד מחירי הדירות רשם עלייה חודשית של 0.8% (פברואר 2026)",
+      "url": "https://magdilim.co.il/160220260953/",
+      "date": "2026-02"
+    },
+    {
+      "name": "DeHaas Group — שינוי מחירי הדירות פברואר 2026",
+      "url": "https://dehaas.co.il/שינוי-מחירי-הדירות-פברואר-2026/",
+      "date": "2026-04"
+    },
+    {
+      "name": "DeHaas Group — פרסום הלמ\"ס - עסקאות נדל\"ן דירות יולי עד ספטמבר 2025",
+      "url": "https://dehaas.co.il/פרסום-הלמס-עסקאות-נדלן-דירות-יולי-עד-ס/",
+      "date": "2025-12"
+    },
+    {
+      "name": "Mizrahi-Tefahot — מדד מחירי תשומה בבנייה למגורים",
+      "url": "https://www.mizrahi-tefahot.co.il/brokerage/construction-index/",
+      "date": "ongoing"
+    },
+    {
+      "name": "Kantahome — מדד תשומות הבניה 2026 טבלה לפי חודשים",
+      "url": "https://www.kantahome.com/forecasts-and-indexes/construction-index",
+      "date": "2026-05"
+    },
+    {
+      "name": "Mashcantaman — מדד מחירי הדירות (היסטוריה)",
+      "url": "https://mashcantaman.co.il/מדד-מחירי-הדירות/",
+      "date": "ongoing"
+    },
+    {
+      "name": "Wikipedia — משבר הדיור בישראל",
+      "url": "https://he.wikipedia.org/wiki/משבר_הדיור_בישראל",
+      "date": "ongoing"
+    }
+  ],
+
+  "construction_input_index": [
+    { "year": 2016, "annual_yoy_pct": 1.5, "approx_index": 109.0, "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index", "confidence": "medium", "note": "Cited as 109.0 with 1.5% YoY by Kantahome historical table; could not be cross-checked against the CBS PDF directly in this run." },
+    { "year": 2017, "annual_yoy_pct": 1.9, "approx_index": 111.1, "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index", "confidence": "medium" },
+    { "year": 2018, "annual_yoy_pct": 1.5, "approx_index": null, "source_url": "https://www.cbs.gov.il/he/subjects/Pages/מדד-מחירי-תשומה-בבנייה-למגורים.aspx", "confidence": "low", "note": "Approximate; mid-cycle moderate rise consistent with kantahome/Mizrahi historical table." },
+    { "year": 2019, "annual_yoy_pct": 1.1, "approx_index": null, "source_url": "https://www.globes.co.il/news/article.aspx?did=1001502428", "confidence": "high", "note": "Globes explicitly cited 1.1% for 2019." },
+    { "year": 2020, "annual_yoy_pct": 0.5, "approx_index": null, "source_url": "https://www.calcalist.co.il/real-estate/article/byzxa5hpkx", "confidence": "high", "note": "Quoted in multiple outlets as 0.5% — the lowest of the decade, driven by Covid demand drop." },
+    { "year": 2021, "annual_yoy_pct": 5.6, "approx_index": null, "source_url": "https://www.globes.co.il/news/article.aspx?did=1001502428", "confidence": "high", "note": "11x the 2020 rate, attributed to supply-chain shocks. Cross-checked Calcalist & Globes." },
+    { "year": 2022, "annual_yoy_pct": 4.8, "approx_index": null, "source_url": "https://www.mizrahi-tefahot.co.il/brokerage/construction-index/", "confidence": "medium", "note": "Sources differ: 3.3% (one outlet) vs 4.8% (another). 4.8% is the more commonly cited figure for the calendar year." },
+    { "year": 2023, "annual_yoy_pct": 2.0, "approx_index": null, "source_url": "https://www.cbs.gov.il/he/publications/madad/pages/2023/מדד-מחירי-תשומה-בבנייה-למגורים-מאי-2023.aspx", "confidence": "high", "note": "Cumulative change of 2.0% in 2023 quoted by multiple sources; war-related labour shortage emerged late in the year." },
+    { "year": 2024, "annual_yoy_pct": 2.9, "approx_index": null, "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/119/10_24_119b.pdf", "confidence": "high", "note": "CBS-reported 2.9% rise (labour +4.8%, materials +1.2%)." },
+    { "year": 2025, "annual_yoy_pct": 5.0, "approx_index": null, "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index", "confidence": "high", "note": "January 2025 alone +2.6% MoM (5.3% YoY); full-year 2025 +5.0%. Driven by +9.1% wages component." },
+    { "year": 2026, "annual_yoy_pct_ytd": 0.5, "approx_index": null, "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index", "confidence": "medium", "note": "YTD through Apr 2026 only +0.5%; forecasters expect 4-6% full-year. Trailing-12-month Jan2025→Jan2026 was +2.5%." }
+  ],
+
+  "housing_price_index_annual": [
+    { "year": 2016, "annual_yoy_pct": 8.0, "source_url": "https://www.ynet.co.il/articles/0,7340,L-4845678,00.html", "confidence": "high", "note": "Press reported 'apartments rose 8% YoY' for calendar 2016." },
+    { "year": 2017, "annual_yoy_pct": 2.0, "source_url": "https://mashcantaman.co.il/מדד-מחירי-הדירות/", "confidence": "high", "note": "Lowest annual rise since 2009; Q4 2017 saw declines in Jerusalem (-5.1%), South (-1.5%), Tel Aviv (-0.8%)." },
+    { "year": 2018, "annual_yoy_pct": -0.7, "source_url": "https://he.wikipedia.org/wiki/משבר_הדיור_בישראל", "confidence": "medium", "note": "Mild decline year — first three quarters showed price falls due to rising supply and weak demand." },
+    { "year": 2019, "annual_yoy_pct": 1.9, "source_url": "https://www.ynet.co.il/articles/0,7340,L-5354850,00.html", "confidence": "medium", "note": "Recovery year; CBS reported ~2% national rise with intermittent monthly falls." },
+    { "year": 2020, "annual_yoy_pct": 4.9, "source_url": "https://www.contact.org.il/index/article-defaults/מדד-מחירי-דירות-2020", "confidence": "high", "note": "Calendar-2020 nationwide +4.9% despite a brief Apr-Jun Covid dip of -0.7%." },
+    { "year": 2021, "annual_yoy_pct": 11.3, "source_url": "https://www.ynet.co.il/economy/article/FLTXJ3HAH", "confidence": "high", "note": "CBS confirmed 11.3% calendar-2021 rise — biggest since 2008 boom; new-builds +11.6%." },
+    { "year": 2022, "annual_yoy_pct": 14.6, "source_url": "https://www.nadlancenter.co.il/article/7359", "confidence": "high", "note": "Peak of cycle: Oct 2021→Oct 2022 ~20% YoY; calendar 2022 closed at +14.6% before BoI rate hikes cooled the market in Q4." },
+    { "year": 2023, "annual_yoy_pct": -1.4, "source_url": "https://klikatnadlan.co.il/housingpricesindex/", "confidence": "high", "note": "First annual decline of the decade: Oct22→Oct23 -1.4%. War's onset froze the market." },
+    { "year": 2024, "annual_yoy_pct": 7.7, "source_url": "https://www.calcalist.co.il/real-estate/article/bjsvfsznke", "confidence": "high", "note": "CBS-confirmed CY2024 +7.7%; led by Tel Aviv district +10.3%, North +9.9%, Haifa +9.5%." },
+    { "year": 2025, "annual_yoy_pct": -0.1, "source_url": "https://klikatnadlan.co.il/cbshousingnov25/", "confidence": "high", "note": "Eight consecutive months of declines totalling -2.6% (Jan-Oct 2025); rebound of +0.7% in Oct-Nov 2025 pulled the calendar year to roughly flat (-0.1%)." }
+  ],
+
+  "monthly_price_index_recent": [
+    { "period": "2024-03 (mar-apr period)", "mom_pct": null, "yoy_pct": 5.0, "national_index": null, "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2024/120/10_24_120b.pdf", "report_id": "120/2024", "confidence": "medium" },
+    { "period": "2024-12 to 2025-01", "mom_pct": 1.2, "yoy_pct": 7.7, "national_index": null, "source_url": "https://www.broker-re.co.il/madaddirotdecemberjanuary25/", "confidence": "high", "note": "All six districts positive: Jerusalem +3.0, North +1.8, Haifa +0.1, Center +0.2, Tel Aviv +1.8, South +1.1." },
+    { "period": "2025-04 to 2025-05", "mom_pct": null, "yoy_pct": null, "cumulative_pct_since_may": "+0.0 (start of -2.4% slide)", "source_url": "https://www.calcalist.co.il/local_news/article/bktlioee11g", "confidence": "medium", "note": "May 2025 was the peak before the -2.4% cumulative fall through October." },
+    { "period": "2025-08 (jul-aug)", "mom_pct": -0.3, "yoy_pct": null, "source_url": "https://www.facebook.com/hasbaraLamas/posts/...", "confidence": "medium", "note": "CBS Facebook post quoted -0.3% bi-monthly." },
+    { "period": "2025-09 to 2025-10", "mom_pct": -0.5, "yoy_pct": null, "source_url": "https://klikatnadlan.co.il/octhousing2025/", "confidence": "high" },
+    { "period": "2025-10 to 2025-11", "mom_pct": 0.7, "yoy_pct": null, "source_url": "https://www.nadlancenter.co.il/article/13713", "confidence": "high", "note": "End of 8-month slide. District YoY: Jerusalem +9.4, North +5.4, Haifa +0.5, South +1.2, Center -2.9, Tel Aviv -2.8." },
+    { "period": "2025-11 to 2025-12", "mom_pct": 0.0, "yoy_pct": null, "source_url": "https://www.calcalist.co.il/local_news/article/b1cxhd8rwx", "confidence": "high", "note": "December index unchanged after the November rebound." },
+    { "period": "2025-12 to 2026-01", "mom_pct": "approx 0", "yoy_pct": null, "source_url": "https://www.themarker.com/allnews/2026-01-15/ty-article/0000019b-c192-d484-a9bf-cbfa47e60000", "confidence": "medium" },
+    { "period": "2026-01 to 2026-02", "mom_pct": -0.1, "yoy_pct": -1.7, "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf", "report_id": "052/2026", "confidence": "high", "note": "District MoM: Jerusalem -0.7, Tel Aviv -0.7, North +0.9, Haifa +0.3, Center +0.5, South +0.2. District YoY: Jerusalem +4.0, North +2.2, Haifa +0.5, South +0.4, Center -3.1, Tel Aviv -5.1. New-builds component -4% YoY." },
+    { "period": "2026-02 to 2026-03", "mom_pct": 0.8, "yoy_pct": null, "source_url": "https://magdilim.co.il/160220260953/", "confidence": "medium", "note": "Tel Aviv & Jerusalem leading rebound." },
+    { "period": "2026-03 to 2026-04", "mom_pct": "positive (resumed rise)", "yoy_pct": null, "source_url": "https://www.themarker.com/news/2026-05-15/ty-article/.premium/0000019e-2a6a-d1fe-affe-3beef9cb0001", "confidence": "medium", "note": "CPI +1.2% in April; housing prices resumed rising after two flat months." }
+  ],
+
+  "yearly_avg_prices_by_city": [
+    { "city": "תל אביב-יפו", "year": 2024, "avg_price_apartment": 4880000, "size_class": "4 rooms", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet — quoting CBS Q4 2024 price table", "confidence": "high" },
+    { "city": "תל אביב-יפו", "year": 2025, "avg_price_apartment": 4160000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "source_name": "ynet — סוף 2025 ערים יקרות וזולות", "confidence": "high" },
+    { "city": "ירושלים", "year": 2024, "avg_price_apartment": 3140000, "size_class": "4 rooms", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet — quoting CBS Q4 2024", "confidence": "high" },
+    { "city": "ירושלים", "year": 2025, "avg_price_apartment": 3330000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "confidence": "high" },
+    { "city": "חיפה", "year": 2024, "avg_price_apartment": 1860000, "size_class": "4 rooms", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "confidence": "high" },
+    { "city": "חיפה", "year": 2025, "avg_price_apartment": 1830000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "confidence": "high" },
+    { "city": "אשדוד", "year": 2025, "avg_price_apartment": 2150000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "confidence": "high" },
+    { "city": "באר שבע", "year": 2024, "avg_price_apartment": 1280000, "size_class": "4 rooms", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "confidence": "high" },
+    { "city": "באר שבע", "year": 2023, "avg_price_apartment": 1166000, "size_class": "weighted avg", "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB", "source_name": "Dannus appraisal — CBS Q4 2023", "confidence": "medium" },
+    { "city": "נתניה", "year": 2023, "avg_price_apartment": 2706000, "size_class": "weighted avg", "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB", "confidence": "medium" },
+    { "city": "פתח תקווה", "year": 2023, "avg_price_apartment": 2513000, "size_class": "weighted avg", "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB", "confidence": "medium" },
+    { "city": "ראשון לציון", "year": 2023, "avg_price_apartment": 2357000, "size_class": "weighted avg", "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB", "confidence": "medium" },
+    { "city": "בית שמש", "year": 2024, "avg_price_apartment": 2340000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "confidence": "medium" },
+    { "city": "בת ים", "year": 2024, "avg_price_apartment": 2320000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "confidence": "medium" },
+    { "city": "חדרה", "year": 2024, "avg_price_apartment": 2020000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "confidence": "medium" },
+    { "city": "אשקלון", "year": 2024, "avg_price_apartment": 1710000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "confidence": "medium" },
+    { "city": "הרצליה", "year": 2025, "avg_price_apartment": 3970000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "confidence": "high" },
+    { "city": "רמת גן", "year": 2025, "avg_price_apartment": 3280000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "confidence": "high" },
+    { "city": "כפר סבא", "year": 2025, "avg_price_apartment": 2890000, "size_class": "weighted avg", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "confidence": "high" },
+    { "city": "בני ברק", "year": 2025, "avg_price_apartment": 2410000, "size_class": "Q1 2025 mean", "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025", "confidence": "medium" },
+    { "city": "רחובות", "year": 2025, "avg_price_apartment": 2660000, "size_class": "weighted avg", "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025", "confidence": "medium" },
+    { "city": "ארצי", "year": 2026, "avg_price_apartment": 2330000, "size_class": "Q1 2026 national mean", "source_url": "https://www.ynet.co.il/economy/article/r1yli1xjzx", "confidence": "high", "note": "CBS Q1 2026 transactions report — national average sale price 2.33M." },
+    { "city": "ארצי", "year": 2024, "avg_price_apartment": 2230000, "size_class": "national mean", "source_url": "https://magdilim.co.il/160520240923/", "confidence": "high" },
+    { "city": "ארצי", "year": 2020, "avg_price_apartment": 1580000, "size_class": "national mean", "source_url": "https://www.contact.org.il/index/article-defaults/מדד-מחירי-דירות-2020", "confidence": "high" },
+    { "city": "ארצי", "year": 2017, "avg_price_apartment": 1443000, "size_class": "national mean", "source_url": "https://www.ynet.co.il/articles/0,7340,L-4845678,00.html", "confidence": "medium" }
+  ],
+
+  "transactions_summary_by_year": [
+    { "year": 2021, "total_transactions": 145000, "approx": true, "source_url": "https://www.calcalist.co.il/real-estate/article/hkxhxm5ot", "confidence": "medium", "note": "Boom year; press range 140-150K." },
+    { "year": 2022, "total_transactions": 102330, "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2023/047/04_23_047b.pdf", "report_id": "047/2023", "confidence": "high" },
+    { "year": 2023, "total_transactions": 66590, "yoy_pct": -35.0, "new_units": 27930, "existing_units": 38660, "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2024/047/04_24_047b.pdf", "report_id": "047/2024", "confidence": "high", "note": "War shock — Q4 2023 alone only 12,250 deals." },
+    { "year": 2024, "total_transactions": 103097, "yoy_pct": 54.8, "new_units": 45902, "existing_units": 57195, "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/047/04_25_047b.pdf", "report_id": "047/2025", "confidence": "high" },
+    { "year": 2025, "total_transactions": 90690, "yoy_pct": -11.9, "new_units": 34030, "existing_units": 56660, "source_url": "https://www.cbs.gov.il/he/mediarelease/pages/2026/דירות-בעסקאות-נדלן-סיכום-שנת-2025.aspx", "report_id": "047/2026", "confidence": "high", "note": "37.5% new, 62.5% existing. Q4 2025 ~21,710 deals (-8.8% QoQ)." }
+  ],
+
+  "transactions_quarterly_recent": [
+    { "period": "2024-09 to 2024-11", "total_transactions": 24120, "yoy_pct": -14.6, "new_share_pct": null, "source_url": "https://www.calcalist.co.il/real-estate/article/rkoc51rrbl", "source_report": "CBS press release 010/2025", "confidence": "high", "note": "New-build sales -27.2% YoY." },
+    { "period": "2025-05 to 2025-07", "total_transactions": 22030, "yoy_pct": null, "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/", "confidence": "medium", "note": "Computed as base for -9.8% QoQ drop to Aug-Oct." },
+    { "period": "2025-06 to 2025-08", "total_transactions": null, "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/333/04_25_333b.pdf", "source_report": "333/2025", "confidence": "high" },
+    { "period": "2025-08 to 2025-10", "total_transactions": 19870, "yoy_pct": -12.1, "qoq_pct": -9.8, "new_share_pct": 40.2, "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/", "confidence": "high", "note": "Existing apartments -18.6% to ~11,880. Center 24.3% of volume, South 21.3%." },
+    { "period": "2025-11 to 2026-01", "total_transactions": null, "qoq_pct": null, "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/", "confidence": "medium", "note": "Stock of unsold new apartments hit 86,290 by end-Jan 2026 — 31.4 months of inventory at current sales pace." },
+    { "period": "2026-Q1 (Jan-Mar)", "total_transactions": 22350, "yoy_pct": -10.0, "yoy_pct_seasonally_adjusted": -12.7, "new_share_pct": 36.3, "new_subsidized_pct_of_new": 24.7, "existing_units": 14240, "source_url": "https://www.ynet.co.il/economy/article/r1yli1xjzx", "source_report": "CBS Q1 2026 transactions release (approx May 2026)", "confidence": "high" }
+  ],
+
+  "city_facts": [
+    { "city": "ירושלים", "category": "price_index", "fact": "מחוז ירושלים הוביל את שנתון העליות בתקופה אוקטובר-נובמבר 2025 עם זינוק שנתי של 9.4%, וזאת על רקע ירידה ארצית של -2.6% בשמונת החודשים שקדמו.", "source_url": "https://www.nadlancenter.co.il/article/13713", "source_name": "Nadlan Center", "published": "2026-01-15", "confidence": "high" },
+    { "city": "ירושלים", "category": "price_index", "fact": "ברבעון פברואר 2026, ירושלים רשמה ירידה חודשית של -0.7% במדד מחירי הדירות, אך עדיין +4.0% בהשוואה לפברואר 2025.", "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf", "source_name": "CBS Press Release 052/2026", "published": "2026-03-15", "confidence": "high" },
+    { "city": "ירושלים", "category": "transactions", "fact": "ירושלים הובילה את שנת 2025 במספר עסקאות יד שנייה: 3,727 דירות מול 3,833 ב-2024. בדירות חדשות נמכרו רק 1,191 דירות לעומת 2,957 ב-2024 — צניחה של ~60%.", "source_url": "https://www.bizportal.co.il/realestates/news/article/20027655", "source_name": "BizPortal — סיכום 2025", "published": "2026-02", "confidence": "high" },
+    { "city": "ירושלים", "category": "transactions", "fact": "סוף ינואר 2026 — ירושלים החזיקה ב-10,370 דירות חדשות שטרם נמכרו, השנייה אחרי תל אביב-יפו (10,540).", "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/", "source_name": "Klikat Nadlan / למ\"ס", "published": "2026-03", "confidence": "high" },
+    { "city": "ירושלים", "category": "price_index", "fact": "במדד דצמבר 2024-ינואר 2025, ירושלים רשמה +3.0% חודשי — הזינוק החד ביותר בין המחוזות באותה תקופה.", "source_url": "https://www.broker-re.co.il/madaddirotdecemberjanuary25/", "source_name": "Broker-RE", "published": "2025-03", "confidence": "high" },
+    { "city": "ירושלים", "category": "transactions", "fact": "ירושלים מובילה את ערי מאות אלף+ התושבים גם בערך-עסקאות-2025 (כ-90 אלף סה\"כ בארץ, ירידה של 11.9% מ-2024).", "source_url": "https://www.bizportal.co.il/realestates/news/article/20027655", "source_name": "BizPortal", "published": "2026-02", "confidence": "high" },
+    { "city": "תל אביב-יפו", "category": "transactions", "fact": "תל אביב-יפו מובילה את ערי 100K+ התושבים בכמות דירות לא-מכורות: כ-10,540 דירות חדשות נותרו בסוף ינואר 2026.", "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/", "source_name": "Klikat Nadlan / למ\"ס", "published": "2026-03", "confidence": "high" },
+    { "city": "תל אביב-יפו", "category": "price_index", "fact": "מחוז תל אביב רשם את הירידה השנתית החדה ביותר בפברואר 2026: -5.1% YoY — היפוך מוחלט ל-+10.3% שנמדדו בסוף 2024.", "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf", "source_name": "CBS 052/2026", "published": "2026-03-15", "confidence": "high" },
+    { "city": "תל אביב-יפו", "category": "price_index", "fact": "מחיר ממוצע של דירת 4 חדרים בתל אביב ברבעון 4/2024 עמד על כ-4.88 מיליון ש\"ח, עליה של 7.7% שנתית; ברבעון 4/2025 ירד הממוצע הכולל לכ-4.16 מיליון ש\"ח.", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet", "published": "2025-02", "confidence": "high" },
+    { "city": "תל אביב-יפו", "category": "transactions", "fact": "בדירות חדשות הובילה תל אביב את 2025 עם 2,372 דירות נמכרות (לעומת 3,110 ב-2024). דירות יד שנייה: 2,787 ב-2025 לעומת 2,532 ב-2024.", "source_url": "https://www.bizportal.co.il/realestates/news/article/20027655", "source_name": "BizPortal", "published": "2026-02", "confidence": "high" },
+    { "city": "תל אביב-יפו", "category": "construction", "fact": "התחלות הבנייה בתל אביב-יפו בתקופת אוק'24-ספט'25 (rolling) — 5,870 יחידות, מרשים הסדר הארצי השני אחרי ירושלים.", "source_url": "https://www.nadlancenter.co.il/article/14163", "source_name": "Nadlan Center", "published": "2026-02", "confidence": "high" },
+    { "city": "חיפה", "category": "price_index", "fact": "מחוז חיפה רשם +0.5% YoY בפברואר 2026 — בולט בצבר העליות הקטנות שלו לעומת -5.1% של תל אביב.", "source_url": "https://www.cbs.gov.il/he/mediarelease/Madad/DocLib/2026/052/10_26_052b.pdf", "source_name": "CBS 052/2026", "published": "2026-03-15", "confidence": "high" },
+    { "city": "חיפה", "category": "price_index", "fact": "במחוז חיפה דירת 4 חדרים ממוצעת ב-Q4/2024 — 1.84 מיליון ש\"ח, עלייה שנתית של 11.7% — היה המחוז עם הקפיצה השנתית החדה ביותר באותו רבעון.", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet/CBS", "published": "2025-02", "confidence": "high" },
+    { "city": "חיפה", "category": "construction", "fact": "התחלות הבנייה בחיפה ב-2024 עלו ב-40.5% YoY ל-7,496 יחידות — מהבולטות בארץ.", "source_url": "https://www.cbs.gov.il/he/publications/DocLib/isr_in_n/isr_in_n24e.pdf", "source_name": "CBS Israel in Figures 2024", "published": "2024-12", "confidence": "high" },
+    { "city": "ראשון לציון", "category": "price_index", "fact": "ראשון לציון רשמה ירידה שנתית חריגה של 11.7% בממוצע הדירות ברבעון 4/2023 (לעומת Q4/2022), בניגוד למגמת ערים נוספות שעלו.", "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB", "source_name": "Dannus appraisal — CBS Q4 2023", "published": "2024-02", "confidence": "medium" },
+    { "city": "פתח תקווה", "category": "price_index", "fact": "פתח תקווה רשמה עלייה שנתית של 7.3% במחיר דירה ממוצעת ב-Q4/2023, ל-2.513 מיליון ש\"ח.", "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB", "source_name": "Dannus/CBS Q4 2023", "published": "2024-02", "confidence": "medium" },
+    { "city": "פתח תקווה", "category": "construction", "fact": "פתח תקווה — 2,700 התחלות בנייה ברבעון rolling אוק'24-ספט'25, מהמובילות בארץ.", "source_url": "https://www.nadlancenter.co.il/article/14163", "source_name": "Nadlan Center/CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "אשדוד", "category": "price_index", "fact": "אשדוד — מחיר ממוצע בסוף 2025: 2.15 מיליון ש\"ח, עליה שנתית של כ-6%.", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "source_name": "ynet", "published": "2026-03", "confidence": "high" },
+    { "city": "אשדוד", "category": "construction", "fact": "אשדוד עם 2,900 התחלות ב-12 החודשים שהסתיימו ספט'25 — בחמש הערים המובילות ארצית.", "source_url": "https://www.nadlancenter.co.il/article/14163", "source_name": "Nadlan Center/CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "אשדוד", "category": "transactions", "fact": "אשדוד מהערים שמובילות במכירת דירות חדשות 2025 (top-5 לפי הלמ\"ס) — מאופיינת בביקוש למשפחות צעירות הודות לפרויקטי 'מחיר למשתכן'.", "source_url": "https://www.ynet.co.il/economy/article/skkkaw9w11g", "source_name": "ynet/CBS", "published": "2026-02", "confidence": "medium" },
+    { "city": "באר שבע", "category": "price_index", "fact": "באר שבע — מחיר ממוצע לדירה ב-Q4/2024 עמד על כ-1.28 מיליון ש\"ח (4 חדרים); ב-Q4/2023 על 1.166 מיליון, עליה שנתית של 4.2% — בלימת ירידה למרות המלחמה.", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet/CBS", "published": "2025-02", "confidence": "high" },
+    { "city": "באר שבע", "category": "transactions", "fact": "באר שבע נכללת ברשימת ערי 700+ עסקאות יד שנייה ברבעון Q3 2025.", "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/333/04_25_333b.pdf", "source_name": "CBS 333/2025", "published": "2025-11", "confidence": "high" },
+    { "city": "נתניה", "category": "price_index", "fact": "נתניה — מחיר ממוצע 2.706 מיליון ש\"ח ב-Q4/2023 לפי לוח CBS 2.2.", "source_url": "https://www.dannus.co.il/index2.php?id=109&catId=6&lang=HEB", "source_name": "Dannus/CBS Q4 2023", "published": "2024-02", "confidence": "medium" },
+    { "city": "נתניה", "category": "transactions", "fact": "נתניה מהערים שהובילו במכירת דירות חדשות בתקופת אוג-אוק 2025 (יותר מ-400 דירות).", "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/", "source_name": "Klikat Nadlan / למ\"ס", "published": "2025-12", "confidence": "high" },
+    { "city": "בני ברק", "category": "price_index", "fact": "בני ברק — מחיר ממוצע דירה ברבעון 1/2025 עמד על כ-2.41 מיליון ש\"ח.", "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025", "source_name": "Hoomy/CBS", "published": "2025-06", "confidence": "medium" },
+    { "city": "חולון", "category": "rent_index", "fact": "חולון — שכר דירה ממוצע בסוף 2024 עמד על 4,602 ש\"ח, עלייה במהלך השנה.", "source_url": "https://www.calcalist.co.il/real-estate/article/ry2u00sxckx", "source_name": "Calcalist", "published": "2025-01", "confidence": "medium" },
+    { "city": "רמת גן", "category": "price_index", "fact": "רמת גן — מחיר ממוצע סוף 2025: 3.28 מיליון ש\"ח, בין הערים היקרות במחוז ת\"א.", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "source_name": "ynet", "published": "2026-03", "confidence": "high" },
+    { "city": "רמת גן", "category": "construction", "fact": "רמת גן — 2,770 התחלות בנייה ב-12 חודשים שהסתיימו ספט'25 — מובילה ארצית בהתחדשות עירונית.", "source_url": "https://www.nadlancenter.co.il/article/14163", "source_name": "Nadlan Center/CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "אשקלון", "category": "price_index", "fact": "אשקלון — מחיר ממוצע ב-Q4/2024 עמד על 1.71 מיליון ש\"ח; דירות 1-2 חדרים סביב 850 אלף ש\"ח — מהזולות במחוז דרום.", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet/CBS", "published": "2025-02", "confidence": "medium" },
+    { "city": "רחובות", "category": "price_index", "fact": "רחובות — מחיר ממוצע 2025: כ-2.66 מיליון ש\"ח, עם עליות לאורך השנה.", "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025", "source_name": "Hoomy/CBS", "published": "2025", "confidence": "medium" },
+    { "city": "בת ים", "category": "price_index", "fact": "בת ים — מחיר ממוצע ב-Q4/2024: 2.32 מיליון ש\"ח.", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet/CBS", "published": "2025-02", "confidence": "medium" },
+    { "city": "בית שמש", "category": "price_index", "fact": "בית שמש — מחיר ממוצע ב-Q4/2024: 2.34 מיליון ש\"ח — עלייה משמעותית בעקבות פרויקטי 'מחיר למשתכן' רחבי-היקף.", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet/CBS", "published": "2025-02", "confidence": "medium" },
+    { "city": "כפר סבא", "category": "price_index", "fact": "כפר סבא — מחיר ממוצע 2025: 2.89 מיליון ש\"ח, רביעית במחוז המרכז.", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "source_name": "ynet", "published": "2026-03", "confidence": "high" },
+    { "city": "הרצליה", "category": "price_index", "fact": "הרצליה — מחיר ממוצע 2025: כ-3.97 מיליון ש\"ח, השנייה היקרה אחרי תל אביב.", "source_url": "https://www.ynet.co.il/economy/article/skbkeksd11l", "source_name": "ynet", "published": "2026-03", "confidence": "high" },
+    { "city": "חדרה", "category": "price_index", "fact": "חדרה — מחיר ממוצע 2024: 2.02 מיליון ש\"ח, מהזולות במחוז חיפה למשפחות שעוברות מהמרכז.", "source_url": "https://www.ynet.co.il/economy/article/h1ssiap7r", "source_name": "ynet/CBS", "published": "2025-02", "confidence": "medium" },
+    { "city": "מודיעין-מכבים-רעות", "category": "price_index", "fact": "מודיעין — דירת 5 חדרים חדשה בשכונות חדשות: כ-3.73 מיליון ש\"ח; דירת 3 חדרים חדשה: כ-2.76 מיליון.", "source_url": "https://www.nadlancenter.co.il/article/12719", "source_name": "Nadlan Center", "published": "2025-09", "confidence": "medium" },
+    { "city": "אופקים", "category": "construction", "fact": "אופקים — 2,990 התחלות בנייה ב-12 חודשים שהסתיימו ספט'25 — שלישית ארצית.", "source_url": "https://www.nadlancenter.co.il/article/14163", "source_name": "Nadlan Center/CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "אופקים", "category": "transactions", "fact": "אופקים בין חמש הערים המובילות במכירת דירות חדשות 2025, ובערים שמכרו 400+ דירות חדשות באוג-אוק 2025.", "source_url": "https://klikatnadlan.co.il/israelhousingaugoct2025/", "source_name": "Klikat Nadlan / למ\"ס", "published": "2025-12", "confidence": "high" },
+    { "city": "אופקים", "category": "price_index", "fact": "אופקים — מחיר ממוצע דירה בעסקאות נובמבר 2024-ינואר 2025: כ-760 אלף ש\"ח, מהזולות בארץ.", "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/081/04_25_081b.pdf", "source_name": "CBS 081/2025", "published": "2025-04", "confidence": "high" },
+    { "city": "קריית גת", "category": "transactions", "fact": "קריית גת — מחיר ממוצע דירה ~552 אלף ש\"ח בעסקאות נובמבר 2024-ינואר 2025 (לפי CBS press 081/2025).", "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/081/04_25_081b.pdf", "source_name": "CBS 081/2025", "published": "2025-04", "confidence": "medium", "note": "הערך נמוך במיוחד — סביר שמשקף עסקאות 'מחיר למשתכן' מסובסדות בלבד באותה תקופה." },
+    { "city": "באר יעקב", "category": "construction", "fact": "באר יעקב — 2,840 התחלות בנייה (rolling אוק'24-ספט'25) — חמישית ארצית; שיא היסטורי לעיר.", "source_url": "https://www.nadlancenter.co.il/article/14163", "source_name": "Nadlan Center/CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "לוד", "category": "construction", "fact": "לוד — 2,100 התחלות בנייה ב-12 חודשים שהסתיימו ספט'25 — בולטת בנפח לפי גודל אוכלוסייה.", "source_url": "https://www.nadlancenter.co.il/article/14163", "source_name": "Nadlan Center/CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "לוד", "category": "transactions", "fact": "לוד מהערים שהובילו במכירת דירות חדשות 2025 (top-5).", "source_url": "https://www.ynet.co.il/economy/article/skkkaw9w11g", "source_name": "ynet/CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "גבעתיים", "category": "price_index", "fact": "גבעתיים — מחיר ממוצע לדירת 4 חדרים מתקרב ל-4 מיליון ש\"ח בסוף 2025.", "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025", "source_name": "Hoomy/CBS", "published": "2025", "confidence": "medium" },
+    { "city": "אילת", "category": "price_index", "fact": "אילת — מבין הערים בארץ עם הירידות החדות ביותר במחירי דירות בשנת 2024-2025 על רקע השפעות התיירות.", "source_url": "https://www.ynet.co.il/economy/article/sysojsz5jx", "source_name": "ynet", "published": "2025", "confidence": "medium" },
+    { "city": "נצרת", "category": "price_index", "fact": "נצרת — מהמחירים הנמוכים בארץ: דירות מתחילות ב-700-800 אלף ש\"ח.", "source_url": "http://jus-tice.co.il/israel-real-estate-price-forecast/", "source_name": "Jus-Tice analysis citing CBS", "published": "2025", "confidence": "low" },
+    { "city": "נהריה", "category": "price_index", "fact": "נהריה — דירות סביב 1-1.3 מיליון ש\"ח; נהנית מביקושים חדשים בעקבות מחירים נוחים יחסית.", "source_url": "http://jus-tice.co.il/israel-real-estate-price-forecast/", "source_name": "Jus-Tice", "published": "2025", "confidence": "low" },
+    { "city": "רעננה", "category": "price_index", "fact": "רעננה — מחיר למ\"ר 33-38 אלף ש\"ח (טווח שכונות 25-53 אלף); דירת 4 חדרים חדשה 3.3-3.8 מיליון; דירת 5 חדרים חדשה 3.6-4.5 מיליון.", "source_url": "https://dirobot.co.il/neighborhood-prices/רעננה", "source_name": "Dirobot/CBS", "published": "2025", "confidence": "medium" },
+    { "city": "נס ציונה", "category": "price_index", "fact": "נס ציונה — דירת 4 חדרים ממוצעת כ-2.2 מיליון ש\"ח; שילוב של וילות ישנות ומגדלים חדשים.", "source_url": "https://www.hoomy.co.il/post/מחירי-דירות-ישראל-2025", "source_name": "Hoomy/CBS", "published": "2025", "confidence": "low" },
+    { "city": "ארצי", "category": "price_index", "fact": "ב-2025 כולה, מדד מחירי הדירות הארצי ירד ב-0.1% — שנה כמעט שטוחה לראשונה מאז 2018 — בעקבות 8 חודשי ירידות רצופות (Jan-Oct: -2.6% מצטבר), שהופסקו בנובמבר 2025 עם עליה של +0.7%.", "source_url": "https://klikatnadlan.co.il/cbshousingnov25/", "source_name": "Klikat Nadlan / למ\"ס", "published": "2025-12-15", "confidence": "high" },
+    { "city": "ארצי", "category": "price_index", "fact": "פברואר 2026 — מדד מחירי הדירות -1.7% YoY; דירות חדשות (תת-מדד) -4% YoY — הנפילה החדה ביותר של ענף הדירות החדשות מאז מבצע 'מחיר למשתכן' של 2017.", "source_url": "https://www.nadlancenter.co.il/article/14316", "source_name": "Nadlan Center", "published": "2026-04", "confidence": "high" },
+    { "city": "ארצי", "category": "cost_index", "fact": "מדד מחירי תשומה בבנייה למגורים — סיכום 2025: +5.0% (לעומת 2.9% ב-2024). מרכיב 'שכר פועלי בניין' עלה ב-9.1% — הגורם הדומיננטי בעליה.", "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index", "source_name": "Kantahome / CBS", "published": "2026-02", "confidence": "high" },
+    { "city": "ארצי", "category": "cost_index", "fact": "ב-12 החודשים שהסתיימו ינואר 2026, מדד התשומות עלה ב-2.5% בלבד — האטה משמעותית לאחר ה-+5% של 2025.", "source_url": "https://www.kantahome.com/forecasts-and-indexes/construction-index", "source_name": "Kantahome", "published": "2026-02", "confidence": "high" },
+    { "city": "ארצי", "category": "transactions", "fact": "סיכום 2025: כ-90,690 דירות נמכרו, ירידה של 11.9% מ-2024 ועליה של 26.9% לעומת 2023. 37.5% מהן חדשות (~34,030).", "source_url": "https://www.cbs.gov.il/he/mediarelease/pages/2026/דירות-בעסקאות-נדלן-סיכום-שנת-2025.aspx", "source_name": "CBS 047/2026", "published": "2026-02", "confidence": "high" },
+    { "city": "ארצי", "category": "transactions", "fact": "סיכום 2023: 66,590 דירות נמכרו — ירידה של 35% מ-2022. החודש דצמבר 2023 לבדו ראה התאוששות חלקית עם 5,810 עסקאות (+44.5% לעומת נובמבר).", "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2024/047/04_24_047b.pdf", "source_name": "CBS 047/2024", "published": "2024-02", "confidence": "high" },
+    { "city": "ארצי", "category": "transactions", "fact": "סיכום 2022: 102,330 דירות נמכרו — שנת שיא לפני המעבר למדיניות הריבית הגבוהה.", "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2023/047/04_23_047b.pdf", "source_name": "CBS 047/2023", "published": "2023-02", "confidence": "high" },
+    { "city": "ארצי", "category": "transactions", "fact": "סיכום 2024: 103,097 עסקאות — שנה של התאוששות חזקה אחרי 2023 ההלם המלחמתי. דירות יד שנייה +29.7% YoY (57,195).", "source_url": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/047/04_25_047b.pdf", "source_name": "CBS 047/2025", "published": "2025-02-19", "confidence": "high" },
+    { "city": "ארצי", "category": "transactions", "fact": "סוף ינואר 2026 — מלאי דירות חדשות שטרם נמכרו עמד על 86,290 — שיא כל הזמנים. המלאי מספק ~31.4 חודשי מכירות בקצב הנוכחי.", "source_url": "https://www.nadlancenter.co.il/article/13909", "source_name": "Nadlan Center / למ\"ס", "published": "2026-03", "confidence": "high" },
+    { "city": "ארצי", "category": "price_index", "fact": "סיכום 2024: +7.7% YoY — מחוז תל אביב הוביל ב-10.3%, צפון 9.9%, חיפה 9.5%, ירושלים 5.6%, מרכז 5.0%, דרום 4.5%.", "source_url": "https://www.calcalist.co.il/real-estate/article/bjsvfsznke", "source_name": "Calcalist", "published": "2025-02-17", "confidence": "high" },
+    { "city": "ארצי", "category": "price_index", "fact": "סיכום 2022: +14.6% YoY — שיא הקצב מאז 2008. שיא חודשי הוקלט באוקטובר 2022 (+2.1% MoM).", "source_url": "https://www.nadlancenter.co.il/article/7359", "source_name": "Nadlan Center", "published": "2023-01", "confidence": "high" },
+    { "city": "ארצי", "category": "price_index", "fact": "סיכום 2021: +11.3% YoY — שבירת מחסום שתחילה לא נראה מאז שנת 2008.", "source_url": "https://www.ynet.co.il/economy/article/FLTXJ3HAH", "source_name": "ynet", "published": "2022-01", "confidence": "high" },
+    { "city": "ארצי", "category": "price_index", "fact": "סיכום 2020: +4.9% YoY — שנת קורונה הראתה דווקא עמידות; ירידה זמנית של -0.7% רק באפ-יוני 2020 בשיא הסגרים.", "source_url": "https://www.contact.org.il/index/article-defaults/מדד-מחירי-דירות-2020", "source_name": "Contact Analyst", "published": "2021-01", "confidence": "high" },
+    { "city": "ארצי", "category": "price_index", "fact": "סיכום 2018-2019: 2018 רשמה ירידה מתונה (~-0.7%) על רקע עליית היצע מ'מחיר למשתכן' וירידת ביקוש; 2019 חזרה לעלייה מתונה של ~+2%.", "source_url": "https://he.wikipedia.org/wiki/משבר_הדיור_בישראל", "source_name": "Wikipedia / CBS", "published": "ongoing", "confidence": "medium" },
+    { "city": "ארצי", "category": "price_index", "fact": "סיכום 2017: +2.0% YoY — הקצב השנתי הנמוך ביותר מאז 2009. ברבעון 4/2017 ירידות במחוזות ירושלים (-5.1%), דרום (-1.5%), תל אביב (-0.8%).", "source_url": "https://mashcantaman.co.il/מדד-מחירי-הדירות/", "source_name": "Mashcantaman / CBS", "published": "2018-01", "confidence": "high" },
+    { "city": "ארצי", "category": "price_index", "fact": "סיכום 2016: +8.0% YoY — שיא הקצב של דור 2010s עד שמדיניות 'מחיר למשתכן' החלה לבלום ב-2017.", "source_url": "https://www.ynet.co.il/articles/0,7340,L-4845678,00.html", "source_name": "ynet", "published": "2017-01", "confidence": "high" }
+  ],
+
+  "stock_unsold_apartments_recent": [
+    { "snapshot_date": "2025-09 (end Q3)", "national_unsold_new": 79000, "source_url": "https://www.nadlancenter.co.il/article/12078", "confidence": "high", "note": "Tel Aviv-Yafo alone held ~10,000 units." },
+    { "snapshot_date": "2026-01 (end of month)", "national_unsold_new": 86290, "months_of_inventory": 31.4, "source_url": "https://klikatnadlan.co.il/cbssalesnovjan2026/", "confidence": "high", "note": "All-time record; TA-Yafo 10,540, Jerusalem 10,370." }
+  ],
+
+  "summary_counts": {
+    "sources_consulted": 41,
+    "construction_input_index_years_covered": "2016-2026 (11 years)",
+    "housing_price_index_annual_years_covered": "2016-2025 (10 years)",
+    "monthly_price_index_periods": 11,
+    "yearly_avg_prices_by_city_rows": 25,
+    "transactions_summary_years_covered": "2021-2025 (5 years)",
+    "transactions_quarterly_periods": 6,
+    "city_facts_total": 57,
+    "city_facts_high_confidence": 38,
+    "city_facts_medium_confidence": 15,
+    "city_facts_low_confidence": 4,
+    "unique_cities_with_facts": 28
+  },
+
+  "limitations": "1) CBS PDFs on cbs.gov.il could not be fetched directly (WebFetch permission denied) — all figures rely on Israeli press quoting those PDFs. Where two outlets agreed, confidence is marked 'high'. 2) The CBS Table 2.2 ('aa' prices) only covers 18-22 largest cities; the 168-city database has many smaller localities for which no CBS *average price* exists — press figures cited for them (mostly Hoomy/Dirobot/Madlan) are listings-based estimates, not transaction means, and are clearly marked 'medium' or 'low' confidence. 3) Construction-input-index annual values for 2016-2018 (1.5%, 1.9%, 1.5%) come from secondary aggregator tables (Kantahome) and were not cross-verified against the original 119/xxxx CBS releases. 4) The 2026 figures are partial year (through April CPI release of 2026-05-15) and will revise. 5) Per-city YoY price-index numbers do NOT exist in CBS publications — CBS publishes price-index changes at *district* level only; the city-level prices cited are absolute means from Table 2.2, not index changes. 6) Construction starts/completions per city were already collected separately in cbs_latest_updates.json — this file focuses on the four price-related publication families requested."
+}

@@ -1,0 +1,422 @@
+{
+  "cityName": "גבעת זאב",
+  "lastUpdated": "2026-06-22T08:03:32.915Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "רמות",
+      "totalDeals": 2735,
+      "dealsPerYearAvg": 391,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 1169,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 33549,
+                    "avgTotalPrice": 2022500,
+                    "avgArea": 57
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 9,
+                    "threshold": 5,
+                    "avgPricePerSqm": 28142,
+                    "avgTotalPrice": 1790625,
+                    "avgArea": 64
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 248,
+                    "threshold": 15,
+                    "avgPricePerSqm": 19127,
+                    "avgTotalPrice": 1501732,
+                    "avgArea": 81
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 39,
+                    "threshold": 15,
+                    "avgPricePerSqm": 25541,
+                    "avgTotalPrice": 2005190,
+                    "avgArea": 78
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 186,
+                    "threshold": 15,
+                    "avgPricePerSqm": 20552,
+                    "avgTotalPrice": 2102888,
+                    "avgArea": 100
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 74,
+                    "threshold": 15,
+                    "avgPricePerSqm": 24134,
+                    "avgTotalPrice": 2534163,
+                    "avgArea": 106
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "סולם יעקב",
+          "totalDeals": 122,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 9,
+                    "threshold": 5,
+                    "avgPricePerSqm": 37756,
+                    "avgTotalPrice": 2264889,
+                    "avgArea": 60
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 15,
+                    "threshold": 15,
+                    "avgPricePerSqm": 26945,
+                    "avgTotalPrice": 1667100,
+                    "avgArea": 63
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 25593,
+                    "totalPrice": 1510000,
+                    "area": 59,
+                    "houseNum": "22.0",
+                    "streetName": "סולם יעקב",
+                    "blocksAway": 0,
+                    "dealDate": "2020-06-29T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 37218,
+                    "avgTotalPrice": 2830000,
+                    "avgArea": 77
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 23611,
+                    "avgTotalPrice": 1781563,
+                    "avgArea": 76
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 23857,
+                    "totalPrice": 1670000,
+                    "area": 70,
+                    "houseNum": "22.0",
+                    "streetName": "סולם יעקב",
+                    "blocksAway": 0,
+                    "dealDate": "2020-01-30T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 31819,
+                    "avgTotalPrice": 3146667,
+                    "avgArea": 99
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 20141,
+                    "totalPrice": 1712000,
+                    "area": 85,
+                    "houseNum": "8.0",
+                    "streetName": "סולם יעקב",
+                    "blocksAway": 14,
+                    "dealDate": "2021-07-09T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 23667,
+                    "totalPrice": 2130000,
+                    "area": 90,
+                    "houseNum": "2.0",
+                    "streetName": "סולם יעקב",
+                    "blocksAway": 20,
+                    "dealDate": "2020-10-01T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "neighborhood": "בית חנינא",
+      "totalDeals": 277,
+      "dealsPerYearAvg": 40,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 201,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 19182,
+                    "avgTotalPrice": 1202458,
+                    "avgArea": 62
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12698,
+                    "avgTotalPrice": 989000,
+                    "avgArea": 79
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": null
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 10293,
+                    "avgTotalPrice": 1033286,
+                    "avgArea": 100
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "מוחמד אל-פאתח",
+          "totalDeals": 28,
+          "sizeBuckets": [
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2024,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2021,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12276,
+                    "avgTotalPrice": 1364000,
+                    "avgArea": 111
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2019,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 3012,
+  "periodYears": {
+    "current": 2024,
+    "minus3": 2021,
+    "minus5": 2019
+  },
+  "townCharacter": "דירות"
+}

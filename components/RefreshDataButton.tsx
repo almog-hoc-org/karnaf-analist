@@ -1,0 +1,186 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+interface ProgressEvent {
+  type: string;
+  message: string;
+  data?: Record<string, unknown>;
+}
+
+export default function RefreshDataButton() {
+  const [open, setOpen] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [events, setEvents] = useState<ProgressEvent[]>([]);
+  const [summary, setSummary] = useState<ProgressEvent["data"] | null>(null);
+  const logRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll log to bottom on new event
+  useEffect(() => {
+    if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight;
+  }, [events]);
+
+  async function startRefresh() {
+    setRunning(true);
+    setEvents([]);
+    setSummary(null);
+    setOpen(true);
+    try {
+      const res = await fetch("/api/refresh-data", { method: "POST" });
+      if (!res.body) throw new Error("no stream");
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n\n");
+        buffer = lines.pop() ?? "";
+        for (const line of lines) {
+          const m = line.match(/^data:\s*(.*)$/);
+          if (!m) continue;
+          try {
+            const evt = JSON.parse(m[1]) as ProgressEvent;
+            if (evt.type === "summary") setSummary(evt.data);
+            if (evt.type !== "done") {
+              setEvents((prev) => [...prev, evt]);
+            }
+          } catch {
+            // ignore malformed
+          }
+        }
+      }
+    } catch (err) {
+      setEvents((prev) => [...prev, { type: "error", message: `שגיאה: ${err}` }]);
+    } finally {
+      setRunning(false);
+    }
+  }
+
+  return (
+    <>
+      {/* Floating action button — appears bottom-right */}
+      <button
+        type="button"
+        onClick={() => (running ? setOpen(true) : startRefresh())}
+        className={`fixed bottom-5 left-5 z-40 group inline-flex items-center gap-2 px-4 py-3 rounded-full font-bold text-sm shadow-2xl transition-all ${
+          running
+            ? "bg-amber-500 text-white hover:bg-amber-600"
+            : "bg-gradient-to-l from-cyan-600 to-blue-600 text-white hover:shadow-cyan-500/40 hover:scale-105"
+        }`}
+        aria-label="רענן נתונים"
+        title="חיפוש דוחות עדכניים בלמ״ס"
+      >
+        <span className={`text-base ${running ? "animate-spin" : "group-hover:rotate-180 transition-transform duration-500"}`}>
+          {running ? "⟳" : "🔄"}
+        </span>
+        <span>{running ? "מרענן..." : "רענן נתונים"}</span>
+      </button>
+
+      {/* Modal */}
+      {open && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-end md:items-center justify-center p-4"
+          onClick={() => !running && setOpen(false)}
+        >
+          <div
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col overflow-hidden border border-slate-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <header className="px-5 py-4 border-b border-slate-100 flex items-center gap-3 bg-gradient-to-l from-cyan-50 via-white to-blue-50">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-600 to-blue-600 text-white text-lg flex items-center justify-center shadow-lg">
+                {running ? <span className="animate-spin">⟳</span> : "🔄"}
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base font-bold text-slate-900 leading-tight">
+                  {running ? "מחפש דוחות עדכניים..." : "סיכום עדכון נתונים"}
+                </h3>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  סורק את אתר הלמ&quot;ס לפי דפוסי URL ידועים • דוחות שכבר במערכת מדולגים
+                </p>
+              </div>
+              {!running && (
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="w-8 h-8 rounded-lg hover:bg-slate-100 text-slate-500 text-lg"
+                  aria-label="סגור"
+                >
+                  ×
+                </button>
+              )}
+            </header>
+
+            {/* Live log */}
+            <div ref={logRef} className="flex-1 overflow-y-auto p-4 bg-slate-50/40 space-y-1.5 text-[12px]">
+              {events.length === 0 && (
+                <div className="text-center text-slate-400 py-8">
+                  <div className="text-3xl mb-2 animate-pulse">⟳</div>
+                  <div className="text-sm">מתחיל...</div>
+                </div>
+              )}
+              {events.map((e, i) => {
+                const cls =
+                  e.type === "found" ? "bg-emerald-50 text-emerald-800 border-emerald-200" :
+                  e.type === "error" ? "bg-red-50 text-red-800 border-red-200" :
+                  e.type === "summary" ? "bg-blue-50 text-blue-900 border-blue-200 font-bold" :
+                  e.type === "log" ? "bg-white text-slate-700 border-slate-200" :
+                  "text-slate-500";
+                return (
+                  <div key={i} className={`px-3 py-1.5 rounded-lg border ${cls} leading-relaxed`}>
+                    {e.message}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Summary footer */}
+            {summary && !running && (
+              <footer className="px-5 py-4 border-t border-slate-100 bg-white">
+                <div className="grid grid-cols-4 gap-3 mb-3">
+                  <KpiCell label="נבדקו" value={String(summary.attempted ?? 0)} tone="slate" />
+                  <KpiCell label="חדשים" value={String(summary.found ?? 0)} tone="emerald" />
+                  <KpiCell label="דולגו" value={String(summary.skipped ?? 0)} tone="amber" />
+                  <KpiCell label="שגיאות" value={String(summary.errors ?? 0)} tone="red" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="flex-1 px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm"
+                  >
+                    סגור
+                  </button>
+                  {Number(summary.found ?? 0) > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => window.location.reload()}
+                      className="flex-1 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-sm"
+                    >
+                      רענן את הדף לראות שינויים →
+                    </button>
+                  )}
+                </div>
+              </footer>
+            )}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+function KpiCell({ label, value, tone }: { label: string; value: string; tone: "slate" | "emerald" | "amber" | "red" }) {
+  const cls = tone === "emerald" ? "text-emerald-700 bg-emerald-50 border-emerald-200"
+            : tone === "amber" ? "text-amber-700 bg-amber-50 border-amber-200"
+            : tone === "red" ? "text-red-700 bg-red-50 border-red-200"
+            : "text-slate-700 bg-slate-50 border-slate-200";
+  return (
+    <div className={`rounded-lg p-2 border text-center ${cls}`}>
+      <div className="text-[10px] font-semibold opacity-70 uppercase tracking-wide">{label}</div>
+      <div className="text-xl font-extrabold tabular-nums leading-none mt-1">{value}</div>
+    </div>
+  );
+}

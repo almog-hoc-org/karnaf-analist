@@ -2,26 +2,348 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Light, premium palette — warm off-white with neutral cool accents */
+    --background: #f6f7fb;           /* warm-cool off-white */
+    --background-elevated: #ffffff;
+    --foreground: #0f172a;            /* slate-900 */
+    --foreground-muted: #475569;      /* slate-600 */
+    --foreground-subtle: #94a3b8;     /* slate-400 */
+    --card: #ffffff;
+    --card-border: #e2e8f0;           /* slate-200 */
+    --card-hover: #f1f5f9;            /* slate-100 */
+    --section-bg: #f1f5f9;
+    --divider: #e2e8f0;
+
+    /* Saturated accents that pop on white */
+    --accent-cyan: #0891b2;           /* cyan-600 */
+    --accent-emerald: #059669;        /* emerald-600 */
+    --accent-amber: #d97706;          /* amber-600 */
+    --accent-red: #dc2626;            /* red-600 */
+    --accent-rose: #e11d48;           /* rose-600 */
+    --accent-purple: #7c3aed;         /* violet-600 */
+    --accent-blue: #2563eb;           /* blue-600 */
+    --accent-indigo: #4f46e5;         /* indigo-600 */
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    /* Very subtle radial highlights for depth without darkness */
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -5%, rgba(8, 145, 178, 0.06), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 90% 30%, rgba(124, 58, 237, 0.04), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 10% 70%, rgba(5, 150, 105, 0.04), transparent 60%);
+    background-attachment: fixed;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* ── Card — clean white with strong soft shadow ───────────── */
+  .glass-card {
+    @apply bg-white border border-slate-200 rounded-2xl;
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 4px 12px -2px rgba(15, 23, 42, 0.06),
+      0 12px 32px -8px rgba(15, 23, 42, 0.05);
+  }
+
+  .glass-card:hover {
+    border-color: #cbd5e1;
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.05),
+      0 6px 16px -2px rgba(15, 23, 42, 0.08),
+      0 16px 40px -8px rgba(15, 23, 42, 0.08);
+  }
+
+  /* ── Section container ───────────────────────────────────────── */
+  .section-container {
+    @apply bg-white border border-slate-200 rounded-2xl p-6;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+
+  /* ── KPI card with top accent bar ───────────────────────────── */
+  .kpi-card {
+    @apply relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-4 md:p-5 transition-all duration-300;
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-bar, linear-gradient(90deg, #0891b2, #06b6d4));
+  }
+
+  .kpi-card:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.05),
+      0 8px 20px -2px rgba(15, 23, 42, 0.1),
+      0 12px 40px -8px var(--accent-shadow, rgba(8, 145, 178, 0.15));
+  }
+
+  /* ── Accent variants — top-bar + hover shadow tints ─────── */
+  .glow-cyan { --accent-bar: linear-gradient(90deg, #0891b2, #06b6d4); --accent-shadow: rgba(8, 145, 178, 0.2); }
+  .glow-emerald { --accent-bar: linear-gradient(90deg, #059669, #10b981); --accent-shadow: rgba(5, 150, 105, 0.2); }
+  .glow-amber { --accent-bar: linear-gradient(90deg, #d97706, #f59e0b); --accent-shadow: rgba(217, 119, 6, 0.2); }
+  .glow-red { --accent-bar: linear-gradient(90deg, #dc2626, #ef4444); --accent-shadow: rgba(220, 38, 38, 0.2); }
+  .glow-purple { --accent-bar: linear-gradient(90deg, #7c3aed, #a855f7); --accent-shadow: rgba(124, 58, 237, 0.2); }
+  .glow-rose { --accent-bar: linear-gradient(90deg, #e11d48, #f43f5e); --accent-shadow: rgba(225, 29, 72, 0.2); }
+  .glow-blue { --accent-bar: linear-gradient(90deg, #2563eb, #3b82f6); --accent-shadow: rgba(37, 99, 235, 0.2); }
+  .glow-zinc { --accent-bar: linear-gradient(90deg, #64748b, #94a3b8); --accent-shadow: rgba(100, 116, 139, 0.15); }
+
+  /* ── Hero KPI card — extra premium, big stat ───────────── */
+  .hero-kpi {
+    @apply relative overflow-hidden rounded-2xl p-4 md:p-5 bg-white border border-slate-200;
+    box-shadow:
+      0 1px 2px rgba(15, 23, 42, 0.04),
+      0 8px 24px -4px rgba(15, 23, 42, 0.08),
+      0 20px 50px -12px rgba(15, 23, 42, 0.08);
+  }
+
+  .hero-kpi::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--hero-bar);
+  }
+
+  .hero-kpi::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: var(--hero-tint, transparent);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .hero-kpi > * { position: relative; z-index: 1; }
+
+  .hero-cyan {
+    --hero-bar: linear-gradient(90deg, #0891b2, #06b6d4);
+    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(8, 145, 178, 0.12), transparent 65%);
+  }
+  .hero-emerald {
+    --hero-bar: linear-gradient(90deg, #059669, #10b981);
+    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(5, 150, 105, 0.12), transparent 65%);
+  }
+  .hero-amber {
+    --hero-bar: linear-gradient(90deg, #d97706, #f59e0b);
+    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(217, 119, 6, 0.12), transparent 65%);
+  }
+  .hero-purple {
+    --hero-bar: linear-gradient(90deg, #7c3aed, #a855f7);
+    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(124, 58, 237, 0.12), transparent 65%);
+  }
+  .hero-rose {
+    --hero-bar: linear-gradient(90deg, #e11d48, #f43f5e);
+    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(225, 29, 72, 0.12), transparent 65%);
+  }
+
+  /* ── Section header ───────────────────────────────────────────── */
+  .section-header {
+    @apply flex items-center gap-3 mb-5;
+  }
+
+  .section-header-icon {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center text-base flex-shrink-0;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+
+  .section-header h2 {
+    @apply text-lg font-bold text-slate-900 tracking-tight;
+  }
+
+  .section-header p {
+    @apply text-xs text-slate-500 mt-0.5;
+  }
+
+  /* ── Statistical typography ──────────────────────────────────── */
+  .stat-mega {
+    @apply text-4xl md:text-5xl font-extrabold tracking-tight leading-none text-slate-900;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  .stat-hero {
+    @apply text-6xl md:text-7xl font-black tracking-tighter leading-[0.85] text-slate-900;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold tracking-tight text-slate-900;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  .stat-label {
+    @apply text-[11px] text-slate-500 font-semibold leading-tight uppercase tracking-wider;
+  }
+
+  /* ── Divider ─────────────────────────────────────────────────── */
+  .section-divider {
+    @apply my-10 border-t border-slate-200;
+  }
+
+  /* ── Trend pill (up/down/flat) ──────────────────────────────── */
+  .trend-pill {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold;
+  }
+
+  .trend-up {
+    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+  }
+
+  .trend-down {
+    @apply bg-rose-50 text-rose-700 border border-rose-200;
+  }
+
+  .trend-flat {
+    @apply bg-slate-100 text-slate-600 border border-slate-200;
+  }
+
+  /* ── Brand stamp ────────────────────────────────────────────── */
+  .brand-stamp {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full;
+    @apply text-[10px] font-bold uppercase tracking-wider text-slate-600;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #e2e8f0;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  }
+
+  /* ── Spark bars ───────────────────────────────────────────── */
+  .spark-bar {
+    @apply h-1 rounded-full overflow-hidden bg-slate-200;
+  }
+
+  .spark-fill {
+    @apply h-full rounded-full transition-all duration-500;
+  }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .font-heebo {
+    font-family: var(--font-heebo), "Heebo", "Assistant", "Rubik", system-ui, sans-serif;
+    /* Tighter line-height for Hebrew — Heebo's default leading is too loose */
+    line-height: 1.45;
+    /* Slightly improve number rendering */
+    font-feature-settings: "kern" 1, "liga" 1, "tnum" 1;
   }
+
+  /* Stronger heading hierarchy with proper Hebrew tracking */
+  .font-heebo h1, .font-heebo h2, .font-heebo h3, .font-heebo h4 {
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+
+  /* Modern text-balance for wide screens — wraps headlines beautifully */
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  /* ── Gradient text utilities ────────────────────────────────── */
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #0e7490, #0891b2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-emerald {
+    background: linear-gradient(135deg, #047857, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-rose {
+    background: linear-gradient(135deg, #be123c, #e11d48);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-amber {
+    background: linear-gradient(135deg, #b45309, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-purple {
+    background: linear-gradient(135deg, #6d28d9, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0891b2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tabular-nums {
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+}
+
+/* ── Custom scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+  background-clip: content-box;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+::selection {
+  background-color: rgba(8, 145, 178, 0.2);
+  color: #0f172a;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out forwards;
 }

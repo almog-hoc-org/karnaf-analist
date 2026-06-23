@@ -1,0 +1,192 @@
+{
+  "cityName": "תל מונד",
+  "lastUpdated": "2026-06-22T08:13:10.978Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "בנה ביתך",
+      "totalDeals": 78,
+      "dealsPerYearAvg": 11,
+      "streets": [
+        {
+          "streetName": "הטווס",
+          "totalDeals": 13,
+          "sizeBuckets": [
+            {
+              "label": "~140 מ\"ר",
+              "targetArea": 140,
+              "minArea": 119,
+              "maxArea": 161,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 17357,
+                    "totalPrice": 2430000,
+                    "area": 140,
+                    "houseNum": "5.0",
+                    "streetName": "הטווס",
+                    "blocksAway": 0,
+                    "dealDate": "2020-05-28T00:00:00Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~190 מ\"ר",
+              "targetArea": 190,
+              "minArea": 167,
+              "maxArea": 218,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 24334,
+                    "avgTotalPrice": 4330000,
+                    "avgArea": 178
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 14780,
+                    "totalPrice": 2690000,
+                    "area": 182,
+                    "houseNum": "5.0",
+                    "streetName": "הטווס",
+                    "blocksAway": 0,
+                    "dealDate": "2021-02-24T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13388,
+                    "totalPrice": 2450000,
+                    "area": 183,
+                    "houseNum": "7.0",
+                    "streetName": "הטווס",
+                    "blocksAway": 2,
+                    "dealDate": "2020-11-03T00:00:00Z"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "הלימון",
+          "totalDeals": 6,
+          "sizeBuckets": [
+            {
+              "label": "~190 מ\"ר",
+              "targetArea": 190,
+              "minArea": 167,
+              "maxArea": 218,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 21386,
+                    "totalPrice": 4320000,
+                    "area": 202,
+                    "houseNum": "6.0",
+                    "streetName": "הלימון",
+                    "blocksAway": 0,
+                    "dealDate": "2026-03-11T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 19471,
+                    "totalPrice": 3680000,
+                    "area": 189,
+                    "houseNum": "3.0",
+                    "streetName": "הלימון",
+                    "blocksAway": 3,
+                    "dealDate": "2022-03-04T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12153,
+                    "avgTotalPrice": 2500000,
+                    "avgArea": 206
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~250 מ\"ר",
+              "targetArea": 250,
+              "minArea": 213,
+              "maxArea": 300,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 18727,
+                    "totalPrice": 4120000,
+                    "area": 220,
+                    "houseNum": "5.0",
+                    "streetName": "הלימון",
+                    "blocksAway": 1,
+                    "dealDate": "2022-09-14T00:00:00Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 78,
+  "periodYears": {
+    "current": 2025,
+    "minus3": 2022,
+    "minus5": 2020
+  },
+  "townCharacter": "בתים פרטיים"
+}

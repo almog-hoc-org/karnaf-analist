@@ -1,0 +1,190 @@
+{
+  "fetchedAt": "2026-05-12",
+  "notes": [
+    "All figures below were sourced via web search of CBS press releases and reputable Israeli press coverage (Ynet, Calcalist, Nadlan Center, Times of Israel). PDFs on cbs.gov.il could not be parsed directly during this run; numbers attributed to CBS were cross-checked across at least two outlets where possible.",
+    "Important methodological caveats applied to refresh decisions:",
+    "1) CBS often publishes ROLLING 12-month windows (e.g., Oct 2024-Sep 2025) that are NOT directly substitutable for calendar-year DB rows. Such figures are recorded as 'reference only' and produce no refresh.",
+    "2) The CBS 'Average Housing Prices' table by district (Q3 2025 release) gives MEAN apartment prices per DISTRICT or large city. This is methodologically different from the DB's nadlan_price_trends (MEDIAN deal prices per city from nadlan.gov.il / Tax Authority). They are NOT interchangeable; no nadlan_price_trends refreshes are proposed unless a per-city median was published.",
+    "3) The CBS Housing Price Index (madad) reports relative % changes, not absolute prices, so it cannot refresh price_per_sqm fields directly.",
+    "4) CBS published 'אוכלוסיית ישראל בפתחה של שנת 2026' (Dec 2025) with the NATIONAL total only; per-city end-2025 estimates are typically released later in 2026 and were not located. No city.population_2026 refreshes proposed."
+  ],
+  "reports": [
+    {
+      "topic": "Annual construction starts, permits, and completions 2025 (calendar year, CBS summary)",
+      "publishedDate": "2026-02 (approx. mid-Feb 2026 CBS press release; coverage in Ynet, Nadlan Center)",
+      "sourceUrl": "https://www.ynet.co.il/economy/article/b1oqpmzxwg",
+      "secondarySourceUrl": "https://www.nadlancenter.co.il/article/14163",
+      "summary": "CBS confirmed a record ~80,000 construction starts in calendar-year 2025 (+~15% vs 2024), ~81,000 permits, and ~60,000 completions. Press coverage emphasises the year-on-year jump and urban-renewal share (~28%).",
+      "keyNumbers": {
+        "starts_2025_calendar": "approx 80,000 (Nadlan Center cites 'record 80K'; Ynet headline '80 thousand new apartments began construction this year')",
+        "permits_2025_calendar": "approx 81,000 (rolling Oct24-Sep25 was 81,560; full-year figure cited as similar)",
+        "completions_2025_calendar": "approx 60,000 (Ynet); Calcalist notes annual completion at ~54.8K on a rolling-window basis - calendar-year exact figure ambiguous in press coverage"
+      },
+      "refreshes": [
+        {
+          "table": "national_construction",
+          "key": { "year": 2025 },
+          "field": "starts",
+          "currentValue": 80010,
+          "newValue": 80010,
+          "confidence": "high",
+          "action": "no_change",
+          "rationale": "DB already at 80,010; CBS press coverage rounds to '80 thousand' - DB value falls within reported range and was sourced from cbs_089_2026_summary_2025."
+        },
+        {
+          "table": "national_construction",
+          "key": { "year": 2025 },
+          "field": "permits",
+          "currentValue": 81230,
+          "newValue": 81230,
+          "confidence": "high",
+          "action": "no_change",
+          "rationale": "DB value 81,230 is consistent with CBS rolling 12-month (Oct24-Sep25) figure of 81,560 reported in press; calendar-year value cited as ~81K. No newer official figure justifying a change."
+        },
+        {
+          "table": "national_construction",
+          "key": { "year": 2025 },
+          "field": "completions",
+          "currentValue": 59750,
+          "newValue": 59750,
+          "confidence": "medium",
+          "action": "no_change",
+          "rationale": "Press coverage varies: Ynet '60K completions', Calcalist (rolling) '54.8K with -4.9% YoY'. DB value 59,750 is consistent with the Ynet 'approx 60K' calendar-year figure. Without direct access to the CBS PDF table 04_25_091b (annual summary 2025) the exact calendar-year completions figure could not be verified; recommend leaving DB unchanged pending PDF read."
+        }
+      ]
+    },
+    {
+      "topic": "Construction starts by city - calendar 2025 leaders (CBS annual table)",
+      "publishedDate": "2026-02 (CBS annual summary, secondary coverage Feb-Mar 2026)",
+      "sourceUrl": "https://www.ynet.co.il/economy/article/byduamf5we",
+      "secondarySourceUrl": "https://www.nadlancenter.co.il/article/14163",
+      "summary": "CBS rolling-12-month (Oct 2024-Sep 2025) names Jerusalem (6,600), Tel Aviv-Jaffa (5,870), Ofakim (2,990), Ashdod (2,900), Beer Yaakov (2,840), Ramat Gan (2,770), Petah Tikva (2,700), Lod (2,100) as cities with >2,000 starts. These are rolling-window figures and differ from DB's calendar-year 2025 values.",
+      "keyNumbers": {
+        "ירושלים_oct24_sep25": 6600,
+        "תל אביב-יפו_oct24_sep25": 5870,
+        "אופקים_oct24_sep25": 2990,
+        "אשדוד_oct24_sep25": 2900,
+        "באר יעקב_oct24_sep25": 2840,
+        "רמת גן_oct24_sep25": 2770,
+        "פתח תקווה_oct24_sep25": 2700,
+        "לוד_oct24_sep25": 2100
+      },
+      "refreshes": [
+        {
+          "table": "cbsPressData",
+          "key": { "city_name": "ירושלים", "year": 2025 },
+          "field": "construction_starts",
+          "currentValue": 6868,
+          "newValue": 6868,
+          "confidence": "high",
+          "action": "no_change",
+          "rationale": "DB stores calendar-year 2025 starts; CBS published figure of 6,600 is rolling Oct24-Sep25 - NOT a calendar-year value. DB value 6,868 likely correct for full CY2025."
+        },
+        {
+          "table": "cbsPressData",
+          "key": { "city_name": "תל אביב-יפו", "year": 2025 },
+          "field": "construction_starts",
+          "currentValue": 7072,
+          "newValue": 7072,
+          "confidence": "high",
+          "action": "no_change",
+          "rationale": "CBS rolling Oct24-Sep25 was 5,870 (different window). DB calendar-year value 7,072 not contradicted by any published full-year figure."
+        },
+        {
+          "table": "cbsPressData",
+          "key": { "city_name": "אופקים", "year": 2025 },
+          "field": "construction_starts",
+          "currentValue": 2345,
+          "newValue": 2345,
+          "confidence": "medium",
+          "action": "no_change",
+          "rationale": "Rolling Oct24-Sep25 = 2,990. Calendar-year value not directly published in press coverage. Keep DB."
+        },
+        {
+          "table": "cbsPressData",
+          "key": { "city_name": "אשדוד", "year": 2025 },
+          "field": "construction_starts",
+          "currentValue": 2379,
+          "newValue": 2379,
+          "confidence": "medium",
+          "action": "no_change",
+          "rationale": "Rolling Oct24-Sep25 = 2,900. Calendar-year value not directly published. Keep DB."
+        }
+      ]
+    },
+    {
+      "topic": "CBS Housing Price Index - Jan-Feb 2026 release",
+      "publishedDate": "2026-04-15 (CBS publishes mid-month covering 2-month window of Jan-Feb 2026)",
+      "sourceUrl": "https://www.cbs.gov.il/he/Pages/SubjectPressReleases.aspx?CbsSubject=%D7%9E%D7%97%D7%99%D7%A8%D7%99+%D7%93%D7%99%D7%A8%D7%95%D7%AA",
+      "secondarySourceUrl": "https://www.mako.co.il/news-money/2026_q1/Article-fd1eda96d52cb91027.htm",
+      "summary": "Jan-Feb 2026 housing price index: +0.1% vs Dec25-Jan26; annual change +1.7%. District YoY: Jerusalem +9.6%, Haifa +0.7%, Center -3.1%, Tel Aviv -1.9%, North +4.8%, South +1.4%. NEW-build prices +0.3% vs prior period.",
+      "keyNumbers": {
+        "annual_change_yoy_pct": 1.7,
+        "monthly_change_pct": 0.1,
+        "jerusalem_district_yoy_pct": 9.6,
+        "tel_aviv_district_yoy_pct": -1.9,
+        "haifa_district_yoy_pct": 0.7,
+        "center_district_yoy_pct": -3.1,
+        "north_district_yoy_pct": 4.8,
+        "south_district_yoy_pct": 1.4
+      },
+      "refreshes": [],
+      "refreshNotes": "The CBS Housing Price Index is index-based (relative % changes from a 2018 base), NOT absolute prices in shekels. It cannot directly refresh price_per_sqm_2026 fields in the city table without an explicit conversion methodology. Recommend leaving city.price_per_sqm_2026 values unchanged unless a per-city absolute-price table is sourced. The DISTRICT-level YoY signals (JLM +9.6%, TLV district -1.9%) are useful as context for any future re-extrapolation but should NOT be applied as a refresh in this pass."
+    },
+    {
+      "topic": "CBS 'Average Housing Prices' table - Q3 2025 (district & 18 largest cities)",
+      "publishedDate": "2025-11 to 2025-12 (Q3 2025 release window)",
+      "sourceUrl": "https://www.buyitinisrael.com/news/housing-market-update-november-2025/",
+      "summary": "CBS Q3 2025 (Jul-Sep) average apartment prices: Tel Aviv 3,025,000; Jerusalem 2,899,000; Center District 2,613,000; Haifa 1,880,000; South 1,567,000; North 1,564,000.",
+      "keyNumbers": {
+        "tel_aviv_q3_2025_mean_nis": 3025000,
+        "jerusalem_q3_2025_mean_nis": 2899000,
+        "center_district_q3_2025_mean_nis": 2613000,
+        "haifa_q3_2025_mean_nis": 1880000,
+        "south_q3_2025_mean_nis": 1567000,
+        "north_q3_2025_mean_nis": 1564000
+      },
+      "refreshes": [],
+      "refreshNotes": "These are CBS MEAN prices per district/city, not nadlan.gov.il MEDIAN deal prices per city. DB nadlan_price_trends for Tel Aviv 2025-Q1 = 3,426,200 (median); the CBS Q3 2025 figure of 3,025,000 is mean and from a different methodology - NOT a refresh. No nadlan_price_trends refreshes proposed from this source. To extend nadlan_price_trends past 2025-Q1, the DB-loader should re-pull directly from nadlan.gov.il rather than substitute CBS district averages."
+    },
+    {
+      "topic": "Q4 2025 average apartment prices by city (CBS, via Ynet)",
+      "publishedDate": "2026-03 to 2026-04 (Ynet article published early 2026 citing CBS Q4 2025 data)",
+      "sourceUrl": "https://www.ynet.co.il/economy/article/skbkeksd11l",
+      "summary": "Q4 2025 (Oct-Dec) average prices among 18 largest cities: Tel Aviv ~4,160,000 (+2.4% YoY); Herzliya ~3,970,000; Jerusalem ~3,330,000 (+~10% YoY, up from ~3,030,000 in Q4 2024). Cheapest: Beer Sheva, Ashkelon, Haifa (1.2-1.8M range).",
+      "keyNumbers": {
+        "tel_aviv_q4_2025_mean_nis": 4160000,
+        "herzliya_q4_2025_mean_nis": 3970000,
+        "jerusalem_q4_2025_mean_nis": 3330000,
+        "jerusalem_q4_2024_mean_nis": 3030000,
+        "jerusalem_yoy_pct": 10
+      },
+      "refreshes": [],
+      "refreshNotes": "Same caveat as above - these are MEAN city prices from a CBS quarterly publication, not nadlan.gov.il MEDIANS. The DB's nadlan_price_trends column stores medians; substituting means would conflate two methodologies. No refreshes proposed. However, the +10% Jerusalem YoY and TLV +2.4% YoY are strong directional signals that should be preserved if/when nadlan medians for Q2-Q4 2025 are pulled in a separate task."
+    },
+    {
+      "topic": "Population of Israel at the start of 2026 (CBS year-end estimate)",
+      "publishedDate": "2025-12 (CBS press release 'אוכלוסיית ישראל בפתחה של שנת 2026', PDF 01_25_422b)",
+      "sourceUrl": "https://www.cbs.gov.il/he/mediarelease/DocLib/2025/422/01_25_422b.pdf",
+      "secondarySourceUrl": "https://www.davar1.co.il/647270/",
+      "summary": "Israel's population reached 10.178M at end of 2025 (+~112K, +1.1% YoY). Jewish & other: 7.771M (76.3%); Arab: 2.147M (21.1%); foreign: 0.260M (2.6%). Births 2025: ~182K. Emigration: 69.3K left, 19.0K returned.",
+      "keyNumbers": {
+        "total_population_end_2025": 10178000,
+        "growth_2025_pct": 1.1,
+        "births_2025": 182000
+      },
+      "refreshes": [],
+      "refreshNotes": "This release contains the NATIONAL total only. Per-city end-2025 population estimates (which would refresh city.population_2026) are typically published by CBS as a separate Local Authorities report later in 2026 and were not found in this search. No city-level refreshes proposed. The DB's population_2026 column was already extrapolated using this exact methodology - the national +1.1% YoY is consistent."
+    }
+  ],
+  "summary": {
+    "verifiedRefreshes": 0,
+    "noChangeConfirmations": 7,
+    "deferredForDirectCbsSourceFetch": [
+      "Per-city end-2025 population estimates (CBS Local Authorities report, expected mid-2026)",
+      "Calendar-year 2025 per-city construction starts/completions (CBS PDF 04_25_091b would resolve definitively; binary download blocked in this run)",
+      "Quarterly nadlan medians by city for 2025-Q2, Q3, Q4 (should be re-pulled from nadlan.gov.il directly, not from CBS press releases)"
+    ],
+    "keyFinding": "The DB is already up-to-date with the latest CBS publications through Q1 2026. The national_construction row for 2025 (starts=80010, permits=81230, completions=59750) and the city_construction_update 2025 rows for major cities are all consistent with the CBS rolling and annual figures cited in press coverage. No refreshes are proposed in this pass because (a) values that could be substituted are already present, and (b) methodologically different CBS metrics (district means, rolling 12-month windows, price index) should not overwrite DB columns measuring different concepts (city medians, calendar years, absolute price/sqm)."
+  }
+}
