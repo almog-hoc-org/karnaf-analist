@@ -18,7 +18,9 @@
 
 set -u
 
-PROJECT_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/קרנף ייעוץ ויזמות/ניהול עסק/קלוד קוד קרנף/my-realestate-project"
+# Resolve the project dir from this script's own location, so the same script
+# works whether it runs from the iCloud copy (manual) or a local clone (launchd).
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LOG_DIR="$HOME/Library/Logs/Karnaf"
 LOG_FILE="$LOG_DIR/monthly-refresh.log"
 STATE_FILE="$LOG_DIR/last-monthly-refresh.txt"
@@ -49,7 +51,14 @@ fi
 cd "$PROJECT_DIR" || { log "✗ project dir missing: $PROJECT_DIR"; exit 1; }
 
 log "═══════════════════════════════════════════════"
-log "▶ monthly deals refresh starting"
+log "▶ monthly deals refresh starting (dir: $PROJECT_DIR)"
+
+# Sync with remote first (the automation working copy may be a local clone,
+# while manual edits land via the iCloud copy → GitHub).
+if [[ $NO_PUSH -eq 0 ]]; then
+  git pull --ff-only origin main >> "$LOG_FILE" 2>&1 && log "  git pull ok" \
+    || log "  ⚠ git pull skipped/failed — continuing on local state"
+fi
 
 CACHE_DIR="data/deals_cache"
 
@@ -86,6 +95,16 @@ log "  prefetch exit: $REFRESH_EXIT"
 # ── VALIDATION GATE ─────────────────────────────────────────────────────
 read POST_FILES POST_DEALS < <(pre_stats)
 log "  post-state: $POST_FILES cache files, $POST_DEALS total deals"
+
+# Hard fail if the refresh itself crashed (e.g. native module / DB load error).
+# Without this, a total crash leaves post==pre and the gate would wrongly pass
+# as "no changes".
+if [[ $REFRESH_EXIT -ne 0 ]]; then
+  log "✗ refresh crashed (exit $REFRESH_EXIT) — restoring backup, NOT pushing."
+  rm -rf "$CACHE_DIR"; mkdir -p "$CACHE_DIR"; cp -R "$BACKUP_DIR/." "$CACHE_DIR/"
+  notify "רענון קרס — לא עלה לאוויר. בדוק לוג."
+  exit 1
+fi
 
 VALID=$(python3 - "$PRE_FILES" "$PRE_DEALS" "$POST_FILES" "$POST_DEALS" "$CACHE_DIR" <<'PY'
 import sys, json, glob, os
