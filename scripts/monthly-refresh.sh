@@ -150,13 +150,18 @@ if ! git diff --quiet -- "$CACHE_DIR" 2>/dev/null; then
       -m "Automated nadlan.gov.il cache refresh. Validation gate passed."
     git push -q origin main 2>>"$LOG_FILE" && log "  pushed to GitHub" || log "  ⚠ git push failed (continuing to deploy)"
 
-    # GitHub→Vercel auto-deploy is NOT wired, so deploy explicitly from this
-    # local clone (iCloud copies upload corrupt). Needs the .vercel link + a
-    # valid vercel CLI session (refreshes automatically when logged in).
+    # GitHub→Vercel auto-deploy is NOT wired, so deploy explicitly via CLI.
+    # IMPORTANT: a CLI `vercel deploy` from a dir that contains .git stalls
+    # forever (status UNKNOWN, never builds). So we stage a .git-less copy to
+    # /tmp (with the .vercel link) and deploy from there — the one path proven
+    # to build reliably. --force avoids dedup skipping the build.
     if command -v vercel >/dev/null 2>&1 && [[ -d .vercel ]]; then
-      # --force is required: without it Vercel dedups and the build never
-      # triggers (deployment stays UNKNOWN / never builds).
-      if vercel deploy --prod --force --yes >> "$LOG_FILE" 2>&1; then
+      STAGE="/tmp/karnaf-deploy-stage"
+      rm -rf "$STAGE"; mkdir -p "$STAGE"
+      rsync -a --exclude .git --exclude node_modules --exclude .next --exclude out \
+        "$PROJECT_DIR/" "$STAGE/" >> "$LOG_FILE" 2>&1
+      cp -R "$PROJECT_DIR/.vercel" "$STAGE/.vercel"
+      if (cd "$STAGE" && vercel deploy --prod --force --yes) >> "$LOG_FILE" 2>&1; then
         log "✓ deployed to Vercel. $CHANGED city caches updated."
         notify "רענון הצליח — $CHANGED ערים עודכנו, האתר מתעדכן."
       else
