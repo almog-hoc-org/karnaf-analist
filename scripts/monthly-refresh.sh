@@ -28,7 +28,7 @@ BACKUP_DIR="/tmp/karnaf-deals-backup"
 INTERVAL_DAYS=30
 
 mkdir -p "$LOG_DIR"
-export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+export PATH="$HOME/.npm-packages/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"; }
 notify() { osascript -e "display notification \"$1\" with title \"קרנף — רענון נתונים\"" 2>/dev/null || true; }
@@ -148,12 +148,23 @@ if ! git diff --quiet -- "$CACHE_DIR" 2>/dev/null; then
     git add "$CACHE_DIR"
     git commit -q -m "Monthly deals refresh — $POST_DEALS deals across $POST_FILES cities" \
       -m "Automated nadlan.gov.il cache refresh. Validation gate passed."
-    if git push -q origin main 2>>"$LOG_FILE"; then
-      log "✓ pushed — Vercel will redeploy. $CHANGED city caches updated."
-      notify "רענון הצליח — $CHANGED ערים עודכנו, האתר מתעדכן."
+    git push -q origin main 2>>"$LOG_FILE" && log "  pushed to GitHub" || log "  ⚠ git push failed (continuing to deploy)"
+
+    # GitHub→Vercel auto-deploy is NOT wired, so deploy explicitly from this
+    # local clone (iCloud copies upload corrupt). Needs the .vercel link + a
+    # valid vercel CLI session (refreshes automatically when logged in).
+    if command -v vercel >/dev/null 2>&1 && [[ -d .vercel ]]; then
+      if vercel deploy --prod --yes >> "$LOG_FILE" 2>&1; then
+        log "✓ deployed to Vercel. $CHANGED city caches updated."
+        notify "רענון הצליח — $CHANGED ערים עודכנו, האתר מתעדכן."
+      else
+        log "✗ vercel deploy failed (see log). Data is on GitHub."
+        notify "רענון בוצע אך deploy נכשל — בדוק לוג."
+        exit 1
+      fi
     else
-      log "✗ git push failed (see log). Commit is local."
-      notify "רענון בוצע אך push נכשל — בדוק לוג."
+      log "⚠ vercel CLI or .vercel link missing — pushed to GitHub only."
+      notify "רענון בוצע, נדחף לגיטהאב. צריך deploy ידני."
       exit 1
     fi
   fi
