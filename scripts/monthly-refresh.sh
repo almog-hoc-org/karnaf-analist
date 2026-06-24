@@ -154,7 +154,9 @@ if ! git diff --quiet -- "$CACHE_DIR" 2>/dev/null; then
     # local clone (iCloud copies upload corrupt). Needs the .vercel link + a
     # valid vercel CLI session (refreshes automatically when logged in).
     if command -v vercel >/dev/null 2>&1 && [[ -d .vercel ]]; then
-      if vercel deploy --prod --yes >> "$LOG_FILE" 2>&1; then
+      # --force is required: without it Vercel dedups and the build never
+      # triggers (deployment stays UNKNOWN / never builds).
+      if vercel deploy --prod --force --yes >> "$LOG_FILE" 2>&1; then
         log "✓ deployed to Vercel. $CHANGED city caches updated."
         notify "רענון הצליח — $CHANGED ערים עודכנו, האתר מתעדכן."
       else
