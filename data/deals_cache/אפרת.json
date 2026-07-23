@@ -1,15 +1,15 @@
 {
   "cityName": "אפרת",
-  "lastUpdated": "2026-06-24T06:50:49.068Z",
+  "lastUpdated": "2026-07-21T09:02:36.810Z",
   "neighborhoods": [
     {
       "neighborhood": "הגפן",
-      "totalDeals": 232,
-      "dealsPerYearAvg": 33,
+      "totalDeals": 237,
+      "dealsPerYearAvg": 34,
       "streets": [
         {
           "streetName": "קדושת לוי",
-          "totalDeals": 92,
+          "totalDeals": 93,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -37,10 +37,10 @@
                     "pricePerSqm": 17422,
                     "totalPrice": 1446000,
                     "area": 83,
-                    "houseNum": "23.0",
+                    "houseNum": 23,
                     "streetName": "קדושת לוי",
                     "blocksAway": 7,
-                    "dealDate": "2022-02-16T00:00:00Z"
+                    "dealDate": "2022-02-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -149,7 +149,7 @@
         },
         {
           "streetName": "פנים מאירים",
-          "totalDeals": 32,
+          "totalDeals": 33,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -165,10 +165,10 @@
                     "pricePerSqm": 28765,
                     "totalPrice": 2330000,
                     "area": 81,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "פנים מאירים",
                     "blocksAway": 21,
-                    "dealDate": "2025-06-08T00:00:00Z"
+                    "dealDate": "2025-06-08T00:00:00.000Z"
                   }
                 },
                 {
@@ -211,10 +211,10 @@
                     "pricePerSqm": 26944,
                     "totalPrice": 2910000,
                     "area": 108,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "פנים מאירים",
                     "blocksAway": 21,
-                    "dealDate": "2025-03-18T00:00:00Z"
+                    "dealDate": "2025-03-18T00:00:00.000Z"
                   }
                 },
                 {
@@ -262,10 +262,10 @@
                     "pricePerSqm": 22308,
                     "totalPrice": 2900000,
                     "area": 130,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "פנים מאירים",
                     "blocksAway": 0,
-                    "dealDate": "2023-07-11T00:00:00Z"
+                    "dealDate": "2023-07-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -276,10 +276,10 @@
                     "pricePerSqm": 9480,
                     "totalPrice": 1185000,
                     "area": 125,
-                    "houseNum": "16.0",
+                    "houseNum": 16,
                     "streetName": "פנים מאירים",
                     "blocksAway": 13,
-                    "dealDate": "2021-05-02T00:00:00Z"
+                    "dealDate": "2021-05-02T00:00:00.000Z"
                   }
                 }
               ]
@@ -289,7 +289,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 315,
+  "totalDealsAnalyzed": 237,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

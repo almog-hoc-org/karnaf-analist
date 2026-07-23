@@ -1,11 +1,11 @@
 {
   "cityName": "אופקים",
-  "lastUpdated": "2026-06-24T06:49:59.217Z",
+  "lastUpdated": "2026-07-21T09:01:02.194Z",
   "neighborhoods": [
     {
       "neighborhood": "קרית מנחם",
-      "totalDeals": 570,
-      "dealsPerYearAvg": 81,
+      "totalDeals": 533,
+      "dealsPerYearAvg": 76,
       "streets": [
         {
           "streetName": "פיקוס",
@@ -25,10 +25,10 @@
                     "pricePerSqm": 15698,
                     "totalPrice": 1350000,
                     "area": 86,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "פיקוס",
                     "blocksAway": 0,
-                    "dealDate": "2024-07-17T00:00:00Z"
+                    "dealDate": "2024-07-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -39,10 +39,10 @@
                     "pricePerSqm": 16905,
                     "totalPrice": 1420000,
                     "area": 84,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "פיקוס",
                     "blocksAway": 0,
-                    "dealDate": "2022-10-31T00:00:00Z"
+                    "dealDate": "2022-10-31T00:00:00.000Z"
                   }
                 },
                 {
@@ -53,19 +53,19 @@
                     "pricePerSqm": 9889,
                     "totalPrice": 890000,
                     "area": 90,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "פיקוס",
                     "blocksAway": 0,
-                    "dealDate": "2021-11-23T00:00:00Z"
+                    "dealDate": "2021-11-23T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~110 מ\"ר",
-              "targetArea": 110,
-              "minArea": 97,
-              "maxArea": 126,
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
               "periods": [
                 {
                   "period": "current",
@@ -75,10 +75,10 @@
                     "pricePerSqm": 14421,
                     "totalPrice": 1370000,
                     "area": 95,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "פיקוס",
                     "blocksAway": 0,
-                    "dealDate": "2024-12-04T00:00:00Z"
+                    "dealDate": "2024-12-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -86,11 +86,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 11675,
-                    "avgTotalPrice": 1225000,
-                    "avgArea": 105
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 12127,
+                    "avgTotalPrice": 1193000,
+                    "avgArea": 99
                   }
                 },
                 {
@@ -98,20 +98,20 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 6,
-                    "threshold": 5,
-                    "avgPricePerSqm": 11378,
-                    "avgTotalPrice": 1265833,
-                    "avgArea": 111
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11527,
+                    "avgTotalPrice": 1238750,
+                    "avgArea": 107
                   }
                 }
               ]
             },
             {
-              "label": "~140 מ\"ר",
-              "targetArea": 140,
-              "minArea": 119,
-              "maxArea": 168,
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
               "periods": [
                 {
                   "period": "current",
@@ -144,9 +144,9 @@
                     "type": "aggregated",
                     "count": 9,
                     "threshold": 5,
-                    "avgPricePerSqm": 10507,
-                    "avgTotalPrice": 1518889,
-                    "avgArea": 145
+                    "avgPricePerSqm": 10552,
+                    "avgTotalPrice": 1345000,
+                    "avgArea": 129
                   }
                 }
               ]
@@ -154,39 +154,32 @@
           ]
         },
         {
-          "streetName": "השיטה",
-          "totalDeals": 63,
+          "streetName": "הרב עובדיה יוסף",
+          "totalDeals": 62,
           "sizeBuckets": [
             {
-              "label": "~110 מ\"ר",
-              "targetArea": 110,
-              "minArea": 97,
-              "maxArea": 126,
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 13509,
-                    "totalPrice": 1540000,
-                    "area": 114,
-                    "houseNum": "29.0",
-                    "streetName": "השיטה",
-                    "blocksAway": 12,
-                    "dealDate": "2025-12-01T00:00:00Z"
-                  }
+                  "sample": null
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 14371,
-                    "avgTotalPrice": 1762500,
-                    "avgArea": 123
+                    "type": "single",
+                    "pricePerSqm": 14598,
+                    "totalPrice": 1270000,
+                    "area": 87,
+                    "houseNum": 13,
+                    "streetName": "הרב עובדיה יוסף",
+                    "blocksAway": 11,
+                    "dealDate": "2022-10-06T00:00:00.000Z"
                   }
                 },
                 {
@@ -194,33 +187,79 @@
                   "year": 2020,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 10905,
-                    "totalPrice": 1265000,
-                    "area": 116,
-                    "houseNum": "17.0",
-                    "streetName": "השיטה",
-                    "blocksAway": 0,
-                    "dealDate": "2020-09-17T00:00:00Z"
+                    "pricePerSqm": 12857,
+                    "totalPrice": 900000,
+                    "area": 70,
+                    "houseNum": 15,
+                    "streetName": "הרב עובדיה יוסף",
+                    "blocksAway": 13,
+                    "dealDate": "2020-10-27T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~140 מ\"ר",
-              "targetArea": 140,
-              "minArea": 119,
-              "maxArea": 168,
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 9,
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14655,
+                    "avgTotalPrice": 1547500,
+                    "avgArea": 106
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 11538,
+                    "totalPrice": 1200000,
+                    "area": 104,
+                    "houseNum": 2,
+                    "streetName": "הרב עובדיה יוסף",
+                    "blocksAway": 0,
+                    "dealDate": "2022-12-31T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
                     "threshold": 5,
-                    "avgPricePerSqm": 12187,
-                    "avgTotalPrice": 1750000,
-                    "avgArea": 140
+                    "avgPricePerSqm": 9945,
+                    "avgTotalPrice": 1040000,
+                    "avgArea": 105
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 15551,
+                    "avgTotalPrice": 1968400,
+                    "avgArea": 126
                   }
                 },
                 {
@@ -228,11 +267,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 7,
+                    "count": 8,
                     "threshold": 5,
-                    "avgPricePerSqm": 12714,
-                    "avgTotalPrice": 1673571,
-                    "avgArea": 132
+                    "avgPricePerSqm": 11603,
+                    "avgTotalPrice": 1502500,
+                    "avgArea": 131
                   }
                 },
                 {
@@ -242,9 +281,9 @@
                     "type": "aggregated",
                     "count": 6,
                     "threshold": 5,
-                    "avgPricePerSqm": 9524,
-                    "avgTotalPrice": 1336429,
-                    "avgArea": 137
+                    "avgPricePerSqm": 9137,
+                    "avgTotalPrice": 1141500,
+                    "avgArea": 125
                   }
                 }
               ]
@@ -255,7 +294,7 @@
     },
     {
       "neighborhood": "הארזים",
-      "totalDeals": 250,
+      "totalDeals": 252,
       "dealsPerYearAvg": 36,
       "streets": [
         {
@@ -307,23 +346,21 @@
               ]
             },
             {
-              "label": "~110 מ\"ר",
-              "targetArea": 110,
-              "minArea": 97,
-              "maxArea": 126,
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 9000,
-                    "totalPrice": 900000,
-                    "area": 100,
-                    "houseNum": "11.0",
-                    "streetName": "אלי כהן",
-                    "blocksAway": 51,
-                    "dealDate": "2025-10-27T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 9151,
+                    "avgTotalPrice": 882500,
+                    "avgArea": 97
                   }
                 },
                 {
@@ -331,11 +368,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
+                    "count": 3,
                     "threshold": 2,
-                    "avgPricePerSqm": 6758,
-                    "avgTotalPrice": 710000,
-                    "avgArea": 105
+                    "avgPricePerSqm": 7357,
+                    "avgTotalPrice": 730000,
+                    "avgArea": 100
                   }
                 },
                 {
@@ -356,7 +393,7 @@
         },
         {
           "streetName": "גיבורי ישראל",
-          "totalDeals": 79,
+          "totalDeals": 81,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -403,23 +440,23 @@
               ]
             },
             {
-              "label": "~110 מ\"ר",
-              "targetArea": 110,
-              "minArea": 97,
-              "maxArea": 126,
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 13200,
-                    "totalPrice": 1320000,
-                    "area": 100,
-                    "houseNum": "29.0",
+                    "pricePerSqm": 10889,
+                    "totalPrice": 980000,
+                    "area": 90,
+                    "houseNum": 14,
                     "streetName": "גיבורי ישראל",
-                    "blocksAway": 7,
-                    "dealDate": "2024-02-06T00:00:00Z"
+                    "blocksAway": 8,
+                    "dealDate": "2025-06-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -427,36 +464,34 @@
                   "year": 2022,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 8205,
-                    "totalPrice": 960000,
-                    "area": 117,
-                    "houseNum": "58.0",
+                    "pricePerSqm": 6139,
+                    "totalPrice": 620000,
+                    "area": 101,
+                    "houseNum": 14,
                     "streetName": "גיבורי ישראל",
-                    "blocksAway": 36,
-                    "dealDate": "2022-11-28T00:00:00Z"
+                    "blocksAway": 8,
+                    "dealDate": "2021-05-04T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 7900,
-                    "totalPrice": 790000,
-                    "area": 100,
-                    "houseNum": "29.0",
-                    "streetName": "גיבורי ישראל",
-                    "blocksAway": 7,
-                    "dealDate": "2020-08-12T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 7256,
+                    "avgTotalPrice": 692500,
+                    "avgArea": 95
                   }
                 }
               ]
             },
             {
-              "label": "~140 מ\"ר",
-              "targetArea": 140,
-              "minArea": 119,
-              "maxArea": 168,
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
               "periods": [
                 {
                   "period": "current",
@@ -467,14 +502,12 @@
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 9122,
-                    "totalPrice": 1350000,
-                    "area": 148,
-                    "houseNum": "38.0",
-                    "streetName": "גיבורי ישראל",
-                    "blocksAway": 16,
-                    "dealDate": "2022-09-20T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 8663,
+                    "avgTotalPrice": 1155000,
+                    "avgArea": 133
                   }
                 },
                 {
@@ -490,7 +523,7 @@
     },
     {
       "neighborhood": "מישור הגפן",
-      "totalDeals": 208,
+      "totalDeals": 211,
       "dealsPerYearAvg": 30,
       "streets": [
         {
@@ -542,35 +575,33 @@
               ]
             },
             {
-              "label": "~110 מ\"ר",
-              "targetArea": 110,
-              "minArea": 97,
-              "maxArea": 126,
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
+                    "count": 3,
                     "threshold": 2,
-                    "avgPricePerSqm": 9117,
-                    "avgTotalPrice": 907500,
-                    "avgArea": 100
+                    "avgPricePerSqm": 9930,
+                    "avgTotalPrice": 951667,
+                    "avgArea": 96
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 3182,
-                    "totalPrice": 315000,
-                    "area": 99,
-                    "houseNum": "90.0",
-                    "streetName": "פרי מגדים",
-                    "blocksAway": 25,
-                    "dealDate": "2022-04-11T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 6016,
+                    "avgTotalPrice": 551000,
+                    "avgArea": 93
                   }
                 },
                 {
@@ -578,22 +609,22 @@
                   "year": 2020,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 9684,
-                    "totalPrice": 920000,
-                    "area": 95,
-                    "houseNum": "115.0",
+                    "pricePerSqm": 6235,
+                    "totalPrice": 530000,
+                    "area": 85,
+                    "houseNum": 94,
                     "streetName": "פרי מגדים",
-                    "blocksAway": 0,
-                    "dealDate": "2021-10-27T00:00:00Z"
+                    "blocksAway": 21,
+                    "dealDate": "2020-09-17T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~140 מ\"ר",
-              "targetArea": 140,
-              "minArea": 119,
-              "maxArea": 168,
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
               "periods": [
                 {
                   "period": "current",
@@ -603,10 +634,10 @@
                     "pricePerSqm": 9750,
                     "totalPrice": 1170000,
                     "area": 120,
-                    "houseNum": "115.0",
+                    "houseNum": 115,
                     "streetName": "פרי מגדים",
                     "blocksAway": 0,
-                    "dealDate": "2026-05-04T00:00:00Z"
+                    "dealDate": "2026-05-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -617,10 +648,10 @@
                     "pricePerSqm": 5863,
                     "totalPrice": 768000,
                     "area": 131,
-                    "houseNum": "104.0",
+                    "houseNum": 104,
                     "streetName": "פרי מגדים",
                     "blocksAway": 11,
-                    "dealDate": "2022-05-04T00:00:00Z"
+                    "dealDate": "2022-05-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -634,7 +665,7 @@
         },
         {
           "streetName": "האורן",
-          "totalDeals": 21,
+          "totalDeals": 22,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -674,32 +705,32 @@
                     "pricePerSqm": 9494,
                     "totalPrice": 750000,
                     "area": 79,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "האורן",
                     "blocksAway": 0,
-                    "dealDate": "2021-06-29T00:00:00Z"
+                    "dealDate": "2021-06-29T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~110 מ\"ר",
-              "targetArea": 110,
-              "minArea": 97,
-              "maxArea": 126,
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 9947,
-                    "totalPrice": 945000,
-                    "area": 95,
-                    "houseNum": "3.0",
+                    "pricePerSqm": 10118,
+                    "totalPrice": 860000,
+                    "area": 85,
+                    "houseNum": 11,
                     "streetName": "האורן",
-                    "blocksAway": 8,
-                    "dealDate": "2026-04-12T00:00:00Z"
+                    "blocksAway": 0,
+                    "dealDate": "2025-12-31T00:00:00.000Z"
                   }
                 },
                 {
@@ -707,11 +738,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
+                    "count": 3,
                     "threshold": 2,
-                    "avgPricePerSqm": 4137,
-                    "avgTotalPrice": 410700,
-                    "avgArea": 100
+                    "avgPricePerSqm": 5795,
+                    "avgTotalPrice": 547133,
+                    "avgArea": 96
                   }
                 },
                 {
@@ -722,10 +753,10 @@
                     "pricePerSqm": 9474,
                     "totalPrice": 900000,
                     "area": 95,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "האורן",
                     "blocksAway": 8,
-                    "dealDate": "2021-03-22T00:00:00Z"
+                    "dealDate": "2021-03-22T00:00:00.000Z"
                   }
                 }
               ]
@@ -735,7 +766,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1104,
+  "totalDealsAnalyzed": 1072,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

@@ -1,0 +1,5009 @@
+{
+ "city": "זכרון יעקב",
+ "cbs_code": "9300",
+ "capturedAt": "2026-07-04T18:48:30.408Z",
+ "totalRows": 6314,
+ "count": 500,
+ "deals": [
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 2200000,
+   "roomNum": 4,
+   "assetArea": 96.8,
+   "yearBuilt": 2000,
+   "priceSM": 22917,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 2750000,
+   "roomNum": 4,
+   "assetArea": 116.65,
+   "yearBuilt": 2014,
+   "priceSM": 23707,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2080000,
+   "roomNum": 4,
+   "assetArea": 117,
+   "yearBuilt": 2019,
+   "priceSM": 17778,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 2950000,
+   "roomNum": 6,
+   "assetArea": 136,
+   "yearBuilt": 1980,
+   "priceSM": 21691,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 3800000,
+   "roomNum": 6,
+   "assetArea": 199,
+   "yearBuilt": 1988,
+   "priceSM": 19095,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-04-09",
+   "dealAmount": 3420000,
+   "roomNum": 6,
+   "assetArea": 120,
+   "yearBuilt": 1999,
+   "priceSM": 28500,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 600000,
+   "roomNum": 2,
+   "assetArea": 36,
+   "yearBuilt": 0,
+   "priceSM": 16667,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2026-03-27",
+   "dealAmount": 725000,
+   "roomNum": 2,
+   "assetArea": 50,
+   "yearBuilt": 0,
+   "priceSM": 14500,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 920000,
+   "roomNum": 3,
+   "assetArea": 82,
+   "yearBuilt": 2015,
+   "priceSM": 11220,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 3575000,
+   "roomNum": 5,
+   "assetArea": 133.98,
+   "yearBuilt": 1987,
+   "priceSM": 26683,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-20",
+   "dealAmount": 2650000,
+   "roomNum": 4,
+   "assetArea": 109.7,
+   "yearBuilt": 2013,
+   "priceSM": 24312,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 4990000,
+   "roomNum": 7,
+   "assetArea": 208,
+   "yearBuilt": 1950,
+   "priceSM": 23990,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-10",
+   "dealAmount": 3300000,
+   "roomNum": 0,
+   "assetArea": 24.88,
+   "yearBuilt": 0,
+   "priceSM": 132637,
+   "neighborhoodName": "יעקב",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-03-10",
+   "dealAmount": 2550000,
+   "roomNum": 4,
+   "assetArea": 104.19,
+   "yearBuilt": 2010,
+   "priceSM": 24519,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 1520000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 24918,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-01",
+   "dealAmount": 2670000,
+   "roomNum": 3,
+   "assetArea": 59.35,
+   "yearBuilt": 1970,
+   "priceSM": 44987,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-26",
+   "dealAmount": 172000,
+   "roomNum": 4,
+   "assetArea": 61.62,
+   "yearBuilt": 1950,
+   "priceSM": 2791,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 1710000,
+   "roomNum": 5,
+   "assetArea": 150,
+   "yearBuilt": 1997,
+   "priceSM": 11400,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 999000,
+   "roomNum": 5,
+   "assetArea": 141,
+   "yearBuilt": 1996,
+   "priceSM": 7085,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 1350000,
+   "roomNum": 3,
+   "assetArea": 60.85,
+   "yearBuilt": 1970,
+   "priceSM": 22500,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 3750000,
+   "roomNum": 6,
+   "assetArea": 154.07,
+   "yearBuilt": 1995,
+   "priceSM": 24340,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 3329000,
+   "roomNum": 5,
+   "assetArea": 114,
+   "yearBuilt": 2019,
+   "priceSM": 29202,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 6000000,
+   "roomNum": 5,
+   "assetArea": 180,
+   "yearBuilt": 2027,
+   "priceSM": 33333,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 6000000,
+   "roomNum": 5,
+   "assetArea": 321,
+   "yearBuilt": 0,
+   "priceSM": 18692,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-08",
+   "dealAmount": 2715000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 1997,
+   "priceSM": 25613,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 3300000,
+   "roomNum": 5,
+   "assetArea": 133.3,
+   "yearBuilt": 2012,
+   "priceSM": 24756,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 3000000,
+   "roomNum": 4,
+   "assetArea": 123,
+   "yearBuilt": 1999,
+   "priceSM": 24390,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 975000,
+   "roomNum": 0,
+   "assetArea": 878,
+   "yearBuilt": 0,
+   "priceSM": 1110,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 1880000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 30820,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-29",
+   "dealAmount": 3000000,
+   "roomNum": 3,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 27273,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 2600000,
+   "roomNum": 4,
+   "assetArea": 104.8,
+   "yearBuilt": 2006,
+   "priceSM": 25000,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-25",
+   "dealAmount": 4750000,
+   "roomNum": 6,
+   "assetArea": 221,
+   "yearBuilt": 2000,
+   "priceSM": 21493,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 3300000,
+   "roomNum": 2,
+   "assetArea": 60,
+   "yearBuilt": 1800,
+   "priceSM": 55000,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-16",
+   "dealAmount": 2600000,
+   "roomNum": 4,
+   "assetArea": 104.19,
+   "yearBuilt": 2010,
+   "priceSM": 25000,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 2930000,
+   "roomNum": 4,
+   "assetArea": 80,
+   "yearBuilt": 1970,
+   "priceSM": 36625,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 4800000,
+   "roomNum": 5,
+   "assetArea": 173,
+   "yearBuilt": 1994,
+   "priceSM": 27746,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 3470000,
+   "roomNum": 5,
+   "assetArea": 119.1,
+   "yearBuilt": 2008,
+   "priceSM": 29160,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-05",
+   "dealAmount": 4500000,
+   "roomNum": 5,
+   "assetArea": 136,
+   "yearBuilt": 1996,
+   "priceSM": 33088,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-04",
+   "dealAmount": 4825000,
+   "roomNum": 6,
+   "assetArea": 220,
+   "yearBuilt": 2002,
+   "priceSM": 21932,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-04",
+   "dealAmount": 600000,
+   "roomNum": 0,
+   "assetArea": 86,
+   "yearBuilt": 0,
+   "priceSM": 6977,
+   "neighborhoodName": "השמורה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-01-02",
+   "dealAmount": 1470000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 12250,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 400000,
+   "roomNum": 1.5,
+   "assetArea": 35,
+   "yearBuilt": 0,
+   "priceSM": 11429,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 2525000,
+   "roomNum": 3,
+   "assetArea": 105,
+   "yearBuilt": 2008,
+   "priceSM": 24048,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 1300000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 13000,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 800000,
+   "roomNum": 2,
+   "assetArea": 58,
+   "yearBuilt": 0,
+   "priceSM": 13793,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 3570000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 2006,
+   "priceSM": 28333,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 5350000,
+   "roomNum": 7,
+   "assetArea": 143.33,
+   "yearBuilt": 1997,
+   "priceSM": 37326,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-12-23",
+   "dealAmount": 3290000,
+   "roomNum": 6,
+   "assetArea": 131,
+   "yearBuilt": 2000,
+   "priceSM": 25115,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 106.8,
+   "yearBuilt": 2001,
+   "priceSM": 30189,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-12-17",
+   "dealAmount": 3575000,
+   "roomNum": 0,
+   "assetArea": 1022,
+   "yearBuilt": 0,
+   "priceSM": 3498,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 5200000,
+   "roomNum": 6,
+   "assetArea": 220,
+   "yearBuilt": 1999,
+   "priceSM": 23636,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 3500000,
+   "roomNum": 5,
+   "assetArea": 143,
+   "yearBuilt": 1997,
+   "priceSM": 24476,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 500000,
+   "roomNum": 1,
+   "assetArea": 34,
+   "yearBuilt": 0,
+   "priceSM": 14706,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 5350000,
+   "roomNum": 5.5,
+   "assetArea": 174.11,
+   "yearBuilt": 1997,
+   "priceSM": 30747,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 1480000,
+   "roomNum": 3,
+   "assetArea": 61.25,
+   "yearBuilt": 1970,
+   "priceSM": 24262,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-01",
+   "dealAmount": 3450000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 28750,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-01",
+   "dealAmount": 750000,
+   "roomNum": 2,
+   "assetArea": 40,
+   "yearBuilt": 1990,
+   "priceSM": 18750,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-30",
+   "dealAmount": 3450000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 28750,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-30",
+   "dealAmount": 6250000,
+   "roomNum": 5,
+   "assetArea": 196,
+   "yearBuilt": 2027,
+   "priceSM": 31888,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-30",
+   "dealAmount": 162000,
+   "roomNum": 6,
+   "assetArea": 171,
+   "yearBuilt": 0,
+   "priceSM": 947,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-29",
+   "dealAmount": 6250000,
+   "roomNum": 5,
+   "assetArea": 196,
+   "yearBuilt": 0,
+   "priceSM": 31888,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-29",
+   "dealAmount": 6250000,
+   "roomNum": 5,
+   "assetArea": 196,
+   "yearBuilt": 0,
+   "priceSM": 31888,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-27",
+   "dealAmount": 4100000,
+   "roomNum": 6,
+   "assetArea": 220,
+   "yearBuilt": 1997,
+   "priceSM": 18636,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-26",
+   "dealAmount": 3950000,
+   "roomNum": 5.5,
+   "assetArea": 247,
+   "yearBuilt": 2010,
+   "priceSM": 15992,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-26",
+   "dealAmount": 2670000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 2008,
+   "priceSM": 24054,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-24",
+   "dealAmount": 2700000,
+   "roomNum": 4,
+   "assetArea": 105.2,
+   "yearBuilt": 0,
+   "priceSM": 25714,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-23",
+   "dealAmount": 2740000,
+   "roomNum": 5,
+   "assetArea": 116.87,
+   "yearBuilt": 2010,
+   "priceSM": 23621,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-20",
+   "dealAmount": 3250000,
+   "roomNum": 6,
+   "assetArea": 176,
+   "yearBuilt": 0,
+   "priceSM": 18466,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-18",
+   "dealAmount": 1300000,
+   "roomNum": 0,
+   "assetArea": 303,
+   "yearBuilt": 0,
+   "priceSM": 4290,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-11-18",
+   "dealAmount": 6250000,
+   "roomNum": 8,
+   "assetArea": 239,
+   "yearBuilt": 1994,
+   "priceSM": 26151,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-11-17",
+   "dealAmount": 5315000,
+   "roomNum": 5,
+   "assetArea": 196,
+   "yearBuilt": 2027,
+   "priceSM": 27117,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-17",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 22951,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-16",
+   "dealAmount": 5315000,
+   "roomNum": 5,
+   "assetArea": 196,
+   "yearBuilt": 0,
+   "priceSM": 27117,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-16",
+   "dealAmount": 5315000,
+   "roomNum": 5,
+   "assetArea": 196,
+   "yearBuilt": 0,
+   "priceSM": 27117,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-14",
+   "dealAmount": 3325000,
+   "roomNum": 0,
+   "assetArea": 457,
+   "yearBuilt": 0,
+   "priceSM": 7276,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-11-06",
+   "dealAmount": 2415000,
+   "roomNum": 4,
+   "assetArea": 86.85,
+   "yearBuilt": 1995,
+   "priceSM": 28081,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-11-06",
+   "dealAmount": 5250000,
+   "roomNum": 5,
+   "assetArea": 176,
+   "yearBuilt": 2024,
+   "priceSM": 29830,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-04",
+   "dealAmount": 1967000,
+   "roomNum": 5,
+   "assetArea": 177,
+   "yearBuilt": 1991,
+   "priceSM": 11113,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-04",
+   "dealAmount": 5585000,
+   "roomNum": 6,
+   "assetArea": 182,
+   "yearBuilt": 2011,
+   "priceSM": 30687,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-02",
+   "dealAmount": 3800000,
+   "roomNum": 0,
+   "assetArea": 634,
+   "yearBuilt": 0,
+   "priceSM": 5994,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-10-30",
+   "dealAmount": 850000,
+   "roomNum": 3,
+   "assetArea": 60.33,
+   "yearBuilt": 1980,
+   "priceSM": 14167,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-29",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 118.7,
+   "yearBuilt": 1993,
+   "priceSM": 27119,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' טורי"
+  },
+  {
+   "dealDate": "2025-10-21",
+   "dealAmount": 3050000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 25417,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-19",
+   "dealAmount": 3400000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 1980,
+   "priceSM": 30909,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-18",
+   "dealAmount": 3400000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 28333,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-15",
+   "dealAmount": 800000,
+   "roomNum": 3,
+   "assetArea": 49.5,
+   "yearBuilt": 1970,
+   "priceSM": 16162,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-07",
+   "dealAmount": 285000,
+   "roomNum": 1,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-09-30",
+   "dealAmount": 7400000,
+   "roomNum": 0,
+   "assetArea": 804,
+   "yearBuilt": 0,
+   "priceSM": 9204,
+   "neighborhoodName": "נווה רמז",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 700000,
+   "roomNum": 2,
+   "assetArea": 62,
+   "yearBuilt": 0,
+   "priceSM": 11290,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 5000000,
+   "roomNum": 0,
+   "assetArea": 216,
+   "yearBuilt": 0,
+   "priceSM": 23148,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 423000,
+   "roomNum": 1,
+   "assetArea": 46,
+   "yearBuilt": 0,
+   "priceSM": 9196,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 3750000,
+   "roomNum": 5,
+   "assetArea": 151.6,
+   "yearBuilt": 2013,
+   "priceSM": 24834,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 295000,
+   "roomNum": 1,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-09-19",
+   "dealAmount": 2180000,
+   "roomNum": 3.5,
+   "assetArea": 83,
+   "yearBuilt": 1997,
+   "priceSM": 26265,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-18",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 155,
+   "yearBuilt": 0,
+   "priceSM": 16129,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-17",
+   "dealAmount": 3400000,
+   "roomNum": 5,
+   "assetArea": 158,
+   "yearBuilt": 2001,
+   "priceSM": 21519,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-09-16",
+   "dealAmount": 5840000,
+   "roomNum": 6,
+   "assetArea": 250,
+   "yearBuilt": 1993,
+   "priceSM": 23360,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-09-16",
+   "dealAmount": 2750000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 27500,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 2250000,
+   "roomNum": 3.5,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 20089,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-10",
+   "dealAmount": 1493000,
+   "roomNum": 7,
+   "assetArea": 169,
+   "yearBuilt": 2002,
+   "priceSM": 8834,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 2780000,
+   "roomNum": 3.5,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 27800,
+   "neighborhoodName": null,
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 2700000,
+   "roomNum": 5,
+   "assetArea": 105.6,
+   "yearBuilt": 2011,
+   "priceSM": 25568,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-08",
+   "dealAmount": 7179000,
+   "roomNum": 0,
+   "assetArea": 3617,
+   "yearBuilt": 0,
+   "priceSM": 1985,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-09-03",
+   "dealAmount": 3235000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 32350,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 3235000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 32350,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-31",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 22936,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-31",
+   "dealAmount": 2750000,
+   "roomNum": 5,
+   "assetArea": 127.15,
+   "yearBuilt": 2014,
+   "priceSM": 21654,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-30",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 22936,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-29",
+   "dealAmount": 1000000,
+   "roomNum": 2,
+   "assetArea": 67,
+   "yearBuilt": 0,
+   "priceSM": 14925,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-08-28",
+   "dealAmount": 300000,
+   "roomNum": 4,
+   "assetArea": 128,
+   "yearBuilt": 1990,
+   "priceSM": 2344,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-28",
+   "dealAmount": 2055000,
+   "roomNum": 3,
+   "assetArea": 70.56,
+   "yearBuilt": 1998,
+   "priceSM": 29357,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-27",
+   "dealAmount": 300000,
+   "roomNum": 4,
+   "assetArea": 128,
+   "yearBuilt": 1990,
+   "priceSM": 2344,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-24",
+   "dealAmount": 1562400,
+   "roomNum": 4,
+   "assetArea": 90,
+   "yearBuilt": 1999,
+   "priceSM": 17360,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-21",
+   "dealAmount": 1890000,
+   "roomNum": 4.5,
+   "assetArea": 91,
+   "yearBuilt": 1970,
+   "priceSM": 20769,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-21",
+   "dealAmount": 3320000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 30182,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 2750000,
+   "roomNum": 0,
+   "assetArea": 1389,
+   "yearBuilt": 1960,
+   "priceSM": 1980,
+   "neighborhoodName": "המושבה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 4050000,
+   "roomNum": 7,
+   "assetArea": 190,
+   "yearBuilt": 2007,
+   "priceSM": 21316,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-08-10",
+   "dealAmount": 3150000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 26250,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-10",
+   "dealAmount": 1975000,
+   "roomNum": 6,
+   "assetArea": 173,
+   "yearBuilt": 1998,
+   "priceSM": 11416,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-08-08",
+   "dealAmount": 1670000,
+   "roomNum": 0,
+   "assetArea": 1471,
+   "yearBuilt": 0,
+   "priceSM": 1135,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-08-05",
+   "dealAmount": 3850000,
+   "roomNum": 4,
+   "assetArea": 123,
+   "yearBuilt": 1990,
+   "priceSM": 31301,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-04",
+   "dealAmount": 3850000,
+   "roomNum": 4,
+   "assetArea": 123,
+   "yearBuilt": 1990,
+   "priceSM": 31301,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-27",
+   "dealAmount": 2210000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 18417,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-26",
+   "dealAmount": 2950000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 24583,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-25",
+   "dealAmount": 5100000,
+   "roomNum": 6,
+   "assetArea": 185,
+   "yearBuilt": 2006,
+   "priceSM": 27568,
+   "neighborhoodName": "השמורה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-07-24",
+   "dealAmount": 4200000,
+   "roomNum": 4,
+   "assetArea": 78.97,
+   "yearBuilt": 2014,
+   "priceSM": 53185,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-07-22",
+   "dealAmount": 2525000,
+   "roomNum": 4,
+   "assetArea": 110.6,
+   "yearBuilt": 2006,
+   "priceSM": 22830,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-20",
+   "dealAmount": 3900000,
+   "roomNum": 0,
+   "assetArea": 227,
+   "yearBuilt": 0,
+   "priceSM": 17181,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-07-18",
+   "dealAmount": 3275000,
+   "roomNum": 5.5,
+   "assetArea": 125.11,
+   "yearBuilt": 1960,
+   "priceSM": 26200,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-07-16",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 20833,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-15",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 20833,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-14",
+   "dealAmount": 1230000,
+   "roomNum": 0,
+   "assetArea": 43,
+   "yearBuilt": 0,
+   "priceSM": 28605,
+   "neighborhoodName": "השמורה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-07-13",
+   "dealAmount": 1500000,
+   "roomNum": 3,
+   "assetArea": 60.85,
+   "yearBuilt": 1970,
+   "priceSM": 25000,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-10",
+   "dealAmount": 570000,
+   "roomNum": 0,
+   "assetArea": 36,
+   "yearBuilt": 0,
+   "priceSM": 15833,
+   "neighborhoodName": null,
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-07-10",
+   "dealAmount": 7140000,
+   "roomNum": 7,
+   "assetArea": 240,
+   "yearBuilt": 2020,
+   "priceSM": 29750,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-08",
+   "dealAmount": 1970000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1970,
+   "priceSM": 19700,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-05",
+   "dealAmount": 2100000,
+   "roomNum": 4,
+   "assetArea": 94.3,
+   "yearBuilt": 1995,
+   "priceSM": 22340,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-02",
+   "dealAmount": 4250000,
+   "roomNum": 0,
+   "assetArea": 1037,
+   "yearBuilt": 1990,
+   "priceSM": 4098,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-07-02",
+   "dealAmount": 2000000,
+   "roomNum": 4,
+   "assetArea": 125,
+   "yearBuilt": 2016,
+   "priceSM": 16000,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-27",
+   "dealAmount": 6200000,
+   "roomNum": 6,
+   "assetArea": 265,
+   "yearBuilt": 0,
+   "priceSM": 23396,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-06-27",
+   "dealAmount": 2700000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 1957,
+   "priceSM": 20149,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-06-26",
+   "dealAmount": 4930000,
+   "roomNum": 6,
+   "assetArea": 144.43,
+   "yearBuilt": 1998,
+   "priceSM": 34134,
+   "neighborhoodName": "השמורה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-06-26",
+   "dealAmount": 3700000,
+   "roomNum": 3,
+   "assetArea": 71,
+   "yearBuilt": 1950,
+   "priceSM": 52113,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-25",
+   "dealAmount": 2950000,
+   "roomNum": 5,
+   "assetArea": 125.2,
+   "yearBuilt": 2014,
+   "priceSM": 23600,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-23",
+   "dealAmount": 4400000,
+   "roomNum": 6,
+   "assetArea": 143.33,
+   "yearBuilt": 1997,
+   "priceSM": 30698,
+   "neighborhoodName": "השמורה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-06-23",
+   "dealAmount": 3100000,
+   "roomNum": 6,
+   "assetArea": 151,
+   "yearBuilt": 1997,
+   "priceSM": 20530,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 6100000,
+   "roomNum": 5,
+   "assetArea": 180,
+   "yearBuilt": 0,
+   "priceSM": 33889,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 4402000,
+   "roomNum": 5,
+   "assetArea": 180,
+   "yearBuilt": 0,
+   "priceSM": 24456,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-06-19",
+   "dealAmount": 1843000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 15358,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-18",
+   "dealAmount": 3687500,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 30729,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-18",
+   "dealAmount": 2750000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 2008,
+   "priceSM": 24775,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-16",
+   "dealAmount": 2250000,
+   "roomNum": 0,
+   "assetArea": 1057,
+   "yearBuilt": 1990,
+   "priceSM": 2129,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-06-12",
+   "dealAmount": 5000000,
+   "roomNum": 5,
+   "assetArea": 160,
+   "yearBuilt": 0,
+   "priceSM": 31250,
+   "neighborhoodName": null,
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-06-12",
+   "dealAmount": 1515000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 24836,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-11",
+   "dealAmount": 6536000,
+   "roomNum": 0,
+   "assetArea": 1044,
+   "yearBuilt": 0,
+   "priceSM": 6261,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-06-11",
+   "dealAmount": 260000,
+   "roomNum": 0,
+   "assetArea": 42,
+   "yearBuilt": 0,
+   "priceSM": 6190,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-06-03",
+   "dealAmount": 4400000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 1990,
+   "priceSM": 38938,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2025-06-02",
+   "dealAmount": 4400000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 1990,
+   "priceSM": 38938,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-02",
+   "dealAmount": 4400000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 1990,
+   "priceSM": 38938,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-29",
+   "dealAmount": 3600000,
+   "roomNum": 6,
+   "assetArea": 221,
+   "yearBuilt": 0,
+   "priceSM": 16290,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-05-29",
+   "dealAmount": 3770000,
+   "roomNum": 5,
+   "assetArea": 112.3,
+   "yearBuilt": 2012,
+   "priceSM": 33571,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-28",
+   "dealAmount": 1354000,
+   "roomNum": 0,
+   "assetArea": 175,
+   "yearBuilt": 0,
+   "priceSM": 7737,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-05-27",
+   "dealAmount": 5350000,
+   "roomNum": 5,
+   "assetArea": 172.5,
+   "yearBuilt": 2022,
+   "priceSM": 31014,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-26",
+   "dealAmount": 2842000,
+   "roomNum": 5,
+   "assetArea": 139,
+   "yearBuilt": 2008,
+   "priceSM": 20446,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-25",
+   "dealAmount": 4500000,
+   "roomNum": 5,
+   "assetArea": 216,
+   "yearBuilt": 2023,
+   "priceSM": 20833,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-05-21",
+   "dealAmount": 3250000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 27083,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-18",
+   "dealAmount": 3250000,
+   "roomNum": 4,
+   "assetArea": 115,
+   "yearBuilt": 1980,
+   "priceSM": 28261,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-18",
+   "dealAmount": 2225000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 1970,
+   "priceSM": 20991,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-18",
+   "dealAmount": 7807000,
+   "roomNum": 6,
+   "assetArea": 280,
+   "yearBuilt": 2001,
+   "priceSM": 27882,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-05-17",
+   "dealAmount": 3250000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 27083,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-15",
+   "dealAmount": 835000,
+   "roomNum": 2,
+   "assetArea": 69,
+   "yearBuilt": 0,
+   "priceSM": 12101,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-14",
+   "dealAmount": 1960000,
+   "roomNum": 3.5,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 32131,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-14",
+   "dealAmount": 1042000,
+   "roomNum": 7,
+   "assetArea": 191,
+   "yearBuilt": 1992,
+   "priceSM": 5455,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-05-14",
+   "dealAmount": 1780000,
+   "roomNum": 5,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 16636,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-13",
+   "dealAmount": 1780000,
+   "roomNum": 5,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 16636,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-08",
+   "dealAmount": 3126000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 23328,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-08",
+   "dealAmount": 2000000,
+   "roomNum": 3,
+   "assetArea": 74.7,
+   "yearBuilt": 2000,
+   "priceSM": 27027,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-08",
+   "dealAmount": 242000,
+   "roomNum": 6,
+   "assetArea": 190,
+   "yearBuilt": 0,
+   "priceSM": 1274,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-07",
+   "dealAmount": 3126809,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 23334,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-07",
+   "dealAmount": 950000,
+   "roomNum": 3,
+   "assetArea": 49.5,
+   "yearBuilt": 1970,
+   "priceSM": 19192,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-06",
+   "dealAmount": 4800000,
+   "roomNum": 6,
+   "assetArea": 300,
+   "yearBuilt": 1960,
+   "priceSM": 16000,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-05-06",
+   "dealAmount": 3025000,
+   "roomNum": 6,
+   "assetArea": 106.8,
+   "yearBuilt": 2001,
+   "priceSM": 28538,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-05-06",
+   "dealAmount": 3140000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 1995,
+   "priceSM": 24154,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-05-05",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 19000,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-04",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 19000,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-29",
+   "dealAmount": 2710000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 2008,
+   "priceSM": 25810,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-28",
+   "dealAmount": 1970000,
+   "roomNum": 5,
+   "assetArea": 114,
+   "yearBuilt": 1970,
+   "priceSM": 17281,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-24",
+   "dealAmount": 720000,
+   "roomNum": 0,
+   "assetArea": 184,
+   "yearBuilt": 0,
+   "priceSM": 3913,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-04-22",
+   "dealAmount": 5900000,
+   "roomNum": 7,
+   "assetArea": 242,
+   "yearBuilt": 1999,
+   "priceSM": 24380,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-04-22",
+   "dealAmount": 5900000,
+   "roomNum": 8,
+   "assetArea": 237,
+   "yearBuilt": 1998,
+   "priceSM": 24895,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-04-22",
+   "dealAmount": 4925000,
+   "roomNum": 7,
+   "assetArea": 190,
+   "yearBuilt": 1990,
+   "priceSM": 25921,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-21",
+   "dealAmount": 4100000,
+   "roomNum": 5,
+   "assetArea": 153.9,
+   "yearBuilt": 2020,
+   "priceSM": 26797,
+   "neighborhoodName": "נווה רמז",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-10",
+   "dealAmount": 1473000,
+   "roomNum": 1,
+   "assetArea": 273,
+   "yearBuilt": 1994,
+   "priceSM": 5396,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-04-10",
+   "dealAmount": 1950000,
+   "roomNum": 0,
+   "assetArea": 39.48,
+   "yearBuilt": 1950,
+   "priceSM": 49392,
+   "neighborhoodName": "המושבה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-04-09",
+   "dealAmount": 1600000,
+   "roomNum": 3,
+   "assetArea": 59.35,
+   "yearBuilt": 1970,
+   "priceSM": 26959,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-09",
+   "dealAmount": 3150000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 26250,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-09",
+   "dealAmount": 2205000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 22050,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-09",
+   "dealAmount": 3570000,
+   "roomNum": 6,
+   "assetArea": 176,
+   "yearBuilt": 1992,
+   "priceSM": 20284,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-04-09",
+   "dealAmount": 2300000,
+   "roomNum": 4.5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 19492,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-08",
+   "dealAmount": 5510000,
+   "roomNum": 5,
+   "assetArea": 212.95,
+   "yearBuilt": 0,
+   "priceSM": 25875,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-04-08",
+   "dealAmount": 2205000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 22050,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-07",
+   "dealAmount": 200000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 1970,
+   "priceSM": 0,
+   "neighborhoodName": "יעקב",
+   "dealNature": "מחסנים"
+  },
+  {
+   "dealDate": "2025-04-07",
+   "dealAmount": 480000,
+   "roomNum": 0,
+   "assetArea": 53.2,
+   "yearBuilt": 1970,
+   "priceSM": 9023,
+   "neighborhoodName": "יעקב",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-04-07",
+   "dealAmount": 2900000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 24167,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-07",
+   "dealAmount": 6800000,
+   "roomNum": 6.5,
+   "assetArea": 220,
+   "yearBuilt": 0,
+   "priceSM": 30909,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-04-07",
+   "dealAmount": 8000000,
+   "roomNum": 0,
+   "assetArea": 1034,
+   "yearBuilt": 0,
+   "priceSM": 7737,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-04-02",
+   "dealAmount": 1730000,
+   "roomNum": 3,
+   "assetArea": 75.3,
+   "yearBuilt": 2000,
+   "priceSM": 22975,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-02",
+   "dealAmount": 1800000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 2015,
+   "priceSM": 18000,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-01",
+   "dealAmount": 2450000,
+   "roomNum": 5,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 22897,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-01",
+   "dealAmount": 1830000,
+   "roomNum": 4,
+   "assetArea": 117,
+   "yearBuilt": 1970,
+   "priceSM": 15641,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-30",
+   "dealAmount": 1050000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 10500,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-28",
+   "dealAmount": 4550000,
+   "roomNum": 7,
+   "assetArea": 165,
+   "yearBuilt": 1994,
+   "priceSM": 27576,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-26",
+   "dealAmount": 3900000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 1970,
+   "priceSM": 24375,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-25",
+   "dealAmount": 4000000,
+   "roomNum": 0,
+   "assetArea": 1002,
+   "yearBuilt": 0,
+   "priceSM": 3992,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-03-25",
+   "dealAmount": 3900000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 1970,
+   "priceSM": 24375,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-24",
+   "dealAmount": 1000000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 10000,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-23",
+   "dealAmount": 2600000,
+   "roomNum": 5,
+   "assetArea": 195,
+   "yearBuilt": 2006,
+   "priceSM": 13333,
+   "neighborhoodName": "נווה רמז",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-03-23",
+   "dealAmount": 3995000,
+   "roomNum": 5,
+   "assetArea": 142.6,
+   "yearBuilt": 2014,
+   "priceSM": 28015,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-21",
+   "dealAmount": 4450000,
+   "roomNum": 7,
+   "assetArea": 171,
+   "yearBuilt": 1994,
+   "priceSM": 26023,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-18",
+   "dealAmount": 4800000,
+   "roomNum": 6,
+   "assetArea": 144,
+   "yearBuilt": 1994,
+   "priceSM": 33333,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-16",
+   "dealAmount": 3515000,
+   "roomNum": 7,
+   "assetArea": 161.8,
+   "yearBuilt": 2004,
+   "priceSM": 21832,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-13",
+   "dealAmount": 2924000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 24367,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-12",
+   "dealAmount": 1492000,
+   "roomNum": 4,
+   "assetArea": 96,
+   "yearBuilt": 2015,
+   "priceSM": 15542,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-03-12",
+   "dealAmount": 2924786,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1980,
+   "priceSM": 24373,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 960000,
+   "roomNum": 2,
+   "assetArea": 50,
+   "yearBuilt": 0,
+   "priceSM": 19200,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 2400000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 24000,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 3700000,
+   "roomNum": 6,
+   "assetArea": 173.2,
+   "yearBuilt": 2004,
+   "priceSM": 21387,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 4600000,
+   "roomNum": 5,
+   "assetArea": 134.3,
+   "yearBuilt": 1980,
+   "priceSM": 34328,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-08",
+   "dealAmount": 2400000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 24000,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-07",
+   "dealAmount": 5245000,
+   "roomNum": 7,
+   "assetArea": 240,
+   "yearBuilt": 0,
+   "priceSM": 21854,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-03-06",
+   "dealAmount": 2800000,
+   "roomNum": 5,
+   "assetArea": 116.7,
+   "yearBuilt": 1997,
+   "priceSM": 24138,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-03-05",
+   "dealAmount": 3500000,
+   "roomNum": 5,
+   "assetArea": 126.2,
+   "yearBuilt": 2011,
+   "priceSM": 27778,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-04",
+   "dealAmount": 3700000,
+   "roomNum": 5,
+   "assetArea": 126.23,
+   "yearBuilt": 2009,
+   "priceSM": 29312,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-03-03",
+   "dealAmount": 1190000,
+   "roomNum": 0,
+   "assetArea": 798,
+   "yearBuilt": 0,
+   "priceSM": 1491,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-02-26",
+   "dealAmount": 3800000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 2025,
+   "priceSM": 38000,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-26",
+   "dealAmount": 3300000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 2025,
+   "priceSM": 33000,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-26",
+   "dealAmount": 2420000,
+   "roomNum": 4,
+   "assetArea": 87.7,
+   "yearBuilt": 1950,
+   "priceSM": 27594,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-02-25",
+   "dealAmount": 1717500,
+   "roomNum": 3,
+   "assetArea": 38.5,
+   "yearBuilt": 1960,
+   "priceSM": 44610,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-25",
+   "dealAmount": 2200000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 22000,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-25",
+   "dealAmount": 1650000,
+   "roomNum": 3,
+   "assetArea": 76,
+   "yearBuilt": 1950,
+   "priceSM": 21711,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-24",
+   "dealAmount": 2200000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 22000,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-23",
+   "dealAmount": 5000000,
+   "roomNum": 6,
+   "assetArea": 153.74,
+   "yearBuilt": 2003,
+   "priceSM": 32522,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-23",
+   "dealAmount": 2746000,
+   "roomNum": 4,
+   "assetArea": 109.6,
+   "yearBuilt": 2014,
+   "priceSM": 25193,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-21",
+   "dealAmount": 1650000,
+   "roomNum": 3,
+   "assetArea": 76,
+   "yearBuilt": 1950,
+   "priceSM": 21711,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-19",
+   "dealAmount": 3650000,
+   "roomNum": 7,
+   "assetArea": 208,
+   "yearBuilt": 0,
+   "priceSM": 17548,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-02-17",
+   "dealAmount": 2725000,
+   "roomNum": 4,
+   "assetArea": 105.6,
+   "yearBuilt": 2014,
+   "priceSM": 25805,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-16",
+   "dealAmount": 1950000,
+   "roomNum": 3,
+   "assetArea": 69,
+   "yearBuilt": 1980,
+   "priceSM": 28261,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-15",
+   "dealAmount": 1950000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 1980,
+   "priceSM": 24375,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-13",
+   "dealAmount": 1700000,
+   "roomNum": 2,
+   "assetArea": 41.55,
+   "yearBuilt": 1970,
+   "priceSM": 41463,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-12",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 83.15,
+   "yearBuilt": 1930,
+   "priceSM": 22850,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-12",
+   "dealAmount": 2200000,
+   "roomNum": 3,
+   "assetArea": 83.15,
+   "yearBuilt": 1930,
+   "priceSM": 26458,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-12",
+   "dealAmount": 3150000,
+   "roomNum": 5,
+   "assetArea": 129.1,
+   "yearBuilt": 2014,
+   "priceSM": 24419,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-11",
+   "dealAmount": 7720000,
+   "roomNum": 8,
+   "assetArea": 380,
+   "yearBuilt": 1997,
+   "priceSM": 20316,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-02-11",
+   "dealAmount": 810000,
+   "roomNum": 0,
+   "assetArea": 266,
+   "yearBuilt": 0,
+   "priceSM": 3045,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-02-11",
+   "dealAmount": 2350000,
+   "roomNum": 0,
+   "assetArea": 259,
+   "yearBuilt": 0,
+   "priceSM": 9073,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-02-10",
+   "dealAmount": 2800000,
+   "roomNum": 5,
+   "assetArea": 114.83,
+   "yearBuilt": 1997,
+   "priceSM": 24561,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-07",
+   "dealAmount": 3000000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 23077,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-06",
+   "dealAmount": 2000000,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 1970,
+   "priceSM": 22222,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-06",
+   "dealAmount": 4480000,
+   "roomNum": 0,
+   "assetArea": 449,
+   "yearBuilt": 0,
+   "priceSM": 9978,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-02-06",
+   "dealAmount": 3000000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 23077,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-04",
+   "dealAmount": 5700000,
+   "roomNum": 7,
+   "assetArea": 134.51,
+   "yearBuilt": 1995,
+   "priceSM": 42376,
+   "neighborhoodName": "נווה רמז",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-02",
+   "dealAmount": 2100000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 1980,
+   "priceSM": 26250,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-01",
+   "dealAmount": 2100000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 1980,
+   "priceSM": 26250,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-01",
+   "dealAmount": 2500000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 1980,
+   "priceSM": 31250,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-30",
+   "dealAmount": 2850000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 28500,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-30",
+   "dealAmount": 2000000,
+   "roomNum": 3,
+   "assetArea": 88,
+   "yearBuilt": 0,
+   "priceSM": 22727,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-29",
+   "dealAmount": 2000000,
+   "roomNum": 3,
+   "assetArea": 88,
+   "yearBuilt": 0,
+   "priceSM": 22727,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-29",
+   "dealAmount": 2850000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 28500,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-21",
+   "dealAmount": 1140000,
+   "roomNum": 3,
+   "assetArea": 96,
+   "yearBuilt": 2015,
+   "priceSM": 11875,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-19",
+   "dealAmount": 2330000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2023,
+   "priceSM": 21981,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-19",
+   "dealAmount": 4750000,
+   "roomNum": 6,
+   "assetArea": 190,
+   "yearBuilt": 0,
+   "priceSM": 25000,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-01-14",
+   "dealAmount": 1900000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-01-09",
+   "dealAmount": 2800000,
+   "roomNum": 5,
+   "assetArea": 105.6,
+   "yearBuilt": 2014,
+   "priceSM": 26667,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-08",
+   "dealAmount": 9300000,
+   "roomNum": 0,
+   "assetArea": 9452,
+   "yearBuilt": 0,
+   "priceSM": 984,
+   "neighborhoodName": null,
+   "dealNature": "מגורים"
+  },
+  {
+   "dealDate": "2025-01-08",
+   "dealAmount": 2490000,
+   "roomNum": 4,
+   "assetArea": 104.8,
+   "yearBuilt": 2006,
+   "priceSM": 23760,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-05",
+   "dealAmount": 1620000,
+   "roomNum": 3,
+   "assetArea": 60,
+   "yearBuilt": 1999,
+   "priceSM": 27000,
+   "neighborhoodName": "השמורה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-31",
+   "dealAmount": 1230000,
+   "roomNum": 0,
+   "assetArea": 39,
+   "yearBuilt": 0,
+   "priceSM": 31538,
+   "neighborhoodName": "השמורה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2024-12-31",
+   "dealAmount": 6350000,
+   "roomNum": 6,
+   "assetArea": 278,
+   "yearBuilt": 1970,
+   "priceSM": 22842,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-31",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 2025,
+   "priceSM": 25000,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-31",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 60,
+   "yearBuilt": 1999,
+   "priceSM": 24167,
+   "neighborhoodName": "השמורה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-31",
+   "dealAmount": 5000000,
+   "roomNum": 7,
+   "assetArea": 218,
+   "yearBuilt": 0,
+   "priceSM": 22936,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 742000,
+   "roomNum": 0,
+   "assetArea": 102.07,
+   "yearBuilt": 1950,
+   "priceSM": 7275,
+   "neighborhoodName": "יעקב",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2024-12-26",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 40.6,
+   "yearBuilt": 1960,
+   "priceSM": 36250,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-24",
+   "dealAmount": 5000000,
+   "roomNum": 7,
+   "assetArea": 200,
+   "yearBuilt": 0,
+   "priceSM": 25000,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-19",
+   "dealAmount": 3200000,
+   "roomNum": 5.5,
+   "assetArea": 115,
+   "yearBuilt": 1998,
+   "priceSM": 27826,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-19",
+   "dealAmount": 4030000,
+   "roomNum": 0,
+   "assetArea": 31000,
+   "yearBuilt": 0,
+   "priceSM": 130,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2024-12-18",
+   "dealAmount": 2400000,
+   "roomNum": 4,
+   "assetArea": 77.3,
+   "yearBuilt": 2004,
+   "priceSM": 31169,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-18",
+   "dealAmount": 1840000,
+   "roomNum": 4,
+   "assetArea": 115,
+   "yearBuilt": 2019,
+   "priceSM": 16000,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-17",
+   "dealAmount": 1733000,
+   "roomNum": 0,
+   "assetArea": 894,
+   "yearBuilt": 0,
+   "priceSM": 1938,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-12-17",
+   "dealAmount": 3625000,
+   "roomNum": 6,
+   "assetArea": 133.85,
+   "yearBuilt": 2005,
+   "priceSM": 27256,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-16",
+   "dealAmount": 320000,
+   "roomNum": 8,
+   "assetArea": 236,
+   "yearBuilt": 1992,
+   "priceSM": 1356,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-12",
+   "dealAmount": 3440000,
+   "roomNum": 5,
+   "assetArea": 129.35,
+   "yearBuilt": 1986,
+   "priceSM": 26595,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-12-10",
+   "dealAmount": 4100000,
+   "roomNum": 6,
+   "assetArea": 186,
+   "yearBuilt": 2021,
+   "priceSM": 22043,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-12-10",
+   "dealAmount": 2775000,
+   "roomNum": 4,
+   "assetArea": 107.3,
+   "yearBuilt": 2007,
+   "priceSM": 25862,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-08",
+   "dealAmount": 2710000,
+   "roomNum": 4,
+   "assetArea": 105.6,
+   "yearBuilt": 2014,
+   "priceSM": 25663,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-05",
+   "dealAmount": 292000,
+   "roomNum": 6,
+   "assetArea": 241,
+   "yearBuilt": 2000,
+   "priceSM": 1212,
+   "neighborhoodName": "נווה רמז",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-11-27",
+   "dealAmount": 4400000,
+   "roomNum": 6,
+   "assetArea": 193,
+   "yearBuilt": 1994,
+   "priceSM": 22798,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-11-27",
+   "dealAmount": 2720000,
+   "roomNum": 4,
+   "assetArea": 116.7,
+   "yearBuilt": 2014,
+   "priceSM": 23448,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-25",
+   "dealAmount": 4570000,
+   "roomNum": 7,
+   "assetArea": 258.3,
+   "yearBuilt": 1990,
+   "priceSM": 17693,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-25",
+   "dealAmount": 1370000,
+   "roomNum": 3,
+   "assetArea": 60.85,
+   "yearBuilt": 1970,
+   "priceSM": 22833,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-24",
+   "dealAmount": 2750000,
+   "roomNum": 0,
+   "assetArea": 258,
+   "yearBuilt": 0,
+   "priceSM": 10659,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-11-24",
+   "dealAmount": 3150000,
+   "roomNum": 5,
+   "assetArea": 148,
+   "yearBuilt": 2006,
+   "priceSM": 21284,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-24",
+   "dealAmount": 2050000,
+   "roomNum": 4,
+   "assetArea": 110.4,
+   "yearBuilt": 1970,
+   "priceSM": 18636,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-20",
+   "dealAmount": 400000,
+   "roomNum": 2,
+   "assetArea": 0,
+   "yearBuilt": 1970,
+   "priceSM": 0,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-18",
+   "dealAmount": 3650000,
+   "roomNum": 6,
+   "assetArea": 143.8,
+   "yearBuilt": 2005,
+   "priceSM": 25382,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-11-15",
+   "dealAmount": 200000,
+   "roomNum": 4,
+   "assetArea": 91.5,
+   "yearBuilt": 1920,
+   "priceSM": 2198,
+   "neighborhoodName": "המושבה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-14",
+   "dealAmount": 2200000,
+   "roomNum": 2,
+   "assetArea": 28.2,
+   "yearBuilt": 1960,
+   "priceSM": 78571,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-11-12",
+   "dealAmount": 1680000,
+   "roomNum": 5,
+   "assetArea": 95,
+   "yearBuilt": 2016,
+   "priceSM": 17684,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-07",
+   "dealAmount": 3350000,
+   "roomNum": 5,
+   "assetArea": 143.85,
+   "yearBuilt": 2014,
+   "priceSM": 23427,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-07",
+   "dealAmount": 650000,
+   "roomNum": 0,
+   "assetArea": 1935,
+   "yearBuilt": 0,
+   "priceSM": 336,
+   "neighborhoodName": null,
+   "dealNature": "לא מעובדת"
+  },
+  {
+   "dealDate": "2024-11-04",
+   "dealAmount": 4600000,
+   "roomNum": 0,
+   "assetArea": 262,
+   "yearBuilt": 1997,
+   "priceSM": 17557,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2024-10-29",
+   "dealAmount": 3230000,
+   "roomNum": 5,
+   "assetArea": 187,
+   "yearBuilt": 1998,
+   "priceSM": 17273,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-27",
+   "dealAmount": 1700000,
+   "roomNum": 0,
+   "assetArea": 26.45,
+   "yearBuilt": 0,
+   "priceSM": 64272,
+   "neighborhoodName": "יעקב",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2024-10-22",
+   "dealAmount": 2700000,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 2011,
+   "priceSM": 22881,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-21",
+   "dealAmount": 5400000,
+   "roomNum": 6,
+   "assetArea": 145.32,
+   "yearBuilt": 1998,
+   "priceSM": 37159,
+   "neighborhoodName": "השמורה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-15",
+   "dealAmount": 2000000,
+   "roomNum": 0,
+   "assetArea": 288,
+   "yearBuilt": 0,
+   "priceSM": 6944,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-10-15",
+   "dealAmount": 3770000,
+   "roomNum": 5,
+   "assetArea": 126.2,
+   "yearBuilt": 2012,
+   "priceSM": 29873,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-15",
+   "dealAmount": 2200000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 2008,
+   "priceSM": 19820,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-14",
+   "dealAmount": 2625000,
+   "roomNum": 4,
+   "assetArea": 100.7,
+   "yearBuilt": 2007,
+   "priceSM": 26250,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-13",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 93,
+   "yearBuilt": 2015,
+   "priceSM": 13441,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-10",
+   "dealAmount": 2450000,
+   "roomNum": 4,
+   "assetArea": 89.33,
+   "yearBuilt": 2006,
+   "priceSM": 27426,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-09",
+   "dealAmount": 2600000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 2009,
+   "priceSM": 23853,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-10-06",
+   "dealAmount": 4200000,
+   "roomNum": 6,
+   "assetArea": 165,
+   "yearBuilt": 2009,
+   "priceSM": 25455,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-09-30",
+   "dealAmount": 3380000,
+   "roomNum": 5,
+   "assetArea": 168.5,
+   "yearBuilt": 2014,
+   "priceSM": 20119,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-09-25",
+   "dealAmount": 2080000,
+   "roomNum": 3,
+   "assetArea": 32,
+   "yearBuilt": 1950,
+   "priceSM": 65000,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-09-22",
+   "dealAmount": 3550000,
+   "roomNum": 5,
+   "assetArea": 126.23,
+   "yearBuilt": 2013,
+   "priceSM": 28123,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-09-18",
+   "dealAmount": 3050000,
+   "roomNum": 4,
+   "assetArea": 114,
+   "yearBuilt": 2016,
+   "priceSM": 26754,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-09-17",
+   "dealAmount": 6250000,
+   "roomNum": 7,
+   "assetArea": 166.9,
+   "yearBuilt": 2013,
+   "priceSM": 37651,
+   "neighborhoodName": "נווה רמז",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-09-09",
+   "dealAmount": 2800000,
+   "roomNum": 0,
+   "assetArea": 492,
+   "yearBuilt": 0,
+   "priceSM": 5691,
+   "neighborhoodName": "המושבה",
+   "dealNature": "מגורים"
+  },
+  {
+   "dealDate": "2024-09-09",
+   "dealAmount": 3550000,
+   "roomNum": 6,
+   "assetArea": 150,
+   "yearBuilt": 1992,
+   "priceSM": 23667,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-09-09",
+   "dealAmount": 3810000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 29308,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-09-09",
+   "dealAmount": 1233000,
+   "roomNum": 5,
+   "assetArea": 152,
+   "yearBuilt": 2000,
+   "priceSM": 8112,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-09-08",
+   "dealAmount": 1825000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 18250,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-09-08",
+   "dealAmount": 3810000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 29308,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-09-05",
+   "dealAmount": 3650000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1950,
+   "priceSM": 36500,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-09-04",
+   "dealAmount": 9400000,
+   "roomNum": 0,
+   "assetArea": 274,
+   "yearBuilt": 0,
+   "priceSM": 34307,
+   "neighborhoodName": "המושבה",
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2024-09-03",
+   "dealAmount": 1650000,
+   "roomNum": 4,
+   "assetArea": 80,
+   "yearBuilt": 1957,
+   "priceSM": 20625,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-09-03",
+   "dealAmount": 4650000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 1990,
+   "priceSM": 29062,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-09-02",
+   "dealAmount": 1518000,
+   "roomNum": 3,
+   "assetArea": 78.89,
+   "yearBuilt": 1999,
+   "priceSM": 19462,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-09-02",
+   "dealAmount": 3206000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 24662,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-09-01",
+   "dealAmount": 3206523,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 24666,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-08-31",
+   "dealAmount": 5800000,
+   "roomNum": 6,
+   "assetArea": 196,
+   "yearBuilt": 0,
+   "priceSM": 29592,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-08-29",
+   "dealAmount": 3900000,
+   "roomNum": 4,
+   "assetArea": 121,
+   "yearBuilt": 1970,
+   "priceSM": 32231,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-08-28",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 86.02,
+   "yearBuilt": 2000,
+   "priceSM": 29063,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-08-25",
+   "dealAmount": 1850000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 30328,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-08-25",
+   "dealAmount": 4600000,
+   "roomNum": 5,
+   "assetArea": 160,
+   "yearBuilt": 2010,
+   "priceSM": 28750,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-08-22",
+   "dealAmount": 4630000,
+   "roomNum": 6,
+   "assetArea": 197,
+   "yearBuilt": 2008,
+   "priceSM": 23503,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-08-22",
+   "dealAmount": 5700000,
+   "roomNum": 7,
+   "assetArea": 212.95,
+   "yearBuilt": 0,
+   "priceSM": 26767,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-08-20",
+   "dealAmount": 4550000,
+   "roomNum": 5,
+   "assetArea": 197,
+   "yearBuilt": 2023,
+   "priceSM": 23096,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-08-20",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 113,
+   "yearBuilt": 2002,
+   "priceSM": 28319,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-08-18",
+   "dealAmount": 3950000,
+   "roomNum": 6,
+   "assetArea": 120.61,
+   "yearBuilt": 0,
+   "priceSM": 32917,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-08-15",
+   "dealAmount": 1290000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 1980,
+   "priceSM": 13030,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-08-14",
+   "dealAmount": 1475000,
+   "roomNum": 3,
+   "assetArea": 74.5,
+   "yearBuilt": 1995,
+   "priceSM": 19932,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-08-14",
+   "dealAmount": 3750000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 1997,
+   "priceSM": 23438,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-08-07",
+   "dealAmount": 4100000,
+   "roomNum": 6,
+   "assetArea": 189,
+   "yearBuilt": 1960,
+   "priceSM": 21693,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-31",
+   "dealAmount": 2850000,
+   "roomNum": 4,
+   "assetArea": 116.7,
+   "yearBuilt": 2013,
+   "priceSM": 24569,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-07-30",
+   "dealAmount": 3900000,
+   "roomNum": 5,
+   "assetArea": 170,
+   "yearBuilt": 0,
+   "priceSM": 22941,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-07-30",
+   "dealAmount": 3850000,
+   "roomNum": 5,
+   "assetArea": 265,
+   "yearBuilt": 1999,
+   "priceSM": 14528,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-29",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 29358,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-07-28",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 29358,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-07-22",
+   "dealAmount": 4275000,
+   "roomNum": 5,
+   "assetArea": 141.1,
+   "yearBuilt": 1984,
+   "priceSM": 30319,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-22",
+   "dealAmount": 4800000,
+   "roomNum": 0,
+   "assetArea": 417,
+   "yearBuilt": 0,
+   "priceSM": 11511,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-07-22",
+   "dealAmount": 3800000,
+   "roomNum": 5,
+   "assetArea": 216,
+   "yearBuilt": 1997,
+   "priceSM": 17593,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-21",
+   "dealAmount": 400000,
+   "roomNum": 0,
+   "assetArea": 796,
+   "yearBuilt": 0,
+   "priceSM": 503,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-07-21",
+   "dealAmount": 5700000,
+   "roomNum": 0,
+   "assetArea": 857,
+   "yearBuilt": 0,
+   "priceSM": 6651,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-07-18",
+   "dealAmount": 3650000,
+   "roomNum": 5,
+   "assetArea": 177,
+   "yearBuilt": 1996,
+   "priceSM": 20621,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-17",
+   "dealAmount": 3300000,
+   "roomNum": 5,
+   "assetArea": 112.2,
+   "yearBuilt": 2006,
+   "priceSM": 29412,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-07-17",
+   "dealAmount": 3525000,
+   "roomNum": 4,
+   "assetArea": 117,
+   "yearBuilt": 2013,
+   "priceSM": 30128,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-16",
+   "dealAmount": 5365000,
+   "roomNum": 5,
+   "assetArea": 176,
+   "yearBuilt": 0,
+   "priceSM": 30483,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-15",
+   "dealAmount": 2550000,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 21610,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-07-11",
+   "dealAmount": 1800000,
+   "roomNum": 4,
+   "assetArea": 124,
+   "yearBuilt": 1970,
+   "priceSM": 14516,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-07-10",
+   "dealAmount": 4250000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 2009,
+   "priceSM": 26562,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-07-07",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 142,
+   "yearBuilt": 2008,
+   "priceSM": 22535,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-07-04",
+   "dealAmount": 3150000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 31500,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-07-03",
+   "dealAmount": 3150000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 31500,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-07-01",
+   "dealAmount": 3750000,
+   "roomNum": 0,
+   "assetArea": 485,
+   "yearBuilt": 0,
+   "priceSM": 7732,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-06-30",
+   "dealAmount": 1950000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2023,
+   "priceSM": 18396,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-30",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2023,
+   "priceSM": 18679,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-30",
+   "dealAmount": 2020000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2023,
+   "priceSM": 19057,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-27",
+   "dealAmount": 4170000,
+   "roomNum": 6,
+   "assetArea": 135.2,
+   "yearBuilt": 1994,
+   "priceSM": 30889,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-27",
+   "dealAmount": 5000000,
+   "roomNum": 5,
+   "assetArea": 167,
+   "yearBuilt": 1998,
+   "priceSM": 29940,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-27",
+   "dealAmount": 2635000,
+   "roomNum": 4,
+   "assetArea": 107.3,
+   "yearBuilt": 2007,
+   "priceSM": 24626,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-25",
+   "dealAmount": 6000000,
+   "roomNum": 5,
+   "assetArea": 220,
+   "yearBuilt": 0,
+   "priceSM": 27273,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-24",
+   "dealAmount": 490000,
+   "roomNum": 1.5,
+   "assetArea": 48,
+   "yearBuilt": 0,
+   "priceSM": 10208,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-23",
+   "dealAmount": 8550000,
+   "roomNum": 5,
+   "assetArea": 256,
+   "yearBuilt": 1993,
+   "priceSM": 33398,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-06-20",
+   "dealAmount": 2250000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 2008,
+   "priceSM": 21429,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-20",
+   "dealAmount": 6300000,
+   "roomNum": 6,
+   "assetArea": 262,
+   "yearBuilt": 2000,
+   "priceSM": 24046,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-06-20",
+   "dealAmount": 4650000,
+   "roomNum": 6,
+   "assetArea": 204,
+   "yearBuilt": 1995,
+   "priceSM": 22794,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-06-18",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 62.2,
+   "yearBuilt": 1960,
+   "priceSM": 19293,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-17",
+   "dealAmount": 1702000,
+   "roomNum": 4,
+   "assetArea": 96,
+   "yearBuilt": 0,
+   "priceSM": 17729,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-16",
+   "dealAmount": 3006000,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 25475,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-16",
+   "dealAmount": 3500000,
+   "roomNum": 5,
+   "assetArea": 164,
+   "yearBuilt": 2013,
+   "priceSM": 21341,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-06-15",
+   "dealAmount": 3006523,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 25479,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-06-13",
+   "dealAmount": 1092000,
+   "roomNum": 9,
+   "assetArea": 248,
+   "yearBuilt": 0,
+   "priceSM": 4403,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-06-09",
+   "dealAmount": 3500000,
+   "roomNum": 5,
+   "assetArea": 136.04,
+   "yearBuilt": 1998,
+   "priceSM": 25735,
+   "neighborhoodName": "נווה רמז",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-06",
+   "dealAmount": 142000,
+   "roomNum": 7,
+   "assetArea": 245,
+   "yearBuilt": 1930,
+   "priceSM": 580,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-06-06",
+   "dealAmount": 790000,
+   "roomNum": 2,
+   "assetArea": 54,
+   "yearBuilt": 0,
+   "priceSM": 14630,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-06",
+   "dealAmount": 3270000,
+   "roomNum": 5,
+   "assetArea": 135,
+   "yearBuilt": 0,
+   "priceSM": 24222,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-04",
+   "dealAmount": 2050000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2023,
+   "priceSM": 19340,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-03",
+   "dealAmount": 540000,
+   "roomNum": 0,
+   "assetArea": 992,
+   "yearBuilt": 0,
+   "priceSM": 544,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2024-06-02",
+   "dealAmount": 2720000,
+   "roomNum": 4,
+   "assetArea": 114,
+   "yearBuilt": 2008,
+   "priceSM": 23860,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-06-02",
+   "dealAmount": 403000,
+   "roomNum": 1,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 8574,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2024-05-30",
+   "dealAmount": 3350000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 2005,
+   "priceSM": 26587,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-05-30",
+   "dealAmount": 4450000,
+   "roomNum": 6,
+   "assetArea": 148.52,
+   "yearBuilt": 2003,
+   "priceSM": 30068,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-05-29",
+   "dealAmount": 3237500,
+   "roomNum": 5,
+   "assetArea": 118.5,
+   "yearBuilt": 2008,
+   "priceSM": 27436,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-05-29",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 2009,
+   "priceSM": 22523,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-05-28",
+   "dealAmount": 4672000,
+   "roomNum": 0,
+   "assetArea": 539,
+   "yearBuilt": 0,
+   "priceSM": 8668,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-05-27",
+   "dealAmount": 2610000,
+   "roomNum": 4,
+   "assetArea": 120.35,
+   "yearBuilt": 2014,
+   "priceSM": 21750,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-05-26",
+   "dealAmount": 445000,
+   "roomNum": 1,
+   "assetArea": 39,
+   "yearBuilt": 0,
+   "priceSM": 11410,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2024-05-21",
+   "dealAmount": 2150000,
+   "roomNum": 4,
+   "assetArea": 78.89,
+   "yearBuilt": 1999,
+   "priceSM": 27564,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-05-21",
+   "dealAmount": 3500000,
+   "roomNum": 0,
+   "assetArea": 7000,
+   "yearBuilt": 0,
+   "priceSM": 500,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-05-12",
+   "dealAmount": 3460000,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 1992,
+   "priceSM": 20719,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-05-09",
+   "dealAmount": 6050000,
+   "roomNum": 6,
+   "assetArea": 200,
+   "yearBuilt": 0,
+   "priceSM": 30250,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-05-09",
+   "dealAmount": 840000,
+   "roomNum": 2,
+   "assetArea": 60,
+   "yearBuilt": 0,
+   "priceSM": 14000,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2024-05-08",
+   "dealAmount": 3400000,
+   "roomNum": 6,
+   "assetArea": 141.4,
+   "yearBuilt": 0,
+   "priceSM": 24045,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-05-05",
+   "dealAmount": 4710000,
+   "roomNum": 5,
+   "assetArea": 153.74,
+   "yearBuilt": 2003,
+   "priceSM": 30784,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-05-05",
+   "dealAmount": 3600000,
+   "roomNum": 5,
+   "assetArea": 224,
+   "yearBuilt": 1982,
+   "priceSM": 16071,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-05-03",
+   "dealAmount": 1132000,
+   "roomNum": 6,
+   "assetArea": 238,
+   "yearBuilt": 0,
+   "priceSM": 4756,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-04-30",
+   "dealAmount": 5850000,
+   "roomNum": 6,
+   "assetArea": 279,
+   "yearBuilt": 1999,
+   "priceSM": 20968,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-04-30",
+   "dealAmount": 2686000,
+   "roomNum": 4,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 20662,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-04-29",
+   "dealAmount": 3506523,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 26973,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-04-29",
+   "dealAmount": 2686523,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 22767,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-04-26",
+   "dealAmount": 5500000,
+   "roomNum": 6,
+   "assetArea": 195,
+   "yearBuilt": 1996,
+   "priceSM": 28205,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-04-17",
+   "dealAmount": 1800000,
+   "roomNum": 4,
+   "assetArea": 61.1,
+   "yearBuilt": 1960,
+   "priceSM": 29508,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-04-16",
+   "dealAmount": 3318000,
+   "roomNum": 5.5,
+   "assetArea": 147.47,
+   "yearBuilt": 2010,
+   "priceSM": 22571,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2024-04-10",
+   "dealAmount": 4650000,
+   "roomNum": 6,
+   "assetArea": 182,
+   "yearBuilt": 2008,
+   "priceSM": 25549,
+   "neighborhoodName": "השמורה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-04-08",
+   "dealAmount": 2900000,
+   "roomNum": 5,
+   "assetArea": 149,
+   "yearBuilt": 0,
+   "priceSM": 19463,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-04-07",
+   "dealAmount": 2000000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 20000,
+   "neighborhoodName": "הגורן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-04-07",
+   "dealAmount": 117000,
+   "roomNum": 6,
+   "assetArea": 207,
+   "yearBuilt": 1985,
+   "priceSM": 565,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-04-06",
+   "dealAmount": 2000000,
+   "roomNum": 3,
+   "assetArea": 100,
+   "yearBuilt": 1980,
+   "priceSM": 20000,
+   "neighborhoodName": "הגורן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-04-02",
+   "dealAmount": 1334000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 21869,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-31",
+   "dealAmount": 3300000,
+   "roomNum": 6,
+   "assetArea": 134.04,
+   "yearBuilt": 1994,
+   "priceSM": 24620,
+   "neighborhoodName": "יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-31",
+   "dealAmount": 2926000,
+   "roomNum": 4,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 24588,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-30",
+   "dealAmount": 2926523,
+   "roomNum": 4,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 24593,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-03-29",
+   "dealAmount": 2580000,
+   "roomNum": 4,
+   "assetArea": 117.91,
+   "yearBuilt": 2008,
+   "priceSM": 22051,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-28",
+   "dealAmount": 3336000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 26476,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-28",
+   "dealAmount": 240000,
+   "roomNum": 7,
+   "assetArea": 250,
+   "yearBuilt": 1960,
+   "priceSM": 960,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-03-28",
+   "dealAmount": 92000,
+   "roomNum": 5,
+   "assetArea": 184,
+   "yearBuilt": 0,
+   "priceSM": 500,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-03-27",
+   "dealAmount": 3336523,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 26480,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-03-26",
+   "dealAmount": 3700000,
+   "roomNum": 6,
+   "assetArea": 155.6,
+   "yearBuilt": 2003,
+   "priceSM": 23779,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-03-21",
+   "dealAmount": 2656000,
+   "roomNum": 4,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 22319,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-21",
+   "dealAmount": 2906000,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 24627,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-20",
+   "dealAmount": 2906523,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 24632,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-03-20",
+   "dealAmount": 2656523,
+   "roomNum": 4,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 22324,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-03-20",
+   "dealAmount": 1550000,
+   "roomNum": 3,
+   "assetArea": 70,
+   "yearBuilt": 1999,
+   "priceSM": 22143,
+   "neighborhoodName": "השמורה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-18",
+   "dealAmount": 2656000,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 22508,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-18",
+   "dealAmount": 3400000,
+   "roomNum": 6,
+   "assetArea": 486,
+   "yearBuilt": 1940,
+   "priceSM": 6996,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-03-18",
+   "dealAmount": 1700000,
+   "roomNum": 4,
+   "assetArea": 85.95,
+   "yearBuilt": 1995,
+   "priceSM": 20000,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-17",
+   "dealAmount": 2656523,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 22513,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-03-17",
+   "dealAmount": 4600000,
+   "roomNum": 6,
+   "assetArea": 195,
+   "yearBuilt": 2010,
+   "priceSM": 23590,
+   "neighborhoodName": "השמורה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-03-17",
+   "dealAmount": 3675000,
+   "roomNum": 5,
+   "assetArea": 147.95,
+   "yearBuilt": 1995,
+   "priceSM": 25000,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-13",
+   "dealAmount": 4300000,
+   "roomNum": 5,
+   "assetArea": 145.3,
+   "yearBuilt": 1992,
+   "priceSM": 29594,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-03-13",
+   "dealAmount": 2425000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 20208,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-03-10",
+   "dealAmount": 3825000,
+   "roomNum": 5,
+   "assetArea": 168,
+   "yearBuilt": 2014,
+   "priceSM": 22768,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-03-10",
+   "dealAmount": 4000000,
+   "roomNum": 5,
+   "assetArea": 200,
+   "yearBuilt": 2023,
+   "priceSM": 20000,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-03-10",
+   "dealAmount": 650000,
+   "roomNum": 2,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 13830,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2024-03-04",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2023,
+   "priceSM": 18679,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-02-29",
+   "dealAmount": 8250000,
+   "roomNum": 8,
+   "assetArea": 321,
+   "yearBuilt": 0,
+   "priceSM": 25701,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-02-28",
+   "dealAmount": 2300000,
+   "roomNum": 4,
+   "assetArea": 90,
+   "yearBuilt": 1970,
+   "priceSM": 25556,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-02-27",
+   "dealAmount": 4100000,
+   "roomNum": 6,
+   "assetArea": 160.17,
+   "yearBuilt": 2012,
+   "priceSM": 25598,
+   "neighborhoodName": "נווה שרת",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-02-26",
+   "dealAmount": 3260000,
+   "roomNum": 5,
+   "assetArea": 148,
+   "yearBuilt": 0,
+   "priceSM": 22027,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-02-25",
+   "dealAmount": 2931000,
+   "roomNum": 5,
+   "assetArea": 117.9,
+   "yearBuilt": 0,
+   "priceSM": 25051,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-02-25",
+   "dealAmount": 3260000,
+   "roomNum": 5,
+   "assetArea": 148,
+   "yearBuilt": 0,
+   "priceSM": 22027,
+   "neighborhoodName": "יעקב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-02-22",
+   "dealAmount": 3060000,
+   "roomNum": 6,
+   "assetArea": 123.8,
+   "yearBuilt": 2005,
+   "priceSM": 24878,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-02-21",
+   "dealAmount": 3100000,
+   "roomNum": 6,
+   "assetArea": 153.9,
+   "yearBuilt": 2006,
+   "priceSM": 20143,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-02-20",
+   "dealAmount": 3350000,
+   "roomNum": 4,
+   "assetArea": 123,
+   "yearBuilt": 2008,
+   "priceSM": 27236,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-02-16",
+   "dealAmount": 5500000,
+   "roomNum": 5,
+   "assetArea": 174.96,
+   "yearBuilt": 1996,
+   "priceSM": 31436,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-02-06",
+   "dealAmount": 2650000,
+   "roomNum": 4,
+   "assetArea": 111.2,
+   "yearBuilt": 2014,
+   "priceSM": 23874,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-02-05",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 142,
+   "yearBuilt": 0,
+   "priceSM": 22535,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' טורי"
+  },
+  {
+   "dealDate": "2024-02-04",
+   "dealAmount": 555000,
+   "roomNum": 2,
+   "assetArea": 50,
+   "yearBuilt": 0,
+   "priceSM": 11100,
+   "neighborhoodName": null,
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2024-02-04",
+   "dealAmount": 2825000,
+   "roomNum": 5,
+   "assetArea": 144,
+   "yearBuilt": 0,
+   "priceSM": 19618,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-02-01",
+   "dealAmount": 6000000,
+   "roomNum": 5,
+   "assetArea": 188,
+   "yearBuilt": 1993,
+   "priceSM": 31915,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-01-31",
+   "dealAmount": 6475000,
+   "roomNum": 1,
+   "assetArea": 389,
+   "yearBuilt": 1996,
+   "priceSM": 16645,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-01-29",
+   "dealAmount": 102000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "מחסנים"
+  },
+  {
+   "dealDate": "2024-01-28",
+   "dealAmount": 50000,
+   "roomNum": 0,
+   "assetArea": 50,
+   "yearBuilt": 1992,
+   "priceSM": 1000,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-01-25",
+   "dealAmount": 1860000,
+   "roomNum": 0,
+   "assetArea": 508,
+   "yearBuilt": 1997,
+   "priceSM": 3661,
+   "neighborhoodName": "המושבה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2024-01-24",
+   "dealAmount": 7000000,
+   "roomNum": 0,
+   "assetArea": 215,
+   "yearBuilt": 0,
+   "priceSM": 32558,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-01-24",
+   "dealAmount": 3450000,
+   "roomNum": 5,
+   "assetArea": 141.5,
+   "yearBuilt": 0,
+   "priceSM": 24382,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-01-24",
+   "dealAmount": 1750000,
+   "roomNum": 4,
+   "assetArea": 97.48,
+   "yearBuilt": 0,
+   "priceSM": 17952,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-01-24",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 63.2,
+   "yearBuilt": 1960,
+   "priceSM": 18987,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-01-24",
+   "dealAmount": 3250000,
+   "roomNum": 5,
+   "assetArea": 1200,
+   "yearBuilt": 0,
+   "priceSM": 2708,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-01-21",
+   "dealAmount": 2200000,
+   "roomNum": 3,
+   "assetArea": 85,
+   "yearBuilt": 1997,
+   "priceSM": 25882,
+   "neighborhoodName": "מול היקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-01-21",
+   "dealAmount": 9000000,
+   "roomNum": 7,
+   "assetArea": 400,
+   "yearBuilt": 1970,
+   "priceSM": 22500,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-01-17",
+   "dealAmount": 884000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 1950,
+   "priceSM": 11787,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-01-17",
+   "dealAmount": 3106000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 23179,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-01-10",
+   "dealAmount": 2450000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 2007,
+   "priceSM": 24500,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-01-04",
+   "dealAmount": 8080000,
+   "roomNum": 7,
+   "assetArea": 248,
+   "yearBuilt": 2024,
+   "priceSM": 32581,
+   "neighborhoodName": "המושבה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-01-03",
+   "dealAmount": 5500000,
+   "roomNum": 5,
+   "assetArea": 172,
+   "yearBuilt": 0,
+   "priceSM": 31977,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-01-03",
+   "dealAmount": 8080000,
+   "roomNum": 7,
+   "assetArea": 248,
+   "yearBuilt": 0,
+   "priceSM": 32581,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-01-03",
+   "dealAmount": 5300000,
+   "roomNum": 5,
+   "assetArea": 163,
+   "yearBuilt": 0,
+   "priceSM": 32515,
+   "neighborhoodName": "המושבה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-01-02",
+   "dealAmount": 4040000,
+   "roomNum": 5,
+   "assetArea": 173,
+   "yearBuilt": 2007,
+   "priceSM": 23353,
+   "neighborhoodName": "נווה שלו",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2023-12-27",
+   "dealAmount": 3496000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 26892,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2023-12-26",
+   "dealAmount": 3496288,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 26895,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2023-12-26",
+   "dealAmount": 910000,
+   "roomNum": 0,
+   "assetArea": 1006,
+   "yearBuilt": 0,
+   "priceSM": 905,
+   "neighborhoodName": "יעקב",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2023-12-23",
+   "dealAmount": 6654000,
+   "roomNum": 8,
+   "assetArea": 438,
+   "yearBuilt": 2008,
+   "priceSM": 15192,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2023-12-21",
+   "dealAmount": 1800000,
+   "roomNum": 0,
+   "assetArea": 330,
+   "yearBuilt": 0,
+   "priceSM": 5455,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2023-12-20",
+   "dealAmount": 3000000,
+   "roomNum": 6,
+   "assetArea": 142,
+   "yearBuilt": 2008,
+   "priceSM": 21127,
+   "neighborhoodName": "חלומות זיכרון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2023-12-17",
+   "dealAmount": 3800000,
+   "roomNum": 7,
+   "assetArea": 155.6,
+   "yearBuilt": 2004,
+   "priceSM": 24516,
+   "neighborhoodName": "גבעת עדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2023-12-13",
+   "dealAmount": 3950000,
+   "roomNum": 5,
+   "assetArea": 195.74,
+   "yearBuilt": 2004,
+   "priceSM": 20180,
+   "neighborhoodName": "נווה הברון",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2023-12-10",
+   "dealAmount": 1000000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 16393,
+   "neighborhoodName": "רמת צבי",
+   "dealNature": "דירה בבית קומות"
+  }
+ ]
+}

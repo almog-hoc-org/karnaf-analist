@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { BRAND, INK, BRAND_LIGHT, SLATE, AXIS, tooltipStyle } from "@/lib/chartColors";
 
 interface DataPoint {
   year: number;
@@ -41,25 +42,19 @@ export default function CityConstructionMiniChart({
         <ComposedChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
           <XAxis
             dataKey="year"
-            tick={{ fill: "#64748b", fontSize: 11 }}
-            axisLine={{ stroke: "#3f3f46" }}
+            tick={{ fill: AXIS, fontSize: 11 }}
+            axisLine={{ stroke: AXIS }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: "#64748b", fontSize: 10 }}
+            tick={{ fill: AXIS, fontSize: 10 }}
             axisLine={false}
             tickLine={false}
             width={40}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              fontSize: "12px",
-              direction: "rtl",
-            }}
-            labelStyle={{ color: "#64748b" }}
+            contentStyle={{ ...tooltipStyle, direction: "rtl" }}
+            labelStyle={{ color: SLATE }}
             formatter={(value: number, name: string) => {
               const labels: Record<string, string> = {
                 permits: "היתרי בנייה",
@@ -82,16 +77,16 @@ export default function CityConstructionMiniChart({
               return labels[value] || value;
             }}
           />
-          <Bar dataKey="permits" fill="#f59e0b" opacity={0.7} radius={[2, 2, 0, 0]} />
-          <Bar dataKey="starts" fill="#22c55e" opacity={0.7} radius={[2, 2, 0, 0]} />
-          <Bar dataKey="completions" fill="#06b6d4" opacity={0.7} radius={[2, 2, 0, 0]} />
+          <Bar dataKey="permits" fill={BRAND} opacity={0.7} radius={[2, 2, 0, 0]} />
+          <Bar dataKey="starts" fill={INK} opacity={0.7} radius={[2, 2, 0, 0]} />
+          <Bar dataKey="completions" fill={BRAND_LIGHT} opacity={0.7} radius={[2, 2, 0, 0]} />
           <Line
             dataKey="housingNeed"
             type="monotone"
-            stroke="#ef4444"
+            stroke={SLATE}
             strokeWidth={2}
             strokeDasharray="5 3"
-            dot={{ fill: "#ef4444", r: 3 }}
+            dot={{ fill: SLATE, r: 3 }}
           />
         </ComposedChart>
       </ResponsiveContainer>

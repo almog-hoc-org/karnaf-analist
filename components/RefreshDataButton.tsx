@@ -66,8 +66,8 @@ export default function RefreshDataButton() {
         onClick={() => (running ? setOpen(true) : startRefresh())}
         className={`fixed bottom-5 left-5 z-40 group inline-flex items-center gap-2 px-4 py-3 rounded-full font-bold text-sm shadow-2xl transition-all ${
           running
-            ? "bg-amber-500 text-white hover:bg-amber-600"
-            : "bg-gradient-to-l from-cyan-600 to-blue-600 text-white hover:shadow-cyan-500/40 hover:scale-105"
+            ? "bg-slate-600 text-white hover:bg-slate-700"
+            : "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-indigo-500/40 hover:scale-105"
         }`}
         aria-label="רענן נתונים"
         title="חיפוש דוחות עדכניים בלמ״ס"
@@ -89,8 +89,8 @@ export default function RefreshDataButton() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <header className="px-5 py-4 border-b border-slate-100 flex items-center gap-3 bg-gradient-to-l from-cyan-50 via-white to-blue-50">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-600 to-blue-600 text-white text-lg flex items-center justify-center shadow-lg">
+            <header className="px-5 py-4 border-b border-slate-100 flex items-center gap-3 bg-indigo-50/60">
+              <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white text-lg flex items-center justify-center shadow-lg">
                 {running ? <span className="animate-spin">⟳</span> : "🔄"}
               </div>
               <div className="flex-1 min-w-0">
@@ -123,9 +123,9 @@ export default function RefreshDataButton() {
               )}
               {events.map((e, i) => {
                 const cls =
-                  e.type === "found" ? "bg-emerald-50 text-emerald-800 border-emerald-200" :
+                  e.type === "found" ? "bg-indigo-50 text-indigo-800 border-indigo-200" :
                   e.type === "error" ? "bg-red-50 text-red-800 border-red-200" :
-                  e.type === "summary" ? "bg-blue-50 text-blue-900 border-blue-200 font-bold" :
+                  e.type === "summary" ? "bg-indigo-50 text-indigo-900 border-indigo-200 font-bold" :
                   e.type === "log" ? "bg-white text-slate-700 border-slate-200" :
                   "text-slate-500";
                 return (
@@ -141,8 +141,8 @@ export default function RefreshDataButton() {
               <footer className="px-5 py-4 border-t border-slate-100 bg-white">
                 <div className="grid grid-cols-4 gap-3 mb-3">
                   <KpiCell label="נבדקו" value={String(summary.attempted ?? 0)} tone="slate" />
-                  <KpiCell label="חדשים" value={String(summary.found ?? 0)} tone="emerald" />
-                  <KpiCell label="דולגו" value={String(summary.skipped ?? 0)} tone="amber" />
+                  <KpiCell label="חדשים" value={String(summary.found ?? 0)} tone="indigo" />
+                  <KpiCell label="דולגו" value={String(summary.skipped ?? 0)} tone="slate" />
                   <KpiCell label="שגיאות" value={String(summary.errors ?? 0)} tone="red" />
                 </div>
                 <div className="flex items-center gap-2">
@@ -157,7 +157,7 @@ export default function RefreshDataButton() {
                     <button
                       type="button"
                       onClick={() => window.location.reload()}
-                      className="flex-1 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-sm"
+                      className="flex-1 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm"
                     >
                       רענן את הדף לראות שינויים →
                     </button>
@@ -172,9 +172,8 @@ export default function RefreshDataButton() {
   );
 }
 
-function KpiCell({ label, value, tone }: { label: string; value: string; tone: "slate" | "emerald" | "amber" | "red" }) {
-  const cls = tone === "emerald" ? "text-emerald-700 bg-emerald-50 border-emerald-200"
-            : tone === "amber" ? "text-amber-700 bg-amber-50 border-amber-200"
+function KpiCell({ label, value, tone }: { label: string; value: string; tone: "slate" | "indigo" | "red" }) {
+  const cls = tone === "indigo" ? "text-indigo-700 bg-indigo-50 border-indigo-200"
             : tone === "red" ? "text-red-700 bg-red-50 border-red-200"
             : "text-slate-700 bg-slate-50 border-slate-200";
   return (

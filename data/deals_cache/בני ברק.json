@@ -1,15 +1,15 @@
 {
   "cityName": "בני ברק",
-  "lastUpdated": "2026-06-24T06:52:13.703Z",
+  "lastUpdated": "2026-07-21T09:05:17.396Z",
   "neighborhoods": [
     {
       "neighborhood": "מרכז העיר",
-      "totalDeals": 2747,
+      "totalDeals": 2748,
       "dealsPerYearAvg": 458,
       "streets": [
         {
           "streetName": "רוטשילד",
-          "totalDeals": 224,
+          "totalDeals": 227,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -49,10 +49,10 @@
                     "pricePerSqm": 24118,
                     "totalPrice": 1640000,
                     "area": 68,
-                    "houseNum": "172.0",
+                    "houseNum": 172,
                     "streetName": "רוטשילד",
                     "blocksAway": 2,
-                    "dealDate": "2021-08-16T00:00:00Z"
+                    "dealDate": "2021-08-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -95,10 +95,10 @@
                     "pricePerSqm": 19740,
                     "totalPrice": 1520000,
                     "area": 77,
-                    "houseNum": "168.0",
+                    "houseNum": 168,
                     "streetName": "רוטשילד",
                     "blocksAway": 2,
-                    "dealDate": "2021-08-30T00:00:00Z"
+                    "dealDate": "2021-08-30T00:00:00.000Z"
                   }
                 }
               ]
@@ -141,10 +141,10 @@
                     "pricePerSqm": 16279,
                     "totalPrice": 1400000,
                     "area": 86,
-                    "houseNum": "146.0",
+                    "houseNum": 146,
                     "streetName": "רוטשילד",
                     "blocksAway": 24,
-                    "dealDate": "2021-11-22T00:00:00Z"
+                    "dealDate": "2021-11-22T00:00:00.000Z"
                   }
                 }
               ]
@@ -153,7 +153,7 @@
         },
         {
           "streetName": "זאב ברנדה",
-          "totalDeals": 147,
+          "totalDeals": 145,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -166,11 +166,11 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 12,
+                    "count": 10,
                     "threshold": 10,
-                    "avgPricePerSqm": 31979,
-                    "avgTotalPrice": 2048854,
-                    "avgArea": 65
+                    "avgPricePerSqm": 31797,
+                    "avgTotalPrice": 2017737,
+                    "avgArea": 64
                   }
                 },
                 {
@@ -193,10 +193,10 @@
                     "pricePerSqm": 4125,
                     "totalPrice": 264000,
                     "area": 64,
-                    "houseNum": "26.0",
+                    "houseNum": 26,
                     "streetName": "זאב ברנדה",
                     "blocksAway": 14,
-                    "dealDate": "2021-08-10T00:00:00Z"
+                    "dealDate": "2021-08-10T00:00:00.000Z"
                   }
                 }
               ]
@@ -214,8 +214,8 @@
                     "type": "aggregated",
                     "count": 10,
                     "threshold": 10,
-                    "avgPricePerSqm": 25463,
-                    "avgTotalPrice": 1953211,
+                    "avgPricePerSqm": 27329,
+                    "avgTotalPrice": 2108892,
                     "avgArea": 78
                   }
                 },
@@ -239,10 +239,10 @@
                     "pricePerSqm": 18214,
                     "totalPrice": 1530000,
                     "area": 84,
-                    "houseNum": "35.0",
+                    "houseNum": 35,
                     "streetName": "זאב ברנדה",
                     "blocksAway": 5,
-                    "dealDate": "2021-11-01T00:00:00Z"
+                    "dealDate": "2021-11-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -285,10 +285,10 @@
                     "pricePerSqm": 18095,
                     "totalPrice": 1900000,
                     "area": 105,
-                    "houseNum": "48.0",
+                    "houseNum": 48,
                     "streetName": "זאב ברנדה",
                     "blocksAway": 8,
-                    "dealDate": "2021-08-03T00:00:00Z"
+                    "dealDate": "2021-08-03T00:00:00.000Z"
                   }
                 }
               ]
@@ -299,12 +299,12 @@
     },
     {
       "neighborhood": "פרדס כץ",
-      "totalDeals": 2103,
-      "dealsPerYearAvg": 300,
+      "totalDeals": 2120,
+      "dealsPerYearAvg": 303,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 402,
+          "totalDeals": 401,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -428,7 +428,7 @@
         },
         {
           "streetName": "הירקון",
-          "totalDeals": 275,
+          "totalDeals": 279,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -526,8 +526,8 @@
     },
     {
       "neighborhood": "הצפון הישן-החלק הצפוני",
-      "totalDeals": 1959,
-      "dealsPerYearAvg": 280,
+      "totalDeals": 1976,
+      "dealsPerYearAvg": 282,
       "streets": [
         {
           "streetName": "דיזנגוף",
@@ -546,7 +546,7 @@
                     "type": "aggregated",
                     "count": 10,
                     "threshold": 10,
-                    "avgPricePerSqm": 55546,
+                    "avgPricePerSqm": 55551,
                     "avgTotalPrice": 3148300,
                     "avgArea": 58
                   }
@@ -615,10 +615,10 @@
                     "pricePerSqm": 54706,
                     "totalPrice": 3720000,
                     "area": 68,
-                    "houseNum": "240.0",
+                    "houseNum": 240,
                     "streetName": "דיזנגוף",
                     "blocksAway": 9,
-                    "dealDate": "2020-03-12T00:00:00Z"
+                    "dealDate": "2020-03-12T00:00:00.000Z"
                   }
                 }
               ]
@@ -649,10 +649,10 @@
                     "pricePerSqm": 63131,
                     "totalPrice": 6250000,
                     "area": 99,
-                    "houseNum": "255.0",
+                    "houseNum": 255,
                     "streetName": "דיזנגוף",
                     "blocksAway": 6,
-                    "dealDate": "2022-03-28T00:00:00Z"
+                    "dealDate": "2022-03-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -663,10 +663,10 @@
                     "pricePerSqm": 58000,
                     "totalPrice": 5800000,
                     "area": 100,
-                    "houseNum": "235.0",
+                    "houseNum": 235,
                     "streetName": "דיזנגוף",
                     "blocksAway": 14,
-                    "dealDate": "2021-02-04T00:00:00Z"
+                    "dealDate": "2021-02-04T00:00:00.000Z"
                   }
                 }
               ]
@@ -675,7 +675,7 @@
         },
         {
           "streetName": "נורדאו",
-          "totalDeals": 105,
+          "totalDeals": 106,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -691,10 +691,10 @@
                     "pricePerSqm": 53030,
                     "totalPrice": 3500000,
                     "area": 66,
-                    "houseNum": "53.0",
+                    "houseNum": 53,
                     "streetName": "נורדאו",
                     "blocksAway": 50,
-                    "dealDate": "2026-02-26T00:00:00Z"
+                    "dealDate": "2026-02-26T00:00:00.000Z"
                   }
                 },
                 {
@@ -781,10 +781,10 @@
                     "pricePerSqm": 55556,
                     "totalPrice": 5000000,
                     "area": 90,
-                    "houseNum": "30.0",
+                    "houseNum": 30,
                     "streetName": "נורדאו",
                     "blocksAway": 27,
-                    "dealDate": "2024-10-09T00:00:00Z"
+                    "dealDate": "2024-10-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -807,10 +807,10 @@
                     "pricePerSqm": 47862,
                     "totalPrice": 4499000,
                     "area": 94,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "נורדאו",
                     "blocksAway": 0,
-                    "dealDate": "2020-09-07T00:00:00Z"
+                    "dealDate": "2020-09-07T00:00:00.000Z"
                   }
                 }
               ]
@@ -820,7 +820,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 10662,
+  "totalDealsAnalyzed": 10782,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

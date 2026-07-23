@@ -1,15 +1,15 @@
 {
   "cityName": "פתח תקווה",
-  "lastUpdated": "2026-06-24T07:00:12.600Z",
+  "lastUpdated": "2026-07-21T09:20:00.195Z",
   "neighborhoods": [
     {
       "neighborhood": "פרדס כץ",
-      "totalDeals": 2103,
-      "dealsPerYearAvg": 300,
+      "totalDeals": 2120,
+      "dealsPerYearAvg": 303,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 402,
+          "totalDeals": 401,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -133,7 +133,7 @@
         },
         {
           "streetName": "הירקון",
-          "totalDeals": 275,
+          "totalDeals": 279,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -231,12 +231,12 @@
     },
     {
       "neighborhood": "נחלת שמעון",
-      "totalDeals": 488,
+      "totalDeals": 490,
       "dealsPerYearAvg": 70,
       "streets": [
         {
           "streetName": "המכבים",
-          "totalDeals": 182,
+          "totalDeals": 184,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -252,10 +252,10 @@
                     "pricePerSqm": 29615,
                     "totalPrice": 1925000,
                     "area": 65,
-                    "houseNum": "73.0",
+                    "houseNum": 73,
                     "streetName": "המכבים",
                     "blocksAway": 0,
-                    "dealDate": "2025-05-13T00:00:00Z"
+                    "dealDate": "2025-05-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -278,10 +278,10 @@
                     "pricePerSqm": 19559,
                     "totalPrice": 1330000,
                     "area": 68,
-                    "houseNum": "79.0",
+                    "houseNum": 79,
                     "streetName": "המכבים",
                     "blocksAway": 6,
-                    "dealDate": "2021-12-15T00:00:00Z"
+                    "dealDate": "2021-12-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -324,10 +324,10 @@
                     "pricePerSqm": 19559,
                     "totalPrice": 1330000,
                     "area": 68,
-                    "houseNum": "79.0",
+                    "houseNum": 79,
                     "streetName": "המכבים",
                     "blocksAway": 6,
-                    "dealDate": "2021-12-15T00:00:00Z"
+                    "dealDate": "2021-12-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -358,10 +358,10 @@
                     "pricePerSqm": 17717,
                     "totalPrice": 1505983,
                     "area": 85,
-                    "houseNum": "87.0",
+                    "houseNum": 87,
                     "streetName": "המכבים",
                     "blocksAway": 14,
-                    "dealDate": "2022-11-23T00:00:00Z"
+                    "dealDate": "2022-11-23T00:00:00.000Z"
                   }
                 },
                 {
@@ -398,10 +398,10 @@
                     "pricePerSqm": 29615,
                     "totalPrice": 1925000,
                     "area": 65,
-                    "houseNum": "94.0",
+                    "houseNum": 94,
                     "streetName": "אברבנאל",
                     "blocksAway": 4,
-                    "dealDate": "2025-05-14T00:00:00Z"
+                    "dealDate": "2025-05-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -417,10 +417,10 @@
                     "pricePerSqm": 26667,
                     "totalPrice": 1600000,
                     "area": 60,
-                    "houseNum": "78.0",
+                    "houseNum": 78,
                     "streetName": "אברבנאל",
                     "blocksAway": 20,
-                    "dealDate": "2020-12-23T00:00:00Z"
+                    "dealDate": "2020-12-23T00:00:00.000Z"
                   }
                 }
               ]
@@ -439,10 +439,10 @@
                     "pricePerSqm": 25732,
                     "totalPrice": 2110000,
                     "area": 82,
-                    "houseNum": "98.0",
+                    "houseNum": 98,
                     "streetName": "אברבנאל",
                     "blocksAway": 0,
-                    "dealDate": "2024-03-25T00:00:00Z"
+                    "dealDate": "2024-03-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -453,10 +453,10 @@
                     "pricePerSqm": 24512,
                     "totalPrice": 2010000,
                     "area": 82,
-                    "houseNum": "98.0",
+                    "houseNum": 98,
                     "streetName": "אברבנאל",
                     "blocksAway": 0,
-                    "dealDate": "2023-12-07T00:00:00Z"
+                    "dealDate": "2023-12-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -467,10 +467,10 @@
                     "pricePerSqm": 23810,
                     "totalPrice": 2000000,
                     "area": 84,
-                    "houseNum": "68.0",
+                    "houseNum": 68,
                     "streetName": "אברבנאל",
                     "blocksAway": 30,
-                    "dealDate": "2020-10-26T00:00:00Z"
+                    "dealDate": "2020-10-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -489,10 +489,10 @@
                     "pricePerSqm": 28681,
                     "totalPrice": 2610000,
                     "area": 91,
-                    "houseNum": "98.0",
+                    "houseNum": 98,
                     "streetName": "אברבנאל",
                     "blocksAway": 0,
-                    "dealDate": "2024-03-25T00:00:00Z"
+                    "dealDate": "2024-03-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -503,10 +503,10 @@
                     "pricePerSqm": 22021,
                     "totalPrice": 2070000,
                     "area": 94,
-                    "houseNum": "80.0",
+                    "houseNum": 80,
                     "streetName": "אברבנאל",
                     "blocksAway": 18,
-                    "dealDate": "2022-05-01T00:00:00Z"
+                    "dealDate": "2022-05-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -517,10 +517,10 @@
                     "pricePerSqm": 23333,
                     "totalPrice": 2100000,
                     "area": 90,
-                    "houseNum": "98.0",
+                    "houseNum": 98,
                     "streetName": "אברבנאל",
                     "blocksAway": 0,
-                    "dealDate": "2021-10-26T00:00:00Z"
+                    "dealDate": "2021-10-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -530,7 +530,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 2591,
+  "totalDealsAnalyzed": 2610,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

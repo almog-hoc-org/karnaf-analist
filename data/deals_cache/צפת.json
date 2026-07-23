@@ -1,15 +1,15 @@
 {
   "cityName": "צפת",
-  "lastUpdated": "2026-06-24T07:00:25.393Z",
+  "lastUpdated": "2026-07-21T09:20:25.719Z",
   "neighborhoods": [
     {
       "neighborhood": "דרום",
-      "totalDeals": 1160,
+      "totalDeals": 1163,
       "dealsPerYearAvg": 166,
       "streets": [
         {
           "streetName": "צה\"ל",
-          "totalDeals": 166,
+          "totalDeals": 167,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -113,10 +113,10 @@
                     "pricePerSqm": 15745,
                     "totalPrice": 1480000,
                     "area": 94,
-                    "houseNum": "7.0",
+                    "houseNum": 7,
                     "streetName": "צה\"ל",
                     "blocksAway": 3,
-                    "dealDate": "2025-08-28T00:00:00Z"
+                    "dealDate": "2025-08-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -149,7 +149,7 @@
         },
         {
           "streetName": "לוחמי הגטאות",
-          "totalDeals": 144,
+          "totalDeals": 143,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -162,11 +162,11 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 16323,
-                    "avgTotalPrice": 963333,
-                    "avgArea": 60
+                    "avgPricePerSqm": 17137,
+                    "avgTotalPrice": 960000,
+                    "avgArea": 57
                   }
                 },
                 {
@@ -288,7 +288,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1173,
+  "totalDealsAnalyzed": 1176,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

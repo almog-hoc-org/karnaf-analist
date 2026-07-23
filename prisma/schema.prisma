@@ -120,6 +120,23 @@ model population_by_year {
   @@unique([city_name, year], map: "sqlite_autoindex_population_by_year_1")
 }
 
+// Multi-source population storage: same (city, year) can have multiple values
+// from different sources (CBS census 2022, CBS yishuvim 2023, data.gov.il 2026,
+// Bituach Leumi, projections, etc.). Lets the city page show source comparison.
+model population_estimates {
+  id          Int      @id @default(autoincrement())
+  city_name   String
+  year        Int
+  source      String
+  population  Int
+  source_url  String?
+  fetched_at  DateTime @default(now())
+
+  @@unique([city_name, year, source])
+  @@index([city_name])
+  @@index([year])
+}
+
 model yad2_market_data {
   id                    Int       @id @default(autoincrement())
   city_name             String    @unique(map: "sqlite_autoindex_yad2_market_data_1")
@@ -137,6 +154,13 @@ model yad2_market_data {
   market_type           String?
   households            Int?
   avg_household_size    Float?
+  // Yadata "מד השוק" — numeric market gauge (typical scale 1-100 or 0-10).
+  // Higher = stronger sellers' market. Null when Yadata doesn't render it
+  // for that city or our parser couldn't find the value.
+  market_gauge          Float?
+  // Yadata "מדד התפשרות" — average % gap between asking price and actual deal
+  // price. Positive = sellers compromise (accept less than asked).
+  compromise_index      Float?
   scraped_at            DateTime? @default(now())
 }
 
@@ -157,4 +181,49 @@ model national_construction {
   starts      Int?
   completions Int?
   source      String?
+}
+
+// Raw audit trail: the sampled 3/4/5-room nadlan settlement deals (WITH build year),
+// collected by paginating the "עסקאות אחרונות ביישוב" view. One row per kept deal.
+// is_secondhand = deal_year - year_built >= 3 (SECONDHAND_MIN_AGE). Source: nadlan.gov.il
+// (רשות המסים). Averages/medians are derived into nadlan_year_room_stats.
+model nadlan_transactions {
+  id            Int      @id @default(autoincrement())
+  city_name     String
+  cbs_code      String?
+  deal_date     String
+  deal_year     Int
+  rooms         Float?
+  room_bucket   String // "3" | "4" | "5"
+  area          Float?
+  price         Float?
+  price_sqm     Float?
+  year_built    Int?
+  is_secondhand Boolean  @default(false)
+  neighborhood  String?
+  street        String?
+  house_num     String?
+  floor         Int?
+  source        String?  @default("nadlan")
+  captured_at   DateTime @default(now())
+
+  @@index([city_name, deal_year, room_bucket], map: "idx_nadlan_tx_city_year_room")
+}
+
+// Read-optimized aggregate the price graphs consume: per city × year × room_bucket,
+// for scope "all" and "secondhand". Populated by scripts/aggregate-nadlan-transactions.ts.
+model nadlan_year_room_stats {
+  id            Int      @id @default(autoincrement())
+  city_name     String
+  year          Int
+  room_bucket   String // "3" | "4" | "5" | "all"
+  scope         String // "all" | "secondhand"
+  avg_price     Float?
+  median_price  Float?
+  avg_sqm       Float?
+  median_sqm    Float?
+  n             Int      @default(0)
+  last_updated  DateTime @default(now())
+
+  @@unique([city_name, year, room_bucket, scope], map: "ux_nadlan_year_room_stats")
 }

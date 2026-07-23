@@ -1,9 +1,13 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
-import CitiesTable from "@/components/CitiesTable";
+import CitiesTable, { type InvestorRow } from "@/components/CitiesTable";
+import { loadAllCityPriceChanges } from "@/lib/price-changes";
+import { loadCitiesChangeMetrics } from "@/lib/cityChangeMetrics";
+import { computeAllInvestorMetrics, REF_YEAR } from "@/lib/investorMetrics";
+import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 
 export const metadata = {
-  title: 'טבלת ערים | מחקר נדל"ן ישראל',
+  title: 'טבלת ערים | קרנף אנליסט',
 };
 
 export default async function CitiesPage() {
@@ -37,59 +41,39 @@ export default async function CitiesPage() {
     ])
   );
 
-  // ─── Price changes per city across 3y / 5y windows ───────────────────────
-  // Source: nadlan_price_trends (quarterly median prices). We average the
-  // quarters per year, then compare the earliest year (window start) vs the
-  // latest available year. The 5y window aligns with the 2020-start window
-  // shown on each city's detail page; the 3y window is 2022-onwards.
-  const priceRows = await prisma.nadlan_price_trends.findMany({
-    where: { median_price: { not: null, gt: 0 } },
-    orderBy: [{ city_name: "asc" }, { year: "asc" }, { quarter: "asc" }],
-  });
+  // Centralized 3y/5y price-change calculation (shared with city page + rankings)
+  const allPriceChanges = await loadAllCityPriceChanges();
+  // Price LEVELS from real transactions — the site's price axis (replaces old-Excel prices)
+  const txPrices = await loadCityTransactionPrices();
+  // Per-city yearly value series for the windowed change columns (median / all / second-hand)
+  const changeMetrics = await loadCitiesChangeMetrics();
+  // Per-city total collected transactions (internal repository) — shown as a column
+  const dealCountRows = await prisma.$queryRawUnsafe<{ city_name: string; n: bigint }[]>(
+    "SELECT city_name, SUM(n) n FROM nadlan_year_room_stats WHERE scope='all' AND room_bucket='all' GROUP BY city_name"
+  );
+  const dealCountMap = new Map(dealCountRows.map((r) => [r.city_name, Number(r.n)]));
 
-  type YearAvg = { sum: number; n: number };
-  const cityYearAvg = new Map<string, Map<number, YearAvg>>();
-  for (const r of priceRows) {
-    if (r.median_price === null) continue;
-    let yrs = cityYearAvg.get(r.city_name);
-    if (!yrs) { yrs = new Map(); cityYearAvg.set(r.city_name, yrs); }
-    const cur = yrs.get(r.year) ?? { sum: 0, n: 0 };
-    cur.sum += r.median_price;
-    cur.n += 1;
-    yrs.set(r.year, cur);
-  }
-
-  function computeChange(yrs: Map<number, YearAvg>, fromYear: number): { pct: number; fromAvg: number; toAvg: number; fromY: number; toY: number } | null {
-    // Pick the actual earliest year >= fromYear, and the actual latest year available.
-    const years = [...yrs.keys()].sort((a, b) => a - b);
-    const start = years.find((y) => y >= fromYear);
-    const end = years[years.length - 1];
-    if (start === undefined || end === undefined || start >= end) return null;
-    const a = yrs.get(start)!;
-    const b = yrs.get(end)!;
-    const fromAvg = a.sum / a.n;
-    const toAvg = b.sum / b.n;
-    if (fromAvg <= 0) return null;
-    return {
-      pct: ((toAvg - fromAvg) / fromAvg) * 100,
-      fromAvg,
-      toAvg,
-      fromY: start,
-      toY: end,
+  // Investor screener metrics (server-computed Map → serializable plain Record,
+  // BigInt-safe via Number()) — passed as a prop to the client table.
+  const investorMetrics = await computeAllInvestorMetrics();
+  const investor: Record<string, InvestorRow> = {};
+  investorMetrics.forEach((m, cityName) => {
+    investor[cityName] = {
+      newPremiumPct: m.newPremiumPct != null ? Number(m.newPremiumPct) : null,
+      newPremiumYear: m.newPremiumYear != null ? Number(m.newPremiumYear) : null,
+      gapPctOfDemand: m.gapPctOfDemand != null ? Number(m.gapPctOfDemand) : null,
+      gapSource: m.gapSource,
+      nDeals: Number(m.nDeals),
+      distinctYears: Number(m.distinctYears),
+      confidence: m.confidence,
     };
-  }
-
-  const priceChange3y = new Map<string, ReturnType<typeof computeChange>>();
-  const priceChange5y = new Map<string, ReturnType<typeof computeChange>>();
-  for (const [cityName, yrs] of cityYearAvg) {
-    priceChange3y.set(cityName, computeChange(yrs, 2022));
-    priceChange5y.set(cityName, computeChange(yrs, 2020));
-  }
+  });
 
   const tableData = cities.map((c) => {
     const permits = permitsMap.get(c.city_name);
-    const ch3 = priceChange3y.get(c.city_name) ?? null;
-    const ch5 = priceChange5y.get(c.city_name) ?? null;
+    const changes = allPriceChanges.get(c.city_name);
+    const ch3 = changes?.change3y ?? null;
+    const ch5 = changes?.change5y ?? null;
     return {
       city_name: c.city_name,
       population_2022: c.population_2022,
@@ -117,6 +101,16 @@ export default async function CitiesPage() {
       total_permits: permits?.total ?? null,
       avg_permits: permits?.avg ?? null,
       urban_renewal_status: c.urban_renewal_status,
+      changeMetrics: changeMetrics.get(c.city_name),
+      dealCount: dealCountMap.get(c.city_name) ?? null,
+      tx_price_year: txPrices.get(c.city_name)?.priceYear ?? null,
+      tx_avg_all: txPrices.get(c.city_name)?.avgAllSqm ?? null,
+      tx_median_all: txPrices.get(c.city_name)?.medianAllSqm ?? null,
+      tx_avg_sh: txPrices.get(c.city_name)?.avgShSqm ?? null,
+      tx_median_sh: txPrices.get(c.city_name)?.medianShSqm ?? null,
+      tx_year_min: txPrices.get(c.city_name)?.yearMin ?? null,
+      tx_year_max: txPrices.get(c.city_name)?.yearMax ?? null,
+      tx_thin: txPrices.get(c.city_name)?.thin ?? true,
     };
   });
 
@@ -143,7 +137,7 @@ export default async function CitiesPage() {
         </p>
       </header>
 
-      <CitiesTable data={tableData} />
+      <CitiesTable data={tableData} investor={investor} refYear={REF_YEAR} />
 
       <footer className="mt-12 pt-6 border-t border-slate-200 text-center text-slate-500 text-xs">
         מקור: למ&quot;ס, מחקר פנימי קרנף 2026

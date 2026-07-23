@@ -1,15 +1,15 @@
 {
   "cityName": "נהרייה",
-  "lastUpdated": "2026-06-24T06:58:24.825Z",
+  "lastUpdated": "2026-07-21T09:16:34.673Z",
   "neighborhoods": [
     {
       "neighborhood": "מרכז העיר",
-      "totalDeals": 2583,
-      "dealsPerYearAvg": 369,
+      "totalDeals": 2599,
+      "dealsPerYearAvg": 371,
       "streets": [
         {
           "streetName": "הרצל",
-          "totalDeals": 420,
+          "totalDeals": 423,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -110,11 +110,11 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 14,
-                    "threshold": 10,
-                    "avgPricePerSqm": 14216,
-                    "avgTotalPrice": 1819029,
-                    "avgArea": 127
+                    "count": 15,
+                    "threshold": 15,
+                    "avgPricePerSqm": 14653,
+                    "avgTotalPrice": 1911093,
+                    "avgArea": 129
                   }
                 },
                 {
@@ -147,7 +147,7 @@
         },
         {
           "streetName": "ויצמן",
-          "totalDeals": 301,
+          "totalDeals": 299,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -250,8 +250,8 @@
                     "type": "aggregated",
                     "count": 12,
                     "threshold": 10,
-                    "avgPricePerSqm": 11419,
-                    "avgTotalPrice": 1579423,
+                    "avgPricePerSqm": 11607,
+                    "avgTotalPrice": 1511346,
                     "avgArea": 134
                   }
                 },
@@ -292,7 +292,7 @@
       "streets": [
         {
           "streetName": "הזמיר",
-          "totalDeals": 254,
+          "totalDeals": 253,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -305,10 +305,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 12,
+                    "count": 11,
                     "threshold": 10,
-                    "avgPricePerSqm": 15101,
-                    "avgTotalPrice": 1232833,
+                    "avgPricePerSqm": 15338,
+                    "avgTotalPrice": 1244909,
                     "avgArea": 81
                   }
                 },
@@ -430,7 +430,7 @@
         },
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 81,
+          "totalDeals": 82,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -679,10 +679,10 @@
                     "pricePerSqm": 8325,
                     "totalPrice": 999000,
                     "area": 120,
-                    "houseNum": "5.0",
+                    "houseNum": 5,
                     "streetName": "ההגנה",
                     "blocksAway": 1,
-                    "dealDate": "2024-09-12T00:00:00Z"
+                    "dealDate": "2024-09-12T00:00:00.000Z"
                   }
                 },
                 {
@@ -705,10 +705,10 @@
                     "pricePerSqm": 9000,
                     "totalPrice": 1350000,
                     "area": 150,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "ההגנה",
                     "blocksAway": 0,
-                    "dealDate": "2021-03-29T00:00:00Z"
+                    "dealDate": "2021-03-29T00:00:00.000Z"
                   }
                 }
               ]
@@ -733,10 +733,10 @@
                     "pricePerSqm": 14583,
                     "totalPrice": 1225000,
                     "area": 84,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "חניתה",
                     "blocksAway": 0,
-                    "dealDate": "2025-02-16T00:00:00Z"
+                    "dealDate": "2025-02-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -747,10 +747,10 @@
                     "pricePerSqm": 15341,
                     "totalPrice": 1350000,
                     "area": 88,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "חניתה",
                     "blocksAway": 8,
-                    "dealDate": "2023-08-14T00:00:00Z"
+                    "dealDate": "2023-08-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -761,10 +761,10 @@
                     "pricePerSqm": 13091,
                     "totalPrice": 1152000,
                     "area": 88,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "חניתה",
                     "blocksAway": 8,
-                    "dealDate": "2021-11-22T00:00:00Z"
+                    "dealDate": "2021-11-22T00:00:00.000Z"
                   }
                 }
               ]
@@ -795,10 +795,10 @@
                     "pricePerSqm": 13621,
                     "totalPrice": 1580000,
                     "area": 116,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "חניתה",
                     "blocksAway": 0,
-                    "dealDate": "2022-05-24T00:00:00Z"
+                    "dealDate": "2022-05-24T00:00:00.000Z"
                   }
                 },
                 {
@@ -841,10 +841,10 @@
                     "pricePerSqm": 9833,
                     "totalPrice": 1180000,
                     "area": 120,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "חניתה",
                     "blocksAway": 0,
-                    "dealDate": "2021-10-11T00:00:00Z"
+                    "dealDate": "2021-10-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -866,7 +866,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 3585,
+  "totalDealsAnalyzed": 3601,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

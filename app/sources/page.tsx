@@ -10,16 +10,23 @@ import {
 import { COVERAGE_MATRIX, SOURCE_DOCUMENTS } from "@/lib/source-documents";
 
 export const metadata = {
-  title: 'מקורות מידע | מחקר נדל"ן ישראל',
+  title: 'מקורות מידע | קרנף אנליסט',
   description: 'רשימה מלאה של כל המקורות, הדוחות והממשקים בהם השתמשנו',
 };
 
+// Unified brand accent — every category renders the same indigo chrome.
+const INDIGO_ACCENT = {
+  bar: "from-indigo-500 to-indigo-600",
+  bg: "bg-indigo-50",
+  text: "text-indigo-700",
+  hover: "hover:border-indigo-300",
+};
 const accentClasses: Record<SourceColor, { bar: string; bg: string; text: string; hover: string }> = {
-  cyan:    { bar: "from-cyan-500 to-cyan-600",       bg: "bg-cyan-100",    text: "text-cyan-700",    hover: "hover:border-cyan-300" },
-  emerald: { bar: "from-emerald-500 to-emerald-600", bg: "bg-emerald-100", text: "text-emerald-700", hover: "hover:border-emerald-300" },
-  amber:   { bar: "from-amber-500 to-amber-600",     bg: "bg-amber-100",   text: "text-amber-700",   hover: "hover:border-amber-300" },
-  purple:  { bar: "from-purple-500 to-purple-600",   bg: "bg-purple-100",  text: "text-purple-700",  hover: "hover:border-purple-300" },
-  rose:    { bar: "from-rose-500 to-rose-600",       bg: "bg-rose-100",    text: "text-rose-700",    hover: "hover:border-rose-300" },
+  cyan:    INDIGO_ACCENT,
+  emerald: INDIGO_ACCENT,
+  amber:   INDIGO_ACCENT,
+  purple:  INDIGO_ACCENT,
+  rose:    INDIGO_ACCENT,
 };
 
 function formatHeDate(d: Date | string | null): string {
@@ -32,19 +39,9 @@ function formatHeDate(d: Date | string | null): string {
 export default function SourcesPage() {
   return (
     <main className="min-h-screen px-4 py-10 max-w-6xl mx-auto">
-      <nav className="flex items-center justify-between mb-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-cyan-700 transition-colors">
-          <span>←</span>
-          <span>חזרה לדף הבית</span>
-        </Link>
-        <Link href="/cities" className="text-sm text-slate-600 hover:text-cyan-700 transition-colors">
-          טבלת ערים מלאה ←
-        </Link>
-      </nav>
-
       <header className="text-center space-y-4 mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200">
-          <p className="text-[10px] font-bold tracking-[0.2em] text-cyan-700 uppercase">Data Sources</p>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200">
+          <p className="text-[10px] font-bold tracking-[0.2em] text-indigo-700 uppercase">Data Sources</p>
         </div>
         <h1 className="text-4xl md:text-5xl font-black leading-[0.95] tracking-tighter">
           <span className="text-gradient-hero">מקורות מידע</span>
@@ -54,11 +51,11 @@ export default function SourcesPage() {
         </p>
         <div className="flex flex-wrap justify-center gap-3 text-sm pt-2">
           <span className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm tabular-nums">
-            <span className="font-bold text-cyan-700">{SOURCES.length}</span>
+            <span className="font-bold text-indigo-700">{SOURCES.length}</span>
             <span className="text-slate-500 mr-1.5">מקורות</span>
           </span>
           <span className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 shadow-sm tabular-nums">
-            <span className="font-bold text-emerald-700">{CATEGORIES.length}</span>
+            <span className="font-bold text-indigo-700">{CATEGORIES.length}</span>
             <span className="text-slate-500 mr-1.5">קטגוריות</span>
           </span>
         </div>
@@ -94,10 +91,10 @@ export default function SourcesPage() {
                     >
                       <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-l ${a.bar}`} />
                       <div className="flex items-start justify-between gap-2 mb-2">
-                        <h3 className="text-sm font-bold text-slate-900 leading-tight group-hover:text-cyan-700 transition-colors">
+                        <h3 className="text-sm font-bold text-slate-900 leading-tight group-hover:text-indigo-700 transition-colors">
                           {src.name}
                         </h3>
-                        <span className="flex-shrink-0 text-slate-400 group-hover:text-cyan-600 transition-colors text-sm">←</span>
+                        <span className="flex-shrink-0 text-slate-400 group-hover:text-indigo-600 transition-colors text-sm">←</span>
                       </div>
                       <p className="text-xs text-slate-600 mb-2 leading-relaxed">{src.description}</p>
                       <div className="flex items-start gap-1.5 text-[11px] mb-2">
@@ -113,7 +110,7 @@ export default function SourcesPage() {
                         {next && (
                           <span
                             className={`px-1.5 py-0.5 rounded font-semibold ${
-                              isOverdue ? "bg-amber-50 text-amber-700 border border-amber-200" : "bg-slate-50 text-slate-600 border border-slate-200"
+                              isOverdue ? "bg-slate-100 text-slate-600 border border-slate-300" : "bg-slate-50 text-slate-600 border border-slate-200"
                             }`}
                             title="פרסום הבא צפוי"
                           >
@@ -134,7 +131,7 @@ export default function SourcesPage() {
       {/* CBS 10-year coverage matrix */}
       <section className="mt-12">
         <div className="flex items-start gap-3 mb-4">
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-cyan-100">
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50">
             🗓️
           </div>
           <div className="flex-1">
@@ -161,15 +158,15 @@ export default function SourcesPage() {
                 return (
                   <tr key={series.sourceId} className="border-b border-slate-100 hover:bg-slate-50">
                     <td className="py-3 px-3 text-right sticky right-0 bg-white">
-                      <Link href={`/sources/${series.sourceId}`} className="text-sm font-semibold text-slate-900 hover:text-cyan-700 hover:underline">
+                      <Link href={`/sources/${series.sourceId}`} className="text-sm font-semibold text-slate-900 hover:text-indigo-700 hover:underline">
                         {series.title}
                       </Link>
                     </td>
                     {series.years.map((c) => {
                       const cls =
                         c.status === "extracted"  ? "bg-emerald-500 text-white" :
-                        c.status === "referenced" ? "bg-amber-400 text-white" :
-                        c.status === "indexed"    ? "bg-slate-300 text-slate-700" :
+                        c.status === "referenced" ? "bg-slate-400 text-white" :
+                        c.status === "indexed"    ? "bg-slate-200 text-slate-600" :
                                                     "bg-rose-100 text-rose-400";
                       const title =
                         c.status === "extracted"  ? `${c.count} מסמכים — נתונים נשאבו` :
@@ -197,10 +194,10 @@ export default function SourcesPage() {
               <span className="inline-block w-3 h-3 rounded bg-emerald-500"></span> נתונים נשאבו
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="inline-block w-3 h-3 rounded bg-amber-400"></span> כיסוי עיתונאי שצוטט
+              <span className="inline-block w-3 h-3 rounded bg-slate-400"></span> כיסוי עיתונאי שצוטט
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="inline-block w-3 h-3 rounded bg-slate-300"></span> במעקב — קישור לפרסום קיים
+              <span className="inline-block w-3 h-3 rounded bg-slate-200"></span> במעקב — קישור לפרסום קיים
             </span>
             <span className="inline-flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded bg-rose-100 border border-rose-200"></span> חסר
@@ -209,8 +206,8 @@ export default function SourcesPage() {
         </div>
         <p className="text-xs text-slate-500 mt-3 leading-relaxed">
           המספר בכל תא = מספר המסמכים שמשתייכים לאותה שנה (חודשי = עד 12, רבעוני = עד 4).
-          תא ירוק = שאבנו מספרים ישירות מהפרסום; צהוב = יש כיסוי עיתונאי לפרסום שצוטט;
-          אפור = ה-URL הקאנוני של הפרסום נרשם במעקב לסקירה עתידית;
+          תא ירוק = שאבנו מספרים ישירות מהפרסום; אפור כהה = יש כיסוי עיתונאי לפרסום שצוטט;
+          אפור בהיר = ה-URL הקאנוני של הפרסום נרשם במעקב לסקירה עתידית;
           ורוד = אין מסמך לאותה שנה.
         </p>
       </section>
@@ -227,9 +224,6 @@ export default function SourcesPage() {
         </ul>
       </div>
 
-      <footer className="mt-12 pt-8 border-t border-slate-200 text-center">
-        <p className="text-slate-500 text-sm">אם זיהיתם מקור נוסף ראוי לשילוב או טעות בנתון — צרו קשר</p>
-      </footer>
     </main>
   );
 }

@@ -1,11 +1,16 @@
 import { prisma } from "@/lib/db";
 import RankingCard from "@/components/RankingCard";
-import NationalConstructionChart from "@/components/NationalConstructionChart";
-import CityConstructionMiniChart from "@/components/CityConstructionMiniChart";
 import HomeSearch from "@/components/HomeSearch";
 import Link from "next/link";
 import RecentReportsSection from "@/components/RecentReportsSection";
-import NumberCaption, { CbsPricesCaption, CbsConstructionCaption, CbsTransactionsCaption } from "@/components/NumberCaption";
+import NumberCaption from "@/components/NumberCaption";
+import PriceGainsRankingCard from "@/components/PriceGainsRankingCard";
+import TrendValue from "@/components/TrendValue";
+import { loadAllCityPriceChanges } from "@/lib/price-changes";
+import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
+import { loadCityTransactionPrices, loadRankingEligibleCities } from "@/lib/cityTransactionPrices";
+import { computeMarketInsights } from "@/lib/marketInsights";
+import MarketInsightsSection from "@/components/MarketInsightsSection";
 
 function formatPrice(value: number | null): string {
   if (value === null) return "—";
@@ -47,16 +52,6 @@ export default async function HomePage() {
     // DB not ready
   }
 
-  let nationalConstruction: Array<{ year: number; permits: number | null; starts: number | null; completions: number | null }> = [];
-  try {
-    nationalConstruction = await prisma.national_construction.findMany({
-      orderBy: { year: "asc" },
-      select: { year: true, permits: true, starts: true, completions: true },
-    });
-  } catch {
-    // empty
-  }
-
   if (cityCount === 0) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4">
@@ -64,7 +59,7 @@ export default async function HomePage() {
           <div className="text-5xl mb-6">🏗️</div>
           <h1 className="text-2xl font-bold text-slate-900">אין נתונים במערכת</h1>
           <p className="text-slate-600 text-lg">נא להריץ את סקריפט הייבוא.</p>
-          <code className="block mt-4 px-4 py-2 bg-slate-100 border border-slate-200 rounded-lg text-cyan-700 text-sm">
+          <code className="block mt-4 px-4 py-2 bg-slate-100 border border-slate-200 rounded-lg text-indigo-700 text-sm">
             npx tsx src/lib/import.ts
           </code>
         </div>
@@ -72,18 +67,20 @@ export default async function HomePage() {
     );
   }
 
-  // Load all cities for client-side search
-  const allCities = await prisma.city.findMany({
+  // Load all cities for client-side search — the % shown per city is the
+  // SECOND-HAND 3y change from real transactions (not the old Excel field).
+  const allCitiesRaw = await prisma.city.findMany({
     orderBy: { city_name: "asc" },
     select: {
       id: true,
       city_name: true,
-      price_change_pct: true,
       population_2024: true,
       population_2022: true,
       population_2026: true,
     },
   });
+  const sh3ForSearch = new Map((await loadSecondhandChanges(3)).map((c) => [c.city_name, c.pct]));
+  const allCities = allCitiesRaw.map((c) => ({ ...c, price_change_pct: sh3ForSearch.get(c.city_name) ?? null }));
 
   // ── Hero aggregate stats ─────────────────────────────────────────
   const aggregates = await prisma.city.aggregate({
@@ -93,32 +90,81 @@ export default async function HomePage() {
     where: { price_per_sqm_2026: { not: null } },
   });
 
-  const latestNational = nationalConstruction[nationalConstruction.length - 1];
-  const prevNational = nationalConstruction[nationalConstruction.length - 2];
-  const startsTrend =
-    latestNational?.starts && prevNational?.starts
-      ? ((latestNational.starts - prevNational.starts) / prevNational.starts) * 100
-      : null;
-
   const avgPricePerSqm = aggregates._avg.price_per_sqm_2026;
   const avgPriceChange = aggregates._avg.price_change_pct;
   const totalPopulation = aggregates._sum.population_2026;
   const totalApartmentsNeeded = aggregates._sum.apartments_required;
 
   // ── Rankings ─────────────────────────────────────────────────────
-  const [mostExpensive, highestGain, highestSurplus, highestInventory] = await Promise.all([
-    prisma.nadlan_price_trends.findMany({
-      where: { quarter: 1, median_price: { not: null }, year: 2025 },
-      orderBy: { median_price: "desc" },
-      take: 5,
-      select: { city_name: true, median_price: true },
-    }),
-    prisma.city.findMany({
-      where: { price_change_pct: { not: null } },
-      orderBy: { price_change_pct: "desc" },
-      take: 5,
-      select: { city_name: true, price_change_pct: true },
-    }),
+  // Top movers = SECOND-HAND ONLY (user rule: overall averages are biased
+  // upward the moment a new expensive neighborhood is built).
+  const allPriceChanges = await loadAllCityPriceChanges();
+  // Normalization gate (user rule): rankings admit only cities with 10+ deals of EVERY type.
+  const rankEligible = await loadRankingEligibleCities();
+  const marketInsights = await computeMarketInsights().catch(() => []);
+  const top3yGain = (await loadSecondhandChanges(3)).slice(0, 5);
+
+  // Compact per-city yearly series for the fully-filterable movers card:
+  // city → scope → year → [avgSqm, medianSqm]; n≥10 cells only, 2015+.
+  const gainRows = await prisma.$queryRawUnsafe<
+    Array<{ city_name: string; scope: string; year: number; avg_sqm: number | null; median_sqm: number | null }>
+  >(
+    `SELECT city_name, scope, year, avg_sqm, median_sqm FROM nadlan_year_room_stats
+     WHERE room_bucket='all' AND year >= 2015 AND n >= 10`
+  );
+  const gainSeries: Record<string, Record<string, Record<number, [number, number]>>> = {};
+  for (const r of gainRows) {
+    if (r.avg_sqm == null || r.median_sqm == null) continue;
+    if (!rankEligible.has(r.city_name)) continue; // normalization: 10+ deals of every type
+    ((gainSeries[r.city_name] ??= {})[r.scope] ??= {})[Number(r.year)] = [
+      Math.round(Number(r.avg_sqm)), Math.round(Number(r.median_sqm)),
+    ];
+  }
+  const gainMaxYear = 2025;
+
+  // ── Live hero KPIs ──────────────────────────────────────────────
+  // nadlan_transactions lives outside the Prisma schema → raw SQL.
+  // COUNT(*) comes back as BigInt from SQLite — must convert via Number().
+  let totalDeals = 0;
+  let deals12m = 0;
+  let dealsMaxDate: string | null = null;
+  try {
+    const [totals] = await prisma.$queryRawUnsafe<Array<{ n: bigint; maxd: string | null }>>(
+      "SELECT COUNT(*) AS n, MAX(deal_date) AS maxd FROM nadlan_transactions"
+    );
+    const [recent] = await prisma.$queryRawUnsafe<Array<{ n: bigint }>>(
+      "SELECT COUNT(*) AS n FROM nadlan_transactions WHERE deal_date >= date('now','-12 months')"
+    );
+    totalDeals = Number(totals?.n ?? 0);
+    deals12m = Number(recent?.n ?? 0);
+    dealsMaxDate = totals?.maxd ?? null;
+  } catch {
+    // nadlan_transactions missing — tiles fall back to "—"
+  }
+  const dealsUpdatedLabel = dealsMaxDate
+    ? new Date(dealsMaxDate).toLocaleDateString("he-IL", { day: "numeric", month: "numeric", year: "2-digit" })
+    : undefined;
+
+  // National 3y KPI = median of the SECOND-HAND changes across cities
+  // (already bounded + n≥10-gated inside loadSecondhandChanges).
+  const sh3all = (await loadSecondhandChanges(3)).map((c) => c.pct).sort((a, b) => a - b);
+  const median3y = sh3all.length
+    ? (sh3all[Math.floor((sh3all.length - 1) / 2)] + sh3all[Math.ceil((sh3all.length - 1) / 2)]) / 2
+    : null;
+  const window3yLabel = top3yGain.length ? `${top3yGain[0].fromY}→${top3yGain[0].toY}` : null;
+
+  // Most-expensive = second-hand median ₪/m² from REAL transactions
+  const txPricesForRank = await loadCityTransactionPrices();
+  const mostExpensiveTx = [...txPricesForRank.values()]
+    .filter((p) => p.medianShSqm != null && rankEligible.has(p.cityName))
+    .sort((a, b) => (b.medianShSqm ?? 0) - (a.medianShSqm ?? 0))
+    .slice(0, 5);
+
+  const [_mostExpensiveOld, _highestGain, highestSurplus, highestInventory] = await Promise.all([
+    Promise.resolve([]),
+    // Kept for parity with the surrounding Promise.all shape; the new
+    // PriceGainsRankingCard renders top3yGain/top5yGain directly so this is unused.
+    Promise.resolve([] as Array<{ city_name: string; price_change_pct: number | null }>),
     // Replaced the legacy "golden_pct" ranking (produced absurd values like
     // +1207% for tiny cities). The new ranking surfaces the cities with the
     // highest absolute construction-starts in 2025 — a concrete fact.
@@ -143,77 +189,23 @@ export default async function HomePage() {
 
   // ── Per-city construction data ──────────────────────────────────
   const topCitiesForConstruction = ["ירושלים", "תל אביב -יפו", "חיפה", "באר שבע", "ראשון לציון", "פתח תקווה"];
-  const cityConstructionData = await Promise.all(
-    topCitiesForConstruction.map(async (cityName) => {
-      const [permits, starts, popByYear, cityData] = await Promise.all([
-        prisma.buildingPermit.findMany({
-          where: { city_name: cityName },
-          orderBy: { year: "asc" },
-          select: { year: true, permits: true },
-        }),
-        prisma.construction_starts.findMany({
-          where: { city_name: cityName },
-          orderBy: { year: "asc" },
-          select: { year: true, starts: true },
-        }),
-        prisma.population_by_year.findMany({
-          where: { city_name: cityName },
-          orderBy: { year: "asc" },
-          select: { year: true, population: true },
-        }),
-        prisma.city.findUnique({
-          where: { city_name: cityName },
-          select: { people_per_apartment: true, avgHouseholdSize2022: true },
-        }),
-      ]);
-
-      const ppa = cityData?.people_per_apartment ?? cityData?.avgHouseholdSize2022 ?? 3.3;
-      const years = Array.from({ length: 10 }, (_, i) => 2016 + i);
-      const data = years.map((year) => {
-        const popThis = popByYear.find((p) => p.year === year)?.population;
-        const popPrev = popByYear.find((p) => p.year === year - 1)?.population;
-        const popGrowth = popThis && popPrev ? popThis - popPrev : null;
-        const housingNeed = popGrowth && ppa > 0 ? Math.round(popGrowth / ppa) : null;
-        return {
-          year,
-          permits: permits.find((p) => p.year === year)?.permits ?? null,
-          starts: starts.find((s) => s.year === year)?.starts ?? null,
-          completions: null as number | null,
-          housingNeed: housingNeed && housingNeed > 0 ? housingNeed : null,
-        };
-      });
-      return { cityName, data };
-    })
-  );
 
   const rankings = [
     {
-      title: "מחיר חציוני גבוה ביותר",
-      accent: "amber" as const,
+      title: "היקרות ביותר — חציון יד-2 ₪/מ״ר",
       icon: "👑",
       detailHref: "/rankings/most-expensive",
-      items: mostExpensive.map((c, i) => ({
+      items: mostExpensiveTx.map((c, i) => ({
         rank: i + 1,
-        city: c.city_name,
-        value: formatPrice(c.median_price),
-        href: `/city/${encodeURIComponent(c.city_name)}`,
+        city: c.cityName,
+        value: `₪${(c.medianShSqm ?? 0).toLocaleString("he-IL")}/מ"ר`,
+        href: `/city/${encodeURIComponent(c.cityName)}`,
       })),
     },
-    {
-      title: "עליית מחיר גבוהה ביותר",
-      accent: "rose" as const,
-      icon: "📈",
-      detailHref: "/rankings/highest-gain",
-      items: highestGain.map((c, i) => ({
-        rank: i + 1,
-        city: c.city_name,
-        value: formatPct(c.price_change_pct),
-        href: `/city/${encodeURIComponent(c.city_name)}`,
-      })),
-    },
+    // NOTE: "עליית מחיר גבוהה ביותר" is now rendered by <PriceGainsRankingCard>
+    // (a sibling of <RankingCard>) so it can host the 3y/5y toggle.
     {
       title: "התחלות בנייה 2025 (לפי עיר)",
-      accent: "emerald" as const,
       icon: "🏗️",
       detailHref: "/stats/national-construction",
       items: highestSurplus.map((c, i) => ({
@@ -227,7 +219,6 @@ export default async function HomePage() {
     },
     {
       title: "מלאי דירות לא מכורות",
-      accent: "cyan" as const,
       icon: "🏘️",
       detailHref: "/rankings/highest-inventory",
       items: highestInventory.map((c, i) => ({
@@ -251,12 +242,12 @@ export default async function HomePage() {
       {/* ── HERO — Compact, screenshot-optimized ───────────────── */}
       <header className="text-center pt-2 pb-1 animate-fade-up">
         <div className="flex items-center justify-center gap-2 flex-wrap mb-4">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-cyan-50 border border-cyan-200">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-50 border border-indigo-200">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-600"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-indigo-600"></span>
             </span>
-            <p className="text-[10px] font-bold tracking-[0.2em] text-cyan-700 uppercase">
+            <p className="text-[10px] font-bold tracking-[0.2em] text-indigo-700 uppercase">
               Real Estate Intelligence
             </p>
           </div>
@@ -267,10 +258,10 @@ export default async function HomePage() {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-black leading-[0.9] tracking-tight text-balance">
-          <span className="text-gradient-hero">מחקר נדל&quot;ן ישראל</span>
+          <span className="text-gradient-hero">קרנף אנליסט</span>
         </h1>
         <p className="text-slate-500 text-sm md:text-base font-medium max-w-xl mx-auto mt-3 leading-relaxed">
-          תמונת מצב של שוק הדיור — מחירים, אוכלוסייה ובנייה
+          מחקר וניתוח שוק הנדל״ן בישראל — מחירים, עסקאות אמת, אוכלוסייה ובנייה
         </p>
 
         <div className="max-w-xl mx-auto mt-5">
@@ -279,269 +270,110 @@ export default async function HomePage() {
 
         <div className="flex flex-wrap items-center justify-center gap-2 mt-5 text-sm">
           <span className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 tabular-nums shadow-sm text-[13px]">
-            <span className="font-bold text-cyan-700">{cityCount}</span>
+            <span className="font-bold text-indigo-700">{cityCount}</span>
             <span className="text-slate-500 mr-1.5">ערים במאגר</span>
           </span>
-          <Link
-            href="/cities"
-            className="px-3.5 py-1.5 rounded-full bg-cyan-600 text-white hover:bg-cyan-700 transition-all font-semibold shadow-sm shadow-cyan-600/30 text-[13px]"
-          >
-            טבלת נתונים מלאה ←
-          </Link>
-          <Link
-            href="/national"
-            className="px-3.5 py-1.5 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-all font-semibold shadow-sm shadow-blue-600/30 text-[13px]"
-          >
-            🇮🇱 דשבורד לאומי
-          </Link>
-          <Link
-            href="/sources"
-            className="px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-slate-700 hover:border-cyan-400 hover:text-cyan-700 transition-all font-semibold shadow-sm text-[13px]"
-          >
-            📚 מקורות מידע
-          </Link>
+
         </div>
       </header>
 
-      {/* ── HERO KPIs — All-fresh, sourced from latest CBS PDFs ───────
-          Replaces the old "דירות נדרשות 235K" which was a stale theoretical
-          cumulative — now every tile shows a number the consultant can act on. */}
-      <section className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {/* Latest CBS price pulse — from 150/2026 */}
-        <Link href="/sources/cbs-price-change-monthly" className="hero-kpi hero-emerald group cursor-pointer block">
+      {/* ── HERO KPIs — live values computed from the DB on every render ──
+          Each number carries its own explicit time window + provenance caption. */}
+      <section className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {/* Total deals in the transactions DB */}
+        <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
           <div className="flex items-start justify-between mb-3">
-            <div className="stat-label">מדד מחירי דירות (טרי)</div>
-            <span className="text-xl">📈</span>
+            <div className="stat-label">סה&quot;כ עסקאות במאגר</div>
+            <span className="text-xl">🗄️</span>
           </div>
-          <div className="stat-mega text-gradient-emerald">+0.3%</div>
+          <div className="stat-mega">{totalDeals ? totalDeals.toLocaleString("he-IL") : "—"}</div>
           <div className="mt-3 flex items-center gap-2">
-            <span className="trend-pill trend-up">▲ MoM</span>
-            <span className="text-xs text-slate-500">היפוך מגמה</span>
-          </div>
-          <CbsPricesCaption insideLink />
-        </Link>
-
-        {/* Latest construction year — from 089/2026 */}
-        <Link href="/stats/national-construction" className="hero-kpi hero-cyan group cursor-pointer block">
-          <div className="flex items-start justify-between mb-3">
-            <div className="stat-label">התחלות בנייה 2025</div>
-            <span className="text-xl">🏗️</span>
-          </div>
-          <div className="stat-mega text-gradient-cyan">
-            {latestNational?.starts ? `${(latestNational.starts / 1000).toFixed(1)}K` : "80K"}
-          </div>
-          <div className="mt-3 flex items-center gap-2">
-            <span className="trend-pill trend-up">▲ +14.6%</span>
-            <span className="text-xs text-slate-500">שיא 15 שנה</span>
-          </div>
-          <CbsConstructionCaption insideLink />
-        </Link>
-
-        {/* Latest transactions — from 047/2026 */}
-        <Link href="/sources/cbs-transactions-apartments" className="hero-kpi hero-amber group cursor-pointer block">
-          <div className="flex items-start justify-between mb-3">
-            <div className="stat-label">עסקאות דירות 2025</div>
-            <span className="text-xl">🤝</span>
-          </div>
-          <div className="stat-mega text-gradient-amber">90.7K</div>
-          <div className="mt-3 flex items-center gap-2">
-            <span className="trend-pill trend-down">▼ -11.9%</span>
-            <span className="text-xs text-slate-500">34K חדשות / 57K יד2</span>
-          </div>
-          <CbsTransactionsCaption insideLink />
-        </Link>
-
-        {/* Cities at-a-glance — fast city lookup */}
-        <Link href="/cities" className="hero-kpi hero-purple group cursor-pointer block">
-          <div className="flex items-start justify-between mb-3">
-            <div className="stat-label">בסיס נתונים</div>
-            <span className="text-xl">🏘️</span>
-          </div>
-          <div className="stat-mega text-gradient-purple">{cityCount}</div>
-          <div className="mt-3 flex items-center gap-2">
-            <span className="trend-pill trend-flat">ערים</span>
-            <span className="text-xs text-slate-500">
-              {totalPopulation ? `${(totalPopulation / 1_000_000).toFixed(1)}M תושבים` : "—"}
-            </span>
+            <span className="trend-pill trend-flat">1998–2026</span>
+            <span className="text-xs text-slate-500">כל העסקאות</span>
           </div>
           <NumberCaption
-            source="מאגר פנימי"
-            period="מפקד 2022 + תחזית 2026"
-            method='למ"ס + הרחבות'
+            source='רשות המסים + נדל"ן'
+            period="1998–2026"
+            updated={dealsUpdatedLabel}
             insideLink
           />
         </Link>
-      </section>
 
-      {/* ── Recent CBS / MoF Reports ───────────────────────────── */}
-      <RecentReportsSection />
+        {/* Deals in the trailing 12 months */}
+        <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
+          <div className="flex items-start justify-between mb-3">
+            <div className="stat-label">עסקאות — 12 ח׳ אחרונים</div>
+            <span className="text-xl">🤝</span>
+          </div>
+          <div className="stat-mega">{deals12m ? deals12m.toLocaleString("he-IL") : "—"}</div>
+          <div className="mt-3 flex items-center gap-2">
+            <span className="trend-pill trend-flat">חלון נגרר 12 ח׳</span>
+          </div>
+          <NumberCaption
+            source='רשות המסים + נדל"ן'
+            period="12 החודשים האחרונים"
+            updated={dealsUpdatedLabel}
+            insideLink
+          />
+        </Link>
+
+        {/* National 3y price change — SECOND-HAND only (real transactions) */}
+        <Link href="/cities" className="hero-kpi hero-indigo group cursor-pointer block">
+          <div className="flex items-start justify-between mb-3">
+            <div className="stat-label">שינוי מחיר יד-2 ארצי — 3 שנים</div>
+            <span className="text-xl">📈</span>
+          </div>
+          <div className="text-4xl md:text-5xl leading-none">
+            <TrendValue pct={median3y} className="font-extrabold tracking-tight" />
+          </div>
+          <div className="mt-3 flex items-center gap-2">
+            <span className="trend-pill trend-flat">יד שנייה בלבד</span>
+            <span className="text-xs text-slate-500">חציון {sh3all.length} ערים</span>
+          </div>
+          <NumberCaption
+            source="עסקאות יד-שנייה אמיתיות · רשות המסים"
+            period={`חציון שינוי 3ש׳ בין הערים · ${window3yLabel ?? "—"}`}
+            insideLink
+          />
+        </Link>
+
+
+      </section>
 
       {/* ── Rankings ─────────────────────────────────────────────── */}
       <section className="mt-12">
         <div className="section-header mb-6">
-          <div className="section-header-icon bg-rose-100 text-rose-600">🏆</div>
+          <div className="section-header-icon">🏆</div>
           <div>
             <h2 className="text-lg font-bold text-slate-900">דירוגים מובילים</h2>
             <p className="text-xs text-slate-500 mt-0.5">חמש הערים המובילות בכל קטגוריה</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 items-start">
           {rankings.map((ranking) => (
             <RankingCard
               key={ranking.title}
               title={ranking.title}
               items={ranking.items}
-              accent={ranking.accent}
               icon={ranking.icon}
               detailHref={ranking.detailHref}
             />
           ))}
+          {/* fully-filterable price-changes ranking (scope × metric × year range) */}
+          <PriceGainsRankingCard series={gainSeries} minYear={2015} maxYear={gainMaxYear} />
         </div>
       </section>
 
-      {/* ── Per-City Construction Supply vs Demand ───────────── */}
-      {cityConstructionData.length > 0 && (
-        <section className="mt-14">
-          <div className="section-header mb-6">
-            <div className="section-header-icon bg-red-100 text-red-600">⚖️</div>
-            <div>
-              <h2 className="text-lg font-bold text-slate-900">היתרים, התחלות בנייה ודירות נדרשות — לפי עיר</h2>
-              <p className="text-xs text-slate-500 mt-0.5">
-                גידול אוכלוסייה / נפשות לדירה — לפי נתוני למ&quot;ס
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {cityConstructionData
-              .filter((c) => c.data.some((d) => d.permits || d.starts || d.housingNeed))
-              .map((c) => (
-                <Link
-                  key={c.cityName}
-                  href={`/city/${encodeURIComponent(c.cityName)}`}
-                  className="glass-card p-5 hover:border-cyan-300 transition-all duration-200 group"
-                >
-                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-cyan-700 transition-colors mb-3">
-                    {c.cityName}
-                  </h3>
-                  <CityConstructionMiniChart data={c.data} cityName={c.cityName} />
-                </Link>
-              ))}
-          </div>
-          <p className="text-[10px] text-slate-500 mt-3">
-            מקור: למ&quot;ס היתרי בנייה + התחלות בנייה | דירות נדרשות = גידול אוכלוסייה שנתי /
-            נפשות לדירה
-          </p>
-        </section>
-      )}
+      {/* ── Auto-computed investor insights ────────────────────── */}
+      <MarketInsightsSection insights={marketInsights} />
 
-      {/* ── National Construction ───────────────────────────── */}
-      {nationalConstruction.length > 0 && (
-        <section className="mt-14">
-          <div className="glass-card p-6">
-            <div className="section-header mb-6">
-              <div className="section-header-icon bg-amber-100 text-amber-700">🏗️</div>
-              <div className="flex-1">
-                <h2 className="text-lg font-bold text-slate-900">בנייה למגורים בישראל — נתונים ארציים</h2>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  היתרי בנייה, התחלות בנייה וגמר בנייה —{" "}
-                  {nationalConstruction[0]?.year}-
-                  {nationalConstruction[nationalConstruction.length - 1]?.year}
-                  <span className="text-slate-400"> | מקור: למ&quot;ס</span>
-                </p>
-              </div>
-            </div>
+      {/* ── Recent CBS / MoF Reports ───────────────────────────── */}
+      <RecentReportsSection />
 
-            <NationalConstructionChart data={nationalConstruction} />
 
-            <div className="mt-6 overflow-x-auto">
-              <table className="w-full text-sm tabular-nums" dir="rtl">
-                <thead>
-                  <tr className="border-b border-slate-200">
-                    <th className="py-3 px-3 text-right text-slate-600 font-semibold">שנה</th>
-                    <th className="py-3 px-3 text-center text-amber-700 font-semibold">היתרי בנייה</th>
-                    <th className="py-3 px-3 text-center text-slate-400 font-medium text-xs">שינוי</th>
-                    <th className="py-3 px-3 text-center text-emerald-700 font-semibold">התחלות בנייה</th>
-                    <th className="py-3 px-3 text-center text-slate-400 font-medium text-xs">שינוי</th>
-                    <th className="py-3 px-3 text-center text-cyan-700 font-semibold">גמר בנייה</th>
-                    <th className="py-3 px-3 text-center text-slate-400 font-medium text-xs">שינוי</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {nationalConstruction.map((row, idx) => {
-                    const prev = idx > 0 ? nationalConstruction[idx - 1] : null;
-                    const pctPermits =
-                      prev?.permits && row.permits ? ((row.permits - prev.permits) / prev.permits) * 100 : null;
-                    const pctStarts =
-                      prev?.starts && row.starts ? ((row.starts - prev.starts) / prev.starts) * 100 : null;
-                    const pctComp =
-                      prev?.completions && row.completions
-                        ? ((row.completions - prev.completions) / prev.completions) * 100
-                        : null;
-                    const isLatest = idx === nationalConstruction.length - 1;
-                    return (
-                      <tr
-                        key={row.year}
-                        className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${
-                          isLatest ? "bg-cyan-50/60" : ""
-                        }`}
-                      >
-                        <td className="py-3 px-3 text-right font-bold text-slate-900">{row.year}</td>
-                        <td className="py-3 px-3 text-center text-amber-700 font-semibold">
-                          {row.permits ? row.permits.toLocaleString("he-IL") : "—"}
-                        </td>
-                        <td className="py-3 px-3 text-center text-xs">
-                          {pctPermits !== null ? (
-                            <span className={pctPermits >= 0 ? "text-emerald-600" : "text-rose-600"}>
-                              {pctPermits >= 0 ? "+" : ""}
-                              {pctPermits.toFixed(1)}%
-                            </span>
-                          ) : (
-                            "—"
-                          )}
-                        </td>
-                        <td className="py-3 px-3 text-center text-emerald-700 font-semibold">
-                          {row.starts ? row.starts.toLocaleString("he-IL") : "—"}
-                        </td>
-                        <td className="py-3 px-3 text-center text-xs">
-                          {pctStarts !== null ? (
-                            <span className={pctStarts >= 0 ? "text-emerald-600" : "text-rose-600"}>
-                              {pctStarts >= 0 ? "+" : ""}
-                              {pctStarts.toFixed(1)}%
-                            </span>
-                          ) : (
-                            "—"
-                          )}
-                        </td>
-                        <td className="py-3 px-3 text-center text-cyan-700 font-semibold">
-                          {row.completions ? row.completions.toLocaleString("he-IL") : "—"}
-                        </td>
-                        <td className="py-3 px-3 text-center text-xs">
-                          {pctComp !== null ? (
-                            <span className={pctComp >= 0 ? "text-emerald-600" : "text-rose-600"}>
-                              {pctComp >= 0 ? "+" : ""}
-                              {pctComp.toFixed(1)}%
-                            </span>
-                          ) : (
-                            "—"
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-      )}
 
-      <footer className="mt-20 pt-8 border-t border-slate-200 text-center">
-        <p className="text-slate-500 text-sm">
-          מקור: קובץ מחקר פנימי | עודכן לאחרונה:{" "}
-          <span className="text-slate-700 font-medium">{lastUpdatedFormatted}</span>
-        </p>
-      </footer>
+
     </main>
   );
 }

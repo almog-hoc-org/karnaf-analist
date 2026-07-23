@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
+import { BRAND, INK, SLATE, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 
 interface PriceChartProps {
   price2023: number | null;
@@ -59,30 +60,24 @@ export default function PriceChart({
         >
           <CartesianGrid
             strokeDasharray="3 3"
-            stroke="#e2e8f0"
+            stroke={GRID}
             vertical={false}
           />
           <XAxis
             dataKey="name"
-            tick={{ fill: "#64748b", fontSize: 12 }}
+            tick={{ fill: AXIS, fontSize: 12 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
             tickFormatter={formatTick}
-            tick={{ fill: "#64748b", fontSize: 11 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             width={52}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              color: "#0f172a",
-              fontSize: 12,
-            }}
+            contentStyle={{ ...tooltipStyle, color: INK }}
             formatter={(value: number, name: string) => [
               `₪${Math.round(value).toLocaleString("he-IL")}`,
               `מחיר ${name}`,
@@ -90,14 +85,14 @@ export default function PriceChart({
             cursor={{ fill: "rgba(255,255,255,0.04)" }}
           />
           <Legend
-            wrapperStyle={{ fontSize: 12, color: "#64748b" }}
+            wrapperStyle={{ fontSize: 12, color: SLATE }}
             iconType="circle"
           />
           {price2023 !== null && (
             <Bar
               dataKey="2023"
               name="2023"
-              fill="#6b7280"
+              fill={SLATE}
               radius={[4, 4, 0, 0]}
               maxBarSize={60}
             />
@@ -106,7 +101,7 @@ export default function PriceChart({
             <Bar
               dataKey="2026"
               name="2026"
-              fill="#22d3ee"
+              fill={BRAND}
               radius={[4, 4, 0, 0]}
               maxBarSize={60}
             />

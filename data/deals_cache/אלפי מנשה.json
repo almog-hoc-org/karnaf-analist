@@ -1,11 +1,11 @@
 {
   "cityName": "אלפי מנשה",
-  "lastUpdated": "2026-06-24T06:50:44.312Z",
+  "lastUpdated": "2026-07-21T09:02:24.697Z",
   "neighborhoods": [
     {
       "neighborhood": "צור יגאל",
-      "totalDeals": 135,
-      "dealsPerYearAvg": 19,
+      "totalDeals": 137,
+      "dealsPerYearAvg": 20,
       "streets": [
         {
           "streetName": "ארבל",
@@ -30,10 +30,10 @@
                     "pricePerSqm": 20081,
                     "totalPrice": 2470000,
                     "area": 123,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "ארבל",
                     "blocksAway": 8,
-                    "dealDate": "2021-03-11T00:00:00Z"
+                    "dealDate": "2021-03-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -44,10 +44,10 @@
                     "pricePerSqm": 19545,
                     "totalPrice": 2150000,
                     "area": 110,
-                    "houseNum": "38.0",
+                    "houseNum": 38,
                     "streetName": "ארבל",
                     "blocksAway": 22,
-                    "dealDate": "2020-05-03T00:00:00Z"
+                    "dealDate": "2020-05-03T00:00:00.000Z"
                   }
                 }
               ]
@@ -66,10 +66,10 @@
                     "pricePerSqm": 26370,
                     "totalPrice": 3850000,
                     "area": 146,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "ארבל",
                     "blocksAway": 14,
-                    "dealDate": "2025-01-13T00:00:00Z"
+                    "dealDate": "2025-01-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -92,10 +92,10 @@
                     "pricePerSqm": 26538,
                     "totalPrice": 3450000,
                     "area": 130,
-                    "houseNum": "9.0",
+                    "houseNum": 9,
                     "streetName": "ארבל",
                     "blocksAway": 7,
-                    "dealDate": "2021-11-07T00:00:00Z"
+                    "dealDate": "2021-11-07T00:00:00.000Z"
                   }
                 }
               ]
@@ -126,10 +126,10 @@
                     "pricePerSqm": 25635,
                     "totalPrice": 5050000,
                     "area": 197,
-                    "houseNum": "46.0",
+                    "houseNum": 46,
                     "streetName": "ארבל",
                     "blocksAway": 30,
-                    "dealDate": "2023-10-24T00:00:00Z"
+                    "dealDate": "2023-10-24T00:00:00.000Z"
                   }
                 },
                 {
@@ -143,7 +143,7 @@
         },
         {
           "streetName": "נוף הרים",
-          "totalDeals": 10,
+          "totalDeals": 11,
           "sizeBuckets": [
             {
               "label": "~110 מ\"ר",
@@ -154,7 +154,16 @@
                 {
                   "period": "current",
                   "year": 2025,
-                  "sample": null
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 33772,
+                    "totalPrice": 3850000,
+                    "area": 114,
+                    "houseNum": 34,
+                    "streetName": "נוף הרים",
+                    "blocksAway": 0,
+                    "dealDate": "2026-05-27T00:00:00.000Z"
+                  }
                 },
                 {
                   "period": "minus3",
@@ -164,10 +173,10 @@
                     "pricePerSqm": 31316,
                     "totalPrice": 3570000,
                     "area": 114,
-                    "houseNum": "34.0",
+                    "houseNum": 34,
                     "streetName": "נוף הרים",
-                    "blocksAway": 137,
-                    "dealDate": "2022-06-28T00:00:00Z"
+                    "blocksAway": 0,
+                    "dealDate": "2022-06-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -178,10 +187,10 @@
                     "pricePerSqm": 26200,
                     "totalPrice": 2620000,
                     "area": 100,
-                    "houseNum": "96.0",
+                    "houseNum": 96,
                     "streetName": "נוף הרים",
-                    "blocksAway": 75,
-                    "dealDate": "2021-05-04T00:00:00Z"
+                    "blocksAway": 62,
+                    "dealDate": "2021-05-04T00:00:00.000Z"
                   }
                 }
               ]
@@ -200,10 +209,10 @@
                     "pricePerSqm": 28438,
                     "totalPrice": 4550000,
                     "area": 160,
-                    "houseNum": "109.0",
+                    "houseNum": 109,
                     "streetName": "נוף הרים",
-                    "blocksAway": 62,
-                    "dealDate": "2026-06-07T00:00:00Z"
+                    "blocksAway": 75,
+                    "dealDate": "2026-06-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -214,10 +223,10 @@
                     "pricePerSqm": 19779,
                     "totalPrice": 2690000,
                     "area": 136,
-                    "houseNum": "171.0",
+                    "houseNum": 171,
                     "streetName": "נוף הרים",
-                    "blocksAway": 0,
-                    "dealDate": "2021-12-10T00:00:00Z"
+                    "blocksAway": 137,
+                    "dealDate": "2021-12-10T00:00:00.000Z"
                   }
                 },
                 {
@@ -239,7 +248,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 135,
+  "totalDealsAnalyzed": 137,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

@@ -26,6 +26,8 @@ interface ScrapedRow {
   market_type: string | null;
   households: number | null;
   avg_household_size: number | null;
+  market_gauge?: number | null;
+  compromise_index?: number | null;
 }
 
 async function main() {
@@ -55,6 +57,8 @@ async function main() {
       market_type: r.market_type,
       households: r.households,
       avg_household_size: r.avg_household_size,
+      market_gauge: r.market_gauge ?? null,
+      compromise_index: r.compromise_index ?? null,
       scraped_at: new Date(),
     };
 

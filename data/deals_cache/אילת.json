@@ -1,11 +1,11 @@
 {
   "cityName": "אילת",
-  "lastUpdated": "2026-06-24T06:50:30.234Z",
+  "lastUpdated": "2026-07-21T09:01:58.554Z",
   "neighborhoods": [
     {
       "neighborhood": "שחמון",
-      "totalDeals": 1757,
-      "dealsPerYearAvg": 251,
+      "totalDeals": 1710,
+      "dealsPerYearAvg": 244,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
@@ -112,7 +112,7 @@
         },
         {
           "streetName": "עין נטפים",
-          "totalDeals": 132,
+          "totalDeals": 134,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -136,14 +136,12 @@
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 13235,
-                    "totalPrice": 900000,
-                    "area": 68,
-                    "houseNum": "16.0",
-                    "streetName": "עין נטפים",
-                    "blocksAway": 2,
-                    "dealDate": "2023-02-14T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 20878,
+                    "avgTotalPrice": 1397500,
+                    "avgArea": 67
                   }
                 },
                 {
@@ -230,10 +228,10 @@
                     "pricePerSqm": 17955,
                     "totalPrice": 1975000,
                     "area": 110,
-                    "houseNum": "18.0",
+                    "houseNum": 18,
                     "streetName": "עין נטפים",
                     "blocksAway": 0,
-                    "dealDate": "2022-05-26T00:00:00Z"
+                    "dealDate": "2022-05-26T00:00:00.000Z"
                   }
                 },
                 {
@@ -256,12 +254,12 @@
     },
     {
       "neighborhood": "הערבה",
-      "totalDeals": 448,
+      "totalDeals": 449,
       "dealsPerYearAvg": 64,
       "streets": [
         {
           "streetName": "לוס אנג'לס",
-          "totalDeals": 137,
+          "totalDeals": 136,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -345,10 +343,10 @@
                     "pricePerSqm": 12078,
                     "totalPrice": 930000,
                     "area": 77,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "לוס אנג'לס",
                     "blocksAway": 16,
-                    "dealDate": "2021-09-26T00:00:00Z"
+                    "dealDate": "2021-09-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -367,10 +365,10 @@
                     "pricePerSqm": 21591,
                     "totalPrice": 1900000,
                     "area": 88,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "לוס אנג'לס",
                     "blocksAway": 0,
-                    "dealDate": "2025-05-19T00:00:00Z"
+                    "dealDate": "2025-05-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -393,10 +391,10 @@
                     "pricePerSqm": 6696,
                     "totalPrice": 770000,
                     "area": 115,
-                    "houseNum": "38.0",
+                    "houseNum": 38,
                     "streetName": "לוס אנג'לס",
                     "blocksAway": 32,
-                    "dealDate": "2020-08-09T00:00:00Z"
+                    "dealDate": "2020-08-09T00:00:00.000Z"
                   }
                 }
               ]
@@ -470,10 +468,10 @@
                     "pricePerSqm": 12360,
                     "totalPrice": 1100000,
                     "area": 89,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "צין",
                     "blocksAway": 2,
-                    "dealDate": "2021-12-13T00:00:00Z"
+                    "dealDate": "2021-12-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -484,10 +482,10 @@
                     "pricePerSqm": 12360,
                     "totalPrice": 1100000,
                     "area": 89,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "צין",
                     "blocksAway": 2,
-                    "dealDate": "2021-12-13T00:00:00Z"
+                    "dealDate": "2021-12-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -506,10 +504,10 @@
                     "pricePerSqm": 8455,
                     "totalPrice": 930000,
                     "area": 110,
-                    "houseNum": "21.0",
+                    "houseNum": 21,
                     "streetName": "צין",
                     "blocksAway": 12,
-                    "dealDate": "2025-09-15T00:00:00Z"
+                    "dealDate": "2025-09-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -544,7 +542,7 @@
     },
     {
       "neighborhood": "צאלים",
-      "totalDeals": 382,
+      "totalDeals": 384,
       "dealsPerYearAvg": 55,
       "streets": [
         {
@@ -589,10 +587,10 @@
                     "pricePerSqm": 14848,
                     "totalPrice": 980000,
                     "area": 66,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "מקור החסידה",
                     "blocksAway": 6,
-                    "dealDate": "2020-01-09T00:00:00Z"
+                    "dealDate": "2020-01-09T00:00:00.000Z"
                   }
                 }
               ]
@@ -749,10 +747,10 @@
                     "pricePerSqm": 15588,
                     "totalPrice": 1060000,
                     "area": 68,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "סילון",
                     "blocksAway": 0,
-                    "dealDate": "2025-03-24T00:00:00Z"
+                    "dealDate": "2025-03-24T00:00:00.000Z"
                   }
                 },
                 {
@@ -763,10 +761,10 @@
                     "pricePerSqm": 2344,
                     "totalPrice": 175820,
                     "area": 75,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "סילון",
                     "blocksAway": 0,
-                    "dealDate": "2022-03-16T00:00:00Z"
+                    "dealDate": "2022-03-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -777,10 +775,10 @@
                     "pricePerSqm": 11690,
                     "totalPrice": 830000,
                     "area": 71,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "סילון",
                     "blocksAway": 0,
-                    "dealDate": "2020-01-15T00:00:00Z"
+                    "dealDate": "2020-01-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -790,7 +788,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 3130,
+  "totalDealsAnalyzed": 3087,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

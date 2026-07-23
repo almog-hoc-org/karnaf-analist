@@ -1,15 +1,15 @@
 {
   "cityName": "גבעת זאב",
-  "lastUpdated": "2026-06-24T06:53:01.416Z",
+  "lastUpdated": "2026-07-21T09:06:40.678Z",
   "neighborhoods": [
     {
       "neighborhood": "רמות",
-      "totalDeals": 2735,
-      "dealsPerYearAvg": 391,
+      "totalDeals": 2780,
+      "dealsPerYearAvg": 397,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 1169,
+          "totalDeals": 1214,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -71,10 +71,10 @@
                   "year": 2021,
                   "sample": {
                     "type": "aggregated",
-                    "count": 39,
+                    "count": 44,
                     "threshold": 15,
-                    "avgPricePerSqm": 25541,
-                    "avgTotalPrice": 2005190,
+                    "avgPricePerSqm": 25480,
+                    "avgTotalPrice": 1995623,
                     "avgArea": 78
                   }
                 },
@@ -108,11 +108,11 @@
                   "year": 2021,
                   "sample": {
                     "type": "aggregated",
-                    "count": 74,
+                    "count": 82,
                     "threshold": 15,
-                    "avgPricePerSqm": 24134,
-                    "avgTotalPrice": 2534163,
-                    "avgArea": 106
+                    "avgPricePerSqm": 24195,
+                    "avgTotalPrice": 2526824,
+                    "avgArea": 105
                   }
                 },
                 {
@@ -126,7 +126,7 @@
         },
         {
           "streetName": "סולם יעקב",
-          "totalDeals": 122,
+          "totalDeals": 121,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -166,10 +166,10 @@
                     "pricePerSqm": 25593,
                     "totalPrice": 1510000,
                     "area": 59,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "סולם יעקב",
                     "blocksAway": 0,
-                    "dealDate": "2020-06-29T00:00:00Z"
+                    "dealDate": "2020-06-29T00:00:00.000Z"
                   }
                 }
               ]
@@ -212,10 +212,10 @@
                     "pricePerSqm": 23857,
                     "totalPrice": 1670000,
                     "area": 70,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "סולם יעקב",
                     "blocksAway": 0,
-                    "dealDate": "2020-01-30T00:00:00Z"
+                    "dealDate": "2020-01-30T00:00:00.000Z"
                   }
                 }
               ]
@@ -246,10 +246,10 @@
                     "pricePerSqm": 20141,
                     "totalPrice": 1712000,
                     "area": 85,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "סולם יעקב",
                     "blocksAway": 14,
-                    "dealDate": "2021-07-09T00:00:00Z"
+                    "dealDate": "2021-07-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -260,10 +260,10 @@
                     "pricePerSqm": 23667,
                     "totalPrice": 2130000,
                     "area": 90,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "סולם יעקב",
                     "blocksAway": 20,
-                    "dealDate": "2020-10-01T00:00:00Z"
+                    "dealDate": "2020-10-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -274,12 +274,12 @@
     },
     {
       "neighborhood": "בית חנינא",
-      "totalDeals": 277,
-      "dealsPerYearAvg": 40,
+      "totalDeals": 298,
+      "dealsPerYearAvg": 43,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 201,
+          "totalDeals": 221,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -352,11 +352,11 @@
                   "year": 2024,
                   "sample": {
                     "type": "aggregated",
-                    "count": 7,
-                    "threshold": 5,
-                    "avgPricePerSqm": 10293,
-                    "avgTotalPrice": 1033286,
-                    "avgArea": 100
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 11074,
+                    "avgTotalPrice": 1157267,
+                    "avgArea": 103
                   }
                 },
                 {
@@ -412,7 +412,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 3012,
+  "totalDealsAnalyzed": 3078,
   "periodYears": {
     "current": 2024,
     "minus3": 2021,

@@ -1,11 +1,11 @@
 {
   "cityName": "חולון",
-  "lastUpdated": "2026-06-24T06:54:40.829Z",
+  "lastUpdated": "2026-07-21T09:09:41.612Z",
   "neighborhoods": [
     {
       "neighborhood": "מרכז העיר",
-      "totalDeals": 2084,
-      "dealsPerYearAvg": 298,
+      "totalDeals": 2090,
+      "dealsPerYearAvg": 299,
       "streets": [
         {
           "streetName": "העצמאות",
@@ -275,10 +275,10 @@
                     "pricePerSqm": 19000,
                     "totalPrice": 1900000,
                     "area": 100,
-                    "houseNum": "72.0",
+                    "houseNum": 72,
                     "streetName": "בלפור",
                     "blocksAway": 18,
-                    "dealDate": "2020-02-05T00:00:00Z"
+                    "dealDate": "2020-02-05T00:00:00.000Z"
                   }
                 }
               ]
@@ -289,7 +289,7 @@
     },
     {
       "neighborhood": "עמידר",
-      "totalDeals": 945,
+      "totalDeals": 947,
       "dealsPerYearAvg": 135,
       "streets": [
         {
@@ -386,11 +386,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 6,
-                    "threshold": 5,
-                    "avgPricePerSqm": 30295,
-                    "avgTotalPrice": 3060000,
-                    "avgArea": 101
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 30323,
+                    "avgTotalPrice": 3040000,
+                    "avgArea": 100
                   }
                 },
                 {
@@ -420,10 +420,10 @@
                     "pricePerSqm": 24167,
                     "totalPrice": 1450000,
                     "area": 60,
-                    "houseNum": "5.0",
+                    "houseNum": 5,
                     "streetName": "דניאל",
                     "blocksAway": 2,
-                    "dealDate": "2024-02-22T00:00:00Z"
+                    "dealDate": "2024-02-22T00:00:00.000Z"
                   }
                 },
                 {
@@ -446,10 +446,10 @@
                     "pricePerSqm": 23909,
                     "totalPrice": 1315000,
                     "area": 55,
-                    "houseNum": "5.0",
+                    "houseNum": 5,
                     "streetName": "דניאל",
                     "blocksAway": 2,
-                    "dealDate": "2020-12-16T00:00:00Z"
+                    "dealDate": "2020-12-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -468,10 +468,10 @@
                     "pricePerSqm": 30220,
                     "totalPrice": 2750000,
                     "area": 91,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "דניאל",
                     "blocksAway": 0,
-                    "dealDate": "2024-10-01T00:00:00Z"
+                    "dealDate": "2024-10-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -494,10 +494,10 @@
                     "pricePerSqm": 21758,
                     "totalPrice": 1980000,
                     "area": 91,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "דניאל",
                     "blocksAway": 0,
-                    "dealDate": "2021-11-10T00:00:00Z"
+                    "dealDate": "2021-11-10T00:00:00.000Z"
                   }
                 }
               ]
@@ -516,10 +516,10 @@
                     "pricePerSqm": 30220,
                     "totalPrice": 2750000,
                     "area": 91,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "דניאל",
                     "blocksAway": 0,
-                    "dealDate": "2024-10-01T00:00:00Z"
+                    "dealDate": "2024-10-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -542,10 +542,10 @@
                     "pricePerSqm": 21758,
                     "totalPrice": 1980000,
                     "area": 91,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "דניאל",
                     "blocksAway": 0,
-                    "dealDate": "2021-11-10T00:00:00Z"
+                    "dealDate": "2021-11-10T00:00:00.000Z"
                   }
                 }
               ]
@@ -556,12 +556,12 @@
     },
     {
       "neighborhood": "צפון יפו",
-      "totalDeals": 623,
-      "dealsPerYearAvg": 89,
+      "totalDeals": 593,
+      "dealsPerYearAvg": 85,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 243,
+          "totalDeals": 210,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -574,11 +574,11 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 17,
-                    "threshold": 15,
-                    "avgPricePerSqm": 52587,
-                    "avgTotalPrice": 2918006,
-                    "avgArea": 58
+                    "count": 9,
+                    "threshold": 5,
+                    "avgPricePerSqm": 52509,
+                    "avgTotalPrice": 3038125,
+                    "avgArea": 62
                   }
                 },
                 {
@@ -618,11 +618,11 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 30,
+                    "count": 17,
                     "threshold": 15,
-                    "avgPricePerSqm": 49489,
-                    "avgTotalPrice": 3895188,
-                    "avgArea": 77
+                    "avgPricePerSqm": 52132,
+                    "avgTotalPrice": 4115392,
+                    "avgArea": 79
                   }
                 },
                 {
@@ -662,10 +662,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 11,
+                    "count": 10,
                     "threshold": 10,
-                    "avgPricePerSqm": 46160,
-                    "avgTotalPrice": 4683693,
+                    "avgPricePerSqm": 46624,
+                    "avgTotalPrice": 4745162,
                     "avgArea": 101
                   }
                 },
@@ -757,10 +757,10 @@
                     "pricePerSqm": 71739,
                     "totalPrice": 4950000,
                     "area": 69,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "אילת",
                     "blocksAway": 0,
-                    "dealDate": "2022-03-01T00:00:00Z"
+                    "dealDate": "2022-03-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -771,10 +771,10 @@
                     "pricePerSqm": 51341,
                     "totalPrice": 4210000,
                     "area": 82,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "אילת",
                     "blocksAway": 0,
-                    "dealDate": "2021-09-12T00:00:00Z"
+                    "dealDate": "2021-09-12T00:00:00.000Z"
                   }
                 }
               ]
@@ -793,10 +793,10 @@
                     "pricePerSqm": 72917,
                     "totalPrice": 7000000,
                     "area": 96,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "אילת",
                     "blocksAway": 0,
-                    "dealDate": "2024-08-14T00:00:00Z"
+                    "dealDate": "2024-08-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -807,10 +807,10 @@
                     "pricePerSqm": 75269,
                     "totalPrice": 7000000,
                     "area": 93,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "אילת",
                     "blocksAway": 0,
-                    "dealDate": "2022-12-05T00:00:00Z"
+                    "dealDate": "2022-12-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -821,10 +821,10 @@
                     "pricePerSqm": 76122,
                     "totalPrice": 7460000,
                     "area": 98,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "אילת",
                     "blocksAway": 0,
-                    "dealDate": "2020-10-18T00:00:00Z"
+                    "dealDate": "2020-10-18T00:00:00.000Z"
                   }
                 }
               ]
@@ -834,7 +834,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 4292,
+  "totalDealsAnalyzed": 4272,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

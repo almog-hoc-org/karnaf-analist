@@ -1,0 +1,5009 @@
+{
+ "city": "בית שאן",
+ "cbs_code": "9200",
+ "capturedAt": "2026-07-04T18:49:20.145Z",
+ "totalRows": 4335,
+ "count": 500,
+ "deals": [
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 1285000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10533,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 1400000,
+   "roomNum": 5,
+   "assetArea": 124,
+   "yearBuilt": 0,
+   "priceSM": 11290,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 1400000,
+   "roomNum": 5,
+   "assetArea": 124,
+   "yearBuilt": 0,
+   "priceSM": 11290,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 1500000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 2020,
+   "priceSM": 12500,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 10593,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-08",
+   "dealAmount": 600000,
+   "roomNum": 3,
+   "assetArea": 73.5,
+   "yearBuilt": 1970,
+   "priceSM": 8219,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 11905,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 13793,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 13793,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 95,
+   "yearBuilt": 0,
+   "priceSM": 12632,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 94,
+   "yearBuilt": 0,
+   "priceSM": 12766,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 550000,
+   "roomNum": 3,
+   "assetArea": 71.5,
+   "yearBuilt": 1960,
+   "priceSM": 7746,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 640000,
+   "roomNum": 3,
+   "assetArea": 71.5,
+   "yearBuilt": 1970,
+   "priceSM": 9014,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 678000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5650,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 800000,
+   "roomNum": 3,
+   "assetArea": 87.2,
+   "yearBuilt": 0,
+   "priceSM": 9174,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 678210,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5652,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 13182,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 13182,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1410000,
+   "roomNum": 4,
+   "assetArea": 61.1,
+   "yearBuilt": 1960,
+   "priceSM": 23115,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 650000,
+   "roomNum": 4,
+   "assetArea": 78.2,
+   "yearBuilt": 1970,
+   "priceSM": 8312,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 10593,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1770000,
+   "roomNum": 5,
+   "assetArea": 106.7,
+   "yearBuilt": 0,
+   "priceSM": 16698,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1420000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 11270,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 10593,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1430000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 0,
+   "priceSM": 8938,
+   "neighborhoodName": null,
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 1430000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 0,
+   "priceSM": 8938,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 1420000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 11270,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 610000,
+   "roomNum": 3.5,
+   "assetArea": 78.71,
+   "yearBuilt": 1970,
+   "priceSM": 7821,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-06",
+   "dealAmount": 1220000,
+   "roomNum": 4,
+   "assetArea": 100.85,
+   "yearBuilt": 0,
+   "priceSM": 12200,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-05",
+   "dealAmount": 1280000,
+   "roomNum": 4,
+   "assetArea": 95.4,
+   "yearBuilt": 2015,
+   "priceSM": 13474,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 650000,
+   "roomNum": 3,
+   "assetArea": 51.9,
+   "yearBuilt": 1960,
+   "priceSM": 12524,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 1290000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10574,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 11695,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 800000,
+   "roomNum": 3,
+   "assetArea": 62.2,
+   "yearBuilt": 1970,
+   "priceSM": 12903,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 1290000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10574,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 1525000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 0,
+   "priceSM": 13739,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 773000,
+   "roomNum": 4,
+   "assetArea": 96.85,
+   "yearBuilt": 1960,
+   "priceSM": 7981,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-28",
+   "dealAmount": 1525000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 0,
+   "priceSM": 13739,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-27",
+   "dealAmount": 910000,
+   "roomNum": 4,
+   "assetArea": 74.4,
+   "yearBuilt": 1960,
+   "priceSM": 12231,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 1550000,
+   "roomNum": 6,
+   "assetArea": 200,
+   "yearBuilt": 1970,
+   "priceSM": 7750,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-24",
+   "dealAmount": 750000,
+   "roomNum": 4,
+   "assetArea": 98.9,
+   "yearBuilt": 1980,
+   "priceSM": 7583,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-23",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 12778,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 1750000,
+   "roomNum": 5,
+   "assetArea": 132.8,
+   "yearBuilt": 1990,
+   "priceSM": 13258,
+   "neighborhoodName": "נוף הגלבוע",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 12778,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-19",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12273,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-19",
+   "dealAmount": 1500000,
+   "roomNum": 4,
+   "assetArea": 101.6,
+   "yearBuilt": 2017,
+   "priceSM": 14764,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12273,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 504000,
+   "roomNum": 3,
+   "assetArea": 71.5,
+   "yearBuilt": 1970,
+   "priceSM": 7049,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 1200000,
+   "roomNum": 5,
+   "assetArea": 129.4,
+   "yearBuilt": 1980,
+   "priceSM": 9302,
+   "neighborhoodName": "נוף שאן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13084,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-16",
+   "dealAmount": 1880000,
+   "roomNum": 5,
+   "assetArea": 147,
+   "yearBuilt": 0,
+   "priceSM": 12789,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-16",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13084,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-15",
+   "dealAmount": 1880000,
+   "roomNum": 5,
+   "assetArea": 147,
+   "yearBuilt": 0,
+   "priceSM": 12789,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-09",
+   "dealAmount": 1410000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 11190,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 1410000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 11190,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-04",
+   "dealAmount": 723000,
+   "roomNum": 3,
+   "assetArea": 66,
+   "yearBuilt": 1970,
+   "priceSM": 10955,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-26",
+   "dealAmount": 677000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5642,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 677914,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5649,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 11574,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 945000,
+   "roomNum": 4,
+   "assetArea": 118.7,
+   "yearBuilt": 1970,
+   "priceSM": 7961,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 11574,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 680000,
+   "roomNum": 3,
+   "assetArea": 66,
+   "yearBuilt": 1970,
+   "priceSM": 10303,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-20",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 92,
+   "yearBuilt": 0,
+   "priceSM": 13043,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 225,
+   "yearBuilt": 2017,
+   "priceSM": 11111,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 1750000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 13889,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 500000,
+   "roomNum": 3,
+   "assetArea": 51.9,
+   "yearBuilt": 1970,
+   "priceSM": 9804,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-17",
+   "dealAmount": 1950000,
+   "roomNum": 5,
+   "assetArea": 152,
+   "yearBuilt": 1999,
+   "priceSM": 12829,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-17",
+   "dealAmount": 1750000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 13889,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 10317,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 10317,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 678000,
+   "roomNum": 4,
+   "assetArea": 96.39,
+   "yearBuilt": 1970,
+   "priceSM": 7062,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 563000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 4731,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 560000,
+   "roomNum": 3,
+   "assetArea": 61.8,
+   "yearBuilt": 1970,
+   "priceSM": 9180,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-08",
+   "dealAmount": 563579,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 4736,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 680000,
+   "roomNum": 3,
+   "assetArea": 71.5,
+   "yearBuilt": 1970,
+   "priceSM": 9510,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 1050000,
+   "roomNum": 3,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 9722,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 520000,
+   "roomNum": 3,
+   "assetArea": 59.1,
+   "yearBuilt": 1970,
+   "priceSM": 8814,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 1100000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 10185,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 1050000,
+   "roomNum": 3,
+   "assetArea": 96,
+   "yearBuilt": 0,
+   "priceSM": 10938,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-29",
+   "dealAmount": 1400000,
+   "roomNum": 5,
+   "assetArea": 101.4,
+   "yearBuilt": 1992,
+   "priceSM": 13861,
+   "neighborhoodName": "נוף הגלבוע",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-28",
+   "dealAmount": 1400000,
+   "roomNum": 5,
+   "assetArea": 124,
+   "yearBuilt": 0,
+   "priceSM": 11290,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 1400000,
+   "roomNum": 5,
+   "assetArea": 124,
+   "yearBuilt": 0,
+   "priceSM": 11290,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12273,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 1395000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 12345,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1600000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 14159,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1395000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 12917,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12273,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-23",
+   "dealAmount": 725000,
+   "roomNum": 4,
+   "assetArea": 96.9,
+   "yearBuilt": 1970,
+   "priceSM": 7482,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 700000,
+   "roomNum": 3,
+   "assetArea": 57.8,
+   "yearBuilt": 1960,
+   "priceSM": 12111,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 930000,
+   "roomNum": 3,
+   "assetArea": 84,
+   "yearBuilt": 1989,
+   "priceSM": 11071,
+   "neighborhoodName": "נוף הגלבוע",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-18",
+   "dealAmount": 630000,
+   "roomNum": 4,
+   "assetArea": 78.2,
+   "yearBuilt": 1960,
+   "priceSM": 8056,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-18",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 1950,
+   "priceSM": 10417,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-18",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 11062,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-17",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 11062,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1350000,
+   "roomNum": 5,
+   "assetArea": 132,
+   "yearBuilt": 1990,
+   "priceSM": 10227,
+   "neighborhoodName": "נוף הגלבוע",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1383000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 12925,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 1383000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 12925,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-02",
+   "dealAmount": 2346900,
+   "roomNum": 5,
+   "assetArea": 140,
+   "yearBuilt": 1960,
+   "priceSM": 16764,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 2300000,
+   "roomNum": 6,
+   "assetArea": 286,
+   "yearBuilt": 1970,
+   "priceSM": 8042,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 10236,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 10236,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 600000,
+   "roomNum": 3,
+   "assetArea": 53.1,
+   "yearBuilt": 1960,
+   "priceSM": 11321,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 1275000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10451,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 1275000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10451,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 1400000,
+   "roomNum": 3,
+   "assetArea": 97,
+   "yearBuilt": 2019,
+   "priceSM": 14433,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-22",
+   "dealAmount": 550000,
+   "roomNum": 3,
+   "assetArea": 61.1,
+   "yearBuilt": 1960,
+   "priceSM": 9016,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 719000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 5752,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-20",
+   "dealAmount": 719003,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 5752,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 96,
+   "yearBuilt": 0,
+   "priceSM": 11458,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 123,
+   "yearBuilt": 1960,
+   "priceSM": 10569,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 96,
+   "yearBuilt": 0,
+   "priceSM": 11458,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-10",
+   "dealAmount": 1770000,
+   "roomNum": 6,
+   "assetArea": 168,
+   "yearBuilt": 0,
+   "priceSM": 10536,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 605000,
+   "roomNum": 0,
+   "assetArea": 90,
+   "yearBuilt": 1970,
+   "priceSM": 6722,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 400000,
+   "roomNum": 0,
+   "assetArea": 45,
+   "yearBuilt": 1970,
+   "priceSM": 8889,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 1770000,
+   "roomNum": 6,
+   "assetArea": 168,
+   "yearBuilt": 0,
+   "priceSM": 10536,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 12857,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 12857,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 1830000,
+   "roomNum": 6,
+   "assetArea": 161,
+   "yearBuilt": 0,
+   "priceSM": 11366,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-06",
+   "dealAmount": 1830000,
+   "roomNum": 6,
+   "assetArea": 161,
+   "yearBuilt": 0,
+   "priceSM": 11366,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 19500000,
+   "roomNum": 0,
+   "assetArea": 4882,
+   "yearBuilt": 0,
+   "priceSM": 3994,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2025-11-27",
+   "dealAmount": 980000,
+   "roomNum": 6,
+   "assetArea": 123.1,
+   "yearBuilt": 1960,
+   "priceSM": 7961,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-27",
+   "dealAmount": 500000,
+   "roomNum": 3,
+   "assetArea": 58.1,
+   "yearBuilt": 1970,
+   "priceSM": 8621,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-26",
+   "dealAmount": 560000,
+   "roomNum": 3,
+   "assetArea": 67.8,
+   "yearBuilt": 1960,
+   "priceSM": 8358,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-25",
+   "dealAmount": 1000000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 8850,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-24",
+   "dealAmount": 1000150,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 8851,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-24",
+   "dealAmount": 900000,
+   "roomNum": 6,
+   "assetArea": 222,
+   "yearBuilt": 1960,
+   "priceSM": 4054,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-23",
+   "dealAmount": 1240000,
+   "roomNum": 4,
+   "assetArea": 101.9,
+   "yearBuilt": 2014,
+   "priceSM": 12169,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-23",
+   "dealAmount": 2100000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 2019,
+   "priceSM": 20792,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-20",
+   "dealAmount": 1285000,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 10118,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-19",
+   "dealAmount": 1285000,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 10118,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-19",
+   "dealAmount": 1200000,
+   "roomNum": 0,
+   "assetArea": 499,
+   "yearBuilt": 0,
+   "priceSM": 2405,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-11-16",
+   "dealAmount": 555000,
+   "roomNum": 3,
+   "assetArea": 59.1,
+   "yearBuilt": 1970,
+   "priceSM": 9407,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-16",
+   "dealAmount": 2700000,
+   "roomNum": 5,
+   "assetArea": 140,
+   "yearBuilt": 0,
+   "priceSM": 19286,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-11-09",
+   "dealAmount": 560000,
+   "roomNum": 3,
+   "assetArea": 64.62,
+   "yearBuilt": 1970,
+   "priceSM": 8750,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-09",
+   "dealAmount": 1475000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 11706,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-09",
+   "dealAmount": 1000000,
+   "roomNum": 4,
+   "assetArea": 130,
+   "yearBuilt": 2003,
+   "priceSM": 7692,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-08",
+   "dealAmount": 1475000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 11706,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-30",
+   "dealAmount": 1230000,
+   "roomNum": 6,
+   "assetArea": 113.79,
+   "yearBuilt": 1950,
+   "priceSM": 10809,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-28",
+   "dealAmount": 1300000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 2018,
+   "priceSM": 12381,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-24",
+   "dealAmount": 900000,
+   "roomNum": 3,
+   "assetArea": 74.01,
+   "yearBuilt": 1970,
+   "priceSM": 12162,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-23",
+   "dealAmount": 900000,
+   "roomNum": 5,
+   "assetArea": 82,
+   "yearBuilt": 1960,
+   "priceSM": 10976,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 1600000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 1998,
+   "priceSM": 13333,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 1650000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 13525,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 3000000,
+   "roomNum": 0,
+   "assetArea": 190,
+   "yearBuilt": 2003,
+   "priceSM": 15789,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 2300000,
+   "roomNum": 5,
+   "assetArea": 140,
+   "yearBuilt": 1980,
+   "priceSM": 16429,
+   "neighborhoodName": "נוף הגלבוע",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-21",
+   "dealAmount": 1650000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 13525,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-21",
+   "dealAmount": 1580000,
+   "roomNum": 4,
+   "assetArea": 104.4,
+   "yearBuilt": 2015,
+   "priceSM": 15134,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-20",
+   "dealAmount": 670000,
+   "roomNum": 5,
+   "assetArea": 91.16,
+   "yearBuilt": 1960,
+   "priceSM": 7350,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-16",
+   "dealAmount": 550000,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1960,
+   "priceSM": 10000,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-05",
+   "dealAmount": 515000,
+   "roomNum": 0,
+   "assetArea": 300,
+   "yearBuilt": 0,
+   "priceSM": 1717,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-09-30",
+   "dealAmount": 1050000,
+   "roomNum": 3,
+   "assetArea": 82,
+   "yearBuilt": 0,
+   "priceSM": 12805,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 59000,
+   "roomNum": 0,
+   "assetArea": 500,
+   "yearBuilt": 0,
+   "priceSM": 118,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 615000,
+   "roomNum": 3,
+   "assetArea": 65.02,
+   "yearBuilt": 1970,
+   "priceSM": 9462,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-20",
+   "dealAmount": 1350000,
+   "roomNum": 6,
+   "assetArea": 102.7,
+   "yearBuilt": 1958,
+   "priceSM": 13235,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-16",
+   "dealAmount": 1700000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 13492,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 13143,
+   "neighborhoodName": null,
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 2000000,
+   "roomNum": 6,
+   "assetArea": 153,
+   "yearBuilt": 0,
+   "priceSM": 13072,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1700000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 13492,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 2300000,
+   "roomNum": 3,
+   "assetArea": 74,
+   "yearBuilt": 1970,
+   "priceSM": 31081,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 2000000,
+   "roomNum": 6,
+   "assetArea": 153,
+   "yearBuilt": 0,
+   "priceSM": 13072,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 13143,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 1750000,
+   "roomNum": 5,
+   "assetArea": 147,
+   "yearBuilt": 0,
+   "priceSM": 11905,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-12",
+   "dealAmount": 1800000,
+   "roomNum": 5,
+   "assetArea": 147,
+   "yearBuilt": 0,
+   "priceSM": 12245,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-11",
+   "dealAmount": 1800000,
+   "roomNum": 5,
+   "assetArea": 147,
+   "yearBuilt": 0,
+   "priceSM": 12245,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12545,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-08",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 13107,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-08",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12545,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-04",
+   "dealAmount": 687000,
+   "roomNum": 3,
+   "assetArea": 73.5,
+   "yearBuilt": 1970,
+   "priceSM": 9411,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-03",
+   "dealAmount": 720000,
+   "roomNum": 3,
+   "assetArea": 95.57,
+   "yearBuilt": 1970,
+   "priceSM": 7579,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-28",
+   "dealAmount": 226667,
+   "roomNum": 3,
+   "assetArea": 66.2,
+   "yearBuilt": 1960,
+   "priceSM": 3434,
+   "neighborhoodName": "נוף שאן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-27",
+   "dealAmount": 1028500,
+   "roomNum": 6,
+   "assetArea": 112.9,
+   "yearBuilt": 1970,
+   "priceSM": 9183,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-18",
+   "dealAmount": 1800000,
+   "roomNum": 5,
+   "assetArea": 118.6,
+   "yearBuilt": 2017,
+   "priceSM": 15177,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-15",
+   "dealAmount": 880000,
+   "roomNum": 4,
+   "assetArea": 88.4,
+   "yearBuilt": 1970,
+   "priceSM": 10000,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-14",
+   "dealAmount": 1650000,
+   "roomNum": 5,
+   "assetArea": 132.32,
+   "yearBuilt": 2015,
+   "priceSM": 12470,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-14",
+   "dealAmount": 850000,
+   "roomNum": 4,
+   "assetArea": 72.5,
+   "yearBuilt": 1970,
+   "priceSM": 11806,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 12897,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 363000,
+   "roomNum": 0,
+   "assetArea": 23,
+   "yearBuilt": 0,
+   "priceSM": 15783,
+   "neighborhoodName": null,
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-08-12",
+   "dealAmount": 760000,
+   "roomNum": 4,
+   "assetArea": 76,
+   "yearBuilt": 1970,
+   "priceSM": 10000,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-12",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 12897,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-08",
+   "dealAmount": 550000,
+   "roomNum": 3,
+   "assetArea": 58.1,
+   "yearBuilt": 1960,
+   "priceSM": 9483,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-06",
+   "dealAmount": 1280000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10492,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-06",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 10593,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-05",
+   "dealAmount": 750000,
+   "roomNum": 4,
+   "assetArea": 94.49,
+   "yearBuilt": 1960,
+   "priceSM": 7979,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-05",
+   "dealAmount": 605000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 4959,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-05",
+   "dealAmount": 1280000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10492,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-05",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 10593,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-04",
+   "dealAmount": 605985,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 4967,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-04",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13084,
+   "neighborhoodName": null,
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-08-03",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13084,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-31",
+   "dealAmount": 1270000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10410,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-31",
+   "dealAmount": 2075000,
+   "roomNum": 6,
+   "assetArea": 151,
+   "yearBuilt": 0,
+   "priceSM": 13742,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 2075000,
+   "roomNum": 6,
+   "assetArea": 151,
+   "yearBuilt": 0,
+   "priceSM": 13742,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 1270000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10410,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-27",
+   "dealAmount": 643000,
+   "roomNum": 5,
+   "assetArea": 91.53,
+   "yearBuilt": 1960,
+   "priceSM": 7066,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-24",
+   "dealAmount": 1870000,
+   "roomNum": 5,
+   "assetArea": 142,
+   "yearBuilt": 0,
+   "priceSM": 13169,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-23",
+   "dealAmount": 482000,
+   "roomNum": 3,
+   "assetArea": 54.5,
+   "yearBuilt": 1960,
+   "priceSM": 8926,
+   "neighborhoodName": "נוף שאן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-23",
+   "dealAmount": 1870000,
+   "roomNum": 5,
+   "assetArea": 142,
+   "yearBuilt": 0,
+   "priceSM": 13169,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-16",
+   "dealAmount": 1220000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 11091,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-15",
+   "dealAmount": 1220000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 11091,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-14",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 13679,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-13",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 13679,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-11",
+   "dealAmount": 1089000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 9637,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-10",
+   "dealAmount": 750000,
+   "roomNum": 4,
+   "assetArea": 81.49,
+   "yearBuilt": 1970,
+   "priceSM": 9259,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-10",
+   "dealAmount": 1089650,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 9643,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-09",
+   "dealAmount": 1550000,
+   "roomNum": 5,
+   "assetArea": 135,
+   "yearBuilt": 0,
+   "priceSM": 11481,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-08",
+   "dealAmount": 916000,
+   "roomNum": 5,
+   "assetArea": 106,
+   "yearBuilt": 1950,
+   "priceSM": 8642,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-07",
+   "dealAmount": 1200000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 10909,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-07",
+   "dealAmount": 760000,
+   "roomNum": 3,
+   "assetArea": 51.7,
+   "yearBuilt": 1960,
+   "priceSM": 14902,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-06",
+   "dealAmount": 1200000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 10909,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-03",
+   "dealAmount": 1285000,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 12476,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-03",
+   "dealAmount": 1000000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 7692,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-03",
+   "dealAmount": 900000,
+   "roomNum": 0,
+   "assetArea": 607,
+   "yearBuilt": 0,
+   "priceSM": 1483,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-07-02",
+   "dealAmount": 1285000,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 12476,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-02",
+   "dealAmount": 706000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 5648,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-01",
+   "dealAmount": 706315,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 5651,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-30",
+   "dealAmount": 2900000,
+   "roomNum": 6,
+   "assetArea": 260,
+   "yearBuilt": 1997,
+   "priceSM": 11154,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-30",
+   "dealAmount": 1235000,
+   "roomNum": 4,
+   "assetArea": 93.75,
+   "yearBuilt": 0,
+   "priceSM": 13280,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-30",
+   "dealAmount": 1585000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 14027,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-29",
+   "dealAmount": 1585000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 14027,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-27",
+   "dealAmount": 555000,
+   "roomNum": 3,
+   "assetArea": 57.9,
+   "yearBuilt": 1960,
+   "priceSM": 9585,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-27",
+   "dealAmount": 540000,
+   "roomNum": 3,
+   "assetArea": 66,
+   "yearBuilt": 1970,
+   "priceSM": 8182,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-26",
+   "dealAmount": 678000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5650,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-25",
+   "dealAmount": 1115000,
+   "roomNum": 3,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 13434,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-24",
+   "dealAmount": 1115000,
+   "roomNum": 3,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 13434,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-24",
+   "dealAmount": 1525000,
+   "roomNum": 5,
+   "assetArea": 124,
+   "yearBuilt": 0,
+   "priceSM": 12298,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-24",
+   "dealAmount": 1640000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16907,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-23",
+   "dealAmount": 1640000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16907,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-23",
+   "dealAmount": 1640000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16907,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-23",
+   "dealAmount": 674000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5617,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 674679,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5622,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 676857,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 5640,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 720525,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 5764,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 1640000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16907,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 1750000,
+   "roomNum": 5,
+   "assetArea": 149,
+   "yearBuilt": 0,
+   "priceSM": 11745,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-22",
+   "dealAmount": 1635000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16856,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-19",
+   "dealAmount": 540000,
+   "roomNum": 3,
+   "assetArea": 51.9,
+   "yearBuilt": 1960,
+   "priceSM": 10588,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-19",
+   "dealAmount": 707000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 5656,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-18",
+   "dealAmount": 1700000,
+   "roomNum": 6,
+   "assetArea": 169,
+   "yearBuilt": 0,
+   "priceSM": 10059,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-17",
+   "dealAmount": 676000,
+   "roomNum": 4,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 5365,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-17",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 0,
+   "priceSM": 12613,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-17",
+   "dealAmount": 1700000,
+   "roomNum": 6,
+   "assetArea": 169,
+   "yearBuilt": 0,
+   "priceSM": 10059,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-11",
+   "dealAmount": 435000,
+   "roomNum": 4,
+   "assetArea": 83.8,
+   "yearBuilt": 1960,
+   "priceSM": 5191,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-11",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10246,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-11",
+   "dealAmount": 438000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5034,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-10",
+   "dealAmount": 438378,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5039,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-10",
+   "dealAmount": 633000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1960,
+   "priceSM": 6330,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-10",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10246,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-06-09",
+   "dealAmount": 1240000,
+   "roomNum": 4,
+   "assetArea": 101.9,
+   "yearBuilt": 2016,
+   "priceSM": 12277,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-07",
+   "dealAmount": 530000,
+   "roomNum": 3,
+   "assetArea": 62.2,
+   "yearBuilt": 1970,
+   "priceSM": 8521,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-04",
+   "dealAmount": 560000,
+   "roomNum": 3,
+   "assetArea": 53.1,
+   "yearBuilt": 1960,
+   "priceSM": 10566,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-06-04",
+   "dealAmount": 1790000,
+   "roomNum": 4,
+   "assetArea": 114,
+   "yearBuilt": 1950,
+   "priceSM": 15702,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-05-30",
+   "dealAmount": 1200000,
+   "roomNum": 7,
+   "assetArea": 128.5,
+   "yearBuilt": 1960,
+   "priceSM": 9339,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-29",
+   "dealAmount": 2350000,
+   "roomNum": 4,
+   "assetArea": 130,
+   "yearBuilt": 2007,
+   "priceSM": 18077,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-05-29",
+   "dealAmount": 1200000,
+   "roomNum": 0,
+   "assetArea": 294,
+   "yearBuilt": 0,
+   "priceSM": 4082,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "מגורים"
+  },
+  {
+   "dealDate": "2025-05-29",
+   "dealAmount": 1300000,
+   "roomNum": 4,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 10400,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-25",
+   "dealAmount": 2400000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 2016,
+   "priceSM": 18462,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-25",
+   "dealAmount": 1886000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 19051,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-05-24",
+   "dealAmount": 1886000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 19051,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-22",
+   "dealAmount": 2900000,
+   "roomNum": 5,
+   "assetArea": 198,
+   "yearBuilt": 1996,
+   "priceSM": 14646,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-21",
+   "dealAmount": 547500,
+   "roomNum": 4,
+   "assetArea": 70,
+   "yearBuilt": 1960,
+   "priceSM": 7821,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-20",
+   "dealAmount": 1635000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16856,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-20",
+   "dealAmount": 1420000,
+   "roomNum": 5,
+   "assetArea": 124.1,
+   "yearBuilt": 1995,
+   "priceSM": 11452,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-05-20",
+   "dealAmount": 1695000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 17474,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-05-19",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 81,
+   "yearBuilt": 0,
+   "priceSM": 17901,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-19",
+   "dealAmount": 1635000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16856,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-19",
+   "dealAmount": 1695000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 17474,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-15",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 116,
+   "yearBuilt": 0,
+   "priceSM": 10776,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-14",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 116,
+   "yearBuilt": 0,
+   "priceSM": 10776,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-13",
+   "dealAmount": 540000,
+   "roomNum": 4,
+   "assetArea": 72.2,
+   "yearBuilt": 1970,
+   "priceSM": 7500,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-11",
+   "dealAmount": 400000,
+   "roomNum": 3,
+   "assetArea": 50,
+   "yearBuilt": 1960,
+   "priceSM": 8000,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-05-08",
+   "dealAmount": 2150000,
+   "roomNum": 5,
+   "assetArea": 164.77,
+   "yearBuilt": 2003,
+   "priceSM": 13110,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-07",
+   "dealAmount": 700000,
+   "roomNum": 3,
+   "assetArea": 59.2,
+   "yearBuilt": 1960,
+   "priceSM": 11864,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-06",
+   "dealAmount": 580000,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 1970,
+   "priceSM": 7532,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-06",
+   "dealAmount": 1200000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 9836,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-05",
+   "dealAmount": 1300000,
+   "roomNum": 7,
+   "assetArea": 151,
+   "yearBuilt": 1960,
+   "priceSM": 8609,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-05",
+   "dealAmount": 1200000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 9836,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-05-04",
+   "dealAmount": 1695000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 17474,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-05-03",
+   "dealAmount": 1695000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 17474,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-30",
+   "dealAmount": 2500000,
+   "roomNum": 7,
+   "assetArea": 250,
+   "yearBuilt": 1960,
+   "priceSM": 10000,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-04-28",
+   "dealAmount": 1500000,
+   "roomNum": 5,
+   "assetArea": 148,
+   "yearBuilt": 0,
+   "priceSM": 10135,
+   "neighborhoodName": null,
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2025-04-27",
+   "dealAmount": 1500000,
+   "roomNum": 5,
+   "assetArea": 148,
+   "yearBuilt": 0,
+   "priceSM": 10135,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-25",
+   "dealAmount": 560000,
+   "roomNum": 4,
+   "assetArea": 72.8,
+   "yearBuilt": 1980,
+   "priceSM": 7778,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-24",
+   "dealAmount": 1810000,
+   "roomNum": 6,
+   "assetArea": 171,
+   "yearBuilt": 0,
+   "priceSM": 10585,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-24",
+   "dealAmount": 550000,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1970,
+   "priceSM": 10000,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-23",
+   "dealAmount": 560000,
+   "roomNum": 3,
+   "assetArea": 39.6,
+   "yearBuilt": 1960,
+   "priceSM": 14359,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-23",
+   "dealAmount": 1440000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13458,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-23",
+   "dealAmount": 1810000,
+   "roomNum": 6,
+   "assetArea": 171,
+   "yearBuilt": 0,
+   "priceSM": 10585,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-22",
+   "dealAmount": 1440000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13458,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-21",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10656,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-21",
+   "dealAmount": 1150000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 10952,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-20",
+   "dealAmount": 2250000,
+   "roomNum": 5,
+   "assetArea": 98,
+   "yearBuilt": 1950,
+   "priceSM": 22959,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-04-20",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 10656,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-20",
+   "dealAmount": 1150000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 10952,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-16",
+   "dealAmount": 550000,
+   "roomNum": 0,
+   "assetArea": 90,
+   "yearBuilt": 1970,
+   "priceSM": 6111,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-04-10",
+   "dealAmount": 436000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5011,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-10",
+   "dealAmount": 555000,
+   "roomNum": 3,
+   "assetArea": 65.02,
+   "yearBuilt": 1970,
+   "priceSM": 8538,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-09",
+   "dealAmount": 1200000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 9600,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-09",
+   "dealAmount": 436160,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5013,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-08",
+   "dealAmount": 1200000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 9600,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-06",
+   "dealAmount": 1700000,
+   "roomNum": 6,
+   "assetArea": 163,
+   "yearBuilt": 0,
+   "priceSM": 10429,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-06",
+   "dealAmount": 390000,
+   "roomNum": 5,
+   "assetArea": 91.53,
+   "yearBuilt": 1960,
+   "priceSM": 4261,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-05",
+   "dealAmount": 1700000,
+   "roomNum": 6,
+   "assetArea": 163,
+   "yearBuilt": 0,
+   "priceSM": 10429,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-04-03",
+   "dealAmount": 940000,
+   "roomNum": 0,
+   "assetArea": 800,
+   "yearBuilt": 1960,
+   "priceSM": 1175,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-04-02",
+   "dealAmount": 655000,
+   "roomNum": 3,
+   "assetArea": 58.1,
+   "yearBuilt": 1960,
+   "priceSM": 11293,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-01",
+   "dealAmount": 561000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 4714,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-04-01",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 18125,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-31",
+   "dealAmount": 561710,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 4720,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-31",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 18125,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-30",
+   "dealAmount": 460000,
+   "roomNum": 3,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 5055,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-30",
+   "dealAmount": 447000,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 4967,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-29",
+   "dealAmount": 447667,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 4974,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-29",
+   "dealAmount": 460595,
+   "roomNum": 3,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 5061,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-26",
+   "dealAmount": 850000,
+   "roomNum": 3,
+   "assetArea": 53.1,
+   "yearBuilt": 1960,
+   "priceSM": 16008,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-26",
+   "dealAmount": 600000,
+   "roomNum": 0,
+   "assetArea": 581,
+   "yearBuilt": 0,
+   "priceSM": 1033,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-03-24",
+   "dealAmount": 1193000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 9779,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-23",
+   "dealAmount": 1193000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 9779,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-23",
+   "dealAmount": 436000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5011,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-23",
+   "dealAmount": 445000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5115,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-23",
+   "dealAmount": 436000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5011,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-22",
+   "dealAmount": 445906,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5125,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-22",
+   "dealAmount": 436160,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5013,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-22",
+   "dealAmount": 436160,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5013,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-20",
+   "dealAmount": 880000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1960,
+   "priceSM": 8800,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-03-12",
+   "dealAmount": 695000,
+   "roomNum": 3,
+   "assetArea": 51.9,
+   "yearBuilt": 1970,
+   "priceSM": 13627,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-12",
+   "dealAmount": 300000,
+   "roomNum": 3,
+   "assetArea": 64.7,
+   "yearBuilt": 1970,
+   "priceSM": 4688,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-11",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 16182,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 16182,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 1688000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 16713,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 434000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4989,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 448000,
+   "roomNum": 4,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 5034,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 443000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5092,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 440000,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4944,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 850000,
+   "roomNum": 5,
+   "assetArea": 98.4,
+   "yearBuilt": 1960,
+   "priceSM": 8673,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-10",
+   "dealAmount": 434000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4989,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 1780000,
+   "roomNum": 6,
+   "assetArea": 171,
+   "yearBuilt": 0,
+   "priceSM": 10409,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 443977,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 5103,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 440488,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4949,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 434260,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4991,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 434260,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4991,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 448340,
+   "roomNum": 4,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 5038,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-09",
+   "dealAmount": 1688000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 16713,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-08",
+   "dealAmount": 1780000,
+   "roomNum": 6,
+   "assetArea": 171,
+   "yearBuilt": 0,
+   "priceSM": 10409,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-06",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 2018,
+   "priceSM": 12857,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-06",
+   "dealAmount": 1520000,
+   "roomNum": 5,
+   "assetArea": 143.95,
+   "yearBuilt": 1987,
+   "priceSM": 10629,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2025-03-04",
+   "dealAmount": 836000,
+   "roomNum": 4,
+   "assetArea": 99.2,
+   "yearBuilt": 1960,
+   "priceSM": 8444,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-03",
+   "dealAmount": 770000,
+   "roomNum": 3,
+   "assetArea": 53.7,
+   "yearBuilt": 1970,
+   "priceSM": 14528,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-03",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 16182,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-03",
+   "dealAmount": 1680000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 16634,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-03-02",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 16182,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-03-02",
+   "dealAmount": 1680000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 16634,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-25",
+   "dealAmount": 1770000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 16239,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-25",
+   "dealAmount": 745000,
+   "roomNum": 4,
+   "assetArea": 125.3,
+   "yearBuilt": 1970,
+   "priceSM": 5960,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-24",
+   "dealAmount": 1770000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 16239,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-23",
+   "dealAmount": 1890000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 19091,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-23",
+   "dealAmount": 360000,
+   "roomNum": 0,
+   "assetArea": 25,
+   "yearBuilt": 1970,
+   "priceSM": 14400,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-02-23",
+   "dealAmount": 690000,
+   "roomNum": 8,
+   "assetArea": 139.4,
+   "yearBuilt": 1960,
+   "priceSM": 4964,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-22",
+   "dealAmount": 1890000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 19091,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-21",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 0,
+   "priceSM": 13063,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-20",
+   "dealAmount": 600000,
+   "roomNum": 4,
+   "assetArea": 68.5,
+   "yearBuilt": 1960,
+   "priceSM": 8759,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-20",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 111,
+   "yearBuilt": 0,
+   "priceSM": 13063,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-19",
+   "dealAmount": 850000,
+   "roomNum": 0,
+   "assetArea": 607,
+   "yearBuilt": 0,
+   "priceSM": 1400,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-02-18",
+   "dealAmount": 1280000,
+   "roomNum": 4,
+   "assetArea": 101.9,
+   "yearBuilt": 2014,
+   "priceSM": 12561,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-18",
+   "dealAmount": 610000,
+   "roomNum": 4,
+   "assetArea": 62.5,
+   "yearBuilt": 1960,
+   "priceSM": 9839,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-17",
+   "dealAmount": 665000,
+   "roomNum": 4,
+   "assetArea": 78,
+   "yearBuilt": 1970,
+   "priceSM": 8526,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-17",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 12844,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-17",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 10000,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-16",
+   "dealAmount": 1620000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 12090,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-16",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 12844,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-16",
+   "dealAmount": 1250000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 10000,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-16",
+   "dealAmount": 453000,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 5033,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-15",
+   "dealAmount": 453590,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 5040,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-15",
+   "dealAmount": 1250000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 11574,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-15",
+   "dealAmount": 1620000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 12090,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-13",
+   "dealAmount": 700000,
+   "roomNum": 3,
+   "assetArea": 64.05,
+   "yearBuilt": 1960,
+   "priceSM": 10929,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-13",
+   "dealAmount": 600000,
+   "roomNum": 3,
+   "assetArea": 52.7,
+   "yearBuilt": 1960,
+   "priceSM": 11538,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-12",
+   "dealAmount": 1670000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 0,
+   "priceSM": 10438,
+   "neighborhoodName": null,
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2025-02-12",
+   "dealAmount": 650000,
+   "roomNum": 4,
+   "assetArea": 67.3,
+   "yearBuilt": 1970,
+   "priceSM": 9701,
+   "neighborhoodName": "נוף שאן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-12",
+   "dealAmount": 560000,
+   "roomNum": 4,
+   "assetArea": 68,
+   "yearBuilt": 1960,
+   "priceSM": 8235,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-11",
+   "dealAmount": 1670000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 0,
+   "priceSM": 10438,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-09",
+   "dealAmount": 432000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4966,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-09",
+   "dealAmount": 442000,
+   "roomNum": 3,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 4857,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-09",
+   "dealAmount": 436000,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4899,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-09",
+   "dealAmount": 430636,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4950,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-08",
+   "dealAmount": 446881,
+   "roomNum": 3,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 4911,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-08",
+   "dealAmount": 436894,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4909,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-08",
+   "dealAmount": 432643,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4973,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-08",
+   "dealAmount": 430636,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 4950,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-08",
+   "dealAmount": 442210,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 4913,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-05",
+   "dealAmount": 610000,
+   "roomNum": 3,
+   "assetArea": 61.1,
+   "yearBuilt": 1960,
+   "priceSM": 10000,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-04",
+   "dealAmount": 500000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1960,
+   "priceSM": 5000,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-02-04",
+   "dealAmount": 790000,
+   "roomNum": 4,
+   "assetArea": 84.7,
+   "yearBuilt": 1960,
+   "priceSM": 9327,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-04",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 13208,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-02-03",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 13208,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-02-03",
+   "dealAmount": 540000,
+   "roomNum": 3,
+   "assetArea": 61.1,
+   "yearBuilt": 1960,
+   "priceSM": 8852,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-02",
+   "dealAmount": 436000,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4899,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-02-01",
+   "dealAmount": 436825,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4908,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-30",
+   "dealAmount": 1700000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 15455,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-30",
+   "dealAmount": 2200000,
+   "roomNum": 0,
+   "assetArea": 2870,
+   "yearBuilt": 0,
+   "priceSM": 767,
+   "neighborhoodName": null,
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-01-29",
+   "dealAmount": 1700000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 15455,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-29",
+   "dealAmount": 405000,
+   "roomNum": 2,
+   "assetArea": 38.4,
+   "yearBuilt": 1950,
+   "priceSM": 10658,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-28",
+   "dealAmount": 738000,
+   "roomNum": 4,
+   "assetArea": 77,
+   "yearBuilt": 1970,
+   "priceSM": 9584,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-01-27",
+   "dealAmount": 1050000,
+   "roomNum": 0,
+   "assetArea": 682,
+   "yearBuilt": 0,
+   "priceSM": 1540,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-01-27",
+   "dealAmount": 860000,
+   "roomNum": 4,
+   "assetArea": 112,
+   "yearBuilt": 1960,
+   "priceSM": 7679,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-27",
+   "dealAmount": 1680000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 16634,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-26",
+   "dealAmount": 1680000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 16634,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-23",
+   "dealAmount": 620000,
+   "roomNum": 4,
+   "assetArea": 72.5,
+   "yearBuilt": 1970,
+   "priceSM": 8552,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-23",
+   "dealAmount": 456000,
+   "roomNum": 5,
+   "assetArea": 288,
+   "yearBuilt": 1960,
+   "priceSM": 1583,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-20",
+   "dealAmount": 338000,
+   "roomNum": 0,
+   "assetArea": 682,
+   "yearBuilt": 0,
+   "priceSM": 496,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-01-20",
+   "dealAmount": 900000,
+   "roomNum": 4,
+   "assetArea": 108.6,
+   "yearBuilt": 1970,
+   "priceSM": 8287,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-20",
+   "dealAmount": 650000,
+   "roomNum": 3,
+   "assetArea": 51.7,
+   "yearBuilt": 1964,
+   "priceSM": 12573,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-16",
+   "dealAmount": 935000,
+   "roomNum": 4,
+   "assetArea": 124,
+   "yearBuilt": 1980,
+   "priceSM": 7540,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-01-14",
+   "dealAmount": 1679000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 15264,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-01-13",
+   "dealAmount": 2550000,
+   "roomNum": 5,
+   "assetArea": 210,
+   "yearBuilt": 2014,
+   "priceSM": 12143,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-13",
+   "dealAmount": 1679000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 15264,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-08",
+   "dealAmount": 630000,
+   "roomNum": 3,
+   "assetArea": 52.7,
+   "yearBuilt": 1970,
+   "priceSM": 11954,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-06",
+   "dealAmount": 1630000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16804,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-01-05",
+   "dealAmount": 1630000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16804,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-01-05",
+   "dealAmount": 2360000,
+   "roomNum": 1,
+   "assetArea": 513,
+   "yearBuilt": 1967,
+   "priceSM": 4600,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-01-02",
+   "dealAmount": 670000,
+   "roomNum": 3,
+   "assetArea": 52.4,
+   "yearBuilt": 1970,
+   "priceSM": 12786,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-31",
+   "dealAmount": 1830000,
+   "roomNum": 5,
+   "assetArea": 146.35,
+   "yearBuilt": 2003,
+   "priceSM": 12504,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-31",
+   "dealAmount": 790000,
+   "roomNum": 4,
+   "assetArea": 76.4,
+   "yearBuilt": 1970,
+   "priceSM": 10340,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-30",
+   "dealAmount": 1610000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 15941,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-30",
+   "dealAmount": 1660000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 15229,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-30",
+   "dealAmount": 1610000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 15784,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-30",
+   "dealAmount": 1660000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 15229,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-30",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12273,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-30",
+   "dealAmount": 1570000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 16020,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-30",
+   "dealAmount": 1210000,
+   "roomNum": 4,
+   "assetArea": 100.85,
+   "yearBuilt": 0,
+   "priceSM": 12100,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 12273,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1520000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 13818,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1460000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 13394,
+   "neighborhoodName": null,
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1575000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16237,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1570000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 16020,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1610000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 15784,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1610000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 15941,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-29",
+   "dealAmount": 1660000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 15229,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-28",
+   "dealAmount": 1520000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 13818,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-28",
+   "dealAmount": 1460000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 13394,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-26",
+   "dealAmount": 939960,
+   "roomNum": 3,
+   "assetArea": 85.1,
+   "yearBuilt": 2012,
+   "priceSM": 11058,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-25",
+   "dealAmount": 480000,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1970,
+   "priceSM": 8727,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-23",
+   "dealAmount": 1660000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 15091,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-23",
+   "dealAmount": 339000,
+   "roomNum": 5,
+   "assetArea": 140,
+   "yearBuilt": 2012,
+   "priceSM": 2421,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2024-12-22",
+   "dealAmount": 1665000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 15275,
+   "neighborhoodName": null,
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-22",
+   "dealAmount": 280000,
+   "roomNum": 0,
+   "assetArea": 38,
+   "yearBuilt": 1970,
+   "priceSM": 7368,
+   "neighborhoodName": "נוף קדומים",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2024-12-22",
+   "dealAmount": 1660000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 15091,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-21",
+   "dealAmount": 1665000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 15275,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-18",
+   "dealAmount": 1270000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 12451,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-18",
+   "dealAmount": 1410000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13178,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-17",
+   "dealAmount": 600000,
+   "roomNum": 3,
+   "assetArea": 59.5,
+   "yearBuilt": 1970,
+   "priceSM": 10084,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-17",
+   "dealAmount": 1410000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 13178,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-17",
+   "dealAmount": 1270000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 12451,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-15",
+   "dealAmount": 1350000,
+   "roomNum": 6,
+   "assetArea": 181,
+   "yearBuilt": 1958,
+   "priceSM": 7459,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2024-12-10",
+   "dealAmount": 443000,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4978,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-09",
+   "dealAmount": 443768,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4986,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-09",
+   "dealAmount": 910000,
+   "roomNum": 5,
+   "assetArea": 126.1,
+   "yearBuilt": 1970,
+   "priceSM": 7216,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-08",
+   "dealAmount": 1355000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 16938,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-08",
+   "dealAmount": 1800000,
+   "roomNum": 6,
+   "assetArea": 161,
+   "yearBuilt": 0,
+   "priceSM": 11180,
+   "neighborhoodName": null,
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2024-12-07",
+   "dealAmount": 1355000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 16938,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-07",
+   "dealAmount": 1800000,
+   "roomNum": 6,
+   "assetArea": 161,
+   "yearBuilt": 0,
+   "priceSM": 11180,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-05",
+   "dealAmount": 610000,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 1960,
+   "priceSM": 7922,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-05",
+   "dealAmount": 690000,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1960,
+   "priceSM": 12545,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-05",
+   "dealAmount": 1430000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 13750,
+   "neighborhoodName": null,
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-12-04",
+   "dealAmount": 1430000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 13750,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-12-03",
+   "dealAmount": 905000,
+   "roomNum": 7,
+   "assetArea": 218,
+   "yearBuilt": 1997,
+   "priceSM": 4151,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-03",
+   "dealAmount": 1379000,
+   "roomNum": 0,
+   "assetArea": 2758,
+   "yearBuilt": 0,
+   "priceSM": 500,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-12-02",
+   "dealAmount": 1000000,
+   "roomNum": 5,
+   "assetArea": 97.92,
+   "yearBuilt": 1970,
+   "priceSM": 10212,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-02",
+   "dealAmount": 1215000,
+   "roomNum": 4,
+   "assetArea": 116.8,
+   "yearBuilt": 1954,
+   "priceSM": 10474,
+   "neighborhoodName": "נוף גנים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-02",
+   "dealAmount": 1725000,
+   "roomNum": 5,
+   "assetArea": 153,
+   "yearBuilt": 0,
+   "priceSM": 11275,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-12-01",
+   "dealAmount": 1725000,
+   "roomNum": 5,
+   "assetArea": 153,
+   "yearBuilt": 0,
+   "priceSM": 11275,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-28",
+   "dealAmount": 1080000,
+   "roomNum": 4,
+   "assetArea": 98.5,
+   "yearBuilt": 1998,
+   "priceSM": 11020,
+   "neighborhoodName": "נוף הגלעד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-28",
+   "dealAmount": 1650000,
+   "roomNum": 5,
+   "assetArea": 127.7,
+   "yearBuilt": 2016,
+   "priceSM": 12992,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2024-11-25",
+   "dealAmount": 1410000,
+   "roomNum": 4,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 11016,
+   "neighborhoodName": "קרית רבין",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-25",
+   "dealAmount": 500000,
+   "roomNum": 3,
+   "assetArea": 71.6,
+   "yearBuilt": 1960,
+   "priceSM": 6983,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-21",
+   "dealAmount": 550000,
+   "roomNum": 4,
+   "assetArea": 76.4,
+   "yearBuilt": 1970,
+   "priceSM": 7199,
+   "neighborhoodName": "נוף הירדן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-21",
+   "dealAmount": 580000,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 4793,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-20",
+   "dealAmount": 583000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 4779,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-20",
+   "dealAmount": 580000,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 4793,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-20",
+   "dealAmount": 495000,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 5500,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-20",
+   "dealAmount": 580626,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 4799,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-19",
+   "dealAmount": 460000,
+   "roomNum": 3,
+   "assetArea": 64.7,
+   "yearBuilt": 1970,
+   "priceSM": 7188,
+   "neighborhoodName": "נווה נחל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-19",
+   "dealAmount": 965000,
+   "roomNum": 0,
+   "assetArea": 682,
+   "yearBuilt": 0,
+   "priceSM": 1415,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2024-11-19",
+   "dealAmount": 580626,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 4799,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-19",
+   "dealAmount": 495268,
+   "roomNum": 3,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 5503,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-19",
+   "dealAmount": 583403,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 4782,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-18",
+   "dealAmount": 1720000,
+   "roomNum": 7,
+   "assetArea": 201,
+   "yearBuilt": 0,
+   "priceSM": 8557,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-17",
+   "dealAmount": 1720000,
+   "roomNum": 7,
+   "assetArea": 201,
+   "yearBuilt": 0,
+   "priceSM": 8557,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-14",
+   "dealAmount": 422000,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4742,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-14",
+   "dealAmount": 1870000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 18889,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-14",
+   "dealAmount": 1261000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 11464,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-14",
+   "dealAmount": 582000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 4770,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-14",
+   "dealAmount": 579000,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 4785,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-14",
+   "dealAmount": 527000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 4429,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 579315,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 4788,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 553661,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 4692,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 1870000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 18889,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 1261000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 11464,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 422168,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 4743,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 553661,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 4538,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 582085,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 4771,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2024-11-13",
+   "dealAmount": 501000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 4817,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  }
+ ]
+}

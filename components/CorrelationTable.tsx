@@ -31,7 +31,7 @@ function getGapColor(permits: number | null, required: number | null): string {
   if (!permits || !required || required === 0) return "text-slate-400";
   const ratio = permits / required;
   if (ratio >= 1.1) return "text-emerald-700";
-  if (ratio >= 0.8) return "text-yellow-400";
+  if (ratio >= 0.8) return "text-slate-600";
   return "text-red-600";
 }
 
@@ -85,9 +85,9 @@ export default function CorrelationTable({
                   }`}>
                     {fmtPct(row.populationGrowthPct)}
                   </td>
-                  <td className="py-2.5 px-3 text-amber-700">{fmt(row.requiredHouseholds)}</td>
-                  <td className="py-2.5 px-3 text-cyan-700">{fmt(row.buildingPermits)}</td>
-                  <td className="py-2.5 px-3 text-purple-700">{fmt(row.constructionStarts)}</td>
+                  <td className="py-2.5 px-3 text-slate-700">{fmt(row.requiredHouseholds)}</td>
+                  <td className="py-2.5 px-3 text-slate-700">{fmt(row.buildingPermits)}</td>
+                  <td className="py-2.5 px-3 text-slate-700">{fmt(row.constructionStarts)}</td>
                   <td className={`py-2.5 px-3 font-bold ${gapColor}`}>
                     {gap !== null ? `${gap >= 0 ? "+" : ""}${fmt(gap)}` : "—"}
                   </td>
@@ -100,7 +100,7 @@ export default function CorrelationTable({
 
       <div className="flex flex-wrap gap-4 mt-3 text-[10px] text-slate-400">
         <span><span className="inline-block w-2 h-2 rounded-full bg-emerald-400 ml-1"></span>עודף (היתרים &gt; נדרש)</span>
-        <span><span className="inline-block w-2 h-2 rounded-full bg-yellow-400 ml-1"></span>קרוב לאיזון</span>
+        <span><span className="inline-block w-2 h-2 rounded-full bg-slate-400 ml-1"></span>קרוב לאיזון</span>
         <span><span className="inline-block w-2 h-2 rounded-full bg-red-400 ml-1"></span>גרעון (היתרים &lt; נדרש)</span>
       </div>
     </motion.div>

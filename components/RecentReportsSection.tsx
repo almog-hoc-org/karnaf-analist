@@ -13,23 +13,60 @@ import {
 } from "@/lib/recent-reports";
 
 // ═══════════════════════════════════════════════════════════════════════════
-//  Design system — single tone map, used by every visual primitive
+//  Design system — TWO tones only: primary (indigo) + neutral (slate).
+//  Legacy Tone keys from lib/recent-reports all collapse onto them.
+//  Green/red appear ONLY as trend semantics (YoyChip / signed values).
 // ═══════════════════════════════════════════════════════════════════════════
 
-const TONE = {
-  blue:    { text: "text-blue-700",    bg: "bg-blue-50",    border: "border-blue-200",    grad: "from-blue-600 to-cyan-600",     dot: "bg-blue-600" },
-  emerald: { text: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200", grad: "from-emerald-600 to-teal-600",  dot: "bg-emerald-600" },
-  red:     { text: "text-red-700",     bg: "bg-red-50",     border: "border-red-200",     grad: "from-red-600 to-rose-600",      dot: "bg-red-600" },
-  amber:   { text: "text-amber-700",   bg: "bg-amber-50",   border: "border-amber-200",   grad: "from-amber-600 to-orange-600",  dot: "bg-amber-600" },
-  purple:  { text: "text-purple-700",  bg: "bg-purple-50",  border: "border-purple-200",  grad: "from-purple-600 to-fuchsia-600", dot: "bg-purple-600" },
-  slate:   { text: "text-slate-700",   bg: "bg-slate-50",   border: "border-slate-200",   grad: "from-slate-600 to-slate-700",   dot: "bg-slate-600" },
-} as const;
+interface ToneStyle {
+  text: string;
+  bg: string;
+  border: string;
+  grad: string;
+  dot: string;
+  ring: string;
+}
+
+const PRIMARY_TONE: ToneStyle = {
+  text: "text-indigo-700",
+  bg: "bg-indigo-50",
+  border: "border-indigo-200",
+  grad: "from-indigo-600 to-indigo-500",
+  dot: "bg-indigo-600",
+  ring: "ring-indigo-600/30",
+};
+
+const NEUTRAL_TONE: ToneStyle = {
+  text: "text-slate-700",
+  bg: "bg-slate-100",
+  border: "border-slate-200",
+  grad: "from-slate-600 to-slate-500",
+  dot: "bg-slate-600",
+  ring: "ring-slate-600/30",
+};
+
+const TONE: Record<Tone, ToneStyle> = {
+  blue: PRIMARY_TONE,
+  emerald: PRIMARY_TONE,
+  red: PRIMARY_TONE,
+  amber: PRIMARY_TONE,
+  purple: PRIMARY_TONE,
+  slate: NEUTRAL_TONE,
+};
 
 const PUBLISHER = {
-  CBS:   { he: 'למ"ס', cls: "bg-blue-600 text-white" },
-  MoF:   { he: "אוצר", cls: "bg-purple-600 text-white" },
-  PRESS: { he: "עיתון", cls: "bg-slate-600 text-white" },
+  CBS:   { he: 'למ"ס', cls: "bg-indigo-600 text-white" },
+  MoF:   { he: "אוצר", cls: "bg-slate-700 text-white" },
+  PRESS: { he: "עיתון", cls: "bg-slate-700 text-white" },
 } as const;
+
+/** Trend colour derived from the value's own sign — the ONLY green/red source
+ *  for KPI values (the decorative `tone` field no longer drives colour). */
+function valueTrendClass(value: string): string {
+  if (/^[+▲]/.test(value)) return "text-emerald-700";
+  if (/^[-−▼]/.test(value)) return "text-red-600";
+  return "text-slate-900";
+}
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Visual primitives — small, focused
@@ -47,14 +84,13 @@ function YoyChip({ value }: { value?: number }) {
 }
 
 function KpiPill({ kpi }: { kpi: ReportKpi }) {
-  const t = TONE[kpi.tone ?? "slate"];
   return (
-    <div className={`rounded-xl px-3 py-2.5 bg-white border ${t.border} shadow-[0_1px_0_rgba(0,0,0,0.02)]`}>
+    <div className="rounded-xl px-3 py-2.5 bg-white border border-slate-200 shadow-[0_1px_0_rgba(0,0,0,0.02)]">
       <div className="flex items-center justify-between gap-1 mb-1">
         <span className="text-[10px] font-semibold text-slate-500 tracking-tight truncate">{kpi.label}</span>
         {kpi.yoy !== undefined && <YoyChip value={kpi.yoy} />}
       </div>
-      <div className={`text-base font-bold tabular-nums leading-none ${t.text}`}>{kpi.value}</div>
+      <div className={`text-base font-bold tabular-nums leading-none ${valueTrendClass(kpi.value)}`}>{kpi.value}</div>
       {kpi.hint && <div className="text-[10px] text-slate-500 mt-1 truncate">{kpi.hint}</div>}
     </div>
   );
@@ -130,14 +166,11 @@ function CityRow({ row, max, metric }: { row: CityDataRow; max: number; metric: 
   if (!val) return null;
   const pct = (val / max) * 100;
   const display = metric === "price" ? `₪${(val / 1_000_000).toFixed(2)}M` : val.toLocaleString("he-IL");
-  const barCls = metric === "starts" ? "from-emerald-100/60 to-emerald-50/0"
-              : metric === "sales"  ? "from-blue-100/60 to-blue-50/0"
-              : "from-purple-100/60 to-purple-50/0";
   return (
     <div className="relative px-3 py-1.5 group hover:bg-slate-50/80 transition-colors">
-      <div className={`absolute inset-y-0 right-0 bg-gradient-to-l ${barCls}`} style={{ width: `${pct}%` }} aria-hidden />
+      <div className="absolute inset-y-0 right-0 bg-gradient-to-l from-indigo-100/60 to-indigo-50/0" style={{ width: `${pct}%` }} aria-hidden />
       <div className="relative flex items-center gap-2 text-[12px]">
-        <Link href={`/city/${encodeURIComponent(row.city)}`} className="font-semibold text-slate-900 hover:text-cyan-700 hover:underline flex-1 truncate">
+        <Link href={`/city/${encodeURIComponent(row.city)}`} className="font-semibold text-slate-900 hover:text-indigo-700 hover:underline flex-1 truncate">
           {row.city}
         </Link>
         {row.rankNote && (
@@ -205,14 +238,14 @@ function ReportDetail({ report }: { report: FocusedReport }) {
         {/* Footer with source links */}
         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100 text-[11px]">
           <a href={report.sourceUrl} target="_blank" rel="noopener noreferrer" className={`${t.text} hover:underline font-bold inline-flex items-center gap-1`}>
-            📄 PDF מקורי באתר הלמ&quot;ס ↗
+            📄 הדוח המקורי באתר הלמ&quot;ס ↗
           </a>
           {report.primaryPdfPath && (
-            <a href={report.primaryPdfPath} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 border border-emerald-300 text-[10px] font-bold">
+            <a href={report.primaryPdfPath} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-[10px] font-bold">
               ✓ עותק מקומי
             </a>
           )}
-          <Link href={`/sources/${report.sourcePageId}`} className="text-slate-500 hover:text-cyan-700 font-semibold mr-auto">
+          <Link href={`/sources/${report.sourcePageId}`} className="text-slate-500 hover:text-indigo-700 font-semibold mr-auto">
             כל הפרסומים בסדרה →
           </Link>
         </div>
@@ -267,8 +300,8 @@ function ReportDetail({ report }: { report: FocusedReport }) {
 
           {activeView === "context" && (
             <div className="space-y-3">
-              <div className="rounded-xl bg-cyan-50/60 border border-cyan-200 p-3">
-                <div className="text-[10px] font-bold text-cyan-700 uppercase tracking-wide mb-2">
+              <div className="rounded-xl bg-indigo-50/60 border border-indigo-200 p-3">
+                <div className="text-[10px] font-bold text-indigo-700 uppercase tracking-wide mb-2">
                   {report.dbCrossReference.title}
                 </div>
                 <ul className="space-y-1.5 text-[11px] text-slate-700 list-disc pr-5 leading-relaxed">
@@ -299,7 +332,7 @@ function TabHeadline({ report, active, onClick }: { report: FocusedReport; activ
       onClick={onClick}
       className={`group text-right rounded-2xl border transition-all overflow-hidden ${
         active
-          ? `bg-white shadow-lg ring-2 ${report.accent === "blue" ? "ring-blue-600/30" : report.accent === "emerald" ? "ring-emerald-600/30" : report.accent === "red" ? "ring-red-600/30" : report.accent === "amber" ? "ring-amber-600/30" : report.accent === "purple" ? "ring-purple-600/30" : "ring-slate-600/30"} border-transparent`
+          ? `bg-white shadow-lg ring-2 ${t.ring} border-transparent`
           : "bg-white/60 border-slate-200 hover:bg-white hover:border-slate-300 hover:shadow-sm"
       }`}
     >
@@ -346,19 +379,19 @@ export default function RecentReportsSection() {
       <div className="mb-6 flex flex-wrap items-end gap-3">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">Primary-Source Reports</span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-bold">
-              ✓ {RECENT_REPORTS.filter((r) => r.status === "extracted").length}/{RECENT_REPORTS.length} PDFs
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-700">Primary-Source Reports</span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[9px] font-bold">
+              🏛️ מקור חיצוני: למ״ס
             </span>
           </div>
           <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight leading-tight">
-            דוחות עדכניים מהלמ&quot;ס — שאיבה ישירה מ-PDF
+            דוחות עדכניים מהלמ&quot;ס
           </h2>
           <p className="text-[13px] text-slate-500 mt-1 leading-snug max-w-2xl">
-            כל המספרים אומתו מול PDFs של הלמ&quot;ס ששמורים מקומית. בחר דוח כדי לראות פירוט מאקרו, פירוט פר מחוז וטבלת ערים מלאה.
+            בחר דוח כדי לראות פירוט מאקרו, פירוט פר מחוז וטבלת ערים מלאה.
           </p>
         </div>
-        <Link href="/sources" className="text-[11px] text-cyan-700 hover:underline font-bold inline-flex items-center gap-1 mr-auto self-center">
+        <Link href="/sources" className="text-[11px] text-indigo-700 hover:underline font-bold inline-flex items-center gap-1 mr-auto self-center">
           כל המקורות עם מטריצת כיסוי 10 שנים →
         </Link>
       </div>
@@ -402,7 +435,7 @@ export default function RecentReportsSection() {
                 href={r.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block rounded-xl bg-white border border-slate-200 px-3 py-2.5 hover:border-cyan-300 hover:shadow-md transition-all"
+                className="group block rounded-xl bg-white border border-slate-200 px-3 py-2.5 hover:border-indigo-300 hover:shadow-md transition-all"
               >
                 <div className="flex items-center gap-2 mb-1">
                   <span className={`inline-block px-2 py-0.5 text-[10px] font-bold rounded ${PUBLISHER[r.publisher].cls}`}>
@@ -414,9 +447,9 @@ export default function RecentReportsSection() {
                     </span>
                   )}
                   <span className="text-[10px] text-slate-500 tabular-nums mr-auto">📅 {r.publishedDate}</span>
-                  <span className="text-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                  <span className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
                 </div>
-                <p className="text-[12px] font-bold text-slate-900 group-hover:text-cyan-700 transition-colors leading-snug">
+                <p className="text-[12px] font-bold text-slate-900 group-hover:text-indigo-700 transition-colors leading-snug">
                   {r.title}
                 </p>
                 <p className="text-[11px] text-slate-600 leading-snug mt-0.5">{r.summary}</p>

@@ -1,15 +1,15 @@
 {
   "cityName": "אשקלון",
-  "lastUpdated": "2026-06-24T06:51:08.721Z",
+  "lastUpdated": "2026-07-21T09:03:10.947Z",
   "neighborhoods": [
     {
       "neighborhood": "מתחם מ-7",
-      "totalDeals": 2559,
-      "dealsPerYearAvg": 427,
+      "totalDeals": 2517,
+      "dealsPerYearAvg": 420,
       "streets": [
         {
           "streetName": "דוריף",
-          "totalDeals": 517,
+          "totalDeals": 576,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -49,10 +49,10 @@
                     "pricePerSqm": 16250,
                     "totalPrice": 1430000,
                     "area": 88,
-                    "houseNum": "20.0",
+                    "houseNum": 20,
                     "streetName": "דוריף",
                     "blocksAway": 38,
-                    "dealDate": "2021-11-28T00:00:00Z"
+                    "dealDate": "2021-11-28T00:00:00.000Z"
                   }
                 }
               ]
@@ -83,10 +83,10 @@
                     "pricePerSqm": 13936,
                     "totalPrice": 1310000,
                     "area": 94,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "דוריף",
                     "blocksAway": 45,
-                    "dealDate": "2022-06-15T00:00:00Z"
+                    "dealDate": "2022-06-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -97,10 +97,10 @@
                     "pricePerSqm": 13140,
                     "totalPrice": 1590000,
                     "area": 121,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "דוריף",
                     "blocksAway": 27,
-                    "dealDate": "2021-06-02T00:00:00Z"
+                    "dealDate": "2021-06-02T00:00:00.000Z"
                   }
                 }
               ]
@@ -143,10 +143,10 @@
                     "pricePerSqm": 15676,
                     "totalPrice": 2320000,
                     "area": 148,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "דוריף",
                     "blocksAway": 27,
-                    "dealDate": "2021-10-12T00:00:00Z"
+                    "dealDate": "2021-10-12T00:00:00.000Z"
                   }
                 }
               ]
@@ -274,12 +274,12 @@
     },
     {
       "neighborhood": "גבעת ציון",
-      "totalDeals": 2285,
-      "dealsPerYearAvg": 326,
+      "totalDeals": 2163,
+      "dealsPerYearAvg": 309,
       "streets": [
         {
           "streetName": "קני סוף",
-          "totalDeals": 434,
+          "totalDeals": 436,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -529,12 +529,12 @@
     },
     {
       "neighborhood": "האגמים",
-      "totalDeals": 1966,
-      "dealsPerYearAvg": 328,
+      "totalDeals": 1902,
+      "dealsPerYearAvg": 272,
       "streets": [
         {
           "streetName": "מפל התנור",
-          "totalDeals": 718,
+          "totalDeals": 719,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -570,14 +570,12 @@
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 11911,
-                    "totalPrice": 1072000,
-                    "area": 90,
-                    "houseNum": "26.0",
-                    "streetName": "מפל התנור",
-                    "blocksAway": 0,
-                    "dealDate": "2021-11-11T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 15541,
+                    "avgTotalPrice": 1210000,
+                    "avgArea": 78
                   }
                 }
               ]
@@ -605,11 +603,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 7,
+                    "count": 6,
                     "threshold": 5,
-                    "avgPricePerSqm": 13196,
-                    "avgTotalPrice": 1567638,
-                    "avgArea": 120
+                    "avgPricePerSqm": 12776,
+                    "avgTotalPrice": 1535578,
+                    "avgArea": 121
                   }
                 },
                 {
@@ -617,13 +615,13 @@
                   "year": 2020,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 8389,
-                    "totalPrice": 948000,
-                    "area": 113,
-                    "houseNum": "26.0",
+                    "pricePerSqm": 12321,
+                    "totalPrice": 1380000,
+                    "area": 112,
+                    "houseNum": 14,
                     "streetName": "מפל התנור",
-                    "blocksAway": 0,
-                    "dealDate": "2021-11-07T00:00:00Z"
+                    "blocksAway": 12,
+                    "dealDate": "2020-10-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -659,10 +657,10 @@
                     "pricePerSqm": 11763,
                     "totalPrice": 1635000,
                     "area": 139,
-                    "houseNum": "26.0",
+                    "houseNum": 26,
                     "streetName": "מפל התנור",
                     "blocksAway": 0,
-                    "dealDate": "2021-12-26T00:00:00Z"
+                    "dealDate": "2021-12-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -671,7 +669,7 @@
         },
         {
           "streetName": "עמק האלה",
-          "totalDeals": 326,
+          "totalDeals": 360,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -707,14 +705,12 @@
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 14070,
-                    "totalPrice": 1210000,
-                    "area": 86,
-                    "houseNum": "51.0",
-                    "streetName": "עמק האלה",
-                    "blocksAway": 4,
-                    "dealDate": "2021-10-31T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 13651,
+                    "avgTotalPrice": 1174000,
+                    "avgArea": 86
                   }
                 }
               ]
@@ -730,10 +726,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 16,
+                    "count": 15,
                     "threshold": 15,
-                    "avgPricePerSqm": 15054,
-                    "avgTotalPrice": 1674118,
+                    "avgPricePerSqm": 15025,
+                    "avgTotalPrice": 1678125,
                     "avgArea": 110
                   }
                 },
@@ -753,14 +749,12 @@
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 13694,
-                    "totalPrice": 1520000,
-                    "area": 111,
-                    "houseNum": "47.0",
-                    "streetName": "עמק האלה",
-                    "blocksAway": 0,
-                    "dealDate": "2021-12-22T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 29,
+                    "threshold": 15,
+                    "avgPricePerSqm": 11844,
+                    "avgTotalPrice": 1285429,
+                    "avgArea": 110
                   }
                 }
               ]
@@ -799,14 +793,12 @@
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 9929,
-                    "totalPrice": 1400000,
-                    "area": 141,
-                    "houseNum": "47.0",
-                    "streetName": "עמק האלה",
-                    "blocksAway": 0,
-                    "dealDate": "2021-12-13T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 14,
+                    "threshold": 10,
+                    "avgPricePerSqm": 10952,
+                    "avgTotalPrice": 1362607,
+                    "avgArea": 126
                   }
                 }
               ]
@@ -816,7 +808,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 8365,
+  "totalDealsAnalyzed": 8484,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
+import { BRAND, BRAND_LIGHT, INK, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 
 interface PriceTrendDataPoint {
   year: number;
@@ -52,31 +53,25 @@ export default function PriceTrendChart({ data, cityName }: PriceTrendChartProps
         >
           <CartesianGrid
             strokeDasharray="3 3"
-            stroke="#e2e8f0"
+            stroke={GRID}
             vertical={false}
           />
           <XAxis
             dataKey="period"
-            tick={{ fill: "#64748b", fontSize: 10 }}
+            tick={{ fill: AXIS, fontSize: 10 }}
             axisLine={false}
             tickLine={false}
             interval={Math.max(0, Math.floor(chartData.length / 8))}
           />
           <YAxis
-            tick={{ fill: "#64748b", fontSize: 11 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             width={55}
             tickFormatter={(v: number) => `${(v / 1000000).toFixed(1)}M`}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              color: "#0f172a",
-              fontSize: 12,
-            }}
+            contentStyle={{ ...tooltipStyle, color: INK }}
             formatter={(value: number) => [
               `₪${value.toLocaleString("he-IL")}`,
               "מחיר חציוני",
@@ -85,10 +80,10 @@ export default function PriceTrendChart({ data, cityName }: PriceTrendChartProps
           <Line
             type="monotone"
             dataKey="מחיר"
-            stroke="#a78bfa"
+            stroke={BRAND}
             strokeWidth={2.5}
-            dot={{ fill: "#a78bfa", r: 3, strokeWidth: 0 }}
-            activeDot={{ r: 5, fill: "#c4b5fd" }}
+            dot={{ fill: BRAND, r: 3, strokeWidth: 0 }}
+            activeDot={{ r: 5, fill: BRAND_LIGHT }}
           />
         </LineChart>
       </ResponsiveContainer>

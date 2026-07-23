@@ -1,6 +1,6 @@
 {
   "cityName": "עכו",
-  "lastUpdated": "2026-06-24T06:59:35.029Z",
+  "lastUpdated": "2026-07-21T09:18:45.953Z",
   "neighborhoods": [
     {
       "neighborhood": "מרכז העיר",
@@ -9,7 +9,7 @@
       "streets": [
         {
           "streetName": "לוחמי הגטאות",
-          "totalDeals": 84,
+          "totalDeals": 82,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -25,10 +25,10 @@
                     "pricePerSqm": 11905,
                     "totalPrice": 750000,
                     "area": 63,
-                    "houseNum": "20.0",
+                    "houseNum": 20,
                     "streetName": "לוחמי הגטאות",
                     "blocksAway": 25,
-                    "dealDate": "2025-07-16T00:00:00Z"
+                    "dealDate": "2025-07-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -112,11 +112,11 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 9,
+                    "count": 7,
                     "threshold": 5,
-                    "avgPricePerSqm": 18989,
-                    "avgTotalPrice": 2013111,
-                    "avgArea": 107
+                    "avgPricePerSqm": 22816,
+                    "avgTotalPrice": 2405714,
+                    "avgArea": 105
                   }
                 },
                 {
@@ -165,10 +165,10 @@
                     "pricePerSqm": 15152,
                     "totalPrice": 1000000,
                     "area": 66,
-                    "houseNum": "30.0",
+                    "houseNum": 30,
                     "streetName": "בן עמי",
                     "blocksAway": 35,
-                    "dealDate": "2026-05-17T00:00:00Z"
+                    "dealDate": "2026-05-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -228,10 +228,10 @@
                     "pricePerSqm": 9250,
                     "totalPrice": 740000,
                     "area": 80,
-                    "houseNum": "42.0",
+                    "houseNum": 42,
                     "streetName": "בן עמי",
                     "blocksAway": 23,
-                    "dealDate": "2020-06-26T00:00:00Z"
+                    "dealDate": "2020-06-26T00:00:00.000Z"
                   }
                 }
               ]

@@ -1,15 +1,15 @@
 {
   "cityName": "בית שמש",
-  "lastUpdated": "2026-06-24T06:52:03.149Z",
+  "lastUpdated": "2026-07-21T09:04:57.952Z",
   "neighborhoods": [
     {
       "neighborhood": "מרכז העיר",
-      "totalDeals": 764,
-      "dealsPerYearAvg": 109,
+      "totalDeals": 799,
+      "dealsPerYearAvg": 114,
       "streets": [
         {
           "streetName": "הרצל",
-          "totalDeals": 120,
+          "totalDeals": 123,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -66,13 +66,13 @@
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 5282,
-                    "totalPrice": 412000,
-                    "area": 78,
-                    "houseNum": "28.0",
+                    "pricePerSqm": 21921,
+                    "totalPrice": 1951000,
+                    "area": 89,
+                    "houseNum": 28,
                     "streetName": "הרצל",
-                    "blocksAway": 6,
-                    "dealDate": "2025-07-28T00:00:00Z"
+                    "blocksAway": 3,
+                    "dealDate": "2026-01-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -80,11 +80,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 4,
                     "threshold": 2,
-                    "avgPricePerSqm": 16215,
-                    "avgTotalPrice": 1433333,
-                    "avgArea": 88
+                    "avgPricePerSqm": 16859,
+                    "avgTotalPrice": 1493071,
+                    "avgArea": 89
                   }
                 },
                 {
@@ -92,11 +92,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 5,
+                    "count": 6,
                     "threshold": 5,
-                    "avgPricePerSqm": 14124,
-                    "avgTotalPrice": 1151000,
-                    "avgArea": 82
+                    "avgPricePerSqm": 14852,
+                    "avgTotalPrice": 1233497,
+                    "avgArea": 83
                   }
                 }
               ]
@@ -115,10 +115,10 @@
                     "pricePerSqm": 20595,
                     "totalPrice": 2286000,
                     "area": 111,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "הרצל",
-                    "blocksAway": 9,
-                    "dealDate": "2025-12-15T00:00:00Z"
+                    "blocksAway": 0,
+                    "dealDate": "2025-12-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -141,10 +141,10 @@
                     "pricePerSqm": 12069,
                     "totalPrice": 1050000,
                     "area": 87,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "הרצל",
-                    "blocksAway": 9,
-                    "dealDate": "2020-06-15T00:00:00Z"
+                    "blocksAway": 0,
+                    "dealDate": "2020-06-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -153,7 +153,7 @@
         },
         {
           "streetName": "קרן היסוד",
-          "totalDeals": 69,
+          "totalDeals": 70,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -213,10 +213,10 @@
                     "pricePerSqm": 21429,
                     "totalPrice": 1500000,
                     "area": 70,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "קרן היסוד",
                     "blocksAway": 3,
-                    "dealDate": "2025-07-31T00:00:00Z"
+                    "dealDate": "2025-07-31T00:00:00.000Z"
                   }
                 },
                 {
@@ -239,10 +239,10 @@
                     "pricePerSqm": 14000,
                     "totalPrice": 980000,
                     "area": 70,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "קרן היסוד",
                     "blocksAway": 3,
-                    "dealDate": "2021-01-13T00:00:00Z"
+                    "dealDate": "2021-01-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -261,10 +261,10 @@
                     "pricePerSqm": 18696,
                     "totalPrice": 2150000,
                     "area": 115,
-                    "houseNum": "7.0",
+                    "houseNum": 7,
                     "streetName": "קרן היסוד",
                     "blocksAway": 2,
-                    "dealDate": "2025-09-16T00:00:00Z"
+                    "dealDate": "2025-09-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -287,10 +287,10 @@
                     "pricePerSqm": 13298,
                     "totalPrice": 1250000,
                     "area": 94,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "קרן היסוד",
                     "blocksAway": 5,
-                    "dealDate": "2021-10-25T00:00:00Z"
+                    "dealDate": "2021-10-25T00:00:00.000Z"
                   }
                 }
               ]
@@ -301,7 +301,7 @@
     },
     {
       "neighborhood": "רמת בית שמש א",
-      "totalDeals": 547,
+      "totalDeals": 548,
       "dealsPerYearAvg": 78,
       "streets": [
         {
@@ -444,7 +444,7 @@
         },
         {
           "streetName": "נחל לכיש",
-          "totalDeals": 51,
+          "totalDeals": 52,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -460,10 +460,10 @@
                     "pricePerSqm": 29518,
                     "totalPrice": 2450000,
                     "area": 83,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "נחל לכיש",
                     "blocksAway": 0,
-                    "dealDate": "2025-02-27T00:00:00Z"
+                    "dealDate": "2025-02-27T00:00:00.000Z"
                   }
                 },
                 {
@@ -541,13 +541,13 @@
       ]
     },
     {
-      "neighborhood": "נווה ספיר",
-      "totalDeals": 239,
-      "dealsPerYearAvg": 34,
+      "neighborhood": "גבעת שרת",
+      "totalDeals": 267,
+      "dealsPerYearAvg": 38,
       "streets": [
         {
-          "streetName": "בר אילן",
-          "totalDeals": 81,
+          "streetName": "הנרקיס",
+          "totalDeals": 117,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -560,25 +560,23 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 31977,
-                    "avgTotalPrice": 2033333,
-                    "avgArea": 64
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 22224,
+                    "avgTotalPrice": 1508571,
+                    "avgArea": 69
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 26984,
-                    "totalPrice": 1700000,
-                    "area": 63,
-                    "houseNum": "2.0",
-                    "streetName": "בר אילן",
-                    "blocksAway": 5,
-                    "dealDate": "2022-09-21T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 16520,
+                    "avgTotalPrice": 1122200,
+                    "avgArea": 68
                   }
                 },
                 {
@@ -586,11 +584,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 18211,
-                    "avgTotalPrice": 1208333,
-                    "avgArea": 66
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 13191,
+                    "avgTotalPrice": 878714,
+                    "avgArea": 67
                   }
                 }
               ]
@@ -606,10 +604,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 24046,
-                    "avgTotalPrice": 1872000,
+                    "count": 17,
+                    "threshold": 15,
+                    "avgPricePerSqm": 20902,
+                    "avgTotalPrice": 1609667,
                     "avgArea": 78
                   }
                 },
@@ -620,9 +618,9 @@
                     "type": "aggregated",
                     "count": 7,
                     "threshold": 5,
-                    "avgPricePerSqm": 19376,
-                    "avgTotalPrice": 1587143,
-                    "avgArea": 82
+                    "avgPricePerSqm": 16857,
+                    "avgTotalPrice": 1245714,
+                    "avgArea": 75
                   }
                 },
                 {
@@ -630,11 +628,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 16653,
-                    "avgTotalPrice": 1275000,
-                    "avgArea": 77
+                    "count": 13,
+                    "threshold": 10,
+                    "avgPricePerSqm": 11530,
+                    "avgTotalPrice": 911154,
+                    "avgArea": 79
                   }
                 }
               ]
@@ -650,35 +648,39 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
+                    "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 22891,
-                    "avgTotalPrice": 2435000,
-                    "avgArea": 106
+                    "avgPricePerSqm": 18611,
+                    "avgTotalPrice": 1675000,
+                    "avgArea": 90
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 18791,
-                    "avgTotalPrice": 1847500,
-                    "avgArea": 99
+                    "type": "single",
+                    "pricePerSqm": 12500,
+                    "totalPrice": 1100000,
+                    "area": 88,
+                    "houseNum": 12,
+                    "streetName": "הנרקיס",
+                    "blocksAway": 2,
+                    "dealDate": "2021-09-12T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 14345,
-                    "avgTotalPrice": 1417500,
-                    "avgArea": 99
+                    "type": "single",
+                    "pricePerSqm": 9375,
+                    "totalPrice": 825000,
+                    "area": 88,
+                    "houseNum": 8,
+                    "streetName": "הנרקיס",
+                    "blocksAway": 2,
+                    "dealDate": "2020-05-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -686,8 +688,8 @@
           ]
         },
         {
-          "streetName": "דוד רזיאל",
-          "totalDeals": 38,
+          "streetName": "הסביון",
+          "totalDeals": 93,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -698,35 +700,35 @@
                 {
                   "period": "current",
                   "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 27000,
-                    "totalPrice": 1620000,
-                    "area": 60,
-                    "houseNum": "4.0",
-                    "streetName": "דוד רזיאל",
-                    "blocksAway": 3,
-                    "dealDate": "2025-06-29T00:00:00Z"
-                  }
+                  "sample": null
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 23898,
-                    "totalPrice": 1410000,
-                    "area": 59,
-                    "houseNum": "10.0",
-                    "streetName": "דוד רזיאל",
-                    "blocksAway": 3,
-                    "dealDate": "2022-11-13T00:00:00Z"
+                    "pricePerSqm": 23860,
+                    "totalPrice": 1360000,
+                    "area": 57,
+                    "houseNum": 8,
+                    "streetName": "הסביון",
+                    "blocksAway": 6,
+                    "dealDate": "2023-04-03T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
-                  "sample": null
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 17759,
+                    "totalPrice": 1030000,
+                    "area": 58,
+                    "houseNum": 4,
+                    "streetName": "הסביון",
+                    "blocksAway": 2,
+                    "dealDate": "2020-06-23T00:00:00.000Z"
+                  }
                 }
               ]
             },
@@ -741,25 +743,27 @@
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 21013,
-                    "totalPrice": 1660000,
-                    "area": 79,
-                    "houseNum": "7.0",
-                    "streetName": "דוד רזיאל",
+                    "pricePerSqm": 24875,
+                    "totalPrice": 1990000,
+                    "area": 80,
+                    "houseNum": 2,
+                    "streetName": "הסביון",
                     "blocksAway": 0,
-                    "dealDate": "2024-03-20T00:00:00Z"
+                    "dealDate": "2026-03-29T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 18822,
-                    "avgTotalPrice": 1493333,
-                    "avgArea": 79
+                    "type": "single",
+                    "pricePerSqm": 21250,
+                    "totalPrice": 1530000,
+                    "area": 72,
+                    "houseNum": 4,
+                    "streetName": "הסביון",
+                    "blocksAway": 2,
+                    "dealDate": "2023-12-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -767,10 +771,10 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
+                    "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 11846,
-                    "avgTotalPrice": 966250,
+                    "avgPricePerSqm": 13972,
+                    "avgTotalPrice": 1132500,
                     "avgArea": 81
                   }
                 }
@@ -787,40 +791,24 @@
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 18791,
-                    "totalPrice": 1710000,
-                    "area": 91,
-                    "houseNum": "5.0",
-                    "streetName": "דוד רזיאל",
-                    "blocksAway": 2,
-                    "dealDate": "2024-12-01T00:00:00Z"
+                    "pricePerSqm": 29519,
+                    "totalPrice": 3070000,
+                    "area": 104,
+                    "houseNum": 2,
+                    "streetName": "הסביון",
+                    "blocksAway": 0,
+                    "dealDate": "2026-03-09T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 16547,
-                    "avgTotalPrice": 1625000,
-                    "avgArea": 98
-                  }
+                  "sample": null
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 11442,
-                    "totalPrice": 1190000,
-                    "area": 104,
-                    "houseNum": "7.0",
-                    "streetName": "דוד רזיאל",
-                    "blocksAway": 0,
-                    "dealDate": "2020-02-24T00:00:00Z"
-                  }
+                  "sample": null
                 }
               ]
             }
@@ -829,7 +817,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1899,
+  "totalDealsAnalyzed": 2108,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

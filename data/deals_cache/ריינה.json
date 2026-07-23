@@ -1,15 +1,15 @@
 {
   "cityName": "ריינה",
-  "lastUpdated": "2026-06-24T07:01:48.783Z",
+  "lastUpdated": "2026-07-21T09:23:10.186Z",
   "neighborhoods": [
     {
       "neighborhood": "הר יונה",
-      "totalDeals": 775,
+      "totalDeals": 780,
       "dealsPerYearAvg": 111,
       "streets": [
         {
           "streetName": "כרכום",
-          "totalDeals": 131,
+          "totalDeals": 132,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -49,10 +49,10 @@
                     "pricePerSqm": 13043,
                     "totalPrice": 900000,
                     "area": 69,
-                    "houseNum": "19.0",
+                    "houseNum": 19,
                     "streetName": "כרכום",
                     "blocksAway": 14,
-                    "dealDate": "2021-03-15T00:00:00Z"
+                    "dealDate": "2021-03-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -68,11 +68,11 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 4,
                     "threshold": 2,
-                    "avgPricePerSqm": 16446,
-                    "avgTotalPrice": 1203333,
-                    "avgArea": 73
+                    "avgPricePerSqm": 15532,
+                    "avgTotalPrice": 1177500,
+                    "avgArea": 77
                   }
                 },
                 {
@@ -149,7 +149,7 @@
         },
         {
           "streetName": "דליה",
-          "totalDeals": 127,
+          "totalDeals": 129,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -175,10 +175,10 @@
                     "pricePerSqm": 9571,
                     "totalPrice": 670000,
                     "area": 70,
-                    "houseNum": "15.0",
+                    "houseNum": 15,
                     "streetName": "דליה",
                     "blocksAway": 0,
-                    "dealDate": "2020-09-16T00:00:00Z"
+                    "dealDate": "2020-09-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -194,10 +194,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 14,
-                    "threshold": 10,
-                    "avgPricePerSqm": 13016,
-                    "avgTotalPrice": 1051385,
+                    "count": 15,
+                    "threshold": 15,
+                    "avgPricePerSqm": 13262,
+                    "avgTotalPrice": 1070571,
                     "avgArea": 84
                   }
                 },
@@ -276,7 +276,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 775,
+  "totalDealsAnalyzed": 780,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

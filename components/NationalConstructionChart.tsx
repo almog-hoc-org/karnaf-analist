@@ -12,6 +12,7 @@ import {
   Legend,
 } from "recharts";
 import { motion } from "framer-motion";
+import { BRAND, INK, BRAND_LIGHT, SLATE, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 
 interface NationalData {
   year: number;
@@ -54,17 +55,17 @@ export default function NationalConstructionChart({ data }: Props) {
         >
           <CartesianGrid
             strokeDasharray="3 3"
-            stroke="#e2e8f0"
+            stroke={GRID}
             vertical={false}
           />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#64748b", fontSize: 12 }}
+            tick={{ fill: AXIS, fontSize: 12 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: "#64748b", fontSize: 11 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             width={55}
@@ -73,37 +74,30 @@ export default function NationalConstructionChart({ data }: Props) {
             }
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              color: "#0f172a",
-              fontSize: 12,
-              direction: "rtl",
-            }}
+            contentStyle={{ ...tooltipStyle, color: INK, direction: "rtl" }}
             formatter={(value: number, name: string) => [
               value.toLocaleString("he-IL") + " דירות",
               name,
             ]}
           />
           <Legend
-            wrapperStyle={{ fontSize: 12, color: "#64748b", direction: "rtl" }}
+            wrapperStyle={{ fontSize: 12, color: SLATE, direction: "rtl" }}
           />
           <Bar
             dataKey="היתרי בנייה"
-            fill="#f59e0b"
+            fill={BRAND}
             radius={[3, 3, 0, 0]}
             maxBarSize={35}
           />
           <Bar
             dataKey="התחלות בנייה"
-            fill="#34d399"
+            fill={INK}
             radius={[3, 3, 0, 0]}
             maxBarSize={35}
           />
           <Bar
             dataKey="גמר בנייה"
-            fill="#22d3ee"
+            fill={BRAND_LIGHT}
             radius={[3, 3, 0, 0]}
             maxBarSize={35}
           />
@@ -111,10 +105,10 @@ export default function NationalConstructionChart({ data }: Props) {
             <Line
               type="monotone"
               dataKey="יעד שנתי (ועדה)"
-              stroke="#dc2626"
+              stroke={SLATE}
               strokeWidth={2}
               strokeDasharray="6 4"
-              dot={{ r: 3, fill: "#dc2626", stroke: "#dc2626" }}
+              dot={{ r: 3, fill: SLATE, stroke: SLATE }}
               activeDot={{ r: 5 }}
             />
           )}

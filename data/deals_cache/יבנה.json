@@ -1,15 +1,15 @@
 {
   "cityName": "יבנה",
-  "lastUpdated": "2026-06-24T06:55:40.150Z",
+  "lastUpdated": "2026-07-21T09:11:35.051Z",
   "neighborhoods": [
     {
       "neighborhood": "רובע ג",
-      "totalDeals": 1342,
-      "dealsPerYearAvg": 192,
+      "totalDeals": 1190,
+      "dealsPerYearAvg": 170,
       "streets": [
         {
           "streetName": "הפלמ\"ח",
-          "totalDeals": 200,
+          "totalDeals": 196,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -78,10 +78,10 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 14,
+                    "count": 13,
                     "threshold": 10,
-                    "avgPricePerSqm": 17695,
-                    "avgTotalPrice": 1400859,
+                    "avgPricePerSqm": 17916,
+                    "avgTotalPrice": 1414002,
                     "avgArea": 78
                   }
                 },
@@ -90,11 +90,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 8,
+                    "count": 9,
                     "threshold": 5,
-                    "avgPricePerSqm": 13919,
-                    "avgTotalPrice": 1055714,
-                    "avgArea": 78
+                    "avgPricePerSqm": 13933,
+                    "avgTotalPrice": 1071250,
+                    "avgArea": 79
                   }
                 }
               ]
@@ -146,9 +146,53 @@
           ]
         },
         {
-          "streetName": "(ללא רחוב)",
-          "totalDeals": 176,
+          "streetName": "עוזיהו",
+          "totalDeals": 125,
           "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 23593,
+                    "avgTotalPrice": 1517500,
+                    "avgArea": 65
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 22115,
+                    "avgTotalPrice": 1295000,
+                    "avgArea": 58
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 17469,
+                    "avgTotalPrice": 1092171,
+                    "avgArea": 63
+                  }
+                }
+              ]
+            },
             {
               "label": "~80 מ\"ר",
               "targetArea": 80,
@@ -158,18 +202,25 @@
                 {
                   "period": "current",
                   "year": 2025,
-                  "sample": null
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 12,
+                    "threshold": 10,
+                    "avgPricePerSqm": 20357,
+                    "avgTotalPrice": 1532731,
+                    "avgArea": 76
+                  }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 5,
+                    "count": 8,
                     "threshold": 5,
-                    "avgPricePerSqm": 20512,
-                    "avgTotalPrice": 1640000,
-                    "avgArea": 80
+                    "avgPricePerSqm": 18552,
+                    "avgTotalPrice": 1454375,
+                    "avgArea": 79
                   }
                 },
                 {
@@ -177,10 +228,10 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 19132,
-                    "avgTotalPrice": 1485000,
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 16004,
+                    "avgTotalPrice": 1208500,
                     "avgArea": 78
                   }
                 }
@@ -199,9 +250,9 @@
                     "type": "aggregated",
                     "count": 5,
                     "threshold": 5,
-                    "avgPricePerSqm": 20743,
-                    "avgTotalPrice": 2178000,
-                    "avgArea": 105
+                    "avgPricePerSqm": 18189,
+                    "avgTotalPrice": 1856000,
+                    "avgArea": 102
                   }
                 },
                 {
@@ -209,17 +260,24 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 28,
-                    "threshold": 15,
-                    "avgPricePerSqm": 18585,
-                    "avgTotalPrice": 1963571,
-                    "avgArea": 106
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11495,
+                    "avgTotalPrice": 1053027,
+                    "avgArea": 93
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
-                  "sample": null
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 13745,
+                    "avgTotalPrice": 1360833,
+                    "avgArea": 100
+                  }
                 }
               ]
             }
@@ -228,7 +286,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1342,
+  "totalDealsAnalyzed": 1190,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

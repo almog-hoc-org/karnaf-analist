@@ -1,15 +1,15 @@
 {
   "cityName": "מכבים רעות",
-  "lastUpdated": "2026-06-22T08:08:11.781Z",
+  "lastUpdated": "2026-07-21T09:15:44.445Z",
   "neighborhoods": [
     {
       "neighborhood": "הכרמים",
-      "totalDeals": 1153,
-      "dealsPerYearAvg": 165,
+      "totalDeals": 1169,
+      "dealsPerYearAvg": 167,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 308,
+          "totalDeals": 316,
           "sizeBuckets": [
             {
               "label": "~90 מ\"ר",
@@ -22,10 +22,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 133,
+                    "count": 135,
                     "threshold": 15,
-                    "avgPricePerSqm": 21554,
-                    "avgTotalPrice": 1893709,
+                    "avgPricePerSqm": 21555,
+                    "avgTotalPrice": 1893995,
                     "avgArea": 87
                   }
                 },
@@ -52,10 +52,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 45,
+                    "count": 47,
                     "threshold": 15,
-                    "avgPricePerSqm": 23744,
-                    "avgTotalPrice": 2718028,
+                    "avgPricePerSqm": 23783,
+                    "avgTotalPrice": 2714145,
                     "avgArea": 113
                   }
                 },
@@ -82,10 +82,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 13,
+                    "count": 14,
                     "threshold": 10,
-                    "avgPricePerSqm": 35271,
-                    "avgTotalPrice": 5465769,
+                    "avgPricePerSqm": 35367,
+                    "avgTotalPrice": 5431071,
                     "avgArea": 155
                   }
                 },
@@ -105,7 +105,7 @@
         },
         {
           "streetName": "כסלו",
-          "totalDeals": 118,
+          "totalDeals": 121,
           "sizeBuckets": [
             {
               "label": "~90 מ\"ר",
@@ -121,10 +121,10 @@
                     "pricePerSqm": 25495,
                     "totalPrice": 2320000,
                     "area": 91,
-                    "houseNum": "76.0",
+                    "houseNum": 76,
                     "streetName": "כסלו",
                     "blocksAway": 5,
-                    "dealDate": "2026-02-08T00:00:00Z"
+                    "dealDate": "2026-02-08T00:00:00.000Z"
                   }
                 },
                 {
@@ -164,11 +164,11 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 27070,
-                    "avgTotalPrice": 3400000,
-                    "avgArea": 125
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 25323,
+                    "avgTotalPrice": 3041667,
+                    "avgArea": 119
                   }
                 },
                 {
@@ -179,10 +179,10 @@
                     "pricePerSqm": 21880,
                     "totalPrice": 2735000,
                     "area": 125,
-                    "houseNum": "36.0",
+                    "houseNum": 36,
                     "streetName": "כסלו",
                     "blocksAway": 35,
-                    "dealDate": "2023-02-07T00:00:00Z"
+                    "dealDate": "2023-02-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -213,10 +213,10 @@
                     "pricePerSqm": 23650,
                     "totalPrice": 3855000,
                     "area": 163,
-                    "houseNum": "71.0",
+                    "houseNum": 71,
                     "streetName": "כסלו",
                     "blocksAway": 0,
-                    "dealDate": "2025-02-14T00:00:00Z"
+                    "dealDate": "2025-02-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -251,7 +251,7 @@
     },
     {
       "neighborhood": "הנביאים",
-      "totalDeals": 504,
+      "totalDeals": 506,
       "dealsPerYearAvg": 72,
       "streets": [
         {
@@ -272,10 +272,10 @@
                     "pricePerSqm": 21078,
                     "totalPrice": 2150000,
                     "area": 102,
-                    "houseNum": "89.0",
+                    "houseNum": 89,
                     "streetName": "עמק האלה",
                     "blocksAway": 40,
-                    "dealDate": "2026-03-11T00:00:00Z"
+                    "dealDate": "2026-03-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -283,11 +283,11 @@
                   "year": 2023,
                   "sample": {
                     "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 28867,
-                    "avgTotalPrice": 2488000,
-                    "avgArea": 86
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 28554,
+                    "avgTotalPrice": 2477500,
+                    "avgArea": 87
                   }
                 },
                 {
@@ -357,7 +357,16 @@
                 {
                   "period": "current",
                   "year": 2026,
-                  "sample": null
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 20000,
+                    "totalPrice": 2960000,
+                    "area": 148,
+                    "houseNum": 23,
+                    "streetName": "עמק האלה",
+                    "blocksAway": 26,
+                    "dealDate": "2026-01-15T00:00:00.000Z"
+                  }
                 },
                 {
                   "period": "minus3",
@@ -367,10 +376,10 @@
                     "pricePerSqm": 21182,
                     "totalPrice": 3135000,
                     "area": 148,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "עמק האלה",
                     "blocksAway": 36,
-                    "dealDate": "2023-07-19T00:00:00Z"
+                    "dealDate": "2023-07-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -391,7 +400,7 @@
         },
         {
           "streetName": "אלישע הנביא",
-          "totalDeals": 55,
+          "totalDeals": 56,
           "sizeBuckets": [
             {
               "label": "~90 מ\"ר",
@@ -419,10 +428,10 @@
                     "pricePerSqm": 30227,
                     "totalPrice": 2660000,
                     "area": 88,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "אלישע הנביא",
                     "blocksAway": 0,
-                    "dealDate": "2023-01-02T00:00:00Z"
+                    "dealDate": "2023-01-02T00:00:00.000Z"
                   }
                 },
                 {
@@ -433,10 +442,10 @@
                     "pricePerSqm": 24444,
                     "totalPrice": 2200000,
                     "area": 90,
-                    "houseNum": "5.0",
+                    "houseNum": 5,
                     "streetName": "אלישע הנביא",
                     "blocksAway": 19,
-                    "dealDate": "2021-11-03T00:00:00Z"
+                    "dealDate": "2021-11-03T00:00:00.000Z"
                   }
                 }
               ]
@@ -452,11 +461,11 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 25155,
-                    "avgTotalPrice": 3180000,
-                    "avgArea": 126
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 25017,
+                    "avgTotalPrice": 3092000,
+                    "avgArea": 123
                   }
                 },
                 {
@@ -467,10 +476,10 @@
                     "pricePerSqm": 23101,
                     "totalPrice": 2980000,
                     "area": 129,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "אלישע הנביא",
                     "blocksAway": 7,
-                    "dealDate": "2024-07-04T00:00:00Z"
+                    "dealDate": "2024-07-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -513,10 +522,10 @@
                     "pricePerSqm": 22647,
                     "totalPrice": 3850000,
                     "area": 170,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "אלישע הנביא",
                     "blocksAway": 0,
-                    "dealDate": "2024-10-10T00:00:00Z"
+                    "dealDate": "2024-10-10T00:00:00.000Z"
                   }
                 },
                 {
@@ -527,10 +536,10 @@
                     "pricePerSqm": 17190,
                     "totalPrice": 2630000,
                     "area": 153,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "אלישע הנביא",
                     "blocksAway": 16,
-                    "dealDate": "2021-05-25T00:00:00Z"
+                    "dealDate": "2021-05-25T00:00:00.000Z"
                   }
                 }
               ]
@@ -541,8 +550,8 @@
     },
     {
       "neighborhood": "המגינים",
-      "totalDeals": 478,
-      "dealsPerYearAvg": 68,
+      "totalDeals": 480,
+      "dealsPerYearAvg": 69,
       "streets": [
         {
           "streetName": "רא\"ל יגאל ידין",
@@ -574,10 +583,10 @@
                     "pricePerSqm": 27273,
                     "totalPrice": 2700000,
                     "area": 99,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "רא\"ל יגאל ידין",
                     "blocksAway": 0,
-                    "dealDate": "2024-11-25T00:00:00Z"
+                    "dealDate": "2024-11-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -613,10 +622,10 @@
                     "pricePerSqm": 27692,
                     "totalPrice": 3600000,
                     "area": 130,
-                    "houseNum": "5.0",
+                    "houseNum": 5,
                     "streetName": "רא\"ל יגאל ידין",
                     "blocksAway": 8,
-                    "dealDate": "2023-07-17T00:00:00Z"
+                    "dealDate": "2023-07-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -697,10 +706,10 @@
                     "pricePerSqm": 27917,
                     "totalPrice": 2680000,
                     "area": 96,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "חטיבת הראל",
                     "blocksAway": 4,
-                    "dealDate": "2026-02-24T00:00:00Z"
+                    "dealDate": "2026-02-24T00:00:00.000Z"
                   }
                 },
                 {
@@ -711,10 +720,10 @@
                     "pricePerSqm": 22621,
                     "totalPrice": 2330000,
                     "area": 103,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "חטיבת הראל",
                     "blocksAway": 10,
-                    "dealDate": "2023-07-05T00:00:00Z"
+                    "dealDate": "2023-07-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -745,10 +754,10 @@
                     "pricePerSqm": 23036,
                     "totalPrice": 2580000,
                     "area": 112,
-                    "houseNum": "10.0",
+                    "houseNum": 10,
                     "streetName": "חטיבת הראל",
                     "blocksAway": 8,
-                    "dealDate": "2026-02-04T00:00:00Z"
+                    "dealDate": "2026-02-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -819,7 +828,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 3472,
+  "totalDealsAnalyzed": 3500,
   "periodYears": {
     "current": 2026,
     "minus3": 2023,

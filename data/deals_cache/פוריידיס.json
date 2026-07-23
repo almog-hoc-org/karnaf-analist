@@ -1,16 +1,46 @@
 {
   "cityName": "פוריידיס",
-  "lastUpdated": "2026-06-24T06:59:56.873Z",
+  "lastUpdated": "2026-07-21T09:19:30.608Z",
   "neighborhoods": [
     {
       "neighborhood": "יעקב",
-      "totalDeals": 171,
-      "dealsPerYearAvg": 24,
+      "totalDeals": 182,
+      "dealsPerYearAvg": 26,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 23,
+          "totalDeals": 33,
           "sizeBuckets": [
+            {
+              "label": "~110 מ\"ר",
+              "targetArea": 110,
+              "minArea": 94,
+              "maxArea": 126,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 25000,
+                    "avgTotalPrice": 2500000,
+                    "avgArea": 100
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            },
             {
               "label": "~150 מ\"ר",
               "targetArea": 150,
@@ -108,10 +138,10 @@
                     "pricePerSqm": 9167,
                     "totalPrice": 1100000,
                     "area": 120,
-                    "houseNum": "67.0",
+                    "houseNum": 67,
                     "streetName": "הכובשים",
                     "blocksAway": 10,
-                    "dealDate": "2020-07-05T00:00:00Z"
+                    "dealDate": "2020-07-05T00:00:00.000Z"
                   }
                 }
               ]
@@ -142,10 +172,10 @@
                     "pricePerSqm": 8125,
                     "totalPrice": 1300000,
                     "area": 160,
-                    "houseNum": "65.0",
+                    "houseNum": 65,
                     "streetName": "הכובשים",
                     "blocksAway": 8,
-                    "dealDate": "2022-01-05T00:00:00Z"
+                    "dealDate": "2022-01-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -156,10 +186,10 @@
                     "pricePerSqm": 13704,
                     "totalPrice": 1850000,
                     "area": 135,
-                    "houseNum": "57.0",
+                    "houseNum": 57,
                     "streetName": "הכובשים",
                     "blocksAway": 0,
-                    "dealDate": "2021-02-26T00:00:00Z"
+                    "dealDate": "2021-02-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -190,10 +220,10 @@
                     "pricePerSqm": 16351,
                     "totalPrice": 3450000,
                     "area": 211,
-                    "houseNum": "49.0",
+                    "houseNum": 49,
                     "streetName": "הכובשים",
                     "blocksAway": 8,
-                    "dealDate": "2021-01-28T00:00:00Z"
+                    "dealDate": "2021-01-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -204,10 +234,10 @@
                     "pricePerSqm": 16351,
                     "totalPrice": 3450000,
                     "area": 211,
-                    "houseNum": "49.0",
+                    "houseNum": 49,
                     "streetName": "הכובשים",
                     "blocksAway": 8,
-                    "dealDate": "2021-01-28T00:00:00Z"
+                    "dealDate": "2021-01-28T00:00:00.000Z"
                   }
                 }
               ]
@@ -218,7 +248,7 @@
     },
     {
       "neighborhood": "חלומות זיכרון",
-      "totalDeals": 147,
+      "totalDeals": 148,
       "dealsPerYearAvg": 21,
       "streets": [
         {
@@ -283,10 +313,10 @@
                     "pricePerSqm": 18566,
                     "totalPrice": 2525000,
                     "area": 136,
-                    "houseNum": "19.0",
+                    "houseNum": 19,
                     "streetName": "חוחית",
                     "blocksAway": 10,
-                    "dealDate": "2025-07-22T00:00:00Z"
+                    "dealDate": "2025-07-22T00:00:00.000Z"
                   }
                 },
                 {
@@ -309,10 +339,10 @@
                     "pricePerSqm": 13769,
                     "totalPrice": 1790000,
                     "area": 130,
-                    "houseNum": "9.0",
+                    "houseNum": 9,
                     "streetName": "חוחית",
                     "blocksAway": 0,
-                    "dealDate": "2020-11-01T00:00:00Z"
+                    "dealDate": "2020-11-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -374,10 +404,10 @@
                     "pricePerSqm": 23025,
                     "totalPrice": 2740000,
                     "area": 119,
-                    "houseNum": "9.0",
+                    "houseNum": 9,
                     "streetName": "דרור",
                     "blocksAway": 4,
-                    "dealDate": "2025-11-23T00:00:00Z"
+                    "dealDate": "2025-11-23T00:00:00.000Z"
                   }
                 },
                 {
@@ -388,10 +418,10 @@
                     "pricePerSqm": 18000,
                     "totalPrice": 1890000,
                     "area": 105,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "דרור",
                     "blocksAway": 2,
-                    "dealDate": "2022-01-16T00:00:00Z"
+                    "dealDate": "2022-01-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -422,10 +452,10 @@
                     "pricePerSqm": 23973,
                     "totalPrice": 3500000,
                     "area": 146,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "דרור",
                     "blocksAway": 10,
-                    "dealDate": "2025-03-05T00:00:00Z"
+                    "dealDate": "2025-03-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -436,10 +466,10 @@
                     "pricePerSqm": 16797,
                     "totalPrice": 2570000,
                     "area": 153,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "דרור",
                     "blocksAway": 0,
-                    "dealDate": "2022-03-16T00:00:00Z"
+                    "dealDate": "2022-03-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -470,10 +500,10 @@
                     "pricePerSqm": 15698,
                     "totalPrice": 2700000,
                     "area": 172,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "דרור",
                     "blocksAway": 9,
-                    "dealDate": "2024-10-22T00:00:00Z"
+                    "dealDate": "2024-10-22T00:00:00.000Z"
                   }
                 },
                 {
@@ -484,10 +514,10 @@
                     "pricePerSqm": 10272,
                     "totalPrice": 1890000,
                     "area": 184,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "דרור",
                     "blocksAway": 10,
-                    "dealDate": "2021-07-25T00:00:00Z"
+                    "dealDate": "2021-07-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -498,10 +528,10 @@
                     "pricePerSqm": 11828,
                     "totalPrice": 2200000,
                     "area": 186,
-                    "houseNum": "9.0",
+                    "houseNum": 9,
                     "streetName": "דרור",
                     "blocksAway": 4,
-                    "dealDate": "2020-11-17T00:00:00Z"
+                    "dealDate": "2020-11-17T00:00:00.000Z"
                   }
                 }
               ]
@@ -511,7 +541,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 438,
+  "totalDealsAnalyzed": 451,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

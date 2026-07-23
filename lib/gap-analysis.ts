@@ -41,7 +41,7 @@ export interface GapAnalysis {
   windowStart: number;
   windowEnd: number;                  // inclusive
   personsPerHousehold: number;
-  personsPerHouseholdSource: "yad2" | "census2022" | "legacy_ppa" | "national_default";
+  personsPerHouseholdSource: "yad2" | "census2022" | "national_default";
   rows: GapWindowYear[];
   totals: {
     popGrowth: number | null;
@@ -73,12 +73,12 @@ export interface GapOptions {
 
 function pickPersonsPerHousehold(
   yad2HhSize: number | null | undefined,
-  censusHhSize: number | null | undefined,
-  legacyPpa: number | null | undefined
+  censusHhSize: number | null | undefined
 ): { value: number; source: GapAnalysis["personsPerHouseholdSource"] } {
+  // Research-Excel fallback (legacy_ppa / city.people_per_apartment) removed per
+  // user directive — only journalistic (yad2) + CBS census + national default.
   if (yad2HhSize && yad2HhSize > 0) return { value: yad2HhSize, source: "yad2" };
   if (censusHhSize && censusHhSize > 0) return { value: censusHhSize, source: "census2022" };
-  if (legacyPpa && legacyPpa > 0) return { value: legacyPpa, source: "legacy_ppa" };
   return { value: NATIONAL_DEFAULT_PERSONS_PER_HH, source: "national_default" };
 }
 
@@ -156,7 +156,7 @@ export async function computeCityGap(
 
   if (!city) return null;
 
-  const ppa = pickPersonsPerHousehold(yad2?.avg_household_size, city.avgHouseholdSize2022, city.people_per_apartment);
+  const ppa = pickPersonsPerHousehold(yad2?.avg_household_size, city.avgHouseholdSize2022);
 
   // Build lookup maps for each supply source
   const permitsBy = new Map<number, number>();

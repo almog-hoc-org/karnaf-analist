@@ -1,15 +1,15 @@
 {
   "cityName": "כרמיאל",
-  "lastUpdated": "2026-06-24T06:56:52.230Z",
+  "lastUpdated": "2026-07-21T09:13:53.301Z",
   "neighborhoods": [
     {
       "neighborhood": "רמת רבין",
-      "totalDeals": 850,
-      "dealsPerYearAvg": 121,
+      "totalDeals": 857,
+      "dealsPerYearAvg": 122,
       "streets": [
         {
           "streetName": "חטיבת גבעתי",
-          "totalDeals": 182,
+          "totalDeals": 183,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -110,10 +110,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 47,
+                    "count": 48,
                     "threshold": 15,
-                    "avgPricePerSqm": 11294,
-                    "avgTotalPrice": 1446850,
+                    "avgPricePerSqm": 11312,
+                    "avgTotalPrice": 1453416,
                     "avgArea": 126
                   }
                 },
@@ -137,10 +137,10 @@
                     "pricePerSqm": 10775,
                     "totalPrice": 1390000,
                     "area": 129,
-                    "houseNum": "43.0",
+                    "houseNum": 43,
                     "streetName": "חטיבת גבעתי",
                     "blocksAway": 19,
-                    "dealDate": "2021-01-28T00:00:00Z"
+                    "dealDate": "2021-01-28T00:00:00.000Z"
                   }
                 }
               ]
@@ -149,7 +149,7 @@
         },
         {
           "streetName": "חטיבת יפתח",
-          "totalDeals": 105,
+          "totalDeals": 106,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -161,14 +161,12 @@
                   "period": "current",
                   "year": 2026,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 14382,
-                    "totalPrice": 1280000,
-                    "area": 89,
-                    "houseNum": "57.0",
-                    "streetName": "חטיבת יפתח",
-                    "blocksAway": 88,
-                    "dealDate": "2026-03-25T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 15524,
+                    "avgTotalPrice": 1390000,
+                    "avgArea": 90
                   }
                 },
                 {
@@ -179,10 +177,10 @@
                     "pricePerSqm": 18750,
                     "totalPrice": 1500000,
                     "area": 80,
-                    "houseNum": "55.0",
+                    "houseNum": 55,
                     "streetName": "חטיבת יפתח",
                     "blocksAway": 90,
-                    "dealDate": "2023-08-09T00:00:00Z"
+                    "dealDate": "2023-08-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -213,10 +211,10 @@
                     "pricePerSqm": 15714,
                     "totalPrice": 1870000,
                     "area": 119,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "חטיבת יפתח",
                     "blocksAway": 114,
-                    "dealDate": "2026-04-17T00:00:00Z"
+                    "dealDate": "2026-04-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -259,10 +257,10 @@
                     "pricePerSqm": 15714,
                     "totalPrice": 1870000,
                     "area": 119,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "חטיבת יפתח",
                     "blocksAway": 114,
-                    "dealDate": "2026-04-17T00:00:00Z"
+                    "dealDate": "2026-04-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -406,10 +404,10 @@
                     "pricePerSqm": 12903,
                     "totalPrice": 1600000,
                     "area": 124,
-                    "houseNum": "80.0",
+                    "houseNum": 80,
                     "streetName": "אשכולות",
                     "blocksAway": 114,
-                    "dealDate": "2025-05-11T00:00:00Z"
+                    "dealDate": "2025-05-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -458,10 +456,10 @@
                     "pricePerSqm": 18500,
                     "totalPrice": 1480000,
                     "area": 80,
-                    "houseNum": "65.0",
+                    "houseNum": 65,
                     "streetName": "שדמה",
                     "blocksAway": 0,
-                    "dealDate": "2025-06-05T00:00:00Z"
+                    "dealDate": "2025-06-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -484,10 +482,10 @@
                     "pricePerSqm": 13205,
                     "totalPrice": 1030000,
                     "area": 78,
-                    "houseNum": "65.0",
+                    "houseNum": 65,
                     "streetName": "שדמה",
                     "blocksAway": 0,
-                    "dealDate": "2022-03-28T00:00:00Z"
+                    "dealDate": "2022-03-28T00:00:00.000Z"
                   }
                 }
               ]
@@ -518,10 +516,10 @@
                     "pricePerSqm": 13227,
                     "totalPrice": 1455000,
                     "area": 110,
-                    "houseNum": "82.0",
+                    "houseNum": 82,
                     "streetName": "שדמה",
                     "blocksAway": 17,
-                    "dealDate": "2023-05-08T00:00:00Z"
+                    "dealDate": "2023-05-08T00:00:00.000Z"
                   }
                 },
                 {
@@ -552,10 +550,10 @@
                     "pricePerSqm": 12562,
                     "totalPrice": 1520000,
                     "area": 121,
-                    "houseNum": "74.0",
+                    "houseNum": 74,
                     "streetName": "שדמה",
                     "blocksAway": 9,
-                    "dealDate": "2026-02-05T00:00:00Z"
+                    "dealDate": "2026-02-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -611,10 +609,10 @@
                     "pricePerSqm": 20411,
                     "totalPrice": 1490000,
                     "area": 73,
-                    "houseNum": "143.0",
+                    "houseNum": 143,
                     "streetName": "חטיבת עציוני",
                     "blocksAway": 141,
-                    "dealDate": "2026-01-15T00:00:00Z"
+                    "dealDate": "2026-01-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -625,10 +623,10 @@
                     "pricePerSqm": 17273,
                     "totalPrice": 1330000,
                     "area": 77,
-                    "houseNum": "123.0",
+                    "houseNum": 123,
                     "streetName": "חטיבת עציוני",
                     "blocksAway": 121,
-                    "dealDate": "2022-06-14T00:00:00Z"
+                    "dealDate": "2022-06-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -758,10 +756,10 @@
                     "pricePerSqm": 16967,
                     "totalPrice": 2070000,
                     "area": 122,
-                    "houseNum": "189.0",
+                    "houseNum": 189,
                     "streetName": "השלום",
                     "blocksAway": 0,
-                    "dealDate": "2024-04-04T00:00:00Z"
+                    "dealDate": "2024-04-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -792,10 +790,10 @@
                     "pricePerSqm": 12185,
                     "totalPrice": 1840000,
                     "area": 151,
-                    "houseNum": "169.0",
+                    "houseNum": 169,
                     "streetName": "השלום",
                     "blocksAway": 20,
-                    "dealDate": "2026-05-14T00:00:00Z"
+                    "dealDate": "2026-05-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -806,10 +804,10 @@
                     "pricePerSqm": 16967,
                     "totalPrice": 2070000,
                     "area": 122,
-                    "houseNum": "189.0",
+                    "houseNum": 189,
                     "streetName": "השלום",
                     "blocksAway": 0,
-                    "dealDate": "2024-04-04T00:00:00Z"
+                    "dealDate": "2024-04-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -831,7 +829,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1315,
+  "totalDealsAnalyzed": 1322,
   "periodYears": {
     "current": 2026,
     "minus3": 2023,

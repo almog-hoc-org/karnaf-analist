@@ -1,11 +1,11 @@
 {
   "cityName": "עילוט",
-  "lastUpdated": "2026-06-24T06:59:28.134Z",
+  "lastUpdated": "2026-07-21T09:18:30.474Z",
   "neighborhoods": [
     {
       "neighborhood": "צפונית",
-      "totalDeals": 1131,
-      "dealsPerYearAvg": 162,
+      "totalDeals": 1138,
+      "dealsPerYearAvg": 163,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
@@ -114,10 +114,10 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 15,
+                    "count": 16,
                     "threshold": 15,
-                    "avgPricePerSqm": 9217,
-                    "avgTotalPrice": 540913,
+                    "avgPricePerSqm": 9235,
+                    "avgTotalPrice": 543356,
                     "avgArea": 59
                   }
                 },
@@ -149,10 +149,10 @@
                     "pricePerSqm": 10811,
                     "totalPrice": 800000,
                     "area": 74,
-                    "houseNum": "7.0",
+                    "houseNum": 7,
                     "streetName": "מנחם אריאב",
                     "blocksAway": 0,
-                    "dealDate": "2025-12-08T00:00:00Z"
+                    "dealDate": "2025-12-08T00:00:00.000Z"
                   }
                 },
                 {
@@ -195,10 +195,10 @@
                     "pricePerSqm": 10833,
                     "totalPrice": 975000,
                     "area": 90,
-                    "houseNum": "45.0",
+                    "houseNum": 45,
                     "streetName": "מנחם אריאב",
                     "blocksAway": 38,
-                    "dealDate": "2024-08-19T00:00:00Z"
+                    "dealDate": "2024-08-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -233,12 +233,12 @@
     },
     {
       "neighborhood": "פנחס ספיר",
-      "totalDeals": 347,
+      "totalDeals": 349,
       "dealsPerYearAvg": 50,
       "streets": [
         {
           "streetName": "תשי\"ג",
-          "totalDeals": 97,
+          "totalDeals": 98,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -342,10 +342,10 @@
                     "pricePerSqm": 8913,
                     "totalPrice": 820000,
                     "area": 92,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "תשי\"ג",
                     "blocksAway": 2,
-                    "dealDate": "2024-03-07T00:00:00Z"
+                    "dealDate": "2024-03-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -368,10 +368,10 @@
                     "pricePerSqm": 6630,
                     "totalPrice": 610000,
                     "area": 92,
-                    "houseNum": "10.0",
+                    "houseNum": 10,
                     "streetName": "תשי\"ג",
                     "blocksAway": 1,
-                    "dealDate": "2021-01-18T00:00:00Z"
+                    "dealDate": "2021-01-18T00:00:00.000Z"
                   }
                 }
               ]
@@ -380,7 +380,7 @@
         },
         {
           "streetName": "שומרון",
-          "totalDeals": 92,
+          "totalDeals": 93,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -484,10 +484,10 @@
                     "pricePerSqm": 9170,
                     "totalPrice": 807000,
                     "area": 88,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "שומרון",
                     "blocksAway": 11,
-                    "dealDate": "2025-01-19T00:00:00Z"
+                    "dealDate": "2025-01-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -498,10 +498,10 @@
                     "pricePerSqm": 7443,
                     "totalPrice": 655000,
                     "area": 88,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "שומרון",
                     "blocksAway": 11,
-                    "dealDate": "2021-07-21T00:00:00Z"
+                    "dealDate": "2021-07-21T00:00:00.000Z"
                   }
                 },
                 {
@@ -512,10 +512,10 @@
                     "pricePerSqm": 5909,
                     "totalPrice": 520000,
                     "area": 88,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "שומרון",
                     "blocksAway": 11,
-                    "dealDate": "2020-08-13T00:00:00Z"
+                    "dealDate": "2020-08-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -526,8 +526,8 @@
     },
     {
       "neighborhood": "שלום עליכם",
-      "totalDeals": 206,
-      "dealsPerYearAvg": 29,
+      "totalDeals": 208,
+      "dealsPerYearAvg": 30,
       "streets": [
         {
           "streetName": "קדש",
@@ -615,10 +615,10 @@
                     "pricePerSqm": 9884,
                     "totalPrice": 850000,
                     "area": 86,
-                    "houseNum": "26.0",
+                    "houseNum": 26,
                     "streetName": "קדש",
                     "blocksAway": 4,
-                    "dealDate": "2020-07-16T00:00:00Z"
+                    "dealDate": "2020-07-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -637,10 +637,10 @@
                     "pricePerSqm": 15000,
                     "totalPrice": 1650000,
                     "area": 110,
-                    "houseNum": "28.0",
+                    "houseNum": 28,
                     "streetName": "קדש",
                     "blocksAway": 2,
-                    "dealDate": "2025-03-26T00:00:00Z"
+                    "dealDate": "2025-03-26T00:00:00.000Z"
                   }
                 },
                 {
@@ -651,10 +651,10 @@
                     "pricePerSqm": 10706,
                     "totalPrice": 910000,
                     "area": 85,
-                    "houseNum": "49.0",
+                    "houseNum": 49,
                     "streetName": "קדש",
                     "blocksAway": 19,
-                    "dealDate": "2022-09-28T00:00:00Z"
+                    "dealDate": "2022-09-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -665,10 +665,10 @@
                     "pricePerSqm": 9884,
                     "totalPrice": 850000,
                     "area": 86,
-                    "houseNum": "26.0",
+                    "houseNum": 26,
                     "streetName": "קדש",
                     "blocksAway": 4,
-                    "dealDate": "2020-07-16T00:00:00Z"
+                    "dealDate": "2020-07-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -677,7 +677,7 @@
         },
         {
           "streetName": "העצמאות",
-          "totalDeals": 54,
+          "totalDeals": 56,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -717,10 +717,10 @@
                     "pricePerSqm": 7589,
                     "totalPrice": 425000,
                     "area": 56,
-                    "houseNum": "50.0",
+                    "houseNum": 50,
                     "streetName": "העצמאות",
                     "blocksAway": 0,
-                    "dealDate": "2021-07-08T00:00:00Z"
+                    "dealDate": "2021-07-08T00:00:00.000Z"
                   }
                 }
               ]
@@ -739,10 +739,10 @@
                     "pricePerSqm": 13043,
                     "totalPrice": 900000,
                     "area": 69,
-                    "houseNum": "48.0",
+                    "houseNum": 48,
                     "streetName": "העצמאות",
                     "blocksAway": 2,
-                    "dealDate": "2025-07-13T00:00:00Z"
+                    "dealDate": "2025-07-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -753,10 +753,10 @@
                     "pricePerSqm": 8696,
                     "totalPrice": 600000,
                     "area": 69,
-                    "houseNum": "7.0",
+                    "houseNum": 7,
                     "streetName": "העצמאות",
                     "blocksAway": 43,
-                    "dealDate": "2022-04-07T00:00:00Z"
+                    "dealDate": "2022-04-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -767,11 +767,43 @@
                     "pricePerSqm": 6301,
                     "totalPrice": 460000,
                     "area": 73,
-                    "houseNum": "7.0",
+                    "houseNum": 7,
                     "streetName": "העצמאות",
                     "blocksAway": 43,
-                    "dealDate": "2020-01-09T00:00:00Z"
+                    "dealDate": "2020-01-09T00:00:00.000Z"
                   }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16071,
+                    "totalPrice": 1800000,
+                    "area": 112,
+                    "houseNum": 2,
+                    "streetName": "העצמאות",
+                    "blocksAway": 48,
+                    "dealDate": "2026-05-27T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
                 }
               ]
             }
@@ -780,7 +812,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1684,
+  "totalDealsAnalyzed": 1695,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

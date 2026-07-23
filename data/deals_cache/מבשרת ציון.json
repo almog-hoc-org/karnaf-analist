@@ -1,15 +1,15 @@
 {
   "cityName": "מבשרת ציון",
-  "lastUpdated": "2026-06-24T06:57:10.345Z",
+  "lastUpdated": "2026-07-21T09:14:26.600Z",
   "neighborhoods": [
     {
       "neighborhood": "רמות",
-      "totalDeals": 2735,
-      "dealsPerYearAvg": 391,
+      "totalDeals": 2780,
+      "dealsPerYearAvg": 397,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 1169,
+          "totalDeals": 1214,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -71,10 +71,10 @@
                   "year": 2021,
                   "sample": {
                     "type": "aggregated",
-                    "count": 39,
+                    "count": 44,
                     "threshold": 15,
-                    "avgPricePerSqm": 25541,
-                    "avgTotalPrice": 2005190,
+                    "avgPricePerSqm": 25480,
+                    "avgTotalPrice": 1995623,
                     "avgArea": 78
                   }
                 },
@@ -108,11 +108,11 @@
                   "year": 2021,
                   "sample": {
                     "type": "aggregated",
-                    "count": 74,
+                    "count": 82,
                     "threshold": 15,
-                    "avgPricePerSqm": 24134,
-                    "avgTotalPrice": 2534163,
-                    "avgArea": 106
+                    "avgPricePerSqm": 24195,
+                    "avgTotalPrice": 2526824,
+                    "avgArea": 105
                   }
                 },
                 {
@@ -126,7 +126,7 @@
         },
         {
           "streetName": "סולם יעקב",
-          "totalDeals": 122,
+          "totalDeals": 121,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -166,10 +166,10 @@
                     "pricePerSqm": 25593,
                     "totalPrice": 1510000,
                     "area": 59,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "סולם יעקב",
                     "blocksAway": 0,
-                    "dealDate": "2020-06-29T00:00:00Z"
+                    "dealDate": "2020-06-29T00:00:00.000Z"
                   }
                 }
               ]
@@ -212,10 +212,10 @@
                     "pricePerSqm": 23857,
                     "totalPrice": 1670000,
                     "area": 70,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "סולם יעקב",
                     "blocksAway": 0,
-                    "dealDate": "2020-01-30T00:00:00Z"
+                    "dealDate": "2020-01-30T00:00:00.000Z"
                   }
                 }
               ]
@@ -246,10 +246,10 @@
                     "pricePerSqm": 20141,
                     "totalPrice": 1712000,
                     "area": 85,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "סולם יעקב",
                     "blocksAway": 14,
-                    "dealDate": "2021-07-09T00:00:00Z"
+                    "dealDate": "2021-07-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -260,10 +260,10 @@
                     "pricePerSqm": 23667,
                     "totalPrice": 2130000,
                     "area": 90,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "סולם יעקב",
                     "blocksAway": 20,
-                    "dealDate": "2020-10-01T00:00:00Z"
+                    "dealDate": "2020-10-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -274,12 +274,12 @@
     },
     {
       "neighborhood": "גבעת שאול",
-      "totalDeals": 495,
-      "dealsPerYearAvg": 71,
+      "totalDeals": 506,
+      "dealsPerYearAvg": 72,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 118,
+          "totalDeals": 119,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -464,8 +464,8 @@
     },
     {
       "neighborhood": "הר נוף",
-      "totalDeals": 399,
-      "dealsPerYearAvg": 57,
+      "totalDeals": 403,
+      "dealsPerYearAvg": 58,
       "streets": [
         {
           "streetName": "הרב שאולזון",
@@ -485,10 +485,10 @@
                     "pricePerSqm": 40938,
                     "totalPrice": 2620000,
                     "area": 64,
-                    "houseNum": "34.0",
+                    "houseNum": 34,
                     "streetName": "הרב שאולזון",
                     "blocksAway": 0,
-                    "dealDate": "2024-07-15T00:00:00Z"
+                    "dealDate": "2024-07-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -511,10 +511,10 @@
                     "pricePerSqm": 30291,
                     "totalPrice": 1666000,
                     "area": 55,
-                    "houseNum": "56.0",
+                    "houseNum": 56,
                     "streetName": "הרב שאולזון",
                     "blocksAway": 22,
-                    "dealDate": "2020-12-03T00:00:00Z"
+                    "dealDate": "2020-12-03T00:00:00.000Z"
                   }
                 }
               ]
@@ -533,10 +533,10 @@
                     "pricePerSqm": 36620,
                     "totalPrice": 2600000,
                     "area": 71,
-                    "houseNum": "34.0",
+                    "houseNum": 34,
                     "streetName": "הרב שאולזון",
                     "blocksAway": 0,
-                    "dealDate": "2024-05-08T00:00:00Z"
+                    "dealDate": "2024-05-08T00:00:00.000Z"
                   }
                 },
                 {
@@ -559,10 +559,10 @@
                     "pricePerSqm": 24765,
                     "totalPrice": 2105000,
                     "area": 85,
-                    "houseNum": "34.0",
+                    "houseNum": 34,
                     "streetName": "הרב שאולזון",
                     "blocksAway": 0,
-                    "dealDate": "2020-11-24T00:00:00Z"
+                    "dealDate": "2020-11-24T00:00:00.000Z"
                   }
                 }
               ]
@@ -605,10 +605,10 @@
                     "pricePerSqm": 24765,
                     "totalPrice": 2105000,
                     "area": 85,
-                    "houseNum": "34.0",
+                    "houseNum": 34,
                     "streetName": "הרב שאולזון",
                     "blocksAway": 0,
-                    "dealDate": "2020-11-24T00:00:00Z"
+                    "dealDate": "2020-11-24T00:00:00.000Z"
                   }
                 }
               ]
@@ -633,10 +633,10 @@
                     "pricePerSqm": 40000,
                     "totalPrice": 2560000,
                     "area": 64,
-                    "houseNum": "55.0",
+                    "houseNum": 55,
                     "streetName": "הקבלן",
                     "blocksAway": 18,
-                    "dealDate": "2024-04-16T00:00:00Z"
+                    "dealDate": "2024-04-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -689,10 +689,10 @@
                     "pricePerSqm": 23193,
                     "totalPrice": 1925000,
                     "area": 83,
-                    "houseNum": "57.0",
+                    "houseNum": 57,
                     "streetName": "הקבלן",
                     "blocksAway": 20,
-                    "dealDate": "2020-02-27T00:00:00Z"
+                    "dealDate": "2020-02-27T00:00:00.000Z"
                   }
                 }
               ]
@@ -735,10 +735,10 @@
                     "pricePerSqm": 25952,
                     "totalPrice": 2725000,
                     "area": 105,
-                    "houseNum": "37.0",
+                    "houseNum": 37,
                     "streetName": "הקבלן",
                     "blocksAway": 0,
-                    "dealDate": "2020-01-07T00:00:00Z"
+                    "dealDate": "2020-01-07T00:00:00.000Z"
                   }
                 }
               ]
@@ -748,7 +748,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 3723,
+  "totalDealsAnalyzed": 3785,
   "periodYears": {
     "current": 2024,
     "minus3": 2021,

@@ -70,11 +70,13 @@ const METRIC_CONFIG: Record<
   },
 };
 
+// Unified brand accent — all metric pages share the same indigo chrome.
+const INDIGO_ACCENT = { icon: "bg-indigo-50 text-indigo-700", bar: "from-indigo-500 to-indigo-600", text: "text-indigo-700" };
 const accentClasses = {
-  cyan: { icon: "bg-cyan-100 text-cyan-700", bar: "from-cyan-500 to-cyan-600", text: "text-cyan-700" },
-  emerald: { icon: "bg-emerald-100 text-emerald-700", bar: "from-emerald-500 to-emerald-600", text: "text-emerald-700" },
-  amber: { icon: "bg-amber-100 text-amber-700", bar: "from-amber-500 to-amber-600", text: "text-amber-700" },
-  purple: { icon: "bg-purple-100 text-purple-700", bar: "from-purple-500 to-purple-600", text: "text-purple-700" },
+  cyan: INDIGO_ACCENT,
+  emerald: INDIGO_ACCENT,
+  amber: INDIGO_ACCENT,
+  purple: INDIGO_ACCENT,
 };
 
 export async function generateStaticParams() {
@@ -83,7 +85,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const cfg = METRIC_CONFIG[params.metric as Metric];
-  return { title: cfg ? `${cfg.title} | מחקר נדל"ן ישראל` : "נתון" };
+  return { title: cfg ? `${cfg.title} | קרנף אנליסט` : "נתון" };
 }
 
 function fmt(n: number | null, suffix = ""): string {
@@ -131,11 +133,11 @@ export default async function StatPage({ params }: PageProps) {
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
-                  <th className="py-3 px-3 text-center text-xs text-amber-700 font-semibold">היתרים</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">היתרים</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">שינוי</th>
-                  <th className="py-3 px-3 text-center text-xs text-emerald-700 font-semibold">התחלות</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">התחלות</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">שינוי</th>
-                  <th className="py-3 px-3 text-center text-xs text-cyan-700 font-semibold">גמרי בנייה</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">גמרי בנייה</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">שינוי</th>
                 </tr>
               </thead>
@@ -147,19 +149,19 @@ export default async function StatPage({ params }: PageProps) {
                     <tr
                       key={row.year}
                       className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${
-                        isLatest ? "bg-cyan-50/40" : ""
+                        isLatest ? "bg-indigo-50/40" : ""
                       }`}
                     >
                       <td className="py-3 px-3 text-right font-bold text-slate-900">{row.year}</td>
-                      <td className="py-3 px-3 text-center text-amber-700 font-semibold">{fmt(row.permits)}</td>
+                      <td className="py-3 px-3 text-center text-slate-900 font-semibold">{fmt(row.permits)}</td>
                       <td className="py-3 px-3 text-center text-xs">
                         <TrendCell pct={pctChange(prev?.permits, row.permits)} />
                       </td>
-                      <td className="py-3 px-3 text-center text-emerald-700 font-semibold">{fmt(row.starts)}</td>
+                      <td className="py-3 px-3 text-center text-slate-900 font-semibold">{fmt(row.starts)}</td>
                       <td className="py-3 px-3 text-center text-xs">
                         <TrendCell pct={pctChange(prev?.starts, row.starts)} />
                       </td>
-                      <td className="py-3 px-3 text-center text-cyan-700 font-semibold">{fmt(row.completions)}</td>
+                      <td className="py-3 px-3 text-center text-slate-900 font-semibold">{fmt(row.completions)}</td>
                       <td className="py-3 px-3 text-center text-xs">
                         <TrendCell pct={pctChange(prev?.completions, row.completions)} />
                       </td>
@@ -220,7 +222,7 @@ export default async function StatPage({ params }: PageProps) {
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
-                  <th className="py-3 px-3 text-center text-xs text-cyan-700 font-semibold">מחיר ממוצע למ&quot;ר</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">מחיר ממוצע למ&quot;ר</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">שינוי משנה קודמת</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">דגימות (עיר × רבעון)</th>
                 </tr>
@@ -233,11 +235,11 @@ export default async function StatPage({ params }: PageProps) {
                     <tr
                       key={row.year}
                       className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${
-                        isLatest ? "bg-cyan-50/40" : ""
+                        isLatest ? "bg-indigo-50/40" : ""
                       }`}
                     >
                       <td className="py-3 px-3 text-right font-bold text-slate-900">{row.year}</td>
-                      <td className="py-3 px-3 text-center text-cyan-700 font-bold">
+                      <td className="py-3 px-3 text-center text-slate-900 font-bold">
                         ₪{Math.round(row.avg).toLocaleString("he-IL")}
                       </td>
                       <td className="py-3 px-3 text-center">
@@ -287,7 +289,7 @@ export default async function StatPage({ params }: PageProps) {
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
-                  <th className="py-3 px-3 text-center text-xs text-purple-700 font-semibold">סך אוכלוסייה</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">סך אוכלוסייה</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">שינוי משנה קודמת</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">ערים עם נתון</th>
                 </tr>
@@ -300,11 +302,11 @@ export default async function StatPage({ params }: PageProps) {
                     <tr
                       key={row.year}
                       className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${
-                        isLatest ? "bg-purple-50/40" : ""
+                        isLatest ? "bg-indigo-50/40" : ""
                       }`}
                     >
                       <td className="py-3 px-3 text-right font-bold text-slate-900">{row.year}</td>
-                      <td className="py-3 px-3 text-center text-purple-700 font-bold">{fmt(row.total)}</td>
+                      <td className="py-3 px-3 text-center text-slate-900 font-bold">{fmt(row.total)}</td>
                       <td className="py-3 px-3 text-center">
                         <TrendCell pct={pctChange(prev?.total ?? null, row.total)} />
                       </td>
@@ -348,7 +350,7 @@ export default async function StatPage({ params }: PageProps) {
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">עיר</th>
-                  <th className="py-3 px-3 text-center text-xs text-amber-700 font-semibold">דירות נדרשות</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">דירות נדרשות</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">גידול אוכלוסייה</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">נפשות לדירה</th>
                 </tr>
@@ -359,13 +361,13 @@ export default async function StatPage({ params }: PageProps) {
                     <td className="py-2.5 px-3 text-right">
                       <Link
                         href={`/city/${encodeURIComponent(c.city_name)}`}
-                        className="text-sm text-slate-900 font-medium hover:text-cyan-700 transition-colors"
+                        className="text-sm text-slate-900 font-medium hover:text-indigo-700 transition-colors"
                       >
                         <span className="text-slate-400 text-xs ml-2">{idx + 1}.</span>
                         {c.city_name}
                       </Link>
                     </td>
-                    <td className="py-2.5 px-3 text-center text-amber-700 font-bold">
+                    <td className="py-2.5 px-3 text-center text-slate-900 font-bold">
                       {fmt(c.apartments_required)}
                     </td>
                     <td className="py-2.5 px-3 text-center text-slate-700">
@@ -402,7 +404,7 @@ export default async function StatPage({ params }: PageProps) {
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
-                  <th className="py-3 px-3 text-center text-xs text-amber-700 font-semibold">מדד מחיר תשומה</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">מדד מחיר תשומה</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">שינוי שנתי</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">מהימנות</th>
                   <th className="py-3 px-3 text-right text-xs text-slate-400 font-medium">הערה</th>
@@ -413,9 +415,9 @@ export default async function StatPage({ params }: PageProps) {
                   const yoy = row.annual_yoy_pct ?? row.annual_yoy_pct_ytd ?? null;
                   const isLatest = idx === series.length - 1;
                   return (
-                    <tr key={row.year} className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${isLatest ? "bg-amber-50/40" : ""}`}>
+                    <tr key={row.year} className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${isLatest ? "bg-indigo-50/40" : ""}`}>
                       <td className="py-3 px-3 text-right font-bold text-slate-900">{row.year}</td>
-                      <td className="py-3 px-3 text-center text-amber-700 font-semibold">
+                      <td className="py-3 px-3 text-center text-slate-900 font-semibold">
                         {row.approx_index !== null ? row.approx_index.toFixed(1) : "—"}
                       </td>
                       <td className="py-3 px-3 text-center text-xs">
@@ -471,7 +473,7 @@ export default async function StatPage({ params }: PageProps) {
                     <td className="py-3 px-3 text-center"><TrendCell pct={row.national_mom_pct ?? null} /></td>
                     <td className="py-3 px-3 text-right text-[10px]">
                       {row.source_url ? (
-                        <a href={row.source_url} target="_blank" rel="noopener noreferrer" className="text-cyan-700 hover:underline">
+                        <a href={row.source_url} target="_blank" rel="noopener noreferrer" className="text-indigo-700 hover:underline">
                           {row.source_name || "מקור"} ↗
                         </a>
                       ) : "—"}
@@ -491,7 +493,7 @@ export default async function StatPage({ params }: PageProps) {
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
-                  <th className="py-3 px-3 text-center text-xs text-cyan-700 font-semibold">שינוי שנתי</th>
+                  <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">שינוי שנתי</th>
                   <th className="py-3 px-3 text-center text-xs text-slate-400 font-medium">מהימנות</th>
                   <th className="py-3 px-3 text-right text-xs text-slate-400 font-medium">מקור</th>
                 </tr>
@@ -500,13 +502,13 @@ export default async function StatPage({ params }: PageProps) {
                 {annual.map((row, idx) => {
                   const isLatest = idx === annual.length - 1;
                   return (
-                    <tr key={row.year} className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${isLatest ? "bg-cyan-50/40" : ""}`}>
+                    <tr key={row.year} className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${isLatest ? "bg-indigo-50/40" : ""}`}>
                       <td className="py-3 px-3 text-right font-bold text-slate-900">{row.year}</td>
                       <td className="py-3 px-3 text-center"><TrendCell pct={row.annual_pct_change} /></td>
                       <td className="py-3 px-3 text-center text-[11px]"><ConfidencePill c={row.confidence} /></td>
                       <td className="py-3 px-3 text-right text-[10px]">
                         {row.source_url ? (
-                          <a href={row.source_url} target="_blank" rel="noopener noreferrer" className="text-cyan-700 hover:underline">
+                          <a href={row.source_url} target="_blank" rel="noopener noreferrer" className="text-indigo-700 hover:underline">
                             {row.source_name || "מקור"} ↗
                           </a>
                         ) : "—"}
@@ -532,8 +534,8 @@ export default async function StatPage({ params }: PageProps) {
 
 function ConfidencePill({ c }: { c: "high" | "medium" | "low" }) {
   const map = {
-    high: { he: "גבוהה", cls: "bg-emerald-50 text-emerald-700 border-emerald-200" },
-    medium: { he: "בינונית", cls: "bg-amber-50 text-amber-700 border-amber-200" },
+    high: { he: "גבוהה", cls: "bg-indigo-50 text-indigo-700 border-indigo-200" },
+    medium: { he: "בינונית", cls: "bg-slate-100 text-slate-500 border-slate-300" },
     low: { he: "נמוכה", cls: "bg-slate-50 text-slate-600 border-slate-200" },
   } as const;
   const entry = map[c] ?? map.medium;
@@ -557,7 +559,7 @@ function TrendCell({ pct }: { pct: number | null | undefined }) {
   }
   const isPositive = pct >= 0;
   return (
-    <span className={isPositive ? "text-emerald-600 font-semibold" : "text-rose-600 font-semibold"}>
+    <span className={isPositive ? "text-emerald-600 font-semibold" : "text-red-600 font-semibold"}>
       {isPositive ? "+" : ""}
       {pct.toFixed(1)}%
     </span>
@@ -575,16 +577,6 @@ function PageHeader({
 }) {
   return (
     <>
-      <nav className="flex items-center justify-between mb-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-cyan-700 transition-colors">
-          <span>←</span>
-          <span>חזרה לדף הבית</span>
-        </Link>
-        <Link href="/cities" className="text-sm text-slate-600 hover:text-cyan-700 transition-colors">
-          טבלת ערים מלאה ←
-        </Link>
-      </nav>
-
       <header className="mb-8">
         <div className="flex items-start gap-4">
           <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${a.icon}`}>

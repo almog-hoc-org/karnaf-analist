@@ -1,10 +1,10 @@
 {
   "cityName": "כפר יונה",
-  "lastUpdated": "2026-06-24T06:56:32.376Z",
+  "lastUpdated": "2026-07-21T09:13:19.158Z",
   "neighborhoods": [
     {
       "neighborhood": "קריית יצחק רבין",
-      "totalDeals": 298,
+      "totalDeals": 299,
       "dealsPerYearAvg": 43,
       "streets": [
         {
@@ -37,10 +37,10 @@
                     "pricePerSqm": 24000,
                     "totalPrice": 1968000,
                     "area": 82,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "האלונים",
                     "blocksAway": 0,
-                    "dealDate": "2022-02-14T00:00:00Z"
+                    "dealDate": "2022-02-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -51,10 +51,10 @@
                     "pricePerSqm": 22949,
                     "totalPrice": 1790000,
                     "area": 78,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "האלונים",
                     "blocksAway": 0,
-                    "dealDate": "2021-08-04T00:00:00Z"
+                    "dealDate": "2021-08-04T00:00:00.000Z"
                   }
                 }
               ]
@@ -141,10 +141,10 @@
                     "pricePerSqm": 15868,
                     "totalPrice": 1920000,
                     "area": 121,
-                    "houseNum": "28.0",
+                    "houseNum": 28,
                     "streetName": "האלונים",
                     "blocksAway": 27,
-                    "dealDate": "2020-07-21T00:00:00Z"
+                    "dealDate": "2020-07-21T00:00:00.000Z"
                   }
                 }
               ]
@@ -181,10 +181,10 @@
                     "pricePerSqm": 19434,
                     "totalPrice": 2196000,
                     "area": 113,
-                    "houseNum": "23.0",
+                    "houseNum": 23,
                     "streetName": "הפארק",
                     "blocksAway": 2,
-                    "dealDate": "2022-02-07T00:00:00Z"
+                    "dealDate": "2022-02-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -250,7 +250,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 298,
+  "totalDealsAnalyzed": 299,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

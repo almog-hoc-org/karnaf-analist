@@ -1,15 +1,15 @@
 {
   "cityName": "כוכב יעקב",
-  "lastUpdated": "2026-06-24T06:56:17.551Z",
+  "lastUpdated": "2026-07-21T09:12:46.939Z",
   "neighborhoods": [
     {
       "neighborhood": "פסגת זאב",
-      "totalDeals": 2523,
-      "dealsPerYearAvg": 360,
+      "totalDeals": 2604,
+      "dealsPerYearAvg": 372,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 593,
+          "totalDeals": 634,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -66,10 +66,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 38,
+                    "count": 42,
                     "threshold": 15,
-                    "avgPricePerSqm": 18559,
-                    "avgTotalPrice": 1461339,
+                    "avgPricePerSqm": 16954,
+                    "avgTotalPrice": 1388419,
                     "avgArea": 79
                   }
                 },
@@ -90,10 +90,10 @@
                   "year": 2021,
                   "sample": {
                     "type": "aggregated",
-                    "count": 16,
+                    "count": 17,
                     "threshold": 15,
-                    "avgPricePerSqm": 20187,
-                    "avgTotalPrice": 1512540,
+                    "avgPricePerSqm": 20176,
+                    "avgTotalPrice": 1551065,
                     "avgArea": 75
                   }
                 }
@@ -110,10 +110,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 107,
+                    "count": 116,
                     "threshold": 15,
-                    "avgPricePerSqm": 17584,
-                    "avgTotalPrice": 1722691,
+                    "avgPricePerSqm": 17591,
+                    "avgTotalPrice": 1726844,
                     "avgArea": 100
                   }
                 },
@@ -122,10 +122,10 @@
                   "year": 2023,
                   "sample": {
                     "type": "aggregated",
-                    "count": 10,
+                    "count": 12,
                     "threshold": 10,
-                    "avgPricePerSqm": 25371,
-                    "avgTotalPrice": 2531000,
+                    "avgPricePerSqm": 25822,
+                    "avgTotalPrice": 2548333,
                     "avgArea": 99
                   }
                 },
@@ -134,11 +134,11 @@
                   "year": 2021,
                   "sample": {
                     "type": "aggregated",
-                    "count": 34,
+                    "count": 58,
                     "threshold": 15,
-                    "avgPricePerSqm": 18674,
-                    "avgTotalPrice": 1910324,
-                    "avgArea": 102
+                    "avgPricePerSqm": 18515,
+                    "avgTotalPrice": 1914414,
+                    "avgArea": 103
                   }
                 }
               ]
@@ -147,7 +147,7 @@
         },
         {
           "streetName": "השישה עשר",
-          "totalDeals": 111,
+          "totalDeals": 112,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -207,10 +207,10 @@
                     "pricePerSqm": 27647,
                     "totalPrice": 2350000,
                     "area": 85,
-                    "houseNum": "14.0",
+                    "houseNum": 14,
                     "streetName": "השישה עשר",
                     "blocksAway": 12,
-                    "dealDate": "2025-01-28T00:00:00Z"
+                    "dealDate": "2025-01-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -253,10 +253,10 @@
                     "pricePerSqm": 27647,
                     "totalPrice": 2350000,
                     "area": 85,
-                    "houseNum": "14.0",
+                    "houseNum": 14,
                     "streetName": "השישה עשר",
                     "blocksAway": 12,
-                    "dealDate": "2025-01-28T00:00:00Z"
+                    "dealDate": "2025-01-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -267,10 +267,10 @@
                     "pricePerSqm": 24706,
                     "totalPrice": 2520000,
                     "area": 102,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "השישה עשר",
                     "blocksAway": 0,
-                    "dealDate": "2023-05-03T00:00:00Z"
+                    "dealDate": "2023-05-03T00:00:00.000Z"
                   }
                 },
                 {
@@ -293,12 +293,12 @@
     },
     {
       "neighborhood": "נווה יעקב",
-      "totalDeals": 1360,
-      "dealsPerYearAvg": 194,
+      "totalDeals": 1377,
+      "dealsPerYearAvg": 197,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 398,
+          "totalDeals": 403,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -355,11 +355,11 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 6,
+                    "count": 8,
                     "threshold": 5,
-                    "avgPricePerSqm": 30613,
-                    "avgTotalPrice": 2552135,
-                    "avgArea": 84
+                    "avgPricePerSqm": 30545,
+                    "avgTotalPrice": 2581601,
+                    "avgArea": 85
                   }
                 },
                 {
@@ -399,11 +399,11 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 14,
-                    "threshold": 10,
-                    "avgPricePerSqm": 28791,
-                    "avgTotalPrice": 2896915,
-                    "avgArea": 101
+                    "count": 16,
+                    "threshold": 15,
+                    "avgPricePerSqm": 28780,
+                    "avgTotalPrice": 2922301,
+                    "avgArea": 102
                   }
                 },
                 {
@@ -496,10 +496,10 @@
                     "pricePerSqm": 32584,
                     "totalPrice": 2900000,
                     "area": 89,
-                    "houseNum": "52.0",
+                    "houseNum": 52,
                     "streetName": "נווה יעקב",
                     "blocksAway": 28,
-                    "dealDate": "2026-01-28T00:00:00Z"
+                    "dealDate": "2026-01-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -542,10 +542,10 @@
                     "pricePerSqm": 32584,
                     "totalPrice": 2900000,
                     "area": 89,
-                    "houseNum": "52.0",
+                    "houseNum": 52,
                     "streetName": "נווה יעקב",
                     "blocksAway": 28,
-                    "dealDate": "2026-01-28T00:00:00Z"
+                    "dealDate": "2026-01-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -568,10 +568,10 @@
                     "pricePerSqm": 22130,
                     "totalPrice": 2390000,
                     "area": 108,
-                    "houseNum": "55.0",
+                    "houseNum": 55,
                     "streetName": "נווה יעקב",
                     "blocksAway": 31,
-                    "dealDate": "2022-11-09T00:00:00Z"
+                    "dealDate": "2022-11-09T00:00:00.000Z"
                   }
                 }
               ]
@@ -582,12 +582,12 @@
     },
     {
       "neighborhood": "בית חנינא",
-      "totalDeals": 277,
-      "dealsPerYearAvg": 40,
+      "totalDeals": 298,
+      "dealsPerYearAvg": 43,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 201,
+          "totalDeals": 221,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -600,10 +600,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 34,
+                    "count": 37,
                     "threshold": 15,
-                    "avgPricePerSqm": 23236,
-                    "avgTotalPrice": 1908103,
+                    "avgPricePerSqm": 23083,
+                    "avgTotalPrice": 1902985,
                     "avgArea": 82
                   }
                 },
@@ -711,7 +711,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 4160,
+  "totalDealsAnalyzed": 4279,
   "periodYears": {
     "current": 2026,
     "minus3": 2023,

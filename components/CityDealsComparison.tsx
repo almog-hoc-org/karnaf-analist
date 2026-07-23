@@ -114,11 +114,12 @@ function ChangeTag({ value }: { value: number | null }) {
 function SampleBadge({ sample }: { sample: DealSample | null }) {
   if (!sample) return null;
   if (sample.type === "aggregated") {
+    // Sample-quality ladder on the brand scale: deeper indigo = larger sample.
     const colorMap: Record<number, string> = {
-      15: "bg-emerald-100 text-emerald-700 border-emerald-200",
-      10: "bg-cyan-100 text-cyan-700 border-cyan-200",
-      5: "bg-amber-100 text-amber-700 border-amber-200",
-      2: "bg-orange-100 text-orange-700 border-orange-200",
+      15: "bg-indigo-100 text-indigo-800 border-indigo-300",
+      10: "bg-indigo-50 text-indigo-700 border-indigo-200",
+      5: "bg-slate-200 text-slate-700 border-slate-300",
+      2: "bg-slate-100 text-slate-600 border-slate-300",
       1: "bg-slate-100 text-slate-700 border-slate-200",
     };
     return (
@@ -159,7 +160,7 @@ function SampleCell({
   const total = getSampleTotalPrice(sample);
   return (
     <td className="px-2 py-2.5 text-center">
-      <div className={`text-[11px] font-bold ${isLatest ? "text-cyan-700" : "text-slate-900"}`}>
+      <div className={`text-[11px] font-bold ${isLatest ? "text-indigo-700" : "text-slate-900"}`}>
         {formatPricePerSqm(ppsm)}
       </div>
       <div className="text-[9px] text-slate-500 mt-0.5">{formatPrice(total)}</div>
@@ -195,7 +196,7 @@ function StreetTable({
                 <th
                   key={p}
                   className={`px-2 py-2.5 text-center text-[10px] font-medium whitespace-nowrap ${
-                    isLatest ? "text-cyan-700" : "text-slate-500"
+                    isLatest ? "text-indigo-700" : "text-slate-500"
                   }`}
                 >
                   {year}
@@ -293,7 +294,7 @@ function NeighborhoodCard({
               {nh.totalDeals} עסקאות
             </span>
             <span
-              className="text-xs text-emerald-700 px-2 py-0.5 rounded-full bg-emerald-50"
+              className="text-xs text-indigo-700 px-2 py-0.5 rounded-full bg-indigo-50"
               title="ממוצע עסקאות לשנה"
             >
               ~{nh.dealsPerYearAvg}/שנה
@@ -373,7 +374,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
   return (
     <section className="mb-10">
       <div className="section-header mb-4">
-        <div className="section-header-icon bg-emerald-50 text-emerald-700">🏠</div>
+        <div className="section-header-icon">🏠</div>
         <div className="flex-1">
           <h2 className="text-base font-bold text-slate-900">
             עסקאות אמיתיות — השוואת מחירים ברחוב
@@ -400,7 +401,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
                 .catch(() => setError("שגיאה בטעינת נתוני עסקאות"))
                 .finally(() => setLoading(false));
             }}
-            className="mt-2 text-xs text-slate-500 hover:text-cyan-700 transition-colors underline"
+            className="mt-2 text-xs text-slate-500 hover:text-indigo-700 transition-colors underline"
           >
             נסה שוב
           </button>
@@ -413,16 +414,16 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
             <>
               <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px]">
                 <span className="text-slate-500">מקרא:</span>
-                <span className="px-1.5 py-0.5 rounded border bg-emerald-100 text-emerald-700 border-emerald-200">
+                <span className="px-1.5 py-0.5 rounded border bg-indigo-100 text-indigo-800 border-indigo-300">
                   ממוצע 15+ עסקאות
                 </span>
-                <span className="px-1.5 py-0.5 rounded border bg-cyan-100 text-cyan-700 border-cyan-200">
+                <span className="px-1.5 py-0.5 rounded border bg-indigo-50 text-indigo-700 border-indigo-200">
                   ממוצע 10+
                 </span>
-                <span className="px-1.5 py-0.5 rounded border bg-amber-100 text-amber-700 border-amber-200">
+                <span className="px-1.5 py-0.5 rounded border bg-slate-200 text-slate-700 border-slate-300">
                   ממוצע 5+
                 </span>
-                <span className="px-1.5 py-0.5 rounded border bg-orange-100 text-orange-700 border-orange-200">
+                <span className="px-1.5 py-0.5 rounded border bg-slate-100 text-slate-600 border-slate-300">
                   ממוצע 2+
                 </span>
                 <span className="px-1.5 py-0.5 rounded border bg-slate-100 text-slate-700 border-slate-200">

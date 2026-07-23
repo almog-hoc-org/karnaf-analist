@@ -1,11 +1,11 @@
 {
   "cityName": "עומר",
-  "lastUpdated": "2026-06-24T06:59:15.606Z",
+  "lastUpdated": "2026-07-21T09:18:07.835Z",
   "neighborhoods": [
     {
       "neighborhood": "ד",
-      "totalDeals": 2929,
-      "dealsPerYearAvg": 418,
+      "totalDeals": 2931,
+      "dealsPerYearAvg": 419,
       "streets": [
         {
           "streetName": "סנהדרין",
@@ -137,10 +137,10 @@
                     "pricePerSqm": 7522,
                     "totalPrice": 865000,
                     "area": 115,
-                    "houseNum": "110.0",
+                    "houseNum": 110,
                     "streetName": "סנהדרין",
                     "blocksAway": 0,
-                    "dealDate": "2021-07-11T00:00:00Z"
+                    "dealDate": "2021-07-11T00:00:00.000Z"
                   }
                 }
               ]
@@ -149,7 +149,7 @@
         },
         {
           "streetName": "אברהם אבינו",
-          "totalDeals": 236,
+          "totalDeals": 239,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -186,11 +186,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 10401,
-                    "avgTotalPrice": 667614,
-                    "avgArea": 64
+                    "count": 7,
+                    "threshold": 5,
+                    "avgPricePerSqm": 11120,
+                    "avgTotalPrice": 721494,
+                    "avgArea": 66
                   }
                 }
               ]
@@ -277,10 +277,10 @@
                     "pricePerSqm": 10398,
                     "totalPrice": 915000,
                     "area": 88,
-                    "houseNum": "39.0",
+                    "houseNum": 39,
                     "streetName": "אברהם אבינו",
                     "blocksAway": 17,
-                    "dealDate": "2020-12-01T00:00:00Z"
+                    "dealDate": "2020-12-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -291,12 +291,12 @@
     },
     {
       "neighborhood": "ו",
-      "totalDeals": 2157,
-      "dealsPerYearAvg": 308,
+      "totalDeals": 2174,
+      "dealsPerYearAvg": 311,
       "streets": [
         {
           "streetName": "מבצע עובדה",
-          "totalDeals": 255,
+          "totalDeals": 258,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -434,7 +434,7 @@
         },
         {
           "streetName": "מבצע נחשון",
-          "totalDeals": 248,
+          "totalDeals": 252,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -538,10 +538,10 @@
                     "pricePerSqm": 10291,
                     "totalPrice": 885000,
                     "area": 86,
-                    "houseNum": "46.0",
+                    "houseNum": 46,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 22,
-                    "dealDate": "2025-08-19T00:00:00Z"
+                    "dealDate": "2025-08-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -564,10 +564,10 @@
                     "pricePerSqm": 6860,
                     "totalPrice": 590000,
                     "area": 86,
-                    "houseNum": "48.0",
+                    "houseNum": 48,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 24,
-                    "dealDate": "2020-03-17T00:00:00Z"
+                    "dealDate": "2020-03-17T00:00:00.000Z"
                   }
                 }
               ]
@@ -578,12 +578,12 @@
     },
     {
       "neighborhood": "רמות הרכס",
-      "totalDeals": 1845,
-      "dealsPerYearAvg": 264,
+      "totalDeals": 1759,
+      "dealsPerYearAvg": 251,
       "streets": [
         {
           "streetName": "גדעון האוזנר",
-          "totalDeals": 229,
+          "totalDeals": 200,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -599,10 +599,10 @@
                     "pricePerSqm": 15417,
                     "totalPrice": 1295000,
                     "area": 84,
-                    "houseNum": "29.0",
+                    "houseNum": 29,
                     "streetName": "גדעון האוזנר",
                     "blocksAway": 19,
-                    "dealDate": "2025-08-06T00:00:00Z"
+                    "dealDate": "2025-08-06T00:00:00.000Z"
                   }
                 },
                 {
@@ -613,10 +613,10 @@
                     "pricePerSqm": 13506,
                     "totalPrice": 1175000,
                     "area": 87,
-                    "houseNum": "21.0",
+                    "houseNum": 19,
                     "streetName": "גדעון האוזנר",
-                    "blocksAway": 11,
-                    "dealDate": "2022-03-07T00:00:00Z"
+                    "blocksAway": 9,
+                    "dealDate": "2022-03-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -656,11 +656,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 11,
+                    "count": 10,
                     "threshold": 10,
-                    "avgPricePerSqm": 12897,
-                    "avgTotalPrice": 1359318,
-                    "avgArea": 108
+                    "avgPricePerSqm": 12866,
+                    "avgTotalPrice": 1347250,
+                    "avgArea": 106
                   }
                 },
                 {
@@ -668,11 +668,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 24,
+                    "count": 22,
                     "threshold": 15,
-                    "avgPricePerSqm": 10403,
-                    "avgTotalPrice": 1095354,
-                    "avgArea": 106
+                    "avgPricePerSqm": 10338,
+                    "avgTotalPrice": 1081750,
+                    "avgArea": 105
                   }
                 }
               ]
@@ -681,7 +681,7 @@
         },
         {
           "streetName": "נחום שריג",
-          "totalDeals": 190,
+          "totalDeals": 189,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -776,7 +776,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 12104,
+  "totalDealsAnalyzed": 11998,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

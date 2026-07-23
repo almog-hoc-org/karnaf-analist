@@ -1,0 +1,5009 @@
+{
+ "city": "ירושלים",
+ "cbs_code": "3000",
+ "capturedAt": "2026-07-04T18:37:40.790Z",
+ "totalRows": 112033,
+ "count": 500,
+ "deals": [
+  {
+   "dealDate": "2026-06-11",
+   "dealAmount": 2290000,
+   "roomNum": 3,
+   "assetArea": 43,
+   "yearBuilt": 1960,
+   "priceSM": 53256,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-10",
+   "dealAmount": 2475000,
+   "roomNum": 4,
+   "assetArea": 90.4,
+   "yearBuilt": 1980,
+   "priceSM": 27500,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-09",
+   "dealAmount": 3500000,
+   "roomNum": 5,
+   "assetArea": 137.61,
+   "yearBuilt": 1990,
+   "priceSM": 25547,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-08",
+   "dealAmount": 2630000,
+   "roomNum": 4,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 29222,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-07",
+   "dealAmount": 2300000,
+   "roomNum": 4,
+   "assetArea": 80,
+   "yearBuilt": 1989,
+   "priceSM": 28750,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-06",
+   "dealAmount": 2390000,
+   "roomNum": 4,
+   "assetArea": 108.7,
+   "yearBuilt": 0,
+   "priceSM": 22130,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-04",
+   "dealAmount": 1985000,
+   "roomNum": 2,
+   "assetArea": 42,
+   "yearBuilt": 1970,
+   "priceSM": 47262,
+   "neighborhoodName": "בית וגן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-04",
+   "dealAmount": 2840000,
+   "roomNum": 4,
+   "assetArea": 96.1,
+   "yearBuilt": 2005,
+   "priceSM": 29553,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-03",
+   "dealAmount": 1940000,
+   "roomNum": 3.5,
+   "assetArea": 61.42,
+   "yearBuilt": 1980,
+   "priceSM": 31586,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-03",
+   "dealAmount": 1988000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20081,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 2420000,
+   "roomNum": 4,
+   "assetArea": 84.3,
+   "yearBuilt": 2005,
+   "priceSM": 28810,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 1807000,
+   "roomNum": 3,
+   "assetArea": 88,
+   "yearBuilt": 0,
+   "priceSM": 20534,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 3030000,
+   "roomNum": 2,
+   "assetArea": 44,
+   "yearBuilt": 2030,
+   "priceSM": 68864,
+   "neighborhoodName": "מקור ברוך",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 3500000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 35714,
+   "neighborhoodName": "רמות",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 3450000,
+   "roomNum": 3,
+   "assetArea": 85,
+   "yearBuilt": 1999,
+   "priceSM": 40588,
+   "neighborhoodName": "מקור חיים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 2695000,
+   "roomNum": 3,
+   "assetArea": 59.1,
+   "yearBuilt": 1970,
+   "priceSM": 45678,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 850000,
+   "roomNum": 4,
+   "assetArea": 87,
+   "yearBuilt": 1970,
+   "priceSM": 9770,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-01",
+   "dealAmount": 3450000,
+   "roomNum": 3,
+   "assetArea": 85,
+   "yearBuilt": 1999,
+   "priceSM": 40588,
+   "neighborhoodName": "מקור חיים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-06-01",
+   "dealAmount": 3475000,
+   "roomNum": 3.5,
+   "assetArea": 63,
+   "yearBuilt": 1960,
+   "priceSM": 55159,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-31",
+   "dealAmount": 2370000,
+   "roomNum": 3,
+   "assetArea": 78,
+   "yearBuilt": 0,
+   "priceSM": 30385,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-31",
+   "dealAmount": 2055000,
+   "roomNum": 3,
+   "assetArea": 53.8,
+   "yearBuilt": 1970,
+   "priceSM": 38774,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-30",
+   "dealAmount": 2370000,
+   "roomNum": 3,
+   "assetArea": 78,
+   "yearBuilt": 0,
+   "priceSM": 30385,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-29",
+   "dealAmount": 2000000,
+   "roomNum": 3,
+   "assetArea": 67.8,
+   "yearBuilt": 1980,
+   "priceSM": 29851,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 4100000,
+   "roomNum": 4,
+   "assetArea": 79,
+   "yearBuilt": 1970,
+   "priceSM": 51899,
+   "neighborhoodName": "רמת אשכול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 3236000,
+   "roomNum": 5,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 28893,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 1878000,
+   "roomNum": 3,
+   "assetArea": 63,
+   "yearBuilt": 1980,
+   "priceSM": 29810,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 9700000,
+   "roomNum": 5,
+   "assetArea": 189,
+   "yearBuilt": 0,
+   "priceSM": 51323,
+   "neighborhoodName": "קטמונים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 2250000,
+   "roomNum": 2,
+   "assetArea": 51.3,
+   "yearBuilt": 1980,
+   "priceSM": 44118,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 1450000,
+   "roomNum": 2,
+   "assetArea": 40,
+   "yearBuilt": 0,
+   "priceSM": 36250,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 550000,
+   "roomNum": 3,
+   "assetArea": 49,
+   "yearBuilt": 1950,
+   "priceSM": 11224,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-27",
+   "dealAmount": 2533000,
+   "roomNum": 4,
+   "assetArea": 88.4,
+   "yearBuilt": 0,
+   "priceSM": 28654,
+   "neighborhoodName": "גבעת שאול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-27",
+   "dealAmount": 3236810,
+   "roomNum": 5,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 28900,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-27",
+   "dealAmount": 3900000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1970,
+   "priceSM": 63934,
+   "neighborhoodName": "רמת אשכול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-27",
+   "dealAmount": 2450000,
+   "roomNum": 4,
+   "assetArea": 88.78,
+   "yearBuilt": 2000,
+   "priceSM": 27841,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-27",
+   "dealAmount": 2021000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20414,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 2013980,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20343,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 3425000,
+   "roomNum": 4,
+   "assetArea": 75,
+   "yearBuilt": 2000,
+   "priceSM": 45667,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 2676000,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 30067,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 2997000,
+   "roomNum": 5,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 27245,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 2325000,
+   "roomNum": 4,
+   "assetArea": 91,
+   "yearBuilt": 1980,
+   "priceSM": 25549,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 2473000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 0,
+   "priceSM": 20270,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 3800000,
+   "roomNum": 4,
+   "assetArea": 67,
+   "yearBuilt": 1970,
+   "priceSM": 56716,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 2270000,
+   "roomNum": 3,
+   "assetArea": 50.5,
+   "yearBuilt": 0,
+   "priceSM": 44950,
+   "neighborhoodName": "בית ישראל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 3900000,
+   "roomNum": 4.5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 33051,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 3990000,
+   "roomNum": 6,
+   "assetArea": 128.8,
+   "yearBuilt": 2013,
+   "priceSM": 31172,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 2018773,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20392,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 1799000,
+   "roomNum": 3,
+   "assetArea": 88,
+   "yearBuilt": 0,
+   "priceSM": 20443,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 2676962,
+   "roomNum": 3,
+   "assetArea": 89,
+   "yearBuilt": 0,
+   "priceSM": 30078,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-24",
+   "dealAmount": 1808000,
+   "roomNum": 3,
+   "assetArea": 88,
+   "yearBuilt": 0,
+   "priceSM": 20545,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-24",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 70.25,
+   "yearBuilt": 1970,
+   "priceSM": 35714,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-20",
+   "dealAmount": 2900000,
+   "roomNum": 3.5,
+   "assetArea": 0,
+   "yearBuilt": 2020,
+   "priceSM": 0,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-20",
+   "dealAmount": 3190000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 27034,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-20",
+   "dealAmount": 3119000,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 2023,
+   "priceSM": 18677,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-20",
+   "dealAmount": 1660000,
+   "roomNum": 3,
+   "assetArea": 43,
+   "yearBuilt": 1978,
+   "priceSM": 38605,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-20",
+   "dealAmount": 2295000,
+   "roomNum": 4,
+   "assetArea": 86.36,
+   "yearBuilt": 1980,
+   "priceSM": 26686,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-20",
+   "dealAmount": 2027000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20475,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 5160000,
+   "roomNum": 6,
+   "assetArea": 156,
+   "yearBuilt": 0,
+   "priceSM": 33077,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 3190000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 27034,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 4494900,
+   "roomNum": 3,
+   "assetArea": 86,
+   "yearBuilt": 1970,
+   "priceSM": 52266,
+   "neighborhoodName": "רוממה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 28351280,
+   "roomNum": 1,
+   "assetArea": 912,
+   "yearBuilt": 0,
+   "priceSM": 31087,
+   "neighborhoodName": "רוממה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 3119605,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 0,
+   "priceSM": 18680,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 1600000,
+   "roomNum": 3,
+   "assetArea": 48.8,
+   "yearBuilt": 1960,
+   "priceSM": 33333,
+   "neighborhoodName": "קטמון הישנה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 2005000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20253,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 2027393,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20479,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 4000000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 61538,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 2035000,
+   "roomNum": 3,
+   "assetArea": 67,
+   "yearBuilt": 1986,
+   "priceSM": 30373,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 1840000,
+   "roomNum": 3,
+   "assetArea": 63.5,
+   "yearBuilt": 1980,
+   "priceSM": 28976,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 5160000,
+   "roomNum": 6,
+   "assetArea": 156,
+   "yearBuilt": 0,
+   "priceSM": 33077,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 2350000,
+   "roomNum": 2,
+   "assetArea": 41.72,
+   "yearBuilt": 1950,
+   "priceSM": 57317,
+   "neighborhoodName": "קטמון הישנה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 2800000,
+   "roomNum": 4,
+   "assetArea": 90,
+   "yearBuilt": 1970,
+   "priceSM": 31111,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 3350000,
+   "roomNum": 3,
+   "assetArea": 61.92,
+   "yearBuilt": 1970,
+   "priceSM": 54918,
+   "neighborhoodName": "שמואל הנביא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 5202000,
+   "roomNum": 5,
+   "assetArea": 139,
+   "yearBuilt": 2000,
+   "priceSM": 37424,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 2023000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20434,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 3735000,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 1995,
+   "priceSM": 36262,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 3250000,
+   "roomNum": 5,
+   "assetArea": 95,
+   "yearBuilt": 1980,
+   "priceSM": 34211,
+   "neighborhoodName": "גבעת הורדים-רסקו",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 1180000,
+   "roomNum": 4,
+   "assetArea": 83.04,
+   "yearBuilt": 1970,
+   "priceSM": 14210,
+   "neighborhoodName": "הגבעה הצרפתית - גבעת שפירא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 900000,
+   "roomNum": 1,
+   "assetArea": 4400,
+   "yearBuilt": 1970,
+   "priceSM": 205,
+   "neighborhoodName": "מקור ברוך",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 2842000,
+   "roomNum": 4,
+   "assetArea": 86.6,
+   "yearBuilt": 1982,
+   "priceSM": 33047,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 850000,
+   "roomNum": 0,
+   "assetArea": 138.1,
+   "yearBuilt": 2009,
+   "priceSM": 6159,
+   "neighborhoodName": "רמות",
+   "dealNature": "מחסנים"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 13850000,
+   "roomNum": 5,
+   "assetArea": 154,
+   "yearBuilt": 1950,
+   "priceSM": 89935,
+   "neighborhoodName": "טלביה-קוממויות",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-15",
+   "dealAmount": 2690000,
+   "roomNum": 4,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 29889,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 2150000,
+   "roomNum": 4,
+   "assetArea": 78.32,
+   "yearBuilt": 1990,
+   "priceSM": 27564,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 1244000,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15747,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 3950000,
+   "roomNum": 3,
+   "assetArea": 72,
+   "yearBuilt": 1970,
+   "priceSM": 54861,
+   "neighborhoodName": "רמת אשכול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 3750000,
+   "roomNum": 5,
+   "assetArea": 128.7,
+   "yearBuilt": 1999,
+   "priceSM": 29297,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 1700000,
+   "roomNum": 3,
+   "assetArea": 70.3,
+   "yearBuilt": 1970,
+   "priceSM": 24286,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 2690000,
+   "roomNum": 4,
+   "assetArea": 90,
+   "yearBuilt": 0,
+   "priceSM": 29889,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 3164000,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 2023,
+   "priceSM": 18946,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 2520000,
+   "roomNum": 3,
+   "assetArea": 63.8,
+   "yearBuilt": 1970,
+   "priceSM": 40000,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 4078000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 2024,
+   "priceSM": 37413,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 2660000,
+   "roomNum": 3,
+   "assetArea": 64.6,
+   "yearBuilt": 1980,
+   "priceSM": 41176,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 3164985,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 0,
+   "priceSM": 18952,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 1244986,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15759,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 2032000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20525,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 4250000,
+   "roomNum": 5,
+   "assetArea": 117.5,
+   "yearBuilt": 1970,
+   "priceSM": 36325,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 1244986,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15759,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 2019000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20394,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 2400000,
+   "roomNum": 3,
+   "assetArea": 44,
+   "yearBuilt": 1970,
+   "priceSM": 54545,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 666000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "מחנה יהודה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 2032441,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20530,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 1514000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 14558,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 3350000,
+   "roomNum": 3,
+   "assetArea": 81,
+   "yearBuilt": 0,
+   "priceSM": 41358,
+   "neighborhoodName": "הולילנד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 2720000,
+   "roomNum": 3,
+   "assetArea": 70,
+   "yearBuilt": 1980,
+   "priceSM": 38857,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 1302000,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16481,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 1000000,
+   "roomNum": 5,
+   "assetArea": 145.75,
+   "yearBuilt": 2014,
+   "priceSM": 6897,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 1910000,
+   "roomNum": 3,
+   "assetArea": 62.05,
+   "yearBuilt": 1990,
+   "priceSM": 30806,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 2570000,
+   "roomNum": 4,
+   "assetArea": 70,
+   "yearBuilt": 1980,
+   "priceSM": 36714,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 1150000,
+   "roomNum": 0,
+   "assetArea": 23,
+   "yearBuilt": 0,
+   "priceSM": 50000,
+   "neighborhoodName": "החבשים",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 2310000,
+   "roomNum": 4,
+   "assetArea": 74.2,
+   "yearBuilt": 1970,
+   "priceSM": 31216,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 3350000,
+   "roomNum": 3,
+   "assetArea": 81,
+   "yearBuilt": 0,
+   "priceSM": 41358,
+   "neighborhoodName": "הולילנד",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 1254007,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15874,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 6450000,
+   "roomNum": 7.5,
+   "assetArea": 205,
+   "yearBuilt": 1960,
+   "priceSM": 31463,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 1559000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 14990,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 1959000,
+   "roomNum": 2,
+   "assetArea": 66.1,
+   "yearBuilt": 2023,
+   "priceSM": 29682,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 2020000,
+   "roomNum": 2,
+   "assetArea": 35,
+   "yearBuilt": 1970,
+   "priceSM": 57714,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 2120000,
+   "roomNum": 3,
+   "assetArea": 63.7,
+   "yearBuilt": 1970,
+   "priceSM": 33281,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 3790000,
+   "roomNum": 5,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 34455,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-09",
+   "dealAmount": 6450000,
+   "roomNum": 8,
+   "assetArea": 205,
+   "yearBuilt": 1960,
+   "priceSM": 31463,
+   "neighborhoodName": "קטמונים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-09",
+   "dealAmount": 1612883,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16628,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-09",
+   "dealAmount": 1657489,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 15937,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-09",
+   "dealAmount": 1674795,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16104,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-09",
+   "dealAmount": 1518580,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15655,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-09",
+   "dealAmount": 1559374,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16076,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 2262000,
+   "roomNum": 2,
+   "assetArea": 51,
+   "yearBuilt": 0,
+   "priceSM": 44353,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 2540000,
+   "roomNum": 4,
+   "assetArea": 92.5,
+   "yearBuilt": 2008,
+   "priceSM": 27609,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 3250000,
+   "roomNum": 4,
+   "assetArea": 71,
+   "yearBuilt": 1960,
+   "priceSM": 45775,
+   "neighborhoodName": "קרית משה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 1654000,
+   "roomNum": 4,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 13024,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 1500000,
+   "roomNum": 3,
+   "assetArea": 76.4,
+   "yearBuilt": 2001,
+   "priceSM": 19634,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 4497300,
+   "roomNum": 5,
+   "assetArea": 123,
+   "yearBuilt": 2015,
+   "priceSM": 36563,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 1905000,
+   "roomNum": 3,
+   "assetArea": 63.1,
+   "yearBuilt": 1970,
+   "priceSM": 30190,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 1419000,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 2023,
+   "priceSM": 17962,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 1830000,
+   "roomNum": 2,
+   "assetArea": 40,
+   "yearBuilt": 2028,
+   "priceSM": 45750,
+   "neighborhoodName": "בית וגן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 2300000,
+   "roomNum": 3,
+   "assetArea": 78.7,
+   "yearBuilt": 1995,
+   "priceSM": 29487,
+   "neighborhoodName": "גבעת משואה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 2021000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 20414,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 3040000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 30707,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 4600000,
+   "roomNum": 4,
+   "assetArea": 89,
+   "yearBuilt": 1980,
+   "priceSM": 51685,
+   "neighborhoodName": "קרית בעלז",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 2550000,
+   "roomNum": 3,
+   "assetArea": 67.9,
+   "yearBuilt": 1970,
+   "priceSM": 38060,
+   "neighborhoodName": "הגבעה הצרפתית - גבעת שפירא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1306560,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16539,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1518580,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15655,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1830000,
+   "roomNum": 2,
+   "assetArea": 40,
+   "yearBuilt": 0,
+   "priceSM": 45750,
+   "neighborhoodName": "בית וגן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1654722,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 15911,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 6025000,
+   "roomNum": 5,
+   "assetArea": 131,
+   "yearBuilt": 1960,
+   "priceSM": 45992,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1658254,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 15945,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 2400000,
+   "roomNum": 5,
+   "assetArea": 137,
+   "yearBuilt": 2023,
+   "priceSM": 17518,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 4450000,
+   "roomNum": 5,
+   "assetArea": 123,
+   "yearBuilt": 2015,
+   "priceSM": 36179,
+   "neighborhoodName": "תלפיות",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1665000,
+   "roomNum": 4,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 13008,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 4226000,
+   "roomNum": 5,
+   "assetArea": 115,
+   "yearBuilt": 0,
+   "priceSM": 36748,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1419299,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 0,
+   "priceSM": 18924,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 2018712,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15895,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 4150000,
+   "roomNum": 4,
+   "assetArea": 92,
+   "yearBuilt": 1930,
+   "priceSM": 45109,
+   "neighborhoodName": "עמק רפאים-המושבה הגרמנית",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1673324,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 16246,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 1350000,
+   "roomNum": 1,
+   "assetArea": 21.7,
+   "yearBuilt": 0,
+   "priceSM": 62212,
+   "neighborhoodName": "מחנה יהודה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2056614,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 16067,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2110000,
+   "roomNum": 4,
+   "assetArea": 74,
+   "yearBuilt": 1980,
+   "priceSM": 28514,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 103.9,
+   "yearBuilt": 1992,
+   "priceSM": 24272,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2009000,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15819,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 1275000,
+   "roomNum": 4,
+   "assetArea": 97.4,
+   "yearBuilt": 1970,
+   "priceSM": 13144,
+   "neighborhoodName": "רמת אשכול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2280000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1960,
+   "priceSM": 49565,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 1665553,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16015,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 1556166,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16043,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 1254007,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15874,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 6025500,
+   "roomNum": 5,
+   "assetArea": 131,
+   "yearBuilt": 1960,
+   "priceSM": 45996,
+   "neighborhoodName": "קטמונים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 3396980,
+   "roomNum": 4,
+   "assetArea": 92,
+   "yearBuilt": 0,
+   "priceSM": 36924,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 4226980,
+   "roomNum": 5,
+   "assetArea": 115,
+   "yearBuilt": 0,
+   "priceSM": 36756,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2180000,
+   "roomNum": 3,
+   "assetArea": 44.9,
+   "yearBuilt": 1960,
+   "priceSM": 49545,
+   "neighborhoodName": "קרית מנחם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2018072,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 19405,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2825000,
+   "roomNum": 4,
+   "assetArea": 107.17,
+   "yearBuilt": 1980,
+   "priceSM": 26360,
+   "neighborhoodName": "הר נוף",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2021652,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 20217,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2850000,
+   "roomNum": 3,
+   "assetArea": 84,
+   "yearBuilt": 0,
+   "priceSM": 33929,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 4800000,
+   "roomNum": 5,
+   "assetArea": 137,
+   "yearBuilt": 2023,
+   "priceSM": 35036,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2550000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 0,
+   "priceSM": 34000,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 5900000,
+   "roomNum": 5,
+   "assetArea": 136,
+   "yearBuilt": 0,
+   "priceSM": 43382,
+   "neighborhoodName": "הולילנד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 3550000,
+   "roomNum": 3,
+   "assetArea": 70.8,
+   "yearBuilt": 2016,
+   "priceSM": 50141,
+   "neighborhoodName": "קרית הלאום",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2628000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 0,
+   "priceSM": 35040,
+   "neighborhoodName": "בית צפפא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 5900000,
+   "roomNum": 5,
+   "assetArea": 136,
+   "yearBuilt": 0,
+   "priceSM": 43382,
+   "neighborhoodName": "הולילנד",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 1670851,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16066,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 6000000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 61856,
+   "neighborhoodName": "זכרון משה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2075000,
+   "roomNum": 3,
+   "assetArea": 67.3,
+   "yearBuilt": 1980,
+   "priceSM": 30970,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 3600000,
+   "roomNum": 5,
+   "assetArea": 113.65,
+   "yearBuilt": 0,
+   "priceSM": 31858,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 1298000,
+   "roomNum": 3,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 13381,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 1045000,
+   "roomNum": 3,
+   "assetArea": 63.3,
+   "yearBuilt": 1986,
+   "priceSM": 16509,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2457000,
+   "roomNum": 3,
+   "assetArea": 74.4,
+   "yearBuilt": 1980,
+   "priceSM": 33203,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2520000,
+   "roomNum": 4,
+   "assetArea": 66.1,
+   "yearBuilt": 1970,
+   "priceSM": 38124,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 1254007,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15874,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 1549838,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15978,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 943000,
+   "roomNum": 3,
+   "assetArea": 30,
+   "yearBuilt": 1970,
+   "priceSM": 31433,
+   "neighborhoodName": "רוממה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2850850,
+   "roomNum": 3,
+   "assetArea": 84,
+   "yearBuilt": 0,
+   "priceSM": 33939,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2009941,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15826,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 3787800,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 1970,
+   "priceSM": 50504,
+   "neighborhoodName": "סנהדריה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 3000000,
+   "roomNum": 4,
+   "assetArea": 77.4,
+   "yearBuilt": 1970,
+   "priceSM": 38760,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 1563612,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16120,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 2320000,
+   "roomNum": 3,
+   "assetArea": 65.7,
+   "yearBuilt": 1970,
+   "priceSM": 35692,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 2190000,
+   "roomNum": 2.5,
+   "assetArea": 58.1,
+   "yearBuilt": 1970,
+   "priceSM": 37759,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 3050000,
+   "roomNum": 3,
+   "assetArea": 59.5,
+   "yearBuilt": 1960,
+   "priceSM": 51695,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 6000000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 61856,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 1567000,
+   "roomNum": 4,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 12339,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 1298377,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16435,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 1700000,
+   "roomNum": 3,
+   "assetArea": 61.16,
+   "yearBuilt": 1990,
+   "priceSM": 27869,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 3474000,
+   "roomNum": 2,
+   "assetArea": 69,
+   "yearBuilt": 2027,
+   "priceSM": 50348,
+   "neighborhoodName": "אזור תעשיה רוממה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 1254007,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15874,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 3600000,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 28346,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 1518580,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15655,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 2450000,
+   "roomNum": 3,
+   "assetArea": 63,
+   "yearBuilt": 1960,
+   "priceSM": 38889,
+   "neighborhoodName": "קרית שמואל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 2775000,
+   "roomNum": 4,
+   "assetArea": 98.05,
+   "yearBuilt": 2008,
+   "priceSM": 28316,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 3900000,
+   "roomNum": 5,
+   "assetArea": 160,
+   "yearBuilt": 2014,
+   "priceSM": 24375,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 4450000,
+   "roomNum": 4,
+   "assetArea": 77,
+   "yearBuilt": 1960,
+   "priceSM": 57792,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 1312167,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16610,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 2001700,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15761,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 3474980,
+   "roomNum": 2,
+   "assetArea": 69,
+   "yearBuilt": 0,
+   "priceSM": 50362,
+   "neighborhoodName": "אזור תעשיה רוממה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 1567968,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16165,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 1514607,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15615,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 3065000,
+   "roomNum": 4,
+   "assetArea": 65.6,
+   "yearBuilt": 2031,
+   "priceSM": 46723,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2920000,
+   "roomNum": 3,
+   "assetArea": 70,
+   "yearBuilt": 2009,
+   "priceSM": 41714,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 1900000,
+   "roomNum": 4,
+   "assetArea": 76.7,
+   "yearBuilt": 1970,
+   "priceSM": 24772,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2150000,
+   "roomNum": 2,
+   "assetArea": 50,
+   "yearBuilt": 1970,
+   "priceSM": 43000,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2570000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 23578,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 3350000,
+   "roomNum": 4,
+   "assetArea": 91,
+   "yearBuilt": 1960,
+   "priceSM": 36813,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 3739000,
+   "roomNum": 5,
+   "assetArea": 131,
+   "yearBuilt": 2023,
+   "priceSM": 28542,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 75000,
+   "roomNum": 0,
+   "assetArea": 134.9,
+   "yearBuilt": 0,
+   "priceSM": 560,
+   "neighborhoodName": "קרית בעלז",
+   "dealNature": "חניה"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2410000,
+   "roomNum": 4,
+   "assetArea": 86,
+   "yearBuilt": 1999,
+   "priceSM": 28023,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 4200000,
+   "roomNum": 5,
+   "assetArea": 125.85,
+   "yearBuilt": 1992,
+   "priceSM": 33373,
+   "neighborhoodName": "הגבעה הצרפתית - גבעת שפירא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 3500000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 1980,
+   "priceSM": 36082,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 13250000,
+   "roomNum": 6,
+   "assetArea": 92,
+   "yearBuilt": 1950,
+   "priceSM": 144022,
+   "neighborhoodName": "טלביה-קוממויות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 1514000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15608,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2150000,
+   "roomNum": 3,
+   "assetArea": 67,
+   "yearBuilt": 1987,
+   "priceSM": 32090,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2700000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 1960,
+   "priceSM": 41538,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 1840000,
+   "roomNum": 3,
+   "assetArea": 68.4,
+   "yearBuilt": 1970,
+   "priceSM": 27059,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2880000,
+   "roomNum": 5,
+   "assetArea": 103,
+   "yearBuilt": 2007,
+   "priceSM": 27961,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2400000,
+   "roomNum": 2,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 51064,
+   "neighborhoodName": "החבשים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 3113000,
+   "roomNum": 2,
+   "assetArea": 44,
+   "yearBuilt": 2030,
+   "priceSM": 70750,
+   "neighborhoodName": "מקור ברוך",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 4223000,
+   "roomNum": 3,
+   "assetArea": 110,
+   "yearBuilt": 1960,
+   "priceSM": 38391,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1790000,
+   "roomNum": 3,
+   "assetArea": 68.7,
+   "yearBuilt": 1990,
+   "priceSM": 26055,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2060000,
+   "roomNum": 3,
+   "assetArea": 63,
+   "yearBuilt": 1990,
+   "priceSM": 32698,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2150000,
+   "roomNum": 2,
+   "assetArea": 50,
+   "yearBuilt": 1970,
+   "priceSM": 43000,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 13250000,
+   "roomNum": 6,
+   "assetArea": 174,
+   "yearBuilt": 1950,
+   "priceSM": 76149,
+   "neighborhoodName": "טלביה-קוממויות",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 4800000,
+   "roomNum": 3,
+   "assetArea": 86,
+   "yearBuilt": 1998,
+   "priceSM": 55814,
+   "neighborhoodName": "תל ארזה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2570730,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 24026,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1254007,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15874,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2375000,
+   "roomNum": 3,
+   "assetArea": 44,
+   "yearBuilt": 1960,
+   "priceSM": 53977,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1514607,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15615,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1576445,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16252,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1641345,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16921,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2075000,
+   "roomNum": 3,
+   "assetArea": 99.9,
+   "yearBuilt": 1992,
+   "priceSM": 20771,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1700000,
+   "roomNum": 3,
+   "assetArea": 60,
+   "yearBuilt": 1980,
+   "priceSM": 28333,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 4085000,
+   "roomNum": 4,
+   "assetArea": 112,
+   "yearBuilt": 2028,
+   "priceSM": 36473,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 3749900,
+   "roomNum": 4,
+   "assetArea": 95,
+   "yearBuilt": 1970,
+   "priceSM": 39473,
+   "neighborhoodName": "בית וגן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2300000,
+   "roomNum": 3,
+   "assetArea": 40,
+   "yearBuilt": 0,
+   "priceSM": 57500,
+   "neighborhoodName": "בית ישראל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2295105,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 21251,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2300000,
+   "roomNum": 3,
+   "assetArea": 64.7,
+   "yearBuilt": 1980,
+   "priceSM": 35938,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1296000,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16405,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1848855,
+   "roomNum": 3,
+   "assetArea": 84,
+   "yearBuilt": 0,
+   "priceSM": 22010,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2180000,
+   "roomNum": 0,
+   "assetArea": 236,
+   "yearBuilt": 0,
+   "priceSM": 9237,
+   "neighborhoodName": "קרית הלאום",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2650000,
+   "roomNum": 4,
+   "assetArea": 87.9,
+   "yearBuilt": 1995,
+   "priceSM": 30148,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1857605,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 23220,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 6000000,
+   "roomNum": 5,
+   "assetArea": 131,
+   "yearBuilt": 1950,
+   "priceSM": 45802,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2500000,
+   "roomNum": 2,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 53191,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 1673265,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16089,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2859600,
+   "roomNum": 1,
+   "assetArea": 174,
+   "yearBuilt": 0,
+   "priceSM": 16434,
+   "neighborhoodName": "קרית הלאום",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2050000,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1970,
+   "priceSM": 37273,
+   "neighborhoodName": "גאולים-בקעה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 3850000,
+   "roomNum": 5,
+   "assetArea": 112,
+   "yearBuilt": 2024,
+   "priceSM": 34375,
+   "neighborhoodName": "קרית מנחם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2330000,
+   "roomNum": 3,
+   "assetArea": 57,
+   "yearBuilt": 1970,
+   "priceSM": 40877,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 1254000,
+   "roomNum": 3,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 12058,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2580000,
+   "roomNum": 3,
+   "assetArea": 52.9,
+   "yearBuilt": 1960,
+   "priceSM": 48771,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 120.2,
+   "yearBuilt": 0,
+   "priceSM": 26622,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 3550000,
+   "roomNum": 3.5,
+   "assetArea": 67,
+   "yearBuilt": 1970,
+   "priceSM": 52985,
+   "neighborhoodName": "קרית משה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 952000,
+   "roomNum": 3,
+   "assetArea": 57,
+   "yearBuilt": 0,
+   "priceSM": 16702,
+   "neighborhoodName": "מחנה יהודה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 4223000,
+   "roomNum": 3,
+   "assetArea": 110,
+   "yearBuilt": 1960,
+   "priceSM": 38391,
+   "neighborhoodName": "קטמונים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 4085000,
+   "roomNum": 4,
+   "assetArea": 81,
+   "yearBuilt": 0,
+   "priceSM": 50432,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2480000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 2000,
+   "priceSM": 33973,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 1596989,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16464,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 1296273,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16409,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 3634400,
+   "roomNum": 1,
+   "assetArea": 236,
+   "yearBuilt": 0,
+   "priceSM": 15400,
+   "neighborhoodName": "קרית הלאום",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2280000,
+   "roomNum": 3,
+   "assetArea": 56,
+   "yearBuilt": 1960,
+   "priceSM": 40714,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2024414,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 15816,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 3215000,
+   "roomNum": 4,
+   "assetArea": 99.6,
+   "yearBuilt": 2023,
+   "priceSM": 32475,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2315000,
+   "roomNum": 4,
+   "assetArea": 85,
+   "yearBuilt": 1992,
+   "priceSM": 27235,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 2323200,
+   "roomNum": 3,
+   "assetArea": 62,
+   "yearBuilt": 1970,
+   "priceSM": 37471,
+   "neighborhoodName": "פת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 3630000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 2023,
+   "priceSM": 29040,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 3220000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 1980,
+   "priceSM": 30093,
+   "neighborhoodName": "הר נוף",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1600000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "בית ישראל",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1254007,
+   "roomNum": 3,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 12058,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1575650,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16244,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1320070,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16710,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 3301978,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 32058,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1660667,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 16123,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 3446000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 32206,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 2730000,
+   "roomNum": 3,
+   "assetArea": 69,
+   "yearBuilt": 1960,
+   "priceSM": 39565,
+   "neighborhoodName": "טלביה-קוממויות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1930000,
+   "roomNum": 3,
+   "assetArea": 56,
+   "yearBuilt": 1970,
+   "priceSM": 34464,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1750000,
+   "roomNum": 3,
+   "assetArea": 60.5,
+   "yearBuilt": 1980,
+   "priceSM": 29167,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 3640000,
+   "roomNum": 4,
+   "assetArea": 70.6,
+   "yearBuilt": 2016,
+   "priceSM": 52000,
+   "neighborhoodName": "קרית הלאום",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 2140000,
+   "roomNum": 2,
+   "assetArea": 39,
+   "yearBuilt": 1970,
+   "priceSM": 54872,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 4200000,
+   "roomNum": 5,
+   "assetArea": 105.45,
+   "yearBuilt": 2010,
+   "priceSM": 40000,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1670000,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 16214,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1302675,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16490,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 1738488,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16716,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 3090000,
+   "roomNum": 3,
+   "assetArea": 76,
+   "yearBuilt": 0,
+   "priceSM": 40658,
+   "neighborhoodName": "גאולים-בקעה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 3375000,
+   "roomNum": 2,
+   "assetArea": 30.9,
+   "yearBuilt": 1960,
+   "priceSM": 112500,
+   "neighborhoodName": "שמואל הנביא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 3130000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 26525,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 2600000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 1970,
+   "priceSM": 40000,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2030000,
+   "roomNum": 3,
+   "assetArea": 61,
+   "yearBuilt": 1980,
+   "priceSM": 33279,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2475000,
+   "roomNum": 4,
+   "assetArea": 80,
+   "yearBuilt": 1980,
+   "priceSM": 30938,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2050000,
+   "roomNum": 3,
+   "assetArea": 56,
+   "yearBuilt": 1970,
+   "priceSM": 36607,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2390000,
+   "roomNum": 4,
+   "assetArea": 83.8,
+   "yearBuilt": 1987,
+   "priceSM": 28795,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 800000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 1960,
+   "priceSM": 10667,
+   "neighborhoodName": "רחביה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2420000,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1960,
+   "priceSM": 44000,
+   "neighborhoodName": "בית וגן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 3130000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 26525,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2400000,
+   "roomNum": 3,
+   "assetArea": 92,
+   "yearBuilt": 0,
+   "priceSM": 26087,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1653000,
+   "roomNum": 4,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 13016,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1670557,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 16219,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 3746980,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 35019,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2493000,
+   "roomNum": 3.5,
+   "assetArea": 64,
+   "yearBuilt": 1970,
+   "priceSM": 38953,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1518580,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15655,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1254007,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 15874,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1625789,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 20580,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 3950000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 37264,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 3090000,
+   "roomNum": 3,
+   "assetArea": 76,
+   "yearBuilt": 0,
+   "priceSM": 40658,
+   "neighborhoodName": "גאולים-בקעה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 950000,
+   "roomNum": 3,
+   "assetArea": 64,
+   "yearBuilt": 1995,
+   "priceSM": 14844,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 3446980,
+   "roomNum": 4,
+   "assetArea": 94,
+   "yearBuilt": 0,
+   "priceSM": 36670,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 3000000,
+   "roomNum": 4,
+   "assetArea": 93,
+   "yearBuilt": 1982,
+   "priceSM": 32258,
+   "neighborhoodName": "הר נוף",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 2150000,
+   "roomNum": 3,
+   "assetArea": 63.7,
+   "yearBuilt": 1970,
+   "priceSM": 34127,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-25",
+   "dealAmount": 1649365,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 15859,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-25",
+   "dealAmount": 1297671,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16426,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-25",
+   "dealAmount": 1653721,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 15901,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-25",
+   "dealAmount": 1701638,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16362,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-25",
+   "dealAmount": 1962024,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15449,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-25",
+   "dealAmount": 2008469,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15815,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-24",
+   "dealAmount": 3881000,
+   "roomNum": 2,
+   "assetArea": 53,
+   "yearBuilt": 2030,
+   "priceSM": 73226,
+   "neighborhoodName": "מקור ברוך",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 1950000,
+   "roomNum": 3,
+   "assetArea": 62.4,
+   "yearBuilt": 1980,
+   "priceSM": 31452,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 1514000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 14558,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 3180000,
+   "roomNum": 4,
+   "assetArea": 63,
+   "yearBuilt": 1974,
+   "priceSM": 50476,
+   "neighborhoodName": "קרית משה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 3400000,
+   "roomNum": 5,
+   "assetArea": 111,
+   "yearBuilt": 1980,
+   "priceSM": 30631,
+   "neighborhoodName": "הר נוף",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 4680000,
+   "roomNum": 5,
+   "assetArea": 133,
+   "yearBuilt": 2022,
+   "priceSM": 35188,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 3859000,
+   "roomNum": 2,
+   "assetArea": 52,
+   "yearBuilt": 0,
+   "priceSM": 74212,
+   "neighborhoodName": "מקור ברוך",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 8750000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 67308,
+   "neighborhoodName": "מקור ברוך",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 4587000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 45416,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 3881000,
+   "roomNum": 2,
+   "assetArea": 53,
+   "yearBuilt": 0,
+   "priceSM": 73226,
+   "neighborhoodName": "מקור ברוך",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 920000,
+   "roomNum": 0,
+   "assetArea": 127,
+   "yearBuilt": 2019,
+   "priceSM": 7244,
+   "neighborhoodName": "אזור תעשיה גבעת שאול",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 7380000,
+   "roomNum": 5,
+   "assetArea": 148,
+   "yearBuilt": 0,
+   "priceSM": 49865,
+   "neighborhoodName": "מקור חיים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 2550000,
+   "roomNum": 2.5,
+   "assetArea": 51,
+   "yearBuilt": 1960,
+   "priceSM": 50000,
+   "neighborhoodName": "בית וגן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 3200000,
+   "roomNum": 4,
+   "assetArea": 82.6,
+   "yearBuilt": 1992,
+   "priceSM": 38741,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 3350000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 1970,
+   "priceSM": 45890,
+   "neighborhoodName": "רמת אשכול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 2500000,
+   "roomNum": 3,
+   "assetArea": 53,
+   "yearBuilt": 0,
+   "priceSM": 47170,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 1514607,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15615,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 1723536,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16572,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 1287267,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 16295,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 1597696,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16471,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 57,
+   "yearBuilt": 1990,
+   "priceSM": 33333,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 1651308,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 15878,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 7380000,
+   "roomNum": 5,
+   "assetArea": 148,
+   "yearBuilt": 0,
+   "priceSM": 49865,
+   "neighborhoodName": "מקור חיים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 1700402,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16350,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-22",
+   "dealAmount": 4587000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 45416,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-21",
+   "dealAmount": 2446000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 22440,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-21",
+   "dealAmount": 2065000,
+   "roomNum": 3,
+   "assetArea": 76,
+   "yearBuilt": 0,
+   "priceSM": 27171,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3090000,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 1960,
+   "priceSM": 40130,
+   "neighborhoodName": "קרית משה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 4000000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 30769,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 7250000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 2027,
+   "priceSM": 66514,
+   "neighborhoodName": "רחביה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2850000,
+   "roomNum": 5,
+   "assetArea": 99.2,
+   "yearBuilt": 1980,
+   "priceSM": 28788,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3250000,
+   "roomNum": 5,
+   "assetArea": 125.1,
+   "yearBuilt": 0,
+   "priceSM": 26000,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3532000,
+   "roomNum": 3,
+   "assetArea": 60,
+   "yearBuilt": 1971,
+   "priceSM": 58867,
+   "neighborhoodName": "המושבה היוונית",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2084000,
+   "roomNum": 3,
+   "assetArea": 47.8,
+   "yearBuilt": 1970,
+   "priceSM": 44340,
+   "neighborhoodName": "קרית מנחם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 725000,
+   "roomNum": 0,
+   "assetArea": 29,
+   "yearBuilt": 0,
+   "priceSM": 25000,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 247000,
+   "roomNum": 0,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 3800,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 408000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 5350000,
+   "roomNum": 0,
+   "assetArea": 82,
+   "yearBuilt": 0,
+   "priceSM": 65244,
+   "neighborhoodName": "מחנה יהודה",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2340000,
+   "roomNum": 4,
+   "assetArea": 76,
+   "yearBuilt": 2018,
+   "priceSM": 30789,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2610000,
+   "roomNum": 0,
+   "assetArea": 53,
+   "yearBuilt": 0,
+   "priceSM": 49245,
+   "neighborhoodName": "מחנה יהודה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2058855,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 19063,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3940000,
+   "roomNum": 2,
+   "assetArea": 67,
+   "yearBuilt": 2029,
+   "priceSM": 58806,
+   "neighborhoodName": "אזור תעשיה גבעת שאול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2446980,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 22657,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 1825000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 2023,
+   "priceSM": 18814,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3170000,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 2023,
+   "priceSM": 18982,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2470000,
+   "roomNum": 2,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 53696,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3150000,
+   "roomNum": 4,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 37952,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3640000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 33394,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 3000000,
+   "roomNum": 3,
+   "assetArea": 86,
+   "yearBuilt": 0,
+   "priceSM": 34884,
+   "neighborhoodName": "מקור חיים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 1553000,
+   "roomNum": 4,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 12228,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 1200000,
+   "roomNum": 1,
+   "assetArea": 154,
+   "yearBuilt": 0,
+   "priceSM": 7792,
+   "neighborhoodName": "מחנה יהודה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 2650000,
+   "roomNum": 3,
+   "assetArea": 59,
+   "yearBuilt": 0,
+   "priceSM": 44915,
+   "neighborhoodName": "נחלאות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1701403,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16360,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 7250000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 66514,
+   "neighborhoodName": "רחביה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1324000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 2023,
+   "priceSM": 17653,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1706995,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16413,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 2004996,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15787,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 3880000,
+   "roomNum": 4,
+   "assetArea": 90.12,
+   "yearBuilt": 2013,
+   "priceSM": 43111,
+   "neighborhoodName": "עין כרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1805000,
+   "roomNum": 3,
+   "assetArea": 59.5,
+   "yearBuilt": 1980,
+   "priceSM": 30593,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1670000,
+   "roomNum": 4,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 13047,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 3100000,
+   "roomNum": 3,
+   "assetArea": 73.2,
+   "yearBuilt": 0,
+   "priceSM": 42466,
+   "neighborhoodName": "נחלאות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 8226000,
+   "roomNum": 5,
+   "assetArea": 147,
+   "yearBuilt": 0,
+   "priceSM": 55959,
+   "neighborhoodName": "גאולים-בקעה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 33,
+   "yearBuilt": 0,
+   "priceSM": 35758,
+   "neighborhoodName": "מאה שערים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 3170423,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 0,
+   "priceSM": 18985,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 3640000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 0,
+   "priceSM": 33394,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 3300000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 31731,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 6200000,
+   "roomNum": 4,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 68132,
+   "neighborhoodName": "עמק רפאים-המושבה הגרמנית",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 3940000,
+   "roomNum": 2,
+   "assetArea": 67,
+   "yearBuilt": 0,
+   "priceSM": 58806,
+   "neighborhoodName": "אזור תעשיה גבעת שאול",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 4556000,
+   "roomNum": 5,
+   "assetArea": 115,
+   "yearBuilt": 0,
+   "priceSM": 39617,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1596489,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16459,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 3000000,
+   "roomNum": 3,
+   "assetArea": 86,
+   "yearBuilt": 0,
+   "priceSM": 34884,
+   "neighborhoodName": "מקור חיים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-19",
+   "dealAmount": 1553399,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 16014,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 1662316,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 15984,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 1324773,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 0,
+   "priceSM": 17664,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 2347882,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 18343,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 1670557,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 16063,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 8226000,
+   "roomNum": 5,
+   "assetArea": 147,
+   "yearBuilt": 0,
+   "priceSM": 55959,
+   "neighborhoodName": "גאולים-בקעה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 1700000,
+   "roomNum": 4,
+   "assetArea": 123,
+   "yearBuilt": 0,
+   "priceSM": 13821,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 1518580,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 15655,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 4556809,
+   "roomNum": 5,
+   "assetArea": 115,
+   "yearBuilt": 0,
+   "priceSM": 39624,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 2001935,
+   "roomNum": 5,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 15763,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-18",
+   "dealAmount": 6200000,
+   "roomNum": 4,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 68132,
+   "neighborhoodName": "עמק רפאים-המושבה הגרמנית",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 1841000,
+   "roomNum": 0,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 18979,
+   "neighborhoodName": "הר נוף",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 1841000,
+   "roomNum": 0,
+   "assetArea": 2759,
+   "yearBuilt": 2019,
+   "priceSM": 667,
+   "neighborhoodName": "אזור תעשיה גבעת שאול",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 1116666,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1960,
+   "priceSM": 20303,
+   "neighborhoodName": "עמק רפאים-המושבה הגרמנית",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 4800000,
+   "roomNum": 4,
+   "assetArea": 122.3,
+   "yearBuilt": 1997,
+   "priceSM": 39344,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 2300000,
+   "roomNum": 3,
+   "assetArea": 70.7,
+   "yearBuilt": 1970,
+   "priceSM": 32857,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 3650000,
+   "roomNum": 5,
+   "assetArea": 100.8,
+   "yearBuilt": 2004,
+   "priceSM": 36210,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 400000,
+   "roomNum": 0,
+   "assetArea": 4623,
+   "yearBuilt": 0,
+   "priceSM": 87,
+   "neighborhoodName": "רמות",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 2841000,
+   "roomNum": 0,
+   "assetArea": 150,
+   "yearBuilt": 0,
+   "priceSM": 18940,
+   "neighborhoodName": "הר נוף",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 1846000,
+   "roomNum": 0,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 19031,
+   "neighborhoodName": "הר נוף",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 2095000,
+   "roomNum": 3,
+   "assetArea": 51.5,
+   "yearBuilt": 1960,
+   "priceSM": 41078,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 3210000,
+   "roomNum": 5,
+   "assetArea": 114.7,
+   "yearBuilt": 0,
+   "priceSM": 27986,
+   "neighborhoodName": "רמת שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 85000,
+   "roomNum": 0,
+   "assetArea": 596,
+   "yearBuilt": 1960,
+   "priceSM": 143,
+   "neighborhoodName": "עמק רפאים-המושבה הגרמנית",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 3949000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2015,
+   "priceSM": 37255,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 86,
+   "yearBuilt": 1990,
+   "priceSM": 29070,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 2680000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 1998,
+   "priceSM": 36712,
+   "neighborhoodName": "גבעת שאול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 200000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "מחנה יהודה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 1966000,
+   "roomNum": 3,
+   "assetArea": 85,
+   "yearBuilt": 0,
+   "priceSM": 23129,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 1016000,
+   "roomNum": 3,
+   "assetArea": 76,
+   "yearBuilt": 1970,
+   "priceSM": 13368,
+   "neighborhoodName": "המושבה היוונית",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 3530000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 2028,
+   "priceSM": 36392,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 3907500,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 2015,
+   "priceSM": 36863,
+   "neighborhoodName": "תלפיות",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 3490000,
+   "roomNum": 3,
+   "assetArea": 84,
+   "yearBuilt": 1970,
+   "priceSM": 41548,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 2140000,
+   "roomNum": 5,
+   "assetArea": 136,
+   "yearBuilt": 2023,
+   "priceSM": 15735,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 2800000,
+   "roomNum": 3,
+   "assetArea": 63,
+   "yearBuilt": 1980,
+   "priceSM": 44444,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 2650000,
+   "roomNum": 4,
+   "assetArea": 96,
+   "yearBuilt": 2010,
+   "priceSM": 27604,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 2400000,
+   "roomNum": 2.5,
+   "assetArea": 51.65,
+   "yearBuilt": 1970,
+   "priceSM": 47059,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1324000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 2023,
+   "priceSM": 17653,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 3888800,
+   "roomNum": 3,
+   "assetArea": 108.6,
+   "yearBuilt": 1960,
+   "priceSM": 35808,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 2125000,
+   "roomNum": 2,
+   "assetArea": 51.9,
+   "yearBuilt": 1980,
+   "priceSM": 41667,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1980000,
+   "roomNum": 3,
+   "assetArea": 60.2,
+   "yearBuilt": 1970,
+   "priceSM": 33000,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1850000,
+   "roomNum": 3,
+   "assetArea": 61.9,
+   "yearBuilt": 1990,
+   "priceSM": 29887,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1966980,
+   "roomNum": 3,
+   "assetArea": 84,
+   "yearBuilt": 0,
+   "priceSM": 23416,
+   "neighborhoodName": "בית חנינא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1320000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 2023,
+   "priceSM": 17600,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1980000,
+   "roomNum": 5,
+   "assetArea": 116.6,
+   "yearBuilt": 1991,
+   "priceSM": 16981,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 2350000,
+   "roomNum": 3,
+   "assetArea": 49,
+   "yearBuilt": 1960,
+   "priceSM": 47959,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 1950000,
+   "roomNum": 2,
+   "assetArea": 32,
+   "yearBuilt": 1950,
+   "priceSM": 60938,
+   "neighborhoodName": "קרית שמואל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 1920000,
+   "roomNum": 4,
+   "assetArea": 75.8,
+   "yearBuilt": 1970,
+   "priceSM": 25330,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 779000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 1970,
+   "priceSM": 7637,
+   "neighborhoodName": "רחביה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 1324773,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 0,
+   "priceSM": 17664,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 3390000,
+   "roomNum": 5,
+   "assetArea": 109.3,
+   "yearBuilt": 2015,
+   "priceSM": 31101,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 1320131,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 0,
+   "priceSM": 17602,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 2130000,
+   "roomNum": 3,
+   "assetArea": 53.9,
+   "yearBuilt": 1970,
+   "priceSM": 39518,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 6525000,
+   "roomNum": 5,
+   "assetArea": 158,
+   "yearBuilt": 0,
+   "priceSM": 41297,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 3009000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 2000,
+   "priceSM": 40120,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 5290000,
+   "roomNum": 5,
+   "assetArea": 123,
+   "yearBuilt": 2022,
+   "priceSM": 43008,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 2690000,
+   "roomNum": 4,
+   "assetArea": 77.9,
+   "yearBuilt": 1970,
+   "priceSM": 34935,
+   "neighborhoodName": "הגבעה הצרפתית - גבעת שפירא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 5290880,
+   "roomNum": 5,
+   "assetArea": 123,
+   "yearBuilt": 0,
+   "priceSM": 43015,
+   "neighborhoodName": "קטמונים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 5062000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 50620,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 4340000,
+   "roomNum": 5,
+   "assetArea": 139,
+   "yearBuilt": 2031,
+   "priceSM": 31223,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 2596000,
+   "roomNum": 3,
+   "assetArea": 70.9,
+   "yearBuilt": 2032,
+   "priceSM": 37086,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 357000,
+   "roomNum": 0,
+   "assetArea": 29.45,
+   "yearBuilt": 2014,
+   "priceSM": 12310,
+   "neighborhoodName": "רוממה",
+   "dealNature": "מחסנים"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 300000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 1960,
+   "priceSM": 0,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "מחסנים"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 6525000,
+   "roomNum": 5,
+   "assetArea": 143,
+   "yearBuilt": 0,
+   "priceSM": 45629,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 3200000,
+   "roomNum": 2,
+   "assetArea": 58,
+   "yearBuilt": 1950,
+   "priceSM": 55172,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 3009793,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 2000,
+   "priceSM": 40131,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 3250000,
+   "roomNum": 3,
+   "assetArea": 87,
+   "yearBuilt": 0,
+   "priceSM": 37356,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 2600000,
+   "roomNum": 3,
+   "assetArea": 70.9,
+   "yearBuilt": 2032,
+   "priceSM": 36671,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 1950000,
+   "roomNum": 2,
+   "assetArea": 45.5,
+   "yearBuilt": 1970,
+   "priceSM": 43333,
+   "neighborhoodName": "נווה יעקב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-11",
+   "dealAmount": 5062000,
+   "roomNum": 4,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 40175,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-10",
+   "dealAmount": 5815000,
+   "roomNum": 5,
+   "assetArea": 96,
+   "yearBuilt": 1960,
+   "priceSM": 60573,
+   "neighborhoodName": "שמואל הנביא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-09",
+   "dealAmount": 1830000,
+   "roomNum": 3,
+   "assetArea": 60,
+   "yearBuilt": 1980,
+   "priceSM": 30500,
+   "neighborhoodName": "תלפיות מזרח",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-09",
+   "dealAmount": 2100000,
+   "roomNum": 3,
+   "assetArea": 75.5,
+   "yearBuilt": 1995,
+   "priceSM": 28000,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-09",
+   "dealAmount": 2120000,
+   "roomNum": 2,
+   "assetArea": 47.3,
+   "yearBuilt": 2014,
+   "priceSM": 44820,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-09",
+   "dealAmount": 5815439,
+   "roomNum": 5,
+   "assetArea": 96,
+   "yearBuilt": 1960,
+   "priceSM": 60577,
+   "neighborhoodName": "שמואל הנביא",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-09",
+   "dealAmount": 2350000,
+   "roomNum": 3,
+   "assetArea": 78,
+   "yearBuilt": 0,
+   "priceSM": 30128,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 2350000,
+   "roomNum": 3,
+   "assetArea": 78,
+   "yearBuilt": 0,
+   "priceSM": 30128,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-06",
+   "dealAmount": 16800000,
+   "roomNum": 6,
+   "assetArea": 210,
+   "yearBuilt": 1950,
+   "priceSM": 80000,
+   "neighborhoodName": "טלביה-קוממויות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-05",
+   "dealAmount": 16800000,
+   "roomNum": 6,
+   "assetArea": 210,
+   "yearBuilt": 1950,
+   "priceSM": 80000,
+   "neighborhoodName": "טלביה-קוממויות",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-01",
+   "dealAmount": 2300000,
+   "roomNum": 3,
+   "assetArea": 57.42,
+   "yearBuilt": 1970,
+   "priceSM": 40056,
+   "neighborhoodName": "הגבעה הצרפתית - גבעת שפירא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-01",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 1990,
+   "priceSM": 24675,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 5995000,
+   "roomNum": 4,
+   "assetArea": 96,
+   "yearBuilt": 1960,
+   "priceSM": 62448,
+   "neighborhoodName": "שמואל הנביא",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 5750200,
+   "roomNum": 4,
+   "assetArea": 91.5,
+   "yearBuilt": 2002,
+   "priceSM": 63189,
+   "neighborhoodName": "רמת שרת",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 5000000,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 41322,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 1990000,
+   "roomNum": 3,
+   "assetArea": 59.6,
+   "yearBuilt": 1970,
+   "priceSM": 33729,
+   "neighborhoodName": "גילה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2000000,
+   "roomNum": 1,
+   "assetArea": 40,
+   "yearBuilt": 0,
+   "priceSM": 50000,
+   "neighborhoodName": "נחלאות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 1070000,
+   "roomNum": 3,
+   "assetArea": 48.4,
+   "yearBuilt": 1960,
+   "priceSM": 22292,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 4250000,
+   "roomNum": 4,
+   "assetArea": 71,
+   "yearBuilt": 1970,
+   "priceSM": 59859,
+   "neighborhoodName": "תלפיות",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2050000,
+   "roomNum": 3,
+   "assetArea": 56.13,
+   "yearBuilt": 1970,
+   "priceSM": 36607,
+   "neighborhoodName": "קרית היובל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 242000,
+   "roomNum": 0,
+   "assetArea": 119.2,
+   "yearBuilt": 1950,
+   "priceSM": 2034,
+   "neighborhoodName": "מנחת-מלחה",
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2550000,
+   "roomNum": 4,
+   "assetArea": 128.5,
+   "yearBuilt": 2007,
+   "priceSM": 19922,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2900000,
+   "roomNum": 3,
+   "assetArea": 59.5,
+   "yearBuilt": 1960,
+   "priceSM": 49153,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 6549000,
+   "roomNum": 5,
+   "assetArea": 143,
+   "yearBuilt": 2029,
+   "priceSM": 45797,
+   "neighborhoodName": "אזור תעשיה גבעת שאול",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2470000,
+   "roomNum": 4,
+   "assetArea": 81.9,
+   "yearBuilt": 2005,
+   "priceSM": 30494,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 6170000,
+   "roomNum": 5,
+   "assetArea": 143,
+   "yearBuilt": 0,
+   "priceSM": 43147,
+   "neighborhoodName": "גבעת המטוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 4929000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 46065,
+   "neighborhoodName": "קטמונים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2290000,
+   "roomNum": 4,
+   "assetArea": 80,
+   "yearBuilt": 1970,
+   "priceSM": 28625,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 3600000,
+   "roomNum": 5,
+   "assetArea": 114.1,
+   "yearBuilt": 2015,
+   "priceSM": 31579,
+   "neighborhoodName": "חומת שמואל-הר חומה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 3890000,
+   "roomNum": 4,
+   "assetArea": 70,
+   "yearBuilt": 1970,
+   "priceSM": 55571,
+   "neighborhoodName": "סנהדריה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 3571000,
+   "roomNum": 4,
+   "assetArea": 61.6,
+   "yearBuilt": 2031,
+   "priceSM": 57971,
+   "neighborhoodName": "עיר גנים א",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 4947072,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 46234,
+   "neighborhoodName": "קטמונים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 1075000,
+   "roomNum": 3,
+   "assetArea": 63.8,
+   "yearBuilt": 1990,
+   "priceSM": 16850,
+   "neighborhoodName": "פסגת זאב",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 2850000,
+   "roomNum": 2,
+   "assetArea": 53,
+   "yearBuilt": 1950,
+   "priceSM": 53774,
+   "neighborhoodName": "בית הכרם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 2485000,
+   "roomNum": 3.5,
+   "assetArea": 64.9,
+   "yearBuilt": 1980,
+   "priceSM": 38828,
+   "neighborhoodName": "רמות",
+   "dealNature": "דירה בבית קומות"
+  }
+ ]
+}

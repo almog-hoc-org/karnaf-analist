@@ -1,15 +1,15 @@
 {
   "cityName": "סח'נין",
-  "lastUpdated": "2026-06-24T06:59:08.875Z",
+  "lastUpdated": "2026-07-21T09:17:57.208Z",
   "neighborhoods": [
     {
       "neighborhood": "רמת רבין",
-      "totalDeals": 850,
-      "dealsPerYearAvg": 121,
+      "totalDeals": 857,
+      "dealsPerYearAvg": 122,
       "streets": [
         {
           "streetName": "חטיבת גבעתי",
-          "totalDeals": 182,
+          "totalDeals": 183,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -30,10 +30,10 @@
                     "pricePerSqm": 18955,
                     "totalPrice": 1270000,
                     "area": 67,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "חטיבת גבעתי",
                     "blocksAway": 61,
-                    "dealDate": "2023-02-16T00:00:00Z"
+                    "dealDate": "2023-02-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -44,10 +44,10 @@
                     "pricePerSqm": 14328,
                     "totalPrice": 960000,
                     "area": 67,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "חטיבת גבעתי",
                     "blocksAway": 49,
-                    "dealDate": "2020-12-25T00:00:00Z"
+                    "dealDate": "2020-12-25T00:00:00.000Z"
                   }
                 }
               ]
@@ -144,7 +144,7 @@
         },
         {
           "streetName": "חטיבת יפתח",
-          "totalDeals": 105,
+          "totalDeals": 106,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -186,14 +186,12 @@
                   "period": "current",
                   "year": 2026,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 14382,
-                    "totalPrice": 1280000,
-                    "area": 89,
-                    "houseNum": "57.0",
-                    "streetName": "חטיבת יפתח",
-                    "blocksAway": 88,
-                    "dealDate": "2026-03-25T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 15524,
+                    "avgTotalPrice": 1390000,
+                    "avgArea": 90
                   }
                 },
                 {
@@ -204,10 +202,10 @@
                     "pricePerSqm": 18750,
                     "totalPrice": 1500000,
                     "area": 80,
-                    "houseNum": "55.0",
+                    "houseNum": 55,
                     "streetName": "חטיבת יפתח",
                     "blocksAway": 90,
-                    "dealDate": "2023-08-09T00:00:00Z"
+                    "dealDate": "2023-08-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -238,10 +236,10 @@
                     "pricePerSqm": 14382,
                     "totalPrice": 1280000,
                     "area": 89,
-                    "houseNum": "57.0",
+                    "houseNum": 57,
                     "streetName": "חטיבת יפתח",
                     "blocksAway": 88,
-                    "dealDate": "2026-03-25T00:00:00Z"
+                    "dealDate": "2026-03-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -297,10 +295,10 @@
                     "pricePerSqm": 13881,
                     "totalPrice": 930000,
                     "area": 67,
-                    "houseNum": "39.0",
+                    "houseNum": 39,
                     "streetName": "הגליל",
                     "blocksAway": 22,
-                    "dealDate": "2026-01-14T00:00:00Z"
+                    "dealDate": "2026-01-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -343,10 +341,10 @@
                     "pricePerSqm": 12821,
                     "totalPrice": 1000000,
                     "area": 78,
-                    "houseNum": "69.0",
+                    "houseNum": 69,
                     "streetName": "הגליל",
                     "blocksAway": 8,
-                    "dealDate": "2026-01-12T00:00:00Z"
+                    "dealDate": "2026-01-12T00:00:00.000Z"
                   }
                 },
                 {
@@ -439,10 +437,10 @@
                     "pricePerSqm": 11765,
                     "totalPrice": 800000,
                     "area": 68,
-                    "houseNum": "57.0",
+                    "houseNum": 57,
                     "streetName": "צה\"ל",
                     "blocksAway": 0,
-                    "dealDate": "2026-03-05T00:00:00Z"
+                    "dealDate": "2026-03-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -482,13 +480,13 @@
                   "year": 2026,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 12500,
-                    "totalPrice": 1300000,
-                    "area": 104,
-                    "houseNum": "83.0",
+                    "pricePerSqm": 11130,
+                    "totalPrice": 1280000,
+                    "area": 115,
+                    "houseNum": 35,
                     "streetName": "צה\"ל",
-                    "blocksAway": 26,
-                    "dealDate": "2025-06-17T00:00:00Z"
+                    "blocksAway": 22,
+                    "dealDate": "2025-02-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -499,10 +497,10 @@
                     "pricePerSqm": 11650,
                     "totalPrice": 1165000,
                     "area": 100,
-                    "houseNum": "35.0",
+                    "houseNum": 31,
                     "streetName": "צה\"ל",
-                    "blocksAway": 22,
-                    "dealDate": "2023-09-10T00:00:00Z"
+                    "blocksAway": 26,
+                    "dealDate": "2023-09-10T00:00:00.000Z"
                   }
                 },
                 {
@@ -546,10 +544,10 @@
                     "pricePerSqm": 21471,
                     "totalPrice": 1460000,
                     "area": 68,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "אשכולות",
                     "blocksAway": 192,
-                    "dealDate": "2026-03-11T00:00:00Z"
+                    "dealDate": "2026-03-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -592,10 +590,10 @@
                     "pricePerSqm": 15989,
                     "totalPrice": 1455000,
                     "area": 91,
-                    "houseNum": "122.0",
+                    "houseNum": 122,
                     "streetName": "אשכולות",
                     "blocksAway": 72,
-                    "dealDate": "2026-01-06T00:00:00Z"
+                    "dealDate": "2026-01-06T00:00:00.000Z"
                   }
                 },
                 {
@@ -693,10 +691,10 @@
                     "pricePerSqm": 19048,
                     "totalPrice": 1200000,
                     "area": 63,
-                    "houseNum": "37.0",
+                    "houseNum": 37,
                     "streetName": "שדמה",
                     "blocksAway": 28,
-                    "dealDate": "2022-11-17T00:00:00Z"
+                    "dealDate": "2022-11-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -707,10 +705,10 @@
                     "pricePerSqm": 19048,
                     "totalPrice": 1200000,
                     "area": 63,
-                    "houseNum": "37.0",
+                    "houseNum": 37,
                     "streetName": "שדמה",
                     "blocksAway": 28,
-                    "dealDate": "2022-11-17T00:00:00Z"
+                    "dealDate": "2022-11-17T00:00:00.000Z"
                   }
                 }
               ]
@@ -729,10 +727,10 @@
                     "pricePerSqm": 18500,
                     "totalPrice": 1480000,
                     "area": 80,
-                    "houseNum": "65.0",
+                    "houseNum": 65,
                     "streetName": "שדמה",
                     "blocksAway": 0,
-                    "dealDate": "2025-06-05T00:00:00Z"
+                    "dealDate": "2025-06-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -755,10 +753,10 @@
                     "pricePerSqm": 13205,
                     "totalPrice": 1030000,
                     "area": 78,
-                    "houseNum": "65.0",
+                    "houseNum": 65,
                     "streetName": "שדמה",
                     "blocksAway": 0,
-                    "dealDate": "2022-03-28T00:00:00Z"
+                    "dealDate": "2022-03-28T00:00:00.000Z"
                   }
                 }
               ]
@@ -777,10 +775,10 @@
                     "pricePerSqm": 13426,
                     "totalPrice": 1450000,
                     "area": 108,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "שדמה",
                     "blocksAway": 48,
-                    "dealDate": "2026-05-24T00:00:00Z"
+                    "dealDate": "2026-05-24T00:00:00.000Z"
                   }
                 },
                 {
@@ -814,7 +812,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1716,
+  "totalDealsAnalyzed": 1723,
   "periodYears": {
     "current": 2026,
     "minus3": 2023,

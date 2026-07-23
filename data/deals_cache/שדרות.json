@@ -1,7 +1,296 @@
 {
   "cityName": "שדרות",
-  "lastUpdated": "2026-06-24T07:02:30.794Z",
+  "lastUpdated": "2026-07-21T09:24:27.833Z",
   "neighborhoods": [
+    {
+      "neighborhood": "נאות יצחק רבין",
+      "totalDeals": 391,
+      "dealsPerYearAvg": 56,
+      "streets": [
+        {
+          "streetName": "אמבר",
+          "totalDeals": 174,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 13565,
+                    "avgTotalPrice": 1153750,
+                    "avgArea": 85
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 9834,
+                    "avgTotalPrice": 873333,
+                    "avgArea": 89
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 10587,
+                    "avgTotalPrice": 859667,
+                    "avgArea": 81
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 13036,
+                    "avgTotalPrice": 1335100,
+                    "avgArea": 104
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 12,
+                    "threshold": 10,
+                    "avgPricePerSqm": 12923,
+                    "avgTotalPrice": 1372000,
+                    "avgArea": 106
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 15,
+                    "threshold": 15,
+                    "avgPricePerSqm": 10107,
+                    "avgTotalPrice": 1063875,
+                    "avgArea": 103
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 9,
+                    "threshold": 5,
+                    "avgPricePerSqm": 9834,
+                    "avgTotalPrice": 1351222,
+                    "avgArea": 133
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 10987,
+                    "avgTotalPrice": 1200100,
+                    "avgArea": 124
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 9752,
+                    "avgTotalPrice": 1170000,
+                    "avgArea": 120
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "כצנלסון",
+          "totalDeals": 52,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14314,
+                    "avgTotalPrice": 1216667,
+                    "avgArea": 85
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15647,
+                    "totalPrice": 1330000,
+                    "area": 85,
+                    "houseNum": 1,
+                    "streetName": "כצנלסון",
+                    "blocksAway": 0,
+                    "dealDate": "2022-05-04T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 8993,
+                    "avgTotalPrice": 757750,
+                    "avgArea": 84
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 9088,
+                    "avgTotalPrice": 890000,
+                    "avgArea": 97
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 11923,
+                    "avgTotalPrice": 1216500,
+                    "avgArea": 102
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 9231,
+                    "totalPrice": 960000,
+                    "area": 104,
+                    "houseNum": 1,
+                    "streetName": "כצנלסון",
+                    "blocksAway": 0,
+                    "dealDate": "2020-11-22T00:00:00.000Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 11090,
+                    "avgTotalPrice": 1545000,
+                    "avgArea": 140
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 9862,
+                    "avgTotalPrice": 1230000,
+                    "avgArea": 129
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 8384,
+                    "totalPrice": 1048000,
+                    "area": 125,
+                    "houseNum": 1,
+                    "streetName": "כצנלסון",
+                    "blocksAway": 0,
+                    "dealDate": "2021-06-02T00:00:00.000Z"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       "neighborhood": "בן גוריון",
       "totalDeals": 308,
@@ -143,10 +432,10 @@
                     "pricePerSqm": 7765,
                     "totalPrice": 660000,
                     "area": 85,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "הרב מימון",
                     "blocksAway": 0,
-                    "dealDate": "2021-06-11T00:00:00Z"
+                    "dealDate": "2021-06-11T00:00:00.000Z"
                   }
                 }
               ]
@@ -189,10 +478,10 @@
                     "pricePerSqm": 6811,
                     "totalPrice": 647000,
                     "area": 95,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "הרב מימון",
                     "blocksAway": 0,
-                    "dealDate": "2020-12-11T00:00:00Z"
+                    "dealDate": "2020-12-11T00:00:00.000Z"
                   }
                 }
               ]
@@ -247,12 +536,12 @@
     },
     {
       "neighborhood": "בן גוריון ב",
-      "totalDeals": 206,
-      "dealsPerYearAvg": 29,
+      "totalDeals": 208,
+      "dealsPerYearAvg": 30,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 118,
+          "totalDeals": 119,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -392,10 +681,10 @@
                     "pricePerSqm": 6667,
                     "totalPrice": 600000,
                     "area": 90,
-                    "houseNum": "66.0",
+                    "houseNum": 66,
                     "streetName": "הרב יוסף עובדיה",
                     "blocksAway": 8,
-                    "dealDate": "2026-01-15T00:00:00Z"
+                    "dealDate": "2026-01-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -436,10 +725,10 @@
                     "pricePerSqm": 13500,
                     "totalPrice": 1350000,
                     "area": 100,
-                    "houseNum": "74.0",
+                    "houseNum": 74,
                     "streetName": "הרב יוסף עובדיה",
                     "blocksAway": 0,
-                    "dealDate": "2022-01-23T00:00:00Z"
+                    "dealDate": "2022-01-23T00:00:00.000Z"
                   }
                 },
                 {
@@ -496,301 +785,9 @@
           ]
         }
       ]
-    },
-    {
-      "neighborhood": "נאות המייסדים",
-      "totalDeals": 134,
-      "dealsPerYearAvg": 19,
-      "streets": [
-        {
-          "streetName": "הוורד",
-          "totalDeals": 42,
-          "sizeBuckets": [
-            {
-              "label": "~80 מ\"ר",
-              "targetArea": 80,
-              "minArea": 68,
-              "maxArea": 92,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 11333,
-                    "totalPrice": 850000,
-                    "area": 75,
-                    "houseNum": "17.0",
-                    "streetName": "הוורד",
-                    "blocksAway": 27,
-                    "dealDate": "2024-10-09T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": null
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": null
-                }
-              ]
-            },
-            {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 88,
-              "maxArea": 115,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 9292,
-                    "totalPrice": 1050000,
-                    "area": 113,
-                    "houseNum": "1.0",
-                    "streetName": "הוורד",
-                    "blocksAway": 43,
-                    "dealDate": "2025-02-17T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 2160,
-                    "totalPrice": 220363,
-                    "area": 102,
-                    "houseNum": "11.0",
-                    "streetName": "הוורד",
-                    "blocksAway": 33,
-                    "dealDate": "2022-11-10T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 6944,
-                    "totalPrice": 750000,
-                    "area": 108,
-                    "houseNum": "17.0",
-                    "streetName": "הוורד",
-                    "blocksAway": 27,
-                    "dealDate": "2021-04-14T00:00:00Z"
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 111,
-              "maxArea": 156,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 9292,
-                    "totalPrice": 1050000,
-                    "area": 113,
-                    "houseNum": "1.0",
-                    "streetName": "הוורד",
-                    "blocksAway": 43,
-                    "dealDate": "2025-02-17T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 8333,
-                    "totalPrice": 1150000,
-                    "area": 138,
-                    "houseNum": "16.0",
-                    "streetName": "הוורד",
-                    "blocksAway": 28,
-                    "dealDate": "2021-11-14T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 8333,
-                    "totalPrice": 1150000,
-                    "area": 138,
-                    "houseNum": "16.0",
-                    "streetName": "הוורד",
-                    "blocksAway": 28,
-                    "dealDate": "2021-11-14T00:00:00Z"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "streetName": "אהבת ישראל",
-          "totalDeals": 15,
-          "sizeBuckets": [
-            {
-              "label": "~80 מ\"ר",
-              "targetArea": 80,
-              "minArea": 68,
-              "maxArea": 92,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 10667,
-                    "totalPrice": 800000,
-                    "area": 75,
-                    "houseNum": "10.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 0,
-                    "dealDate": "2024-07-02T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 8867,
-                    "totalPrice": 665000,
-                    "area": 75,
-                    "houseNum": "10.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 0,
-                    "dealDate": "2021-03-07T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 8867,
-                    "totalPrice": 665000,
-                    "area": 75,
-                    "houseNum": "10.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 0,
-                    "dealDate": "2021-03-07T00:00:00Z"
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 88,
-              "maxArea": 115,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 9545,
-                    "totalPrice": 1050000,
-                    "area": 110,
-                    "houseNum": "10.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 0,
-                    "dealDate": "2025-11-17T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 8289,
-                    "totalPrice": 945000,
-                    "area": 114,
-                    "houseNum": "10.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 0,
-                    "dealDate": "2023-05-24T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 7150,
-                    "totalPrice": 715000,
-                    "area": 100,
-                    "houseNum": "10.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 0,
-                    "dealDate": "2021-06-08T00:00:00Z"
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 111,
-              "maxArea": 156,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 8983,
-                    "totalPrice": 1060000,
-                    "area": 118,
-                    "houseNum": "10.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 0,
-                    "dealDate": "2025-04-07T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 6333,
-                    "totalPrice": 760000,
-                    "area": 120,
-                    "houseNum": "12.0",
-                    "streetName": "אהבת ישראל",
-                    "blocksAway": 2,
-                    "dealDate": "2022-08-11T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": null
-                }
-              ]
-            }
-          ]
-        }
-      ]
     }
   ],
-  "totalDealsAnalyzed": 648,
+  "totalDealsAnalyzed": 1141,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

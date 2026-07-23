@@ -1,15 +1,15 @@
 {
   "cityName": "נתניה",
-  "lastUpdated": "2026-06-24T06:59:01.740Z",
+  "lastUpdated": "2026-07-21T09:17:44.290Z",
   "neighborhoods": [
     {
       "neighborhood": "נאות הרצל",
-      "totalDeals": 535,
-      "dealsPerYearAvg": 76,
+      "totalDeals": 537,
+      "dealsPerYearAvg": 77,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 101,
+          "totalDeals": 102,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -119,7 +119,7 @@
         },
         {
           "streetName": "יוספטל",
-          "totalDeals": 89,
+          "totalDeals": 90,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -179,10 +179,10 @@
                     "pricePerSqm": 16304,
                     "totalPrice": 1500000,
                     "area": 92,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "יוספטל",
                     "blocksAway": 1,
-                    "dealDate": "2024-04-16T00:00:00Z"
+                    "dealDate": "2024-04-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -203,7 +203,7 @@
     },
     {
       "neighborhood": "נאות גנים - שיכון ותיקים",
-      "totalDeals": 216,
+      "totalDeals": 217,
       "dealsPerYearAvg": 31,
       "streets": [
         {
@@ -267,10 +267,10 @@
                     "pricePerSqm": 19783,
                     "totalPrice": 1820000,
                     "area": 92,
-                    "houseNum": "16.0",
+                    "houseNum": 16,
                     "streetName": "הרב פריגיה זוארץ",
                     "blocksAway": 0,
-                    "dealDate": "2025-03-07T00:00:00Z"
+                    "dealDate": "2025-03-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -278,10 +278,10 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 22053,
-                    "avgTotalPrice": 1636667,
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 22353,
+                    "avgTotalPrice": 1642500,
                     "avgArea": 74
                   }
                 },
@@ -290,11 +290,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
+                    "count": 3,
                     "threshold": 2,
-                    "avgPricePerSqm": 14262,
-                    "avgTotalPrice": 1208889,
-                    "avgArea": 85
+                    "avgPricePerSqm": 14300,
+                    "avgTotalPrice": 1196852,
+                    "avgArea": 84
                   }
                 }
               ]
@@ -325,10 +325,10 @@
                     "pricePerSqm": 16667,
                     "totalPrice": 1550000,
                     "area": 93,
-                    "houseNum": "16.0",
+                    "houseNum": 16,
                     "streetName": "הרב פריגיה זוארץ",
                     "blocksAway": 0,
-                    "dealDate": "2022-06-23T00:00:00Z"
+                    "dealDate": "2022-06-23T00:00:00.000Z"
                   }
                 },
                 {
@@ -338,9 +338,9 @@
                     "type": "aggregated",
                     "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 14302,
-                    "avgTotalPrice": 1287500,
-                    "avgArea": 90
+                    "avgPricePerSqm": 13807,
+                    "avgTotalPrice": 1290000,
+                    "avgArea": 94
                   }
                 }
               ]
@@ -350,151 +350,13 @@
       ]
     },
     {
-      "neighborhood": "גבעת האירוסים",
-      "totalDeals": 214,
+      "neighborhood": "נוף גלים",
+      "totalDeals": 215,
       "dealsPerYearAvg": 31,
       "streets": [
         {
-          "streetName": "אירוס הארגמן",
-          "totalDeals": 99,
-          "sizeBuckets": [
-            {
-              "label": "~80 מ\"ר",
-              "targetArea": 80,
-              "minArea": 68,
-              "maxArea": 92,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 26512,
-                    "avgTotalPrice": 2252700,
-                    "avgArea": 85
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 25515,
-                    "avgTotalPrice": 2182500,
-                    "avgArea": 86
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 20795,
-                    "avgTotalPrice": 1734000,
-                    "avgArea": 83
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 88,
-              "maxArea": 115,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 26342,
-                    "avgTotalPrice": 2478950,
-                    "avgArea": 95
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 19129,
-                    "avgTotalPrice": 1894161,
-                    "avgArea": 99
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 7,
-                    "threshold": 5,
-                    "avgPricePerSqm": 17237,
-                    "avgTotalPrice": 1650000,
-                    "avgArea": 96
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 111,
-              "maxArea": 156,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 19076,
-                    "avgTotalPrice": 2495000,
-                    "avgArea": 133
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 6,
-                    "threshold": 5,
-                    "avgPricePerSqm": 19305,
-                    "avgTotalPrice": 2373333,
-                    "avgArea": 118
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 8,
-                    "threshold": 5,
-                    "avgPricePerSqm": 13715,
-                    "avgTotalPrice": 1731875,
-                    "avgArea": 124
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "streetName": "חרצית",
-          "totalDeals": 81,
+          "streetName": "הבריגדה היהודית",
+          "totalDeals": 88,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -507,25 +369,27 @@
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 30833,
-                    "totalPrice": 2775000,
-                    "area": 90,
-                    "houseNum": "50.0",
-                    "streetName": "חרצית",
-                    "blocksAway": 0,
-                    "dealDate": "2025-03-10T00:00:00Z"
+                    "pricePerSqm": 25625,
+                    "totalPrice": 2050000,
+                    "area": 80,
+                    "houseNum": 21,
+                    "streetName": "הבריגדה היהודית",
+                    "blocksAway": 27,
+                    "dealDate": "2025-06-24T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 25884,
-                    "avgTotalPrice": 2215000,
-                    "avgArea": 86
+                    "type": "single",
+                    "pricePerSqm": 21957,
+                    "totalPrice": 2020000,
+                    "area": 92,
+                    "houseNum": 25,
+                    "streetName": "הבריגדה היהודית",
+                    "blocksAway": 23,
+                    "dealDate": "2022-10-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -535,9 +399,9 @@
                     "type": "aggregated",
                     "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 18023,
-                    "avgTotalPrice": 1550000,
-                    "avgArea": 86
+                    "avgPricePerSqm": 13709,
+                    "avgTotalPrice": 1185000,
+                    "avgArea": 88
                   }
                 }
               ]
@@ -555,9 +419,9 @@
                     "type": "aggregated",
                     "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 28843,
-                    "avgTotalPrice": 2837500,
-                    "avgArea": 99
+                    "avgPricePerSqm": 21157,
+                    "avgTotalPrice": 2317350,
+                    "avgArea": 110
                   }
                 },
                 {
@@ -565,11 +429,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 20389,
-                    "avgTotalPrice": 1992500,
-                    "avgArea": 98
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 19254,
+                    "avgTotalPrice": 2032875,
+                    "avgArea": 106
                   }
                 },
                 {
@@ -577,11 +441,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 7,
-                    "threshold": 5,
-                    "avgPricePerSqm": 17478,
-                    "avgTotalPrice": 1814643,
-                    "avgArea": 105
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14603,
+                    "avgTotalPrice": 1435225,
+                    "avgArea": 98
                   }
                 }
               ]
@@ -597,11 +461,100 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 4,
                     "threshold": 2,
-                    "avgPricePerSqm": 19440,
-                    "avgTotalPrice": 2418300,
-                    "avgArea": 125
+                    "avgPricePerSqm": 17758,
+                    "avgTotalPrice": 2291250,
+                    "avgArea": 130
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 19737,
+                    "avgTotalPrice": 2400000,
+                    "avgArea": 118
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 10,
+                    "threshold": 10,
+                    "avgPricePerSqm": 15943,
+                    "avgTotalPrice": 1984000,
+                    "avgArea": 123
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "יעקב דורי",
+          "totalDeals": 49,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 68,
+              "maxArea": 92,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 23049,
+                    "avgTotalPrice": 2050000,
+                    "avgArea": 89
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": null
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16011,
+                    "totalPrice": 1425000,
+                    "area": 89,
+                    "houseNum": 7,
+                    "streetName": "יעקב דורי",
+                    "blocksAway": 1,
+                    "dealDate": "2020-05-20T00:00:00.000Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 88,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 21649,
+                    "avgTotalPrice": 2257025,
+                    "avgArea": 104
                   }
                 },
                 {
@@ -611,9 +564,9 @@
                     "type": "aggregated",
                     "count": 8,
                     "threshold": 5,
-                    "avgPricePerSqm": 18118,
-                    "avgTotalPrice": 2136667,
-                    "avgArea": 124
+                    "avgPricePerSqm": 22568,
+                    "avgTotalPrice": 2281250,
+                    "avgArea": 102
                   }
                 },
                 {
@@ -621,11 +574,55 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 8,
+                    "count": 6,
                     "threshold": 5,
-                    "avgPricePerSqm": 14985,
-                    "avgTotalPrice": 1789444,
-                    "avgArea": 118
+                    "avgPricePerSqm": 17125,
+                    "avgTotalPrice": 1741667,
+                    "avgArea": 102
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~130 מ\"ר",
+              "targetArea": 130,
+              "minArea": 111,
+              "maxArea": 156,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 21246,
+                    "avgTotalPrice": 2439000,
+                    "avgArea": 115
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 21007,
+                    "avgTotalPrice": 2518667,
+                    "avgArea": 120
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 15652,
+                    "avgTotalPrice": 1882000,
+                    "avgArea": 120
                   }
                 }
               ]
@@ -635,7 +632,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1355,
+  "totalDealsAnalyzed": 1360,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

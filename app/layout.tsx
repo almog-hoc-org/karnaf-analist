@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Heebo } from "next/font/google";
+import { Assistant } from "next/font/google";
 import "./globals.css";
 import RefreshDataButton from "@/components/RefreshDataButton";
+import TopNav from "@/components/TopNav";
+import SiteFooter from "@/components/SiteFooter";
+import { prisma } from "@/lib/db";
 
-const heebo = Heebo({
+const assistant = Assistant({
   subsets: ["hebrew", "latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-heebo",
@@ -11,19 +14,31 @@ const heebo = Heebo({
 });
 
 export const metadata: Metadata = {
-  title: 'מחקר נדל"ן ישראל | לוח מידע',
-  description: 'לוח מידע לניתוח שוק הנדל"ן בישראל — מחירים, היצע, ביקוש ונתוני בנייה',
+  title: 'קרנף אנליסט | מחקר שוק הדיור בישראל',
+  description: 'פורטל מחקר לשוק הנדל"ן בישראל — מחירים, עסקאות, היצע, ביקוש ונתוני בנייה',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // city list for the global search (server-side, cached per request)
+  let cityNames: string[] = [];
+  try {
+    const rows = await prisma.city.findMany({
+      select: { city_name: true },
+      orderBy: { population_2026: "desc" },
+    });
+    cityNames = rows.map((r) => r.city_name);
+  } catch {
+    cityNames = [];
+  }
+
   return (
     <html lang="he" dir="rtl">
       <body
-        className={`${heebo.variable} font-heebo text-slate-900 antialiased min-h-screen relative`}
+        className={`${assistant.variable} font-heebo text-slate-900 antialiased min-h-screen relative`}
       >
         {/* Subtle grid texture overlay for depth */}
         <div
@@ -34,7 +49,9 @@ export default function RootLayout({
             backgroundSize: "48px 48px",
           }}
         />
+        <TopNav cities={cityNames} />
         <div className="relative">{children}</div>
+        <SiteFooter />
         <RefreshDataButton />
       </body>
     </html>

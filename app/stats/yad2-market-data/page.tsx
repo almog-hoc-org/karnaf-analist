@@ -1,8 +1,7 @@
 import { prisma } from "@/lib/db";
-import Link from "next/link";
 import SortableTable, { type Yad2Row } from "./SortableTable";
 
-export const metadata = { title: 'יד2 — נתוני מצב שוק לפי עיר | מחקר נדל"ן ישראל' };
+export const metadata = { title: 'יד2 — נתוני מצב שוק לפי עיר | קרנף אנליסט' };
 
 function fmt(v: number | null | undefined): string {
   if (v === null || v === undefined) return "—";
@@ -50,23 +49,13 @@ export default async function Yad2DetailPage() {
 
   return (
     <main className="min-h-screen px-4 py-8 max-w-7xl mx-auto">
-      <nav className="flex items-center justify-between mb-6">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-cyan-700 transition-colors">
-          <span>←</span>
-          <span>חזרה לדף הבית</span>
-        </Link>
-        <Link href="/sources/yad2-data" className="text-sm text-slate-600 hover:text-cyan-700 transition-colors">
-          על המקור: יד2 →
-        </Link>
-      </nav>
-
       <header className="mb-8">
         <div className="flex items-start gap-4">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-amber-100 text-amber-700">
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50 text-indigo-700">
             🏘️
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-amber-700">יד2</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-indigo-700">יד2</p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
               נתוני מצב שוק — לפי עיר
             </h1>
@@ -75,7 +64,7 @@ export default async function Yad2DetailPage() {
             </p>
             <div className="flex flex-wrap gap-3 mt-3 text-sm">
               <span className="px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700 tabular-nums shadow-sm">
-                <span className="font-bold text-amber-700">{rows.length}</span>
+                <span className="font-bold text-indigo-700">{rows.length}</span>
                 <span className="text-slate-500 mr-1.5">ערים</span>
               </span>
               {lastScraped && (
@@ -90,21 +79,21 @@ export default async function Yad2DetailPage() {
 
       {/* Aggregate stats */}
       <section className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-        <div className="kpi-card glow-amber">
+        <div className="kpi-card glow-indigo">
           <div className="stat-label">סה"כ מודעות חדשות</div>
-          <div className="stat-large text-amber-700 mt-2 tabular-nums">{fmt(totals.new)}</div>
+          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmt(totals.new)}</div>
         </div>
-        <div className="kpi-card glow-cyan">
+        <div className="kpi-card glow-indigo">
           <div className="stat-label">סה"כ יד שנייה</div>
-          <div className="stat-large text-cyan-700 mt-2 tabular-nums">{fmt(totals.sh)}</div>
+          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmt(totals.sh)}</div>
         </div>
-        <div className="kpi-card glow-purple">
+        <div className="kpi-card glow-indigo">
           <div className="stat-label">סה"כ קונים פעילים</div>
-          <div className="stat-large text-purple-700 mt-2 tabular-nums">{fmt(totals.buyers)}</div>
+          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmt(totals.buyers)}</div>
         </div>
-        <div className="kpi-card glow-emerald">
+        <div className="kpi-card glow-indigo">
           <div className="stat-label">ממוצע ימים בשוק</div>
-          <div className="stat-large text-emerald-700 mt-2 tabular-nums">{avgDays ? Math.round(avgDays) : "—"}</div>
+          <div className="stat-large text-slate-900 mt-2 tabular-nums">{avgDays ? Math.round(avgDays) : "—"}</div>
         </div>
       </section>
 
@@ -112,9 +101,9 @@ export default async function Yad2DetailPage() {
       <section className="mb-6 glass-card p-4">
         <h3 className="text-sm font-bold text-slate-900 mb-3">סיווג שוק לפי עיר</h3>
         <div className="grid grid-cols-3 gap-3 text-center">
-          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200">
-            <div className="text-2xl font-extrabold text-rose-700 tabular-nums">{sellersCount}</div>
-            <div className="text-xs text-rose-700 font-semibold mt-1">שוק מוכרים</div>
+          <div className="p-3 rounded-xl bg-red-50 border border-red-200">
+            <div className="text-2xl font-extrabold text-red-600 tabular-nums">{sellersCount}</div>
+            <div className="text-xs text-red-600 font-semibold mt-1">שוק מוכרים</div>
             <div className="text-[10px] text-slate-600 mt-0.5">היצע נמוך → מחירים עולים</div>
           </div>
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
@@ -132,7 +121,7 @@ export default async function Yad2DetailPage() {
 
       {/* Main table */}
       <div className="glass-card overflow-hidden">
-        <div className="h-1 bg-gradient-to-l from-amber-500 to-amber-600" />
+        <div className="h-1 bg-gradient-to-l from-indigo-500 to-indigo-600" />
         <div className="px-3 py-2 text-[11px] text-slate-500 bg-slate-50 border-b border-slate-100">
           💡 לחיצה על כותרת עמודה ממיינת את הטבלה. לחיצה נוספת הופכת את כיוון המיון.
         </div>
@@ -151,10 +140,6 @@ export default async function Yad2DetailPage() {
         </ul>
       </div>
 
-      <footer className="mt-8 pt-6 border-t border-slate-200 text-center text-xs text-slate-500">
-        מקור: yad2.co.il — Yad2 Data |{" "}
-        <Link href="/sources/yad2-data" className="text-cyan-700 hover:underline">פרטים על המקור</Link>
-      </footer>
     </main>
   );
 }

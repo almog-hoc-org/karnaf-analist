@@ -1,8 +1,52 @@
 {
   "cityName": "רהט",
-  "lastUpdated": "2026-06-24T07:01:42.699Z",
-  "neighborhoods": [],
-  "totalDealsAnalyzed": 4,
+  "lastUpdated": "2026-07-21T09:23:00.034Z",
+  "neighborhoods": [
+    {
+      "neighborhood": "14",
+      "totalDeals": 6,
+      "dealsPerYearAvg": 2,
+      "streets": [
+        {
+          "streetName": "(ללא רחוב)",
+          "totalDeals": 6,
+          "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": null
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 15223,
+                    "avgTotalPrice": 905000,
+                    "avgArea": 59
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": null
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "totalDealsAnalyzed": 6,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

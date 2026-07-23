@@ -1,15 +1,15 @@
 {
   "cityName": "פרדסייה",
-  "lastUpdated": "2026-06-24T07:00:06.530Z",
+  "lastUpdated": "2026-07-21T09:19:48.278Z",
   "neighborhoods": [
     {
       "neighborhood": "נאות שקד",
-      "totalDeals": 873,
+      "totalDeals": 874,
       "dealsPerYearAvg": 125,
       "streets": [
         {
           "streetName": "שמורק",
-          "totalDeals": 216,
+          "totalDeals": 220,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -22,10 +22,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 34,
+                    "count": 38,
                     "threshold": 15,
-                    "avgPricePerSqm": 33761,
-                    "avgTotalPrice": 2211400,
+                    "avgPricePerSqm": 33774,
+                    "avgTotalPrice": 2212205,
                     "avgArea": 65
                   }
                 },
@@ -66,11 +66,11 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 15,
+                    "count": 16,
                     "threshold": 15,
-                    "avgPricePerSqm": 32271,
-                    "avgTotalPrice": 2422533,
-                    "avgArea": 77
+                    "avgPricePerSqm": 32352,
+                    "avgTotalPrice": 2418000,
+                    "avgArea": 76
                   }
                 },
                 {
@@ -93,10 +93,10 @@
                     "pricePerSqm": 15893,
                     "totalPrice": 1335000,
                     "area": 84,
-                    "houseNum": "18.0",
+                    "houseNum": 18,
                     "streetName": "שמורק",
                     "blocksAway": 2,
-                    "dealDate": "2021-04-30T00:00:00Z"
+                    "dealDate": "2021-04-30T00:00:00.000Z"
                   }
                 }
               ]
@@ -114,8 +114,8 @@
                     "type": "aggregated",
                     "count": 64,
                     "threshold": 15,
-                    "avgPricePerSqm": 30504,
-                    "avgTotalPrice": 3100937,
+                    "avgPricePerSqm": 30516,
+                    "avgTotalPrice": 3102143,
                     "avgArea": 102
                   }
                 },
@@ -127,10 +127,10 @@
                     "pricePerSqm": 18605,
                     "totalPrice": 1600000,
                     "area": 86,
-                    "houseNum": "18.0",
+                    "houseNum": 18,
                     "streetName": "שמורק",
                     "blocksAway": 2,
-                    "dealDate": "2023-03-01T00:00:00Z"
+                    "dealDate": "2023-03-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -144,7 +144,7 @@
         },
         {
           "streetName": "בן צבי",
-          "totalDeals": 208,
+          "totalDeals": 204,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -160,10 +160,10 @@
                     "pricePerSqm": 7866,
                     "totalPrice": 527000,
                     "area": 67,
-                    "houseNum": "104.0",
+                    "houseNum": 104,
                     "streetName": "בן צבי",
                     "blocksAway": 34,
-                    "dealDate": "2026-03-24T00:00:00Z"
+                    "dealDate": "2026-03-24T00:00:00.000Z"
                   }
                 },
                 {
@@ -203,10 +203,10 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 56,
+                    "count": 53,
                     "threshold": 15,
-                    "avgPricePerSqm": 32560,
-                    "avgTotalPrice": 2743685,
+                    "avgPricePerSqm": 32552,
+                    "avgTotalPrice": 2744137,
                     "avgArea": 84
                   }
                 },
@@ -218,10 +218,10 @@
                     "pricePerSqm": 18824,
                     "totalPrice": 1280000,
                     "area": 68,
-                    "houseNum": "68.0",
+                    "houseNum": 68,
                     "streetName": "בן צבי",
                     "blocksAway": 2,
-                    "dealDate": "2022-05-19T00:00:00Z"
+                    "dealDate": "2022-05-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -249,11 +249,11 @@
                   "year": 2026,
                   "sample": {
                     "type": "aggregated",
-                    "count": 47,
+                    "count": 45,
                     "threshold": 15,
-                    "avgPricePerSqm": 30922,
-                    "avgTotalPrice": 3189596,
-                    "avgArea": 103
+                    "avgPricePerSqm": 30932,
+                    "avgTotalPrice": 3201826,
+                    "avgArea": 104
                   }
                 },
                 {
@@ -274,12 +274,12 @@
     },
     {
       "neighborhood": "נאות הרצל",
-      "totalDeals": 535,
-      "dealsPerYearAvg": 76,
+      "totalDeals": 537,
+      "dealsPerYearAvg": 77,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 101,
+          "totalDeals": 102,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -359,7 +359,7 @@
         },
         {
           "streetName": "יוספטל",
-          "totalDeals": 89,
+          "totalDeals": 90,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -375,10 +375,10 @@
                     "pricePerSqm": 25000,
                     "totalPrice": 1350000,
                     "area": 54,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "יוספטל",
                     "blocksAway": 10,
-                    "dealDate": "2025-11-17T00:00:00Z"
+                    "dealDate": "2025-11-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -421,10 +421,10 @@
                     "pricePerSqm": 20548,
                     "totalPrice": 1500000,
                     "area": 73,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "יוספטל",
                     "blocksAway": 0,
-                    "dealDate": "2025-05-20T00:00:00Z"
+                    "dealDate": "2025-05-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -462,7 +462,16 @@
                 {
                   "period": "current",
                   "year": 2026,
-                  "sample": null
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 16106,
+                    "totalPrice": 1675000,
+                    "area": 104,
+                    "houseNum": 5,
+                    "streetName": "יוספטל",
+                    "blocksAway": 3,
+                    "dealDate": "2026-04-26T00:00:00.000Z"
+                  }
                 },
                 {
                   "period": "minus3",
@@ -472,10 +481,10 @@
                     "pricePerSqm": 16304,
                     "totalPrice": 1500000,
                     "area": 92,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "יוספטל",
                     "blocksAway": 1,
-                    "dealDate": "2024-04-16T00:00:00Z"
+                    "dealDate": "2024-04-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -491,7 +500,7 @@
     },
     {
       "neighborhood": "קריית יצחק רבין",
-      "totalDeals": 298,
+      "totalDeals": 299,
       "dealsPerYearAvg": 43,
       "streets": [
         {
@@ -611,10 +620,10 @@
                     "pricePerSqm": 23643,
                     "totalPrice": 2648000,
                     "area": 112,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "הפארק",
                     "blocksAway": 8,
-                    "dealDate": "2023-06-06T00:00:00Z"
+                    "dealDate": "2023-06-06T00:00:00.000Z"
                   }
                 },
                 {
@@ -625,10 +634,10 @@
                     "pricePerSqm": 16909,
                     "totalPrice": 1860000,
                     "area": 110,
-                    "houseNum": "23.0",
+                    "houseNum": 23,
                     "streetName": "הפארק",
                     "blocksAway": 2,
-                    "dealDate": "2021-05-29T00:00:00Z"
+                    "dealDate": "2021-05-29T00:00:00.000Z"
                   }
                 }
               ]
@@ -638,7 +647,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1920,
+  "totalDealsAnalyzed": 1924,
   "periodYears": {
     "current": 2026,
     "minus3": 2023,

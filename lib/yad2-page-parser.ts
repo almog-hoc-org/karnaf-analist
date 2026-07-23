@@ -23,6 +23,12 @@ export interface YadataKpis {
   market_type: "sellers" | "buyers" | "balanced" | null;
   households: number | null;
   avg_household_size: number | null;
+  // "מד השוק" — Yadata's market gauge (numeric, varies by city — typically a
+  // small integer or percentage). Null when not found on the page.
+  market_gauge: number | null;
+  // "מדד התפשרות" — average % gap between asking price and actual deal price.
+  // Positive value means sellers are accepting LESS than asking.
+  compromise_index: number | null;
 }
 
 function parseHebrewYoY(text: string): number | null {
@@ -53,6 +59,8 @@ export function parseYadataPage(pageText: string): YadataKpis {
     market_type: null,
     households: null,
     avg_household_size: null,
+    market_gauge: null,
+    compromise_index: null,
   };
 
   const lines = pageText.split("\n").map((l) => l.trim()).filter((l) => l.length > 0);
@@ -113,6 +121,66 @@ export function parseYadataPage(pageText: string): YadataKpis {
     result.market_type = "sellers";
   } else if (/שוק ידידותי לקונים בדרך כלל/.test(pageText)) {
     result.market_type = "buyers";
+  }
+
+  // "מד השוק" (Market Gauge) — Yadata shows a numeric gauge that quantifies the
+  // sellers/buyers tilt. We try several layouts because the page changes slowly:
+  //
+  //   variant A — line-pair: <number>\nמד השוק
+  //   variant B — inline:    "מד השוק: 7.5"  or  "מד השוק 7.5"
+  //   variant C — with %:    "מד השוק 64%"
+  //
+  // The first matching pattern wins.
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i] === "מד השוק" || lines[i].includes("מד השוק")) {
+      // variant A — number on previous line
+      const prevNum = parseFloat(lines[i - 1].replace(/[,%]/g, "").trim());
+      if (!isNaN(prevNum) && prevNum >= 0 && prevNum <= 1000) {
+        result.market_gauge = prevNum;
+        break;
+      }
+    }
+  }
+  if (result.market_gauge === null) {
+    // variants B and C — inline match on the whole text
+    const m = pageText.match(/מד השוק[:\s]+(\d+(?:\.\d+)?)%?/);
+    if (m) {
+      const v = parseFloat(m[1]);
+      if (!isNaN(v) && v >= 0 && v <= 1000) result.market_gauge = v;
+    }
+  }
+
+  // "מדד התפשרות" (Compromise Index) — average % gap between asking price and
+  // actual deal price. Always shown as a percentage in Yadata.
+  //
+  //   variant A — line-pair: "3.5%"\nמדד התפשרות
+  //   variant B — inline:    "מדד התפשרות 3.5%"  or  "מדד התפשרות: 3.5%"
+  //   variant C — explanation: "X% פער בין מחיר מבוקש למחיר עסקה"
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i] === "מדד התפשרות" || lines[i].includes("מדד התפשרות")) {
+      const pctMatch = lines[i - 1].match(/(\d+(?:\.\d+)?)%/);
+      if (pctMatch) {
+        const v = parseFloat(pctMatch[1]);
+        if (!isNaN(v) && v >= -100 && v <= 100) {
+          result.compromise_index = v;
+          break;
+        }
+      }
+    }
+  }
+  if (result.compromise_index === null) {
+    const m = pageText.match(/מדד התפשרות[:\s]+(-?\d+(?:\.\d+)?)%/);
+    if (m) {
+      const v = parseFloat(m[1]);
+      if (!isNaN(v) && v >= -100 && v <= 100) result.compromise_index = v;
+    }
+  }
+  if (result.compromise_index === null) {
+    const m = pageText.match(/(\d+(?:\.\d+)?)%\s+פער בין מחיר מבוקש/);
+    if (m) {
+      const v = parseFloat(m[1]);
+      if (!isNaN(v) && v >= -100 && v <= 100) result.compromise_index = v;
+    }
   }
 
   return result;

@@ -1,0 +1,2825 @@
+{
+  "cityName": "ראשון לציון",
+  "lastUpdated": "2026-07-03T14:40:20.035Z",
+  "totalRawDealsFetched": 5906,
+  "totalDealsKept": 3761,
+  "byYear": {
+    "2016": {
+      "year": 2016,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 18679.59595959596,
+              "medianPricePerSqm": 18888.88888888889,
+              "avgPrice": 1296000,
+              "medianPrice": 1080000,
+              "dealCount": 5
+            },
+            "3": {
+              "avgPricePerSqm": 19982.668371345688,
+              "medianPricePerSqm": 20080.645161290322,
+              "avgPrice": 1305548.3193277312,
+              "medianPrice": 1300000,
+              "dealCount": 119
+            },
+            "4": {
+              "avgPricePerSqm": 17031.600663043373,
+              "medianPricePerSqm": 17022.727272727272,
+              "avgPrice": 1487916.6666666667,
+              "medianPrice": 1492500,
+              "dealCount": 72
+            },
+            "5+": {
+              "avgPricePerSqm": 16326.235271979782,
+              "medianPricePerSqm": 16101.694915254237,
+              "avgPrice": 2167319.14893617,
+              "medianPrice": 2100000,
+              "dealCount": 47
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 31165.028665028665,
+              "medianPricePerSqm": 31165.028665028665,
+              "avgPrice": 1092500,
+              "medianPrice": 1092500,
+              "dealCount": 2
+            },
+            "3": {
+              "avgPricePerSqm": 20571.661429247488,
+              "medianPricePerSqm": 20930.28846153846,
+              "avgPrice": 1358056.5789473683,
+              "medianPrice": 1337000,
+              "dealCount": 38
+            },
+            "4": {
+              "avgPricePerSqm": 18053.93405273007,
+              "medianPricePerSqm": 17842.377260981913,
+              "avgPrice": 1660666.6666666667,
+              "medianPrice": 1610000,
+              "dealCount": 48
+            },
+            "5+": {
+              "avgPricePerSqm": 17934.84483537586,
+              "medianPricePerSqm": 16694.214876033056,
+              "avgPrice": 2034615.3846153845,
+              "medianPrice": 2000000,
+              "dealCount": 13
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21499.334780025318,
+              "medianPricePerSqm": 21992.753623188408,
+              "avgPrice": 1625000,
+              "medianPrice": 1650000,
+              "dealCount": 8
+            },
+            "4": {
+              "avgPricePerSqm": 20344.491511839344,
+              "medianPricePerSqm": 20650,
+              "avgPrice": 1974615.3846153845,
+              "medianPrice": 1950000,
+              "dealCount": 13
+            },
+            "5+": {
+              "avgPricePerSqm": 17381.23441117694,
+              "medianPricePerSqm": 16666.666666666668,
+              "avgPrice": 2960957.4468085105,
+              "medianPrice": 2865000,
+              "dealCount": 47
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21094.017094017094,
+              "medianPricePerSqm": 22615.384615384617,
+              "avgPrice": 1506666.6666666667,
+              "medianPrice": 1470000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 17838.53350711911,
+              "medianPricePerSqm": 18190.47619047619,
+              "avgPrice": 1815315.7894736843,
+              "medianPrice": 1850000,
+              "dealCount": 19
+            },
+            "5+": {
+              "avgPricePerSqm": 15676.078679868715,
+              "medianPricePerSqm": 16000,
+              "avgPrice": 2401809.523809524,
+              "medianPrice": 2180000,
+              "dealCount": 21
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 18338.72416891285,
+              "medianPricePerSqm": 18338.72416891285,
+              "avgPrice": 1935000,
+              "medianPrice": 1935000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 19944.817189621863,
+              "medianPricePerSqm": 20149.253731343284,
+              "avgPrice": 2891827.5862068967,
+              "medianPrice": 2825000,
+              "dealCount": 29
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 19234.69387755102,
+              "medianPricePerSqm": 19234.69387755102,
+              "avgPrice": 1885000,
+              "medianPrice": 1885000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 22246.862446862448,
+          "medianPricePerSqm": 21600,
+          "avgPrice": 1237857.142857143,
+          "medianPrice": 1080000,
+          "dealCount": 7
+        },
+        "3": {
+          "avgPricePerSqm": 20207.96071442735,
+          "medianPricePerSqm": 20310.24531024531,
+          "avgPrice": 1336228.5714285714,
+          "medianPrice": 1311500,
+          "dealCount": 168
+        },
+        "4": {
+          "avgPricePerSqm": 17756.04355338528,
+          "medianPricePerSqm": 17678.571428571428,
+          "avgPrice": 1630696.7741935484,
+          "medianPrice": 1585000,
+          "dealCount": 155
+        },
+        "5+": {
+          "avgPricePerSqm": 17356.696870984262,
+          "medianPricePerSqm": 16666.666666666668,
+          "avgPrice": 2559108.280254777,
+          "medianPrice": 2510000,
+          "dealCount": 157
+        }
+      }
+    },
+    "2017": {
+      "year": 2017,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21352.674137644433,
+              "medianPricePerSqm": 20526.315789473683,
+              "avgPrice": 1124285.7142857143,
+              "medianPrice": 1100000,
+              "dealCount": 7
+            },
+            "3": {
+              "avgPricePerSqm": 20211.610317360955,
+              "medianPricePerSqm": 20387.32394366197,
+              "avgPrice": 1356695.9318181819,
+              "medianPrice": 1350000,
+              "dealCount": 88
+            },
+            "4": {
+              "avgPricePerSqm": 18599.877629498525,
+              "medianPricePerSqm": 18292.857142857145,
+              "avgPrice": 1661627.380952381,
+              "medianPrice": 1660000,
+              "dealCount": 84
+            },
+            "5+": {
+              "avgPricePerSqm": 17635.4060156117,
+              "medianPricePerSqm": 17103.44827586207,
+              "avgPrice": 2452487.8048780486,
+              "medianPrice": 2300000,
+              "dealCount": 41
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 31818.18181818182,
+              "medianPricePerSqm": 31818.18181818182,
+              "avgPrice": 1050000,
+              "medianPrice": 1050000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 20944.610137685067,
+              "medianPricePerSqm": 21076.923076923078,
+              "avgPrice": 1388355.4545454546,
+              "medianPrice": 1400000,
+              "dealCount": 33
+            },
+            "4": {
+              "avgPricePerSqm": 20021.272206627284,
+              "medianPricePerSqm": 20109.89010989011,
+              "avgPrice": 1840786.0975609757,
+              "medianPrice": 1830000,
+              "dealCount": 41
+            },
+            "5+": {
+              "avgPricePerSqm": 18900.692755366043,
+              "medianPricePerSqm": 19045.405405405407,
+              "avgPrice": 2286581.7391304346,
+              "medianPrice": 2240000,
+              "dealCount": 23
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 22080.36229101534,
+              "medianPricePerSqm": 22060.478199718706,
+              "avgPrice": 1737916.6666666667,
+              "medianPrice": 1735000,
+              "dealCount": 12
+            },
+            "4": {
+              "avgPricePerSqm": 21333.152087886374,
+              "medianPricePerSqm": 21842.105263157893,
+              "avgPrice": 2102344.6,
+              "medianPrice": 2140000,
+              "dealCount": 15
+            },
+            "5+": {
+              "avgPricePerSqm": 19230.789652456013,
+              "medianPricePerSqm": 18589.74358974359,
+              "avgPrice": 3190896.5517241377,
+              "medianPrice": 3210000,
+              "dealCount": 29
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 29024.39024390244,
+              "medianPricePerSqm": 29024.39024390244,
+              "avgPrice": 1190000,
+              "medianPrice": 1190000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 18477.314814814814,
+              "medianPricePerSqm": 19000,
+              "avgPrice": 1373700,
+              "medianPrice": 1330000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 18966.868825234797,
+              "medianPricePerSqm": 18672.566371681416,
+              "avgPrice": 1916818.1818181819,
+              "medianPrice": 1940000,
+              "dealCount": 11
+            },
+            "5+": {
+              "avgPricePerSqm": 17168.743964738496,
+              "medianPricePerSqm": 17117.975734355045,
+              "avgPrice": 2122500,
+              "medianPrice": 2150000,
+              "dealCount": 4
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 22416.915608663185,
+              "medianPricePerSqm": 22416.915608663185,
+              "avgPrice": 2320000,
+              "medianPrice": 2320000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 20729.855908931073,
+              "medianPricePerSqm": 21916.666666666668,
+              "avgPrice": 3358111.111111111,
+              "medianPrice": 2975000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 23367.921225066148,
+          "medianPricePerSqm": 21153.846153846152,
+          "avgPrice": 1123333.3333333333,
+          "medianPrice": 1100000,
+          "dealCount": 9
+        },
+        "3": {
+          "avgPricePerSqm": 20516.103929470573,
+          "medianPricePerSqm": 20867.1679197995,
+          "avgPrice": 1398390.2352941176,
+          "medianPrice": 1390000,
+          "dealCount": 136
+        },
+        "4": {
+          "avgPricePerSqm": 19325.02320890718,
+          "medianPricePerSqm": 19411.764705882353,
+          "avgPrice": 1779798.0326797385,
+          "medianPrice": 1750000,
+          "dealCount": 153
+        },
+        "5+": {
+          "avgPricePerSqm": 18591.548669566575,
+          "medianPricePerSqm": 18008.35253456221,
+          "avgPrice": 2682946.9811320757,
+          "medianPrice": 2600000,
+          "dealCount": 106
+        }
+      }
+    },
+    "2018": {
+      "year": 2018,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 19324.34850640986,
+              "medianPricePerSqm": 20396.825396825396,
+              "avgPrice": 1193727.2727272727,
+              "medianPrice": 1248000,
+              "dealCount": 11
+            },
+            "3": {
+              "avgPricePerSqm": 20552.35549774288,
+              "medianPricePerSqm": 20625,
+              "avgPrice": 1403757.2815533981,
+              "medianPrice": 1400000,
+              "dealCount": 103
+            },
+            "4": {
+              "avgPricePerSqm": 19089.008100809806,
+              "medianPricePerSqm": 19090.909090909092,
+              "avgPrice": 1687567.888888889,
+              "medianPrice": 1645000,
+              "dealCount": 81
+            },
+            "5+": {
+              "avgPricePerSqm": 18921.84940434083,
+              "medianPricePerSqm": 18669.06474820144,
+              "avgPrice": 2426969.6363636362,
+              "medianPrice": 2350000,
+              "dealCount": 33
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 27272.727272727272,
+              "medianPricePerSqm": 27272.727272727272,
+              "avgPrice": 900000,
+              "medianPrice": 900000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 21768.646713416078,
+              "medianPricePerSqm": 21718.75,
+              "avgPrice": 1498880.6451612904,
+              "medianPrice": 1462000,
+              "dealCount": 31
+            },
+            "4": {
+              "avgPricePerSqm": 18667.631889285818,
+              "medianPricePerSqm": 19605.263157894737,
+              "avgPrice": 1744418.75,
+              "medianPrice": 1752125,
+              "dealCount": 40
+            },
+            "5+": {
+              "avgPricePerSqm": 18461.390206049244,
+              "medianPricePerSqm": 17333.333333333332,
+              "avgPrice": 2198689.705882353,
+              "medianPrice": 2175000,
+              "dealCount": 17
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21541.985694617273,
+              "medianPricePerSqm": 22666.666666666668,
+              "avgPrice": 1680555.5555555555,
+              "medianPrice": 1720000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 20942.5297494083,
+              "medianPricePerSqm": 21658.07560137457,
+              "avgPrice": 2086071.4285714286,
+              "medianPrice": 2107500,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 17172.796852320163,
+              "medianPricePerSqm": 16722.595078299775,
+              "avgPrice": 3030326.4565217393,
+              "medianPrice": 3050000,
+              "dealCount": 46
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21802.84992784993,
+              "medianPricePerSqm": 21802.84992784993,
+              "avgPrice": 1625000,
+              "medianPrice": 1625000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 19153.769360643575,
+              "medianPricePerSqm": 19050,
+              "avgPrice": 1955000,
+              "medianPrice": 2000000,
+              "dealCount": 11
+            },
+            "5+": {
+              "avgPricePerSqm": 17847.94076193424,
+              "medianPricePerSqm": 17909.203980099504,
+              "avgPrice": 2782000,
+              "medianPrice": 2405000,
+              "dealCount": 14
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 20576.923076923078,
+              "medianPricePerSqm": 20576.923076923078,
+              "avgPrice": 2140000,
+              "medianPrice": 2140000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 19651.788534793035,
+              "medianPricePerSqm": 21223.45803842265,
+              "avgPrice": 3442500,
+              "medianPrice": 3072500,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 19986.71340360298,
+          "medianPricePerSqm": 20555.555555555555,
+          "avgPrice": 1169250,
+          "medianPrice": 1244000,
+          "dealCount": 12
+        },
+        "3": {
+          "avgPricePerSqm": 20891.06369303911,
+          "medianPricePerSqm": 21066.666666666668,
+          "avgPrice": 1444326.2068965517,
+          "medianPrice": 1410000,
+          "dealCount": 145
+        },
+        "4": {
+          "avgPricePerSqm": 19165.84172974656,
+          "medianPricePerSqm": 19360.46511627907,
+          "avgPrice": 1764079.925170068,
+          "medianPrice": 1720000,
+          "dealCount": 147
+        },
+        "5+": {
+          "avgPricePerSqm": 18095.752525408785,
+          "medianPricePerSqm": 17755.167958656333,
+          "avgPrice": 2740260.5084745763,
+          "medianPrice": 2600000,
+          "dealCount": 118
+        }
+      }
+    },
+    "2019": {
+      "year": 2019,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 20732.722183383823,
+              "medianPricePerSqm": 22658.46066779853,
+              "avgPrice": 1132000,
+              "medianPrice": 1225000,
+              "dealCount": 6
+            },
+            "3": {
+              "avgPricePerSqm": 19543.535861240576,
+              "medianPricePerSqm": 20289.855072463768,
+              "avgPrice": 1351875.1898734176,
+              "medianPrice": 1400000,
+              "dealCount": 79
+            },
+            "4": {
+              "avgPricePerSqm": 19543.12131376426,
+              "medianPricePerSqm": 19480.51948051948,
+              "avgPrice": 1718527.397260274,
+              "medianPrice": 1660000,
+              "dealCount": 73
+            },
+            "5+": {
+              "avgPricePerSqm": 20431.158724725727,
+              "medianPricePerSqm": 20493.827160493827,
+              "avgPrice": 2575826.086956522,
+              "medianPrice": 2630000,
+              "dealCount": 23
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 26222.222222222223,
+              "medianPricePerSqm": 26222.222222222223,
+              "avgPrice": 1180000,
+              "medianPrice": 1180000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 21193.48915327911,
+              "medianPricePerSqm": 21194.02985074627,
+              "avgPrice": 1480925.9259259258,
+              "medianPrice": 1450000,
+              "dealCount": 27
+            },
+            "4": {
+              "avgPricePerSqm": 20195.56792762115,
+              "medianPricePerSqm": 20343.75,
+              "avgPrice": 1757500,
+              "medianPrice": 1715000,
+              "dealCount": 40
+            },
+            "5+": {
+              "avgPricePerSqm": 19199.067414020734,
+              "medianPricePerSqm": 17523.809523809523,
+              "avgPrice": 2323333.3333333335,
+              "medianPrice": 2000000,
+              "dealCount": 15
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 22552.072673556566,
+              "medianPricePerSqm": 22565.78947368421,
+              "avgPrice": 1749230.7692307692,
+              "medianPrice": 1720000,
+              "dealCount": 13
+            },
+            "4": {
+              "avgPricePerSqm": 20854.489729064797,
+              "medianPricePerSqm": 20900.252525252523,
+              "avgPrice": 2155000,
+              "medianPrice": 2272500,
+              "dealCount": 18
+            },
+            "5+": {
+              "avgPricePerSqm": 18356.204691075385,
+              "medianPricePerSqm": 19000,
+              "avgPrice": 3151137.9310344825,
+              "medianPrice": 3150000,
+              "dealCount": 29
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 22940.503940503942,
+              "medianPricePerSqm": 22077.922077922078,
+              "avgPrice": 1586666.6666666667,
+              "medianPrice": 1630000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 19028.21863043365,
+              "medianPricePerSqm": 18811.881188118812,
+              "avgPrice": 2012666.6666666667,
+              "medianPrice": 2010000,
+              "dealCount": 15
+            },
+            "5+": {
+              "avgPricePerSqm": 16331.723822961347,
+              "medianPricePerSqm": 16888.88888888889,
+              "avgPrice": 2364545.4545454546,
+              "medianPrice": 2230000,
+              "dealCount": 11
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28148.14814814815,
+              "medianPricePerSqm": 28148.14814814815,
+              "avgPrice": 1520000,
+              "medianPrice": 1520000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 24557.69230769231,
+              "medianPricePerSqm": 24557.69230769231,
+              "avgPrice": 2500000,
+              "medianPrice": 2500000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 23814.601647311953,
+              "medianPricePerSqm": 24748.822009423922,
+              "avgPrice": 3540833.3333333335,
+              "medianPrice": 3465000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 21516.93647464645,
+          "medianPricePerSqm": 23387.09677419355,
+          "avgPrice": 1138857.142857143,
+          "medianPrice": 1200000,
+          "dealCount": 7
+        },
+        "3": {
+          "avgPricePerSqm": 20376.50524310924,
+          "medianPricePerSqm": 20989.01098901099,
+          "avgPrice": 1429293.8211382113,
+          "medianPrice": 1430000,
+          "dealCount": 123
+        },
+        "4": {
+          "avgPricePerSqm": 19894.527379761443,
+          "medianPricePerSqm": 19738.095238095237,
+          "avgPrice": 1822516.8918918918,
+          "medianPrice": 1750000,
+          "dealCount": 148
+        },
+        "5+": {
+          "avgPricePerSqm": 19199.632974483753,
+          "medianPricePerSqm": 18388.0842168135,
+          "avgPrice": 2770619.0476190476,
+          "medianPrice": 2780000,
+          "dealCount": 84
+        }
+      }
+    },
+    "2020": {
+      "year": 2020,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21284.105081063684,
+              "medianPricePerSqm": 20597.014925373136,
+              "avgPrice": 1278000,
+              "medianPrice": 1240000,
+              "dealCount": 5
+            },
+            "3": {
+              "avgPricePerSqm": 20632.501233953328,
+              "medianPricePerSqm": 20722.693032015064,
+              "avgPrice": 1449396.551724138,
+              "medianPrice": 1469000,
+              "dealCount": 58
+            },
+            "4": {
+              "avgPricePerSqm": 20040.73009190293,
+              "medianPricePerSqm": 19862.741501589633,
+              "avgPrice": 1784519.2307692308,
+              "medianPrice": 1730000,
+              "dealCount": 52
+            },
+            "5+": {
+              "avgPricePerSqm": 19008.88160927128,
+              "medianPricePerSqm": 18873.920690757914,
+              "avgPrice": 2505463.3333333335,
+              "medianPrice": 2360560,
+              "dealCount": 24
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22135.416666666668,
+              "medianPricePerSqm": 22135.416666666668,
+              "avgPrice": 1062500,
+              "medianPrice": 1062500,
+              "dealCount": 2
+            },
+            "3": {
+              "avgPricePerSqm": 21278.545149511807,
+              "medianPricePerSqm": 21458.866155157717,
+              "avgPrice": 1534093.75,
+              "medianPrice": 1507500,
+              "dealCount": 32
+            },
+            "4": {
+              "avgPricePerSqm": 19951.939660710163,
+              "medianPricePerSqm": 19897.95918367347,
+              "avgPrice": 1903636.3636363635,
+              "medianPrice": 1770000,
+              "dealCount": 33
+            },
+            "5+": {
+              "avgPricePerSqm": 19471.90976866613,
+              "medianPricePerSqm": 17790.10633379565,
+              "avgPrice": 2535708.3333333335,
+              "medianPrice": 2295000,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21942.731678691012,
+              "medianPricePerSqm": 22133.333333333332,
+              "avgPrice": 1668888.888888889,
+              "medianPrice": 1710000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 21755.9814856647,
+              "medianPricePerSqm": 21969.8756432247,
+              "avgPrice": 2113571.4285714286,
+              "medianPrice": 2110000,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 18807.776195388542,
+              "medianPricePerSqm": 18547.177260165812,
+              "avgPrice": 3325384.6153846155,
+              "medianPrice": 3315000,
+              "dealCount": 26
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 20826.888761040544,
+              "medianPricePerSqm": 21413.26530612245,
+              "avgPrice": 2003750,
+              "medianPrice": 2090000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 16940.830561607097,
+              "medianPricePerSqm": 16699.55223880597,
+              "avgPrice": 2410357.1428571427,
+              "medianPrice": 2157500,
+              "dealCount": 14
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 22692.30769230769,
+              "medianPricePerSqm": 22692.30769230769,
+              "avgPrice": 2360000,
+              "medianPrice": 2360000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 20428.644358838512,
+              "medianPricePerSqm": 20588.235294117647,
+              "avgPrice": 3157142.8571428573,
+              "medianPrice": 2925000,
+              "dealCount": 7
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 21527.336962664536,
+          "medianPricePerSqm": 21354.166666666668,
+          "avgPrice": 1216428.5714285714,
+          "medianPrice": 1220000,
+          "dealCount": 7
+        },
+        "3": {
+          "avgPricePerSqm": 20960.435368301918,
+          "medianPricePerSqm": 21355.93220338983,
+          "avgPrice": 1496727.2727272727,
+          "medianPrice": 1490000,
+          "dealCount": 99
+        },
+        "4": {
+          "avgPricePerSqm": 20318.73270520672,
+          "medianPricePerSqm": 20422.4315572564,
+          "avgPrice": 1885138.888888889,
+          "medianPrice": 1800000,
+          "dealCount": 108
+        },
+        "5+": {
+          "avgPricePerSqm": 18783.73970242139,
+          "medianPricePerSqm": 17892.156862745098,
+          "avgPrice": 2805597.8313253014,
+          "medianPrice": 2810000,
+          "dealCount": 83
+        }
+      }
+    },
+    "2021": {
+      "year": 2021,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 24346.392977325526,
+              "medianPricePerSqm": 26098.556183301946,
+              "avgPrice": 1368856.25,
+              "medianPrice": 1380000,
+              "dealCount": 8
+            },
+            "3": {
+              "avgPricePerSqm": 22015.29096595381,
+              "medianPricePerSqm": 21849.31506849315,
+              "avgPrice": 1543275.1951219512,
+              "medianPrice": 1550000,
+              "dealCount": 123
+            },
+            "4": {
+              "avgPricePerSqm": 20413.008202631023,
+              "medianPricePerSqm": 19882.940854326396,
+              "avgPrice": 1918432.1326530613,
+              "medianPrice": 1844000,
+              "dealCount": 98
+            },
+            "5+": {
+              "avgPricePerSqm": 22209.569571163425,
+              "medianPricePerSqm": 22666.666666666668,
+              "avgPrice": 2920570.275362319,
+              "medianPrice": 2900000,
+              "dealCount": 69
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 28409.090909090908,
+              "medianPricePerSqm": 28409.090909090908,
+              "avgPrice": 1250000,
+              "medianPrice": 1250000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 22539.301880418272,
+              "medianPricePerSqm": 22096.774193548386,
+              "avgPrice": 1547819.6585365853,
+              "medianPrice": 1540000,
+              "dealCount": 41
+            },
+            "4": {
+              "avgPricePerSqm": 21259.46364394608,
+              "medianPricePerSqm": 21153.846153846152,
+              "avgPrice": 1941415.2112676057,
+              "medianPrice": 1870000,
+              "dealCount": 71
+            },
+            "5+": {
+              "avgPricePerSqm": 22508.762268104285,
+              "medianPricePerSqm": 22551.186440677964,
+              "avgPrice": 2780458.3333333335,
+              "medianPrice": 2725000,
+              "dealCount": 24
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25393.608214331896,
+              "medianPricePerSqm": 25328.947368421053,
+              "avgPrice": 2009125,
+              "medianPrice": 1975000,
+              "dealCount": 8
+            },
+            "4": {
+              "avgPricePerSqm": 21521.933874442417,
+              "medianPricePerSqm": 21993.115942028984,
+              "avgPrice": 2093666.6666666667,
+              "medianPrice": 2200000,
+              "dealCount": 18
+            },
+            "5+": {
+              "avgPricePerSqm": 20021.428397797332,
+              "medianPricePerSqm": 19821.246318490652,
+              "avgPrice": 3638875,
+              "medianPrice": 3742500,
+              "dealCount": 40
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21818.18181818182,
+              "medianPricePerSqm": 21818.18181818182,
+              "avgPrice": 1200000,
+              "medianPrice": 1200000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 22653.84486950017,
+              "medianPricePerSqm": 22479.806778587266,
+              "avgPrice": 1761250,
+              "medianPrice": 1735000,
+              "dealCount": 4
+            },
+            "4": {
+              "avgPricePerSqm": 20055.547718598667,
+              "medianPricePerSqm": 19618.055555555555,
+              "avgPrice": 2141909.090909091,
+              "medianPrice": 2150000,
+              "dealCount": 22
+            },
+            "5+": {
+              "avgPricePerSqm": 18654.15931668133,
+              "medianPricePerSqm": 18656.084656084655,
+              "avgPrice": 2733583.3333333335,
+              "medianPrice": 2449500,
+              "dealCount": 24
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 25412.84403669725,
+              "medianPricePerSqm": 25412.84403669725,
+              "avgPrice": 2770000,
+              "medianPrice": 2770000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 23125.54695373505,
+              "medianPricePerSqm": 24333.333333333332,
+              "avgPrice": 3689647.0588235296,
+              "medianPrice": 3350000,
+              "dealCount": 17
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 24499.84165458769,
+          "medianPricePerSqm": 26098.556183301946,
+          "avgPrice": 1340085,
+          "medianPrice": 1345000,
+          "dealCount": 10
+        },
+        "3": {
+          "avgPricePerSqm": 22305.434153989343,
+          "medianPricePerSqm": 22124.06015037594,
+          "avgPrice": 1570462.8125,
+          "medianPrice": 1570000,
+          "dealCount": 176
+        },
+        "4": {
+          "avgPricePerSqm": 20802.555782940948,
+          "medianPricePerSqm": 20581.39534883721,
+          "avgPrice": 1972487.3412322274,
+          "medianPrice": 1910000,
+          "dealCount": 211
+        },
+        "5+": {
+          "avgPricePerSqm": 21346.907198681143,
+          "medianPricePerSqm": 21730.22095509622,
+          "avgPrice": 3115720.396551724,
+          "medianPrice": 3012500,
+          "dealCount": 174
+        }
+      }
+    },
+    "2022": {
+      "year": 2022,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 25804.090012832017,
+              "medianPricePerSqm": 26166.666666666668,
+              "avgPrice": 1664000,
+              "medianPrice": 1610000,
+              "dealCount": 5
+            },
+            "3": {
+              "avgPricePerSqm": 23614.534705830214,
+              "medianPricePerSqm": 23814.97948016416,
+              "avgPrice": 1700138.027027027,
+              "medianPrice": 1750000,
+              "dealCount": 74
+            },
+            "4": {
+              "avgPricePerSqm": 23132.45512992344,
+              "medianPricePerSqm": 22923.103932584272,
+              "avgPrice": 2063389.96875,
+              "medianPrice": 2040000,
+              "dealCount": 96
+            },
+            "5+": {
+              "avgPricePerSqm": 23580.523164238868,
+              "medianPricePerSqm": 22782.608695652172,
+              "avgPrice": 3110133.3333333335,
+              "medianPrice": 2850000,
+              "dealCount": 45
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 30833.333333333332,
+              "medianPricePerSqm": 30833.333333333332,
+              "avgPrice": 1480000,
+              "medianPrice": 1480000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 26375.65777285443,
+              "medianPricePerSqm": 25373.13432835821,
+              "avgPrice": 1820294.1176470588,
+              "medianPrice": 1700000,
+              "dealCount": 17
+            },
+            "4": {
+              "avgPricePerSqm": 25983.018512647675,
+              "medianPricePerSqm": 26650.406504065042,
+              "avgPrice": 2478607.1428571427,
+              "medianPrice": 2400000,
+              "dealCount": 28
+            },
+            "5+": {
+              "avgPricePerSqm": 24973.45734614402,
+              "medianPricePerSqm": 25508.474576271186,
+              "avgPrice": 2989733.3333333335,
+              "medianPrice": 3010000,
+              "dealCount": 15
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 29553.21999336084,
+              "medianPricePerSqm": 29859.154929577464,
+              "avgPrice": 2263333.3333333335,
+              "medianPrice": 2270000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 25098.17605101369,
+              "medianPricePerSqm": 26806.503412284223,
+              "avgPrice": 2481250,
+              "medianPrice": 2640000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 22589.591192406337,
+              "medianPricePerSqm": 23062.770562770565,
+              "avgPrice": 4149423.076923077,
+              "medianPrice": 4165000,
+              "dealCount": 26
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 26623.376623376622,
+              "medianPricePerSqm": 26623.376623376622,
+              "avgPrice": 2050000,
+              "medianPrice": 2050000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 23843.303021966265,
+              "medianPricePerSqm": 23686.666666666664,
+              "avgPrice": 2409000,
+              "medianPrice": 2397000,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 20886.412570881952,
+              "medianPricePerSqm": 21349.20634920635,
+              "avgPrice": 2633157.8947368423,
+              "medianPrice": 2670000,
+              "dealCount": 19
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 29545.454545454544,
+              "medianPricePerSqm": 29545.454545454544,
+              "avgPrice": 3250000,
+              "medianPrice": 3250000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 26400.619971031323,
+              "medianPricePerSqm": 27818.503538928213,
+              "avgPrice": 4372500,
+              "medianPrice": 3825000,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 26642.29723291557,
+          "medianPricePerSqm": 26889.303482587064,
+          "avgPrice": 1633333.3333333333,
+          "medianPrice": 1590000,
+          "dealCount": 6
+        },
+        "3": {
+          "avgPricePerSqm": 24327.83986287811,
+          "medianPricePerSqm": 24305.555555555555,
+          "avgPrice": 1743107.5157894737,
+          "medianPrice": 1755000,
+          "dealCount": 95
+        },
+        "4": {
+          "avgPricePerSqm": 23894.41868995824,
+          "medianPricePerSqm": 23684.21052631579,
+          "avgPrice": 2203409.9103448275,
+          "medianPrice": 2150000,
+          "dealCount": 145
+        },
+        "5+": {
+          "avgPricePerSqm": 23284.084709738778,
+          "medianPricePerSqm": 22807.01754385965,
+          "avgPrice": 3342451.3274336285,
+          "medianPrice": 3070000,
+          "dealCount": 113
+        }
+      }
+    },
+    "2023": {
+      "year": 2023,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21753.571428571428,
+              "medianPricePerSqm": 21753.571428571428,
+              "avgPrice": 1130000,
+              "medianPrice": 1130000,
+              "dealCount": 2
+            },
+            "3": {
+              "avgPricePerSqm": 24363.083759066885,
+              "medianPricePerSqm": 25925.925925925927,
+              "avgPrice": 1683090.9090909092,
+              "medianPrice": 1770000,
+              "dealCount": 33
+            },
+            "4": {
+              "avgPricePerSqm": 24637.251437679508,
+              "medianPricePerSqm": 25217.391304347828,
+              "avgPrice": 2174944.4444444445,
+              "medianPrice": 2180000,
+              "dealCount": 45
+            },
+            "5+": {
+              "avgPricePerSqm": 24607.142049106198,
+              "medianPricePerSqm": 24833.333333333332,
+              "avgPrice": 3147736.8421052634,
+              "medianPrice": 3000000,
+              "dealCount": 19
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 27708.519439611235,
+              "medianPricePerSqm": 28637.254901960783,
+              "avgPrice": 1879000,
+              "medianPrice": 1825000,
+              "dealCount": 10
+            },
+            "4": {
+              "avgPricePerSqm": 26774.061775386675,
+              "medianPricePerSqm": 26330.743362831858,
+              "avgPrice": 2554677.419354839,
+              "medianPrice": 2445000,
+              "dealCount": 31
+            },
+            "5+": {
+              "avgPricePerSqm": 26382.813504987524,
+              "medianPricePerSqm": 27428.678566071696,
+              "avgPrice": 3399633,
+              "medianPrice": 3330500,
+              "dealCount": 14
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25904.399075769754,
+              "medianPricePerSqm": 26685.393258426968,
+              "avgPrice": 2301000,
+              "medianPrice": 2250000,
+              "dealCount": 5
+            },
+            "4": {
+              "avgPricePerSqm": 27288.21109143734,
+              "medianPricePerSqm": 28947.36842105263,
+              "avgPrice": 2653285.714285714,
+              "medianPrice": 2720000,
+              "dealCount": 7
+            },
+            "5+": {
+              "avgPricePerSqm": 25211.71770544948,
+              "medianPricePerSqm": 24074.074074074073,
+              "avgPrice": 4221307.692307692,
+              "medianPrice": 4200000,
+              "dealCount": 13
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25582.785621551448,
+              "medianPricePerSqm": 24187.5,
+              "avgPrice": 1878333.3333333333,
+              "medianPrice": 1935000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 24620.06652569185,
+              "medianPricePerSqm": 25673.076923076922,
+              "avgPrice": 2568181.8181818184,
+              "medianPrice": 2510000,
+              "dealCount": 11
+            },
+            "5+": {
+              "avgPricePerSqm": 22901.48590560834,
+              "medianPricePerSqm": 20394.04978749241,
+              "avgPrice": 3140000,
+              "medianPrice": 2700000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 30288.46153846154,
+              "medianPricePerSqm": 30288.46153846154,
+              "avgPrice": 3150000,
+              "medianPrice": 3150000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 27805.92255219687,
+              "medianPricePerSqm": 28457.44680851064,
+              "avgPrice": 4738000,
+              "medianPrice": 4350000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 21753.571428571428,
+          "medianPricePerSqm": 21753.571428571428,
+          "avgPrice": 1130000,
+          "medianPrice": 1130000,
+          "dealCount": 2
+        },
+        "3": {
+          "avgPricePerSqm": 25241.90805272201,
+          "medianPricePerSqm": 26685.393258426968,
+          "avgPrice": 1793568.6274509805,
+          "medianPrice": 1828000,
+          "dealCount": 51
+        },
+        "4": {
+          "avgPricePerSqm": 25587.356849407344,
+          "medianPricePerSqm": 25714.285714285714,
+          "avgPrice": 2389900,
+          "medianPrice": 2320000,
+          "dealCount": 95
+        },
+        "5+": {
+          "avgPricePerSqm": 25282.209585409142,
+          "medianPricePerSqm": 26027.305732484077,
+          "avgPrice": 3593137.9298245613,
+          "medianPrice": 3350000,
+          "dealCount": 57
+        }
+      }
+    },
+    "2024": {
+      "year": 2024,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 25792.207792207795,
+              "medianPricePerSqm": 25792.207792207795,
+              "avgPrice": 1590000,
+              "medianPrice": 1590000,
+              "dealCount": 2
+            },
+            "3": {
+              "avgPricePerSqm": 26235.253766025075,
+              "medianPricePerSqm": 26234.81781376518,
+              "avgPrice": 1838435.4838709678,
+              "medianPrice": 1850000,
+              "dealCount": 62
+            },
+            "4": {
+              "avgPricePerSqm": 23173.407816297535,
+              "medianPricePerSqm": 23595.505617977527,
+              "avgPrice": 2170546.6666666665,
+              "medianPrice": 2100000,
+              "dealCount": 75
+            },
+            "5+": {
+              "avgPricePerSqm": 24104.93927573977,
+              "medianPricePerSqm": 23362.83185840708,
+              "avgPrice": 2979783.7837837837,
+              "medianPrice": 2700000,
+              "dealCount": 37
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 26847.443414876507,
+              "medianPricePerSqm": 25999.8097412481,
+              "avgPrice": 1882136.3636363635,
+              "medianPrice": 1875000,
+              "dealCount": 22
+            },
+            "4": {
+              "avgPricePerSqm": 24709.334787337317,
+              "medianPricePerSqm": 24487.951807228914,
+              "avgPrice": 2294476.2666666666,
+              "medianPrice": 2290000,
+              "dealCount": 30
+            },
+            "5+": {
+              "avgPricePerSqm": 27131.2468200238,
+              "medianPricePerSqm": 27516.77852348993,
+              "avgPrice": 3344751.3703703703,
+              "medianPrice": 3400000,
+              "dealCount": 27
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28897.282608695652,
+              "medianPricePerSqm": 28800,
+              "avgPrice": 2286250,
+              "medianPrice": 2235000,
+              "dealCount": 4
+            },
+            "4": {
+              "avgPricePerSqm": 28684.31099984329,
+              "medianPricePerSqm": 28459.595959595958,
+              "avgPrice": 2851666.6666666665,
+              "medianPrice": 2860000,
+              "dealCount": 6
+            },
+            "5+": {
+              "avgPricePerSqm": 25618.455616064206,
+              "medianPricePerSqm": 25273.553229310684,
+              "avgPrice": 4712857.142857143,
+              "medianPrice": 4735000,
+              "dealCount": 14
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 29513.88888888889,
+              "medianPricePerSqm": 29513.88888888889,
+              "avgPrice": 2125000,
+              "medianPrice": 2125000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 24188.05065686033,
+              "medianPricePerSqm": 23990.825688073393,
+              "avgPrice": 2627222.222222222,
+              "medianPrice": 2630000,
+              "dealCount": 9
+            },
+            "5+": {
+              "avgPricePerSqm": 21667.96795105513,
+              "medianPricePerSqm": 21825.121443442054,
+              "avgPrice": 2850625,
+              "medianPrice": 2870000,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 30733.94495412844,
+              "medianPricePerSqm": 30733.94495412844,
+              "avgPrice": 3350000,
+              "medianPrice": 3350000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 27688.90013159071,
+              "medianPricePerSqm": 29102.5641025641,
+              "avgPrice": 4690600,
+              "medianPrice": 3990000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 25792.207792207795,
+          "medianPricePerSqm": 25792.207792207795,
+          "avgPrice": 1590000,
+          "medianPrice": 1590000,
+          "dealCount": 2
+        },
+        "3": {
+          "avgPricePerSqm": 26576.071075926648,
+          "medianPricePerSqm": 26691.13924050633,
+          "avgPrice": 1875388.888888889,
+          "medianPrice": 1872500,
+          "dealCount": 90
+        },
+        "4": {
+          "avgPricePerSqm": 23965.437162870785,
+          "medianPricePerSqm": 23990.825688073393,
+          "avgPrice": 2278762.7107438017,
+          "medianPrice": 2220000,
+          "dealCount": 121
+        },
+        "5+": {
+          "avgPricePerSqm": 25218.385057519867,
+          "medianPricePerSqm": 24961.8320610687,
+          "avgPrice": 3437343.813186813,
+          "medianPrice": 3270000,
+          "dealCount": 91
+        }
+      }
+    },
+    "2025": {
+      "year": 2025,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 20053.272450532724,
+              "medianPricePerSqm": 20053.272450532724,
+              "avgPrice": 1200000,
+              "medianPrice": 1200000,
+              "dealCount": 2
+            },
+            "3": {
+              "avgPricePerSqm": 25105.926379389755,
+              "medianPricePerSqm": 26056.338028169015,
+              "avgPrice": 1830639.3442622952,
+              "medianPrice": 1815000,
+              "dealCount": 61
+            },
+            "4": {
+              "avgPricePerSqm": 23419.025271719933,
+              "medianPricePerSqm": 23437.5,
+              "avgPrice": 2157726.76056338,
+              "medianPrice": 2100000,
+              "dealCount": 71
+            },
+            "5+": {
+              "avgPricePerSqm": 25578.70768106768,
+              "medianPricePerSqm": 24714.828897338404,
+              "avgPrice": 3312771.4285714286,
+              "medianPrice": 3150000,
+              "dealCount": 35
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 27160.614427498153,
+              "medianPricePerSqm": 28578.595317725754,
+              "avgPrice": 1814000,
+              "medianPrice": 1825000,
+              "dealCount": 20
+            },
+            "4": {
+              "avgPricePerSqm": 24167.19999245519,
+              "medianPricePerSqm": 25415.024954032044,
+              "avgPrice": 2207704.5454545454,
+              "medianPrice": 2242500,
+              "dealCount": 22
+            },
+            "5+": {
+              "avgPricePerSqm": 23987.088789467674,
+              "medianPricePerSqm": 22222.222222222223,
+              "avgPrice": 2758333.3333333335,
+              "medianPrice": 2530000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 30212.987012987014,
+              "medianPricePerSqm": 29600,
+              "avgPrice": 2306666.6666666665,
+              "medianPrice": 2250000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 28869.55922464857,
+              "medianPricePerSqm": 29182.376763021923,
+              "avgPrice": 2781571.4285714286,
+              "medianPrice": 2755000,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 24135.964758982933,
+              "medianPricePerSqm": 24268.46590909091,
+              "avgPrice": 4452750,
+              "medianPrice": 4650000,
+              "dealCount": 20
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 21963.27419019033,
+              "medianPricePerSqm": 21665.217391304348,
+              "avgPrice": 2346357.1428571427,
+              "medianPrice": 2457000,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 20238.69708594118,
+              "medianPricePerSqm": 21367.521367521367,
+              "avgPrice": 3004000,
+              "medianPrice": 2600000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": 30224.022106817858,
+              "medianPricePerSqm": 30224.022106817858,
+              "avgPrice": 4372000,
+              "medianPrice": 4372000,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 20053.272450532724,
+          "medianPricePerSqm": 20053.272450532724,
+          "avgPrice": 1200000,
+          "medianPrice": 1200000,
+          "dealCount": 2
+        },
+        "3": {
+          "avgPricePerSqm": 25777.53284204404,
+          "medianPricePerSqm": 26356.2091503268,
+          "avgPrice": 1843678.5714285714,
+          "medianPrice": 1830000,
+          "dealCount": 84
+        },
+        "4": {
+          "avgPricePerSqm": 24017.263321767543,
+          "medianPricePerSqm": 23932.038834951458,
+          "avgPrice": 2260819.008264463,
+          "medianPrice": 2240000,
+          "dealCount": 121
+        },
+        "5+": {
+          "avgPricePerSqm": 24725.343560078574,
+          "medianPricePerSqm": 24218.75,
+          "avgPrice": 3571704.2253521127,
+          "medianPrice": 3620000,
+          "dealCount": 71
+        }
+      }
+    },
+    "2026": {
+      "year": 2026,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "רמז",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 23298.61421012438,
+              "medianPricePerSqm": 23575.297941495126,
+              "avgPrice": 1713000,
+              "medianPrice": 1750000,
+              "dealCount": 10
+            },
+            "4": {
+              "avgPricePerSqm": 22440.50239655823,
+              "medianPricePerSqm": 23266.666666666668,
+              "avgPrice": 2018747.619047619,
+              "medianPrice": 2000000,
+              "dealCount": 21
+            },
+            "5+": {
+              "avgPricePerSqm": 21951.029281689527,
+              "medianPricePerSqm": 21785.714285714286,
+              "avgPrice": 3112111.111111111,
+              "medianPrice": 2740000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "קריית ראשון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25753.252280795514,
+              "medianPricePerSqm": 25416.666666666668,
+              "avgPrice": 1850000,
+              "medianPrice": 1835000,
+              "dealCount": 5
+            },
+            "4": {
+              "avgPricePerSqm": 26418.683838423905,
+              "medianPricePerSqm": 27195.121951219513,
+              "avgPrice": 2404285.714285714,
+              "medianPrice": 2300000,
+              "dealCount": 7
+            },
+            "5+": {
+              "avgPricePerSqm": 25779.50558213716,
+              "medianPricePerSqm": 25779.50558213716,
+              "avgPrice": 2702500,
+              "medianPrice": 2702500,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "נווה ים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28125,
+              "medianPricePerSqm": 28125,
+              "avgPrice": 2025000,
+              "medianPrice": 2025000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 28181.16462976276,
+              "medianPricePerSqm": 28181.16462976276,
+              "avgPrice": 2800000,
+              "medianPrice": 2800000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 24444.60392223754,
+              "medianPricePerSqm": 25408.335115483318,
+              "avgPrice": 4259816.666666667,
+              "medianPrice": 3966950,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28571.428571428572,
+              "medianPricePerSqm": 28571.428571428572,
+              "avgPrice": 2200000,
+              "medianPrice": 2200000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 22611.005277498643,
+              "medianPricePerSqm": 23375.221238938055,
+              "avgPrice": 2334280,
+              "medianPrice": 2635000,
+              "dealCount": 5
+            },
+            "5+": {
+              "avgPricePerSqm": 20255.95238095238,
+              "medianPricePerSqm": 20255.95238095238,
+              "avgPrice": 2691000,
+              "medianPrice": 2691000,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "בנות חיל",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": 28289.473684210527,
+              "medianPricePerSqm": 28289.473684210527,
+              "avgPrice": 4300000,
+              "medianPrice": 4300000,
+              "dealCount": 1
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "מב''ת מערב",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 24614.637180979407,
+          "medianPricePerSqm": 25384.615384615383,
+          "avgPrice": 1800294.1176470588,
+          "medianPrice": 1830000,
+          "dealCount": 17
+        },
+        "4": {
+          "avgPricePerSqm": 23588.53408124883,
+          "medianPricePerSqm": 23456.79012345679,
+          "avgPrice": 2185574.285714286,
+          "medianPrice": 2120000,
+          "dealCount": 35
+        },
+        "5+": {
+          "avgPricePerSqm": 23229.36383395103,
+          "medianPricePerSqm": 22219.151723573243,
+          "avgPrice": 3432745,
+          "medianPrice": 3407500,
+          "dealCount": 20
+        }
+      }
+    }
+  },
+  "cityAnnual": [
+    {
+      "year": 2016,
+      "avgPrice": 1822770.8418891171,
+      "medianPrice": 1590000,
+      "avgPricePerSqm": 18537.68705681948,
+      "medianPricePerSqm": 18461.53846153846,
+      "dealCount": 487
+    },
+    {
+      "year": 2017,
+      "avgPrice": 1873743.938118812,
+      "medianPrice": 1700000,
+      "avgPricePerSqm": 19623.59934497638,
+      "medianPricePerSqm": 19646.428571428572,
+      "dealCount": 404
+    },
+    {
+      "year": 2018,
+      "avgPrice": 1910257.7938388626,
+      "medianPrice": 1697500,
+      "avgPricePerSqm": 19482.754333186927,
+      "medianPricePerSqm": 19616.876310272535,
+      "dealCount": 422
+    },
+    {
+      "year": 2019,
+      "avgPrice": 1895689.6132596685,
+      "medianPrice": 1700000,
+      "avgPricePerSqm": 19928.41967482401,
+      "medianPricePerSqm": 19994.38202247191,
+      "dealCount": 362
+    },
+    {
+      "year": 2020,
+      "avgPrice": 1997140.1346801347,
+      "medianPrice": 1760000,
+      "avgPricePerSqm": 20132.148106612265,
+      "medianPricePerSqm": 20263.157894736843,
+      "dealCount": 297
+    },
+    {
+      "year": 2021,
+      "avgPrice": 2185871.248686515,
+      "medianPrice": 1910000,
+      "avgPricePerSqm": 21496.420228404673,
+      "medianPricePerSqm": 21428.571428571428,
+      "dealCount": 571
+    },
+    {
+      "year": 2022,
+      "avgPrice": 2430603.484679666,
+      "medianPrice": 2190000,
+      "avgPricePerSqm": 23862.927166059442,
+      "medianPricePerSqm": 23727.272727272728,
+      "dealCount": 359
+    },
+    {
+      "year": 2023,
+      "avgPrice": 2563811.5219512195,
+      "medianPrice": 2345000,
+      "avgPricePerSqm": 25379.167320038938,
+      "medianPricePerSqm": 25909.090909090908,
+      "dealCount": 205
+    },
+    {
+      "year": 2024,
+      "avgPrice": 2501623.601973684,
+      "medianPrice": 2220000,
+      "avgPricePerSqm": 25125.400491314085,
+      "medianPricePerSqm": 25000,
+      "dealCount": 304
+    },
+    {
+      "year": 2025,
+      "avgPrice": 2461939.2086330936,
+      "medianPrice": 2200000,
+      "avgPricePerSqm": 24701.46603716625,
+      "medianPricePerSqm": 25000,
+      "dealCount": 278
+    },
+    {
+      "year": 2026,
+      "avgPrice": 2441041.6666666665,
+      "medianPrice": 2170000,
+      "avgPricePerSqm": 23731.038911102492,
+      "medianPricePerSqm": 23609.583180540278,
+      "dealCount": 72
+    }
+  ]
+}

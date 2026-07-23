@@ -11,13 +11,19 @@ import CityDealsComparison from "@/components/CityDealsComparison";
 import CityConstructionMiniChart from "@/components/CityConstructionMiniChart";
 import ScatteredFactsSection from "@/components/ScatteredFactsSection";
 import { getCityScatteredData } from "@/lib/scatteredFacts";
-import CityNeighborhoods from "@/components/CityNeighborhoods";
-import { loadCityNeighborhoods } from "@/lib/neighborhoods";
 import NumberCaption from "@/components/NumberCaption";
+import { loadCityPriceChanges } from "@/lib/price-changes";
+import NewVsSecondhandPanel from "@/components/NewVsSecondhandPanel";
+import PopulationBySource from "@/components/PopulationBySource";
+import { loadCityPopulationEstimates } from "@/lib/population-sources";
+import PriceChangeSection from "@/components/PriceChangeSection";
+import { loadCityGraphSeries, loadCityDeals } from "@/lib/nadlanTransactionSeries";
 import Link from "next/link";
+import SourceBadge from "@/components/SourceBadge";
 
 interface PageProps {
   params: { slug: string };
+  searchParams?: { window?: string };
 }
 
 function formatPrice(value: number | null): string {
@@ -45,12 +51,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
   return {
-    title: `${cityName} | מחקר נדל"ן ישראל`,
+    title: `${cityName} | קרנף אנליסט`,
   };
 }
 
-export default async function CityPage({ params }: PageProps) {
+export default async function CityPage({ params, searchParams }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
+  const activeWindow: "3y" | "5y" = searchParams?.window === "3y" ? "3y" : "5y";
 
   const [city, salesData, buildingPermits, insights, yad2Data, populationByYear, priceTrends, constructionStarts, completionsData] = await Promise.all([
     prisma.city.findUnique({ where: { city_name: cityName } }),
@@ -81,7 +88,13 @@ export default async function CityPage({ params }: PageProps) {
 
   // Load scattered facts from CBS/MoF reports (cached file)
   const scattered = getCityScatteredData(cityName);
-  const cityNeighborhoods = loadCityNeighborhoods(cityName);
+  // parallel — these were sequential and dominated page latency
+  const [cityPriceChanges, cityPopulationEstimates, cityGraphData, cityDeals] = await Promise.all([
+    loadCityPriceChanges(cityName),
+    loadCityPopulationEstimates(cityName),
+    loadCityGraphSeries(cityName),
+    loadCityDeals(cityName),
+  ]);
 
   if (!city) {
     return (
@@ -94,7 +107,7 @@ export default async function CityPage({ params }: PageProps) {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-700 hover:border-cyan-400 hover:text-cyan-700 transition-all"
+            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-all"
           >
             ← חזרה לדף הבית
           </Link>
@@ -150,22 +163,22 @@ export default async function CityPage({ params }: PageProps) {
 
   const insightEntries: { key: string; text: string; icon: string; color: string }[] = [
     insights.priceChange
-      ? { key: "price", text: insights.priceChange, icon: "📈", color: "border-emerald-900/50" }
+      ? { key: "price", text: insights.priceChange, icon: "📈", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.supplyBalance
-      ? { key: "supply", text: insights.supplyBalance, icon: "⚖️", color: "border-purple-900/50" }
+      ? { key: "supply", text: insights.supplyBalance, icon: "⚖️", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.inventoryClearance
-      ? { key: "inventory", text: insights.inventoryClearance, icon: "🏘️", color: "border-amber-900/50" }
+      ? { key: "inventory", text: insights.inventoryClearance, icon: "🏘️", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.peoplePerApartment
-      ? { key: "people", text: insights.peoplePerApartment, icon: "👥", color: "border-cyan-900/50" }
+      ? { key: "people", text: insights.peoplePerApartment, icon: "👥", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.buildingPermitsTrend
-      ? { key: "permits", text: insights.buildingPermitsTrend, icon: "🏗️", color: "border-orange-900/50" }
+      ? { key: "permits", text: insights.buildingPermitsTrend, icon: "🏗️", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.populationTrend
-      ? { key: "population", text: insights.populationTrend, icon: "📊", color: "border-blue-900/50" }
+      ? { key: "population", text: insights.populationTrend, icon: "📊", color: "border-slate-200 bg-slate-50" }
       : null,
   ].filter(Boolean) as { key: string; text: string; icon: string; color: string }[];
 
@@ -228,28 +241,11 @@ export default async function CityPage({ params }: PageProps) {
 
   return (
     <main className="min-h-screen px-4 py-8 max-w-6xl mx-auto">
-      {/* ── Navigation ─────────────────────────────────────────── */}
-      <nav className="flex items-center justify-between mb-10">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-cyan-700 transition-colors group"
-        >
-          <span className="group-hover:-translate-x-0.5 transition-transform">←</span>
-          חזרה לדף הבית
-        </Link>
-        <Link
-          href="/cities"
-          className="text-sm text-slate-500 hover:text-cyan-700 transition-colors"
-        >
-          טבלת ערים מלאה →
-        </Link>
-      </nav>
-
       {/* ── Header ─────────────────────────────────────────────── */}
       <header className="mb-10">
         <div className="flex items-start gap-4">
           <div className="flex-1">
-            <p className="text-[10px] font-semibold tracking-[0.2em] text-cyan-500/80 uppercase mb-3">
+            <p className="text-[10px] font-semibold tracking-[0.2em] text-indigo-500/80 uppercase mb-3">
               City Intelligence Report
             </p>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">
@@ -275,14 +271,24 @@ export default async function CityPage({ params }: PageProps) {
         </div>
       </header>
 
+      {/* Data-trust banner: the site's main numbers come from the independent repository */}
+      <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl border border-indigo-100 bg-indigo-50/50 px-4 py-3">
+        <SourceBadge kind="internal" />
+        <p className="text-[11px] leading-relaxed text-slate-600">
+          הנתונים המרכזיים בעמוד מבוססים על עסקאות אמת שנאספו באופן בלתי-תלוי מרשות המסים.
+          עסקת <strong>יד-שנייה</strong> = חלפו 3+ שנים משנת הבנייה לרכישה; <strong>חדשה</strong> = פחות מכך.
+          נתונים ממקורות נוספים (למ״ס, גוב-נדלן, יד2) מסומנים 🏛️.
+        </p>
+      </div>
+
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1: PRICES
           ═══════════════════════════════════════════════════════════ */}
       <section className="mb-10">
         <div className="section-header">
-          <div className="section-header-icon bg-cyan-50 text-cyan-700">₪</div>
+          <div className="section-header-icon">₪</div>
           <div>
-            <h2>מחירים</h2>
+            <h2 className="flex items-center gap-2 flex-wrap">מחירים <SourceBadge kind="external" name="גוב-נדלן" /></h2>
             <p>מחיר חציוני לדירה | מקור: nadlan.gov.il</p>
           </div>
         </div>
@@ -324,15 +330,15 @@ export default async function CityPage({ params }: PageProps) {
         <section className="mb-10">
           <div className="section-header flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="section-header-icon bg-amber-50 text-amber-700">🏠</div>
+              <div className="section-header-icon">🏠</div>
               <div>
-                <h2>מצב שוק — נתוני יד2</h2>
+                <h2 className="flex items-center gap-2 flex-wrap">מצב שוק — נתוני יד2 <SourceBadge kind="external" name="יד2 / ידאטה" /></h2>
                 <p>מודעות, ימים בשוק, סוג שוק | מקור: yad2 / yadata</p>
               </div>
             </div>
             <Link
               href="/stats/yad2-market-data"
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-700 hover:bg-amber-100 transition-colors"
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-semibold text-indigo-700 hover:bg-indigo-100 transition-colors"
             >
               <span>טבלה מלאה — כל הערים</span>
               <span>←</span>
@@ -344,26 +350,26 @@ export default async function CityPage({ params }: PageProps) {
               label="נכסים חדשים למכירה"
               value={formatNumber(yad2Data.new_properties)}
               yoy={yad2Data.new_properties_yoy}
-              color="text-cyan-700"
+              color="text-slate-900"
             />
             <Yad2Card
               label="נכסים יד שנייה"
               value={formatNumber(yad2Data.secondhand_properties)}
               yoy={yad2Data.secondhand_yoy}
-              color="text-purple-700"
+              color="text-slate-900"
             />
             <Yad2Card
               label="ימים ממוצע למודעה"
               value={formatNumber(yad2Data.avg_days_on_market)}
               yoy={yad2Data.days_yoy}
-              color="text-amber-700"
+              color="text-slate-900"
               invertYoy
             />
             <Yad2Card
               label="קונים שצפו"
               value={formatNumber(yad2Data.buyers_count)}
               yoy={yad2Data.buyers_yoy}
-              color="text-emerald-700"
+              color="text-slate-900"
             />
           </div>
 
@@ -379,7 +385,7 @@ export default async function CityPage({ params }: PageProps) {
             </div>
             <Link
               href="/stats/yad2-market-data"
-              className="md:hidden text-xs text-amber-700 hover:text-amber-900 font-semibold"
+              className="md:hidden text-xs text-indigo-700 hover:text-indigo-900 font-semibold"
             >
               כל הערים ←
             </Link>
@@ -404,52 +410,364 @@ export default async function CityPage({ params }: PageProps) {
               )}
             </div>
           )}
+
+          {/* Yadata's bespoke indices — market gauge + compromise.
+              Populated by the monthly Yadata scrape; shown only when present. */}
+          {(yad2Data.market_gauge !== null && yad2Data.market_gauge !== undefined) ||
+          (yad2Data.compromise_index !== null && yad2Data.compromise_index !== undefined) ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+              {yad2Data.market_gauge !== null && yad2Data.market_gauge !== undefined && (
+                <div className="rounded-2xl bg-indigo-50/40 border border-indigo-100 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] font-bold text-indigo-700 uppercase tracking-wide">
+                        מד השוק (יד2)
+                      </p>
+                      <p className="text-2xl font-black tabular-nums text-slate-900 mt-1">
+                        {formatNumber(yad2Data.market_gauge, 1)}
+                      </p>
+                    </div>
+                    <span className="text-2xl">🎯</span>
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    מחוון של Yadata — ככל שגבוה יותר, יותר שוק של מוכרים
+                  </p>
+                </div>
+              )}
+              {yad2Data.compromise_index !== null && yad2Data.compromise_index !== undefined && (
+                <div className="rounded-2xl bg-indigo-50/40 border border-indigo-100 p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] font-bold text-indigo-700 uppercase tracking-wide">
+                        מדד התפשרות (יד2)
+                      </p>
+                      <p className="text-2xl font-black tabular-nums text-slate-900 mt-1">
+                        {yad2Data.compromise_index >= 0 ? "+" : ""}
+                        {formatNumber(yad2Data.compromise_index, 1)}%
+                      </p>
+                    </div>
+                    <span className="text-2xl">📉</span>
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    פער ממוצע בין מחיר מבוקש למחיר עסקה — חיובי = מוכרים מתפשרים
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : null}
         </section>
       )}
 
+
+
+
+
+      <div className="section-divider" />
+
       {/* ═══════════════════════════════════════════════════════════
-          SECTION 2: DEMOGRAPHICS
+          PRICE-CHANGE SECTION (boxed) — YoY ₪/sqm graph + matrix + median
           ═══════════════════════════════════════════════════════════ */}
-      <section className="mb-10">
-        <div className="section-header">
-          <div className="section-header-icon bg-purple-50 text-purple-700">👥</div>
-          <div>
-            <h2>דמוגרפיה ודיור</h2>
-            <p>מקור: data.gov.il מפקד 2022 | למ&quot;ס מרשם אוכלוסין</p>
+      <PriceChangeSection
+        priceChanges={cityPriceChanges}
+        graphData={cityGraphData}
+        deals={cityDeals}
+        initialWindow={activeWindow}
+        cityName={city.city_name}
+      />
+
+      {/* ═══════════════════════════════════════════════════════════
+          NEW (CONTRACTOR) vs SECOND-HAND — CBS 047/2026 hard numbers
+          ═══════════════════════════════════════════════════════════ */}
+      <NewVsSecondhandPanel
+        cityName={city.city_name}
+        yad2SecondhandListings={yad2Data?.secondhand_properties ?? undefined}
+        yad2SecondhandYoy={yad2Data?.secondhand_yoy ?? undefined}
+      />
+
+      {/* ═══════════════════════════════════════════════════════════
+          POPULATION BY SOURCE — multi-source comparison
+          ═══════════════════════════════════════════════════════════ */}
+      <PopulationBySource data={cityPopulationEstimates} cityName={city.city_name} />
+
+      {/* (Sub-area price matrix now lives inside <PriceChangeSection> above) */}
+
+      <div className="section-divider" />
+
+      {/* (Yad2 section was moved to the top — right after the city header) */}
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 5: CHARTS
+          ═══════════════════════════════════════════════════════════ */}
+
+      {/* Population by Year */}
+      {populationByYear.length > 2 && (
+        <section className="mb-10">
+          <div className="glass-card p-6">
+            <div className="section-header mb-4">
+              <div className="section-header-icon">📊</div>
+              <div className="flex-1">
+                <h2 className="flex items-center gap-2 flex-wrap">מגמת אוכלוסייה <SourceBadge kind="external" name='למ"ס' /></h2>
+                <p>2016-2026 | מקור: data.gov.il מרשם אוכלוסין + מפקד 2022</p>
+              </div>
+            </div>
+            <PopulationChart
+              data={populationByYear.map(p => ({
+                year: p.year,
+                population: p.population,
+                source: p.source,
+              }))}
+              cityName={city.city_name}
+            />
+            {populationByYear.length >= 2 && (() => {
+              const first = populationByYear.find(p => p.population)?.population ?? 0;
+              const last = [...populationByYear].reverse().find(p => p.population)?.population ?? 0;
+              const growthPct = first > 0 ? ((last - first) / first * 100).toFixed(1) : '—';
+              return (
+                <p className="text-xs text-slate-500 mt-3 text-center">
+                  גידול כולל: <span className={Number(growthPct) >= 0 ? 'text-emerald-700' : 'text-red-600'}>{growthPct}%</span>
+                  {' '}({formatNumber(first)} → {formatNumber(last)})
+                </p>
+              );
+            })()}
           </div>
-        </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <KpiTile label="אוכלוסייה 2021" value={formatNumber(city.population_2021)} accent="zinc" />
-          <KpiTile label="אוכלוסייה 2022" value={formatNumber(city.population_2022)} accent="zinc" />
-          <KpiTile label="אוכלוסייה 2024" value={formatNumber(city.population_2024)} accent="purple" />
-          <KpiTile label="אוכלוסייה 2026" value={formatNumber(city.population_2026)} accent="cyan" href="/stats/total-population" />
-        </div>
+        </section>
+      )}
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-3">
-          <KpiTile label="משקי בית 2022" value={formatNumber(city.households_2022)} accent="amber" />
-          <KpiTile label="גודל משק בית ממוצע" value={formatNumber(city.avgHouseholdSize2022, 2)} accent="amber" />
-          <KpiTile label="נפשות לדירה" value={formatNumber(city.people_per_apartment, 1)} accent="amber" />
-          <KpiTile label="סך דירות" value={formatNumber(city.total_apartments)} accent="zinc" />
-        </div>
-        <NumberCaption
-          source='למ"ס + מפקד 2022'
-          sourceHref="https://www.cbs.gov.il/he/subjects/Pages/Population-Census-2022.aspx"
-          period="2021 → 2026 (תחזית)"
-          method="data.gov.il + cbs_registry_2025_update"
-        />
-      </section>
+      {/* Price Trends */}
+      {priceTrends.length > 2 && (
+        <section className="mb-10">
+          <div className="glass-card p-6">
+            <div className="section-header mb-4">
+              <div className="section-header-icon">💰</div>
+              <div className="flex-1">
+                <h2 className="flex items-center gap-2 flex-wrap">מגמת מחירים חציוניים <SourceBadge kind="external" name="גוב-נדלן" /></h2>
+                <p>מקור: nadlan.gov.il — אתר הנדל&quot;ן הממשלתי</p>
+              </div>
+            </div>
+            <PriceTrendChart
+              data={priceTrends.map(p => ({
+                year: p.year,
+                quarter: p.quarter,
+                median_price: p.median_price,
+              }))}
+              cityName={city.city_name}
+            />
+            {priceTrends.length >= 2 && (() => {
+              const first = priceTrends.find(p => p.median_price)?.median_price ?? 0;
+              const last = [...priceTrends].reverse().find(p => p.median_price)?.median_price ?? 0;
+              const changePct = first > 0 ? ((last - first) / first * 100).toFixed(1) : '—';
+              return (
+                <p className="text-xs text-slate-500 mt-2 text-center">
+                  שינוי מחיר חציוני: <span className={Number(changePct) >= 0 ? 'text-emerald-700' : 'text-red-600'}>{changePct}%</span>
+                  {' '}(₪{formatNumber(first)} → ₪{formatNumber(last)})
+                </p>
+              );
+            })()}
+          </div>
+        </section>
+      )}
 
+      {/* Scattered facts from CBS / MoF Chief Economist reports */}
+      <ScatteredFactsSection facts={scattered.facts} timeSeries={scattered.timeSeries} />
+
+      {/* Real Deals Comparison */}
+      <CityDealsComparison cityName={city.city_name} />
+
+      {/* Sales Chart */}
+      {salesData && (
+        <section className="mb-10">
+          <div className="glass-card p-6">
+            <div className="section-header mb-4">
+              <div className="section-header-icon">🏗️</div>
+              <div>
+                <h2 className="flex items-center gap-2 flex-wrap">מכירות דירות חדשות <SourceBadge kind="external" name='למ"ס' /></h2>
+                <p>מקור: למ&quot;ס — סקר בנייה (22 ערים)</p>
+              </div>
+            </div>
+            <SalesChart
+              sales2023={salesData?.new_sales_2023 ?? null}
+              sales2024={salesData?.new_sales_2024 ?? null}
+              sales2025={salesData?.new_sales_2025 ?? null}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Building Permits Chart */}
+      {permitsData.length > 0 && (
+        <section className="mb-10">
+          <div className="glass-card p-6">
+            <div className="section-header mb-4">
+              <div className="section-header-icon">📋</div>
+              <div className="flex-1">
+                <h2 className="flex items-center gap-2 flex-wrap">היתרי בנייה לפי שנה (2016-2024) <SourceBadge kind="external" name='למ"ס' /></h2>
+                <p>מקור: למ&quot;ס — מחולל לוחות</p>
+              </div>
+              <div className="flex gap-4 text-xs text-slate-500">
+                <span>סה&quot;כ: <span className="text-slate-700 font-medium">{totalPermits.toLocaleString("he-IL")}</span></span>
+                <span>ממוצע: <span className="text-slate-700 font-medium">{avgPermits.toLocaleString("he-IL")}</span></span>
+                {permitsTrend !== null && (
+                  <span>מגמה: <span className={permitsTrend >= 0 ? "text-emerald-700" : "text-red-600"}>
+                    {permitsTrend >= 0 ? "+" : ""}{permitsTrend.toFixed(0)}%
+                  </span></span>
+                )}
+              </div>
+            </div>
+            <PermitsChart data={permitsData} cityName={city.city_name} />
+          </div>
+        </section>
+      )}
+
+      <div className="section-divider" />
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 6: ANALYSIS
+          ═══════════════════════════════════════════════════════════ */}
+
+      {/* Correlation Table */}
+      {populationByYear.length > 2 && (
+        <section className="mb-10">
+          <div className="glass-card p-6">
+            <div className="section-header mb-4">
+              <div className="section-header-icon">🔗</div>
+              <div className="flex-1">
+                <h2>ניתוח קורלציה — גידול מול היצע</h2>
+                <p>מקורות: data.gov.il | למ&quot;ס היתרי בנייה + התחלות בנייה</p>
+              </div>
+            </div>
+            <CorrelationTable
+              cityName={city.city_name}
+              avgHouseholdSize={city.avgHouseholdSize2022}
+              data={(() => {
+                const years = [2020, 2021, 2022, 2023, 2024, 2025];
+                return years.map(year => {
+                  const popThisYear = populationByYear.find(p => p.year === year)?.population;
+                  const popPrevYear = populationByYear.find(p => p.year === year - 1)?.population;
+                  const growthPct = (popThisYear && popPrevYear && popPrevYear > 0)
+                    ? ((popThisYear - popPrevYear) / popPrevYear * 100)
+                    : null;
+                  const popGrowth = (popThisYear && popPrevYear) ? popThisYear - popPrevYear : null;
+                  const requiredHH = (popGrowth && city.avgHouseholdSize2022 && city.avgHouseholdSize2022 > 0)
+                    ? Math.round(popGrowth / city.avgHouseholdSize2022)
+                    : null;
+                  const permits = buildingPermits.find(p => p.year === year)?.permits ?? null;
+                  const starts = constructionStarts.find(s => s.year === year)?.starts ?? null;
+                  return {
+                    year,
+                    populationGrowthPct: growthPct,
+                    requiredHouseholds: requiredHH,
+                    householdsGrowth: null,
+                    buildingPermits: permits,
+                    constructionStarts: starts,
+                  };
+                });
+              })()}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Sales Inventory */}
+      {salesData && (
+        <section className="mb-10">
+          <div className="section-header">
+            <div className="section-header-icon">📦</div>
+            <div>
+              <h2 className="flex items-center gap-2 flex-wrap">מלאי ומכירות <SourceBadge kind="external" name='למ"ס' /></h2>
+              <p>מקור: למ&quot;ס — סקר בנייה, פרסומי מכירות דירות חדשות</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="kpi-card glow-indigo">
+              <p className="stat-label mb-2">מלאי לא מכור 2025</p>
+              <p className="stat-value text-slate-900">{formatNumber(salesData.unsold_inventory_2025)}</p>
+              <p className="text-[10px] text-slate-400 mt-1">דירות</p>
+            </div>
+            <div className="kpi-card glow-indigo">
+              <p className="stat-label mb-2">ממוצע מכירות 3 שנים</p>
+              <p className="stat-value text-slate-900">{salesData.avg_sales_3y !== null ? salesData.avg_sales_3y.toFixed(0) : "—"}</p>
+              <p className="text-[10px] text-slate-400 mt-1">דירות לשנה</p>
+            </div>
+            <div className="kpi-card glow-indigo">
+              <p className="stat-label mb-2">שנים לפינוי מלאי</p>
+              <p className="stat-value text-slate-900">{salesData.years_to_clear_avg !== null ? salesData.years_to_clear_avg.toFixed(1) : "—"}</p>
+              <p className="text-[10px] text-slate-400 mt-1">שנים</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Urban Renewal */}
+      {city.urban_renewal_status && (
+        <section className="mb-10">
+          <div className="section-header">
+            <div className="section-header-icon">🔄</div>
+            <div>
+              <h2>התחדשות עירונית</h2>
+            </div>
+          </div>
+          <div className="glass-card p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div>
+                <p className="stat-label mb-1">סטטוס</p>
+                <p className="text-lg font-bold text-slate-900">{city.urban_renewal_status}</p>
+              </div>
+              {city.urban_renewal_proposed_units !== null && (
+                <div>
+                  <p className="stat-label mb-1">יחידות מוצעות</p>
+                  <p className="text-lg font-bold text-slate-900">{formatNumber(city.urban_renewal_proposed_units)}</p>
+                </div>
+              )}
+              {city.urban_renewal_existing_units !== null && (
+                <div>
+                  <p className="stat-label mb-1">יחידות קיימות</p>
+                  <p className="text-lg font-bold text-slate-700">{formatNumber(city.urban_renewal_existing_units)}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Insights */}
+      {insightEntries.length > 0 && (
+        <section className="mb-10">
+          <div className="section-header">
+            <div className="section-header-icon">💡</div>
+            <div>
+              <h2>תובנות אנליטיות</h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {insightEntries.map((insight) => (
+              <div
+                key={insight.key}
+                className={`flex items-start gap-3 px-5 py-4 glass-card border ${insight.color}`}
+              >
+                <span className="text-xl flex-shrink-0 mt-0.5">{insight.icon}</span>
+                <p className="text-slate-700 text-sm leading-relaxed">{insight.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <div className="section-divider" />
+
+      {/* ═══════════════════════════════════════════════════════════
+          RAW DATA TABLE
+          ═══════════════════════════════════════════════════════════ */}
       {/* ═══════════════════════════════════════════════════════════
           SECTION 3: SUPPLY & DEMAND (EXPANDED)
           ═══════════════════════════════════════════════════════════ */}
       <section className="mb-10">
         <div className="section-header">
-          <div className="section-header-icon bg-red-50 text-red-600">⚖️</div>
+          <div className="section-header-icon">⚖️</div>
           <div>
-            <h2>היצע וביקוש — ניתוח מקיף</h2>
+            <h2 className="flex items-center gap-2 flex-wrap">היצע וביקוש — ניתוח מקיף <SourceBadge kind="external" name='למ"ס' /></h2>
             <p>
               חישוב מגידול אוכלוסייה לפי {ppa.toFixed(1)} נפשות/משק בית
-              {gapAnalysis ? ` (מקור: ${gapAnalysis.personsPerHouseholdSource === 'yad2' ? 'יד2' : gapAnalysis.personsPerHouseholdSource === 'census2022' ? 'מפקד 2022' : gapAnalysis.personsPerHouseholdSource === 'legacy_ppa' ? 'מחקר אקסל' : 'ממוצע ארצי'})` : ''}
+              {gapAnalysis ? ` (מקור: ${gapAnalysis.personsPerHouseholdSource === 'yad2' ? 'יד2' : gapAnalysis.personsPerHouseholdSource === 'census2022' ? 'מפקד 2022' : 'ממוצע ארצי'})` : ''}
               {' | '}חלון: {gapAnalysis?.windowStart ?? '—'}-{gapAnalysis?.windowEnd ?? '—'}
               {' | '}סולם היצע: גמר ← התחלות ← היתרים
             </p>
@@ -470,7 +788,7 @@ export default async function CityPage({ params }: PageProps) {
           <KpiTile
             label={`דירות נדרשות (${gapAnalysis?.windowStart ?? 2020}-${gapAnalysis?.windowEnd ?? 2024})`}
             value={formatNumber(totalRequired !== null && totalRequired > 0 ? totalRequired : city.apartments_required)}
-            accent="red"
+            accent="zinc"
           />
           <KpiTile
             label={`סך היתרי בנייה (${gapAnalysis?.coverage.yearsWithPermits ?? 0} שנים)`}
@@ -480,7 +798,7 @@ export default async function CityPage({ params }: PageProps) {
           <KpiTile
             label={`סך התחלות בנייה (${gapAnalysis?.coverage.yearsWithStarts ?? 0} שנים)`}
             value={formatNumber(totalStarts > 0 ? totalStarts : null)}
-            accent="emerald"
+            accent="zinc"
           />
           <KpiTile
             label={`סך גמר בנייה (${gapAnalysis?.coverage.yearsWithCompletions ?? 0} שנים)`}
@@ -506,10 +824,10 @@ export default async function CityPage({ params }: PageProps) {
                 <tr className="border-b border-slate-200 bg-slate-50">
                   <th className="py-3 px-4 text-right text-xs text-slate-500 font-medium">שנה</th>
                   <th className="py-3 px-4 text-center text-xs text-slate-500 font-medium">גידול אוכלוסייה</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-red-600/80">דירות נדרשות</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-amber-700/80">היתרי בנייה</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-emerald-700/80">התחלות בנייה</th>
-                  <th className="py-3 px-4 text-center text-xs font-medium text-cyan-700/80">גמר בנייה</th>
+                  <th className="py-3 px-4 text-center text-xs text-slate-500 font-medium">דירות נדרשות</th>
+                  <th className="py-3 px-4 text-center text-xs text-slate-500 font-medium">היתרי בנייה</th>
+                  <th className="py-3 px-4 text-center text-xs text-slate-500 font-medium">התחלות בנייה</th>
+                  <th className="py-3 px-4 text-center text-xs text-slate-500 font-medium">גמר בנייה</th>
                   <th className="py-3 px-4 text-center text-xs text-slate-500 font-medium">בסיס</th>
                   <th className="py-3 px-4 text-center text-xs text-slate-500 font-medium">פער (היצע − נדרש)</th>
                 </tr>
@@ -528,16 +846,16 @@ export default async function CityPage({ params }: PageProps) {
                       <td className="py-2.5 px-4 text-center text-slate-500">
                         {row.popGrowth !== null ? `${row.popGrowth >= 0 ? '+' : ''}${formatNumber(row.popGrowth)}` : '—'}
                       </td>
-                      <td className="py-2.5 px-4 text-center text-red-600 font-medium">
+                      <td className="py-2.5 px-4 text-center text-slate-700 font-medium">
                         {formatNumber(row.required)}
                       </td>
-                      <td className={`py-2.5 px-4 text-center font-medium ${row.chosenSource === 'permits' ? 'text-amber-700 ring-1 ring-amber-300 rounded' : 'text-amber-700'}`}>
+                      <td className={`py-2.5 px-4 text-center font-medium ${row.chosenSource === 'permits' ? 'text-indigo-700 ring-1 ring-indigo-300 rounded' : 'text-slate-700'}`}>
                         {formatNumber(row.permits)}
                       </td>
-                      <td className={`py-2.5 px-4 text-center font-medium ${row.chosenSource === 'starts' ? 'text-emerald-700 ring-1 ring-emerald-300 rounded' : 'text-emerald-700'}`}>
+                      <td className={`py-2.5 px-4 text-center font-medium ${row.chosenSource === 'starts' ? 'text-indigo-700 ring-1 ring-indigo-300 rounded' : 'text-slate-700'}`}>
                         {formatNumber(row.starts)}
                       </td>
-                      <td className={`py-2.5 px-4 text-center font-medium ${row.chosenSource === 'completions' ? 'text-cyan-700 ring-1 ring-cyan-300 rounded' : 'text-cyan-700'}`}>
+                      <td className={`py-2.5 px-4 text-center font-medium ${row.chosenSource === 'completions' ? 'text-indigo-700 ring-1 ring-indigo-300 rounded' : 'text-slate-700'}`}>
                         {formatNumber(row.completions)}
                       </td>
                       <td className="py-2.5 px-4 text-center">
@@ -557,16 +875,16 @@ export default async function CityPage({ params }: PageProps) {
                   <td className="py-3 px-4 text-center text-slate-500">
                     {formatNumber(gapAnalysis?.totals.popGrowth ?? city.population_growth_abs)}
                   </td>
-                  <td className="py-3 px-4 text-center text-red-600">
+                  <td className="py-3 px-4 text-center text-slate-700">
                     {formatNumber(totalRequired !== null && totalRequired > 0 ? totalRequired : city.apartments_required)}
                   </td>
-                  <td className="py-3 px-4 text-center text-amber-700">
+                  <td className="py-3 px-4 text-center text-slate-700">
                     {formatNumber(gapAnalysis?.totals.permits ?? totalPermits)}
                   </td>
-                  <td className="py-3 px-4 text-center text-emerald-700">
+                  <td className="py-3 px-4 text-center text-slate-700">
                     {formatNumber(totalStarts > 0 ? totalStarts : null)}
                   </td>
-                  <td className="py-3 px-4 text-center text-cyan-700">
+                  <td className="py-3 px-4 text-center text-slate-700">
                     {formatNumber(totalCompletions > 0 ? totalCompletions : null)}
                   </td>
                   <td className="py-3 px-4 text-center">
@@ -609,282 +927,41 @@ export default async function CityPage({ params }: PageProps) {
         />
       </section>
 
-      <div className="section-divider" />
-
       {/* ═══════════════════════════════════════════════════════════
-          NEIGHBORHOODS — top-3 from Govmap/nadlan.gov.il
-          ═══════════════════════════════════════════════════════════ */}
-      <CityNeighborhoods neighborhoods={cityNeighborhoods} />
-
-      <div className="section-divider" />
-
-      {/* (Yad2 section was moved to the top — right after the city header) */}
-
-      {/* ═══════════════════════════════════════════════════════════
-          SECTION 5: CHARTS
-          ═══════════════════════════════════════════════════════════ */}
-
-      {/* Population by Year */}
-      {populationByYear.length > 2 && (
-        <section className="mb-10">
-          <div className="glass-card p-6">
-            <div className="section-header mb-4">
-              <div className="section-header-icon bg-blue-500/10 text-blue-400">📊</div>
-              <div className="flex-1">
-                <h2>מגמת אוכלוסייה</h2>
-                <p>2016-2026 | מקור: data.gov.il מרשם אוכלוסין + מפקד 2022</p>
-              </div>
-            </div>
-            <PopulationChart
-              data={populationByYear.map(p => ({
-                year: p.year,
-                population: p.population,
-                source: p.source,
-              }))}
-              cityName={city.city_name}
-            />
-            {populationByYear.length >= 2 && (() => {
-              const first = populationByYear.find(p => p.population)?.population ?? 0;
-              const last = [...populationByYear].reverse().find(p => p.population)?.population ?? 0;
-              const growthPct = first > 0 ? ((last - first) / first * 100).toFixed(1) : '—';
-              return (
-                <p className="text-xs text-slate-500 mt-3 text-center">
-                  גידול כולל: <span className={Number(growthPct) >= 0 ? 'text-emerald-700' : 'text-red-600'}>{growthPct}%</span>
-                  {' '}({formatNumber(first)} → {formatNumber(last)})
-                </p>
-              );
-            })()}
-          </div>
-        </section>
-      )}
-
-      {/* Price Trends */}
-      {priceTrends.length > 2 && (
-        <section className="mb-10">
-          <div className="glass-card p-6">
-            <div className="section-header mb-4">
-              <div className="section-header-icon bg-emerald-50 text-emerald-700">💰</div>
-              <div className="flex-1">
-                <h2>מגמת מחירים חציוניים</h2>
-                <p>מקור: nadlan.gov.il — אתר הנדל&quot;ן הממשלתי</p>
-              </div>
-            </div>
-            <PriceTrendChart
-              data={priceTrends.map(p => ({
-                year: p.year,
-                quarter: p.quarter,
-                median_price: p.median_price,
-              }))}
-              cityName={city.city_name}
-            />
-            {priceTrends.length >= 2 && (() => {
-              const first = priceTrends.find(p => p.median_price)?.median_price ?? 0;
-              const last = [...priceTrends].reverse().find(p => p.median_price)?.median_price ?? 0;
-              const changePct = first > 0 ? ((last - first) / first * 100).toFixed(1) : '—';
-              return (
-                <p className="text-xs text-slate-500 mt-2 text-center">
-                  שינוי מחיר חציוני: <span className={Number(changePct) >= 0 ? 'text-emerald-700' : 'text-red-600'}>{changePct}%</span>
-                  {' '}(₪{formatNumber(first)} → ₪{formatNumber(last)})
-                </p>
-              );
-            })()}
-          </div>
-        </section>
-      )}
-
-      {/* Scattered facts from CBS / MoF Chief Economist reports */}
-      <ScatteredFactsSection facts={scattered.facts} timeSeries={scattered.timeSeries} />
-
-      {/* Real Deals Comparison */}
-      <CityDealsComparison cityName={city.city_name} />
-
-      {/* Sales Chart */}
-      {salesData && (
-        <section className="mb-10">
-          <div className="glass-card p-6">
-            <div className="section-header mb-4">
-              <div className="section-header-icon bg-cyan-50 text-cyan-700">🏗️</div>
-              <div>
-                <h2>מכירות דירות חדשות</h2>
-                <p>מקור: למ&quot;ס — סקר בנייה (22 ערים)</p>
-              </div>
-            </div>
-            <SalesChart
-              sales2023={salesData?.new_sales_2023 ?? null}
-              sales2024={salesData?.new_sales_2024 ?? null}
-              sales2025={salesData?.new_sales_2025 ?? null}
-            />
-          </div>
-        </section>
-      )}
-
-      {/* Building Permits Chart */}
-      {permitsData.length > 0 && (
-        <section className="mb-10">
-          <div className="glass-card p-6">
-            <div className="section-header mb-4">
-              <div className="section-header-icon bg-amber-50 text-amber-700">📋</div>
-              <div className="flex-1">
-                <h2>היתרי בנייה לפי שנה (2016-2024)</h2>
-                <p>מקור: למ&quot;ס — מחולל לוחות</p>
-              </div>
-              <div className="flex gap-4 text-xs text-slate-500">
-                <span>סה&quot;כ: <span className="text-slate-700 font-medium">{totalPermits.toLocaleString("he-IL")}</span></span>
-                <span>ממוצע: <span className="text-slate-700 font-medium">{avgPermits.toLocaleString("he-IL")}</span></span>
-                {permitsTrend !== null && (
-                  <span>מגמה: <span className={permitsTrend >= 0 ? "text-emerald-700" : "text-red-600"}>
-                    {permitsTrend >= 0 ? "+" : ""}{permitsTrend.toFixed(0)}%
-                  </span></span>
-                )}
-              </div>
-            </div>
-            <PermitsChart data={permitsData} cityName={city.city_name} />
-          </div>
-        </section>
-      )}
-
-      <div className="section-divider" />
-
-      {/* ═══════════════════════════════════════════════════════════
-          SECTION 6: ANALYSIS
-          ═══════════════════════════════════════════════════════════ */}
-
-      {/* Correlation Table */}
-      {populationByYear.length > 2 && (
-        <section className="mb-10">
-          <div className="glass-card p-6">
-            <div className="section-header mb-4">
-              <div className="section-header-icon bg-purple-50 text-purple-700">🔗</div>
-              <div className="flex-1">
-                <h2>ניתוח קורלציה — גידול מול היצע</h2>
-                <p>מקורות: data.gov.il | למ&quot;ס היתרי בנייה + התחלות בנייה</p>
-              </div>
-            </div>
-            <CorrelationTable
-              cityName={city.city_name}
-              avgHouseholdSize={city.avgHouseholdSize2022}
-              data={(() => {
-                const years = [2020, 2021, 2022, 2023, 2024, 2025];
-                return years.map(year => {
-                  const popThisYear = populationByYear.find(p => p.year === year)?.population;
-                  const popPrevYear = populationByYear.find(p => p.year === year - 1)?.population;
-                  const growthPct = (popThisYear && popPrevYear && popPrevYear > 0)
-                    ? ((popThisYear - popPrevYear) / popPrevYear * 100)
-                    : null;
-                  const popGrowth = (popThisYear && popPrevYear) ? popThisYear - popPrevYear : null;
-                  const requiredHH = (popGrowth && city.avgHouseholdSize2022 && city.avgHouseholdSize2022 > 0)
-                    ? Math.round(popGrowth / city.avgHouseholdSize2022)
-                    : null;
-                  const permits = buildingPermits.find(p => p.year === year)?.permits ?? null;
-                  const starts = constructionStarts.find(s => s.year === year)?.starts ?? null;
-                  return {
-                    year,
-                    populationGrowthPct: growthPct,
-                    requiredHouseholds: requiredHH,
-                    householdsGrowth: null,
-                    buildingPermits: permits,
-                    constructionStarts: starts,
-                  };
-                });
-              })()}
-            />
-          </div>
-        </section>
-      )}
-
-      {/* Sales Inventory */}
-      {salesData && (
-        <section className="mb-10">
-          <div className="section-header">
-            <div className="section-header-icon bg-amber-50 text-amber-700">📦</div>
-            <div>
-              <h2>מלאי ומכירות</h2>
-              <p>מקור: למ&quot;ס — סקר בנייה, פרסומי מכירות דירות חדשות</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div className="kpi-card glow-amber">
-              <p className="stat-label mb-2">מלאי לא מכור 2025</p>
-              <p className="stat-value text-amber-700">{formatNumber(salesData.unsold_inventory_2025)}</p>
-              <p className="text-[10px] text-slate-400 mt-1">דירות</p>
-            </div>
-            <div className="kpi-card glow-cyan">
-              <p className="stat-label mb-2">ממוצע מכירות 3 שנים</p>
-              <p className="stat-value text-cyan-700">{salesData.avg_sales_3y !== null ? salesData.avg_sales_3y.toFixed(0) : "—"}</p>
-              <p className="text-[10px] text-slate-400 mt-1">דירות לשנה</p>
-            </div>
-            <div className="kpi-card glow-purple">
-              <p className="stat-label mb-2">שנים לפינוי מלאי</p>
-              <p className="stat-value text-purple-700">{salesData.years_to_clear_avg !== null ? salesData.years_to_clear_avg.toFixed(1) : "—"}</p>
-              <p className="text-[10px] text-slate-400 mt-1">שנים</p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Urban Renewal */}
-      {city.urban_renewal_status && (
-        <section className="mb-10">
-          <div className="section-header">
-            <div className="section-header-icon bg-emerald-50 text-emerald-700">🔄</div>
-            <div>
-              <h2>התחדשות עירונית</h2>
-            </div>
-          </div>
-          <div className="glass-card p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <p className="stat-label mb-1">סטטוס</p>
-                <p className="text-lg font-bold text-cyan-700">{city.urban_renewal_status}</p>
-              </div>
-              {city.urban_renewal_proposed_units !== null && (
-                <div>
-                  <p className="stat-label mb-1">יחידות מוצעות</p>
-                  <p className="text-lg font-bold text-emerald-700">{formatNumber(city.urban_renewal_proposed_units)}</p>
-                </div>
-              )}
-              {city.urban_renewal_existing_units !== null && (
-                <div>
-                  <p className="stat-label mb-1">יחידות קיימות</p>
-                  <p className="text-lg font-bold text-slate-700">{formatNumber(city.urban_renewal_existing_units)}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Insights */}
-      {insightEntries.length > 0 && (
-        <section className="mb-10">
-          <div className="section-header">
-            <div className="section-header-icon bg-blue-500/10 text-blue-400">💡</div>
-            <div>
-              <h2>תובנות אנליטיות</h2>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {insightEntries.map((insight) => (
-              <div
-                key={insight.key}
-                className={`flex items-start gap-3 px-5 py-4 glass-card border ${insight.color}`}
-              >
-                <span className="text-xl flex-shrink-0 mt-0.5">{insight.icon}</span>
-                <p className="text-slate-700 text-sm leading-relaxed">{insight.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <div className="section-divider" />
-
-      {/* ═══════════════════════════════════════════════════════════
-          RAW DATA TABLE
+          SECTION 2: DEMOGRAPHICS
           ═══════════════════════════════════════════════════════════ */}
       <section className="mb-10">
         <div className="section-header">
-          <div className="section-header-icon bg-slate-100 text-slate-600">📋</div>
+          <div className="section-header-icon">👥</div>
+          <div>
+            <h2 className="flex items-center gap-2 flex-wrap">דמוגרפיה ודיור <SourceBadge kind="external" name='למ"ס' /></h2>
+            <p>מקור: data.gov.il מפקד 2022 | למ&quot;ס מרשם אוכלוסין</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <KpiTile label="אוכלוסייה 2021" value={formatNumber(city.population_2021)} accent="zinc" />
+          <KpiTile label="אוכלוסייה 2022" value={formatNumber(city.population_2022)} accent="zinc" />
+          <KpiTile label="אוכלוסייה 2024" value={formatNumber(city.population_2024)} accent="purple" />
+          <KpiTile label="אוכלוסייה 2026" value={formatNumber(city.population_2026)} accent="cyan" href="/stats/total-population" />
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-3">
+          <KpiTile label="משקי בית 2022" value={formatNumber(city.households_2022)} accent="amber" />
+          <KpiTile label="גודל משק בית ממוצע" value={formatNumber(city.avgHouseholdSize2022, 2)} accent="amber" />
+          <KpiTile label="נפשות לדירה" value={formatNumber(city.people_per_apartment, 1)} accent="amber" />
+          <KpiTile label="סך דירות" value={formatNumber(city.total_apartments)} accent="zinc" />
+        </div>
+        <NumberCaption
+          source='למ"ס + מפקד 2022'
+          sourceHref="https://www.cbs.gov.il/he/subjects/Pages/Population-Census-2022.aspx"
+          period="2021 → 2026 (תחזית)"
+          method="data.gov.il + cbs_registry_2025_update"
+        />
+      </section>
+
+      <section className="mb-10">
+        <div className="section-header">
+          <div className="section-header-icon">📋</div>
           <div>
             <h2>כל הנתונים</h2>
           </div>
@@ -925,15 +1002,6 @@ export default async function CityPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* ── Footer ─────────────────────────────────────────────── */}
-      <footer className="pt-8 pb-4 border-t border-slate-100 text-center">
-        <p className="text-slate-500 text-xs">
-          מקור: למ&quot;ס, מחקר פנימי קרנף | עודכן:{" "}
-          {city.last_updated
-            ? city.last_updated.toLocaleDateString("he-IL")
-            : "לא ידוע"}
-        </p>
-      </footer>
     </main>
   );
 }
@@ -958,22 +1026,24 @@ function KpiTile({
   /** Optional link — if provided, the tile becomes clickable and shows a hover hint. */
   href?: string;
 }) {
+  // Unified palette: non-trend KPI values are neutral slate ink; only emerald/red deviate,
+  // reserved for trend direction (up = green, down = red). Decorative accents → brand indigo bar.
   const accentMap: Record<AccentColor, string> = {
-    cyan: "text-cyan-700",
-    purple: "text-purple-700",
+    cyan: "text-slate-900",
+    purple: "text-slate-900",
     emerald: "text-emerald-700",
-    amber: "text-amber-700",
+    amber: "text-slate-900",
     red: "text-red-600",
-    zinc: "text-slate-800",
+    zinc: "text-slate-900",
   };
 
   const glowMap: Record<AccentColor, string> = {
-    cyan: "glow-cyan",
-    purple: "glow-purple",
+    cyan: "glow-indigo",
+    purple: "glow-indigo",
     emerald: "glow-emerald",
-    amber: "glow-amber",
+    amber: "glow-indigo",
     red: "glow-red",
-    zinc: "glow-zinc",
+    zinc: "glow-indigo",
   };
 
   const inner = (
@@ -1022,7 +1092,7 @@ function Yad2Card({
 }) {
   const yoyPositive = invertYoy ? (yoy ?? 0) <= 0 : (yoy ?? 0) >= 0;
   return (
-    <div className="kpi-card glow-zinc">
+    <div className="kpi-card glow-indigo">
       <p className="stat-label mb-2">{label}</p>
       <p className={`stat-value ${color}`}>{value}</p>
       {yoy !== null && (

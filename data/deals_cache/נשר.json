@@ -1,15 +1,15 @@
 {
   "cityName": "נשר",
-  "lastUpdated": "2026-06-24T06:58:46.793Z",
+  "lastUpdated": "2026-07-21T09:17:18.089Z",
   "neighborhoods": [
     {
       "neighborhood": "תל עמל",
-      "totalDeals": 601,
+      "totalDeals": 605,
       "dealsPerYearAvg": 86,
       "streets": [
         {
           "streetName": "פאר",
-          "totalDeals": 173,
+          "totalDeals": 174,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -118,10 +118,10 @@
                     "pricePerSqm": 7789,
                     "totalPrice": 740000,
                     "area": 95,
-                    "houseNum": "78.0",
+                    "houseNum": 78,
                     "streetName": "פאר",
                     "blocksAway": 29,
-                    "dealDate": "2022-02-13T00:00:00Z"
+                    "dealDate": "2022-02-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -132,10 +132,10 @@
                     "pricePerSqm": 8235,
                     "totalPrice": 700000,
                     "area": 85,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "פאר",
                     "blocksAway": 45,
-                    "dealDate": "2020-07-21T00:00:00Z"
+                    "dealDate": "2020-07-21T00:00:00.000Z"
                   }
                 }
               ]
@@ -144,7 +144,7 @@
         },
         {
           "streetName": "יד לבנים",
-          "totalDeals": 161,
+          "totalDeals": 163,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -248,10 +248,10 @@
                     "pricePerSqm": 13500,
                     "totalPrice": 1215000,
                     "area": 90,
-                    "houseNum": "92.0",
+                    "houseNum": 92,
                     "streetName": "יד לבנים",
                     "blocksAway": 0,
-                    "dealDate": "2025-05-16T00:00:00Z"
+                    "dealDate": "2025-05-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -262,10 +262,10 @@
                     "pricePerSqm": 15761,
                     "totalPrice": 1450000,
                     "area": 92,
-                    "houseNum": "60.0",
+                    "houseNum": 60,
                     "streetName": "יד לבנים",
                     "blocksAway": 32,
-                    "dealDate": "2022-02-14T00:00:00Z"
+                    "dealDate": "2022-02-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -281,7 +281,7 @@
     },
     {
       "neighborhood": "קרית בנימין",
-      "totalDeals": 345,
+      "totalDeals": 346,
       "dealsPerYearAvg": 49,
       "streets": [
         {
@@ -402,10 +402,10 @@
                     "pricePerSqm": 15741,
                     "totalPrice": 1700000,
                     "area": 108,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "שטיינברג",
                     "blocksAway": 0,
-                    "dealDate": "2023-12-20T00:00:00Z"
+                    "dealDate": "2023-12-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -416,10 +416,10 @@
                     "pricePerSqm": 11514,
                     "totalPrice": 1255000,
                     "area": 109,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "שטיינברג",
                     "blocksAway": 0,
-                    "dealDate": "2021-08-26T00:00:00Z"
+                    "dealDate": "2021-08-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -456,10 +456,10 @@
                     "pricePerSqm": 35938,
                     "totalPrice": 2300000,
                     "area": 64,
-                    "houseNum": "53.0",
+                    "houseNum": 53,
                     "streetName": "לילינבלום",
                     "blocksAway": 36,
-                    "dealDate": "2023-10-31T00:00:00Z"
+                    "dealDate": "2023-10-31T00:00:00.000Z"
                   }
                 },
                 {
@@ -483,10 +483,10 @@
                     "pricePerSqm": 13333,
                     "totalPrice": 960000,
                     "area": 72,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "לילינבלום",
                     "blocksAway": 0,
-                    "dealDate": "2024-10-13T00:00:00Z"
+                    "dealDate": "2024-10-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -529,10 +529,10 @@
                     "pricePerSqm": 20952,
                     "totalPrice": 2200000,
                     "area": 105,
-                    "houseNum": "67.0",
+                    "houseNum": 67,
                     "streetName": "לילינבלום",
                     "blocksAway": 50,
-                    "dealDate": "2025-04-09T00:00:00Z"
+                    "dealDate": "2025-04-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -543,10 +543,10 @@
                     "pricePerSqm": 14174,
                     "totalPrice": 1630000,
                     "area": 115,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "לילינבלום",
                     "blocksAway": 15,
-                    "dealDate": "2023-03-09T00:00:00Z"
+                    "dealDate": "2023-03-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -568,14 +568,60 @@
       ]
     },
     {
-      "neighborhood": "סביוני הכרמל",
-      "totalDeals": 224,
-      "dealsPerYearAvg": 32,
+      "neighborhood": "חליסה",
+      "totalDeals": 139,
+      "dealsPerYearAvg": 20,
       "streets": [
         {
-          "streetName": "מנדל זינגר",
-          "totalDeals": 54,
+          "streetName": "גוש עציון",
+          "totalDeals": 31,
           "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 13333,
+                    "totalPrice": 760000,
+                    "area": 57,
+                    "houseNum": 1,
+                    "streetName": "גוש עציון",
+                    "blocksAway": 0,
+                    "dealDate": "2025-03-30T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 9283,
+                    "avgTotalPrice": 557000,
+                    "avgArea": 61
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 7838,
+                    "avgTotalPrice": 490000,
+                    "avgArea": 63
+                  }
+                }
+              ]
+            },
             {
               "label": "~80 מ\"ר",
               "targetArea": 80,
@@ -587,39 +633,39 @@
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 23827,
-                    "totalPrice": 1930000,
-                    "area": 81,
-                    "houseNum": "12.0",
-                    "streetName": "מנדל זינגר",
-                    "blocksAway": 0,
-                    "dealDate": "2026-04-13T00:00:00Z"
+                    "pricePerSqm": 6579,
+                    "totalPrice": 500000,
+                    "area": 76,
+                    "houseNum": 22,
+                    "streetName": "גוש עציון",
+                    "blocksAway": 21,
+                    "dealDate": "2024-03-03T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 22959,
-                    "avgTotalPrice": 1860000,
-                    "avgArea": 81
+                    "type": "single",
+                    "pricePerSqm": 5600,
+                    "totalPrice": 420000,
+                    "area": 75,
+                    "houseNum": 11,
+                    "streetName": "גוש עציון",
+                    "blocksAway": 10,
+                    "dealDate": "2023-02-22T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 17826,
-                    "totalPrice": 1640000,
-                    "area": 92,
-                    "houseNum": "13.0",
-                    "streetName": "מנדל זינגר",
-                    "blocksAway": 1,
-                    "dealDate": "2020-10-08T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 4900,
+                    "avgTotalPrice": 375000,
+                    "avgArea": 80
                   }
                 }
               ]
@@ -634,36 +680,42 @@
                   "period": "current",
                   "year": 2025,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 22965,
-                    "avgTotalPrice": 2210000,
-                    "avgArea": 96
+                    "type": "single",
+                    "pricePerSqm": 2191,
+                    "totalPrice": 241000,
+                    "area": 110,
+                    "houseNum": 24,
+                    "streetName": "גוש עציון",
+                    "blocksAway": 23,
+                    "dealDate": "2025-07-28T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 20730,
-                    "avgTotalPrice": 1957500,
-                    "avgArea": 95
+                    "type": "single",
+                    "pricePerSqm": 3250,
+                    "totalPrice": 325000,
+                    "area": 100,
+                    "houseNum": 8,
+                    "streetName": "גוש עציון",
+                    "blocksAway": 7,
+                    "dealDate": "2021-02-15T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 17174,
-                    "avgTotalPrice": 1770000,
-                    "avgArea": 104
+                    "type": "single",
+                    "pricePerSqm": 5474,
+                    "totalPrice": 520000,
+                    "area": 95,
+                    "houseNum": 26,
+                    "streetName": "גוש עציון",
+                    "blocksAway": 25,
+                    "dealDate": "2020-06-21T00:00:00.000Z"
                   }
                 }
               ]
@@ -671,9 +723,55 @@
           ]
         },
         {
-          "streetName": "אוסקר שינדלר",
-          "totalDeals": 51,
+          "streetName": "הירדן",
+          "totalDeals": 30,
           "sizeBuckets": [
+            {
+              "label": "~60 מ\"ר",
+              "targetArea": 60,
+              "minArea": 50,
+              "maxArea": 70,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 12453,
+                    "totalPrice": 660000,
+                    "area": 53,
+                    "houseNum": 5,
+                    "streetName": "הירדן",
+                    "blocksAway": 4,
+                    "dealDate": "2025-03-02T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 3,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12556,
+                    "avgTotalPrice": 750000,
+                    "avgArea": 60
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 6948,
+                    "avgTotalPrice": 385000,
+                    "avgArea": 56
+                  }
+                }
+              ]
+            },
             {
               "label": "~80 מ\"ר",
               "targetArea": 80,
@@ -684,36 +782,42 @@
                   "period": "current",
                   "year": 2025,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 18625,
-                    "avgTotalPrice": 1600000,
-                    "avgArea": 85
+                    "type": "single",
+                    "pricePerSqm": 6250,
+                    "totalPrice": 500000,
+                    "area": 80,
+                    "houseNum": 8,
+                    "streetName": "הירדן",
+                    "blocksAway": 1,
+                    "dealDate": "2025-07-27T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 20548,
-                    "avgTotalPrice": 1768333,
-                    "avgArea": 86
+                    "type": "single",
+                    "pricePerSqm": 7568,
+                    "totalPrice": 560000,
+                    "area": 74,
+                    "houseNum": 26,
+                    "streetName": "הירדן",
+                    "blocksAway": 17,
+                    "dealDate": "2022-03-14T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 19225,
-                    "avgTotalPrice": 1570000,
-                    "avgArea": 82
+                    "type": "single",
+                    "pricePerSqm": 7341,
+                    "totalPrice": 602000,
+                    "area": 82,
+                    "houseNum": 26,
+                    "streetName": "הירדן",
+                    "blocksAway": 17,
+                    "dealDate": "2020-08-04T00:00:00.000Z"
                   }
                 }
               ]
@@ -727,37 +831,34 @@
                 {
                   "period": "current",
                   "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 27934,
-                    "avgTotalPrice": 3205000,
-                    "avgArea": 115
-                  }
+                  "sample": null
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 27443,
-                    "avgTotalPrice": 2850000,
-                    "avgArea": 104
+                    "type": "single",
+                    "pricePerSqm": 8041,
+                    "totalPrice": 780000,
+                    "area": 97,
+                    "houseNum": 12,
+                    "streetName": "הירדן",
+                    "blocksAway": 3,
+                    "dealDate": "2022-04-27T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 17544,
-                    "avgTotalPrice": 1900000,
-                    "avgArea": 108
+                    "type": "single",
+                    "pricePerSqm": 7588,
+                    "totalPrice": 645000,
+                    "area": 85,
+                    "houseNum": 26,
+                    "streetName": "הירדן",
+                    "blocksAway": 17,
+                    "dealDate": "2021-07-22T00:00:00.000Z"
                   }
                 }
               ]
@@ -767,7 +868,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1372,
+  "totalDealsAnalyzed": 1092,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

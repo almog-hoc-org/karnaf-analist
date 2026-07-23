@@ -1,15 +1,15 @@
 {
   "cityName": "עפולה",
-  "lastUpdated": "2026-06-24T06:59:40.267Z",
+  "lastUpdated": "2026-07-21T09:18:55.801Z",
   "neighborhoods": [
     {
       "neighborhood": "גבעת המורה",
-      "totalDeals": 792,
-      "dealsPerYearAvg": 113,
+      "totalDeals": 797,
+      "dealsPerYearAvg": 114,
       "streets": [
         {
           "streetName": "הנרייטה סאלד",
-          "totalDeals": 76,
+          "totalDeals": 78,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -69,10 +69,10 @@
                     "pricePerSqm": 9000,
                     "totalPrice": 630000,
                     "area": 70,
-                    "houseNum": "14.0",
+                    "houseNum": 14,
                     "streetName": "הנרייטה סאלד",
                     "blocksAway": 14,
-                    "dealDate": "2025-03-12T00:00:00Z"
+                    "dealDate": "2025-03-12T00:00:00.000Z"
                   }
                 },
                 {
@@ -95,10 +95,10 @@
                     "pricePerSqm": 6429,
                     "totalPrice": 450000,
                     "area": 70,
-                    "houseNum": "10.0",
+                    "houseNum": 10,
                     "streetName": "הנרייטה סאלד",
                     "blocksAway": 18,
-                    "dealDate": "2020-01-27T00:00:00Z"
+                    "dealDate": "2020-01-27T00:00:00.000Z"
                   }
                 }
               ]
@@ -117,10 +117,10 @@
                     "pricePerSqm": 14216,
                     "totalPrice": 1450000,
                     "area": 102,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "הנרייטה סאלד",
                     "blocksAway": 25,
-                    "dealDate": "2024-06-26T00:00:00Z"
+                    "dealDate": "2024-06-26T00:00:00.000Z"
                   }
                 },
                 {
@@ -131,10 +131,10 @@
                     "pricePerSqm": 10556,
                     "totalPrice": 1140000,
                     "area": 108,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "הנרייטה סאלד",
                     "blocksAway": 25,
-                    "dealDate": "2022-03-15T00:00:00Z"
+                    "dealDate": "2022-03-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -145,10 +145,10 @@
                     "pricePerSqm": 9200,
                     "totalPrice": 920000,
                     "area": 100,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "הנרייטה סאלד",
                     "blocksAway": 25,
-                    "dealDate": "2021-07-26T00:00:00Z"
+                    "dealDate": "2021-07-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -157,7 +157,7 @@
         },
         {
           "streetName": "עליית הנוער",
-          "totalDeals": 75,
+          "totalDeals": 76,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -261,10 +261,10 @@
                     "pricePerSqm": 8941,
                     "totalPrice": 760000,
                     "area": 85,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "עליית הנוער",
                     "blocksAway": 1,
-                    "dealDate": "2024-09-16T00:00:00Z"
+                    "dealDate": "2024-09-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -275,10 +275,10 @@
                     "pricePerSqm": 7882,
                     "totalPrice": 670000,
                     "area": 85,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "עליית הנוער",
                     "blocksAway": 9,
-                    "dealDate": "2022-08-28T00:00:00Z"
+                    "dealDate": "2022-08-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -289,10 +289,10 @@
                     "pricePerSqm": 5882,
                     "totalPrice": 500000,
                     "area": 85,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "עליית הנוער",
                     "blocksAway": 9,
-                    "dealDate": "2021-07-01T00:00:00Z"
+                    "dealDate": "2021-07-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -303,12 +303,12 @@
     },
     {
       "neighborhood": "עפולה הצעירה",
-      "totalDeals": 777,
+      "totalDeals": 780,
       "dealsPerYearAvg": 111,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 181,
+          "totalDeals": 182,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -388,7 +388,7 @@
         },
         {
           "streetName": "הרצל",
-          "totalDeals": 95,
+          "totalDeals": 96,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -492,10 +492,10 @@
                     "pricePerSqm": 13068,
                     "totalPrice": 1150000,
                     "area": 88,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "הרצל",
                     "blocksAway": 2,
-                    "dealDate": "2026-02-16T00:00:00Z"
+                    "dealDate": "2026-02-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -506,10 +506,10 @@
                     "pricePerSqm": 8435,
                     "totalPrice": 776000,
                     "area": 92,
-                    "houseNum": "16.0",
+                    "houseNum": 16,
                     "streetName": "הרצל",
                     "blocksAway": 3,
-                    "dealDate": "2022-09-20T00:00:00Z"
+                    "dealDate": "2022-09-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -520,10 +520,10 @@
                     "pricePerSqm": 7485,
                     "totalPrice": 658700,
                     "area": 88,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "הרצל",
                     "blocksAway": 2,
-                    "dealDate": "2020-01-14T00:00:00Z"
+                    "dealDate": "2020-01-14T00:00:00.000Z"
                   }
                 }
               ]
@@ -533,7 +533,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1569,
+  "totalDealsAnalyzed": 1577,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

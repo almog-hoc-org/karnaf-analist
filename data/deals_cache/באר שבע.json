@@ -1,115 +1,15 @@
 {
   "cityName": "באר שבע",
-  "lastUpdated": "2026-06-24T06:51:30.263Z",
+  "lastUpdated": "2026-07-21T09:03:53.368Z",
   "neighborhoods": [
     {
       "neighborhood": "נווה זאב",
-      "totalDeals": 2509,
-      "dealsPerYearAvg": 358,
+      "totalDeals": 2474,
+      "dealsPerYearAvg": 353,
       "streets": [
         {
-          "streetName": "יוסף בורג",
-          "totalDeals": 256,
-          "sizeBuckets": [
-            {
-              "label": "~80 מ\"ר",
-              "targetArea": 80,
-              "minArea": 70,
-              "maxArea": 90,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 15000,
-                    "totalPrice": 1200000,
-                    "area": 80,
-                    "houseNum": "5.0",
-                    "streetName": "יוסף בורג",
-                    "blocksAway": 87,
-                    "dealDate": "2025-06-12T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 15529,
-                    "totalPrice": 1320000,
-                    "area": 85,
-                    "houseNum": "30.0",
-                    "streetName": "יוסף בורג",
-                    "blocksAway": 62,
-                    "dealDate": "2022-06-21T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 14674,
-                    "totalPrice": 1350000,
-                    "area": 92,
-                    "houseNum": "88.0",
-                    "streetName": "יוסף בורג",
-                    "blocksAway": 4,
-                    "dealDate": "2020-09-15T00:00:00Z"
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 90,
-              "maxArea": 115,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 17791,
-                    "avgTotalPrice": 1845000,
-                    "avgArea": 105
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 14840,
-                    "avgTotalPrice": 1598750,
-                    "avgArea": 108
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 12,
-                    "threshold": 10,
-                    "avgPricePerSqm": 11424,
-                    "avgTotalPrice": 1240462,
-                    "avgArea": 107
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
           "streetName": "יוהנה ז'בוטינסקי",
-          "totalDeals": 243,
+          "totalDeals": 252,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -137,24 +37,22 @@
                     "pricePerSqm": 17015,
                     "totalPrice": 1140000,
                     "area": 67,
-                    "houseNum": "3.0",
+                    "houseNum": 3,
                     "streetName": "יוהנה ז'בוטינסקי",
                     "blocksAway": 9,
-                    "dealDate": "2023-02-08T00:00:00Z"
+                    "dealDate": "2023-02-08T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 11692,
-                    "totalPrice": 760000,
-                    "area": 65,
-                    "houseNum": "58.0",
-                    "streetName": "יוהנה ז'בוטינסקי",
-                    "blocksAway": 46,
-                    "dealDate": "2020-11-10T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12817,
+                    "avgTotalPrice": 861000,
+                    "avgArea": 67
                   }
                 }
               ]
@@ -194,11 +92,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 4,
                     "threshold": 2,
-                    "avgPricePerSqm": 11636,
-                    "avgTotalPrice": 983333,
-                    "avgArea": 85
+                    "avgPricePerSqm": 11669,
+                    "avgTotalPrice": 978750,
+                    "avgArea": 84
                   }
                 }
               ]
@@ -238,11 +136,111 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 8,
-                    "threshold": 5,
-                    "avgPricePerSqm": 10392,
-                    "avgTotalPrice": 1060000,
+                    "count": 11,
+                    "threshold": 10,
+                    "avgPricePerSqm": 10253,
+                    "avgTotalPrice": 1047636,
                     "avgArea": 102
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "streetName": "יוסף בורג",
+          "totalDeals": 203,
+          "sizeBuckets": [
+            {
+              "label": "~80 מ\"ר",
+              "targetArea": 80,
+              "minArea": 70,
+              "maxArea": 90,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15000,
+                    "totalPrice": 1200000,
+                    "area": 80,
+                    "houseNum": 5,
+                    "streetName": "יוסף בורג",
+                    "blocksAway": 87,
+                    "dealDate": "2025-06-12T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 15529,
+                    "totalPrice": 1320000,
+                    "area": 85,
+                    "houseNum": 30,
+                    "streetName": "יוסף בורג",
+                    "blocksAway": 62,
+                    "dealDate": "2022-06-21T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 14674,
+                    "totalPrice": 1350000,
+                    "area": 92,
+                    "houseNum": 88,
+                    "streetName": "יוסף בורג",
+                    "blocksAway": 4,
+                    "dealDate": "2020-09-15T00:00:00.000Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~100 מ\"ר",
+              "targetArea": 100,
+              "minArea": 90,
+              "maxArea": 115,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 5,
+                    "threshold": 5,
+                    "avgPricePerSqm": 17791,
+                    "avgTotalPrice": 1845000,
+                    "avgArea": 105
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 4,
+                    "threshold": 2,
+                    "avgPricePerSqm": 14840,
+                    "avgTotalPrice": 1598750,
+                    "avgArea": 108
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "aggregated",
+                    "count": 11,
+                    "threshold": 10,
+                    "avgPricePerSqm": 11340,
+                    "avgTotalPrice": 1230667,
+                    "avgArea": 106
                   }
                 }
               ]
@@ -253,12 +251,12 @@
     },
     {
       "neighborhood": "ו",
-      "totalDeals": 2157,
-      "dealsPerYearAvg": 308,
+      "totalDeals": 2174,
+      "dealsPerYearAvg": 311,
       "streets": [
         {
           "streetName": "מבצע עובדה",
-          "totalDeals": 255,
+          "totalDeals": 258,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -396,7 +394,7 @@
         },
         {
           "streetName": "מבצע נחשון",
-          "totalDeals": 248,
+          "totalDeals": 252,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -500,10 +498,10 @@
                     "pricePerSqm": 10291,
                     "totalPrice": 885000,
                     "area": 86,
-                    "houseNum": "46.0",
+                    "houseNum": 46,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 22,
-                    "dealDate": "2025-08-19T00:00:00Z"
+                    "dealDate": "2025-08-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -526,10 +524,10 @@
                     "pricePerSqm": 6860,
                     "totalPrice": 590000,
                     "area": 86,
-                    "houseNum": "48.0",
+                    "houseNum": 48,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 24,
-                    "dealDate": "2020-03-17T00:00:00Z"
+                    "dealDate": "2020-03-17T00:00:00.000Z"
                   }
                 }
               ]
@@ -540,12 +538,12 @@
     },
     {
       "neighborhood": "רמות הרכס",
-      "totalDeals": 1845,
-      "dealsPerYearAvg": 264,
+      "totalDeals": 1759,
+      "dealsPerYearAvg": 251,
       "streets": [
         {
           "streetName": "גדעון האוזנר",
-          "totalDeals": 229,
+          "totalDeals": 200,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -561,10 +559,10 @@
                     "pricePerSqm": 15417,
                     "totalPrice": 1295000,
                     "area": 84,
-                    "houseNum": "29.0",
+                    "houseNum": 29,
                     "streetName": "גדעון האוזנר",
                     "blocksAway": 19,
-                    "dealDate": "2025-08-06T00:00:00Z"
+                    "dealDate": "2025-08-06T00:00:00.000Z"
                   }
                 },
                 {
@@ -575,10 +573,10 @@
                     "pricePerSqm": 13506,
                     "totalPrice": 1175000,
                     "area": 87,
-                    "houseNum": "21.0",
+                    "houseNum": 19,
                     "streetName": "גדעון האוזנר",
-                    "blocksAway": 11,
-                    "dealDate": "2022-03-07T00:00:00Z"
+                    "blocksAway": 9,
+                    "dealDate": "2022-03-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -618,11 +616,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 11,
+                    "count": 10,
                     "threshold": 10,
-                    "avgPricePerSqm": 12897,
-                    "avgTotalPrice": 1359318,
-                    "avgArea": 108
+                    "avgPricePerSqm": 12866,
+                    "avgTotalPrice": 1347250,
+                    "avgArea": 106
                   }
                 },
                 {
@@ -630,11 +628,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 24,
+                    "count": 22,
                     "threshold": 15,
-                    "avgPricePerSqm": 10403,
-                    "avgTotalPrice": 1095354,
-                    "avgArea": 106
+                    "avgPricePerSqm": 10338,
+                    "avgTotalPrice": 1081750,
+                    "avgArea": 105
                   }
                 }
               ]
@@ -643,7 +641,7 @@
         },
         {
           "streetName": "נחום שריג",
-          "totalDeals": 190,
+          "totalDeals": 189,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -738,7 +736,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 15354,
+  "totalDealsAnalyzed": 15304,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

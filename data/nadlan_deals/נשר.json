@@ -1,0 +1,5009 @@
+{
+ "city": "נשר",
+ "cbs_code": "2500",
+ "capturedAt": "2026-07-04T18:49:04.242Z",
+ "totalRows": 8522,
+ "count": 500,
+ "deals": [
+  {
+   "dealDate": "2026-06-04",
+   "dealAmount": 1800000,
+   "roomNum": 4,
+   "assetArea": 93.33,
+   "yearBuilt": 2000,
+   "priceSM": 19355,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 1275000,
+   "roomNum": 4,
+   "assetArea": 68.29,
+   "yearBuilt": 1990,
+   "priceSM": 18750,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 1365000,
+   "roomNum": 4,
+   "assetArea": 79.8,
+   "yearBuilt": 1970,
+   "priceSM": 17278,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 1230000,
+   "roomNum": 3,
+   "assetArea": 60.1,
+   "yearBuilt": 1970,
+   "priceSM": 20500,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 2190000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 20467,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 2080000,
+   "roomNum": 4,
+   "assetArea": 105.47,
+   "yearBuilt": 0,
+   "priceSM": 19810,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 2190000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 20467,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-15",
+   "dealAmount": 2060000,
+   "roomNum": 5,
+   "assetArea": 107.42,
+   "yearBuilt": 1993,
+   "priceSM": 19252,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 1810000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18469,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 1525000,
+   "roomNum": 4,
+   "assetArea": 83.96,
+   "yearBuilt": 1980,
+   "priceSM": 18373,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 2575000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 21458,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 2575000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 21458,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1220000,
+   "roomNum": 3,
+   "assetArea": 68.6,
+   "yearBuilt": 2000,
+   "priceSM": 17784,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 944000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 8906,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 3265553,
+   "roomNum": 1,
+   "assetArea": 229,
+   "yearBuilt": 0,
+   "priceSM": 14260,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 3055880,
+   "roomNum": 1,
+   "assetArea": 211,
+   "yearBuilt": 0,
+   "priceSM": 14483,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 2577354,
+   "roomNum": 1,
+   "assetArea": 189,
+   "yearBuilt": 0,
+   "priceSM": 13637,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-02",
+   "dealAmount": 1889999,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 17830,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2170000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 1990,
+   "priceSM": 22371,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 93.8,
+   "yearBuilt": 1991,
+   "priceSM": 19140,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 1109000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 8802,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 3040000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 22687,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 2219998,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 17619,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-26",
+   "dealAmount": 1074000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 8524,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-25",
+   "dealAmount": 2149997,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 17063,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 2450000,
+   "roomNum": 4,
+   "assetArea": 100.61,
+   "yearBuilt": 0,
+   "priceSM": 24500,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 783000,
+   "roomNum": 0,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 9911,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 600000,
+   "roomNum": 4,
+   "assetArea": 79.8,
+   "yearBuilt": 1970,
+   "priceSM": 7519,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 2130000,
+   "roomNum": 5,
+   "assetArea": 132,
+   "yearBuilt": 1982,
+   "priceSM": 16136,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 864000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 10800,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 955000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 9363,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 1910000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 18725,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 1245000,
+   "roomNum": 3,
+   "assetArea": 43.7,
+   "yearBuilt": 1970,
+   "priceSM": 28953,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1045000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 22717,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1380000,
+   "roomNum": 3,
+   "assetArea": 42.3,
+   "yearBuilt": 1980,
+   "priceSM": 32857,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 1550000,
+   "roomNum": 3.5,
+   "assetArea": 78,
+   "yearBuilt": 1999,
+   "priceSM": 19872,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 1215000,
+   "roomNum": 3,
+   "assetArea": 60.5,
+   "yearBuilt": 1970,
+   "priceSM": 20250,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-09",
+   "dealAmount": 1391000,
+   "roomNum": 0,
+   "assetArea": 229,
+   "yearBuilt": 0,
+   "priceSM": 6074,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 2523950,
+   "roomNum": 1,
+   "assetArea": 202,
+   "yearBuilt": 0,
+   "priceSM": 12495,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 1617873,
+   "roomNum": 1,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 1391811,
+   "roomNum": 1,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 12427,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 2839727,
+   "roomNum": 1,
+   "assetArea": 229,
+   "yearBuilt": 0,
+   "priceSM": 12401,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 1461716,
+   "roomNum": 1,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 12387,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 1302245,
+   "roomNum": 1,
+   "assetArea": 97,
+   "yearBuilt": 0,
+   "priceSM": 13425,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-08",
+   "dealAmount": 1519985,
+   "roomNum": 1,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 13571,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-01",
+   "dealAmount": 885000,
+   "roomNum": 2,
+   "assetArea": 45.8,
+   "yearBuilt": 1970,
+   "priceSM": 19667,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 1600000,
+   "roomNum": 4,
+   "assetArea": 81.5,
+   "yearBuilt": 1990,
+   "priceSM": 19753,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 1749000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 21862,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 2550000,
+   "roomNum": 4,
+   "assetArea": 102.62,
+   "yearBuilt": 0,
+   "priceSM": 25000,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 1500000,
+   "roomNum": 3,
+   "assetArea": 76.5,
+   "yearBuilt": 2000,
+   "priceSM": 19737,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 1749999,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 21875,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 1020000,
+   "roomNum": 2,
+   "assetArea": 51,
+   "yearBuilt": 1996,
+   "priceSM": 20000,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 630000,
+   "roomNum": 2,
+   "assetArea": 30.55,
+   "yearBuilt": 1960,
+   "priceSM": 21000,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 844000,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 0,
+   "priceSM": 10961,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 1989998,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 18774,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 1689998,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 0,
+   "priceSM": 21948,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-24",
+   "dealAmount": 903000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 8853,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-23",
+   "dealAmount": 1322000,
+   "roomNum": 0,
+   "assetArea": 57,
+   "yearBuilt": 0,
+   "priceSM": 23193,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-03-23",
+   "dealAmount": 1807998,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 17725,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 800000,
+   "roomNum": 3,
+   "assetArea": 36.32,
+   "yearBuilt": 1950,
+   "priceSM": 22222,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 659000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 6217,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-21",
+   "dealAmount": 1979999,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 18679,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-20",
+   "dealAmount": 1300000,
+   "roomNum": 4,
+   "assetArea": 78.3,
+   "yearBuilt": 1980,
+   "priceSM": 16667,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-19",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 69.68,
+   "yearBuilt": 1980,
+   "priceSM": 20290,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-19",
+   "dealAmount": 1270000,
+   "roomNum": 3,
+   "assetArea": 53.1,
+   "yearBuilt": 1970,
+   "priceSM": 23917,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 908000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 8566,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 1300000,
+   "roomNum": 4,
+   "assetArea": 78.3,
+   "yearBuilt": 1980,
+   "priceSM": 16667,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 1250000,
+   "roomNum": 3,
+   "assetArea": 60.6,
+   "yearBuilt": 1970,
+   "priceSM": 20627,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 1817999,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 17151,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-12",
+   "dealAmount": 1150000,
+   "roomNum": 3,
+   "assetArea": 54.12,
+   "yearBuilt": 1960,
+   "priceSM": 21296,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 2185000,
+   "roomNum": 4,
+   "assetArea": 106.65,
+   "yearBuilt": 2019,
+   "priceSM": 20488,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 975000,
+   "roomNum": 3,
+   "assetArea": 55,
+   "yearBuilt": 1970,
+   "priceSM": 17727,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-10",
+   "dealAmount": 1553000,
+   "roomNum": 0,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 12942,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-03-09",
+   "dealAmount": 1553706,
+   "roomNum": 1,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 12948,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-09",
+   "dealAmount": 2100000,
+   "roomNum": 4,
+   "assetArea": 105.96,
+   "yearBuilt": 2019,
+   "priceSM": 19819,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-05",
+   "dealAmount": 1240000,
+   "roomNum": 2,
+   "assetArea": 43,
+   "yearBuilt": 0,
+   "priceSM": 28837,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-05",
+   "dealAmount": 2630000,
+   "roomNum": 5,
+   "assetArea": 101.3,
+   "yearBuilt": 1992,
+   "priceSM": 26040,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-04",
+   "dealAmount": 1240000,
+   "roomNum": 2,
+   "assetArea": 43,
+   "yearBuilt": 0,
+   "priceSM": 28837,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-02",
+   "dealAmount": 1840000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 18400,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-27",
+   "dealAmount": 966000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 9113,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-26",
+   "dealAmount": 940000,
+   "roomNum": 3,
+   "assetArea": 68.6,
+   "yearBuilt": 1995,
+   "priceSM": 13703,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-26",
+   "dealAmount": 1932320,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 18229,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-26",
+   "dealAmount": 2070000,
+   "roomNum": 4,
+   "assetArea": 105.96,
+   "yearBuilt": 2019,
+   "priceSM": 19714,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 1570000,
+   "roomNum": 4,
+   "assetArea": 81.6,
+   "yearBuilt": 1990,
+   "priceSM": 19240,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 740000,
+   "roomNum": 1,
+   "assetArea": 21,
+   "yearBuilt": 0,
+   "priceSM": 35238,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 2700000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 22500,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 1625000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 22260,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 25106,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 740000,
+   "roomNum": 1,
+   "assetArea": 21,
+   "yearBuilt": 0,
+   "priceSM": 35238,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 2550000,
+   "roomNum": 5,
+   "assetArea": 116.03,
+   "yearBuilt": 0,
+   "priceSM": 21977,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 25106,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 1625000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 22260,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 1545000,
+   "roomNum": 0,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 13093,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 2470000,
+   "roomNum": 7,
+   "assetArea": 148.9,
+   "yearBuilt": 1990,
+   "priceSM": 16689,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 1220000,
+   "roomNum": 4,
+   "assetArea": 80.7,
+   "yearBuilt": 1980,
+   "priceSM": 15250,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 1675000,
+   "roomNum": 4,
+   "assetArea": 96,
+   "yearBuilt": 2018,
+   "priceSM": 17448,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 1255335,
+   "roomNum": 1,
+   "assetArea": 96,
+   "yearBuilt": 0,
+   "priceSM": 13076,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 1230000,
+   "roomNum": 4,
+   "assetArea": 78.15,
+   "yearBuilt": 1985,
+   "priceSM": 15769,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 1545322,
+   "roomNum": 1,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 13096,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-20",
+   "dealAmount": 1650000,
+   "roomNum": 4,
+   "assetArea": 88,
+   "yearBuilt": 2018,
+   "priceSM": 18750,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-19",
+   "dealAmount": 830000,
+   "roomNum": 2,
+   "assetArea": 38.1,
+   "yearBuilt": 1960,
+   "priceSM": 21842,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-19",
+   "dealAmount": 1240000,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 2000,
+   "priceSM": 15696,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 1410000,
+   "roomNum": 3,
+   "assetArea": 58,
+   "yearBuilt": 2018,
+   "priceSM": 24310,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-16",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 93.42,
+   "yearBuilt": 0,
+   "priceSM": 20430,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-16",
+   "dealAmount": 1425000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 21923,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 1425000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 21923,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 3001000,
+   "roomNum": 0,
+   "assetArea": 229,
+   "yearBuilt": 0,
+   "priceSM": 13105,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 1270000,
+   "roomNum": 3,
+   "assetArea": 67.85,
+   "yearBuilt": 1993,
+   "priceSM": 18955,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 1339068,
+   "roomNum": 1,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 13258,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 1471160,
+   "roomNum": 1,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 13135,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 2978243,
+   "roomNum": 1,
+   "assetArea": 229,
+   "yearBuilt": 0,
+   "priceSM": 13005,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 3001840,
+   "roomNum": 1,
+   "assetArea": 229,
+   "yearBuilt": 0,
+   "priceSM": 13108,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 1480000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22769,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 1445000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22231,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-14",
+   "dealAmount": 1425000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 21923,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-12",
+   "dealAmount": 1190000,
+   "roomNum": 3,
+   "assetArea": 60.5,
+   "yearBuilt": 1970,
+   "priceSM": 19833,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-12",
+   "dealAmount": 1590000,
+   "roomNum": 3,
+   "assetArea": 68,
+   "yearBuilt": 0,
+   "priceSM": 23382,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-11",
+   "dealAmount": 957000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 9382,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 1628000,
+   "roomNum": 0,
+   "assetArea": 150,
+   "yearBuilt": 0,
+   "priceSM": 10853,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 1085000,
+   "roomNum": 2,
+   "assetArea": 41,
+   "yearBuilt": 0,
+   "priceSM": 26463,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 2420000,
+   "roomNum": 5,
+   "assetArea": 102.95,
+   "yearBuilt": 1992,
+   "priceSM": 23507,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 1915000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 18775,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 738112,
+   "roomNum": 2,
+   "assetArea": 21,
+   "yearBuilt": 0,
+   "priceSM": 35148,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-08",
+   "dealAmount": 2550000,
+   "roomNum": 4,
+   "assetArea": 108.64,
+   "yearBuilt": 2013,
+   "priceSM": 23611,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-08",
+   "dealAmount": 2690000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 22605,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-07",
+   "dealAmount": 2690000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 22605,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-06",
+   "dealAmount": 885000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 11062,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 1770000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 22125,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 875000,
+   "roomNum": 1,
+   "assetArea": 28,
+   "yearBuilt": 0,
+   "priceSM": 31250,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 2050000,
+   "roomNum": 4,
+   "assetArea": 112.32,
+   "yearBuilt": 2017,
+   "priceSM": 18251,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 300000,
+   "roomNum": 3,
+   "assetArea": 68.25,
+   "yearBuilt": 1993,
+   "priceSM": 4396,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 875000,
+   "roomNum": 1,
+   "assetArea": 28,
+   "yearBuilt": 0,
+   "priceSM": 31250,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 1173000,
+   "roomNum": 2,
+   "assetArea": 43,
+   "yearBuilt": 0,
+   "priceSM": 27279,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 924000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 9059,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 949000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 9304,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 1500000,
+   "roomNum": 4,
+   "assetArea": 75.53,
+   "yearBuilt": 1980,
+   "priceSM": 20000,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 1899999,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 18627,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 1849998,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 18137,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 1173900,
+   "roomNum": 2,
+   "assetArea": 43,
+   "yearBuilt": 0,
+   "priceSM": 27300,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-01",
+   "dealAmount": 2178000,
+   "roomNum": 0,
+   "assetArea": 152,
+   "yearBuilt": 0,
+   "priceSM": 14329,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-01-31",
+   "dealAmount": 2178950,
+   "roomNum": 1,
+   "assetArea": 152,
+   "yearBuilt": 0,
+   "priceSM": 14335,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-29",
+   "dealAmount": 1298000,
+   "roomNum": 0,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 14264,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-01-28",
+   "dealAmount": 1298000,
+   "roomNum": 1,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 14264,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-28",
+   "dealAmount": 770000,
+   "roomNum": 2,
+   "assetArea": 30,
+   "yearBuilt": 1950,
+   "priceSM": 25667,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 1027000,
+   "roomNum": 2,
+   "assetArea": 42,
+   "yearBuilt": 0,
+   "priceSM": 24452,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1010000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 21957,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1146746,
+   "roomNum": 2,
+   "assetArea": 42,
+   "yearBuilt": 0,
+   "priceSM": 27303,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1027138,
+   "roomNum": 2,
+   "assetArea": 41,
+   "yearBuilt": 0,
+   "priceSM": 25052,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-23",
+   "dealAmount": 740000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 33636,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-22",
+   "dealAmount": 1180000,
+   "roomNum": 3,
+   "assetArea": 67.9,
+   "yearBuilt": 1986,
+   "priceSM": 17612,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-22",
+   "dealAmount": 740000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 33636,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 944000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 9255,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 3498000,
+   "roomNum": 0,
+   "assetArea": 229,
+   "yearBuilt": 0,
+   "priceSM": 15275,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 1040000,
+   "roomNum": 3,
+   "assetArea": 68.4,
+   "yearBuilt": 1995,
+   "priceSM": 15294,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-19",
+   "dealAmount": 1700000,
+   "roomNum": 3.5,
+   "assetArea": 109,
+   "yearBuilt": 1999,
+   "priceSM": 15596,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 1435000,
+   "roomNum": 4,
+   "assetArea": 86.34,
+   "yearBuilt": 1987,
+   "priceSM": 16686,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 1720000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17551,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 25106,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 122.9,
+   "yearBuilt": 1992,
+   "priceSM": 14590,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1720000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17551,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 47,
+   "yearBuilt": 0,
+   "priceSM": 25106,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 1400000,
+   "roomNum": 5,
+   "assetArea": 110,
+   "yearBuilt": 1983,
+   "priceSM": 12727,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 500000,
+   "roomNum": 3,
+   "assetArea": 104,
+   "yearBuilt": 1950,
+   "priceSM": 4808,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 1350000,
+   "roomNum": 3,
+   "assetArea": 60.5,
+   "yearBuilt": 1970,
+   "priceSM": 22500,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 883000,
+   "roomNum": 0,
+   "assetArea": 68,
+   "yearBuilt": 0,
+   "priceSM": 12985,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-01-10",
+   "dealAmount": 883159,
+   "roomNum": 1,
+   "assetArea": 68,
+   "yearBuilt": 0,
+   "priceSM": 12988,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-09",
+   "dealAmount": 1235000,
+   "roomNum": 2,
+   "assetArea": 44,
+   "yearBuilt": 0,
+   "priceSM": 28068,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-09",
+   "dealAmount": 1065000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 1970,
+   "priceSM": 23667,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 1010000,
+   "roomNum": 2,
+   "assetArea": 42.15,
+   "yearBuilt": 1970,
+   "priceSM": 24048,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 2575000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 21458,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 1235000,
+   "roomNum": 2,
+   "assetArea": 44,
+   "yearBuilt": 0,
+   "priceSM": 28068,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 725000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 32955,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 2635000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 21958,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 2575000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 25750,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 725000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 32955,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 1240000,
+   "roomNum": 3,
+   "assetArea": 43.7,
+   "yearBuilt": 1970,
+   "priceSM": 28837,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 1430000,
+   "roomNum": 4,
+   "assetArea": 108.15,
+   "yearBuilt": 1991,
+   "priceSM": 13222,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-06",
+   "dealAmount": 2770000,
+   "roomNum": 5,
+   "assetArea": 122.5,
+   "yearBuilt": 0,
+   "priceSM": 22705,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-06",
+   "dealAmount": 975000,
+   "roomNum": 4,
+   "assetArea": 127,
+   "yearBuilt": 1950,
+   "priceSM": 7677,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2026-01-06",
+   "dealAmount": 975000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 9559,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-05",
+   "dealAmount": 1950000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 19118,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-04",
+   "dealAmount": 2350000,
+   "roomNum": 5,
+   "assetArea": 183,
+   "yearBuilt": 2016,
+   "priceSM": 12842,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 1295000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28778,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 1700000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 1999,
+   "priceSM": 15455,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 1295000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28778,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 1453000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22354,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 132.79,
+   "yearBuilt": 2017,
+   "priceSM": 18827,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1453000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22354,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1190000,
+   "roomNum": 3.5,
+   "assetArea": 67.8,
+   "yearBuilt": 1986,
+   "priceSM": 17761,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1740000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17755,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1416000,
+   "roomNum": 3,
+   "assetArea": 58.49,
+   "yearBuilt": 1970,
+   "priceSM": 24414,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1527000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 23492,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1220000,
+   "roomNum": 3,
+   "assetArea": 76.05,
+   "yearBuilt": 1993,
+   "priceSM": 16042,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1097000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 8706,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 1420000,
+   "roomNum": 3,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 14490,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 1740000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17755,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 1410000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 21692,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 44,
+   "yearBuilt": 0,
+   "priceSM": 26818,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 2194998,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 17421,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 44,
+   "yearBuilt": 0,
+   "priceSM": 26818,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 1560000,
+   "roomNum": 4,
+   "assetArea": 87,
+   "yearBuilt": 1995,
+   "priceSM": 17931,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 1775000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18112,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 1425402,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 21929,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 1420000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 21846,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 1000000,
+   "roomNum": 2.5,
+   "assetArea": 43.7,
+   "yearBuilt": 1960,
+   "priceSM": 22883,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-26",
+   "dealAmount": 1363000,
+   "roomNum": 2,
+   "assetArea": 51,
+   "yearBuilt": 0,
+   "priceSM": 26725,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 1363000,
+   "roomNum": 2,
+   "assetArea": 51,
+   "yearBuilt": 0,
+   "priceSM": 26725,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 43,
+   "yearBuilt": 0,
+   "priceSM": 27442,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 740000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 33636,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 1615000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 22123,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 1615000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 22123,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-23",
+   "dealAmount": 9174500,
+   "roomNum": 1,
+   "assetArea": 453,
+   "yearBuilt": 0,
+   "priceSM": 20253,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-23",
+   "dealAmount": 2155000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16705,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-23",
+   "dealAmount": 842000,
+   "roomNum": 0,
+   "assetArea": 66,
+   "yearBuilt": 0,
+   "priceSM": 12758,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-12-22",
+   "dealAmount": 1056572,
+   "roomNum": 1,
+   "assetArea": 74,
+   "yearBuilt": 0,
+   "priceSM": 14278,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-22",
+   "dealAmount": 842718,
+   "roomNum": 1,
+   "assetArea": 66,
+   "yearBuilt": 0,
+   "priceSM": 12768,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-22",
+   "dealAmount": 2155000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16705,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 2200000,
+   "roomNum": 4,
+   "assetArea": 99.18,
+   "yearBuilt": 2013,
+   "priceSM": 22222,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18505,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-20",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18505,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-20",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18163,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-19",
+   "dealAmount": 1640000,
+   "roomNum": 4,
+   "assetArea": 89.8,
+   "yearBuilt": 1999,
+   "priceSM": 18427,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-18",
+   "dealAmount": 1300000,
+   "roomNum": 4,
+   "assetArea": 78.3,
+   "yearBuilt": 1980,
+   "priceSM": 16667,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-18",
+   "dealAmount": 1724000,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 0,
+   "priceSM": 10323,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-18",
+   "dealAmount": 2635000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 1999,
+   "priceSM": 20913,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-17",
+   "dealAmount": 849000,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 0,
+   "priceSM": 11026,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-17",
+   "dealAmount": 3449999,
+   "roomNum": 6,
+   "assetArea": 167,
+   "yearBuilt": 0,
+   "priceSM": 20659,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22308,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 1699999,
+   "roomNum": 3,
+   "assetArea": 77,
+   "yearBuilt": 0,
+   "priceSM": 22078,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 990000,
+   "roomNum": 3,
+   "assetArea": 58.1,
+   "yearBuilt": 1960,
+   "priceSM": 17069,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 3400000,
+   "roomNum": 6,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 26357,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 2300000,
+   "roomNum": 4,
+   "assetArea": 105.96,
+   "yearBuilt": 2017,
+   "priceSM": 21706,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 1175000,
+   "roomNum": 3,
+   "assetArea": 47.7,
+   "yearBuilt": 1970,
+   "priceSM": 24633,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22308,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 900000,
+   "roomNum": 3,
+   "assetArea": 61.5,
+   "yearBuilt": 1970,
+   "priceSM": 14634,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 340000,
+   "roomNum": 6,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 2636,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 1580000,
+   "roomNum": 4,
+   "assetArea": 86.9,
+   "yearBuilt": 1993,
+   "priceSM": 18372,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-12",
+   "dealAmount": 1200000,
+   "roomNum": 4,
+   "assetArea": 81.45,
+   "yearBuilt": 1990,
+   "priceSM": 14733,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-11",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 60.6,
+   "yearBuilt": 1980,
+   "priceSM": 18333,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 3280000,
+   "roomNum": 6,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 25426,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 3280000,
+   "roomNum": 6,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 25426,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 1900000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17757,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 1085000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 23587,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 1075000,
+   "roomNum": 3,
+   "assetArea": 63.4,
+   "yearBuilt": 1970,
+   "priceSM": 16956,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-06",
+   "dealAmount": 1900000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17757,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-06",
+   "dealAmount": 1844000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18816,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-04",
+   "dealAmount": 1300000,
+   "roomNum": 3,
+   "assetArea": 64,
+   "yearBuilt": 1993,
+   "priceSM": 20312,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-03",
+   "dealAmount": 1330000,
+   "roomNum": 3,
+   "assetArea": 58,
+   "yearBuilt": 2018,
+   "priceSM": 22931,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-03",
+   "dealAmount": 1633000,
+   "roomNum": 3,
+   "assetArea": 36.32,
+   "yearBuilt": 1960,
+   "priceSM": 44961,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 1010000,
+   "roomNum": 3,
+   "assetArea": 60.6,
+   "yearBuilt": 1970,
+   "priceSM": 16833,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 1250000,
+   "roomNum": 3,
+   "assetArea": 59.1,
+   "yearBuilt": 1970,
+   "priceSM": 21186,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-01",
+   "dealAmount": 2400000,
+   "roomNum": 5,
+   "assetArea": 132.79,
+   "yearBuilt": 2019,
+   "priceSM": 18074,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-01",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 1992,
+   "priceSM": 13776,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-01",
+   "dealAmount": 2280000,
+   "roomNum": 5,
+   "assetArea": 122.27,
+   "yearBuilt": 1993,
+   "priceSM": 18647,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-30",
+   "dealAmount": 1870000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17477,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-30",
+   "dealAmount": 1210000,
+   "roomNum": 3,
+   "assetArea": 43.7,
+   "yearBuilt": 1970,
+   "priceSM": 27689,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-29",
+   "dealAmount": 1870000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17477,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-28",
+   "dealAmount": 1025000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 9670,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-28",
+   "dealAmount": 3540000,
+   "roomNum": 6,
+   "assetArea": 268,
+   "yearBuilt": 2000,
+   "priceSM": 13209,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-27",
+   "dealAmount": 2050000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 19340,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-27",
+   "dealAmount": 1400000,
+   "roomNum": 3.5,
+   "assetArea": 81.3,
+   "yearBuilt": 1990,
+   "priceSM": 17220,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-27",
+   "dealAmount": 2170000,
+   "roomNum": 4,
+   "assetArea": 96.18,
+   "yearBuilt": 2013,
+   "priceSM": 22604,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-26",
+   "dealAmount": 1280000,
+   "roomNum": 4,
+   "assetArea": 76.5,
+   "yearBuilt": 1970,
+   "priceSM": 16842,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-26",
+   "dealAmount": 1555000,
+   "roomNum": 4,
+   "assetArea": 87,
+   "yearBuilt": 1993,
+   "priceSM": 17874,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-26",
+   "dealAmount": 1010000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 9528,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-25",
+   "dealAmount": 880000,
+   "roomNum": 3,
+   "assetArea": 48.6,
+   "yearBuilt": 1970,
+   "priceSM": 18107,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-25",
+   "dealAmount": 2020000,
+   "roomNum": 4,
+   "assetArea": 106,
+   "yearBuilt": 0,
+   "priceSM": 19057,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-24",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 68.3,
+   "yearBuilt": 1990,
+   "priceSM": 17647,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-24",
+   "dealAmount": 2110000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16357,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-23",
+   "dealAmount": 287000,
+   "roomNum": 3,
+   "assetArea": 63.8,
+   "yearBuilt": 1970,
+   "priceSM": 4556,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-23",
+   "dealAmount": 2110000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16357,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-20",
+   "dealAmount": 1000000,
+   "roomNum": 3,
+   "assetArea": 74.59,
+   "yearBuilt": 1996,
+   "priceSM": 13514,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-19",
+   "dealAmount": 1450000,
+   "roomNum": 3.5,
+   "assetArea": 93,
+   "yearBuilt": 1999,
+   "priceSM": 15591,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-18",
+   "dealAmount": 1085000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 23587,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-17",
+   "dealAmount": 1000000,
+   "roomNum": 4,
+   "assetArea": 70.5,
+   "yearBuilt": 1970,
+   "priceSM": 14286,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-16",
+   "dealAmount": 1603000,
+   "roomNum": 0,
+   "assetArea": 241,
+   "yearBuilt": 0,
+   "priceSM": 6651,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-11-15",
+   "dealAmount": 1603502,
+   "roomNum": 1,
+   "assetArea": 127,
+   "yearBuilt": 0,
+   "priceSM": 12626,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-15",
+   "dealAmount": 3218804,
+   "roomNum": 1,
+   "assetArea": 241,
+   "yearBuilt": 0,
+   "priceSM": 13356,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-14",
+   "dealAmount": 1490000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22923,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-13",
+   "dealAmount": 1490836,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 22936,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-13",
+   "dealAmount": 265000,
+   "roomNum": 4,
+   "assetArea": 89,
+   "yearBuilt": 2006,
+   "priceSM": 2978,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-13",
+   "dealAmount": 100000,
+   "roomNum": 0,
+   "assetArea": 253,
+   "yearBuilt": 0,
+   "priceSM": 395,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "חניה"
+  },
+  {
+   "dealDate": "2025-11-12",
+   "dealAmount": 1540000,
+   "roomNum": 4,
+   "assetArea": 86.1,
+   "yearBuilt": 1999,
+   "priceSM": 17907,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-12",
+   "dealAmount": 3466486,
+   "roomNum": 1,
+   "assetArea": 253,
+   "yearBuilt": 0,
+   "priceSM": 13702,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-11",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 23913,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-11",
+   "dealAmount": 1290000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1950,
+   "priceSM": 12900,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-11",
+   "dealAmount": 1600000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 24615,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-11",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 58.49,
+   "yearBuilt": 1970,
+   "priceSM": 18966,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-10",
+   "dealAmount": 1600000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 24615,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-09",
+   "dealAmount": 2905000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 24412,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-09",
+   "dealAmount": 1300000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 1995,
+   "priceSM": 17333,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-08",
+   "dealAmount": 2905000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 24412,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-07",
+   "dealAmount": 1820000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 2018,
+   "priceSM": 18763,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-06",
+   "dealAmount": 1245000,
+   "roomNum": 4,
+   "assetArea": 78.3,
+   "yearBuilt": 1980,
+   "priceSM": 15900,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-06",
+   "dealAmount": 3069000,
+   "roomNum": 6,
+   "assetArea": 131,
+   "yearBuilt": 0,
+   "priceSM": 23427,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-05",
+   "dealAmount": 1710000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 15981,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-05",
+   "dealAmount": 3069000,
+   "roomNum": 6,
+   "assetArea": 131,
+   "yearBuilt": 0,
+   "priceSM": 23427,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-04",
+   "dealAmount": 1710000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17449,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-04",
+   "dealAmount": 1910000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17850,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-11-02",
+   "dealAmount": 1670000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 1999,
+   "priceSM": 16535,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-02",
+   "dealAmount": 1820000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18571,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-02",
+   "dealAmount": 1040000,
+   "roomNum": 3,
+   "assetArea": 54,
+   "yearBuilt": 1960,
+   "priceSM": 19259,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-11-01",
+   "dealAmount": 1820000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18571,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-30",
+   "dealAmount": 1785000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18214,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-30",
+   "dealAmount": 1350000,
+   "roomNum": 4,
+   "assetArea": 82.1,
+   "yearBuilt": 1950,
+   "priceSM": 16443,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-29",
+   "dealAmount": 1785000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18214,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-29",
+   "dealAmount": 1900000,
+   "roomNum": 5,
+   "assetArea": 107.42,
+   "yearBuilt": 1993,
+   "priceSM": 17688,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-29",
+   "dealAmount": 2595000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 21625,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-29",
+   "dealAmount": 1650000,
+   "roomNum": 4,
+   "assetArea": 87.45,
+   "yearBuilt": 1992,
+   "priceSM": 18868,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-28",
+   "dealAmount": 2595000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 21625,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-28",
+   "dealAmount": 2150000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16667,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-28",
+   "dealAmount": 950000,
+   "roomNum": 2,
+   "assetArea": 48.3,
+   "yearBuilt": 1970,
+   "priceSM": 19792,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-27",
+   "dealAmount": 1060000,
+   "roomNum": 3,
+   "assetArea": 57.6,
+   "yearBuilt": 1970,
+   "priceSM": 18596,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-27",
+   "dealAmount": 2150000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16667,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-27",
+   "dealAmount": 2220000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 17209,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-26",
+   "dealAmount": 2125000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16473,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-26",
+   "dealAmount": 1622000,
+   "roomNum": 4,
+   "assetArea": 96,
+   "yearBuilt": 1994,
+   "priceSM": 16896,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-26",
+   "dealAmount": 1500000,
+   "roomNum": 4,
+   "assetArea": 90.95,
+   "yearBuilt": 1996,
+   "priceSM": 16493,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-25",
+   "dealAmount": 2125000,
+   "roomNum": 5,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 16473,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 1500000,
+   "roomNum": 2,
+   "assetArea": 68.27,
+   "yearBuilt": 2000,
+   "priceSM": 22059,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 2500000,
+   "roomNum": 0,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 31250,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 2800000,
+   "roomNum": 6,
+   "assetArea": 206,
+   "yearBuilt": 2000,
+   "priceSM": 13592,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-10-22",
+   "dealAmount": 795000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 36136,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-21",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18505,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-21",
+   "dealAmount": 795000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 36136,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-20",
+   "dealAmount": 2050000,
+   "roomNum": 4,
+   "assetArea": 77.47,
+   "yearBuilt": 1950,
+   "priceSM": 26623,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-20",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18505,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-20",
+   "dealAmount": 1310000,
+   "roomNum": 2,
+   "assetArea": 46,
+   "yearBuilt": 0,
+   "priceSM": 28478,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-19",
+   "dealAmount": 1310000,
+   "roomNum": 2,
+   "assetArea": 46,
+   "yearBuilt": 0,
+   "priceSM": 28478,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-16",
+   "dealAmount": 1220000,
+   "roomNum": 3,
+   "assetArea": 67.85,
+   "yearBuilt": 1993,
+   "priceSM": 17981,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-16",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 43.7,
+   "yearBuilt": 1960,
+   "priceSM": 27907,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-15",
+   "dealAmount": 1250000,
+   "roomNum": 3,
+   "assetArea": 53.1,
+   "yearBuilt": 1970,
+   "priceSM": 23585,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-15",
+   "dealAmount": 1039000,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 10186,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-14",
+   "dealAmount": 2079999,
+   "roomNum": 4,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 20392,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-10-12",
+   "dealAmount": 1650000,
+   "roomNum": 4,
+   "assetArea": 93.8,
+   "yearBuilt": 1992,
+   "priceSM": 17742,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-09",
+   "dealAmount": 1240000,
+   "roomNum": 3,
+   "assetArea": 66.36,
+   "yearBuilt": 2002,
+   "priceSM": 18788,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-06",
+   "dealAmount": 1890000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17664,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-05",
+   "dealAmount": 1700000,
+   "roomNum": 5,
+   "assetArea": 97,
+   "yearBuilt": 1997,
+   "priceSM": 17526,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-10-05",
+   "dealAmount": 1890000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17664,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-30",
+   "dealAmount": 1560000,
+   "roomNum": 4,
+   "assetArea": 121,
+   "yearBuilt": 1960,
+   "priceSM": 12893,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-30",
+   "dealAmount": 1000000,
+   "roomNum": 3,
+   "assetArea": 49.55,
+   "yearBuilt": 1980,
+   "priceSM": 20182,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-30",
+   "dealAmount": 1765000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18010,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-30",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 62.1,
+   "yearBuilt": 1980,
+   "priceSM": 19355,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 1765000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 18010,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-29",
+   "dealAmount": 1180000,
+   "roomNum": 2,
+   "assetArea": 49.55,
+   "yearBuilt": 1980,
+   "priceSM": 24082,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-28",
+   "dealAmount": 1430000,
+   "roomNum": 0,
+   "assetArea": 115,
+   "yearBuilt": 0,
+   "priceSM": 12435,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-28",
+   "dealAmount": 1750000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 1999,
+   "priceSM": 17327,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-28",
+   "dealAmount": 2730000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 22941,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-28",
+   "dealAmount": 4428000,
+   "roomNum": 6,
+   "assetArea": 200,
+   "yearBuilt": 1994,
+   "priceSM": 22140,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2025-09-28",
+   "dealAmount": 1080000,
+   "roomNum": 2,
+   "assetArea": 48.1,
+   "yearBuilt": 1970,
+   "priceSM": 22453,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-27",
+   "dealAmount": 2730000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 22941,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-27",
+   "dealAmount": 1430750,
+   "roomNum": 1,
+   "assetArea": 115,
+   "yearBuilt": 0,
+   "priceSM": 12441,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-25",
+   "dealAmount": 850000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 18478,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-25",
+   "dealAmount": 1560000,
+   "roomNum": 4,
+   "assetArea": 87.15,
+   "yearBuilt": 1993,
+   "priceSM": 17931,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-25",
+   "dealAmount": 1490000,
+   "roomNum": 4,
+   "assetArea": 69.5,
+   "yearBuilt": 1990,
+   "priceSM": 21594,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-25",
+   "dealAmount": 1415000,
+   "roomNum": 4,
+   "assetArea": 67,
+   "yearBuilt": 0,
+   "priceSM": 21119,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-25",
+   "dealAmount": 1612000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 22082,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-25",
+   "dealAmount": 3249000,
+   "roomNum": 0,
+   "assetArea": 271,
+   "yearBuilt": 0,
+   "priceSM": 11989,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-24",
+   "dealAmount": 3249189,
+   "roomNum": 1,
+   "assetArea": 271,
+   "yearBuilt": 0,
+   "priceSM": 11990,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-24",
+   "dealAmount": 1612000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 22082,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-21",
+   "dealAmount": 1750000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17857,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-21",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 64.4,
+   "yearBuilt": 1970,
+   "priceSM": 18750,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-21",
+   "dealAmount": 2545000,
+   "roomNum": 0,
+   "assetArea": 254,
+   "yearBuilt": 0,
+   "priceSM": 10020,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-20",
+   "dealAmount": 1750000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17857,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-20",
+   "dealAmount": 3003336,
+   "roomNum": 1,
+   "assetArea": 254,
+   "yearBuilt": 0,
+   "priceSM": 11824,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-18",
+   "dealAmount": 1153000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 9151,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-18",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 80.84,
+   "yearBuilt": 1980,
+   "priceSM": 17318,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-17",
+   "dealAmount": 2135000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 2016,
+   "priceSM": 20529,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-17",
+   "dealAmount": 2306400,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 18305,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-16",
+   "dealAmount": 897000,
+   "roomNum": 0,
+   "assetArea": 112,
+   "yearBuilt": 2018,
+   "priceSM": 8009,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 2800000,
+   "roomNum": 0,
+   "assetArea": 96,
+   "yearBuilt": 0,
+   "priceSM": 29167,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 824326,
+   "roomNum": 1,
+   "assetArea": 39,
+   "yearBuilt": 2018,
+   "priceSM": 21137,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 897872,
+   "roomNum": 1,
+   "assetArea": 44,
+   "yearBuilt": 2018,
+   "priceSM": 20406,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1204106,
+   "roomNum": 1,
+   "assetArea": 62,
+   "yearBuilt": 2018,
+   "priceSM": 19421,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1255283,
+   "roomNum": 1,
+   "assetArea": 69,
+   "yearBuilt": 2018,
+   "priceSM": 18193,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1281779,
+   "roomNum": 1,
+   "assetArea": 70,
+   "yearBuilt": 2018,
+   "priceSM": 18311,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1331966,
+   "roomNum": 1,
+   "assetArea": 73,
+   "yearBuilt": 2018,
+   "priceSM": 18246,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1460520,
+   "roomNum": 1,
+   "assetArea": 60,
+   "yearBuilt": 2018,
+   "priceSM": 24342,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1847877,
+   "roomNum": 1,
+   "assetArea": 102,
+   "yearBuilt": 2018,
+   "priceSM": 18116,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1983737,
+   "roomNum": 1,
+   "assetArea": 100,
+   "yearBuilt": 2018,
+   "priceSM": 19837,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 2311527,
+   "roomNum": 1,
+   "assetArea": 112,
+   "yearBuilt": 2018,
+   "priceSM": 20639,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 858040,
+   "roomNum": 1,
+   "assetArea": 40,
+   "yearBuilt": 2018,
+   "priceSM": 21451,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 2532917,
+   "roomNum": 1,
+   "assetArea": 0,
+   "yearBuilt": 2018,
+   "priceSM": 0,
+   "neighborhoodName": "תל חנן",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-15",
+   "dealAmount": 1940000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18131,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 1760000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17959,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 1212100,
+   "roomNum": 3,
+   "assetArea": 59.1,
+   "yearBuilt": 1970,
+   "priceSM": 20544,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-14",
+   "dealAmount": 1940000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18131,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-13",
+   "dealAmount": 1760000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17959,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-11",
+   "dealAmount": 2000000,
+   "roomNum": 4,
+   "assetArea": 100.9,
+   "yearBuilt": 0,
+   "priceSM": 19822,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-11",
+   "dealAmount": 1260000,
+   "roomNum": 4,
+   "assetArea": 78.3,
+   "yearBuilt": 1980,
+   "priceSM": 16154,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 682000,
+   "roomNum": 0,
+   "assetArea": 59,
+   "yearBuilt": 0,
+   "priceSM": 11559,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 1220000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 27111,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 1670000,
+   "roomNum": 3.5,
+   "assetArea": 81.3,
+   "yearBuilt": 1990,
+   "priceSM": 20617,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 925000,
+   "roomNum": 2,
+   "assetArea": 40,
+   "yearBuilt": 2000,
+   "priceSM": 23125,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 1000000,
+   "roomNum": 2,
+   "assetArea": 48,
+   "yearBuilt": 1970,
+   "priceSM": 20833,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-09",
+   "dealAmount": 1320000,
+   "roomNum": 3,
+   "assetArea": 58.42,
+   "yearBuilt": 1980,
+   "priceSM": 22759,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-08",
+   "dealAmount": 682276,
+   "roomNum": 1,
+   "assetArea": 59,
+   "yearBuilt": 0,
+   "priceSM": 11564,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-08",
+   "dealAmount": 1220000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 27111,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-08",
+   "dealAmount": 605000,
+   "roomNum": 4,
+   "assetArea": 91.75,
+   "yearBuilt": 1993,
+   "priceSM": 6594,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-08",
+   "dealAmount": 1319000,
+   "roomNum": 0,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 9843,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-07",
+   "dealAmount": 1319535,
+   "roomNum": 1,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 12567,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-07",
+   "dealAmount": 1715602,
+   "roomNum": 1,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 12803,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-07",
+   "dealAmount": 1120000,
+   "roomNum": 3,
+   "assetArea": 53.9,
+   "yearBuilt": 1960,
+   "priceSM": 21132,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-07",
+   "dealAmount": 1470000,
+   "roomNum": 3,
+   "assetArea": 68.6,
+   "yearBuilt": 2000,
+   "priceSM": 21618,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-04",
+   "dealAmount": 990000,
+   "roomNum": 2,
+   "assetArea": 40,
+   "yearBuilt": 2000,
+   "priceSM": 24750,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-03",
+   "dealAmount": 1375000,
+   "roomNum": 4,
+   "assetArea": 69.5,
+   "yearBuilt": 1990,
+   "priceSM": 19928,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-03",
+   "dealAmount": 2590000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 21765,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 1351000,
+   "roomNum": 4,
+   "assetArea": 80.84,
+   "yearBuilt": 1980,
+   "priceSM": 16888,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 997000,
+   "roomNum": 0,
+   "assetArea": 491,
+   "yearBuilt": 0,
+   "priceSM": 2031,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 830000,
+   "roomNum": 3,
+   "assetArea": 53.1,
+   "yearBuilt": 1970,
+   "priceSM": 15660,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 1375000,
+   "roomNum": 4,
+   "assetArea": 83.8,
+   "yearBuilt": 1981,
+   "priceSM": 16566,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 2430000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 19286,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 1240000,
+   "roomNum": 3,
+   "assetArea": 59.1,
+   "yearBuilt": 1970,
+   "priceSM": 21017,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-02",
+   "dealAmount": 2590000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 21765,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 5980594,
+   "roomNum": 1,
+   "assetArea": 491,
+   "yearBuilt": 0,
+   "priceSM": 12180,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 811000,
+   "roomNum": 0,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 12477,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 1380000,
+   "roomNum": 4,
+   "assetArea": 78.1,
+   "yearBuilt": 1970,
+   "priceSM": 17692,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 997454,
+   "roomNum": 1,
+   "assetArea": 79,
+   "yearBuilt": 0,
+   "priceSM": 12626,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 2181800,
+   "roomNum": 5,
+   "assetArea": 121.48,
+   "yearBuilt": 1993,
+   "priceSM": 17960,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 2430000,
+   "roomNum": 5,
+   "assetArea": 126,
+   "yearBuilt": 0,
+   "priceSM": 19286,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 1000000,
+   "roomNum": 4,
+   "assetArea": 96.4,
+   "yearBuilt": 1970,
+   "priceSM": 10417,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-09-01",
+   "dealAmount": 1580000,
+   "roomNum": 4,
+   "assetArea": 79.96,
+   "yearBuilt": 2004,
+   "priceSM": 20000,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-31",
+   "dealAmount": 811792,
+   "roomNum": 1,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 12489,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-27",
+   "dealAmount": 3340000,
+   "roomNum": 6,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 25891,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-27",
+   "dealAmount": 1132000,
+   "roomNum": 3,
+   "assetArea": 67.55,
+   "yearBuilt": 1993,
+   "priceSM": 16758,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-27",
+   "dealAmount": 1140000,
+   "roomNum": 3,
+   "assetArea": 60.5,
+   "yearBuilt": 1970,
+   "priceSM": 19000,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-26",
+   "dealAmount": 3340000,
+   "roomNum": 6,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 25891,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-26",
+   "dealAmount": 1240000,
+   "roomNum": 3,
+   "assetArea": 74,
+   "yearBuilt": 1970,
+   "priceSM": 16757,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-24",
+   "dealAmount": 1600000,
+   "roomNum": 4,
+   "assetArea": 87,
+   "yearBuilt": 2018,
+   "priceSM": 18391,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-24",
+   "dealAmount": 4805000,
+   "roomNum": 0,
+   "assetArea": 396,
+   "yearBuilt": 0,
+   "priceSM": 12134,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-08-23",
+   "dealAmount": 4805485,
+   "roomNum": 1,
+   "assetArea": 395,
+   "yearBuilt": 0,
+   "priceSM": 12166,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-23",
+   "dealAmount": 3922697,
+   "roomNum": 1,
+   "assetArea": 315,
+   "yearBuilt": 0,
+   "priceSM": 12453,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-22",
+   "dealAmount": 1310000,
+   "roomNum": 4,
+   "assetArea": 80.84,
+   "yearBuilt": 1980,
+   "priceSM": 16375,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-21",
+   "dealAmount": 1000000,
+   "roomNum": 4,
+   "assetArea": 78,
+   "yearBuilt": 1980,
+   "priceSM": 12821,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-20",
+   "dealAmount": 2370000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 23700,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-20",
+   "dealAmount": 1650000,
+   "roomNum": 3,
+   "assetArea": 51.5,
+   "yearBuilt": 1950,
+   "priceSM": 32039,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-19",
+   "dealAmount": 2370000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 23700,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-18",
+   "dealAmount": 3314000,
+   "roomNum": 0,
+   "assetArea": 1172,
+   "yearBuilt": 0,
+   "priceSM": 2828,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-08-18",
+   "dealAmount": 800000,
+   "roomNum": 1.5,
+   "assetArea": 25.75,
+   "yearBuilt": 1950,
+   "priceSM": 32000,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-18",
+   "dealAmount": 1575000,
+   "roomNum": 3,
+   "assetArea": 80.67,
+   "yearBuilt": 2004,
+   "priceSM": 19524,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-17",
+   "dealAmount": 3911492,
+   "roomNum": 1,
+   "assetArea": 320,
+   "yearBuilt": 0,
+   "priceSM": 12223,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-17",
+   "dealAmount": 14691000,
+   "roomNum": 1,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-17",
+   "dealAmount": 2320000,
+   "roomNum": 4,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 17984,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-17",
+   "dealAmount": 1868000,
+   "roomNum": 4,
+   "assetArea": 100.8,
+   "yearBuilt": 1992,
+   "priceSM": 18680,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-16",
+   "dealAmount": 3360000,
+   "roomNum": 6,
+   "assetArea": 129,
+   "yearBuilt": 0,
+   "priceSM": 26047,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-16",
+   "dealAmount": 2320000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 22970,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-15",
+   "dealAmount": 2010000,
+   "roomNum": 3,
+   "assetArea": 79.53,
+   "yearBuilt": 0,
+   "priceSM": 25443,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-14",
+   "dealAmount": 1402000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 31156,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-14",
+   "dealAmount": 2510000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 21092,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-14",
+   "dealAmount": 1600000,
+   "roomNum": 5,
+   "assetArea": 156,
+   "yearBuilt": 1950,
+   "priceSM": 10256,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 2510000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 21092,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 1402300,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 31162,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 2000000,
+   "roomNum": 4,
+   "assetArea": 97.89,
+   "yearBuilt": 2013,
+   "priceSM": 20619,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 87.35,
+   "yearBuilt": 1980,
+   "priceSM": 16667,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-13",
+   "dealAmount": 3550000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 29832,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-12",
+   "dealAmount": 3075000,
+   "roomNum": 0,
+   "assetArea": 245,
+   "yearBuilt": 0,
+   "priceSM": 12551,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-08-12",
+   "dealAmount": 5966000,
+   "roomNum": 0,
+   "assetArea": 5500,
+   "yearBuilt": 0,
+   "priceSM": 1085,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "תעשיה"
+  },
+  {
+   "dealDate": "2025-08-12",
+   "dealAmount": 2885000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 24244,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-12",
+   "dealAmount": 3550000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 29832,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-12",
+   "dealAmount": 1510000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 23231,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-11",
+   "dealAmount": 1296000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28800,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-11",
+   "dealAmount": 1530000,
+   "roomNum": 4,
+   "assetArea": 82.9,
+   "yearBuilt": 2000,
+   "priceSM": 18456,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-11",
+   "dealAmount": 1510000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 0,
+   "priceSM": 23231,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-11",
+   "dealAmount": 3628500,
+   "roomNum": 1,
+   "assetArea": 245,
+   "yearBuilt": 0,
+   "priceSM": 14810,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-11",
+   "dealAmount": 1270000,
+   "roomNum": 3,
+   "assetArea": 60.1,
+   "yearBuilt": 1970,
+   "priceSM": 21167,
+   "neighborhoodName": "גבעת עמוס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-11",
+   "dealAmount": 1280000,
+   "roomNum": 3,
+   "assetArea": 52.37,
+   "yearBuilt": 1970,
+   "priceSM": 24615,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-10",
+   "dealAmount": 1296808,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28818,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-07",
+   "dealAmount": 1290000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28667,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-06",
+   "dealAmount": 1290000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28667,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-06",
+   "dealAmount": 1310000,
+   "roomNum": 3,
+   "assetArea": 46.68,
+   "yearBuilt": 1960,
+   "priceSM": 28478,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-06",
+   "dealAmount": 530000,
+   "roomNum": 4,
+   "assetArea": 74,
+   "yearBuilt": 1970,
+   "priceSM": 7162,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-05",
+   "dealAmount": 710000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 32273,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-04",
+   "dealAmount": 2280000,
+   "roomNum": 4,
+   "assetArea": 96.16,
+   "yearBuilt": 2013,
+   "priceSM": 23750,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-04",
+   "dealAmount": 922051,
+   "roomNum": 3,
+   "assetArea": 56.5,
+   "yearBuilt": 1960,
+   "priceSM": 16465,
+   "neighborhoodName": "גבעת נשר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-04",
+   "dealAmount": 975000,
+   "roomNum": 3,
+   "assetArea": 46,
+   "yearBuilt": 1970,
+   "priceSM": 21196,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-08-04",
+   "dealAmount": 710000,
+   "roomNum": 1,
+   "assetArea": 22,
+   "yearBuilt": 0,
+   "priceSM": 32273,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-08-01",
+   "dealAmount": 1425000,
+   "roomNum": 3,
+   "assetArea": 58,
+   "yearBuilt": 2018,
+   "priceSM": 24569,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-31",
+   "dealAmount": 2840000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 23866,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-31",
+   "dealAmount": 1977000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18477,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 1600000,
+   "roomNum": 4,
+   "assetArea": 99.21,
+   "yearBuilt": 1990,
+   "priceSM": 16162,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 2840000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 23866,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 86.75,
+   "yearBuilt": 1992,
+   "priceSM": 16279,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 1977000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18477,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 1910000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17850,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-30",
+   "dealAmount": 1090000,
+   "roomNum": 3,
+   "assetArea": 57.6,
+   "yearBuilt": 1970,
+   "priceSM": 19123,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-29",
+   "dealAmount": 1290000,
+   "roomNum": 3,
+   "assetArea": 63,
+   "yearBuilt": 2000,
+   "priceSM": 20476,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-29",
+   "dealAmount": 1910000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 17850,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-29",
+   "dealAmount": 1880000,
+   "roomNum": 0,
+   "assetArea": 153,
+   "yearBuilt": 0,
+   "priceSM": 12288,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-07-29",
+   "dealAmount": 1873000,
+   "roomNum": 4,
+   "assetArea": 99,
+   "yearBuilt": 0,
+   "priceSM": 18919,
+   "neighborhoodName": "עמק הכרמל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-28",
+   "dealAmount": 2218518,
+   "roomNum": 1,
+   "assetArea": 153,
+   "yearBuilt": 0,
+   "priceSM": 14500,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-27",
+   "dealAmount": 1290000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28667,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-27",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 51.95,
+   "yearBuilt": 1960,
+   "priceSM": 21174,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-27",
+   "dealAmount": 1733000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17684,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-26",
+   "dealAmount": 1290000,
+   "roomNum": 2,
+   "assetArea": 45,
+   "yearBuilt": 0,
+   "priceSM": 28667,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-26",
+   "dealAmount": 1733000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 0,
+   "priceSM": 17684,
+   "neighborhoodName": "בן דור",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-07-25",
+   "dealAmount": 1770000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 1999,
+   "priceSM": 17525,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-24",
+   "dealAmount": 1710000,
+   "roomNum": 4,
+   "assetArea": 89,
+   "yearBuilt": 2018,
+   "priceSM": 19213,
+   "neighborhoodName": "תל חנן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-23",
+   "dealAmount": 1265000,
+   "roomNum": 4,
+   "assetArea": 67.6,
+   "yearBuilt": 1985,
+   "priceSM": 18881,
+   "neighborhoodName": "רמות יצחק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-23",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 18505,
+   "neighborhoodName": "בן דור",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-07-23",
+   "dealAmount": 1254000,
+   "roomNum": 0,
+   "assetArea": 94,
+   "yearBuilt": 0,
+   "priceSM": 13340,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  }
+ ]
+}

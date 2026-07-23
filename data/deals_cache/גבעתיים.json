@@ -1,15 +1,15 @@
 {
   "cityName": "גבעתיים",
-  "lastUpdated": "2026-06-24T06:53:21.882Z",
+  "lastUpdated": "2026-07-21T09:07:19.365Z",
   "neighborhoods": [
     {
       "neighborhood": "פרדס כץ",
-      "totalDeals": 2103,
-      "dealsPerYearAvg": 300,
+      "totalDeals": 2120,
+      "dealsPerYearAvg": 303,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 402,
+          "totalDeals": 401,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -133,7 +133,7 @@
         },
         {
           "streetName": "הירקון",
-          "totalDeals": 275,
+          "totalDeals": 279,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -231,12 +231,12 @@
     },
     {
       "neighborhood": "תל גנים",
-      "totalDeals": 1077,
-      "dealsPerYearAvg": 154,
+      "totalDeals": 1082,
+      "dealsPerYearAvg": 155,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 444,
+          "totalDeals": 446,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -316,7 +316,7 @@
         },
         {
           "streetName": "ההסתדרות",
-          "totalDeals": 318,
+          "totalDeals": 324,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -332,10 +332,10 @@
                     "pricePerSqm": 24701,
                     "totalPrice": 1655000,
                     "area": 67,
-                    "houseNum": "20.0",
+                    "houseNum": 20,
                     "streetName": "ההסתדרות",
-                    "blocksAway": 36,
-                    "dealDate": "2024-05-20T00:00:00Z"
+                    "blocksAway": 2,
+                    "dealDate": "2024-05-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -346,10 +346,10 @@
                     "pricePerSqm": 18294,
                     "totalPrice": 933000,
                     "area": 51,
-                    "houseNum": "20.0",
+                    "houseNum": 20,
                     "streetName": "ההסתדרות",
-                    "blocksAway": 36,
-                    "dealDate": "2022-04-28T00:00:00Z"
+                    "blocksAway": 2,
+                    "dealDate": "2022-04-28T00:00:00.000Z"
                   }
                 },
                 {
@@ -357,13 +357,13 @@
                   "year": 2020,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 44792,
-                    "totalPrice": 2687500,
-                    "area": 60,
-                    "houseNum": "52.0",
+                    "pricePerSqm": 53529,
+                    "totalPrice": 2730000,
+                    "area": 51,
+                    "houseNum": 30,
                     "streetName": "ההסתדרות",
-                    "blocksAway": 4,
-                    "dealDate": "2021-05-24T00:00:00Z"
+                    "blocksAway": 8,
+                    "dealDate": "2021-08-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -379,10 +379,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 19,
+                    "count": 20,
                     "threshold": 15,
-                    "avgPricePerSqm": 48376,
-                    "avgTotalPrice": 3837545,
+                    "avgPricePerSqm": 48304,
+                    "avgTotalPrice": 3812318,
                     "avgArea": 79
                   }
                 },
@@ -394,24 +394,22 @@
                     "pricePerSqm": 37882,
                     "totalPrice": 3220000,
                     "area": 85,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "ההסתדרות",
-                    "blocksAway": 32,
-                    "dealDate": "2022-06-23T00:00:00Z"
+                    "blocksAway": 2,
+                    "dealDate": "2022-06-23T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 30217,
-                    "totalPrice": 2780000,
-                    "area": 92,
-                    "houseNum": "5.0",
-                    "streetName": "ההסתדרות",
-                    "blocksAway": 51,
-                    "dealDate": "2020-01-21T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 25137,
+                    "avgTotalPrice": 2000000,
+                    "avgArea": 80
                   }
                 }
               ]
@@ -427,10 +425,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 44,
+                    "count": 46,
                     "threshold": 15,
-                    "avgPricePerSqm": 47333,
-                    "avgTotalPrice": 4875028,
+                    "avgPricePerSqm": 47362,
+                    "avgTotalPrice": 4954739,
                     "avgArea": 104
                   }
                 },
@@ -454,10 +452,10 @@
                     "pricePerSqm": 30217,
                     "totalPrice": 2780000,
                     "area": 92,
-                    "houseNum": "5.0",
+                    "houseNum": 5,
                     "streetName": "ההסתדרות",
-                    "blocksAway": 51,
-                    "dealDate": "2020-01-21T00:00:00Z"
+                    "blocksAway": 17,
+                    "dealDate": "2020-01-21T00:00:00.000Z"
                   }
                 }
               ]
@@ -468,12 +466,12 @@
     },
     {
       "neighborhood": "נווה שאנן",
-      "totalDeals": 860,
+      "totalDeals": 861,
       "dealsPerYearAvg": 123,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 267,
+          "totalDeals": 268,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -500,8 +498,8 @@
                     "type": "aggregated",
                     "count": 29,
                     "threshold": 15,
-                    "avgPricePerSqm": 44314,
-                    "avgTotalPrice": 2389505,
+                    "avgPricePerSqm": 45235,
+                    "avgTotalPrice": 2446912,
                     "avgArea": 57
                   }
                 },
@@ -664,10 +662,10 @@
                     "pricePerSqm": 40260,
                     "totalPrice": 3100000,
                     "area": 77,
-                    "houseNum": "14.0",
+                    "houseNum": 14,
                     "streetName": "עקיבא איגר",
                     "blocksAway": 12,
-                    "dealDate": "2024-04-17T00:00:00Z"
+                    "dealDate": "2024-04-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -678,10 +676,10 @@
                     "pricePerSqm": 47674,
                     "totalPrice": 4100000,
                     "area": 86,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "עקיבא איגר",
                     "blocksAway": 0,
-                    "dealDate": "2021-09-13T00:00:00Z"
+                    "dealDate": "2021-09-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -692,10 +690,10 @@
                     "pricePerSqm": 47674,
                     "totalPrice": 4100000,
                     "area": 86,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "עקיבא איגר",
                     "blocksAway": 0,
-                    "dealDate": "2021-09-13T00:00:00Z"
+                    "dealDate": "2021-09-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -719,10 +717,10 @@
                     "pricePerSqm": 47674,
                     "totalPrice": 4100000,
                     "area": 86,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "עקיבא איגר",
                     "blocksAway": 0,
-                    "dealDate": "2021-09-13T00:00:00Z"
+                    "dealDate": "2021-09-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -733,10 +731,10 @@
                     "pricePerSqm": 47674,
                     "totalPrice": 4100000,
                     "area": 86,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "עקיבא איגר",
                     "blocksAway": 0,
-                    "dealDate": "2021-09-13T00:00:00Z"
+                    "dealDate": "2021-09-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -746,7 +744,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 6348,
+  "totalDealsAnalyzed": 7209,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

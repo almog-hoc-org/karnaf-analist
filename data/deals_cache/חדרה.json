@@ -1,15 +1,15 @@
 {
   "cityName": "חדרה",
-  "lastUpdated": "2026-06-24T06:54:37.395Z",
+  "lastUpdated": "2026-07-21T09:09:34.896Z",
   "neighborhoods": [
     {
       "neighborhood": "בית אליעזר",
-      "totalDeals": 789,
+      "totalDeals": 793,
       "dealsPerYearAvg": 113,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 101,
+          "totalDeals": 102,
           "sizeBuckets": [
             {
               "label": "~100 מ\"ר",
@@ -88,7 +88,7 @@
           ]
         },
         {
-          "streetName": "השקמה",
+          "streetName": "שקצר",
           "totalDeals": 54,
           "sizeBuckets": [
             {
@@ -101,28 +101,24 @@
                   "period": "current",
                   "year": 2025,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 17065,
-                    "totalPrice": 1570000,
-                    "area": 92,
-                    "houseNum": "36.0",
-                    "streetName": "השקמה",
-                    "blocksAway": 0,
-                    "dealDate": "2024-05-02T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 15979,
+                    "avgTotalPrice": 1365000,
+                    "avgArea": 86
                   }
                 },
                 {
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 15603,
-                    "totalPrice": 1217000,
-                    "area": 78,
-                    "houseNum": "36.0",
-                    "streetName": "השקמה",
-                    "blocksAway": 0,
-                    "dealDate": "2021-07-05T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 15397,
+                    "avgTotalPrice": 1277500,
+                    "avgArea": 82
                   }
                 },
                 {
@@ -130,11 +126,11 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 16235,
-                    "avgTotalPrice": 1190000,
-                    "avgArea": 76
+                    "count": 6,
+                    "threshold": 5,
+                    "avgPricePerSqm": 12994,
+                    "avgTotalPrice": 956667,
+                    "avgArea": 74
                   }
                 }
               ]
@@ -150,13 +146,13 @@
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 15273,
-                    "totalPrice": 1680000,
-                    "area": 110,
-                    "houseNum": "36.0",
-                    "streetName": "השקמה",
-                    "blocksAway": 0,
-                    "dealDate": "2024-08-24T00:00:00Z"
+                    "pricePerSqm": 15172,
+                    "totalPrice": 1320000,
+                    "area": 87,
+                    "houseNum": 16,
+                    "streetName": "שקצר",
+                    "blocksAway": 6,
+                    "dealDate": "2025-07-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -164,27 +160,25 @@
                   "year": 2022,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 18010,
-                    "totalPrice": 1855000,
-                    "area": 103,
-                    "houseNum": "67.0",
-                    "streetName": "השקמה",
-                    "blocksAway": 31,
-                    "dealDate": "2022-05-31T00:00:00Z"
+                    "pricePerSqm": 13066,
+                    "totalPrice": 1385000,
+                    "area": 106,
+                    "houseNum": 16,
+                    "streetName": "שקצר",
+                    "blocksAway": 6,
+                    "dealDate": "2022-04-29T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 10100,
-                    "totalPrice": 1010000,
-                    "area": 100,
-                    "houseNum": "61.0",
-                    "streetName": "השקמה",
-                    "blocksAway": 25,
-                    "dealDate": "2020-02-19T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 12863,
+                    "avgTotalPrice": 1240000,
+                    "avgArea": 97
                   }
                 }
               ]
@@ -198,14 +192,7 @@
                 {
                   "period": "current",
                   "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 12411,
-                    "avgTotalPrice": 1532500,
-                    "avgArea": 124
-                  }
+                  "sample": null
                 },
                 {
                   "period": "minus3",
@@ -214,21 +201,23 @@
                     "type": "aggregated",
                     "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 11958,
-                    "avgTotalPrice": 1667500,
-                    "avgArea": 140
+                    "avgPricePerSqm": 11088,
+                    "avgTotalPrice": 1552500,
+                    "avgArea": 141
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 12064,
-                    "avgTotalPrice": 1490000,
-                    "avgArea": 124
+                    "type": "single",
+                    "pricePerSqm": 7917,
+                    "totalPrice": 1140000,
+                    "area": 144,
+                    "houseNum": 40,
+                    "streetName": "שקצר",
+                    "blocksAway": 18,
+                    "dealDate": "2021-05-27T00:00:00.000Z"
                   }
                 }
               ]
@@ -238,7 +227,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 789,
+  "totalDealsAnalyzed": 793,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

@@ -1,6 +1,6 @@
 {
   "cityName": "ראשון לציון",
-  "lastUpdated": "2026-06-24T07:01:37.687Z",
+  "lastUpdated": "2026-07-21T09:22:46.971Z",
   "neighborhoods": [
     {
       "neighborhood": "נווה ים",
@@ -49,10 +49,10 @@
                     "pricePerSqm": 20482,
                     "totalPrice": 1700000,
                     "area": 83,
-                    "houseNum": "50.0",
+                    "houseNum": 50,
                     "streetName": "מבצע משה",
                     "blocksAway": 0,
-                    "dealDate": "2020-06-02T00:00:00Z"
+                    "dealDate": "2020-06-02T00:00:00.000Z"
                   }
                 }
               ]
@@ -115,10 +115,10 @@
                     "pricePerSqm": 30417,
                     "totalPrice": 3650000,
                     "area": 120,
-                    "houseNum": "46.0",
+                    "houseNum": 46,
                     "streetName": "מבצע משה",
                     "blocksAway": 4,
-                    "dealDate": "2025-06-23T00:00:00Z"
+                    "dealDate": "2025-06-23T00:00:00.000Z"
                   }
                 },
                 {
@@ -129,10 +129,10 @@
                     "pricePerSqm": 29000,
                     "totalPrice": 3480000,
                     "area": 120,
-                    "houseNum": "36.0",
+                    "houseNum": 36,
                     "streetName": "מבצע משה",
                     "blocksAway": 14,
-                    "dealDate": "2022-05-01T00:00:00Z"
+                    "dealDate": "2022-05-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -181,10 +181,10 @@
                     "pricePerSqm": 29859,
                     "totalPrice": 2120000,
                     "area": 71,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 10,
-                    "dealDate": "2022-05-02T00:00:00Z"
+                    "dealDate": "2022-05-02T00:00:00.000Z"
                   }
                 },
                 {
@@ -227,10 +227,10 @@
                     "pricePerSqm": 23611,
                     "totalPrice": 2550000,
                     "area": 108,
-                    "houseNum": "14.0",
+                    "houseNum": 14,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 12,
-                    "dealDate": "2022-03-02T00:00:00Z"
+                    "dealDate": "2022-03-02T00:00:00.000Z"
                   }
                 },
                 {
@@ -266,10 +266,10 @@
                     "pricePerSqm": 20833,
                     "totalPrice": 2500000,
                     "area": 120,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 2,
-                    "dealDate": "2021-11-09T00:00:00Z"
+                    "dealDate": "2021-11-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -280,10 +280,10 @@
                     "pricePerSqm": 20833,
                     "totalPrice": 2500000,
                     "area": 120,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 2,
-                    "dealDate": "2021-11-09T00:00:00Z"
+                    "dealDate": "2021-11-09T00:00:00.000Z"
                   }
                 }
               ]
@@ -294,12 +294,12 @@
     },
     {
       "neighborhood": "רמת בן צבי",
-      "totalDeals": 124,
+      "totalDeals": 123,
       "dealsPerYearAvg": 18,
       "streets": [
         {
           "streetName": "הטייסים",
-          "totalDeals": 43,
+          "totalDeals": 44,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -359,10 +359,10 @@
                     "pricePerSqm": 26522,
                     "totalPrice": 2440000,
                     "area": 92,
-                    "houseNum": "38.0",
+                    "houseNum": 38,
                     "streetName": "הטייסים",
                     "blocksAway": 34,
-                    "dealDate": "2025-07-10T00:00:00Z"
+                    "dealDate": "2025-07-10T00:00:00.000Z"
                   }
                 },
                 {
@@ -385,10 +385,10 @@
                     "pricePerSqm": 18818,
                     "totalPrice": 2070000,
                     "area": 110,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הטייסים",
                     "blocksAway": 0,
-                    "dealDate": "2021-12-16T00:00:00Z"
+                    "dealDate": "2021-12-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -407,10 +407,10 @@
                     "pricePerSqm": 21982,
                     "totalPrice": 2440000,
                     "area": 111,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הטייסים",
                     "blocksAway": 0,
-                    "dealDate": "2024-06-07T00:00:00Z"
+                    "dealDate": "2024-06-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -421,10 +421,10 @@
                     "pricePerSqm": 18839,
                     "totalPrice": 2110000,
                     "area": 112,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הטייסים",
                     "blocksAway": 0,
-                    "dealDate": "2022-04-03T00:00:00Z"
+                    "dealDate": "2022-04-03T00:00:00.000Z"
                   }
                 },
                 {
@@ -438,7 +438,7 @@
         },
         {
           "streetName": "ההסתדרות",
-          "totalDeals": 41,
+          "totalDeals": 36,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -462,26 +462,26 @@
                   "period": "minus3",
                   "year": 2022,
                   "sample": {
-                    "type": "single",
-                    "pricePerSqm": 28068,
-                    "totalPrice": 2470000,
-                    "area": 88,
-                    "houseNum": "42.0",
-                    "streetName": "ההסתדרות",
-                    "blocksAway": 0,
-                    "dealDate": "2022-08-16T00:00:00Z"
+                    "type": "aggregated",
+                    "count": 2,
+                    "threshold": 2,
+                    "avgPricePerSqm": 28182,
+                    "avgTotalPrice": 2480000,
+                    "avgArea": 88
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 19855,
-                    "avgTotalPrice": 1370000,
-                    "avgArea": 69
+                    "type": "single",
+                    "pricePerSqm": 21739,
+                    "totalPrice": 1500000,
+                    "area": 69,
+                    "houseNum": 40,
+                    "streetName": "ההסתדרות",
+                    "blocksAway": 2,
+                    "dealDate": "2021-08-18T00:00:00.000Z"
                   }
                 }
               ]
@@ -500,10 +500,10 @@
                     "pricePerSqm": 29655,
                     "totalPrice": 2580000,
                     "area": 87,
-                    "houseNum": "42.0",
+                    "houseNum": 42,
                     "streetName": "ההסתדרות",
                     "blocksAway": 0,
-                    "dealDate": "2025-09-25T00:00:00Z"
+                    "dealDate": "2025-09-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -511,11 +511,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
+                    "count": 4,
                     "threshold": 2,
-                    "avgPricePerSqm": 23218,
-                    "avgTotalPrice": 2135000,
-                    "avgArea": 93
+                    "avgPricePerSqm": 25598,
+                    "avgTotalPrice": 2340000,
+                    "avgArea": 92
                   }
                 },
                 {
@@ -526,10 +526,10 @@
                     "pricePerSqm": 7713,
                     "totalPrice": 725000,
                     "area": 94,
-                    "houseNum": "18.0",
+                    "houseNum": 18,
                     "streetName": "ההסתדרות",
                     "blocksAway": 24,
-                    "dealDate": "2020-12-27T00:00:00Z"
+                    "dealDate": "2020-12-27T00:00:00.000Z"
                   }
                 }
               ]
@@ -545,13 +545,13 @@
                   "year": 2025,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 19286,
-                    "totalPrice": 2430000,
-                    "area": 126,
-                    "houseNum": "36.0",
+                    "pricePerSqm": 38430,
+                    "totalPrice": 4650000,
+                    "area": 121,
+                    "houseNum": 42,
                     "streetName": "ההסתדרות",
-                    "blocksAway": 6,
-                    "dealDate": "2024-03-12T00:00:00Z"
+                    "blocksAway": 0,
+                    "dealDate": "2025-08-24T00:00:00.000Z"
                   }
                 },
                 {
@@ -562,10 +562,10 @@
                     "pricePerSqm": 19068,
                     "totalPrice": 2250000,
                     "area": 118,
-                    "houseNum": "36.0",
+                    "houseNum": 36,
                     "streetName": "ההסתדרות",
                     "blocksAway": 6,
-                    "dealDate": "2021-03-04T00:00:00Z"
+                    "dealDate": "2021-03-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -576,10 +576,10 @@
                     "pricePerSqm": 19068,
                     "totalPrice": 2250000,
                     "area": 118,
-                    "houseNum": "36.0",
+                    "houseNum": 36,
                     "streetName": "ההסתדרות",
                     "blocksAway": 6,
-                    "dealDate": "2021-03-04T00:00:00Z"
+                    "dealDate": "2021-03-04T00:00:00.000Z"
                   }
                 }
               ]
@@ -589,7 +589,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 397,
+  "totalDealsAnalyzed": 396,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

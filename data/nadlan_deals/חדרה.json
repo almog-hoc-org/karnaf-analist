@@ -1,0 +1,5009 @@
+{
+ "city": "חדרה",
+ "cbs_code": "6500",
+ "capturedAt": "2026-07-04T18:40:21.822Z",
+ "totalRows": 32413,
+ "count": 500,
+ "deals": [
+  {
+   "dealDate": "2026-06-07",
+   "dealAmount": 2850000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 23950,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-07",
+   "dealAmount": 2000000,
+   "roomNum": 4,
+   "assetArea": 85.7,
+   "yearBuilt": 2012,
+   "priceSM": 23337,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-06",
+   "dealAmount": 2850000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 23750,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-06-03",
+   "dealAmount": 3750000,
+   "roomNum": 6,
+   "assetArea": 165,
+   "yearBuilt": 1989,
+   "priceSM": 22727,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-03",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 78.6,
+   "yearBuilt": 1990,
+   "priceSM": 15267,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 3750000,
+   "roomNum": 6,
+   "assetArea": 165,
+   "yearBuilt": 1989,
+   "priceSM": 22727,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-06-02",
+   "dealAmount": 299000,
+   "roomNum": 4,
+   "assetArea": 123.35,
+   "yearBuilt": 1960,
+   "priceSM": 2424,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-06-01",
+   "dealAmount": 2560000,
+   "roomNum": 4,
+   "assetArea": 101,
+   "yearBuilt": 0,
+   "priceSM": 25347,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-31",
+   "dealAmount": 684000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 8241,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-05-31",
+   "dealAmount": 2257000,
+   "roomNum": 3,
+   "assetArea": 72,
+   "yearBuilt": 0,
+   "priceSM": 31347,
+   "neighborhoodName": "נווה חיים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-30",
+   "dealAmount": 2257350,
+   "roomNum": 3,
+   "assetArea": 72,
+   "yearBuilt": 0,
+   "priceSM": 31352,
+   "neighborhoodName": "נווה חיים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 1564000,
+   "roomNum": 0,
+   "assetArea": 1000,
+   "yearBuilt": 0,
+   "priceSM": 1564,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-05-28",
+   "dealAmount": 1570000,
+   "roomNum": 4,
+   "assetArea": 94,
+   "yearBuilt": 2000,
+   "priceSM": 16702,
+   "neighborhoodName": "רמב\"ם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 1850000,
+   "roomNum": 3,
+   "assetArea": 72.41,
+   "yearBuilt": 1998,
+   "priceSM": 25549,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירת נופש"
+  },
+  {
+   "dealDate": "2026-05-26",
+   "dealAmount": 2750000,
+   "roomNum": 5,
+   "assetArea": 136,
+   "yearBuilt": 0,
+   "priceSM": 20221,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 114.06,
+   "yearBuilt": 1992,
+   "priceSM": 21918,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 136,
+   "yearBuilt": 0,
+   "priceSM": 23529,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 2750000,
+   "roomNum": 5,
+   "assetArea": 121,
+   "yearBuilt": 0,
+   "priceSM": 22727,
+   "neighborhoodName": "נווה חיים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-25",
+   "dealAmount": 2750000,
+   "roomNum": 5,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 24554,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-24",
+   "dealAmount": 2060000,
+   "roomNum": 3,
+   "assetArea": 61.4,
+   "yearBuilt": 1993,
+   "priceSM": 33550,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-24",
+   "dealAmount": 1750000,
+   "roomNum": 4,
+   "assetArea": 73.9,
+   "yearBuilt": 1991,
+   "priceSM": 23681,
+   "neighborhoodName": "יוספטל",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-05-24",
+   "dealAmount": 255000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 2040,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-05-24",
+   "dealAmount": 2600000,
+   "roomNum": 5,
+   "assetArea": 113.4,
+   "yearBuilt": 1992,
+   "priceSM": 22928,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-05-21",
+   "dealAmount": 255000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 2040,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-05-21",
+   "dealAmount": 1270000,
+   "roomNum": 4.5,
+   "assetArea": 81.4,
+   "yearBuilt": 1970,
+   "priceSM": 15679,
+   "neighborhoodName": "גבעת בוסל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-20",
+   "dealAmount": 400000,
+   "roomNum": 0,
+   "assetArea": 40,
+   "yearBuilt": 0,
+   "priceSM": 10000,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 4285000,
+   "roomNum": 6,
+   "assetArea": 194,
+   "yearBuilt": 2027,
+   "priceSM": 22088,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 1400000,
+   "roomNum": 4,
+   "assetArea": 92,
+   "yearBuilt": 1990,
+   "priceSM": 15217,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-19",
+   "dealAmount": 1670000,
+   "roomNum": 4,
+   "assetArea": 82.66,
+   "yearBuilt": 1996,
+   "priceSM": 20366,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 4285000,
+   "roomNum": 6,
+   "assetArea": 194,
+   "yearBuilt": 0,
+   "priceSM": 22088,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 2585000,
+   "roomNum": 4,
+   "assetArea": 102.7,
+   "yearBuilt": 2016,
+   "priceSM": 25170,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-18",
+   "dealAmount": 1400000,
+   "roomNum": 3.5,
+   "assetArea": 73.43,
+   "yearBuilt": 1970,
+   "priceSM": 19178,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-17",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 78,
+   "yearBuilt": 1990,
+   "priceSM": 14103,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 1424000,
+   "roomNum": 4,
+   "assetArea": 77.64,
+   "yearBuilt": 1970,
+   "priceSM": 18341,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-14",
+   "dealAmount": 1590000,
+   "roomNum": 3,
+   "assetArea": 37.05,
+   "yearBuilt": 1960,
+   "priceSM": 42973,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 1750000,
+   "roomNum": 3,
+   "assetArea": 75,
+   "yearBuilt": 1950,
+   "priceSM": 23333,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 1227000,
+   "roomNum": 0,
+   "assetArea": 250,
+   "yearBuilt": 0,
+   "priceSM": 4908,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 281000,
+   "roomNum": 0,
+   "assetArea": 140,
+   "yearBuilt": 0,
+   "priceSM": 2007,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-05-13",
+   "dealAmount": 2300000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 2029,
+   "priceSM": 22115,
+   "neighborhoodName": "אפרים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 2070000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 20700,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 1180000,
+   "roomNum": 3,
+   "assetArea": 61.9,
+   "yearBuilt": 1970,
+   "priceSM": 19344,
+   "neighborhoodName": "גני אלון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 2300000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 22115,
+   "neighborhoodName": "אפרים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-12",
+   "dealAmount": 1380000,
+   "roomNum": 3,
+   "assetArea": 72,
+   "yearBuilt": 0,
+   "priceSM": 19167,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 1260000,
+   "roomNum": 3,
+   "assetArea": 65,
+   "yearBuilt": 1960,
+   "priceSM": 19385,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-11",
+   "dealAmount": 3650000,
+   "roomNum": 5,
+   "assetArea": 141,
+   "yearBuilt": 1970,
+   "priceSM": 25887,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 1980000,
+   "roomNum": 4,
+   "assetArea": 95,
+   "yearBuilt": 2026,
+   "priceSM": 20842,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-10",
+   "dealAmount": 1520000,
+   "roomNum": 4,
+   "assetArea": 91.38,
+   "yearBuilt": 1970,
+   "priceSM": 16634,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-08",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 166.6,
+   "yearBuilt": 2016,
+   "priceSM": 19208,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-08",
+   "dealAmount": 1400000,
+   "roomNum": 3,
+   "assetArea": 59.98,
+   "yearBuilt": 2000,
+   "priceSM": 23729,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 2510000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 20917,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 1080000,
+   "roomNum": 3,
+   "assetArea": 81.13,
+   "yearBuilt": 1990,
+   "priceSM": 13333,
+   "neighborhoodName": "נווה עובד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 2900000,
+   "roomNum": 5.5,
+   "assetArea": 130.5,
+   "yearBuilt": 2001,
+   "priceSM": 22308,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 2700000,
+   "roomNum": 5,
+   "assetArea": 158,
+   "yearBuilt": 1992,
+   "priceSM": 17089,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 266000,
+   "roomNum": 0,
+   "assetArea": 21,
+   "yearBuilt": 0,
+   "priceSM": 12667,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 433000,
+   "roomNum": 3.5,
+   "assetArea": 73.28,
+   "yearBuilt": 1970,
+   "priceSM": 5909,
+   "neighborhoodName": "נווה עובד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-07",
+   "dealAmount": 370000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 2960,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 1360000,
+   "roomNum": 5,
+   "assetArea": 92.28,
+   "yearBuilt": 1990,
+   "priceSM": 14783,
+   "neighborhoodName": "יוספטל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 2350000,
+   "roomNum": 5,
+   "assetArea": 124.5,
+   "yearBuilt": 2014,
+   "priceSM": 18952,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-06",
+   "dealAmount": 2500000,
+   "roomNum": 3,
+   "assetArea": 70,
+   "yearBuilt": 1960,
+   "priceSM": 35714,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 3560000,
+   "roomNum": 5,
+   "assetArea": 146,
+   "yearBuilt": 2006,
+   "priceSM": 24384,
+   "neighborhoodName": "ניסן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2520000,
+   "roomNum": 5,
+   "assetArea": 126.4,
+   "yearBuilt": 0,
+   "priceSM": 19937,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-05",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 2029,
+   "priceSM": 24272,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 24272,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-05-04",
+   "dealAmount": 2360000,
+   "roomNum": 5,
+   "assetArea": 149,
+   "yearBuilt": 2017,
+   "priceSM": 15839,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 1970000,
+   "roomNum": 5,
+   "assetArea": 135,
+   "yearBuilt": 1993,
+   "priceSM": 14593,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 2100000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 2014,
+   "priceSM": 16154,
+   "neighborhoodName": "שמשון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-03",
+   "dealAmount": 1170000,
+   "roomNum": 3,
+   "assetArea": 58.5,
+   "yearBuilt": 1970,
+   "priceSM": 20172,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-01",
+   "dealAmount": 1495000,
+   "roomNum": 3,
+   "assetArea": 67,
+   "yearBuilt": 1995,
+   "priceSM": 22313,
+   "neighborhoodName": "גני אלון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-05-01",
+   "dealAmount": 1580000,
+   "roomNum": 3,
+   "assetArea": 65.24,
+   "yearBuilt": 1960,
+   "priceSM": 24308,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2400000,
+   "roomNum": 5,
+   "assetArea": 117,
+   "yearBuilt": 0,
+   "priceSM": 20513,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 1340000,
+   "roomNum": 3,
+   "assetArea": 70,
+   "yearBuilt": 1990,
+   "priceSM": 19143,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 1530000,
+   "roomNum": 4,
+   "assetArea": 86.69,
+   "yearBuilt": 1970,
+   "priceSM": 17791,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 1190000,
+   "roomNum": 3,
+   "assetArea": 62.9,
+   "yearBuilt": 1990,
+   "priceSM": 19194,
+   "neighborhoodName": "גני אלון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-30",
+   "dealAmount": 2889000,
+   "roomNum": 5,
+   "assetArea": 119,
+   "yearBuilt": 0,
+   "priceSM": 24277,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2400000,
+   "roomNum": 5,
+   "assetArea": 117,
+   "yearBuilt": 0,
+   "priceSM": 20513,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 1400000,
+   "roomNum": 3,
+   "assetArea": 65.24,
+   "yearBuilt": 1970,
+   "priceSM": 21459,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-29",
+   "dealAmount": 2350000,
+   "roomNum": 4,
+   "assetArea": 130,
+   "yearBuilt": 2018,
+   "priceSM": 18077,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-28",
+   "dealAmount": 900000,
+   "roomNum": 1,
+   "assetArea": 67.58,
+   "yearBuilt": 1990,
+   "priceSM": 13433,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-27",
+   "dealAmount": 925000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 0,
+   "priceSM": 11562,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-24",
+   "dealAmount": 2400000,
+   "roomNum": 5,
+   "assetArea": 165.02,
+   "yearBuilt": 2000,
+   "priceSM": 14544,
+   "neighborhoodName": "שמשון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-24",
+   "dealAmount": 2400000,
+   "roomNum": 5,
+   "assetArea": 165,
+   "yearBuilt": 2008,
+   "priceSM": 14545,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 400000,
+   "roomNum": 0,
+   "assetArea": 26.65,
+   "yearBuilt": 1980,
+   "priceSM": 15385,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 8221000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 63238,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 1530000,
+   "roomNum": 4,
+   "assetArea": 103.95,
+   "yearBuilt": 1980,
+   "priceSM": 14854,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-23",
+   "dealAmount": 1600000,
+   "roomNum": 0,
+   "assetArea": 200,
+   "yearBuilt": 1995,
+   "priceSM": 8000,
+   "neighborhoodName": "שמשון",
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 520000,
+   "roomNum": 0,
+   "assetArea": 71465,
+   "yearBuilt": 0,
+   "priceSM": 7,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 756000,
+   "roomNum": 0,
+   "assetArea": 88,
+   "yearBuilt": 0,
+   "priceSM": 8591,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 326000,
+   "roomNum": 0,
+   "assetArea": 38,
+   "yearBuilt": 0,
+   "priceSM": 8579,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 827000,
+   "roomNum": 0,
+   "assetArea": 25746,
+   "yearBuilt": 0,
+   "priceSM": 32,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2026-04-20",
+   "dealAmount": 1760000,
+   "roomNum": 4,
+   "assetArea": 88.6,
+   "yearBuilt": 2004,
+   "priceSM": 19865,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 4240000,
+   "roomNum": 6,
+   "assetArea": 195,
+   "yearBuilt": 2027,
+   "priceSM": 21744,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 438000,
+   "roomNum": 5,
+   "assetArea": 160,
+   "yearBuilt": 1984,
+   "priceSM": 2738,
+   "neighborhoodName": "הפועל המזרחי",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 2770000,
+   "roomNum": 5,
+   "assetArea": 125.1,
+   "yearBuilt": 0,
+   "priceSM": 22160,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 5400000,
+   "roomNum": 5,
+   "assetArea": 190,
+   "yearBuilt": 0,
+   "priceSM": 28421,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 300000,
+   "roomNum": 0,
+   "assetArea": 167,
+   "yearBuilt": 0,
+   "priceSM": 1796,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 1820000,
+   "roomNum": 5,
+   "assetArea": 214.43,
+   "yearBuilt": 1970,
+   "priceSM": 8488,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 672000,
+   "roomNum": 0,
+   "assetArea": 60,
+   "yearBuilt": 0,
+   "priceSM": 11200,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2026-04-16",
+   "dealAmount": 1955000,
+   "roomNum": 4,
+   "assetArea": 84,
+   "yearBuilt": 2018,
+   "priceSM": 23274,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 4240000,
+   "roomNum": 6,
+   "assetArea": 195,
+   "yearBuilt": 0,
+   "priceSM": 21744,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-15",
+   "dealAmount": 5400000,
+   "roomNum": 5,
+   "assetArea": 190,
+   "yearBuilt": 0,
+   "priceSM": 28421,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 3175000,
+   "roomNum": 5,
+   "assetArea": 228,
+   "yearBuilt": 1992,
+   "priceSM": 13925,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-14",
+   "dealAmount": 2200000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 18333,
+   "neighborhoodName": "אפרים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 1165000,
+   "roomNum": 3,
+   "assetArea": 40.1,
+   "yearBuilt": 1960,
+   "priceSM": 29125,
+   "neighborhoodName": "הפועל המזרחי",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-13",
+   "dealAmount": 507000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 26,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 4886000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 46533,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-12",
+   "dealAmount": 1360000,
+   "roomNum": 3,
+   "assetArea": 76,
+   "yearBuilt": 1960,
+   "priceSM": 17895,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-06",
+   "dealAmount": 2120000,
+   "roomNum": 5,
+   "assetArea": 106.4,
+   "yearBuilt": 0,
+   "priceSM": 20000,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-06",
+   "dealAmount": 2830000,
+   "roomNum": 5,
+   "assetArea": 99.7,
+   "yearBuilt": 2015,
+   "priceSM": 28385,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-04-06",
+   "dealAmount": 490000,
+   "roomNum": 0,
+   "assetArea": 166,
+   "yearBuilt": 0,
+   "priceSM": 2952,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2770000,
+   "roomNum": 5,
+   "assetArea": 106.04,
+   "yearBuilt": 2005,
+   "priceSM": 26132,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2500000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 2020,
+   "priceSM": 31250,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 1900000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 2013,
+   "priceSM": 18095,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2188000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 2026,
+   "priceSM": 22327,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 1150000,
+   "roomNum": 3,
+   "assetArea": 72,
+   "yearBuilt": 1995,
+   "priceSM": 15972,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 3175000,
+   "roomNum": 6,
+   "assetArea": 219,
+   "yearBuilt": 1996,
+   "priceSM": 14498,
+   "neighborhoodName": "שמשון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 1682000,
+   "roomNum": 2,
+   "assetArea": 20.4,
+   "yearBuilt": 2026,
+   "priceSM": 82451,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-31",
+   "dealAmount": 2530000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 2017,
+   "priceSM": 21083,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 2450000,
+   "roomNum": 4,
+   "assetArea": 96.64,
+   "yearBuilt": 0,
+   "priceSM": 25352,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 2100000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 2027,
+   "priceSM": 16800,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 1950000,
+   "roomNum": 5,
+   "assetArea": 110.28,
+   "yearBuilt": 2012,
+   "priceSM": 17727,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 2000000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 2022,
+   "priceSM": 18182,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 340000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 2720,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 8406000,
+   "roomNum": 6,
+   "assetArea": 160,
+   "yearBuilt": 0,
+   "priceSM": 52538,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-30",
+   "dealAmount": 2850000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 2016,
+   "priceSM": 22800,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 3400000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 25373,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 2850000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 2016,
+   "priceSM": 22800,
+   "neighborhoodName": "עין הים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 2400000,
+   "roomNum": 4,
+   "assetArea": 97,
+   "yearBuilt": 2009,
+   "priceSM": 24742,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 1100000,
+   "roomNum": 3,
+   "assetArea": 69.5,
+   "yearBuilt": 1990,
+   "priceSM": 15827,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 3070000,
+   "roomNum": 5,
+   "assetArea": 129.8,
+   "yearBuilt": 2017,
+   "priceSM": 23798,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 1700000,
+   "roomNum": 0,
+   "assetArea": 136,
+   "yearBuilt": 1996,
+   "priceSM": 12500,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 2177000,
+   "roomNum": 4,
+   "assetArea": 95,
+   "yearBuilt": 0,
+   "priceSM": 22916,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-29",
+   "dealAmount": 1300000,
+   "roomNum": 5,
+   "assetArea": 181,
+   "yearBuilt": 1997,
+   "priceSM": 7182,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-28",
+   "dealAmount": 3400000,
+   "roomNum": 5,
+   "assetArea": 134,
+   "yearBuilt": 0,
+   "priceSM": 25373,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-28",
+   "dealAmount": 2177680,
+   "roomNum": 4,
+   "assetArea": 95,
+   "yearBuilt": 0,
+   "priceSM": 22923,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-27",
+   "dealAmount": 1745000,
+   "roomNum": 4,
+   "assetArea": 87.7,
+   "yearBuilt": 1990,
+   "priceSM": 20057,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 750000,
+   "roomNum": 0,
+   "assetArea": 75,
+   "yearBuilt": 2026,
+   "priceSM": 10000,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 1380000,
+   "roomNum": 3,
+   "assetArea": 82.48,
+   "yearBuilt": 1993,
+   "priceSM": 16731,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 2820000,
+   "roomNum": 6,
+   "assetArea": 125.6,
+   "yearBuilt": 1995,
+   "priceSM": 22452,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-26",
+   "dealAmount": 1730000,
+   "roomNum": 4,
+   "assetArea": 78.34,
+   "yearBuilt": 2005,
+   "priceSM": 22179,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 1237000,
+   "roomNum": 5,
+   "assetArea": 111.4,
+   "yearBuilt": 1992,
+   "priceSM": 11144,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 3800000,
+   "roomNum": 5,
+   "assetArea": 192,
+   "yearBuilt": 0,
+   "priceSM": 19792,
+   "neighborhoodName": null,
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 885000,
+   "roomNum": 1,
+   "assetArea": 75,
+   "yearBuilt": 0,
+   "priceSM": 11800,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 1290300,
+   "roomNum": 4,
+   "assetArea": 74.6,
+   "yearBuilt": 1995,
+   "priceSM": 17296,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 1600000,
+   "roomNum": 3,
+   "assetArea": 74.48,
+   "yearBuilt": 1960,
+   "priceSM": 21622,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-25",
+   "dealAmount": 1500000,
+   "roomNum": 3,
+   "assetArea": 34.7,
+   "yearBuilt": 1950,
+   "priceSM": 43228,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-24",
+   "dealAmount": 75000,
+   "roomNum": 0,
+   "assetArea": 250,
+   "yearBuilt": 0,
+   "priceSM": 300,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-24",
+   "dealAmount": 3541600,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 27669,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-24",
+   "dealAmount": 400000,
+   "roomNum": 0,
+   "assetArea": 196,
+   "yearBuilt": 0,
+   "priceSM": 2041,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-03-24",
+   "dealAmount": 1741000,
+   "roomNum": 2,
+   "assetArea": 41,
+   "yearBuilt": 2026,
+   "priceSM": 42463,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-24",
+   "dealAmount": 2100000,
+   "roomNum": 4,
+   "assetArea": 82.67,
+   "yearBuilt": 1980,
+   "priceSM": 25610,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-23",
+   "dealAmount": 3400000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 26562,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-23",
+   "dealAmount": 2800000,
+   "roomNum": 5,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 25000,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-23",
+   "dealAmount": 1330000,
+   "roomNum": 3,
+   "assetArea": 65.7,
+   "yearBuilt": 1993,
+   "priceSM": 20462,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 750000,
+   "roomNum": 4,
+   "assetArea": 74.25,
+   "yearBuilt": 1970,
+   "priceSM": 10135,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 1500000,
+   "roomNum": 3,
+   "assetArea": 66.2,
+   "yearBuilt": 1990,
+   "priceSM": 22659,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 2162000,
+   "roomNum": 5,
+   "assetArea": 84,
+   "yearBuilt": 0,
+   "priceSM": 25738,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-22",
+   "dealAmount": 1370000,
+   "roomNum": 4,
+   "assetArea": 94.56,
+   "yearBuilt": 0,
+   "priceSM": 14574,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-21",
+   "dealAmount": 2162720,
+   "roomNum": 5,
+   "assetArea": 84,
+   "yearBuilt": 0,
+   "priceSM": 25747,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-20",
+   "dealAmount": 519000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 26,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-20",
+   "dealAmount": 2060000,
+   "roomNum": 4,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 18393,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-19",
+   "dealAmount": 3430000,
+   "roomNum": 5,
+   "assetArea": 185.8,
+   "yearBuilt": 1999,
+   "priceSM": 18541,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-19",
+   "dealAmount": 180000,
+   "roomNum": 0,
+   "assetArea": 1000,
+   "yearBuilt": 0,
+   "priceSM": 180,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-19",
+   "dealAmount": 519000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 26,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 393000,
+   "roomNum": 2,
+   "assetArea": 50,
+   "yearBuilt": 1960,
+   "priceSM": 7860,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 861000,
+   "roomNum": 0,
+   "assetArea": 29,
+   "yearBuilt": 2028,
+   "priceSM": 29690,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2026-03-18",
+   "dealAmount": 857000,
+   "roomNum": 0,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 8402,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 1847000,
+   "roomNum": 3,
+   "assetArea": 41,
+   "yearBuilt": 2026,
+   "priceSM": 45049,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 861400,
+   "roomNum": 1,
+   "assetArea": 29,
+   "yearBuilt": 0,
+   "priceSM": 29703,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 2610000,
+   "roomNum": 2,
+   "assetArea": 56,
+   "yearBuilt": 0,
+   "priceSM": 46607,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-17",
+   "dealAmount": 1478746,
+   "roomNum": 1,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 14498,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-16",
+   "dealAmount": 1140000,
+   "roomNum": 2,
+   "assetArea": 57,
+   "yearBuilt": 1950,
+   "priceSM": 20000,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-16",
+   "dealAmount": 4846000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 46596,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-16",
+   "dealAmount": 2604000,
+   "roomNum": 2,
+   "assetArea": 56,
+   "yearBuilt": 0,
+   "priceSM": 46500,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-16",
+   "dealAmount": 1700000,
+   "roomNum": 0,
+   "assetArea": 1000,
+   "yearBuilt": 0,
+   "priceSM": 1700,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-03-16",
+   "dealAmount": 1500000,
+   "roomNum": 4.5,
+   "assetArea": 96.59,
+   "yearBuilt": 1970,
+   "priceSM": 15530,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-15",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 64.04,
+   "yearBuilt": 1993,
+   "priceSM": 18738,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-15",
+   "dealAmount": 269000,
+   "roomNum": 0,
+   "assetArea": 143,
+   "yearBuilt": 0,
+   "priceSM": 1881,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-15",
+   "dealAmount": 4840000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 46095,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-12",
+   "dealAmount": 2395800,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 32819,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-12",
+   "dealAmount": 3059000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 23898,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-12",
+   "dealAmount": 5056000,
+   "roomNum": 6,
+   "assetArea": 207,
+   "yearBuilt": 2023,
+   "priceSM": 24425,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-12",
+   "dealAmount": 1835000,
+   "roomNum": 4,
+   "assetArea": 91.6,
+   "yearBuilt": 2005,
+   "priceSM": 20165,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-12",
+   "dealAmount": 1780000,
+   "roomNum": 4,
+   "assetArea": 92.53,
+   "yearBuilt": 1999,
+   "priceSM": 19348,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 3050000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 23828,
+   "neighborhoodName": "עין הים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 1565000,
+   "roomNum": 3,
+   "assetArea": 82,
+   "yearBuilt": 1960,
+   "priceSM": 19085,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 2300000,
+   "roomNum": 3,
+   "assetArea": 73,
+   "yearBuilt": 0,
+   "priceSM": 31507,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 1300000,
+   "roomNum": 3,
+   "assetArea": 70,
+   "yearBuilt": 1990,
+   "priceSM": 18571,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 1257000,
+   "roomNum": 3,
+   "assetArea": 52.3,
+   "yearBuilt": 1960,
+   "priceSM": 24173,
+   "neighborhoodName": "יוספטל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 2200000,
+   "roomNum": 4,
+   "assetArea": 84.95,
+   "yearBuilt": 2000,
+   "priceSM": 26190,
+   "neighborhoodName": "יוספטל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-11",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 99.97,
+   "yearBuilt": 1970,
+   "priceSM": 14504,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-10",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 66.45,
+   "yearBuilt": 1994,
+   "priceSM": 21821,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-10",
+   "dealAmount": 5700000,
+   "roomNum": 5,
+   "assetArea": 210,
+   "yearBuilt": 0,
+   "priceSM": 27143,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-10",
+   "dealAmount": 660000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7952,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-03-09",
+   "dealAmount": 1900000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 2016,
+   "priceSM": 17273,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-09",
+   "dealAmount": 1220000,
+   "roomNum": 3,
+   "assetArea": 52.9,
+   "yearBuilt": 1970,
+   "priceSM": 23462,
+   "neighborhoodName": "יוספטל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-09",
+   "dealAmount": 5700000,
+   "roomNum": 5,
+   "assetArea": 210,
+   "yearBuilt": 0,
+   "priceSM": 27143,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-09",
+   "dealAmount": 775000,
+   "roomNum": 3,
+   "assetArea": 72,
+   "yearBuilt": 1995,
+   "priceSM": 10764,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 2270000,
+   "roomNum": 4,
+   "assetArea": 108.3,
+   "yearBuilt": 2016,
+   "priceSM": 20960,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 2385000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 2029,
+   "priceSM": 22933,
+   "neighborhoodName": "אפרים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 3050000,
+   "roomNum": 6,
+   "assetArea": 140,
+   "yearBuilt": 2000,
+   "priceSM": 21786,
+   "neighborhoodName": "האוצר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 3570000,
+   "roomNum": 5,
+   "assetArea": 159,
+   "yearBuilt": 2018,
+   "priceSM": 22453,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 1287000,
+   "roomNum": 3,
+   "assetArea": 62.32,
+   "yearBuilt": 1970,
+   "priceSM": 20651,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 3100000,
+   "roomNum": 5,
+   "assetArea": 131.6,
+   "yearBuilt": 2015,
+   "priceSM": 23664,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 2000000,
+   "roomNum": 4,
+   "assetArea": 108.75,
+   "yearBuilt": 2010,
+   "priceSM": 18519,
+   "neighborhoodName": "ניסן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-08",
+   "dealAmount": 1800000,
+   "roomNum": 4,
+   "assetArea": 83.12,
+   "yearBuilt": 2003,
+   "priceSM": 21687,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-07",
+   "dealAmount": 2385000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 22933,
+   "neighborhoodName": "אפרים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-05",
+   "dealAmount": 3300000,
+   "roomNum": 5,
+   "assetArea": 175,
+   "yearBuilt": 1987,
+   "priceSM": 18857,
+   "neighborhoodName": "גבעת ביל\"ו",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-05",
+   "dealAmount": 1510000,
+   "roomNum": 3,
+   "assetArea": 66.6,
+   "yearBuilt": 2004,
+   "priceSM": 22879,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-05",
+   "dealAmount": 2200000,
+   "roomNum": 5,
+   "assetArea": 105,
+   "yearBuilt": 2020,
+   "priceSM": 20952,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-04",
+   "dealAmount": 2200000,
+   "roomNum": 5,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 20952,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-03",
+   "dealAmount": 3550000,
+   "roomNum": 6,
+   "assetArea": 137.5,
+   "yearBuilt": 2004,
+   "priceSM": 25818,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-03",
+   "dealAmount": 2520000,
+   "roomNum": 5,
+   "assetArea": 113.7,
+   "yearBuilt": 1990,
+   "priceSM": 22164,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-03",
+   "dealAmount": 4250000,
+   "roomNum": 6,
+   "assetArea": 195,
+   "yearBuilt": 2028,
+   "priceSM": 21795,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-03-02",
+   "dealAmount": 4250000,
+   "roomNum": 6,
+   "assetArea": 195,
+   "yearBuilt": 0,
+   "priceSM": 21795,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-03-01",
+   "dealAmount": 2350000,
+   "roomNum": 3,
+   "assetArea": 54.3,
+   "yearBuilt": 1950,
+   "priceSM": 43278,
+   "neighborhoodName": "שלמה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-03-01",
+   "dealAmount": 1420000,
+   "roomNum": 4,
+   "assetArea": 76.1,
+   "yearBuilt": 1970,
+   "priceSM": 18684,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-27",
+   "dealAmount": 1050000,
+   "roomNum": 3,
+   "assetArea": 60.18,
+   "yearBuilt": 1970,
+   "priceSM": 17500,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-27",
+   "dealAmount": 80000,
+   "roomNum": 0,
+   "assetArea": 800,
+   "yearBuilt": 0,
+   "priceSM": 100,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-02-26",
+   "dealAmount": 3100000,
+   "roomNum": 5,
+   "assetArea": 159.1,
+   "yearBuilt": 1996,
+   "priceSM": 19485,
+   "neighborhoodName": "שמשון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-26",
+   "dealAmount": 2659000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 20773,
+   "neighborhoodName": "עין הים",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 2260000,
+   "roomNum": 5,
+   "assetArea": 117.4,
+   "yearBuilt": 2016,
+   "priceSM": 19316,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 2939000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 22961,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 2650000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 20703,
+   "neighborhoodName": "עין הים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-25",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 79,
+   "yearBuilt": 1970,
+   "priceSM": 18354,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 1464600,
+   "roomNum": 4,
+   "assetArea": 90.05,
+   "yearBuilt": 1970,
+   "priceSM": 16273,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 900000,
+   "roomNum": 0,
+   "assetArea": 201,
+   "yearBuilt": 0,
+   "priceSM": 4478,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 610000,
+   "roomNum": 0,
+   "assetArea": 49,
+   "yearBuilt": 0,
+   "priceSM": 12449,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 2200000,
+   "roomNum": 5,
+   "assetArea": 146,
+   "yearBuilt": 2012,
+   "priceSM": 15068,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 378000,
+   "roomNum": 0,
+   "assetArea": 35,
+   "yearBuilt": 0,
+   "priceSM": 10800,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2026-02-24",
+   "dealAmount": 2930000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 22891,
+   "neighborhoodName": "עין הים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 115000,
+   "roomNum": 6,
+   "assetArea": 200,
+   "yearBuilt": 1989,
+   "priceSM": 575,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 2312000,
+   "roomNum": 4,
+   "assetArea": 95,
+   "yearBuilt": 0,
+   "priceSM": 24337,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 2670000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 1989,
+   "priceSM": 22250,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 242000,
+   "roomNum": 3,
+   "assetArea": 40,
+   "yearBuilt": 1960,
+   "priceSM": 6050,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-23",
+   "dealAmount": 570000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 29,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 2312710,
+   "roomNum": 4,
+   "assetArea": 95,
+   "yearBuilt": 0,
+   "priceSM": 24344,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 3150000,
+   "roomNum": 5,
+   "assetArea": 169,
+   "yearBuilt": 0,
+   "priceSM": 18639,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 1550000,
+   "roomNum": 4,
+   "assetArea": 117.06,
+   "yearBuilt": 1970,
+   "priceSM": 13248,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 1640000,
+   "roomNum": 4,
+   "assetArea": 97.5,
+   "yearBuilt": 1970,
+   "priceSM": 16821,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 8171000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 62854,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-22",
+   "dealAmount": 2670000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 1989,
+   "priceSM": 22250,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-21",
+   "dealAmount": 8165000,
+   "roomNum": 5,
+   "assetArea": 132,
+   "yearBuilt": 0,
+   "priceSM": 61856,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-21",
+   "dealAmount": 2585000,
+   "roomNum": 2,
+   "assetArea": 50,
+   "yearBuilt": 0,
+   "priceSM": 51700,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-19",
+   "dealAmount": 2210000,
+   "roomNum": 5,
+   "assetArea": 123.3,
+   "yearBuilt": 2014,
+   "priceSM": 17967,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-19",
+   "dealAmount": 660000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 33,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 1500000,
+   "roomNum": 4,
+   "assetArea": 77.65,
+   "yearBuilt": 1990,
+   "priceSM": 19481,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 545000,
+   "roomNum": 1,
+   "assetArea": 23.45,
+   "yearBuilt": 1970,
+   "priceSM": 23696,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 2132000,
+   "roomNum": 3,
+   "assetArea": 41,
+   "yearBuilt": 2026,
+   "priceSM": 52000,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-18",
+   "dealAmount": 120000,
+   "roomNum": 0,
+   "assetArea": 102,
+   "yearBuilt": 0,
+   "priceSM": 1176,
+   "neighborhoodName": null,
+   "dealNature": "מגורים"
+  },
+  {
+   "dealDate": "2026-02-17",
+   "dealAmount": 1430000,
+   "roomNum": 3,
+   "assetArea": 47.4,
+   "yearBuilt": 1995,
+   "priceSM": 30169,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-17",
+   "dealAmount": 465000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 3720,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-02-17",
+   "dealAmount": 2180000,
+   "roomNum": 3,
+   "assetArea": 74.5,
+   "yearBuilt": 1997,
+   "priceSM": 29262,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-16",
+   "dealAmount": 1300000,
+   "roomNum": 3.5,
+   "assetArea": 62.32,
+   "yearBuilt": 1970,
+   "priceSM": 20968,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-16",
+   "dealAmount": 4000000,
+   "roomNum": 7,
+   "assetArea": 273,
+   "yearBuilt": 1982,
+   "priceSM": 14652,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2026-02-16",
+   "dealAmount": 6706000,
+   "roomNum": 5,
+   "assetArea": 131,
+   "yearBuilt": 0,
+   "priceSM": 51191,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-16",
+   "dealAmount": 4200000,
+   "roomNum": 5,
+   "assetArea": 271,
+   "yearBuilt": 0,
+   "priceSM": 15498,
+   "neighborhoodName": "הפארק",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 4000000,
+   "roomNum": 7,
+   "assetArea": 273,
+   "yearBuilt": 1982,
+   "priceSM": 14652,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 1375000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 1994,
+   "priceSM": 17188,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 2000000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 2016,
+   "priceSM": 18519,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-15",
+   "dealAmount": 6700000,
+   "roomNum": 5,
+   "assetArea": 132,
+   "yearBuilt": 0,
+   "priceSM": 50758,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-13",
+   "dealAmount": 1190000,
+   "roomNum": 3,
+   "assetArea": 59.5,
+   "yearBuilt": 1970,
+   "priceSM": 20169,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-12",
+   "dealAmount": 2765000,
+   "roomNum": 5,
+   "assetArea": 187,
+   "yearBuilt": 2018,
+   "priceSM": 14786,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-11",
+   "dealAmount": 1600000,
+   "roomNum": 4,
+   "assetArea": 96.3,
+   "yearBuilt": 1995,
+   "priceSM": 16667,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-11",
+   "dealAmount": 2150000,
+   "roomNum": 4,
+   "assetArea": 112.85,
+   "yearBuilt": 1992,
+   "priceSM": 19196,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-02-11",
+   "dealAmount": 1270000,
+   "roomNum": 3,
+   "assetArea": 64.25,
+   "yearBuilt": 1992,
+   "priceSM": 19844,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-11",
+   "dealAmount": 1520000,
+   "roomNum": 4,
+   "assetArea": 82.66,
+   "yearBuilt": 2000,
+   "priceSM": 18537,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 1285000,
+   "roomNum": 3,
+   "assetArea": 69.1,
+   "yearBuilt": 1992,
+   "priceSM": 18623,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 1500000,
+   "roomNum": 4,
+   "assetArea": 82.48,
+   "yearBuilt": 1990,
+   "priceSM": 18186,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 260000,
+   "roomNum": 5,
+   "assetArea": 140,
+   "yearBuilt": 2020,
+   "priceSM": 1857,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 1950000,
+   "roomNum": 3,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 18056,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-10",
+   "dealAmount": 1100000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 56,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 590000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 30,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 2080000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 20000,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 302000,
+   "roomNum": 3,
+   "assetArea": 60,
+   "yearBuilt": 1970,
+   "priceSM": 5033,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-09",
+   "dealAmount": 2150000,
+   "roomNum": 4,
+   "assetArea": 114.45,
+   "yearBuilt": 2010,
+   "priceSM": 18860,
+   "neighborhoodName": "ניסן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-08",
+   "dealAmount": 1430000,
+   "roomNum": 4,
+   "assetArea": 89,
+   "yearBuilt": 1970,
+   "priceSM": 16067,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-08",
+   "dealAmount": 2125000,
+   "roomNum": 4,
+   "assetArea": 115,
+   "yearBuilt": 2016,
+   "priceSM": 18478,
+   "neighborhoodName": "ניסן",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-08",
+   "dealAmount": 194000,
+   "roomNum": 0,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 1940,
+   "neighborhoodName": null,
+   "dealNature": "לא מעובדת"
+  },
+  {
+   "dealDate": "2026-02-07",
+   "dealAmount": 2620000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 23818,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 279000,
+   "roomNum": 0,
+   "assetArea": 23508,
+   "yearBuilt": 0,
+   "priceSM": 12,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 1400000,
+   "roomNum": 2,
+   "assetArea": 59.05,
+   "yearBuilt": 1960,
+   "priceSM": 23709,
+   "neighborhoodName": "האוצר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 3930000,
+   "roomNum": 5,
+   "assetArea": 176,
+   "yearBuilt": 2021,
+   "priceSM": 22330,
+   "neighborhoodName": "הפארק",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 2900000,
+   "roomNum": 5,
+   "assetArea": 152.53,
+   "yearBuilt": 2027,
+   "priceSM": 19079,
+   "neighborhoodName": "נווה חיים",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-05",
+   "dealAmount": 965000,
+   "roomNum": 2,
+   "assetArea": 44.4,
+   "yearBuilt": 1970,
+   "priceSM": 21734,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 548000,
+   "roomNum": 0,
+   "assetArea": 189,
+   "yearBuilt": 0,
+   "priceSM": 2899,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 493000,
+   "roomNum": 0,
+   "assetArea": 170,
+   "yearBuilt": 0,
+   "priceSM": 2900,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 1800000,
+   "roomNum": 4,
+   "assetArea": 98.51,
+   "yearBuilt": 2003,
+   "priceSM": 18272,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 59000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 1530000,
+   "roomNum": 4,
+   "assetArea": 116,
+   "yearBuilt": 1970,
+   "priceSM": 13190,
+   "neighborhoodName": "שמשון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 3030000,
+   "roomNum": 4.5,
+   "assetArea": 142,
+   "yearBuilt": 1995,
+   "priceSM": 21338,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 2900000,
+   "roomNum": 5,
+   "assetArea": 170,
+   "yearBuilt": 0,
+   "priceSM": 17059,
+   "neighborhoodName": "נווה חיים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-04",
+   "dealAmount": 376000,
+   "roomNum": 0,
+   "assetArea": 35,
+   "yearBuilt": 0,
+   "priceSM": 10743,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 1186000,
+   "roomNum": 3,
+   "assetArea": 54.8,
+   "yearBuilt": 1970,
+   "priceSM": 21963,
+   "neighborhoodName": "נווה עובד",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 1300000,
+   "roomNum": 3,
+   "assetArea": 41,
+   "yearBuilt": 1960,
+   "priceSM": 31707,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-03",
+   "dealAmount": 1230000,
+   "roomNum": 3,
+   "assetArea": 62.2,
+   "yearBuilt": 1970,
+   "priceSM": 19839,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-02",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 18269,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-01",
+   "dealAmount": 3340000,
+   "roomNum": 5,
+   "assetArea": 108.16,
+   "yearBuilt": 2015,
+   "priceSM": 30926,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-02-01",
+   "dealAmount": 1490000,
+   "roomNum": 3,
+   "assetArea": 80.86,
+   "yearBuilt": 1970,
+   "priceSM": 18625,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-01",
+   "dealAmount": 2800000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 21875,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-02-01",
+   "dealAmount": 2420000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 2028,
+   "priceSM": 21416,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-02-01",
+   "dealAmount": 1800000,
+   "roomNum": 6,
+   "assetArea": 200,
+   "yearBuilt": 2020,
+   "priceSM": 9000,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-01-31",
+   "dealAmount": 2420000,
+   "roomNum": 4,
+   "assetArea": 113,
+   "yearBuilt": 0,
+   "priceSM": 21416,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-30",
+   "dealAmount": 2106000,
+   "roomNum": 4,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 23143,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-29",
+   "dealAmount": 2106230,
+   "roomNum": 4,
+   "assetArea": 91,
+   "yearBuilt": 0,
+   "priceSM": 23145,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-29",
+   "dealAmount": 2560000,
+   "roomNum": 4,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 22857,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-29",
+   "dealAmount": 590000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-29",
+   "dealAmount": 2160000,
+   "roomNum": 4,
+   "assetArea": 102.3,
+   "yearBuilt": 2015,
+   "priceSM": 21176,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-28",
+   "dealAmount": 3450000,
+   "roomNum": 5,
+   "assetArea": 142,
+   "yearBuilt": 2016,
+   "priceSM": 24296,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-28",
+   "dealAmount": 2780000,
+   "roomNum": 5,
+   "assetArea": 157,
+   "yearBuilt": 2013,
+   "priceSM": 17707,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-28",
+   "dealAmount": 2560000,
+   "roomNum": 4,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 22857,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-28",
+   "dealAmount": 450000,
+   "roomNum": 0,
+   "assetArea": 500,
+   "yearBuilt": 0,
+   "priceSM": 900,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 2300000,
+   "roomNum": 5,
+   "assetArea": 146,
+   "yearBuilt": 2012,
+   "priceSM": 15753,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 1335000,
+   "roomNum": 3,
+   "assetArea": 65.4,
+   "yearBuilt": 1970,
+   "priceSM": 20538,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 2250000,
+   "roomNum": 4.5,
+   "assetArea": 132,
+   "yearBuilt": 2009,
+   "priceSM": 17045,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 3450000,
+   "roomNum": 5,
+   "assetArea": 142,
+   "yearBuilt": 2016,
+   "priceSM": 24296,
+   "neighborhoodName": "עין הים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-27",
+   "dealAmount": 2720000,
+   "roomNum": 5,
+   "assetArea": 146,
+   "yearBuilt": 1990,
+   "priceSM": 18630,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 2130000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 0,
+   "priceSM": 19722,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1060000,
+   "roomNum": 3,
+   "assetArea": 61.7,
+   "yearBuilt": 1970,
+   "priceSM": 17180,
+   "neighborhoodName": "גני אלון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-26",
+   "dealAmount": 1645000,
+   "roomNum": 4,
+   "assetArea": 94.77,
+   "yearBuilt": 1960,
+   "priceSM": 17358,
+   "neighborhoodName": "האוצר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-25",
+   "dealAmount": 1475000,
+   "roomNum": 4,
+   "assetArea": 90.72,
+   "yearBuilt": 1970,
+   "priceSM": 16389,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-25",
+   "dealAmount": 342000,
+   "roomNum": 0,
+   "assetArea": 50,
+   "yearBuilt": 0,
+   "priceSM": 6840,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-25",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 58.95,
+   "yearBuilt": 1970,
+   "priceSM": 20356,
+   "neighborhoodName": "רמב\"ם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-24",
+   "dealAmount": 1660000,
+   "roomNum": 2,
+   "assetArea": 58,
+   "yearBuilt": 0,
+   "priceSM": 28621,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-22",
+   "dealAmount": 1610000,
+   "roomNum": 3.5,
+   "assetArea": 74.4,
+   "yearBuilt": 1993,
+   "priceSM": 21640,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-22",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 31,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 2800000,
+   "roomNum": 4,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 25000,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 1770000,
+   "roomNum": 3,
+   "assetArea": 103,
+   "yearBuilt": 0,
+   "priceSM": 17184,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 2909000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 22727,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-21",
+   "dealAmount": 7506000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 0,
+   "priceSM": 57738,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 1310000,
+   "roomNum": 3,
+   "assetArea": 62.2,
+   "yearBuilt": 1970,
+   "priceSM": 21129,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 2900000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 22656,
+   "neighborhoodName": "עין הים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 590000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7108,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 2800000,
+   "roomNum": 4,
+   "assetArea": 112,
+   "yearBuilt": 0,
+   "priceSM": 25000,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 2225000,
+   "roomNum": 4,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 18856,
+   "neighborhoodName": "אפרים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 2750000,
+   "roomNum": 4,
+   "assetArea": 87,
+   "yearBuilt": 1960,
+   "priceSM": 31609,
+   "neighborhoodName": "נחליאל",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 7500000,
+   "roomNum": 5,
+   "assetArea": 131,
+   "yearBuilt": 0,
+   "priceSM": 57252,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-20",
+   "dealAmount": 3045000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 24360,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-19",
+   "dealAmount": 3045000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 24360,
+   "neighborhoodName": "הפארק",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-19",
+   "dealAmount": 1450000,
+   "roomNum": 4,
+   "assetArea": 79.96,
+   "yearBuilt": 2000,
+   "priceSM": 18354,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-19",
+   "dealAmount": 601000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7241,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-19",
+   "dealAmount": 600000,
+   "roomNum": 3,
+   "assetArea": 56,
+   "yearBuilt": 1960,
+   "priceSM": 10714,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-19",
+   "dealAmount": 1860000,
+   "roomNum": 4,
+   "assetArea": 93.85,
+   "yearBuilt": 2010,
+   "priceSM": 20000,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-19",
+   "dealAmount": 1600000,
+   "roomNum": 4,
+   "assetArea": 104.8,
+   "yearBuilt": 1995,
+   "priceSM": 15267,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-18",
+   "dealAmount": 2700000,
+   "roomNum": 5,
+   "assetArea": 165,
+   "yearBuilt": 0,
+   "priceSM": 16364,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-18",
+   "dealAmount": 1420000,
+   "roomNum": 4,
+   "assetArea": 85.46,
+   "yearBuilt": 1970,
+   "priceSM": 16706,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-17",
+   "dealAmount": 2600000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 23636,
+   "neighborhoodName": null,
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-16",
+   "dealAmount": 94000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 2050000,
+   "roomNum": 3,
+   "assetArea": 88.15,
+   "yearBuilt": 2016,
+   "priceSM": 23256,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 1850000,
+   "roomNum": 5,
+   "assetArea": 115.7,
+   "yearBuilt": 1994,
+   "priceSM": 15990,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 2150000,
+   "roomNum": 5,
+   "assetArea": 128.95,
+   "yearBuilt": 2015,
+   "priceSM": 16797,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 1080000,
+   "roomNum": 0,
+   "assetArea": 375,
+   "yearBuilt": 0,
+   "priceSM": 2880,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 2740000,
+   "roomNum": 5,
+   "assetArea": 196,
+   "yearBuilt": 2018,
+   "priceSM": 13980,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 519000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 26,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 31,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-15",
+   "dealAmount": 2800000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 2018,
+   "priceSM": 28000,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 2315000,
+   "roomNum": 3,
+   "assetArea": 48.4,
+   "yearBuilt": 1950,
+   "priceSM": 48229,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 649000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 33,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 2065000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 2009,
+   "priceSM": 19120,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 4850000,
+   "roomNum": 4,
+   "assetArea": 110,
+   "yearBuilt": 0,
+   "priceSM": 44091,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 2600000,
+   "roomNum": 3.5,
+   "assetArea": 120,
+   "yearBuilt": 0,
+   "priceSM": 21667,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-14",
+   "dealAmount": 410000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 3280,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1500000,
+   "roomNum": 5,
+   "assetArea": 131.05,
+   "yearBuilt": 1982,
+   "priceSM": 11446,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1640000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 1982,
+   "priceSM": 15769,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 727000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-13",
+   "dealAmount": 1790000,
+   "roomNum": 3,
+   "assetArea": 79.4,
+   "yearBuilt": 1958,
+   "priceSM": 22658,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירת גג"
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 1630000,
+   "roomNum": 2,
+   "assetArea": 42,
+   "yearBuilt": 0,
+   "priceSM": 38810,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 1800000,
+   "roomNum": 4,
+   "assetArea": 105.25,
+   "yearBuilt": 2010,
+   "priceSM": 17102,
+   "neighborhoodName": "האוצר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-12",
+   "dealAmount": 1890000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 1999,
+   "priceSM": 19286,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 328000,
+   "roomNum": 0,
+   "assetArea": 6570,
+   "yearBuilt": 0,
+   "priceSM": 50,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 2000000,
+   "roomNum": 2,
+   "assetArea": 38.7,
+   "yearBuilt": 1950,
+   "priceSM": 52632,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 590000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 1760000,
+   "roomNum": 3,
+   "assetArea": 84,
+   "yearBuilt": 0,
+   "priceSM": 20952,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 2300000,
+   "roomNum": 2,
+   "assetArea": 52,
+   "yearBuilt": 1950,
+   "priceSM": 44231,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "קוטג' חד משפחתי"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 1730000,
+   "roomNum": 4,
+   "assetArea": 78.9,
+   "yearBuilt": 1970,
+   "priceSM": 22179,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-11",
+   "dealAmount": 2400000,
+   "roomNum": 4,
+   "assetArea": 90,
+   "yearBuilt": 1998,
+   "priceSM": 26667,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2026-01-10",
+   "dealAmount": 90000,
+   "roomNum": 0,
+   "assetArea": 1800,
+   "yearBuilt": 0,
+   "priceSM": 50,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-09",
+   "dealAmount": 3310000,
+   "roomNum": 6,
+   "assetArea": 178.8,
+   "yearBuilt": 2000,
+   "priceSM": 18596,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 211000,
+   "roomNum": 0,
+   "assetArea": 8333,
+   "yearBuilt": 0,
+   "priceSM": 25,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 1400000,
+   "roomNum": 3,
+   "assetArea": 96,
+   "yearBuilt": 1997,
+   "priceSM": 14583,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-08",
+   "dealAmount": 1250000,
+   "roomNum": 3,
+   "assetArea": 42.9,
+   "yearBuilt": 1960,
+   "priceSM": 29138,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 440000,
+   "roomNum": 0,
+   "assetArea": 200,
+   "yearBuilt": 0,
+   "priceSM": 2200,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 1690000,
+   "roomNum": 5,
+   "assetArea": 99,
+   "yearBuilt": 1993,
+   "priceSM": 17071,
+   "neighborhoodName": "גני אלון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 370000,
+   "roomNum": 0,
+   "assetArea": 190,
+   "yearBuilt": 0,
+   "priceSM": 1947,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 590000,
+   "roomNum": 0,
+   "assetArea": 5080,
+   "yearBuilt": 0,
+   "priceSM": 116,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-07",
+   "dealAmount": 1080000,
+   "roomNum": 3,
+   "assetArea": 60,
+   "yearBuilt": 0,
+   "priceSM": 18000,
+   "neighborhoodName": "רמב\"ם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-06",
+   "dealAmount": 2310000,
+   "roomNum": 4,
+   "assetArea": 108,
+   "yearBuilt": 2018,
+   "priceSM": 21389,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-06",
+   "dealAmount": 3200000,
+   "roomNum": 5,
+   "assetArea": 171,
+   "yearBuilt": 0,
+   "priceSM": 18713,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-05",
+   "dealAmount": 335000,
+   "roomNum": 0,
+   "assetArea": 23,
+   "yearBuilt": 1970,
+   "priceSM": 14565,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2026-01-05",
+   "dealAmount": 2685000,
+   "roomNum": 5,
+   "assetArea": 120,
+   "yearBuilt": 2026,
+   "priceSM": 22375,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-05",
+   "dealAmount": 2800000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 1989,
+   "priceSM": 21538,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-04",
+   "dealAmount": 1180000,
+   "roomNum": 0,
+   "assetArea": 140,
+   "yearBuilt": 0,
+   "priceSM": 8429,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-04",
+   "dealAmount": 1550000,
+   "roomNum": 3,
+   "assetArea": 72.21,
+   "yearBuilt": 2001,
+   "priceSM": 21528,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-04",
+   "dealAmount": 1860000,
+   "roomNum": 4,
+   "assetArea": 99.15,
+   "yearBuilt": 2011,
+   "priceSM": 18788,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-04",
+   "dealAmount": 2800000,
+   "roomNum": 5,
+   "assetArea": 130,
+   "yearBuilt": 1989,
+   "priceSM": 21538,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2026-01-02",
+   "dealAmount": 590000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7108,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2026-01-02",
+   "dealAmount": 2100000,
+   "roomNum": 4,
+   "assetArea": 67.5,
+   "yearBuilt": 1990,
+   "priceSM": 31111,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7386,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 1310000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 1990,
+   "priceSM": 10738,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2026-01-01",
+   "dealAmount": 1570000,
+   "roomNum": 3,
+   "assetArea": 72.21,
+   "yearBuilt": 2000,
+   "priceSM": 21742,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 280000,
+   "roomNum": 0,
+   "assetArea": 140,
+   "yearBuilt": 0,
+   "priceSM": 2000,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 1900000,
+   "roomNum": 3,
+   "assetArea": 48.4,
+   "yearBuilt": 1960,
+   "priceSM": 39583,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 2320000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 2022,
+   "priceSM": 21284,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-31",
+   "dealAmount": 1320000,
+   "roomNum": 3,
+   "assetArea": 65.4,
+   "yearBuilt": 1970,
+   "priceSM": 20308,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7386,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1570000,
+   "roomNum": 3,
+   "assetArea": 62.62,
+   "yearBuilt": 1960,
+   "priceSM": 25072,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1830000,
+   "roomNum": 4,
+   "assetArea": 100,
+   "yearBuilt": 1998,
+   "priceSM": 18300,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1080000,
+   "roomNum": 3,
+   "assetArea": 48.7,
+   "yearBuilt": 1970,
+   "priceSM": 22500,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 1200000,
+   "roomNum": 2.5,
+   "assetArea": 62.26,
+   "yearBuilt": 1960,
+   "priceSM": 19274,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 2320000,
+   "roomNum": 4,
+   "assetArea": 109,
+   "yearBuilt": 2022,
+   "priceSM": 21284,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 3149000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 24602,
+   "neighborhoodName": "עין הים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-30",
+   "dealAmount": 235000,
+   "roomNum": 0,
+   "assetArea": 21,
+   "yearBuilt": 0,
+   "priceSM": 11190,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7386,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 3140000,
+   "roomNum": 5,
+   "assetArea": 128,
+   "yearBuilt": 0,
+   "priceSM": 24531,
+   "neighborhoodName": "עין הים",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 4300000,
+   "roomNum": 8,
+   "assetArea": 315,
+   "yearBuilt": 1970,
+   "priceSM": 13651,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-29",
+   "dealAmount": 1464000,
+   "roomNum": 2,
+   "assetArea": 41.2,
+   "yearBuilt": 2030,
+   "priceSM": 35707,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 2500000,
+   "roomNum": 5,
+   "assetArea": 119.8,
+   "yearBuilt": 0,
+   "priceSM": 20868,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-28",
+   "dealAmount": 495000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 5964,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7386,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 4786000,
+   "roomNum": 4,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 46019,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 766000,
+   "roomNum": 5,
+   "assetArea": 190,
+   "yearBuilt": 2018,
+   "priceSM": 4032,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-25",
+   "dealAmount": 1475000,
+   "roomNum": 3,
+   "assetArea": 67,
+   "yearBuilt": 1985,
+   "priceSM": 22015,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 2875000,
+   "roomNum": 5,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 23000,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 322000,
+   "roomNum": 0,
+   "assetArea": 0,
+   "yearBuilt": 0,
+   "priceSM": 0,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2025-12-24",
+   "dealAmount": 2515000,
+   "roomNum": 5,
+   "assetArea": 118,
+   "yearBuilt": 0,
+   "priceSM": 21314,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-22",
+   "dealAmount": 200000,
+   "roomNum": 4,
+   "assetArea": 76.1,
+   "yearBuilt": 1970,
+   "priceSM": 2632,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-22",
+   "dealAmount": 1434300,
+   "roomNum": 4,
+   "assetArea": 83,
+   "yearBuilt": 1970,
+   "priceSM": 17281,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 1225000,
+   "roomNum": 3,
+   "assetArea": 61.9,
+   "yearBuilt": 1985,
+   "priceSM": 20082,
+   "neighborhoodName": "גני אלון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 1265000,
+   "roomNum": 3,
+   "assetArea": 87.81,
+   "yearBuilt": 1960,
+   "priceSM": 14540,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 1400000,
+   "roomNum": 3,
+   "assetArea": 88,
+   "yearBuilt": 1970,
+   "priceSM": 15909,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 1250000,
+   "roomNum": 3,
+   "assetArea": 63.1,
+   "yearBuilt": 1970,
+   "priceSM": 19841,
+   "neighborhoodName": "יוספטל",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-21",
+   "dealAmount": 1300000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 1994,
+   "priceSM": 16250,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-20",
+   "dealAmount": 1396000,
+   "roomNum": 0,
+   "assetArea": 399,
+   "yearBuilt": 0,
+   "priceSM": 3499,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-18",
+   "dealAmount": 2200000,
+   "roomNum": 5,
+   "assetArea": 106.4,
+   "yearBuilt": 0,
+   "priceSM": 20755,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-18",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7386,
+   "neighborhoodName": null,
+   "dealNature": "מגורים"
+  },
+  {
+   "dealDate": "2025-12-17",
+   "dealAmount": 1150000,
+   "roomNum": 2,
+   "assetArea": 40.74,
+   "yearBuilt": 1960,
+   "priceSM": 28750,
+   "neighborhoodName": "האוצר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 1360000,
+   "roomNum": 4,
+   "assetArea": 87.01,
+   "yearBuilt": 1970,
+   "priceSM": 15630,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 2125000,
+   "roomNum": 4.5,
+   "assetArea": 24.8,
+   "yearBuilt": 1940,
+   "priceSM": 85685,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 601000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7241,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 1190000,
+   "roomNum": 3,
+   "assetArea": 59.1,
+   "yearBuilt": 1970,
+   "priceSM": 20169,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 1398000,
+   "roomNum": 0,
+   "assetArea": 144.18,
+   "yearBuilt": 1970,
+   "priceSM": 9696,
+   "neighborhoodName": "אזור תעשיה",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 4300000,
+   "roomNum": 7,
+   "assetArea": 181.74,
+   "yearBuilt": 1994,
+   "priceSM": 23757,
+   "neighborhoodName": "ברנדייס",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-16",
+   "dealAmount": 2700000,
+   "roomNum": 5,
+   "assetArea": 126.4,
+   "yearBuilt": 0,
+   "priceSM": 21429,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 31,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 4200000,
+   "roomNum": 0,
+   "assetArea": 2012,
+   "yearBuilt": 0,
+   "priceSM": 2087,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 1500000,
+   "roomNum": 4,
+   "assetArea": 82.1,
+   "yearBuilt": 1996,
+   "priceSM": 18270,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 3050000,
+   "roomNum": 5,
+   "assetArea": 115.8,
+   "yearBuilt": 2014,
+   "priceSM": 26339,
+   "neighborhoodName": "הפארק",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 637000,
+   "roomNum": 0,
+   "assetArea": 19780,
+   "yearBuilt": 0,
+   "priceSM": 32,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 1280000,
+   "roomNum": 4,
+   "assetArea": 79.9,
+   "yearBuilt": 1970,
+   "priceSM": 16203,
+   "neighborhoodName": "שמשון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-15",
+   "dealAmount": 1635000,
+   "roomNum": 3,
+   "assetArea": 62.62,
+   "yearBuilt": 1970,
+   "priceSM": 26110,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 425000,
+   "roomNum": 0,
+   "assetArea": 24.4,
+   "yearBuilt": 1970,
+   "priceSM": 17708,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "חנות"
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 2100000,
+   "roomNum": 4,
+   "assetArea": 115,
+   "yearBuilt": 2014,
+   "priceSM": 18261,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7386,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 370000,
+   "roomNum": 0,
+   "assetArea": 43,
+   "yearBuilt": 1950,
+   "priceSM": 8605,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 1163000,
+   "roomNum": 0,
+   "assetArea": 107,
+   "yearBuilt": 0,
+   "priceSM": 10869,
+   "neighborhoodName": "פארק עסקים",
+   "dealNature": "מסחרי + משרדים"
+  },
+  {
+   "dealDate": "2025-12-14",
+   "dealAmount": 2246000,
+   "roomNum": 2,
+   "assetArea": 49,
+   "yearBuilt": 0,
+   "priceSM": 45837,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-13",
+   "dealAmount": 370000,
+   "roomNum": 1,
+   "assetArea": 43,
+   "yearBuilt": 1950,
+   "priceSM": 8605,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-12",
+   "dealAmount": 1300000,
+   "roomNum": 4,
+   "assetArea": 89,
+   "yearBuilt": 1993,
+   "priceSM": 14607,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-11",
+   "dealAmount": 2262000,
+   "roomNum": 4,
+   "assetArea": 98,
+   "yearBuilt": 2026,
+   "priceSM": 23082,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-11",
+   "dealAmount": 2460000,
+   "roomNum": 5,
+   "assetArea": 122,
+   "yearBuilt": 2014,
+   "priceSM": 20164,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-11",
+   "dealAmount": 1300000,
+   "roomNum": 3,
+   "assetArea": 63.4,
+   "yearBuilt": 1960,
+   "priceSM": 20505,
+   "neighborhoodName": "האוצר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-11",
+   "dealAmount": 4780000,
+   "roomNum": 4,
+   "assetArea": 105,
+   "yearBuilt": 0,
+   "priceSM": 45524,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-11",
+   "dealAmount": 1260000,
+   "roomNum": 3,
+   "assetArea": 54.28,
+   "yearBuilt": 1970,
+   "priceSM": 23333,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-10",
+   "dealAmount": 2050000,
+   "roomNum": 4,
+   "assetArea": 120,
+   "yearBuilt": 2016,
+   "priceSM": 17083,
+   "neighborhoodName": "אפרים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-10",
+   "dealAmount": 1270000,
+   "roomNum": 3,
+   "assetArea": 58,
+   "yearBuilt": 0,
+   "priceSM": 21897,
+   "neighborhoodName": "רמב\"ם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 1840000,
+   "roomNum": 4,
+   "assetArea": 90.95,
+   "yearBuilt": 2008,
+   "priceSM": 20444,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 1612000,
+   "roomNum": 4,
+   "assetArea": 89.62,
+   "yearBuilt": 2014,
+   "priceSM": 18112,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 7021000,
+   "roomNum": 5,
+   "assetArea": 131,
+   "yearBuilt": 0,
+   "priceSM": 53595,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-12-09",
+   "dealAmount": 1850000,
+   "roomNum": 3,
+   "assetArea": 104,
+   "yearBuilt": 0,
+   "priceSM": 17788,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1400000,
+   "roomNum": 3,
+   "assetArea": 80,
+   "yearBuilt": 1990,
+   "priceSM": 17500,
+   "neighborhoodName": "הזיתים",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 2000000,
+   "roomNum": 5,
+   "assetArea": 160,
+   "yearBuilt": 2023,
+   "priceSM": 12500,
+   "neighborhoodName": "נווה חיים",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1170000,
+   "roomNum": 3,
+   "assetArea": 61.7,
+   "yearBuilt": 1980,
+   "priceSM": 19180,
+   "neighborhoodName": "גני אלון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1610000,
+   "roomNum": 4,
+   "assetArea": 106.56,
+   "yearBuilt": 1970,
+   "priceSM": 15109,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1450000,
+   "roomNum": 3,
+   "assetArea": 62.62,
+   "yearBuilt": 1960,
+   "priceSM": 23156,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 7015000,
+   "roomNum": 5,
+   "assetArea": 132,
+   "yearBuilt": 0,
+   "priceSM": 53144,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": null
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1320000,
+   "roomNum": 0,
+   "assetArea": 503,
+   "yearBuilt": 0,
+   "priceSM": 2624,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1310000,
+   "roomNum": 4,
+   "assetArea": 79.8,
+   "yearBuilt": 1970,
+   "priceSM": 16416,
+   "neighborhoodName": "שמשון",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-08",
+   "dealAmount": 1565000,
+   "roomNum": 4.5,
+   "assetArea": 101.2,
+   "yearBuilt": 1992,
+   "priceSM": 15464,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 350000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 2800,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 1410000,
+   "roomNum": 3,
+   "assetArea": 60.35,
+   "yearBuilt": 1990,
+   "priceSM": 23500,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 347000,
+   "roomNum": 0,
+   "assetArea": 132,
+   "yearBuilt": 0,
+   "priceSM": 2629,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 2200000,
+   "roomNum": 6,
+   "assetArea": 130.5,
+   "yearBuilt": 1992,
+   "priceSM": 16858,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קוטג' דו משפחתי"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 790000,
+   "roomNum": 0,
+   "assetArea": 252,
+   "yearBuilt": 0,
+   "priceSM": 3135,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 330000,
+   "roomNum": 0,
+   "assetArea": 100,
+   "yearBuilt": 0,
+   "priceSM": 3300,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-07",
+   "dealAmount": 415000,
+   "roomNum": 0,
+   "assetArea": 30,
+   "yearBuilt": 0,
+   "priceSM": 13833,
+   "neighborhoodName": "מרכז העיר",
+   "dealNature": "משרד"
+  },
+  {
+   "dealDate": "2025-12-04",
+   "dealAmount": 490000,
+   "roomNum": 0,
+   "assetArea": 143,
+   "yearBuilt": 0,
+   "priceSM": 3427,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-04",
+   "dealAmount": 1600000,
+   "roomNum": 0,
+   "assetArea": 201,
+   "yearBuilt": 0,
+   "priceSM": 7960,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-04",
+   "dealAmount": 613000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 7386,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-04",
+   "dealAmount": 2355000,
+   "roomNum": 4,
+   "assetArea": 83.93,
+   "yearBuilt": 2005,
+   "priceSM": 28373,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירת גן"
+  },
+  {
+   "dealDate": "2025-12-03",
+   "dealAmount": 1635000,
+   "roomNum": 4,
+   "assetArea": 78.3,
+   "yearBuilt": 1999,
+   "priceSM": 20962,
+   "neighborhoodName": "אחוזת דניה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-03",
+   "dealAmount": 2500000,
+   "roomNum": 4,
+   "assetArea": 88.85,
+   "yearBuilt": 1995,
+   "priceSM": 28137,
+   "neighborhoodName": "גבעת אולגה",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-03",
+   "dealAmount": 5633000,
+   "roomNum": 0,
+   "assetArea": 1316,
+   "yearBuilt": 0,
+   "priceSM": 4280,
+   "neighborhoodName": "וייצמן",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-03",
+   "dealAmount": 2340000,
+   "roomNum": 5,
+   "assetArea": 154,
+   "yearBuilt": 2016,
+   "priceSM": 15195,
+   "neighborhoodName": "הפארק",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 1350000,
+   "roomNum": 0,
+   "assetArea": 57.9,
+   "yearBuilt": 1970,
+   "priceSM": 23684,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 377000,
+   "roomNum": 0,
+   "assetArea": 83,
+   "yearBuilt": 0,
+   "priceSM": 4542,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 1420000,
+   "roomNum": 2,
+   "assetArea": 41.65,
+   "yearBuilt": 1993,
+   "priceSM": 34094,
+   "neighborhoodName": "בית אליעזר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 1480000,
+   "roomNum": 3,
+   "assetArea": 71.61,
+   "yearBuilt": 2000,
+   "priceSM": 20845,
+   "neighborhoodName": "בית\"ר",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 895000,
+   "roomNum": 0,
+   "assetArea": 125,
+   "yearBuilt": 0,
+   "priceSM": 7160,
+   "neighborhoodName": null,
+   "dealNature": "ללא תיכנון"
+  },
+  {
+   "dealDate": "2025-12-02",
+   "dealAmount": 590000,
+   "roomNum": 0,
+   "assetArea": 70,
+   "yearBuilt": 0,
+   "priceSM": 8429,
+   "neighborhoodName": null,
+   "dealNature": "קרקע למגורים"
+  },
+  {
+   "dealDate": "2025-12-01",
+   "dealAmount": 1200000,
+   "roomNum": 3,
+   "assetArea": 58,
+   "yearBuilt": 0,
+   "priceSM": 20690,
+   "neighborhoodName": "רמב\"ם",
+   "dealNature": "דירה בבית קומות"
+  },
+  {
+   "dealDate": "2025-12-01",
+   "dealAmount": 1260000,
+   "roomNum": 3,
+   "assetArea": 58.5,
+   "yearBuilt": 1970,
+   "priceSM": 21724,
+   "neighborhoodName": "פאר",
+   "dealNature": "דירה בבית קומות"
+  }
+ ]
+}

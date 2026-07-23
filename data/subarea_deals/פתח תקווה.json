@@ -1,0 +1,3697 @@
+{
+  "cityName": "פתח תקווה",
+  "lastUpdated": "2026-07-03T14:41:03.737Z",
+  "totalRawDealsFetched": 12391,
+  "totalDealsKept": 10084,
+  "byYear": {
+    "2016": {
+      "year": 2016,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21382.831761765105,
+              "medianPricePerSqm": 21853.333333333332,
+              "avgPrice": 1675444.4444444445,
+              "medianPrice": 1700000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 19380.692086637027,
+              "medianPricePerSqm": 19306.930693069306,
+              "avgPrice": 1930623.6559139786,
+              "medianPrice": 1930000,
+              "dealCount": 93
+            },
+            "5+": {
+              "avgPricePerSqm": 18134.628867218278,
+              "medianPricePerSqm": 17644.628099173555,
+              "avgPrice": 2394488.023952096,
+              "medianPrice": 2330000,
+              "dealCount": 167
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 17338.23431234873,
+              "medianPricePerSqm": 17158.4440227704,
+              "avgPrice": 1206182.8684210526,
+              "medianPrice": 1190000,
+              "dealCount": 38
+            },
+            "4": {
+              "avgPricePerSqm": 16786.690709109705,
+              "medianPricePerSqm": 16583.333333333336,
+              "avgPrice": 1483534.0909090908,
+              "medianPrice": 1498000,
+              "dealCount": 44
+            },
+            "5+": {
+              "avgPricePerSqm": 15708.813064803466,
+              "medianPricePerSqm": 15178.57142857143,
+              "avgPrice": 1831402.9411764706,
+              "medianPrice": 1720000,
+              "dealCount": 17
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20557.511737089204,
+              "medianPricePerSqm": 20557.511737089204,
+              "avgPrice": 1470000,
+              "medianPrice": 1470000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 18583.238441168276,
+              "medianPricePerSqm": 18658.841158841158,
+              "avgPrice": 1881394.7368421052,
+              "medianPrice": 1933000,
+              "dealCount": 38
+            },
+            "5+": {
+              "avgPricePerSqm": 18542.396713519738,
+              "medianPricePerSqm": 17789.855072463768,
+              "avgPrice": 2441044.117647059,
+              "medianPrice": 2315000,
+              "dealCount": 68
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22252.627627627626,
+              "medianPricePerSqm": 22894.144144144142,
+              "avgPrice": 975000,
+              "medianPrice": 980000,
+              "dealCount": 4
+            },
+            "3": {
+              "avgPricePerSqm": 17875.80810761513,
+              "medianPricePerSqm": 17600,
+              "avgPrice": 1226114.2857142857,
+              "medianPrice": 1225000,
+              "dealCount": 35
+            },
+            "4": {
+              "avgPricePerSqm": 16876.966361894956,
+              "medianPricePerSqm": 16875,
+              "avgPrice": 1451547.5151515151,
+              "medianPrice": 1440000,
+              "dealCount": 33
+            },
+            "5+": {
+              "avgPricePerSqm": 17497.46740649752,
+              "medianPricePerSqm": 15906.412069778406,
+              "avgPrice": 1969833.3333333333,
+              "medianPrice": 1797000,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 12037.037037037036,
+              "medianPricePerSqm": 12037.037037037036,
+              "avgPrice": 650000,
+              "medianPrice": 650000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 18126.576234149346,
+              "medianPricePerSqm": 17563.194444444445,
+              "avgPrice": 1314071.4285714286,
+              "medianPrice": 1285000,
+              "dealCount": 14
+            },
+            "4": {
+              "avgPricePerSqm": 16840.70094232863,
+              "medianPricePerSqm": 16878.590785907858,
+              "avgPrice": 1444970.5882352942,
+              "medianPrice": 1415000,
+              "dealCount": 68
+            },
+            "5+": {
+              "avgPricePerSqm": 15666.155596872662,
+              "medianPricePerSqm": 15064.102564102564,
+              "avgPrice": 1951856.7567567567,
+              "medianPrice": 1900000,
+              "dealCount": 37
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 19204.545454545456,
+              "medianPricePerSqm": 19204.545454545456,
+              "avgPrice": 845000,
+              "medianPrice": 845000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 17012.898402203,
+              "medianPricePerSqm": 17307.69230769231,
+              "avgPrice": 993935.4838709678,
+              "medianPrice": 980000,
+              "dealCount": 31
+            },
+            "4": {
+              "avgPricePerSqm": 14988.686237505999,
+              "medianPricePerSqm": 15117.0075548185,
+              "avgPrice": 1285750,
+              "medianPrice": 1290000,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 14130.266243422559,
+              "medianPricePerSqm": 13382.978723404256,
+              "avgPrice": 1704750,
+              "medianPrice": 1650000,
+              "dealCount": 4
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20109.544034591236,
+              "medianPricePerSqm": 20987.654320987655,
+              "avgPrice": 1551000,
+              "medianPrice": 1625000,
+              "dealCount": 11
+            },
+            "4": {
+              "avgPricePerSqm": 19309.801577299357,
+              "medianPricePerSqm": 19147.102897102897,
+              "avgPrice": 1817725,
+              "medianPrice": 1810000,
+              "dealCount": 60
+            },
+            "5+": {
+              "avgPricePerSqm": 18606.93324710387,
+              "medianPricePerSqm": 18699.18699186992,
+              "avgPrice": 2485545.4545454546,
+              "medianPrice": 2300000,
+              "dealCount": 11
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 20250.785922249604,
+              "medianPricePerSqm": 18604.6511627907,
+              "avgPrice": 1090000,
+              "medianPrice": 1015000,
+              "dealCount": 9
+            },
+            "3": {
+              "avgPricePerSqm": 17476.9347028054,
+              "medianPricePerSqm": 17457.627118644068,
+              "avgPrice": 1138102.564102564,
+              "medianPrice": 1140000,
+              "dealCount": 39
+            },
+            "4": {
+              "avgPricePerSqm": 17829.76735138176,
+              "medianPricePerSqm": 18273.809523809523,
+              "avgPrice": 1612433.3333333333,
+              "medianPrice": 1660000,
+              "dealCount": 60
+            },
+            "5+": {
+              "avgPricePerSqm": 14960.445396272302,
+              "medianPricePerSqm": 15544.554455445545,
+              "avgPrice": 1932857.142857143,
+              "medianPrice": 1930000,
+              "dealCount": 7
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 20167.277753489292,
+          "medianPricePerSqm": 19204.545454545456,
+          "avgPrice": 1013666.6666666666,
+          "medianPrice": 980000,
+          "dealCount": 15
+        },
+        "3": {
+          "avgPricePerSqm": 17888.514259788517,
+          "medianPricePerSqm": 17638.88888888889,
+          "avgPrice": 1214658.932960894,
+          "medianPrice": 1200000,
+          "dealCount": 179
+        },
+        "4": {
+          "avgPricePerSqm": 18033.15622699579,
+          "medianPricePerSqm": 18208.266452648473,
+          "avgPrice": 1675769.7745098039,
+          "medianPrice": 1690000,
+          "dealCount": 408
+        },
+        "5+": {
+          "avgPricePerSqm": 17684.066977939478,
+          "medianPricePerSqm": 17360,
+          "avgPrice": 2292727.7089783284,
+          "medianPrice": 2270000,
+          "dealCount": 323
+        }
+      }
+    },
+    "2017": {
+      "year": 2017,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20957.2793843,
+              "medianPricePerSqm": 21776.315789473687,
+              "avgPrice": 1593666.6666666667,
+              "medianPrice": 1707500,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 19942.220768489744,
+              "medianPricePerSqm": 19975,
+              "avgPrice": 2005936.9047619049,
+              "medianPrice": 2010000,
+              "dealCount": 84
+            },
+            "5+": {
+              "avgPricePerSqm": 18645.535702726753,
+              "medianPricePerSqm": 18281.25,
+              "avgPrice": 2417390.070921986,
+              "medianPrice": 2380000,
+              "dealCount": 141
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19630.22435723248,
+              "medianPricePerSqm": 19427.419354838712,
+              "avgPrice": 1360428.5714285714,
+              "medianPrice": 1355000,
+              "dealCount": 28
+            },
+            "4": {
+              "avgPricePerSqm": 17349.25786219003,
+              "medianPricePerSqm": 17141.477272727272,
+              "avgPrice": 1588096.6666666667,
+              "medianPrice": 1640000,
+              "dealCount": 60
+            },
+            "5+": {
+              "avgPricePerSqm": 17447.628838170676,
+              "medianPricePerSqm": 17500,
+              "avgPrice": 2151852.923076923,
+              "medianPrice": 2170000,
+              "dealCount": 13
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 19487.378164175538,
+              "medianPricePerSqm": 19795.918367346938,
+              "avgPrice": 1987434.7826086956,
+              "medianPrice": 2000000,
+              "dealCount": 23
+            },
+            "5+": {
+              "avgPricePerSqm": 18344.13777610503,
+              "medianPricePerSqm": 18211.38211382114,
+              "avgPrice": 2556957.627118644,
+              "medianPrice": 2492500,
+              "dealCount": 59
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 25430.87855297158,
+              "medianPricePerSqm": 25833.333333333332,
+              "avgPrice": 1005000,
+              "medianPrice": 955000,
+              "dealCount": 3
+            },
+            "3": {
+              "avgPricePerSqm": 18734.253688243876,
+              "medianPricePerSqm": 18680.555555555555,
+              "avgPrice": 1238785.7142857143,
+              "medianPrice": 1237500,
+              "dealCount": 28
+            },
+            "4": {
+              "avgPricePerSqm": 16913.61733905512,
+              "medianPricePerSqm": 16702.89855072464,
+              "avgPrice": 1508000,
+              "medianPrice": 1520000,
+              "dealCount": 40
+            },
+            "5+": {
+              "avgPricePerSqm": 16346.469484458845,
+              "medianPricePerSqm": 16036.036036036036,
+              "avgPrice": 2067222.2222222222,
+              "medianPrice": 2100000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20444.254843517137,
+              "medianPricePerSqm": 20125,
+              "avgPrice": 1421800,
+              "medianPrice": 1400000,
+              "dealCount": 5
+            },
+            "4": {
+              "avgPricePerSqm": 17896.780351908157,
+              "medianPricePerSqm": 18068.18181818182,
+              "avgPrice": 1588724.1379310344,
+              "medianPrice": 1549000,
+              "dealCount": 29
+            },
+            "5+": {
+              "avgPricePerSqm": 17691.18913309774,
+              "medianPricePerSqm": 17199.49494949495,
+              "avgPrice": 2418750,
+              "medianPrice": 2490000,
+              "dealCount": 14
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 24448.506136950906,
+              "medianPricePerSqm": 24396.802325581397,
+              "avgPrice": 1015500,
+              "medianPrice": 1005000,
+              "dealCount": 8
+            },
+            "3": {
+              "avgPricePerSqm": 18844.859650941617,
+              "medianPricePerSqm": 18358.20895522388,
+              "avgPrice": 1121924.4444444445,
+              "medianPrice": 1125000,
+              "dealCount": 45
+            },
+            "4": {
+              "avgPricePerSqm": 15927.755849587562,
+              "medianPricePerSqm": 15029.058248580108,
+              "avgPrice": 1344375,
+              "medianPrice": 1380000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 22692.173305380853,
+              "medianPricePerSqm": 22692.173305380853,
+              "avgPrice": 2035000,
+              "medianPrice": 2035000,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21506.294602008868,
+              "medianPricePerSqm": 20937.5,
+              "avgPrice": 1734533.3333333333,
+              "medianPrice": 1710000,
+              "dealCount": 15
+            },
+            "4": {
+              "avgPricePerSqm": 19242.645796367746,
+              "medianPricePerSqm": 19525.280898876405,
+              "avgPrice": 1839304.347826087,
+              "medianPrice": 1844500,
+              "dealCount": 46
+            },
+            "5+": {
+              "avgPricePerSqm": 20672.886443303116,
+              "medianPricePerSqm": 19913.043478260868,
+              "avgPrice": 2510000,
+              "medianPrice": 2535000,
+              "dealCount": 11
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 20786.127209867584,
+              "medianPricePerSqm": 21501.92554557125,
+              "avgPrice": 861875,
+              "medianPrice": 917500,
+              "dealCount": 8
+            },
+            "3": {
+              "avgPricePerSqm": 19519.6319663505,
+              "medianPricePerSqm": 19161.078098471986,
+              "avgPrice": 1307153.8461538462,
+              "medianPrice": 1262500,
+              "dealCount": 52
+            },
+            "4": {
+              "avgPricePerSqm": 17979.589670091016,
+              "medianPricePerSqm": 18137.362637362636,
+              "avgPrice": 1607440,
+              "medianPrice": 1677000,
+              "dealCount": 50
+            },
+            "5+": {
+              "avgPricePerSqm": 16968.28823675111,
+              "medianPricePerSqm": 16541.353383458645,
+              "avgPrice": 2116428.5714285714,
+              "medianPrice": 1930000,
+              "dealCount": 14
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 23061.56328597172,
+          "medianPricePerSqm": 24318.18181818182,
+          "avgPrice": 949157.8947368421,
+          "medianPrice": 955000,
+          "dealCount": 19
+        },
+        "3": {
+          "avgPricePerSqm": 19484.940231114273,
+          "medianPricePerSqm": 19354.83870967742,
+          "avgPrice": 1306846.9273743017,
+          "medianPrice": 1275000,
+          "dealCount": 179
+        },
+        "4": {
+          "avgPricePerSqm": 18445.371396359667,
+          "medianPricePerSqm": 18478.260869565216,
+          "avgPrice": 1740069.1176470588,
+          "medianPrice": 1760000,
+          "dealCount": 340
+        },
+        "5+": {
+          "avgPricePerSqm": 18415.51651633461,
+          "medianPricePerSqm": 18191.489361702126,
+          "avgPrice": 2408608.699619772,
+          "medianPrice": 2385000,
+          "dealCount": 263
+        }
+      }
+    },
+    "2018": {
+      "year": 2018,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21050.15060335479,
+              "medianPricePerSqm": 21666.666666666668,
+              "avgPrice": 1078411.1463414633,
+              "medianPrice": 1075000,
+              "dealCount": 41
+            },
+            "3": {
+              "avgPricePerSqm": 19013.254073563832,
+              "medianPricePerSqm": 19117.647058823528,
+              "avgPrice": 1274649.162011173,
+              "medianPrice": 1280000,
+              "dealCount": 179
+            },
+            "4": {
+              "avgPricePerSqm": 16700.291499506806,
+              "medianPricePerSqm": 16666.666666666668,
+              "avgPrice": 1496206.8490566039,
+              "medianPrice": 1459550,
+              "dealCount": 106
+            },
+            "5+": {
+              "avgPricePerSqm": 16627.105202247596,
+              "medianPricePerSqm": 16000,
+              "avgPrice": 1960942.3076923077,
+              "medianPrice": 1860000,
+              "dealCount": 26
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19302.578100616116,
+              "medianPricePerSqm": 20853.658536585364,
+              "avgPrice": 1600000,
+              "medianPrice": 1745000,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 19145.013283214405,
+              "medianPricePerSqm": 18961.432261512426,
+              "avgPrice": 1989390.625,
+              "medianPrice": 1955000,
+              "dealCount": 64
+            },
+            "5+": {
+              "avgPricePerSqm": 18512.081276381825,
+              "medianPricePerSqm": 18401.867902976548,
+              "avgPrice": 2368881.513157895,
+              "medianPrice": 2290000,
+              "dealCount": 152
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19495.539506916833,
+              "medianPricePerSqm": 19850.746268656716,
+              "avgPrice": 1286003.0303030303,
+              "medianPrice": 1270000,
+              "dealCount": 33
+            },
+            "4": {
+              "avgPricePerSqm": 17463.836828317893,
+              "medianPricePerSqm": 17807.415227922,
+              "avgPrice": 1600778.109375,
+              "medianPrice": 1649500,
+              "dealCount": 64
+            },
+            "5+": {
+              "avgPricePerSqm": 17267.5283099503,
+              "medianPricePerSqm": 17272.727272727272,
+              "avgPrice": 2032941.1764705882,
+              "medianPrice": 1930000,
+              "dealCount": 17
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20752.27758958816,
+              "medianPricePerSqm": 21898.73417721519,
+              "avgPrice": 1586333.3333333333,
+              "medianPrice": 1575000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 19212.575935103487,
+              "medianPricePerSqm": 19581.48644469642,
+              "avgPrice": 1949656.25,
+              "medianPrice": 1990000,
+              "dealCount": 32
+            },
+            "5+": {
+              "avgPricePerSqm": 18944.784799437533,
+              "medianPricePerSqm": 18644.06779661017,
+              "avgPrice": 2612333.3333333335,
+              "medianPrice": 2450000,
+              "dealCount": 57
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21320.754716981133,
+              "medianPricePerSqm": 21320.754716981133,
+              "avgPrice": 1130000,
+              "medianPrice": 1130000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 19396.617907587846,
+              "medianPricePerSqm": 19192.708333333336,
+              "avgPrice": 1210766.6666666667,
+              "medianPrice": 1219500,
+              "dealCount": 30
+            },
+            "4": {
+              "avgPricePerSqm": 16941.871846619222,
+              "medianPricePerSqm": 17156.470588235294,
+              "avgPrice": 1466074.1935483871,
+              "medianPrice": 1500000,
+              "dealCount": 31
+            },
+            "5+": {
+              "avgPricePerSqm": 17267.30129797862,
+              "medianPricePerSqm": 17354.231166150672,
+              "avgPrice": 2196666.6666666665,
+              "medianPrice": 2127500,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 18939.12644898746,
+              "medianPricePerSqm": 19314.102564102563,
+              "avgPrice": 1431500,
+              "medianPrice": 1405000,
+              "dealCount": 10
+            },
+            "4": {
+              "avgPricePerSqm": 18624.702443822436,
+              "medianPricePerSqm": 18638.342696629214,
+              "avgPrice": 1600666.6666666667,
+              "medianPrice": 1580000,
+              "dealCount": 48
+            },
+            "5+": {
+              "avgPricePerSqm": 17528.853045828193,
+              "medianPricePerSqm": 18376.068376068375,
+              "avgPrice": 2172200,
+              "medianPrice": 2150000,
+              "dealCount": 15
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22842.786836914544,
+              "medianPricePerSqm": 23437.849944008958,
+              "avgPrice": 991250,
+              "medianPrice": 1025000,
+              "dealCount": 8
+            },
+            "3": {
+              "avgPricePerSqm": 19259.49262878148,
+              "medianPricePerSqm": 18833.333333333332,
+              "avgPrice": 1164317.0731707318,
+              "medianPrice": 1160000,
+              "dealCount": 41
+            },
+            "4": {
+              "avgPricePerSqm": 17480.222628802683,
+              "medianPricePerSqm": 17878.434065934067,
+              "avgPrice": 1451583.3333333333,
+              "medianPrice": 1442500,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 12376.81436210848,
+              "medianPricePerSqm": 12376.81436210848,
+              "avgPrice": 1560000,
+              "medianPrice": 1560000,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20884.211607473553,
+              "medianPricePerSqm": 20253.164556962027,
+              "avgPrice": 1702857.142857143,
+              "medianPrice": 1650000,
+              "dealCount": 7
+            },
+            "4": {
+              "avgPricePerSqm": 19272.448251759055,
+              "medianPricePerSqm": 19170.42768106598,
+              "avgPrice": 1842220.5714285714,
+              "medianPrice": 1847500,
+              "dealCount": 28
+            },
+            "5+": {
+              "avgPricePerSqm": 19157.66801892051,
+              "medianPricePerSqm": 17917.403477748307,
+              "avgPrice": 2371428.5714285714,
+              "medianPrice": 2400000,
+              "dealCount": 14
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 23357.39980365037,
+              "medianPricePerSqm": 23913.043478260868,
+              "avgPrice": 1089571.4285714286,
+              "medianPrice": 1000000,
+              "dealCount": 7
+            },
+            "3": {
+              "avgPricePerSqm": 20286.175114180685,
+              "medianPricePerSqm": 20576.923076923078,
+              "avgPrice": 1327330.303030303,
+              "medianPrice": 1250000,
+              "dealCount": 33
+            },
+            "4": {
+              "avgPricePerSqm": 17577.440205396215,
+              "medianPricePerSqm": 17390,
+              "avgPrice": 1606295.3488372094,
+              "medianPrice": 1680000,
+              "dealCount": 43
+            },
+            "5+": {
+              "avgPricePerSqm": 15158.78073405478,
+              "medianPricePerSqm": 15199.272727272728,
+              "avgPrice": 2054666.6666666667,
+              "medianPrice": 1784000,
+              "dealCount": 6
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 21589.84250483151,
+          "medianPricePerSqm": 22051.28205128205,
+          "avgPrice": 1068453.6315789474,
+          "medianPrice": 1070000,
+          "dealCount": 57
+        },
+        "3": {
+          "avgPricePerSqm": 19302.22176545752,
+          "medianPricePerSqm": 19385.23557571177,
+          "avgPrice": 1283790.0584795321,
+          "medianPrice": 1275000,
+          "dealCount": 342
+        },
+        "4": {
+          "avgPricePerSqm": 17879.450074730612,
+          "medianPricePerSqm": 17973.415473415473,
+          "avgPrice": 1661471.731308411,
+          "medianPrice": 1650000,
+          "dealCount": 428
+        },
+        "5+": {
+          "avgPricePerSqm": 18203.36295923491,
+          "medianPricePerSqm": 18172.566371681416,
+          "avgPrice": 2335350.813559322,
+          "medianPrice": 2280000,
+          "dealCount": 295
+        }
+      }
+    },
+    "2019": {
+      "year": 2019,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21749.485521738603,
+              "medianPricePerSqm": 21730.76923076923,
+              "avgPrice": 1086258.0459770116,
+              "medianPrice": 1120000,
+              "dealCount": 87
+            },
+            "3": {
+              "avgPricePerSqm": 18710.089904258522,
+              "medianPricePerSqm": 18581.48893360161,
+              "avgPrice": 1299378.2894736843,
+              "medianPrice": 1280000,
+              "dealCount": 304
+            },
+            "4": {
+              "avgPricePerSqm": 17099.786046974332,
+              "medianPricePerSqm": 17094.298245614034,
+              "avgPrice": 1547291.584158416,
+              "medianPrice": 1535000,
+              "dealCount": 202
+            },
+            "5+": {
+              "avgPricePerSqm": 16664.86614403899,
+              "medianPricePerSqm": 16306.818181818182,
+              "avgPrice": 1972868.4210526317,
+              "medianPrice": 1850000,
+              "dealCount": 76
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21999.720965376015,
+              "medianPricePerSqm": 22115.384615384617,
+              "avgPrice": 1785555.5555555555,
+              "medianPrice": 1750000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 19401.427893060565,
+              "medianPricePerSqm": 19401.980198019803,
+              "avgPrice": 1995855.4054054054,
+              "medianPrice": 2005000,
+              "dealCount": 74
+            },
+            "5+": {
+              "avgPricePerSqm": 18890.48089220187,
+              "medianPricePerSqm": 18852.45901639344,
+              "avgPrice": 2483467.5953757227,
+              "medianPrice": 2380000,
+              "dealCount": 173
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19523.311746418833,
+              "medianPricePerSqm": 19600,
+              "avgPrice": 1403735.294117647,
+              "medianPrice": 1440000,
+              "dealCount": 34
+            },
+            "4": {
+              "avgPricePerSqm": 18125.380773853904,
+              "medianPricePerSqm": 18000,
+              "avgPrice": 1678320.224719101,
+              "medianPrice": 1750000,
+              "dealCount": 89
+            },
+            "5+": {
+              "avgPricePerSqm": 17482.90548842039,
+              "medianPricePerSqm": 17409.090909090908,
+              "avgPrice": 2095375,
+              "medianPrice": 1945000,
+              "dealCount": 24
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20282.410307269372,
+              "medianPricePerSqm": 20208.333333333332,
+              "avgPrice": 1966666.6666666667,
+              "medianPrice": 1940000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 19735.584200436813,
+              "medianPricePerSqm": 20045.871559633026,
+              "avgPrice": 2046243.2432432433,
+              "medianPrice": 2100000,
+              "dealCount": 37
+            },
+            "5+": {
+              "avgPricePerSqm": 18874.870265561665,
+              "medianPricePerSqm": 18854.961832061068,
+              "avgPrice": 2530558.585858586,
+              "medianPrice": 2400000,
+              "dealCount": 99
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 20053.49099099099,
+              "medianPricePerSqm": 18648.64864864865,
+              "avgPrice": 1126666.6666666667,
+              "medianPrice": 1100000,
+              "dealCount": 3
+            },
+            "3": {
+              "avgPricePerSqm": 18253.89969095098,
+              "medianPricePerSqm": 18589.74358974359,
+              "avgPrice": 1250789.4736842106,
+              "medianPrice": 1280000,
+              "dealCount": 19
+            },
+            "4": {
+              "avgPricePerSqm": 18116.823567570205,
+              "medianPricePerSqm": 18100,
+              "avgPrice": 1611406.9767441861,
+              "medianPrice": 1570000,
+              "dealCount": 43
+            },
+            "5+": {
+              "avgPricePerSqm": 15665.226876372932,
+              "medianPricePerSqm": 15365.217391304348,
+              "avgPrice": 2052916.6666666667,
+              "medianPrice": 1925000,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19670.03913404053,
+              "medianPricePerSqm": 19140.58424621805,
+              "avgPrice": 1466700,
+              "medianPrice": 1475000,
+              "dealCount": 10
+            },
+            "4": {
+              "avgPricePerSqm": 18879.366608931952,
+              "medianPricePerSqm": 18705.882352941175,
+              "avgPrice": 1659202.7027027027,
+              "medianPrice": 1620000,
+              "dealCount": 37
+            },
+            "5+": {
+              "avgPricePerSqm": 18908.74625865163,
+              "medianPricePerSqm": 19007.57575757576,
+              "avgPrice": 2184318.1818181816,
+              "medianPrice": 2140000,
+              "dealCount": 22
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22061.90611941947,
+              "medianPricePerSqm": 21400,
+              "avgPrice": 1031666.6666666666,
+              "medianPrice": 1000000,
+              "dealCount": 9
+            },
+            "3": {
+              "avgPricePerSqm": 19430.097532200707,
+              "medianPricePerSqm": 19535.714285714286,
+              "avgPrice": 1140673.9705882352,
+              "medianPrice": 1142500,
+              "dealCount": 34
+            },
+            "4": {
+              "avgPricePerSqm": 16113.16091406486,
+              "medianPricePerSqm": 16049.382716049382,
+              "avgPrice": 1391538.4615384615,
+              "medianPrice": 1305000,
+              "dealCount": 13
+            },
+            "5+": {
+              "avgPricePerSqm": 15577.687194651498,
+              "medianPricePerSqm": 14621.212121212122,
+              "avgPrice": 1912660,
+              "medianPrice": 1930000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 22821.29662371856,
+              "medianPricePerSqm": 23164.556962025315,
+              "avgPrice": 1763181.8181818181,
+              "medianPrice": 1750000,
+              "dealCount": 11
+            },
+            "4": {
+              "avgPricePerSqm": 19495.218409910758,
+              "medianPricePerSqm": 19185.271078128222,
+              "avgPrice": 1915937.5,
+              "medianPrice": 1912500,
+              "dealCount": 48
+            },
+            "5+": {
+              "avgPricePerSqm": 19352.2946384439,
+              "medianPricePerSqm": 19400,
+              "avgPrice": 2507666.6666666665,
+              "medianPrice": 2620000,
+              "dealCount": 15
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 16401.550955016486,
+              "medianPricePerSqm": 15655.844155844155,
+              "avgPrice": 957833.3333333334,
+              "medianPrice": 985000,
+              "dealCount": 6
+            },
+            "3": {
+              "avgPricePerSqm": 19561.044128164885,
+              "medianPricePerSqm": 19684.8635235732,
+              "avgPrice": 1253117.6470588236,
+              "medianPrice": 1210000,
+              "dealCount": 34
+            },
+            "4": {
+              "avgPricePerSqm": 18275.341247984506,
+              "medianPricePerSqm": 18478.260869565216,
+              "avgPrice": 1704990.243902439,
+              "medianPrice": 1735000,
+              "dealCount": 41
+            },
+            "5+": {
+              "avgPricePerSqm": 16952.8007258442,
+              "medianPricePerSqm": 18055.555555555555,
+              "avgPrice": 2594000,
+              "medianPrice": 2700000,
+              "dealCount": 5
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 21422.21118256291,
+          "medianPricePerSqm": 21224.48979591837,
+          "avgPrice": 1075394.761904762,
+          "medianPrice": 1110000,
+          "dealCount": 105
+        },
+        "3": {
+          "avgPricePerSqm": 19062.79959533805,
+          "medianPricePerSqm": 19043.91100702576,
+          "avgPrice": 1318611.1681222708,
+          "medianPrice": 1300000,
+          "dealCount": 458
+        },
+        "4": {
+          "avgPricePerSqm": 18159.809065969825,
+          "medianPricePerSqm": 18324.82993197279,
+          "avgPrice": 1705425.1712328766,
+          "medianPrice": 1716000,
+          "dealCount": 584
+        },
+        "5+": {
+          "avgPricePerSqm": 18282.3594169293,
+          "medianPricePerSqm": 18461.53846153846,
+          "avgPrice": 2350882.8167053363,
+          "medianPrice": 2330000,
+          "dealCount": 431
+        }
+      }
+    },
+    "2020": {
+      "year": 2020,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22130.661933621555,
+              "medianPricePerSqm": 20733.333333333336,
+              "avgPrice": 1100526.3157894737,
+              "medianPrice": 1121500,
+              "dealCount": 38
+            },
+            "3": {
+              "avgPricePerSqm": 19464.93255329793,
+              "medianPricePerSqm": 19357.14285714286,
+              "avgPrice": 1325009.009009009,
+              "medianPrice": 1315000,
+              "dealCount": 111
+            },
+            "4": {
+              "avgPricePerSqm": 17507.81068475432,
+              "medianPricePerSqm": 17746.22531939605,
+              "avgPrice": 1606324.3902439023,
+              "medianPrice": 1590000,
+              "dealCount": 82
+            },
+            "5+": {
+              "avgPricePerSqm": 16967.435731866477,
+              "medianPricePerSqm": 17058.531746031746,
+              "avgPrice": 2059923.076923077,
+              "medianPrice": 1970000,
+              "dealCount": 26
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19211.288794037282,
+              "medianPricePerSqm": 21768.29268292683,
+              "avgPrice": 1682000,
+              "medianPrice": 1870000,
+              "dealCount": 5
+            },
+            "4": {
+              "avgPricePerSqm": 19799.568219128385,
+              "medianPricePerSqm": 19853.41709499334,
+              "avgPrice": 2076178.5714285714,
+              "medianPrice": 2077500,
+              "dealCount": 84
+            },
+            "5+": {
+              "avgPricePerSqm": 18903.750550860168,
+              "medianPricePerSqm": 18696.383133406034,
+              "avgPrice": 2465717.7419354836,
+              "medianPrice": 2387500,
+              "dealCount": 124
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20208.3890498251,
+              "medianPricePerSqm": 20366.93548387097,
+              "avgPrice": 1422543.75,
+              "medianPrice": 1467500,
+              "dealCount": 48
+            },
+            "4": {
+              "avgPricePerSqm": 18718.04332209893,
+              "medianPricePerSqm": 19120.879120879123,
+              "avgPrice": 1725904.1095890412,
+              "medianPrice": 1775000,
+              "dealCount": 73
+            },
+            "5+": {
+              "avgPricePerSqm": 17367.97515086908,
+              "medianPricePerSqm": 17518.24817518248,
+              "avgPrice": 2144888.888888889,
+              "medianPrice": 2240000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 23672.732067510547,
+              "medianPricePerSqm": 24050.632911392404,
+              "avgPrice": 1878333.3333333333,
+              "medianPrice": 1900000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 20621.065264928213,
+              "medianPricePerSqm": 20552.623211446742,
+              "avgPrice": 2151279.411764706,
+              "medianPrice": 2170000,
+              "dealCount": 34
+            },
+            "5+": {
+              "avgPricePerSqm": 19795.75409551007,
+              "medianPricePerSqm": 19758.064516129034,
+              "avgPrice": 2511218.2533333334,
+              "medianPrice": 2450000,
+              "dealCount": 75
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 27571.428571428572,
+              "medianPricePerSqm": 27571.428571428572,
+              "avgPrice": 965000,
+              "medianPrice": 965000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 20364.908958396016,
+              "medianPricePerSqm": 20000,
+              "avgPrice": 1351702.1739130435,
+              "medianPrice": 1280000,
+              "dealCount": 23
+            },
+            "4": {
+              "avgPricePerSqm": 18262.335922155467,
+              "medianPricePerSqm": 18390.80459770115,
+              "avgPrice": 1603980.9090909092,
+              "medianPrice": 1610000,
+              "dealCount": 55
+            },
+            "5+": {
+              "avgPricePerSqm": 17787.576026540817,
+              "medianPricePerSqm": 18044.208280657396,
+              "avgPrice": 2297500,
+              "medianPrice": 2072500,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 20634.920634920636,
+              "medianPricePerSqm": 20634.920634920636,
+              "avgPrice": 1300000,
+              "medianPrice": 1300000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 20122.183799948634,
+              "medianPricePerSqm": 20000,
+              "avgPrice": 1472000,
+              "medianPrice": 1480000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 19119.17701443551,
+              "medianPricePerSqm": 18780.957459414625,
+              "avgPrice": 1611375,
+              "medianPrice": 1570000,
+              "dealCount": 40
+            },
+            "5+": {
+              "avgPricePerSqm": 19585.268880373424,
+              "medianPricePerSqm": 19623.655913978495,
+              "avgPrice": 2271739.1304347827,
+              "medianPrice": 2250000,
+              "dealCount": 23
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 23268.89079902098,
+              "medianPricePerSqm": 23608.630952380954,
+              "avgPrice": 1010833.3333333334,
+              "medianPrice": 1057500,
+              "dealCount": 6
+            },
+            "3": {
+              "avgPricePerSqm": 19372.648401307564,
+              "medianPricePerSqm": 19193.548387096773,
+              "avgPrice": 1176250,
+              "medianPrice": 1190000,
+              "dealCount": 43
+            },
+            "4": {
+              "avgPricePerSqm": 17929.835344392148,
+              "medianPricePerSqm": 17543.103448275862,
+              "avgPrice": 1448333.3333333333,
+              "medianPrice": 1465000,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 14064.075749222742,
+              "medianPricePerSqm": 14519.23076923077,
+              "avgPrice": 1762083.3333333333,
+              "medianPrice": 1887500,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 22023.446334157972,
+              "medianPricePerSqm": 21951.509742674403,
+              "avgPrice": 1804958.3333333333,
+              "medianPrice": 1789000,
+              "dealCount": 12
+            },
+            "4": {
+              "avgPricePerSqm": 19861.507964764824,
+              "medianPricePerSqm": 19795.8089668616,
+              "avgPrice": 1947547.619047619,
+              "medianPrice": 1952500,
+              "dealCount": 42
+            },
+            "5+": {
+              "avgPricePerSqm": 20237.027485622537,
+              "medianPricePerSqm": 20397.127329192546,
+              "avgPrice": 2377720,
+              "medianPrice": 2320000,
+              "dealCount": 10
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 19899.860958897352,
+              "medianPricePerSqm": 20512.82051282051,
+              "avgPrice": 1142737.142857143,
+              "medianPrice": 1150000,
+              "dealCount": 7
+            },
+            "3": {
+              "avgPricePerSqm": 20509.89563022595,
+              "medianPricePerSqm": 19589.04109589041,
+              "avgPrice": 1265248,
+              "medianPrice": 1250000,
+              "dealCount": 25
+            },
+            "4": {
+              "avgPricePerSqm": 18853.22035898176,
+              "medianPricePerSqm": 18813.186813186814,
+              "avgPrice": 1699000,
+              "medianPrice": 1712000,
+              "dealCount": 29
+            },
+            "5+": {
+              "avgPricePerSqm": 16201.221272661942,
+              "medianPricePerSqm": 16991.75824175824,
+              "avgPrice": 1931375,
+              "medianPrice": 1737500,
+              "dealCount": 8
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 22039.31838095048,
+          "medianPricePerSqm": 20800,
+          "avgPrice": 1097153.9622641508,
+          "medianPrice": 1133000,
+          "dealCount": 53
+        },
+        "3": {
+          "avgPricePerSqm": 19918.38715499933,
+          "medianPricePerSqm": 20000,
+          "avgPrice": 1353439.7849462365,
+          "medianPrice": 1315000,
+          "dealCount": 279
+        },
+        "4": {
+          "avgPricePerSqm": 18917.11284575762,
+          "medianPricePerSqm": 19148.936170212764,
+          "avgPrice": 1787969.068736142,
+          "medianPrice": 1790000,
+          "dealCount": 451
+        },
+        "5+": {
+          "avgPricePerSqm": 18793.47551862185,
+          "medianPricePerSqm": 19038.46153846154,
+          "avgPrice": 2377382.4880546075,
+          "medianPrice": 2350000,
+          "dealCount": 293
+        }
+      }
+    },
+    "2021": {
+      "year": 2021,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 24104.502345747136,
+              "medianPricePerSqm": 23227.848101265823,
+              "avgPrice": 1930555.5555555555,
+              "medianPrice": 1925000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 21108.283736869595,
+              "medianPricePerSqm": 20995.495495495496,
+              "avgPrice": 2175719.512195122,
+              "medianPrice": 2160000,
+              "dealCount": 82
+            },
+            "5+": {
+              "avgPricePerSqm": 20569.037091407718,
+              "medianPricePerSqm": 20236.453201970442,
+              "avgPrice": 2720606.9758064514,
+              "medianPrice": 2622500,
+              "dealCount": 124
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 19231.69811320755,
+              "medianPricePerSqm": 20000,
+              "avgPrice": 727333.3333333334,
+              "medianPrice": 500000,
+              "dealCount": 3
+            },
+            "3": {
+              "avgPricePerSqm": 20408.062176152805,
+              "medianPricePerSqm": 20503.663003663,
+              "avgPrice": 1429137.9310344828,
+              "medianPrice": 1357500,
+              "dealCount": 58
+            },
+            "4": {
+              "avgPricePerSqm": 19344.750528172888,
+              "medianPricePerSqm": 19479.489164086688,
+              "avgPrice": 1727190.4761904762,
+              "medianPrice": 1790000,
+              "dealCount": 84
+            },
+            "5+": {
+              "avgPricePerSqm": 19490.300213503153,
+              "medianPricePerSqm": 19622.64150943396,
+              "avgPrice": 2273333.3333333335,
+              "medianPrice": 2130000,
+              "dealCount": 27
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 24887.175324675325,
+              "medianPricePerSqm": 23295.454545454544,
+              "avgPrice": 1951666.6666666667,
+              "medianPrice": 2050000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 21570.181215624754,
+              "medianPricePerSqm": 21447.36842105263,
+              "avgPrice": 2244145.6140350876,
+              "medianPrice": 2280000,
+              "dealCount": 57
+            },
+            "5+": {
+              "avgPricePerSqm": 20945.233656404722,
+              "medianPricePerSqm": 20677.966101694914,
+              "avgPrice": 2748657.0588235296,
+              "medianPrice": 2700000,
+              "dealCount": 85
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22959.06432748538,
+              "medianPricePerSqm": 22959.06432748538,
+              "avgPrice": 1170000,
+              "medianPrice": 1170000,
+              "dealCount": 2
+            },
+            "3": {
+              "avgPricePerSqm": 20722.23729726727,
+              "medianPricePerSqm": 20608.108108108107,
+              "avgPrice": 1416746.2,
+              "medianPrice": 1440000,
+              "dealCount": 35
+            },
+            "4": {
+              "avgPricePerSqm": 18502.98490527703,
+              "medianPricePerSqm": 18269.23076923077,
+              "avgPrice": 1691390.243902439,
+              "medianPrice": 1700000,
+              "dealCount": 41
+            },
+            "5+": {
+              "avgPricePerSqm": 18014.60805611369,
+              "medianPricePerSqm": 18333.333333333332,
+              "avgPrice": 2322689.6551724137,
+              "medianPrice": 2170000,
+              "dealCount": 29
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20836.290763714424,
+              "medianPricePerSqm": 20140.845070422536,
+              "avgPrice": 1542000,
+              "medianPrice": 1558000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 19596.38535765797,
+              "medianPricePerSqm": 19611.650485436894,
+              "avgPrice": 1738276.119402985,
+              "medianPrice": 1700000,
+              "dealCount": 67
+            },
+            "5+": {
+              "avgPricePerSqm": 21128.51696731899,
+              "medianPricePerSqm": 19882.23140495868,
+              "avgPrice": 2660166.6666666665,
+              "medianPrice": 2440000,
+              "dealCount": 24
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22529.011034352636,
+              "medianPricePerSqm": 25000,
+              "avgPrice": 1082727.2727272727,
+              "medianPrice": 1100000,
+              "dealCount": 11
+            },
+            "3": {
+              "avgPricePerSqm": 20932.573264804872,
+              "medianPricePerSqm": 21313.405797101448,
+              "avgPrice": 1241086.4583333333,
+              "medianPrice": 1230000,
+              "dealCount": 72
+            },
+            "4": {
+              "avgPricePerSqm": 18338.312013049203,
+              "medianPricePerSqm": 19010.98901098901,
+              "avgPrice": 1626097.3684210526,
+              "medianPrice": 1655850,
+              "dealCount": 19
+            },
+            "5+": {
+              "avgPricePerSqm": 16931.74236772588,
+              "medianPricePerSqm": 16730.93573093573,
+              "avgPrice": 1923333.3333333333,
+              "medianPrice": 1820000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21569.890876795896,
+              "medianPricePerSqm": 21413.043478260868,
+              "avgPrice": 1820263.1578947369,
+              "medianPrice": 1820000,
+              "dealCount": 19
+            },
+            "4": {
+              "avgPricePerSqm": 20827.609627570615,
+              "medianPricePerSqm": 20702.930005425937,
+              "avgPrice": 2078672.4137931035,
+              "medianPrice": 2050000,
+              "dealCount": 58
+            },
+            "5+": {
+              "avgPricePerSqm": 20780.099818679475,
+              "medianPricePerSqm": 20141.322314049587,
+              "avgPrice": 2499500,
+              "medianPrice": 2477500,
+              "dealCount": 10
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 25136.53272806591,
+              "medianPricePerSqm": 26147.025171624715,
+              "avgPrice": 1062500,
+              "medianPrice": 1125000,
+              "dealCount": 6
+            },
+            "3": {
+              "avgPricePerSqm": 21525.206700790764,
+              "medianPricePerSqm": 22076.07843137255,
+              "avgPrice": 1465780.857142857,
+              "medianPrice": 1557500,
+              "dealCount": 70
+            },
+            "4": {
+              "avgPricePerSqm": 19432.83944204849,
+              "medianPricePerSqm": 19763.182238667898,
+              "avgPrice": 1782250,
+              "medianPrice": 1775000,
+              "dealCount": 40
+            },
+            "5+": {
+              "avgPricePerSqm": 19053.96105710658,
+              "medianPricePerSqm": 18387.605042016807,
+              "avgPrice": 2939166.6666666665,
+              "medianPrice": 3042500,
+              "dealCount": 6
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 22829.615488221272,
+          "medianPricePerSqm": 24431.818181818184,
+          "avgPrice": 1036681.8181818182,
+          "medianPrice": 1100000,
+          "dealCount": 22
+        },
+        "3": {
+          "avgPricePerSqm": 21133.862714039366,
+          "medianPricePerSqm": 21506.84931506849,
+          "avgPrice": 1440480.0072727273,
+          "medianPrice": 1415000,
+          "dealCount": 275
+        },
+        "4": {
+          "avgPricePerSqm": 20068.441304662614,
+          "medianPricePerSqm": 20121.96935891715,
+          "avgPrice": 1919575.111607143,
+          "medianPrice": 1900000,
+          "dealCount": 448
+        },
+        "5+": {
+          "avgPricePerSqm": 20290.568570650445,
+          "medianPricePerSqm": 20098.039215686276,
+          "avgPrice": 2629399.083601286,
+          "medianPrice": 2550000,
+          "dealCount": 311
+        }
+      }
+    },
+    "2022": {
+      "year": 2022,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28969.08276338652,
+              "medianPricePerSqm": 28925,
+              "avgPrice": 2399400,
+              "medianPrice": 2350000,
+              "dealCount": 11
+            },
+            "4": {
+              "avgPricePerSqm": 26857.869034318035,
+              "medianPricePerSqm": 27140.78374455733,
+              "avgPrice": 2736458,
+              "medianPrice": 2800000,
+              "dealCount": 50
+            },
+            "5+": {
+              "avgPricePerSqm": 26653.876808806854,
+              "medianPricePerSqm": 26788.990825688074,
+              "avgPrice": 3535793.6507936507,
+              "medianPrice": 3400000,
+              "dealCount": 63
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 24385.184309369964,
+              "medianPricePerSqm": 25421.849087893865,
+              "avgPrice": 1695028.394736842,
+              "medianPrice": 1682500,
+              "dealCount": 38
+            },
+            "4": {
+              "avgPricePerSqm": 23702.364458839962,
+              "medianPricePerSqm": 23587.62254901961,
+              "avgPrice": 2134578.48,
+              "medianPrice": 2250000,
+              "dealCount": 50
+            },
+            "5+": {
+              "avgPricePerSqm": 21095.915072801028,
+              "medianPricePerSqm": 21932.534678436317,
+              "avgPrice": 2644166.6666666665,
+              "medianPrice": 2590000,
+              "dealCount": 18
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28815.068493150684,
+              "medianPricePerSqm": 31375,
+              "avgPrice": 2251666.6666666665,
+              "medianPrice": 2510000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 27339.103481256327,
+              "medianPricePerSqm": 27025.451559934318,
+              "avgPrice": 2918750,
+              "medianPrice": 2960000,
+              "dealCount": 28
+            },
+            "5+": {
+              "avgPricePerSqm": 25929.782587217618,
+              "medianPricePerSqm": 26925.39388322521,
+              "avgPrice": 3536050,
+              "medianPrice": 3500000,
+              "dealCount": 40
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 29791.666666666668,
+              "medianPricePerSqm": 29791.666666666668,
+              "avgPrice": 1430000,
+              "medianPrice": 1430000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 23857.698462331184,
+              "medianPricePerSqm": 23583.05462653289,
+              "avgPrice": 1688750,
+              "medianPrice": 1612500,
+              "dealCount": 12
+            },
+            "4": {
+              "avgPricePerSqm": 20904.503737055064,
+              "medianPricePerSqm": 21103.414151410194,
+              "avgPrice": 1988571.4285714286,
+              "medianPrice": 1995000,
+              "dealCount": 28
+            },
+            "5+": {
+              "avgPricePerSqm": 21270.894291095177,
+              "medianPricePerSqm": 20250,
+              "avgPrice": 2405800,
+              "medianPrice": 2360000,
+              "dealCount": 11
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25667.296170239362,
+              "medianPricePerSqm": 27464.788732394365,
+              "avgPrice": 1925000,
+              "medianPrice": 1940000,
+              "dealCount": 7
+            },
+            "4": {
+              "avgPricePerSqm": 23297.085873524076,
+              "medianPricePerSqm": 22990.19607843137,
+              "avgPrice": 2037777.7777777778,
+              "medianPrice": 2052500,
+              "dealCount": 36
+            },
+            "5+": {
+              "avgPricePerSqm": 24978.04779928105,
+              "medianPricePerSqm": 23417.167851284856,
+              "avgPrice": 3201666.6666666665,
+              "medianPrice": 2950000,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 23760.743454204796,
+              "medianPricePerSqm": 26616.915422885573,
+              "avgPrice": 1209155,
+              "medianPrice": 1390000,
+              "dealCount": 10
+            },
+            "3": {
+              "avgPricePerSqm": 24845.77333009292,
+              "medianPricePerSqm": 26268.65671641791,
+              "avgPrice": 1441787.0344827587,
+              "medianPrice": 1490000,
+              "dealCount": 29
+            },
+            "4": {
+              "avgPricePerSqm": 21673.26858780166,
+              "medianPricePerSqm": 21101.851851851854,
+              "avgPrice": 1987666.6666666667,
+              "medianPrice": 1917500,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 20809.690468759127,
+              "medianPricePerSqm": 20117.62360446571,
+              "avgPrice": 2400833.3333333335,
+              "medianPrice": 2455000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25911.353923589126,
+              "medianPricePerSqm": 26568.80152187698,
+              "avgPrice": 2174500,
+              "medianPrice": 2365000,
+              "dealCount": 8
+            },
+            "4": {
+              "avgPricePerSqm": 26456.74120113449,
+              "medianPricePerSqm": 26732.673267326732,
+              "avgPrice": 2631103.4482758623,
+              "medianPrice": 2620000,
+              "dealCount": 29
+            },
+            "5+": {
+              "avgPricePerSqm": 27763.127434531878,
+              "medianPricePerSqm": 28333.333333333332,
+              "avgPrice": 3261000,
+              "medianPrice": 3250000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 23463.52996864186,
+              "medianPricePerSqm": 23809.52380952381,
+              "avgPrice": 1184550,
+              "medianPrice": 1000000,
+              "dealCount": 5
+            },
+            "3": {
+              "avgPricePerSqm": 23967.81021713657,
+              "medianPricePerSqm": 24932.20338983051,
+              "avgPrice": 1562840.1176470588,
+              "medianPrice": 1600000,
+              "dealCount": 34
+            },
+            "4": {
+              "avgPricePerSqm": 24272.432740369797,
+              "medianPricePerSqm": 24239.130434782608,
+              "avgPrice": 2314342.8571428573,
+              "medianPrice": 2230000,
+              "dealCount": 35
+            },
+            "5+": {
+              "avgPricePerSqm": 19545.46820293647,
+              "medianPricePerSqm": 18765.411190895542,
+              "avgPrice": 2907185.714285714,
+              "medianPrice": 2430000,
+              "dealCount": 42
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 24044.796940745244,
+          "medianPricePerSqm": 26616.915422885573,
+          "avgPrice": 1215268.75,
+          "medianPrice": 1390000,
+          "dealCount": 16
+        },
+        "3": {
+          "avgPricePerSqm": 24932.60126560891,
+          "medianPricePerSqm": 25850.603621730384,
+          "avgPrice": 1715801.88028169,
+          "medianPrice": 1662500,
+          "dealCount": 142
+        },
+        "4": {
+          "avgPricePerSqm": 24605.924000063227,
+          "medianPricePerSqm": 25000,
+          "avgPrice": 2371167.2537313434,
+          "medianPrice": 2350000,
+          "dealCount": 268
+        },
+        "5+": {
+          "avgPricePerSqm": 23931.024716019914,
+          "medianPricePerSqm": 24674.79674796748,
+          "avgPrice": 3195368.5279187816,
+          "medianPrice": 3180000,
+          "dealCount": 197
+        }
+      }
+    },
+    "2023": {
+      "year": 2023,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 30984.39880188276,
+              "medianPricePerSqm": 30731.70731707317,
+              "avgPrice": 2447000,
+              "medianPrice": 2435000,
+              "dealCount": 5
+            },
+            "4": {
+              "avgPricePerSqm": 27681.05139072084,
+              "medianPricePerSqm": 27360.853432282005,
+              "avgPrice": 2867810,
+              "medianPrice": 2925000,
+              "dealCount": 40
+            },
+            "5+": {
+              "avgPricePerSqm": 26706.86802094375,
+              "medianPricePerSqm": 27064.272703616967,
+              "avgPrice": 3650733.3333333335,
+              "medianPrice": 3565000,
+              "dealCount": 72
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 9491.525423728814,
+              "medianPricePerSqm": 9491.525423728814,
+              "avgPrice": 560000,
+              "medianPrice": 560000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 25295.074816273576,
+              "medianPricePerSqm": 26351.35135135135,
+              "avgPrice": 1860480.142857143,
+              "medianPrice": 2000000,
+              "dealCount": 21
+            },
+            "4": {
+              "avgPricePerSqm": 24377.419596514264,
+              "medianPricePerSqm": 25000,
+              "avgPrice": 2193782.6086956523,
+              "medianPrice": 2300000,
+              "dealCount": 23
+            },
+            "5+": {
+              "avgPricePerSqm": 24154.88268956477,
+              "medianPricePerSqm": 23333.333333333332,
+              "avgPrice": 2910000,
+              "medianPrice": 2700000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 29678.42881192881,
+              "medianPricePerSqm": 29263.167388167385,
+              "avgPrice": 2492881.3333333335,
+              "medianPrice": 2442500,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 27279.3598291421,
+              "medianPricePerSqm": 27890.346766635426,
+              "avgPrice": 2754250,
+              "medianPrice": 2777500,
+              "dealCount": 20
+            },
+            "5+": {
+              "avgPricePerSqm": 26198.47943613041,
+              "medianPricePerSqm": 26829.268292682926,
+              "avgPrice": 3629869.565217391,
+              "medianPrice": 3350000,
+              "dealCount": 23
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 23560.909608646805,
+              "medianPricePerSqm": 24604.989604989605,
+              "avgPrice": 1677844.888888889,
+              "medianPrice": 1775000,
+              "dealCount": 18
+            },
+            "4": {
+              "avgPricePerSqm": 23360.41973325266,
+              "medianPricePerSqm": 23284.998554774065,
+              "avgPrice": 2165833.3333333335,
+              "medianPrice": 2230000,
+              "dealCount": 18
+            },
+            "5+": {
+              "avgPricePerSqm": 22190.847191792676,
+              "medianPricePerSqm": 21794.871794871793,
+              "avgPrice": 2666000,
+              "medianPrice": 2630000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 27657.86642502664,
+              "medianPricePerSqm": 27887.323943661973,
+              "avgPrice": 2017222.2222222222,
+              "medianPrice": 2010000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 24572.76377644746,
+              "medianPricePerSqm": 25023.704902867714,
+              "avgPrice": 2104772.727272727,
+              "medianPrice": 2200000,
+              "dealCount": 22
+            },
+            "5+": {
+              "avgPricePerSqm": 23501.67624418751,
+              "medianPricePerSqm": 25287.35632183908,
+              "avgPrice": 2435555.5555555555,
+              "medianPrice": 2350000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 25845.720502901353,
+              "medianPricePerSqm": 30340.90909090909,
+              "avgPrice": 1233500,
+              "medianPrice": 1312000,
+              "dealCount": 4
+            },
+            "3": {
+              "avgPricePerSqm": 25454.78151899474,
+              "medianPricePerSqm": 26142.85714285714,
+              "avgPrice": 1627355.1612903227,
+              "medianPrice": 1650000,
+              "dealCount": 31
+            },
+            "4": {
+              "avgPricePerSqm": 23304.519633735403,
+              "medianPricePerSqm": 23557.791537667697,
+              "avgPrice": 2072083.3333333333,
+              "medianPrice": 2200000,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 22626.262626262625,
+              "medianPricePerSqm": 22626.262626262625,
+              "avgPrice": 2240000,
+              "medianPrice": 2240000,
+              "dealCount": 1
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28758.308057294038,
+              "medianPricePerSqm": 28487.113008998018,
+              "avgPrice": 2317500,
+              "medianPrice": 2325000,
+              "dealCount": 4
+            },
+            "4": {
+              "avgPricePerSqm": 26187.677453192624,
+              "medianPricePerSqm": 27604.166666666668,
+              "avgPrice": 2533088.2352941176,
+              "medianPrice": 2667500,
+              "dealCount": 17
+            },
+            "5+": {
+              "avgPricePerSqm": 26779.661016949154,
+              "medianPricePerSqm": 26779.661016949154,
+              "avgPrice": 3160000,
+              "medianPrice": 3160000,
+              "dealCount": 1
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 22030.940619743968,
+              "medianPricePerSqm": 22345.70713249015,
+              "avgPrice": 1384261.5,
+              "medianPrice": 1191300.5,
+              "dealCount": 6
+            },
+            "3": {
+              "avgPricePerSqm": 27608.58103353376,
+              "medianPricePerSqm": 28666.666666666668,
+              "avgPrice": 2035085.7142857143,
+              "medianPrice": 2135000,
+              "dealCount": 35
+            },
+            "4": {
+              "avgPricePerSqm": 25374.4754570804,
+              "medianPricePerSqm": 25531.91489361702,
+              "avgPrice": 2349818.1818181816,
+              "medianPrice": 2370000,
+              "dealCount": 33
+            },
+            "5+": {
+              "avgPricePerSqm": 25342.61016107138,
+              "medianPricePerSqm": 26046.511627906977,
+              "avgPrice": 3301351.063829787,
+              "medianPrice": 3330000,
+              "dealCount": 47
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 22278.186468527092,
+          "medianPricePerSqm": 27472.527472527472,
+          "avgPrice": 1254506.2727272727,
+          "medianPrice": 1274000,
+          "dealCount": 11
+        },
+        "3": {
+          "avgPricePerSqm": 26415.799258103165,
+          "medianPricePerSqm": 27250,
+          "avgPrice": 1903601.465116279,
+          "medianPrice": 1940000,
+          "dealCount": 129
+        },
+        "4": {
+          "avgPricePerSqm": 25604.328127592675,
+          "medianPricePerSqm": 25871.559633027522,
+          "avgPrice": 2437923.7837837837,
+          "medianPrice": 2400000,
+          "dealCount": 185
+        },
+        "5+": {
+          "avgPricePerSqm": 25823.38565249687,
+          "medianPricePerSqm": 26218.75,
+          "avgPrice": 3415357.6687116562,
+          "medianPrice": 3350000,
+          "dealCount": 163
+        }
+      }
+    },
+    "2024": {
+      "year": 2024,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 26682.53792061274,
+              "medianPricePerSqm": 27377.049180327867,
+              "avgPrice": 1537478.2608695652,
+              "medianPrice": 1600000,
+              "dealCount": 23
+            },
+            "3": {
+              "avgPricePerSqm": 26572.937426042023,
+              "medianPricePerSqm": 27067.87330316742,
+              "avgPrice": 1928198.6929824562,
+              "medianPrice": 1930000,
+              "dealCount": 114
+            },
+            "4": {
+              "avgPricePerSqm": 24995.45602904364,
+              "medianPricePerSqm": 25000,
+              "avgPrice": 2303825.4660194176,
+              "medianPrice": 2330000,
+              "dealCount": 103
+            },
+            "5+": {
+              "avgPricePerSqm": 23802.1899484911,
+              "medianPricePerSqm": 24347.82608695652,
+              "avgPrice": 3092359.090909091,
+              "medianPrice": 3000000,
+              "dealCount": 33
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 29876.198758623425,
+              "medianPricePerSqm": 29753.325942350333,
+              "avgPrice": 2485000,
+              "medianPrice": 2475000,
+              "dealCount": 8
+            },
+            "4": {
+              "avgPricePerSqm": 27469.511569586863,
+              "medianPricePerSqm": 28014.70588235294,
+              "avgPrice": 2852920.634920635,
+              "medianPrice": 2930000,
+              "dealCount": 63
+            },
+            "5+": {
+              "avgPricePerSqm": 27363.064418474154,
+              "medianPricePerSqm": 27272.727272727272,
+              "avgPrice": 3526247.7876106193,
+              "medianPrice": 3390000,
+              "dealCount": 113
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 27507.302348452857,
+              "medianPricePerSqm": 27379.032258064515,
+              "avgPrice": 1839833.3333333333,
+              "medianPrice": 1695000,
+              "dealCount": 24
+            },
+            "4": {
+              "avgPricePerSqm": 24309.620415551715,
+              "medianPricePerSqm": 25000,
+              "avgPrice": 2182140.350877193,
+              "medianPrice": 2220000,
+              "dealCount": 57
+            },
+            "5+": {
+              "avgPricePerSqm": 23979.81768080057,
+              "medianPricePerSqm": 24358.97435897436,
+              "avgPrice": 2869724.1379310344,
+              "medianPrice": 2770000,
+              "dealCount": 29
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 30656.819610307983,
+              "medianPricePerSqm": 30656.819610307983,
+              "avgPrice": 2450000,
+              "medianPrice": 2450000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 28859.436782259825,
+              "medianPricePerSqm": 29308.823529411762,
+              "avgPrice": 2880223.6842105263,
+              "medianPrice": 2870000,
+              "dealCount": 38
+            },
+            "5+": {
+              "avgPricePerSqm": 27016.758655897254,
+              "medianPricePerSqm": 27077.7027027027,
+              "avgPrice": 3660267.8571428573,
+              "medianPrice": 3410000,
+              "dealCount": 28
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 26210.715858675634,
+              "medianPricePerSqm": 26231.884057971016,
+              "avgPrice": 1818181.8181818181,
+              "medianPrice": 1810000,
+              "dealCount": 11
+            },
+            "4": {
+              "avgPricePerSqm": 24214.495742132982,
+              "medianPricePerSqm": 23947.36842105263,
+              "avgPrice": 2064451.6129032257,
+              "medianPrice": 2020000,
+              "dealCount": 31
+            },
+            "5+": {
+              "avgPricePerSqm": 21631.059297176824,
+              "medianPricePerSqm": 22000,
+              "avgPrice": 2540000,
+              "medianPrice": 2725000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 24230.76923076923,
+              "medianPricePerSqm": 24230.76923076923,
+              "avgPrice": 1890000,
+              "medianPrice": 1890000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 27713.15418590826,
+              "medianPricePerSqm": 29383.726528647087,
+              "avgPrice": 1859166.6666666667,
+              "medianPrice": 1922500,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 25909.598494384376,
+              "medianPricePerSqm": 25892.801977139326,
+              "avgPrice": 2183423.076923077,
+              "medianPrice": 2182500,
+              "dealCount": 26
+            },
+            "5+": {
+              "avgPricePerSqm": 24695.735852819667,
+              "medianPricePerSqm": 24501.84811827957,
+              "avgPrice": 2910000,
+              "medianPrice": 2800000,
+              "dealCount": 14
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 15750,
+              "medianPricePerSqm": 15750,
+              "avgPrice": 567000,
+              "medianPrice": 567000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 25938.54008129894,
+              "medianPricePerSqm": 27474.832359939435,
+              "avgPrice": 1574237.5,
+              "medianPrice": 1635000,
+              "dealCount": 24
+            },
+            "4": {
+              "avgPricePerSqm": 23359.669524102246,
+              "medianPricePerSqm": 23039.21568627451,
+              "avgPrice": 2196952.380952381,
+              "medianPrice": 2260000,
+              "dealCount": 21
+            },
+            "5+": {
+              "avgPricePerSqm": 24687.127471671476,
+              "medianPricePerSqm": 24031.007751937985,
+              "avgPrice": 2980000,
+              "medianPrice": 3100000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28213.55784020808,
+              "medianPricePerSqm": 28433.734939759037,
+              "avgPrice": 2383181.8181818184,
+              "medianPrice": 2380000,
+              "dealCount": 11
+            },
+            "4": {
+              "avgPricePerSqm": 26741.22423636578,
+              "medianPricePerSqm": 26990.29126213592,
+              "avgPrice": 2625111.111111111,
+              "medianPrice": 2670000,
+              "dealCount": 45
+            },
+            "5+": {
+              "avgPricePerSqm": 27814.18662676414,
+              "medianPricePerSqm": 27782.375145180024,
+              "avgPrice": 3402500,
+              "medianPrice": 3365000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 27333.333333333332,
+              "medianPricePerSqm": 27333.333333333332,
+              "avgPrice": 1640000,
+              "medianPrice": 1640000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 27931.96628251311,
+              "medianPricePerSqm": 28867.967332123415,
+              "avgPrice": 1989500,
+              "medianPrice": 2090000,
+              "dealCount": 52
+            },
+            "4": {
+              "avgPricePerSqm": 26107.127898266433,
+              "medianPricePerSqm": 26457.516339869282,
+              "avgPrice": 2443958.3333333335,
+              "medianPrice": 2415000,
+              "dealCount": 48
+            },
+            "5+": {
+              "avgPricePerSqm": 25375.563255219793,
+              "medianPricePerSqm": 26298.4496124031,
+              "avgPrice": 3160135.4166666665,
+              "medianPrice": 3200000,
+              "dealCount": 48
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 26192.787489930597,
+          "medianPricePerSqm": 27221.354166666664,
+          "avgPrice": 1517653.8461538462,
+          "medianPrice": 1612500,
+          "dealCount": 26
+        },
+        "3": {
+          "avgPricePerSqm": 27102.168637564657,
+          "medianPricePerSqm": 27852.62206148282,
+          "avgPrice": 1933953.7738095238,
+          "medianPrice": 1927500,
+          "dealCount": 252
+        },
+        "4": {
+          "avgPricePerSqm": 25830.48004608172,
+          "medianPricePerSqm": 26353.479853479854,
+          "avgPrice": 2437966.488425926,
+          "medianPrice": 2422500,
+          "dealCount": 432
+        },
+        "5+": {
+          "avgPricePerSqm": 25888.246076069066,
+          "medianPricePerSqm": 26363.636363636364,
+          "avgPrice": 3287104.736842105,
+          "medianPrice": 3270000,
+          "dealCount": 285
+        }
+      }
+    },
+    "2025": {
+      "year": 2025,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 26721.173136099744,
+              "medianPricePerSqm": 27405.594405594406,
+              "avgPrice": 1537380.4347826086,
+              "medianPrice": 1537500,
+              "dealCount": 46
+            },
+            "3": {
+              "avgPricePerSqm": 25212.37075463946,
+              "medianPricePerSqm": 25704.607046070458,
+              "avgPrice": 1866046.799107143,
+              "medianPrice": 1850000,
+              "dealCount": 224
+            },
+            "4": {
+              "avgPricePerSqm": 24047.32892442098,
+              "medianPricePerSqm": 24636.41245972073,
+              "avgPrice": 2218307.7319587627,
+              "medianPrice": 2150000,
+              "dealCount": 194
+            },
+            "5+": {
+              "avgPricePerSqm": 22963.08113428117,
+              "medianPricePerSqm": 23726.828132277595,
+              "avgPrice": 2850183.5098039214,
+              "medianPrice": 2887500,
+              "dealCount": 102
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 31030.376333890155,
+              "medianPricePerSqm": 31448.34201151,
+              "avgPrice": 2543750,
+              "medianPrice": 2515000,
+              "dealCount": 4
+            },
+            "4": {
+              "avgPricePerSqm": 28132.864906816045,
+              "medianPricePerSqm": 28149.834851366228,
+              "avgPrice": 2884600,
+              "medianPrice": 2867500,
+              "dealCount": 50
+            },
+            "5+": {
+              "avgPricePerSqm": 26794.501156982806,
+              "medianPricePerSqm": 26825.396825396827,
+              "avgPrice": 3413412.698412698,
+              "medianPrice": 3310000,
+              "dealCount": 63
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25674.835953890288,
+              "medianPricePerSqm": 25483.870967741936,
+              "avgPrice": 1790800,
+              "medianPrice": 1750000,
+              "dealCount": 15
+            },
+            "4": {
+              "avgPricePerSqm": 24995.568091004105,
+              "medianPricePerSqm": 25134.408602150535,
+              "avgPrice": 2336100,
+              "medianPrice": 2350000,
+              "dealCount": 40
+            },
+            "5+": {
+              "avgPricePerSqm": 23434.98100757972,
+              "medianPricePerSqm": 24709.218146718144,
+              "avgPrice": 2684375,
+              "medianPrice": 2770000,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 32207.79220779221,
+              "medianPricePerSqm": 32207.79220779221,
+              "avgPrice": 2480000,
+              "medianPrice": 2480000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 27696.70771795416,
+              "medianPricePerSqm": 28616.731075244374,
+              "avgPrice": 2873576.923076923,
+              "medianPrice": 2960000,
+              "dealCount": 26
+            },
+            "5+": {
+              "avgPricePerSqm": 28413.572237592616,
+              "medianPricePerSqm": 28126.017849000065,
+              "avgPrice": 3848782.6086956523,
+              "medianPrice": 3745000,
+              "dealCount": 46
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 31886.79245283019,
+              "medianPricePerSqm": 31886.79245283019,
+              "avgPrice": 1690000,
+              "medianPrice": 1690000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 25966.274348597228,
+              "medianPricePerSqm": 26098.484848484848,
+              "avgPrice": 1685000,
+              "medianPrice": 1722500,
+              "dealCount": 10
+            },
+            "4": {
+              "avgPricePerSqm": 22006.7541395445,
+              "medianPricePerSqm": 22897.314098053015,
+              "avgPrice": 1995666.6666666667,
+              "medianPrice": 2090000,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 22940.88874336904,
+              "medianPricePerSqm": 21074.766355140186,
+              "avgPrice": 2802777.777777778,
+              "medianPrice": 2340000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 24171.641791044778,
+              "medianPricePerSqm": 24171.641791044778,
+              "avgPrice": 1817500,
+              "medianPrice": 1817500,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 26344.074641454976,
+              "medianPricePerSqm": 26445.41139240506,
+              "avgPrice": 2262250,
+              "medianPrice": 2250000,
+              "dealCount": 20
+            },
+            "5+": {
+              "avgPricePerSqm": 25614.187520887088,
+              "medianPricePerSqm": 25598.722627737225,
+              "avgPrice": 2880636.3636363638,
+              "medianPrice": 2610000,
+              "dealCount": 22
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 18636.363636363636,
+              "medianPricePerSqm": 18636.363636363636,
+              "avgPrice": 820000,
+              "medianPrice": 820000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 25743.68614547644,
+              "medianPricePerSqm": 25925.925925925927,
+              "avgPrice": 1666695.652173913,
+              "medianPrice": 1715000,
+              "dealCount": 23
+            },
+            "4": {
+              "avgPricePerSqm": 22414.658223873615,
+              "medianPricePerSqm": 22626.923076923078,
+              "avgPrice": 2039500,
+              "medianPrice": 1955000,
+              "dealCount": 10
+            },
+            "5+": {
+              "avgPricePerSqm": 23021.58273381295,
+              "medianPricePerSqm": 23021.58273381295,
+              "avgPrice": 3200000,
+              "medianPrice": 3200000,
+              "dealCount": 1
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 28263.564424149252,
+              "medianPricePerSqm": 27647.058823529413,
+              "avgPrice": 2270727.272727273,
+              "medianPrice": 2290000,
+              "dealCount": 11
+            },
+            "4": {
+              "avgPricePerSqm": 26327.28340772552,
+              "medianPricePerSqm": 26930.01443001443,
+              "avgPrice": 2559267.8571428573,
+              "medianPrice": 2640000,
+              "dealCount": 28
+            },
+            "5+": {
+              "avgPricePerSqm": 27051.565097330375,
+              "medianPricePerSqm": 27194.60986410139,
+              "avgPrice": 3290000,
+              "medianPrice": 3300000,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 21568.62745098039,
+              "medianPricePerSqm": 21568.62745098039,
+              "avgPrice": 2200000,
+              "medianPrice": 2200000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 27859.959672425262,
+              "medianPricePerSqm": 28708.333333333336,
+              "avgPrice": 2036852.9411764706,
+              "medianPrice": 2057500,
+              "dealCount": 34
+            },
+            "4": {
+              "avgPricePerSqm": 25465.302878323768,
+              "medianPricePerSqm": 26781.6091954023,
+              "avgPrice": 2374088.888888889,
+              "medianPrice": 2440000,
+              "dealCount": 45
+            },
+            "5+": {
+              "avgPricePerSqm": 25978.65218141403,
+              "medianPricePerSqm": 26000,
+              "avgPrice": 3215621.5789473685,
+              "medianPrice": 3250000,
+              "dealCount": 19
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 26556.443832668618,
+          "medianPricePerSqm": 27272.727272727272,
+          "avgPrice": 1539377.551020408,
+          "medianPrice": 1540000,
+          "dealCount": 49
+        },
+        "3": {
+          "avgPricePerSqm": 25763.183740225515,
+          "medianPricePerSqm": 26156.633221850614,
+          "avgPrice": 1884449.0216049382,
+          "medianPrice": 1850000,
+          "dealCount": 324
+        },
+        "4": {
+          "avgPricePerSqm": 25152.87969569107,
+          "medianPricePerSqm": 25943.396226415094,
+          "avgPrice": 2378400.470588235,
+          "medianPrice": 2400000,
+          "dealCount": 425
+        },
+        "5+": {
+          "avgPricePerSqm": 25279.85841253833,
+          "medianPricePerSqm": 25604.054054054053,
+          "avgPrice": 3178052.2589928056,
+          "medianPrice": 3150000,
+          "dealCount": 278
+        }
+      }
+    },
+    "2026": {
+      "year": 2026,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "מרכז העיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 26011.79087674579,
+              "medianPricePerSqm": 26776.153846153844,
+              "avgPrice": 1648291.6666666667,
+              "medianPrice": 1662500,
+              "dealCount": 12
+            },
+            "3": {
+              "avgPricePerSqm": 25206.195405689148,
+              "medianPricePerSqm": 25285.714285714286,
+              "avgPrice": 1829614.0350877193,
+              "medianPrice": 1880000,
+              "dealCount": 57
+            },
+            "4": {
+              "avgPricePerSqm": 23795.620186542426,
+              "medianPricePerSqm": 24683.54430379747,
+              "avgPrice": 2151613.3333333335,
+              "medianPrice": 2160000,
+              "dealCount": 75
+            },
+            "5+": {
+              "avgPricePerSqm": 21849.508425566753,
+              "medianPricePerSqm": 22222.222222222223,
+              "avgPrice": 2764655.172413793,
+              "medianPrice": 2845000,
+              "dealCount": 29
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הדר המושבות החדשה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 29833.11938382542,
+              "medianPricePerSqm": 29833.11938382542,
+              "avgPrice": 2350000,
+              "medianPrice": 2350000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 25723.328786137896,
+              "medianPricePerSqm": 26685.29411764706,
+              "avgPrice": 2665277.777777778,
+              "medianPrice": 2731500,
+              "dealCount": 18
+            },
+            "5+": {
+              "avgPricePerSqm": 26197.40090801003,
+              "medianPricePerSqm": 26210.9375,
+              "avgPrice": 3242260.8695652173,
+              "medianPrice": 3250000,
+              "dealCount": 23
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "מחנה יהודה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 26648.571865612634,
+              "medianPricePerSqm": 27529.806259314457,
+              "avgPrice": 1946875,
+              "medianPrice": 2045000,
+              "dealCount": 8
+            },
+            "4": {
+              "avgPricePerSqm": 22924.77987599032,
+              "medianPricePerSqm": 23187.777777777777,
+              "avgPrice": 2225714.285714286,
+              "medianPrice": 2230000,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 22387.528729440495,
+              "medianPricePerSqm": 22781.593406593405,
+              "avgPrice": 2790000,
+              "medianPrice": 2580000,
+              "dealCount": 4
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "נווה גן",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 27482.997461084033,
+              "medianPricePerSqm": 27385.04672897196,
+              "avgPrice": 2745000,
+              "medianPrice": 2780000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 26882.758974605946,
+              "medianPricePerSqm": 27484.774436090225,
+              "avgPrice": 3534125,
+              "medianPrice": 3735000,
+              "dealCount": 16
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "קרית חזני",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 24569.405196141306,
+              "medianPricePerSqm": 24604.640151515152,
+              "avgPrice": 1728333.3333333333,
+              "medianPrice": 1695000,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 22327.890611618852,
+              "medianPricePerSqm": 22040.47619047619,
+              "avgPrice": 1976687.5,
+              "medianPrice": 2020000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 21762.597657748924,
+              "medianPricePerSqm": 19527.55905511811,
+              "avgPrice": 2410000,
+              "medianPrice": 2480000,
+              "dealCount": 3
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb5",
+          "subareaLabel": "הדר גנים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 16129.032258064517,
+              "medianPricePerSqm": 16129.032258064517,
+              "avgPrice": 1000000,
+              "medianPrice": 1000000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 25391.148356773498,
+              "medianPricePerSqm": 25974.025974025975,
+              "avgPrice": 2170000,
+              "medianPrice": 2220000,
+              "dealCount": 9
+            },
+            "5+": {
+              "avgPricePerSqm": 27637.66049280783,
+              "medianPricePerSqm": 28553.911205073997,
+              "avgPrice": 3108333.3333333335,
+              "medianPrice": 3395000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb6",
+          "subareaLabel": "אחדות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 31904.761904761905,
+              "medianPricePerSqm": 31904.761904761905,
+              "avgPrice": 1340000,
+              "medianPrice": 1340000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 25391.23062015504,
+              "medianPricePerSqm": 25391.23062015504,
+              "avgPrice": 2305000,
+              "medianPrice": 2305000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 24581.086728075796,
+              "medianPricePerSqm": 23958.333333333332,
+              "avgPrice": 2175625,
+              "medianPrice": 2300000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 21286.63942945203,
+              "medianPricePerSqm": 22900.763358778626,
+              "avgPrice": 2805000,
+              "medianPrice": 2950000,
+              "dealCount": 3
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb7",
+          "subareaLabel": "הדר המושבות",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 29125,
+              "medianPricePerSqm": 29125,
+              "avgPrice": 2330000,
+              "medianPrice": 2330000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 26679.780186891614,
+              "medianPricePerSqm": 26895.01987374328,
+              "avgPrice": 2592500,
+              "medianPrice": 2530000,
+              "dealCount": 6
+            },
+            "5+": {
+              "avgPricePerSqm": 26094.850352112677,
+              "medianPricePerSqm": 26094.850352112677,
+              "avgPrice": 3525000,
+              "medianPrice": 3525000,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 27390.871330390182,
+              "medianPricePerSqm": 28080,
+              "avgPrice": 1943436.3636363635,
+              "medianPrice": 1940000,
+              "dealCount": 11
+            },
+            "4": {
+              "avgPricePerSqm": 24770.24138109314,
+              "medianPricePerSqm": 28269.23076923077,
+              "avgPrice": 2264800,
+              "medianPrice": 2572500,
+              "dealCount": 10
+            },
+            "5+": {
+              "avgPricePerSqm": 27459.016393442624,
+              "medianPricePerSqm": 27459.016393442624,
+              "avgPrice": 3350000,
+              "medianPrice": 3350000,
+              "dealCount": 1
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 26465.096340439337,
+          "medianPricePerSqm": 27692.30769230769,
+          "avgPrice": 1624576.923076923,
+          "medianPrice": 1625000,
+          "dealCount": 13
+        },
+        "3": {
+          "avgPricePerSqm": 25617.732512799405,
+          "medianPricePerSqm": 26708.333333333336,
+          "avgPrice": 1866486.3636363635,
+          "medianPrice": 1900000,
+          "dealCount": 88
+        },
+        "4": {
+          "avgPricePerSqm": 24359.45883945192,
+          "medianPricePerSqm": 24861.925708699902,
+          "avgPrice": 2265496.794871795,
+          "medianPrice": 2255000,
+          "dealCount": 156
+        },
+        "5+": {
+          "avgPricePerSqm": 24488.190977623468,
+          "medianPricePerSqm": 25000,
+          "avgPrice": 3070666.6666666665,
+          "medianPrice": 3100000,
+          "dealCount": 87
+        }
+      }
+    }
+  },
+  "cityAnnual": [
+    {
+      "year": 2016,
+      "avgPrice": 1791236.8291891892,
+      "medianPrice": 1769000,
+      "avgPricePerSqm": 17917.875235992666,
+      "medianPricePerSqm": 17840,
+      "dealCount": 925
+    },
+    {
+      "year": 2017,
+      "avgPrice": 1844003.9800249687,
+      "medianPrice": 1810000,
+      "avgPricePerSqm": 18777.37967835354,
+      "medianPricePerSqm": 18604.938271604937,
+      "dealCount": 801
+    },
+    {
+      "year": 2018,
+      "avgPrice": 1693401.468805704,
+      "medianPrice": 1600000,
+      "avgPricePerSqm": 18586.78927943036,
+      "medianPricePerSqm": 18467.7763551003,
+      "dealCount": 1122
+    },
+    {
+      "year": 2019,
+      "avgPrice": 1727527.9841571609,
+      "medianPrice": 1640000,
+      "avgPricePerSqm": 18672.446002570858,
+      "medianPricePerSqm": 18591.549295774646,
+      "dealCount": 1578
+    },
+    {
+      "year": 2020,
+      "avgPrice": 1801771.3559479553,
+      "medianPrice": 1760000,
+      "avgPricePerSqm": 19296.858839059583,
+      "medianPricePerSqm": 19243.2211313698,
+      "dealCount": 1076
+    },
+    {
+      "year": 2021,
+      "avgPrice": 1985465.6884469697,
+      "medianPrice": 1900000,
+      "avgPricePerSqm": 20468.83742146101,
+      "medianPricePerSqm": 20380.98693759071,
+      "dealCount": 1056
+    },
+    {
+      "year": 2022,
+      "avgPrice": 2452726.4703049758,
+      "medianPrice": 2340000,
+      "avgPricePerSqm": 24452.561206807797,
+      "medianPricePerSqm": 25000,
+      "dealCount": 623
+    },
+    {
+      "year": 2023,
+      "avgPrice": 2596482.2909836066,
+      "medianPrice": 2469500,
+      "avgPricePerSqm": 25817.03016477611,
+      "medianPricePerSqm": 26368.63136863137,
+      "dealCount": 488
+    },
+    {
+      "year": 2024,
+      "avgPrice": 2529489.1698492463,
+      "medianPrice": 2440000,
+      "avgPricePerSqm": 26178.56932963968,
+      "medianPricePerSqm": 26642.85714285714,
+      "dealCount": 995
+    },
+    {
+      "year": 2025,
+      "avgPrice": 2398057.352230483,
+      "medianPrice": 2277500,
+      "avgPricePerSqm": 25433.37526857639,
+      "medianPricePerSqm": 25996.031746031746,
+      "dealCount": 1076
+    },
+    {
+      "year": 2026,
+      "avgPrice": 2342836.6279069767,
+      "medianPrice": 2250000,
+      "avgPricePerSqm": 24793.473568487792,
+      "medianPricePerSqm": 25265.98754951896,
+      "dealCount": 344
+    }
+  ]
+}

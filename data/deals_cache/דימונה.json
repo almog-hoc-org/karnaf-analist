@@ -1,15 +1,15 @@
 {
   "cityName": "דימונה",
-  "lastUpdated": "2026-06-24T06:54:00.850Z",
+  "lastUpdated": "2026-07-21T09:08:35.820Z",
   "neighborhoods": [
     {
       "neighborhood": "ממשית",
-      "totalDeals": 710,
-      "dealsPerYearAvg": 101,
+      "totalDeals": 715,
+      "dealsPerYearAvg": 102,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 438,
+          "totalDeals": 447,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -22,10 +22,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 28,
+                    "count": 29,
                     "threshold": 15,
-                    "avgPricePerSqm": 12106,
-                    "avgTotalPrice": 1042763,
+                    "avgPricePerSqm": 12170,
+                    "avgTotalPrice": 1048185,
                     "avgArea": 86
                   }
                 },
@@ -129,10 +129,10 @@
                     "pricePerSqm": 6731,
                     "totalPrice": 350000,
                     "area": 52,
-                    "houseNum": "56.0",
+                    "houseNum": 56,
                     "streetName": "בבא סאלי",
                     "blocksAway": 70,
-                    "dealDate": "2020-12-01T00:00:00Z"
+                    "dealDate": "2020-12-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -175,10 +175,10 @@
                     "pricePerSqm": 3514,
                     "totalPrice": 260000,
                     "area": 74,
-                    "houseNum": "56.0",
+                    "houseNum": 56,
                     "streetName": "בבא סאלי",
                     "blocksAway": 70,
-                    "dealDate": "2020-12-14T00:00:00Z"
+                    "dealDate": "2020-12-14T00:00:00.000Z"
                   }
                 }
               ]
@@ -197,10 +197,10 @@
                     "pricePerSqm": 7585,
                     "totalPrice": 713000,
                     "area": 94,
-                    "houseNum": "72.0",
+                    "houseNum": 72,
                     "streetName": "בבא סאלי",
                     "blocksAway": 54,
-                    "dealDate": "2024-07-04T00:00:00Z"
+                    "dealDate": "2024-07-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -211,10 +211,10 @@
                     "pricePerSqm": 4500,
                     "totalPrice": 450000,
                     "area": 100,
-                    "houseNum": "126.0",
+                    "houseNum": 126,
                     "streetName": "בבא סאלי",
                     "blocksAway": 0,
-                    "dealDate": "2022-06-20T00:00:00Z"
+                    "dealDate": "2022-06-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -230,7 +230,7 @@
     },
     {
       "neighborhood": "מלכי ישראל",
-      "totalDeals": 267,
+      "totalDeals": 265,
       "dealsPerYearAvg": 38,
       "streets": [
         {
@@ -339,10 +339,10 @@
                     "pricePerSqm": 8148,
                     "totalPrice": 880000,
                     "area": 108,
-                    "houseNum": "19.0",
+                    "houseNum": 19,
                     "streetName": "בן גוריון",
                     "blocksAway": 2,
-                    "dealDate": "2024-05-26T00:00:00Z"
+                    "dealDate": "2024-05-26T00:00:00.000Z"
                   }
                 },
                 {
@@ -353,10 +353,10 @@
                     "pricePerSqm": 6027,
                     "totalPrice": 675000,
                     "area": 112,
-                    "houseNum": "55.0",
+                    "houseNum": 55,
                     "streetName": "בן גוריון",
                     "blocksAway": 38,
-                    "dealDate": "2022-11-30T00:00:00Z"
+                    "dealDate": "2022-11-30T00:00:00.000Z"
                   }
                 },
                 {
@@ -367,10 +367,10 @@
                     "pricePerSqm": 5340,
                     "totalPrice": 550000,
                     "area": 103,
-                    "houseNum": "19.0",
+                    "houseNum": 19,
                     "streetName": "בן גוריון",
                     "blocksAway": 2,
-                    "dealDate": "2021-06-01T00:00:00Z"
+                    "dealDate": "2021-06-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -379,7 +379,7 @@
         },
         {
           "streetName": "הספורט",
-          "totalDeals": 76,
+          "totalDeals": 74,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -395,10 +395,10 @@
                     "pricePerSqm": 8917,
                     "totalPrice": 535000,
                     "area": 60,
-                    "houseNum": "44.0",
+                    "houseNum": 44,
                     "streetName": "הספורט",
                     "blocksAway": 2,
-                    "dealDate": "2024-02-14T00:00:00Z"
+                    "dealDate": "2024-02-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -421,10 +421,10 @@
                     "pricePerSqm": 4500,
                     "totalPrice": 270000,
                     "area": 60,
-                    "houseNum": "44.0",
+                    "houseNum": 44,
                     "streetName": "הספורט",
                     "blocksAway": 2,
-                    "dealDate": "2020-04-07T00:00:00Z"
+                    "dealDate": "2020-04-07T00:00:00.000Z"
                   }
                 }
               ]
@@ -487,10 +487,10 @@
                     "pricePerSqm": 6353,
                     "totalPrice": 540000,
                     "area": 85,
-                    "houseNum": "46.0",
+                    "houseNum": 46,
                     "streetName": "הספורט",
                     "blocksAway": 0,
-                    "dealDate": "2024-12-22T00:00:00Z"
+                    "dealDate": "2024-12-22T00:00:00.000Z"
                   }
                 },
                 {
@@ -513,10 +513,10 @@
                     "pricePerSqm": 4000,
                     "totalPrice": 340000,
                     "area": 85,
-                    "houseNum": "46.0",
+                    "houseNum": 46,
                     "streetName": "הספורט",
                     "blocksAway": 0,
-                    "dealDate": "2020-08-20T00:00:00Z"
+                    "dealDate": "2020-08-20T00:00:00.000Z"
                   }
                 }
               ]
@@ -527,12 +527,12 @@
     },
     {
       "neighborhood": "שיכון שלוש קומות",
-      "totalDeals": 234,
-      "dealsPerYearAvg": 33,
+      "totalDeals": 236,
+      "dealsPerYearAvg": 34,
       "streets": [
         {
           "streetName": "אריאל שרון",
-          "totalDeals": 54,
+          "totalDeals": 55,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -592,10 +592,10 @@
                     "pricePerSqm": 8851,
                     "totalPrice": 770000,
                     "area": 87,
-                    "houseNum": "61.0",
+                    "houseNum": 61,
                     "streetName": "אריאל שרון",
                     "blocksAway": 20,
-                    "dealDate": "2026-03-18T00:00:00Z"
+                    "dealDate": "2026-03-18T00:00:00.000Z"
                   }
                 },
                 {
@@ -606,10 +606,10 @@
                     "pricePerSqm": 6395,
                     "totalPrice": 550000,
                     "area": 86,
-                    "houseNum": "81.0",
+                    "houseNum": 81,
                     "streetName": "אריאל שרון",
                     "blocksAway": 0,
-                    "dealDate": "2023-08-10T00:00:00Z"
+                    "dealDate": "2023-08-10T00:00:00.000Z"
                   }
                 },
                 {
@@ -633,10 +633,10 @@
                     "pricePerSqm": 7100,
                     "totalPrice": 710000,
                     "area": 100,
-                    "houseNum": "79.0",
+                    "houseNum": 79,
                     "streetName": "אריאל שרון",
                     "blocksAway": 2,
-                    "dealDate": "2024-01-21T00:00:00Z"
+                    "dealDate": "2024-01-21T00:00:00.000Z"
                   }
                 },
                 {
@@ -647,10 +647,10 @@
                     "pricePerSqm": 6771,
                     "totalPrice": 650000,
                     "area": 96,
-                    "houseNum": "79.0",
+                    "houseNum": 79,
                     "streetName": "אריאל שרון",
                     "blocksAway": 2,
-                    "dealDate": "2022-06-19T00:00:00Z"
+                    "dealDate": "2022-06-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -661,10 +661,10 @@
                     "pricePerSqm": 4948,
                     "totalPrice": 480000,
                     "area": 97,
-                    "houseNum": "77.0",
+                    "houseNum": 77,
                     "streetName": "אריאל שרון",
                     "blocksAway": 4,
-                    "dealDate": "2020-06-28T00:00:00Z"
+                    "dealDate": "2020-06-28T00:00:00.000Z"
                   }
                 }
               ]
@@ -673,7 +673,7 @@
         },
         {
           "streetName": "הרצל",
-          "totalDeals": 45,
+          "totalDeals": 46,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -694,10 +694,10 @@
                     "pricePerSqm": 6903,
                     "totalPrice": 428000,
                     "area": 62,
-                    "houseNum": "93.0",
+                    "houseNum": 93,
                     "streetName": "הרצל",
                     "blocksAway": 4,
-                    "dealDate": "2023-10-25T00:00:00Z"
+                    "dealDate": "2023-10-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -721,10 +721,10 @@
                     "pricePerSqm": 6081,
                     "totalPrice": 450000,
                     "area": 74,
-                    "houseNum": "85.0",
+                    "houseNum": 85,
                     "streetName": "הרצל",
                     "blocksAway": 12,
-                    "dealDate": "2025-03-11T00:00:00Z"
+                    "dealDate": "2025-03-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -747,10 +747,10 @@
                     "pricePerSqm": 5556,
                     "totalPrice": 400000,
                     "area": 72,
-                    "houseNum": "97.0",
+                    "houseNum": 97,
                     "streetName": "הרצל",
                     "blocksAway": 0,
-                    "dealDate": "2021-11-18T00:00:00Z"
+                    "dealDate": "2021-11-18T00:00:00.000Z"
                   }
                 }
               ]
@@ -793,10 +793,10 @@
                     "pricePerSqm": 4301,
                     "totalPrice": 400000,
                     "area": 93,
-                    "houseNum": "89.0",
+                    "houseNum": 89,
                     "streetName": "הרצל",
                     "blocksAway": 8,
-                    "dealDate": "2020-09-15T00:00:00Z"
+                    "dealDate": "2020-09-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -806,7 +806,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 2267,
+  "totalDealsAnalyzed": 2276,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

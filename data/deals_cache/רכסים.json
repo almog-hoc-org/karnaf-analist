@@ -1,15 +1,15 @@
 {
   "cityName": "רכסים",
-  "lastUpdated": "2026-06-24T07:01:51.689Z",
+  "lastUpdated": "2026-07-21T09:23:15.748Z",
   "neighborhoods": [
     {
       "neighborhood": "מרכז העיר",
-      "totalDeals": 2776,
-      "dealsPerYearAvg": 463,
+      "totalDeals": 2795,
+      "dealsPerYearAvg": 466,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 362,
+          "totalDeals": 367,
           "sizeBuckets": [
             {
               "label": "~110 מ\"ר",
@@ -89,7 +89,7 @@
         },
         {
           "streetName": "סוקולוב",
-          "totalDeals": 156,
+          "totalDeals": 157,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -129,10 +129,10 @@
                     "pricePerSqm": 7987,
                     "totalPrice": 615000,
                     "area": 77,
-                    "houseNum": "38.0",
+                    "houseNum": 38,
                     "streetName": "סוקולוב",
                     "blocksAway": 1,
-                    "dealDate": "2021-11-16T00:00:00Z"
+                    "dealDate": "2021-11-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -175,10 +175,10 @@
                     "pricePerSqm": 12028,
                     "totalPrice": 1275000,
                     "area": 106,
-                    "houseNum": "39.0",
+                    "houseNum": 39,
                     "streetName": "סוקולוב",
                     "blocksAway": 2,
-                    "dealDate": "2021-06-15T00:00:00Z"
+                    "dealDate": "2021-06-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -221,10 +221,10 @@
                     "pricePerSqm": 11000,
                     "totalPrice": 1650000,
                     "area": 150,
-                    "houseNum": "30.0",
+                    "houseNum": 30,
                     "streetName": "סוקולוב",
                     "blocksAway": 7,
-                    "dealDate": "2021-05-19T00:00:00Z"
+                    "dealDate": "2021-05-19T00:00:00.000Z"
                   }
                 }
               ]
@@ -235,7 +235,7 @@
     },
     {
       "neighborhood": "קרית בנימין",
-      "totalDeals": 345,
+      "totalDeals": 346,
       "dealsPerYearAvg": 49,
       "streets": [
         {
@@ -324,10 +324,10 @@
                     "pricePerSqm": 11514,
                     "totalPrice": 1255000,
                     "area": 109,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "שטיינברג",
                     "blocksAway": 0,
-                    "dealDate": "2021-08-26T00:00:00Z"
+                    "dealDate": "2021-08-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -346,10 +346,10 @@
                     "pricePerSqm": 13252,
                     "totalPrice": 1630000,
                     "area": 123,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "שטיינברג",
                     "blocksAway": 0,
-                    "dealDate": "2024-06-20T00:00:00Z"
+                    "dealDate": "2024-06-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -391,10 +391,10 @@
                     "pricePerSqm": 13333,
                     "totalPrice": 960000,
                     "area": 72,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "לילינבלום",
                     "blocksAway": 0,
-                    "dealDate": "2024-10-13T00:00:00Z"
+                    "dealDate": "2024-10-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -437,10 +437,10 @@
                     "pricePerSqm": 16667,
                     "totalPrice": 1750000,
                     "area": 105,
-                    "houseNum": "9.0",
+                    "houseNum": 9,
                     "streetName": "לילינבלום",
                     "blocksAway": 8,
-                    "dealDate": "2024-12-09T00:00:00Z"
+                    "dealDate": "2024-12-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -451,10 +451,10 @@
                     "pricePerSqm": 14174,
                     "totalPrice": 1630000,
                     "area": 115,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "לילינבלום",
                     "blocksAway": 15,
-                    "dealDate": "2023-03-09T00:00:00Z"
+                    "dealDate": "2023-03-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -485,10 +485,10 @@
                     "pricePerSqm": 20148,
                     "totalPrice": 2720000,
                     "area": 135,
-                    "houseNum": "23.0",
+                    "houseNum": 23,
                     "streetName": "לילינבלום",
                     "blocksAway": 6,
-                    "dealDate": "2025-10-20T00:00:00Z"
+                    "dealDate": "2025-10-20T00:00:00.000Z"
                   }
                 },
                 {
@@ -522,7 +522,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 3121,
+  "totalDealsAnalyzed": 3141,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

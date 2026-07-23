@@ -1,6 +1,6 @@
 {
   "cityName": "הוד השרון",
-  "lastUpdated": "2026-06-24T06:54:13.329Z",
+  "lastUpdated": "2026-07-21T09:08:54.466Z",
   "neighborhoods": [
     {
       "neighborhood": "הדרים",
@@ -12,21 +12,21 @@
           "totalDeals": 36,
           "sizeBuckets": [
             {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 85,
-              "maxArea": 115,
+              "label": "~90 מ\"ר",
+              "targetArea": 90,
+              "minArea": 77,
+              "maxArea": 103,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 26553,
-                    "avgTotalPrice": 2731667,
-                    "avgArea": 104
+                    "avgPricePerSqm": 28743,
+                    "avgTotalPrice": 2822500,
+                    "avgArea": 99
                   }
                 },
                 {
@@ -37,44 +37,35 @@
                     "pricePerSqm": 33529,
                     "totalPrice": 2850000,
                     "area": 85,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "עמק עירון",
                     "blocksAway": 7,
-                    "dealDate": "2022-06-28T00:00:00Z"
+                    "dealDate": "2022-06-28T00:00:00.000Z"
                   }
                 },
                 {
                   "period": "minus5",
                   "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 17387,
-                    "totalPrice": 1930000,
-                    "area": 111,
-                    "houseNum": "10.0",
-                    "streetName": "עמק עירון",
-                    "blocksAway": 5,
-                    "dealDate": "2020-01-23T00:00:00Z"
-                  }
+                  "sample": null
                 }
               ]
             },
             {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 114,
-              "maxArea": 150,
+              "label": "~120 מ\"ר",
+              "targetArea": 120,
+              "minArea": 106,
+              "maxArea": 138,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 4,
+                    "count": 3,
                     "threshold": 2,
-                    "avgPricePerSqm": 21275,
-                    "avgTotalPrice": 2743750,
-                    "avgArea": 129
+                    "avgPricePerSqm": 20923,
+                    "avgTotalPrice": 2541667,
+                    "avgArea": 122
                   }
                 },
                 {
@@ -82,11 +73,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 24819,
-                    "avgTotalPrice": 3183000,
-                    "avgArea": 130
+                    "avgPricePerSqm": 26658,
+                    "avgTotalPrice": 3199500,
+                    "avgArea": 121
                   }
                 },
                 {
@@ -97,19 +88,19 @@
                     "pricePerSqm": 17387,
                     "totalPrice": 1930000,
                     "area": 111,
-                    "houseNum": "10.0",
+                    "houseNum": 10,
                     "streetName": "עמק עירון",
                     "blocksAway": 5,
-                    "dealDate": "2020-01-23T00:00:00Z"
+                    "dealDate": "2020-01-23T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~170 מ\"ר",
-              "targetArea": 170,
-              "minArea": 145,
-              "maxArea": 204,
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
               "periods": [
                 {
                   "period": "current",
@@ -131,10 +122,10 @@
                     "pricePerSqm": 21141,
                     "totalPrice": 3150000,
                     "area": 149,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "עמק עירון",
                     "blocksAway": 3,
-                    "dealDate": "2022-12-13T00:00:00Z"
+                    "dealDate": "2022-12-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -158,10 +149,60 @@
           "totalDeals": 27,
           "sizeBuckets": [
             {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 85,
-              "maxArea": 115,
+              "label": "~90 מ\"ר",
+              "targetArea": 90,
+              "minArea": 77,
+              "maxArea": 103,
+              "periods": [
+                {
+                  "period": "current",
+                  "year": 2025,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 32059,
+                    "totalPrice": 2725000,
+                    "area": 85,
+                    "houseNum": 25,
+                    "streetName": "המוביל",
+                    "blocksAway": 0,
+                    "dealDate": "2024-12-04T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus3",
+                  "year": 2022,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 33855,
+                    "totalPrice": 2810000,
+                    "area": 83,
+                    "houseNum": 31,
+                    "streetName": "המוביל",
+                    "blocksAway": 6,
+                    "dealDate": "2022-08-14T00:00:00.000Z"
+                  }
+                },
+                {
+                  "period": "minus5",
+                  "year": 2020,
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 17670,
+                    "totalPrice": 1820000,
+                    "area": 103,
+                    "houseNum": 16,
+                    "streetName": "המוביל",
+                    "blocksAway": 9,
+                    "dealDate": "2020-08-06T00:00:00.000Z"
+                  }
+                }
+              ]
+            },
+            {
+              "label": "~120 מ\"ר",
+              "targetArea": 120,
+              "minArea": 106,
+              "maxArea": 138,
               "periods": [
                 {
                   "period": "current",
@@ -171,10 +212,10 @@
                     "pricePerSqm": 29439,
                     "totalPrice": 3150000,
                     "area": 107,
-                    "houseNum": "31.0",
+                    "houseNum": 31,
                     "streetName": "המוביל",
                     "blocksAway": 6,
-                    "dealDate": "2025-02-13T00:00:00Z"
+                    "dealDate": "2025-02-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -194,70 +235,20 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 3,
+                    "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 18169,
-                    "avgTotalPrice": 1970000,
-                    "avgArea": 108
+                    "avgPricePerSqm": 18419,
+                    "avgTotalPrice": 2045000,
+                    "avgArea": 111
                   }
                 }
               ]
             },
             {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 114,
-              "maxArea": 150,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 22345,
-                    "totalPrice": 2525000,
-                    "area": 113,
-                    "houseNum": "25.0",
-                    "streetName": "המוביל",
-                    "blocksAway": 0,
-                    "dealDate": "2026-03-30T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 25000,
-                    "totalPrice": 2800000,
-                    "area": 112,
-                    "houseNum": "27.0",
-                    "streetName": "המוביל",
-                    "blocksAway": 2,
-                    "dealDate": "2022-12-27T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 18673,
-                    "totalPrice": 2110000,
-                    "area": 113,
-                    "houseNum": "18.0",
-                    "streetName": "המוביל",
-                    "blocksAway": 7,
-                    "dealDate": "2020-11-25T00:00:00Z"
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~170 מ\"ר",
-              "targetArea": 170,
-              "minArea": 145,
-              "maxArea": 204,
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
               "periods": [
                 {
                   "period": "current",
@@ -267,10 +258,10 @@
                     "pricePerSqm": 23026,
                     "totalPrice": 3500000,
                     "area": 152,
-                    "houseNum": "29.0",
+                    "houseNum": 29,
                     "streetName": "המוביל",
                     "blocksAway": 4,
-                    "dealDate": "2026-02-10T00:00:00Z"
+                    "dealDate": "2026-02-10T00:00:00.000Z"
                   }
                 },
                 {
@@ -281,10 +272,10 @@
                     "pricePerSqm": 16133,
                     "totalPrice": 2420000,
                     "area": 150,
-                    "houseNum": "27.0",
+                    "houseNum": 27,
                     "streetName": "המוביל",
                     "blocksAway": 2,
-                    "dealDate": "2021-01-07T00:00:00Z"
+                    "dealDate": "2021-01-07T00:00:00.000Z"
                   }
                 },
                 {
@@ -306,296 +297,8 @@
       ]
     },
     {
-      "neighborhood": "הזמר העברי",
-      "totalDeals": 256,
-      "dealsPerYearAvg": 37,
-      "streets": [
-        {
-          "streetName": "אהוד מנור",
-          "totalDeals": 42,
-          "sizeBuckets": [
-            {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 85,
-              "maxArea": 115,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 31132,
-                    "totalPrice": 3300000,
-                    "area": 106,
-                    "houseNum": "15.0",
-                    "streetName": "אהוד מנור",
-                    "blocksAway": 11,
-                    "dealDate": "2024-09-22T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": null
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 24545,
-                    "avgTotalPrice": 2405000,
-                    "avgArea": 98
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 114,
-              "maxArea": 150,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 27349,
-                    "avgTotalPrice": 3607500,
-                    "avgArea": 132
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 26328,
-                    "avgTotalPrice": 3587333,
-                    "avgArea": 136
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 5,
-                    "threshold": 5,
-                    "avgPricePerSqm": 20758,
-                    "avgTotalPrice": 2897000,
-                    "avgArea": 140
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~170 מ\"ר",
-              "targetArea": 170,
-              "minArea": 145,
-              "maxArea": 204,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 30098,
-                    "avgTotalPrice": 4825000,
-                    "avgArea": 161
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 23391,
-                    "avgTotalPrice": 4200000,
-                    "avgArea": 180
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 4,
-                    "threshold": 2,
-                    "avgPricePerSqm": 18680,
-                    "avgTotalPrice": 3091250,
-                    "avgArea": 164
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "streetName": "יאיר רוזנבלום",
-          "totalDeals": 37,
-          "sizeBuckets": [
-            {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 85,
-              "maxArea": 115,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 32075,
-                    "totalPrice": 3400000,
-                    "area": 106,
-                    "houseNum": "2.0",
-                    "streetName": "יאיר רוזנבלום",
-                    "blocksAway": 6,
-                    "dealDate": "2024-12-16T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 28641,
-                    "totalPrice": 2950000,
-                    "area": 103,
-                    "houseNum": "2.0",
-                    "streetName": "יאיר רוזנבלום",
-                    "blocksAway": 6,
-                    "dealDate": "2021-11-17T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 24241,
-                    "avgTotalPrice": 2390000,
-                    "avgArea": 99
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 114,
-              "maxArea": 150,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 26125,
-                    "avgTotalPrice": 3427500,
-                    "avgArea": 131
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 22681,
-                    "totalPrice": 3130000,
-                    "area": 138,
-                    "houseNum": "24.0",
-                    "streetName": "יאיר רוזנבלום",
-                    "blocksAway": 16,
-                    "dealDate": "2022-02-15T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 18391,
-                    "avgTotalPrice": 2500000,
-                    "avgArea": 137
-                  }
-                }
-              ]
-            },
-            {
-              "label": "~170 מ\"ר",
-              "targetArea": 170,
-              "minArea": 145,
-              "maxArea": 204,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 23116,
-                    "totalPrice": 4600000,
-                    "area": 199,
-                    "houseNum": "8.0",
-                    "streetName": "יאיר רוזנבלום",
-                    "blocksAway": 0,
-                    "dealDate": "2025-04-07T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 21055,
-                    "totalPrice": 4190000,
-                    "area": 199,
-                    "houseNum": "8.0",
-                    "streetName": "יאיר רוזנבלום",
-                    "blocksAway": 0,
-                    "dealDate": "2022-03-27T00:00:00Z"
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": {
-                    "type": "aggregated",
-                    "count": 3,
-                    "threshold": 2,
-                    "avgPricePerSqm": 16404,
-                    "avgTotalPrice": 2646667,
-                    "avgArea": 161
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "neighborhood": "הרצליה הצעירה",
-      "totalDeals": 193,
+      "totalDeals": 197,
       "dealsPerYearAvg": 28,
       "streets": [
         {
@@ -603,10 +306,10 @@
           "totalDeals": 26,
           "sizeBuckets": [
             {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 85,
-              "maxArea": 115,
+              "label": "~90 מ\"ר",
+              "targetArea": 90,
+              "minArea": 77,
+              "maxArea": 103,
               "periods": [
                 {
                   "period": "current",
@@ -629,21 +332,23 @@
                   "period": "minus5",
                   "year": 2020,
                   "sample": {
-                    "type": "aggregated",
-                    "count": 2,
-                    "threshold": 2,
-                    "avgPricePerSqm": 32503,
-                    "avgTotalPrice": 3349500,
-                    "avgArea": 103
+                    "type": "single",
+                    "pricePerSqm": 31683,
+                    "totalPrice": 3200000,
+                    "area": 101,
+                    "houseNum": 36,
+                    "streetName": "ברנר",
+                    "blocksAway": 14,
+                    "dealDate": "2020-07-06T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 114,
-              "maxArea": 150,
+              "label": "~120 מ\"ר",
+              "targetArea": 120,
+              "minArea": 106,
+              "maxArea": 138,
               "periods": [
                 {
                   "period": "current",
@@ -653,10 +358,10 @@
                     "pricePerSqm": 35833,
                     "totalPrice": 4300000,
                     "area": 120,
-                    "houseNum": "59.0",
+                    "houseNum": 59,
                     "streetName": "ברנר",
                     "blocksAway": 37,
-                    "dealDate": "2026-01-19T00:00:00Z"
+                    "dealDate": "2026-01-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -664,13 +369,13 @@
                   "year": 2022,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 28462,
-                    "totalPrice": 3700000,
-                    "area": 130,
-                    "houseNum": "22.0",
+                    "pricePerSqm": 26602,
+                    "totalPrice": 2740000,
+                    "area": 103,
+                    "houseNum": 22,
                     "streetName": "ברנר",
                     "blocksAway": 0,
-                    "dealDate": "2021-06-28T00:00:00Z"
+                    "dealDate": "2022-09-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -678,22 +383,22 @@
                   "year": 2020,
                   "sample": {
                     "type": "single",
-                    "pricePerSqm": 28462,
-                    "totalPrice": 3700000,
-                    "area": 130,
-                    "houseNum": "22.0",
+                    "pricePerSqm": 33324,
+                    "totalPrice": 3499000,
+                    "area": 105,
+                    "houseNum": 52,
                     "streetName": "ברנר",
-                    "blocksAway": 0,
-                    "dealDate": "2021-06-28T00:00:00Z"
+                    "blocksAway": 30,
+                    "dealDate": "2020-02-21T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~170 מ\"ר",
-              "targetArea": 170,
-              "minArea": 145,
-              "maxArea": 204,
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
               "periods": [
                 {
                   "period": "current",
@@ -702,9 +407,9 @@
                     "type": "aggregated",
                     "count": 2,
                     "threshold": 2,
-                    "avgPricePerSqm": 32829,
-                    "avgTotalPrice": 5675000,
-                    "avgArea": 174
+                    "avgPricePerSqm": 30586,
+                    "avgTotalPrice": 5240000,
+                    "avgArea": 172
                   }
                 },
                 {
@@ -727,10 +432,10 @@
                     "pricePerSqm": 30897,
                     "totalPrice": 4480000,
                     "area": 145,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "ברנר",
                     "blocksAway": 0,
-                    "dealDate": "2021-04-28T00:00:00Z"
+                    "dealDate": "2021-04-28T00:00:00.000Z"
                   }
                 }
               ]
@@ -739,18 +444,27 @@
         },
         {
           "streetName": "בן יהודה",
-          "totalDeals": 15,
+          "totalDeals": 17,
           "sizeBuckets": [
             {
-              "label": "~100 מ\"ר",
-              "targetArea": 100,
-              "minArea": 85,
-              "maxArea": 115,
+              "label": "~90 מ\"ר",
+              "targetArea": 90,
+              "minArea": 77,
+              "maxArea": 103,
               "periods": [
                 {
                   "period": "current",
                   "year": 2025,
-                  "sample": null
+                  "sample": {
+                    "type": "single",
+                    "pricePerSqm": 36804,
+                    "totalPrice": 3386000,
+                    "area": 92,
+                    "houseNum": 70,
+                    "streetName": "בן יהודה",
+                    "blocksAway": 4,
+                    "dealDate": "2026-06-15T00:00:00.000Z"
+                  }
                 },
                 {
                   "period": "minus3",
@@ -760,10 +474,10 @@
                     "pricePerSqm": 6849,
                     "totalPrice": 637000,
                     "area": 93,
-                    "houseNum": "86.0",
+                    "houseNum": 86,
                     "streetName": "בן יהודה",
                     "blocksAway": 12,
-                    "dealDate": "2022-03-16T00:00:00Z"
+                    "dealDate": "2022-03-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -774,19 +488,19 @@
                     "pricePerSqm": 19742,
                     "totalPrice": 1915000,
                     "area": 97,
-                    "houseNum": "86.0",
+                    "houseNum": 86,
                     "streetName": "בן יהודה",
                     "blocksAway": 12,
-                    "dealDate": "2021-05-23T00:00:00Z"
+                    "dealDate": "2021-05-23T00:00:00.000Z"
                   }
                 }
               ]
             },
             {
-              "label": "~130 מ\"ר",
-              "targetArea": 130,
-              "minArea": 114,
-              "maxArea": 150,
+              "label": "~160 מ\"ר",
+              "targetArea": 160,
+              "minArea": 136,
+              "maxArea": 192,
               "periods": [
                 {
                   "period": "current",
@@ -798,43 +512,11 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 2,
+                    "count": 3,
                     "threshold": 2,
-                    "avgPricePerSqm": 31473,
-                    "avgTotalPrice": 4425000,
-                    "avgArea": 141
-                  }
-                },
-                {
-                  "period": "minus5",
-                  "year": 2020,
-                  "sample": null
-                }
-              ]
-            },
-            {
-              "label": "~170 מ\"ר",
-              "targetArea": 170,
-              "minArea": 145,
-              "maxArea": 204,
-              "periods": [
-                {
-                  "period": "current",
-                  "year": 2025,
-                  "sample": null
-                },
-                {
-                  "period": "minus3",
-                  "year": 2022,
-                  "sample": {
-                    "type": "single",
-                    "pricePerSqm": 31593,
-                    "totalPrice": 5750000,
-                    "area": 182,
-                    "houseNum": "51.0",
-                    "streetName": "בן יהודה",
-                    "blocksAway": 23,
-                    "dealDate": "2022-08-23T00:00:00Z"
+                    "avgPricePerSqm": 31513,
+                    "avgTotalPrice": 4866667,
+                    "avgArea": 154
                   }
                 },
                 {
@@ -849,7 +531,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 889,
+  "totalDealsAnalyzed": 637,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

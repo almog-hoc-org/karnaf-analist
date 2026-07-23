@@ -1,15 +1,15 @@
 {
   "cityName": "ביתר עילית",
-  "lastUpdated": "2026-06-24T06:52:10.899Z",
+  "lastUpdated": "2026-07-21T09:05:11.213Z",
   "neighborhoods": [
     {
       "neighborhood": "הר כתרון",
-      "totalDeals": 40,
+      "totalDeals": 41,
       "dealsPerYearAvg": 6,
       "streets": [
         {
           "streetName": "הר כתרון",
-          "totalDeals": 7,
+          "totalDeals": 8,
           "sizeBuckets": [
             {
               "label": "~140 מ\"ר",
@@ -35,10 +35,10 @@
                     "pricePerSqm": 14557,
                     "totalPrice": 2300000,
                     "area": 158,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "הר כתרון",
-                    "blocksAway": 8,
-                    "dealDate": "2020-03-20T00:00:00Z"
+                    "blocksAway": 9,
+                    "dealDate": "2020-03-20T00:00:00.000Z"
                   }
                 }
               ]
@@ -69,10 +69,10 @@
                     "pricePerSqm": 20339,
                     "totalPrice": 3600000,
                     "area": 177,
-                    "houseNum": "33.0",
+                    "houseNum": 33,
                     "streetName": "הר כתרון",
-                    "blocksAway": 17,
-                    "dealDate": "2022-02-21T00:00:00Z"
+                    "blocksAway": 0,
+                    "dealDate": "2022-02-21T00:00:00.000Z"
                   }
                 },
                 {
@@ -83,10 +83,10 @@
                     "pricePerSqm": 15517,
                     "totalPrice": 2700000,
                     "area": 174,
-                    "houseNum": "58.0",
+                    "houseNum": 58,
                     "streetName": "הר כתרון",
-                    "blocksAway": 42,
-                    "dealDate": "2020-07-05T00:00:00Z"
+                    "blocksAway": 25,
+                    "dealDate": "2020-07-05T00:00:00.000Z"
                   }
                 }
               ]
@@ -111,10 +111,10 @@
                     "pricePerSqm": 26786,
                     "totalPrice": 3750000,
                     "area": 140,
-                    "houseNum": "38.0",
+                    "houseNum": 38,
                     "streetName": "בושמת",
                     "blocksAway": 0,
-                    "dealDate": "2025-06-15T00:00:00Z"
+                    "dealDate": "2025-06-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -125,10 +125,10 @@
                     "pricePerSqm": 19677,
                     "totalPrice": 3050000,
                     "area": 155,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "בושמת",
                     "blocksAway": 26,
-                    "dealDate": "2021-11-21T00:00:00Z"
+                    "dealDate": "2021-11-21T00:00:00.000Z"
                   }
                 },
                 {
@@ -139,10 +139,10 @@
                     "pricePerSqm": 19677,
                     "totalPrice": 3050000,
                     "area": 155,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "בושמת",
                     "blocksAway": 26,
-                    "dealDate": "2021-11-21T00:00:00Z"
+                    "dealDate": "2021-11-21T00:00:00.000Z"
                   }
                 }
               ]
@@ -161,10 +161,10 @@
                     "pricePerSqm": 12632,
                     "totalPrice": 2400000,
                     "area": 190,
-                    "houseNum": "52.0",
+                    "houseNum": 52,
                     "streetName": "בושמת",
                     "blocksAway": 14,
-                    "dealDate": "2025-05-14T00:00:00Z"
+                    "dealDate": "2025-05-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -180,10 +180,10 @@
                     "pricePerSqm": 13812,
                     "totalPrice": 2500000,
                     "area": 181,
-                    "houseNum": "40.0",
+                    "houseNum": 40,
                     "streetName": "בושמת",
                     "blocksAway": 2,
-                    "dealDate": "2020-01-13T00:00:00Z"
+                    "dealDate": "2020-01-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -193,7 +193,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 40,
+  "totalDealsAnalyzed": 41,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

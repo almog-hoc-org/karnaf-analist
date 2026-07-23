@@ -1,15 +1,15 @@
 {
   "cityName": "שפרעם",
-  "lastUpdated": "2026-06-24T07:02:46.771Z",
+  "lastUpdated": "2026-07-21T09:24:59.697Z",
   "neighborhoods": [
     {
       "neighborhood": "מרכז העיר",
-      "totalDeals": 2776,
-      "dealsPerYearAvg": 463,
+      "totalDeals": 2795,
+      "dealsPerYearAvg": 466,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 362,
+          "totalDeals": 367,
           "sizeBuckets": [
             {
               "label": "~110 מ\"ר",
@@ -89,7 +89,7 @@
         },
         {
           "streetName": "סוקולוב",
-          "totalDeals": 156,
+          "totalDeals": 157,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -129,10 +129,10 @@
                     "pricePerSqm": 7987,
                     "totalPrice": 615000,
                     "area": 77,
-                    "houseNum": "38.0",
+                    "houseNum": 38,
                     "streetName": "סוקולוב",
                     "blocksAway": 1,
-                    "dealDate": "2021-11-16T00:00:00Z"
+                    "dealDate": "2021-11-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -175,10 +175,10 @@
                     "pricePerSqm": 12028,
                     "totalPrice": 1275000,
                     "area": 106,
-                    "houseNum": "39.0",
+                    "houseNum": 39,
                     "streetName": "סוקולוב",
                     "blocksAway": 2,
-                    "dealDate": "2021-06-15T00:00:00Z"
+                    "dealDate": "2021-06-15T00:00:00.000Z"
                   }
                 }
               ]
@@ -221,10 +221,10 @@
                     "pricePerSqm": 11000,
                     "totalPrice": 1650000,
                     "area": 150,
-                    "houseNum": "30.0",
+                    "houseNum": 30,
                     "streetName": "סוקולוב",
                     "blocksAway": 7,
-                    "dealDate": "2021-05-19T00:00:00Z"
+                    "dealDate": "2021-05-19T00:00:00.000Z"
                   }
                 }
               ]
@@ -234,7 +234,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 2776,
+  "totalDealsAnalyzed": 2795,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

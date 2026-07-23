@@ -1,6 +1,6 @@
 {
   "cityName": "בית דגן",
-  "lastUpdated": "2026-06-24T06:51:51.769Z",
+  "lastUpdated": "2026-07-21T09:04:31.891Z",
   "neighborhoods": [
     {
       "neighborhood": "נווה ים",
@@ -49,10 +49,10 @@
                     "pricePerSqm": 20482,
                     "totalPrice": 1700000,
                     "area": 83,
-                    "houseNum": "50.0",
+                    "houseNum": 50,
                     "streetName": "מבצע משה",
                     "blocksAway": 0,
-                    "dealDate": "2020-06-02T00:00:00Z"
+                    "dealDate": "2020-06-02T00:00:00.000Z"
                   }
                 }
               ]
@@ -115,10 +115,10 @@
                     "pricePerSqm": 30417,
                     "totalPrice": 3650000,
                     "area": 120,
-                    "houseNum": "46.0",
+                    "houseNum": 46,
                     "streetName": "מבצע משה",
                     "blocksAway": 4,
-                    "dealDate": "2025-06-23T00:00:00Z"
+                    "dealDate": "2025-06-23T00:00:00.000Z"
                   }
                 },
                 {
@@ -129,10 +129,10 @@
                     "pricePerSqm": 29000,
                     "totalPrice": 3480000,
                     "area": 120,
-                    "houseNum": "36.0",
+                    "houseNum": 36,
                     "streetName": "מבצע משה",
                     "blocksAway": 14,
-                    "dealDate": "2022-05-01T00:00:00Z"
+                    "dealDate": "2022-05-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -181,10 +181,10 @@
                     "pricePerSqm": 29859,
                     "totalPrice": 2120000,
                     "area": 71,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 10,
-                    "dealDate": "2022-05-02T00:00:00Z"
+                    "dealDate": "2022-05-02T00:00:00.000Z"
                   }
                 },
                 {
@@ -227,10 +227,10 @@
                     "pricePerSqm": 23611,
                     "totalPrice": 2550000,
                     "area": 108,
-                    "houseNum": "14.0",
+                    "houseNum": 14,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 12,
-                    "dealDate": "2022-03-02T00:00:00Z"
+                    "dealDate": "2022-03-02T00:00:00.000Z"
                   }
                 },
                 {
@@ -266,10 +266,10 @@
                     "pricePerSqm": 20833,
                     "totalPrice": 2500000,
                     "area": 120,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 2,
-                    "dealDate": "2021-11-09T00:00:00Z"
+                    "dealDate": "2021-11-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -280,10 +280,10 @@
                     "pricePerSqm": 20833,
                     "totalPrice": 2500000,
                     "area": 120,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "מבצע נחשון",
                     "blocksAway": 2,
-                    "dealDate": "2021-11-09T00:00:00Z"
+                    "dealDate": "2021-11-09T00:00:00.000Z"
                   }
                 }
               ]
@@ -294,8 +294,8 @@
     },
     {
       "neighborhood": "קרית גיורא",
-      "totalDeals": 260,
-      "dealsPerYearAvg": 37,
+      "totalDeals": 263,
+      "dealsPerYearAvg": 38,
       "streets": [
         {
           "streetName": "יקותיאל אדם",
@@ -315,10 +315,10 @@
                     "pricePerSqm": 22208,
                     "totalPrice": 1710000,
                     "area": 77,
-                    "houseNum": "28.0",
+                    "houseNum": 30,
                     "streetName": "יקותיאל אדם",
-                    "blocksAway": 9,
-                    "dealDate": "2025-02-18T00:00:00Z"
+                    "blocksAway": 7,
+                    "dealDate": "2025-02-18T00:00:00.000Z"
                   }
                 },
                 {
@@ -329,10 +329,10 @@
                     "pricePerSqm": 19737,
                     "totalPrice": 1500000,
                     "area": 76,
-                    "houseNum": "38.0",
+                    "houseNum": 40,
                     "streetName": "יקותיאל אדם",
-                    "blocksAway": 1,
-                    "dealDate": "2021-12-13T00:00:00Z"
+                    "blocksAway": 3,
+                    "dealDate": "2021-12-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -387,10 +387,10 @@
                     "pricePerSqm": 15632,
                     "totalPrice": 1360000,
                     "area": 87,
-                    "houseNum": "22.0",
+                    "houseNum": 22,
                     "streetName": "יקותיאל אדם",
                     "blocksAway": 15,
-                    "dealDate": "2020-08-11T00:00:00Z"
+                    "dealDate": "2020-08-11T00:00:00.000Z"
                   }
                 }
               ]
@@ -429,7 +429,7 @@
         },
         {
           "streetName": "סביון",
-          "totalDeals": 32,
+          "totalDeals": 31,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -442,10 +442,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 18,
+                    "count": 17,
                     "threshold": 15,
-                    "avgPricePerSqm": 30188,
-                    "avgTotalPrice": 2505222,
+                    "avgPricePerSqm": 30215,
+                    "avgTotalPrice": 2505647,
                     "avgArea": 84
                   }
                 },
@@ -492,10 +492,10 @@
                     "pricePerSqm": 16667,
                     "totalPrice": 1700000,
                     "area": 102,
-                    "houseNum": "21.0",
+                    "houseNum": 21,
                     "streetName": "סביון",
                     "blocksAway": 20,
-                    "dealDate": "2020-01-01T00:00:00Z"
+                    "dealDate": "2020-01-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -535,7 +535,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 533,
+  "totalDealsAnalyzed": 536,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

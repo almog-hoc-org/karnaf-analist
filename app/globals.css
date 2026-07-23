@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════════
+   Design system — ONE brand accent (indigo) on slate neutrals.
+   Green/red appear ONLY on trend values (TrendValue / trend-pill).
+   ═══════════════════════════════════════════════════════════════════ */
+
 @layer base {
   :root {
-    /* Light, premium palette — warm off-white with neutral cool accents */
-    --background: #f6f7fb;           /* warm-cool off-white */
+    --background: #f7f7fb;            /* cool off-white */
     --background-elevated: #ffffff;
     --foreground: #0f172a;            /* slate-900 */
     --foreground-muted: #475569;      /* slate-600 */
@@ -16,37 +20,34 @@
     --section-bg: #f1f5f9;
     --divider: #e2e8f0;
 
-    /* Saturated accents that pop on white */
-    --accent-cyan: #0891b2;           /* cyan-600 */
-    --accent-emerald: #059669;        /* emerald-600 */
-    --accent-amber: #d97706;          /* amber-600 */
-    --accent-red: #dc2626;            /* red-600 */
-    --accent-rose: #e11d48;           /* rose-600 */
-    --accent-purple: #7c3aed;         /* violet-600 */
-    --accent-blue: #2563eb;           /* blue-600 */
-    --accent-indigo: #4f46e5;         /* indigo-600 */
+    /* Brand */
+    --brand: #0e7490;                 /* navy-600 */
+    --brand-strong: #155e75;          /* navy-700 */
+    --brand-soft: #eef9fb;            /* navy-50 */
+    --brand-border: #b5e2ea;          /* navy-200 */
+
+    /* Trend-only accents — never decorative */
+    --trend-up: #059669;              /* emerald-600 */
+    --trend-down: #dc2626;            /* red-600 */
   }
 
   * { box-sizing: border-box; }
 
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
 
   body {
     background-color: var(--background);
     color: var(--foreground);
-    /* Very subtle radial highlights for depth without darkness */
+    /* single, calm brand tint — no rainbow */
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -5%, rgba(8, 145, 178, 0.06), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 90% 30%, rgba(124, 58, 237, 0.04), transparent 60%),
-      radial-gradient(ellipse 60% 50% at 10% 70%, rgba(5, 150, 105, 0.04), transparent 60%);
+      radial-gradient(ellipse 80% 50% at 50% -5%, rgba(14, 116, 144, 0.055), transparent 60%),
+      radial-gradient(ellipse 60% 45% at 8% 65%, rgba(51, 65, 85, 0.035), transparent 60%);
     background-attachment: fixed;
   }
 }
 
 @layer components {
-  /* ── Card — clean white with strong soft shadow ───────────── */
+  /* ── Card ─────────────────────────────────────────────────────── */
   .glass-card {
     @apply bg-white border border-slate-200 rounded-2xl;
     box-shadow:
@@ -56,20 +57,19 @@
   }
 
   .glass-card:hover {
-    border-color: #cbd5e1;
+    border-color: #b5e2ea;
     box-shadow:
       0 1px 2px rgba(15, 23, 42, 0.05),
       0 6px 16px -2px rgba(15, 23, 42, 0.08),
-      0 16px 40px -8px rgba(15, 23, 42, 0.08);
+      0 16px 40px -8px rgba(14, 116, 144, 0.10);
   }
 
-  /* ── Section container ───────────────────────────────────────── */
   .section-container {
     @apply bg-white border border-slate-200 rounded-2xl p-6;
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
-  /* ── KPI card with top accent bar ───────────────────────────── */
+  /* ── KPI card with top accent bar ─────────────────────────────── */
   .kpi-card {
     @apply relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-4 md:p-5 transition-all duration-300;
     box-shadow:
@@ -84,29 +84,30 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--accent-bar, linear-gradient(90deg, #0891b2, #06b6d4));
+    background: var(--accent-bar, linear-gradient(90deg, #155e75, #17879f));
   }
 
   .kpi-card:hover {
-    border-color: #cbd5e1;
+    border-color: #b5e2ea;
     transform: translateY(-2px);
     box-shadow:
       0 1px 2px rgba(15, 23, 42, 0.05),
       0 8px 20px -2px rgba(15, 23, 42, 0.1),
-      0 12px 40px -8px var(--accent-shadow, rgba(8, 145, 178, 0.15));
+      0 12px 40px -8px var(--accent-shadow, rgba(14, 116, 144, 0.16));
   }
 
-  /* ── Accent variants — top-bar + hover shadow tints ─────── */
-  .glow-cyan { --accent-bar: linear-gradient(90deg, #0891b2, #06b6d4); --accent-shadow: rgba(8, 145, 178, 0.2); }
+  /* ── Accent variants — brand + neutral + TREND-ONLY green/red ── */
+  .glow-indigo  { --accent-bar: linear-gradient(90deg, #155e75, #17879f); --accent-shadow: rgba(14, 116, 144, 0.18); }
+  .glow-slate   { --accent-bar: linear-gradient(90deg, #64748b, #94a3b8); --accent-shadow: rgba(100, 116, 139, 0.14); }
+  /* trend-only: */
   .glow-emerald { --accent-bar: linear-gradient(90deg, #059669, #10b981); --accent-shadow: rgba(5, 150, 105, 0.2); }
-  .glow-amber { --accent-bar: linear-gradient(90deg, #d97706, #f59e0b); --accent-shadow: rgba(217, 119, 6, 0.2); }
-  .glow-red { --accent-bar: linear-gradient(90deg, #dc2626, #ef4444); --accent-shadow: rgba(220, 38, 38, 0.2); }
-  .glow-purple { --accent-bar: linear-gradient(90deg, #7c3aed, #a855f7); --accent-shadow: rgba(124, 58, 237, 0.2); }
-  .glow-rose { --accent-bar: linear-gradient(90deg, #e11d48, #f43f5e); --accent-shadow: rgba(225, 29, 72, 0.2); }
-  .glow-blue { --accent-bar: linear-gradient(90deg, #2563eb, #3b82f6); --accent-shadow: rgba(37, 99, 235, 0.2); }
-  .glow-zinc { --accent-bar: linear-gradient(90deg, #64748b, #94a3b8); --accent-shadow: rgba(100, 116, 139, 0.15); }
+  .glow-red     { --accent-bar: linear-gradient(90deg, #dc2626, #ef4444); --accent-shadow: rgba(220, 38, 38, 0.2); }
+  /* legacy aliases → unified (kept so stray usages don't break) */
+  .glow-cyan, .glow-blue, .glow-purple, .glow-amber, .glow-rose, .glow-zinc {
+    --accent-bar: linear-gradient(90deg, #155e75, #17879f); --accent-shadow: rgba(14, 116, 144, 0.18);
+  }
 
-  /* ── Hero KPI card — extra premium, big stat ───────────── */
+  /* ── Hero KPI — single premium variant ────────────────────────── */
   .hero-kpi {
     @apply relative overflow-hidden rounded-2xl p-4 md:p-5 bg-white border border-slate-200;
     box-shadow:
@@ -118,67 +119,57 @@
   .hero-kpi::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 4px;
-    background: var(--hero-bar);
+    background: var(--hero-bar, linear-gradient(90deg, #155e75, #17879f));
   }
 
   .hero-kpi::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 60%;
-    background: var(--hero-tint, transparent);
-    opacity: 0.35;
+    background: var(--hero-tint, radial-gradient(ellipse 100% 80% at 50% 0%, rgba(14, 116, 144, 0.09), transparent 65%));
+    opacity: 0.4;
     pointer-events: none;
   }
 
   .hero-kpi > * { position: relative; z-index: 1; }
 
-  .hero-cyan {
-    --hero-bar: linear-gradient(90deg, #0891b2, #06b6d4);
-    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(8, 145, 178, 0.12), transparent 65%);
-  }
-  .hero-emerald {
-    --hero-bar: linear-gradient(90deg, #059669, #10b981);
-    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(5, 150, 105, 0.12), transparent 65%);
-  }
-  .hero-amber {
-    --hero-bar: linear-gradient(90deg, #d97706, #f59e0b);
-    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(217, 119, 6, 0.12), transparent 65%);
-  }
-  .hero-purple {
-    --hero-bar: linear-gradient(90deg, #7c3aed, #a855f7);
-    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(124, 58, 237, 0.12), transparent 65%);
-  }
-  .hero-rose {
-    --hero-bar: linear-gradient(90deg, #e11d48, #f43f5e);
-    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(225, 29, 72, 0.12), transparent 65%);
+  /* user rule: center the copy inside home display windows */
+  .hero-kpi { text-align: center; }
+  .hero-kpi .flex { justify-content: center; }
+  .hero-kpi .stat-label { display: block; width: 100%; text-align: center; }
+
+  /* single variant + legacy aliases collapse to it */
+  .hero-indigo,
+  .hero-cyan, .hero-emerald, .hero-amber, .hero-purple, .hero-rose {
+    --hero-bar: linear-gradient(90deg, #155e75, #17879f);
+    --hero-tint: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(14, 116, 144, 0.09), transparent 65%);
   }
 
-  /* ── Section header ───────────────────────────────────────────── */
+  /* ── Section header — one unified style ───────────────────────── */
   .section-header {
     @apply flex items-center gap-3 mb-5;
   }
 
   .section-header-icon {
     @apply w-10 h-10 rounded-xl flex items-center justify-center text-base flex-shrink-0;
+    background: var(--brand-soft);
+    color: var(--brand-strong);
+    border: 1px solid var(--brand-border);
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
   .section-header h2 {
-    @apply text-lg font-bold text-slate-900 tracking-tight;
+    @apply text-xl font-black text-slate-900 tracking-tight;
   }
 
   .section-header p {
     @apply text-xs text-slate-500 mt-0.5;
   }
 
-  /* ── Statistical typography ──────────────────────────────────── */
+  /* ── Statistical typography ───────────────────────────────────── */
   .stat-mega {
     @apply text-4xl md:text-5xl font-extrabold tracking-tight leading-none text-slate-900;
     font-feature-settings: "tnum" 1, "lnum" 1;
@@ -186,6 +177,11 @@
 
   .stat-hero {
     @apply text-6xl md:text-7xl font-black tracking-tighter leading-[0.85] text-slate-900;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  .stat-large {
+    @apply text-3xl md:text-4xl font-extrabold tracking-tight leading-none text-slate-900;
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
@@ -198,29 +194,19 @@
     @apply text-[11px] text-slate-500 font-semibold leading-tight uppercase tracking-wider;
   }
 
-  /* ── Divider ─────────────────────────────────────────────────── */
   .section-divider {
     @apply my-10 border-t border-slate-200;
   }
 
-  /* ── Trend pill (up/down/flat) ──────────────────────────────── */
+  /* ── Trend pill — the ONLY place green/red live besides TrendValue ── */
   .trend-pill {
     @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold;
   }
 
-  .trend-up {
-    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
-  }
+  .trend-up   { @apply bg-emerald-50 text-emerald-700 border border-emerald-200; }
+  .trend-down { @apply bg-rose-50 text-rose-700 border border-rose-200; }
+  .trend-flat { @apply bg-slate-100 text-slate-600 border border-slate-200; }
 
-  .trend-down {
-    @apply bg-rose-50 text-rose-700 border border-rose-200;
-  }
-
-  .trend-flat {
-    @apply bg-slate-100 text-slate-600 border border-slate-200;
-  }
-
-  /* ── Brand stamp ────────────────────────────────────────────── */
   .brand-stamp {
     @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full;
     @apply text-[10px] font-bold uppercase tracking-wider text-slate-600;
@@ -230,112 +216,77 @@
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
   }
 
-  /* ── Spark bars ───────────────────────────────────────────── */
-  .spark-bar {
-    @apply h-1 rounded-full overflow-hidden bg-slate-200;
+  .spark-bar  { @apply h-1 rounded-full overflow-hidden bg-slate-200; }
+  .spark-fill { @apply h-full rounded-full transition-all duration-500; }
+
+  /* ── Controls — unified pill/select/chip language ─────────────── */
+  .control-pill {
+    @apply px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer select-none;
+    @apply bg-white border-slate-200 text-slate-600 hover:border-indigo-300 hover:text-indigo-700;
   }
 
-  .spark-fill {
-    @apply h-full rounded-full transition-all duration-500;
+  .control-pill-active {
+    @apply bg-indigo-600 border-indigo-600 text-white hover:text-white hover:border-indigo-600;
   }
+
+  .control-select {
+    @apply rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-700;
+    @apply focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-400;
+  }
+
+  .chip-quality {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border;
+  }
+  .chip-quality-good { @apply bg-indigo-50 text-indigo-700 border-indigo-200; }
+  .chip-quality-warn { @apply bg-slate-100 text-slate-500 border-slate-300; }
 }
 
 @layer utilities {
   .font-heebo {
-    font-family: var(--font-heebo), "Heebo", "Assistant", "Rubik", system-ui, sans-serif;
-    /* Tighter line-height for Hebrew — Heebo's default leading is too loose */
+    font-family: var(--font-heebo), "Assistant", "Heebo", "Rubik", system-ui, sans-serif;
     line-height: 1.45;
-    /* Slightly improve number rendering */
     font-feature-settings: "kern" 1, "liga" 1, "tnum" 1;
   }
 
-  /* Stronger heading hierarchy with proper Hebrew tracking */
   .font-heebo h1, .font-heebo h2, .font-heebo h3, .font-heebo h4 {
     letter-spacing: -0.015em;
     line-height: 1.15;
   }
 
-  /* Modern text-balance for wide screens — wraps headlines beautifully */
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
 
-  /* ── Gradient text utilities ────────────────────────────────── */
-  .text-gradient-cyan {
-    background: linear-gradient(135deg, #0e7490, #0891b2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-emerald {
-    background: linear-gradient(135deg, #047857, #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-rose {
-    background: linear-gradient(135deg, #be123c, #e11d48);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-amber {
-    background: linear-gradient(135deg, #b45309, #d97706);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-purple {
-    background: linear-gradient(135deg, #6d28d9, #8b5cf6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
+  /* Brand headline gradient — the ONE gradient text.
+     Legacy color-gradient utilities collapse to plain slate-900. */
   .text-gradient-hero {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0891b2 100%);
+    background: linear-gradient(135deg, #0f172a 0%, #164e63 55%, #0e7490 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .tabular-nums {
-    font-feature-settings: "tnum" 1, "lnum" 1;
+  .text-gradient-cyan, .text-gradient-emerald, .text-gradient-rose,
+  .text-gradient-amber, .text-gradient-purple {
+    color: #0f172a;
   }
+
+  .tabular-nums { font-feature-settings: "tnum" 1, "lnum" 1; }
 }
 
-/* ── Custom scrollbar ───────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+/* ── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 5px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-  background-clip: content-box;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 transparent;
-}
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; background-clip: content-box; }
+* { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
 
 ::selection {
-  background-color: rgba(8, 145, 178, 0.2);
+  background-color: rgba(14, 116, 144, 0.18);
   color: #0f172a;
 }
 
@@ -344,6 +295,4 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-up {
-  animation: fadeUp 0.6s ease-out forwards;
-}
+.animate-fade-up { animation: fadeUp 0.6s ease-out forwards; }

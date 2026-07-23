@@ -1,6 +1,6 @@
 {
   "cityName": "נתיבות",
-  "lastUpdated": "2026-06-24T06:58:54.633Z",
+  "lastUpdated": "2026-07-21T09:17:30.380Z",
   "neighborhoods": [
     {
       "neighborhood": "קרית מנחם בגין",
@@ -9,7 +9,7 @@
       "streets": [
         {
           "streetName": "הרב גרשונוביץ",
-          "totalDeals": 304,
+          "totalDeals": 303,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -105,10 +105,10 @@
                     "pricePerSqm": 14308,
                     "totalPrice": 930000,
                     "area": 65,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הרב צבאן",
                     "blocksAway": 8,
-                    "dealDate": "2024-01-29T00:00:00Z"
+                    "dealDate": "2024-01-29T00:00:00.000Z"
                   }
                 },
                 {
@@ -119,10 +119,10 @@
                     "pricePerSqm": 14265,
                     "totalPrice": 970000,
                     "area": 68,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הרב צבאן",
                     "blocksAway": 8,
-                    "dealDate": "2023-12-19T00:00:00Z"
+                    "dealDate": "2023-12-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -133,10 +133,10 @@
                     "pricePerSqm": 9923,
                     "totalPrice": 645000,
                     "area": 65,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הרב צבאן",
                     "blocksAway": 8,
-                    "dealDate": "2021-03-14T00:00:00Z"
+                    "dealDate": "2021-03-14T00:00:00.000Z"
                   }
                 }
               ]
@@ -179,10 +179,10 @@
                     "pricePerSqm": 8444,
                     "totalPrice": 760000,
                     "area": 90,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הרב צבאן",
                     "blocksAway": 8,
-                    "dealDate": "2021-11-10T00:00:00Z"
+                    "dealDate": "2021-11-10T00:00:00.000Z"
                   }
                 }
               ]
@@ -225,10 +225,10 @@
                     "pricePerSqm": 11852,
                     "totalPrice": 1280000,
                     "area": 108,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "הרב צבאן",
                     "blocksAway": 8,
-                    "dealDate": "2020-09-16T00:00:00Z"
+                    "dealDate": "2020-09-16T00:00:00.000Z"
                   }
                 }
               ]
@@ -284,10 +284,10 @@
                     "pricePerSqm": 11500,
                     "totalPrice": 575000,
                     "area": 50,
-                    "houseNum": "1139.0",
+                    "houseNum": 1139,
                     "streetName": "חזני",
                     "blocksAway": 2,
-                    "dealDate": "2020-02-19T00:00:00Z"
+                    "dealDate": "2020-02-19T00:00:00.000Z"
                   }
                 }
               ]
@@ -380,10 +380,10 @@
                     "pricePerSqm": 10952,
                     "totalPrice": 690000,
                     "area": 63,
-                    "houseNum": "1342.0",
+                    "houseNum": 1342,
                     "streetName": "ז'בוטינסקי",
                     "blocksAway": 0,
-                    "dealDate": "2021-10-14T00:00:00Z"
+                    "dealDate": "2021-10-14T00:00:00.000Z"
                   }
                 }
               ]
@@ -446,10 +446,10 @@
                     "pricePerSqm": 14253,
                     "totalPrice": 1240000,
                     "area": 87,
-                    "houseNum": "1349.0",
+                    "houseNum": 1349,
                     "streetName": "ז'בוטינסקי",
                     "blocksAway": 7,
-                    "dealDate": "2025-03-05T00:00:00Z"
+                    "dealDate": "2025-03-05T00:00:00.000Z"
                   }
                 },
                 {
@@ -460,10 +460,10 @@
                     "pricePerSqm": 10278,
                     "totalPrice": 925000,
                     "area": 90,
-                    "houseNum": "1338.0",
+                    "houseNum": 1338,
                     "streetName": "ז'בוטינסקי",
                     "blocksAway": 4,
-                    "dealDate": "2023-05-29T00:00:00Z"
+                    "dealDate": "2023-05-29T00:00:00.000Z"
                   }
                 },
                 {
@@ -474,10 +474,10 @@
                     "pricePerSqm": 9158,
                     "totalPrice": 870000,
                     "area": 95,
-                    "houseNum": "1338.0",
+                    "houseNum": 1338,
                     "streetName": "ז'בוטינסקי",
                     "blocksAway": 4,
-                    "dealDate": "2021-12-29T00:00:00Z"
+                    "dealDate": "2021-12-29T00:00:00.000Z"
                   }
                 }
               ]
@@ -488,7 +488,7 @@
     },
     {
       "neighborhood": "ברית כהונה",
-      "totalDeals": 204,
+      "totalDeals": 205,
       "dealsPerYearAvg": 29,
       "streets": [
         {
@@ -659,10 +659,10 @@
                     "pricePerSqm": 5359,
                     "totalPrice": 396563,
                     "area": 74,
-                    "houseNum": "1071.0",
+                    "houseNum": 1071,
                     "streetName": "הרב משה חלפון הכהן",
                     "blocksAway": 0,
-                    "dealDate": "2022-05-17T00:00:00Z"
+                    "dealDate": "2022-05-17T00:00:00.000Z"
                   }
                 },
                 {
@@ -673,10 +673,10 @@
                     "pricePerSqm": 9357,
                     "totalPrice": 655000,
                     "area": 70,
-                    "houseNum": "1071.0",
+                    "houseNum": 1071,
                     "streetName": "הרב משה חלפון הכהן",
                     "blocksAway": 0,
-                    "dealDate": "2021-10-17T00:00:00Z"
+                    "dealDate": "2021-10-17T00:00:00.000Z"
                   }
                 }
               ]
@@ -695,10 +695,10 @@
                     "pricePerSqm": 2529,
                     "totalPrice": 220000,
                     "area": 87,
-                    "houseNum": "507.0",
+                    "houseNum": 507,
                     "streetName": "הרב משה חלפון הכהן",
                     "blocksAway": 564,
-                    "dealDate": "2025-03-19T00:00:00Z"
+                    "dealDate": "2025-03-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -709,10 +709,10 @@
                     "pricePerSqm": 9355,
                     "totalPrice": 870000,
                     "area": 93,
-                    "houseNum": "604.0",
+                    "houseNum": 604,
                     "streetName": "הרב משה חלפון הכהן",
                     "blocksAway": 467,
-                    "dealDate": "2023-01-04T00:00:00Z"
+                    "dealDate": "2023-01-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -727,7 +727,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1265,
+  "totalDealsAnalyzed": 1247,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

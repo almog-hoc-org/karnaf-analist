@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
+import { BRAND, INK, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 
 interface SalesChartProps {
   sales2023: number | null;
@@ -53,30 +54,24 @@ export default function SalesChart({
         >
           <CartesianGrid
             strokeDasharray="3 3"
-            stroke="#e2e8f0"
+            stroke={GRID}
             vertical={false}
           />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#64748b", fontSize: 12 }}
+            tick={{ fill: AXIS, fontSize: 12 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: "#64748b", fontSize: 11 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             width={45}
             tickFormatter={(v: number) => v.toLocaleString("he-IL")}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              color: "#0f172a",
-              fontSize: 12,
-            }}
+            contentStyle={{ ...tooltipStyle, color: INK }}
             formatter={(value: number) => [
               value.toLocaleString("he-IL"),
               "עסקאות",
@@ -85,7 +80,7 @@ export default function SalesChart({
           />
           <Bar
             dataKey="עסקאות"
-            fill="#a78bfa"
+            fill={BRAND}
             radius={[4, 4, 0, 0]}
             maxBarSize={70}
           />

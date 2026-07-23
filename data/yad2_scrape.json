@@ -1,122 +1,675 @@
 {
-  "fetchedAt": "2026-05-17",
+  "fetchedAt": "2026-06-25",
   "endpoint": "https://yadata.yad2.co.il/market/sale?city={cbs_code}",
-  "cities": [
-    {"city_name":"תל אביב-יפו","cbs_code":"5000","new_properties":5080,"new_properties_yoy":4,"secondhand_properties":6895,"secondhand_yoy":-6,"avg_days_on_market":39,"days_yoy":3,"buyers_count":67539,"buyers_yoy":-19,"market_type":"balanced","households":210390,"avg_household_size":2.2},
-    {"city_name":"ירושלים","cbs_code":"3000","new_properties":1594,"new_properties_yoy":21,"secondhand_properties":4731,"secondhand_yoy":4,"avg_days_on_market":43,"days_yoy":-7,"buyers_count":68352,"buyers_yoy":18,"market_type":"sellers","households":269880,"avg_household_size":3.7},
-    {"city_name":"חיפה","cbs_code":"4000","new_properties":1099,"new_properties_yoy":7,"secondhand_properties":4388,"secondhand_yoy":13,"avg_days_on_market":52,"days_yoy":2,"buyers_count":90568,"buyers_yoy":43,"market_type":"balanced","households":115850,"avg_household_size":2.4},
-    {"city_name":"פתח תקווה","cbs_code":"7900","new_properties":950,"new_properties_yoy":5,"secondhand_properties":2001,"secondhand_yoy":10,"avg_days_on_market":44,"days_yoy":-2,"buyers_count":31950,"buyers_yoy":-29,"market_type":"balanced","households":90265,"avg_household_size":2.8},
-    {"city_name":"ראשון לציון","cbs_code":"8300","new_properties":1209,"new_properties_yoy":12,"secondhand_properties":2576,"secondhand_yoy":4,"avg_days_on_market":45,"days_yoy":-2,"buyers_count":39098,"buyers_yoy":-16,"market_type":"balanced","households":92955,"avg_household_size":2.6},
-    {"city_name":"נתניה","cbs_code":"7400","new_properties":1372,"new_properties_yoy":31,"secondhand_properties":2467,"secondhand_yoy":6,"avg_days_on_market":48,"days_yoy":-2,"buyers_count":29139,"buyers_yoy":-10,"market_type":"balanced","households":80540,"avg_household_size":2.7},
-    {"city_name":"בני ברק","cbs_code":"6100","new_properties":339,"new_properties_yoy":26,"secondhand_properties":657,"secondhand_yoy":-16,"avg_days_on_market":48,"days_yoy":-2,"buyers_count":9247,"buyers_yoy":-30,"market_type":"balanced","households":49820,"avg_household_size":4.2},
-    {"city_name":"באר שבע","cbs_code":"9000","new_properties":1065,"new_properties_yoy":13,"secondhand_properties":3923,"secondhand_yoy":-1,"avg_days_on_market":51,"days_yoy":null,"buyers_count":33902,"buyers_yoy":-24,"market_type":"balanced","households":81570,"avg_household_size":2.6},
-    {"city_name":"חולון","cbs_code":"6600","new_properties":609,"new_properties_yoy":2,"secondhand_properties":1585,"secondhand_yoy":-7,"avg_days_on_market":47,"days_yoy":null,"buyers_count":20771,"buyers_yoy":-20,"market_type":"balanced","households":70991,"avg_household_size":2.7},
-    {"city_name":"בית שמש","cbs_code":"2610","new_properties":542,"new_properties_yoy":2,"secondhand_properties":447,"secondhand_yoy":14,"avg_days_on_market":47,"days_yoy":-10,"buyers_count":14136,"buyers_yoy":-10,"market_type":"sellers","households":32660,"avg_household_size":4.5},
-    {"city_name":"רמת גן","cbs_code":"8600","new_properties":1463,"new_properties_yoy":5,"secondhand_properties":1492,"secondhand_yoy":6,"avg_days_on_market":46,"days_yoy":2,"buyers_count":28619,"buyers_yoy":-19,"market_type":"balanced","households":69238,"avg_household_size":2.3},
-    {"city_name":"אשקלון","cbs_code":"7100","new_properties":1359,"new_properties_yoy":20,"secondhand_properties":1825,"secondhand_yoy":null,"avg_days_on_market":48,"days_yoy":-2,"buyers_count":26776,"buyers_yoy":-30,"market_type":"balanced","households":52415,"avg_household_size":2.8},
-    {"city_name":"רחובות","cbs_code":"8400","new_properties":697,"new_properties_yoy":11,"secondhand_properties":1236,"secondhand_yoy":10,"avg_days_on_market":50,"days_yoy":2,"buyers_count":23126,"buyers_yoy":-19,"market_type":"balanced","households":51040,"avg_household_size":2.9},
-    {"city_name":"בת ים","cbs_code":"6200","new_properties":846,"new_properties_yoy":11,"secondhand_properties":1599,"secondhand_yoy":-7,"avg_days_on_market":49,"days_yoy":2,"buyers_count":16718,"buyers_yoy":-23,"market_type":"buyers","households":53199,"avg_household_size":2.4},
-    {"city_name":"הרצליה","cbs_code":"6400","new_properties":1059,"new_properties_yoy":-1,"secondhand_properties":1597,"secondhand_yoy":10,"avg_days_on_market":50,"days_yoy":-4,"buyers_count":21867,"buyers_yoy":-20,"market_type":"balanced","households":40603,"avg_household_size":2.5},
-    {"city_name":"חדרה","cbs_code":"6500","new_properties":620,"new_properties_yoy":19,"secondhand_properties":945,"secondhand_yoy":null,"avg_days_on_market":49,"days_yoy":-4,"buyers_count":18036,"buyers_yoy":-16,"market_type":"balanced","households":37510,"avg_household_size":2.7},
-    {"city_name":"מודיעין-מכבים-רעות","cbs_code":"1200","new_properties":430,"new_properties_yoy":21,"secondhand_properties":649,"secondhand_yoy":5,"avg_days_on_market":49,"days_yoy":-8,"buyers_count":15456,"buyers_yoy":-24,"market_type":"balanced","households":27890,"avg_household_size":3.3},
-    {"city_name":"כפר סבא","cbs_code":"6900","new_properties":343,"new_properties_yoy":8,"secondhand_properties":997,"secondhand_yoy":-6,"avg_days_on_market":50,"days_yoy":4,"buyers_count":13341,"buyers_yoy":-17,"market_type":"balanced","households":35604,"avg_household_size":2.7},
-    {"city_name":"לוד","cbs_code":"7000","new_properties":302,"new_properties_yoy":38,"secondhand_properties":786,"secondhand_yoy":-5,"avg_days_on_market":48,"days_yoy":-4,"buyers_count":11858,"buyers_yoy":-28,"market_type":"balanced","households":26700,"avg_household_size":3.2},
-    {"city_name":"רמלה","cbs_code":"8500","new_properties":379,"new_properties_yoy":7,"secondhand_properties":808,"secondhand_yoy":-1,"avg_days_on_market":49,"days_yoy":-2,"buyers_count":10096,"buyers_yoy":-28,"market_type":"buyers","households":24931,"avg_household_size":3.1},
-    {"city_name":"מודיעין עילית","cbs_code":"3797","new_properties":50,"new_properties_yoy":43,"secondhand_properties":97,"secondhand_yoy":18,"avg_days_on_market":53,"days_yoy":null,"buyers_count":2291,"buyers_yoy":-10,"market_type":"buyers","households":14306,"avg_household_size":5.9},
-    {"city_name":"רעננה","cbs_code":"8700","new_properties":797,"new_properties_yoy":14,"secondhand_properties":813,"secondhand_yoy":-5,"avg_days_on_market":48,"days_yoy":-2,"buyers_count":13308,"buyers_yoy":-10,"market_type":"balanced","households":27331,"avg_household_size":2.8},
-    {"city_name":"ראש העין","cbs_code":"2640","new_properties":740,"new_properties_yoy":-5,"secondhand_properties":286,"secondhand_yoy":13,"avg_days_on_market":51,"days_yoy":6,"buyers_count":13793,"buyers_yoy":-18,"market_type":"balanced","households":23716,"avg_household_size":3.2},
-    {"city_name":"נצרת","cbs_code":"7300","new_properties":8,"new_properties_yoy":null,"secondhand_properties":5,"secondhand_yoy":null,"avg_days_on_market":55,"days_yoy":62,"buyers_count":492,"buyers_yoy":null,"market_type":"buyers","households":24079,"avg_household_size":3.3},
-    {"city_name":"קריית גת","cbs_code":"2630","new_properties":480,"new_properties_yoy":-1,"secondhand_properties":516,"secondhand_yoy":-4,"avg_days_on_market":51,"days_yoy":null,"buyers_count":11056,"buyers_yoy":-24,"market_type":"balanced","households":20240,"avg_household_size":3.1},
-    {"city_name":"נהרייה","cbs_code":"9100","new_properties":678,"new_properties_yoy":17,"secondhand_properties":753,"secondhand_yoy":11,"avg_days_on_market":51,"days_yoy":4,"buyers_count":12006,"buyers_yoy":-22,"market_type":"balanced","households":23807,"avg_household_size":2.6},
-    {"city_name":"הוד השרון","cbs_code":"9700","new_properties":511,"new_properties_yoy":9,"secondhand_properties":740,"secondhand_yoy":1,"avg_days_on_market":48,"days_yoy":-2,"buyers_count":11551,"buyers_yoy":-14,"market_type":"balanced","households":22169,"avg_household_size":2.9},
-    {"city_name":"עפולה","cbs_code":"7700","new_properties":467,"new_properties_yoy":null,"secondhand_properties":485,"secondhand_yoy":-11,"avg_days_on_market":49,"days_yoy":-2,"buyers_count":14482,"buyers_yoy":-8,"market_type":"balanced","households":21410,"avg_household_size":2.8},
-    {"city_name":"ביתר עילית","cbs_code":"3780","new_properties":28,"new_properties_yoy":-13,"secondhand_properties":59,"secondhand_yoy":-19,"avg_days_on_market":41,"days_yoy":5,"buyers_count":4016,"buyers_yoy":null,"market_type":"sellers","households":11450,"avg_household_size":5.4},
-    {"city_name":"קריית אתא","cbs_code":"6800","new_properties":329,"new_properties_yoy":37,"secondhand_properties":841,"secondhand_yoy":18,"avg_days_on_market":51,"days_yoy":6,"buyers_count":20708,"buyers_yoy":25,"market_type":"balanced","households":22127,"avg_household_size":2.7},
-    {"city_name":"גבעתיים","cbs_code":"6300","new_properties":489,"new_properties_yoy":-12,"secondhand_properties":488,"secondhand_yoy":-7,"avg_days_on_market":49,"days_yoy":7,"buyers_count":11578,"buyers_yoy":-14,"market_type":"balanced","households":24081,"avg_household_size":2.4},
-    {"city_name":"יבנה","cbs_code":"2660","new_properties":426,"new_properties_yoy":6,"secondhand_properties":461,"secondhand_yoy":24,"avg_days_on_market":48,"days_yoy":-4,"buyers_count":10002,"buyers_yoy":-20,"market_type":"balanced","households":17020,"avg_household_size":3.2},
-    {"city_name":"אילת","cbs_code":"2600","new_properties":196,"new_properties_yoy":7,"secondhand_properties":556,"secondhand_yoy":-19,"avg_days_on_market":48,"days_yoy":-11,"buyers_count":11111,"buyers_yoy":-11,"market_type":"sellers","households":22270,"avg_household_size":2.4},
-    {"city_name":"עכו","cbs_code":"7600","new_properties":114,"new_properties_yoy":18,"secondhand_properties":390,"secondhand_yoy":15,"avg_days_on_market":45,"days_yoy":-8,"buyers_count":6694,"buyers_yoy":-48,"market_type":"balanced","households":17740,"avg_household_size":2.8},
-    {"city_name":"טבריה","cbs_code":"6700","new_properties":250,"new_properties_yoy":-2,"secondhand_properties":715,"secondhand_yoy":4,"avg_days_on_market":49,"days_yoy":null,"buyers_count":10971,"buyers_yoy":-24,"market_type":"balanced","households":16980,"avg_household_size":2.8},
-    {"city_name":"קריית מוצקין","cbs_code":"8200","new_properties":317,"new_properties_yoy":-14,"secondhand_properties":674,"secondhand_yoy":10,"avg_days_on_market":48,"days_yoy":2,"buyers_count":21569,"buyers_yoy":33,"market_type":"buyers","households":19461,"avg_household_size":2.5},
-    {"city_name":"אלעד","cbs_code":"1309","new_properties":27,"new_properties_yoy":50,"secondhand_properties":167,"secondhand_yoy":7,"avg_days_on_market":40,"days_yoy":-15,"buyers_count":2438,"buyers_yoy":-19,"market_type":"sellers","households":9593,"avg_household_size":5.0},
-    {"city_name":"רמת השרון","cbs_code":"2650","new_properties":403,"new_properties_yoy":12,"secondhand_properties":762,"secondhand_yoy":13,"avg_days_on_market":55,"days_yoy":10,"buyers_count":10452,"buyers_yoy":-12,"market_type":"balanced","households":17066,"avg_household_size":2.8},
-    {"city_name":"כרמיאל","cbs_code":"1139","new_properties":63,"new_properties_yoy":34,"secondhand_properties":594,"secondhand_yoy":11,"avg_days_on_market":49,"days_yoy":-4,"buyers_count":8558,"buyers_yoy":4,"market_type":"balanced","households":17890,"avg_household_size":2.7},
-    {"city_name":"נס ציונה","cbs_code":"7200","new_properties":163,"new_properties_yoy":9,"secondhand_properties":347,"secondhand_yoy":-9,"avg_days_on_market":47,"days_yoy":-2,"buyers_count":11521,"buyers_yoy":-1,"market_type":"sellers","households":15330,"avg_household_size":3.1},
-    {"city_name":"קריית ביאליק","cbs_code":"9500","new_properties":270,"new_properties_yoy":17,"secondhand_properties":594,"secondhand_yoy":3,"avg_days_on_market":48,"days_yoy":null,"buyers_count":19638,"buyers_yoy":38,"market_type":"balanced","households":17492,"avg_household_size":2.5},
-    {"city_name":"פרדס חנה-כרכור","cbs_code":"7800","new_properties":271,"new_properties_yoy":1,"secondhand_properties":371,"secondhand_yoy":-8,"avg_days_on_market":47,"days_yoy":24,"buyers_count":11780,"buyers_yoy":2,"market_type":"balanced","households":14744,"avg_household_size":2.9},
-    {"city_name":"נוף הגליל","cbs_code":"1061","new_properties":27,"new_properties_yoy":-4,"secondhand_properties":324,"secondhand_yoy":2,"avg_days_on_market":52,"days_yoy":6,"buyers_count":6344,"buyers_yoy":30,"market_type":"sellers","households":16394,"avg_household_size":2.6},
-    {"city_name":"קריית אונו","cbs_code":"2620","new_properties":345,"new_properties_yoy":25,"secondhand_properties":352,"secondhand_yoy":14,"avg_days_on_market":46,"days_yoy":-8,"buyers_count":12040,"buyers_yoy":-9,"market_type":"sellers","households":14030,"avg_household_size":2.8},
-    {"city_name":"קריית ים","cbs_code":"9600","new_properties":91,"new_properties_yoy":-15,"secondhand_properties":577,"secondhand_yoy":2,"avg_days_on_market":49,"days_yoy":-2,"buyers_count":13901,"buyers_yoy":1,"market_type":"balanced","households":15700,"avg_household_size":2.4},
-    {"city_name":"חריש","cbs_code":"1247","new_properties":947,"new_properties_yoy":24,"secondhand_properties":132,"secondhand_yoy":-27,"avg_days_on_market":48,"days_yoy":-13,"buyers_count":10474,"buyers_yoy":-14,"market_type":"balanced","households":9550,"avg_household_size":3.3},
-    {"city_name":"אור יהודה","cbs_code":"2400","new_properties":231,"new_properties_yoy":43,"secondhand_properties":316,"secondhand_yoy":11,"avg_days_on_market":42,"days_yoy":-9,"buyers_count":6352,"buyers_yoy":-24,"market_type":"buyers","households":12053,"avg_household_size":3.0},
-    {"city_name":"דימונה","cbs_code":"2200","new_properties":108,"new_properties_yoy":-23,"secondhand_properties":356,"secondhand_yoy":null,"avg_days_on_market":53,"days_yoy":-2,"buyers_count":6957,"buyers_yoy":-34,"market_type":"balanced","households":12970,"avg_household_size":2.8},
-    {"city_name":"צפת","cbs_code":"8000","new_properties":43,"new_properties_yoy":10,"secondhand_properties":282,"secondhand_yoy":10,"avg_days_on_market":41,"days_yoy":-20,"buyers_count":5206,"buyers_yoy":-6,"market_type":"balanced","households":10880,"avg_household_size":3.4},
-    {"city_name":"באר יעקב","cbs_code":"2530","new_properties":322,"new_properties_yoy":21,"secondhand_properties":205,"secondhand_yoy":5,"avg_days_on_market":50,"days_yoy":-2,"buyers_count":8960,"buyers_yoy":-5,"market_type":"balanced","households":8875,"avg_household_size":3.4},
-    {"city_name":"שדרות","cbs_code":"1031","new_properties":273,"new_properties_yoy":-3,"secondhand_properties":206,"secondhand_yoy":-6,"avg_days_on_market":49,"days_yoy":-4,"buyers_count":8790,"buyers_yoy":-26,"market_type":"balanced","households":9940,"avg_household_size":3.0},
-    {"city_name":"מעלה אדומים","cbs_code":"3616","new_properties":27,"new_properties_yoy":-21,"secondhand_properties":523,"secondhand_yoy":-2,"avg_days_on_market":44,"days_yoy":10,"buyers_count":15860,"buyers_yoy":null,"market_type":"sellers","households":10980,"avg_household_size":3.3},
-    {"city_name":"טירת כרמל","cbs_code":"2100","new_properties":351,"new_properties_yoy":42,"secondhand_properties":215,"secondhand_yoy":19,"avg_days_on_market":47,"days_yoy":-8,"buyers_count":11152,"buyers_yoy":36,"market_type":"sellers","households":10640,"avg_household_size":2.7},
-    {"city_name":"יהוד-מונוסון","cbs_code":"9400","new_properties":110,"new_properties_yoy":-23,"secondhand_properties":206,"secondhand_yoy":-13,"avg_days_on_market":52,"days_yoy":16,"buyers_count":5058,"buyers_yoy":-35,"market_type":"balanced","households":10860,"avg_household_size":2.8},
-    {"city_name":"גדרה","cbs_code":"2550","new_properties":223,"new_properties_yoy":47,"secondhand_properties":261,"secondhand_yoy":54,"avg_days_on_market":43,"days_yoy":-12,"buyers_count":7104,"buyers_yoy":-20,"market_type":"balanced","households":8460,"avg_household_size":3.3},
-    {"city_name":"ערד","cbs_code":"2560","new_properties":85,"new_properties_yoy":93,"secondhand_properties":394,"secondhand_yoy":-2,"avg_days_on_market":45,"days_yoy":-20,"buyers_count":4270,"buyers_yoy":-42,"market_type":"buyers","households":9209,"avg_household_size":2.9},
-    {"city_name":"קריית מלאכי","cbs_code":"1034","new_properties":282,"new_properties_yoy":10,"secondhand_properties":282,"secondhand_yoy":12,"avg_days_on_market":55,"days_yoy":2,"buyers_count":5472,"buyers_yoy":-22,"market_type":"balanced","households":7760,"avg_household_size":3.3},
-    {"city_name":"מבשרת ציון","cbs_code":"1015","new_properties":108,"new_properties_yoy":-7,"secondhand_properties":182,"secondhand_yoy":-2,"avg_days_on_market":45,"days_yoy":-4,"buyers_count":5531,"buyers_yoy":-2,"market_type":"balanced","households":8790,"avg_household_size":2.9},
-    {"city_name":"גבעת זאב","cbs_code":"3730","new_properties":82,"new_properties_yoy":-5,"secondhand_properties":204,"secondhand_yoy":3,"avg_days_on_market":48,"days_yoy":4,"buyers_count":15183,"buyers_yoy":null,"market_type":"buyers","households":3700,"avg_household_size":4.1},
-    {"city_name":"אור עקיבא","cbs_code":"1020","new_properties":486,"new_properties_yoy":19,"secondhand_properties":267,"secondhand_yoy":-10,"avg_days_on_market":50,"days_yoy":4,"buyers_count":6772,"buyers_yoy":-11,"market_type":"balanced","households":7941,"avg_household_size":2.7},
-    {"city_name":"קריית שמונה","cbs_code":"2800","new_properties":65,"new_properties_yoy":35,"secondhand_properties":147,"secondhand_yoy":-2,"avg_days_on_market":49,"days_yoy":17,"buyers_count":9017,"buyers_yoy":23,"market_type":"sellers","households":9170,"avg_household_size":2.5},
-    {"city_name":"זכרון יעקב","cbs_code":"9300","new_properties":121,"new_properties_yoy":25,"secondhand_properties":231,"secondhand_yoy":3,"avg_days_on_market":41,"days_yoy":32,"buyers_count":11218,"buyers_yoy":13,"market_type":"buyers","households":7709,"avg_household_size":3.0},
-    {"city_name":"שוהם","cbs_code":"1304","new_properties":65,"new_properties_yoy":-11,"secondhand_properties":124,"secondhand_yoy":38,"avg_days_on_market":55,"days_yoy":null,"buyers_count":4410,"buyers_yoy":-4,"market_type":"sellers","households":6370,"avg_household_size":3.3},
-    {"city_name":"מעלות-תרשיחא","cbs_code":"1063","new_properties":76,"new_properties_yoy":-4,"secondhand_properties":181,"secondhand_yoy":26,"avg_days_on_market":48,"days_yoy":4,"buyers_count":5346,"buyers_yoy":11,"market_type":"balanced","households":7720,"avg_household_size":2.9},
-    {"city_name":"נשר","cbs_code":"2500","new_properties":52,"new_properties_yoy":-2,"secondhand_properties":378,"secondhand_yoy":10,"avg_days_on_market":45,"days_yoy":5,"buyers_count":6074,"buyers_yoy":-6,"market_type":"balanced","households":9760,"avg_household_size":2.4},
-    {"city_name":"אריאל","cbs_code":"3570","new_properties":69,"new_properties_yoy":35,"secondhand_properties":210,"secondhand_yoy":-13,"avg_days_on_market":51,"days_yoy":null,"buyers_count":5316,"buyers_yoy":25,"market_type":"sellers","households":5630,"avg_household_size":2.6},
-    {"city_name":"בית שאן","cbs_code":"9200","new_properties":49,"new_properties_yoy":14,"secondhand_properties":118,"secondhand_yoy":-2,"avg_days_on_market":54,"days_yoy":13,"buyers_count":5202,"buyers_yoy":-18,"market_type":"sellers","households":6640,"avg_household_size":2.9},
-    {"city_name":"קריית טבעון","cbs_code":"2300","new_properties":41,"new_properties_yoy":-32,"secondhand_properties":140,"secondhand_yoy":-9,"avg_days_on_market":56,"days_yoy":17,"buyers_count":7080,"buyers_yoy":17,"market_type":"balanced","households":6490,"avg_household_size":2.7},
-    {"city_name":"בנימינה-גבעת עדה","cbs_code":"9800","new_properties":66,"new_properties_yoy":27,"secondhand_properties":85,"secondhand_yoy":-9,"avg_days_on_market":50,"days_yoy":-4,"buyers_count":4553,"buyers_yoy":-5,"market_type":"buyers","households":4600,"avg_household_size":3.3},
-    {"city_name":"אפרת","cbs_code":"3650","new_properties":27,"new_properties_yoy":42,"secondhand_properties":62,"secondhand_yoy":3,"avg_days_on_market":64,"days_yoy":21,"buyers_count":3827,"buyers_yoy":null,"market_type":"sellers","households":3120,"avg_household_size":3.8},
-    {"city_name":"מיתר","cbs_code":"1268","new_properties":85,"new_properties_yoy":37,"secondhand_properties":54,"secondhand_yoy":-18,"avg_days_on_market":55,"days_yoy":4,"buyers_count":2623,"buyers_yoy":-33,"market_type":"balanced","households":3160,"avg_household_size":3.6},
-    {"city_name":"חצור הגלילית","cbs_code":"2034","new_properties":13,"new_properties_yoy":-32,"secondhand_properties":40,"secondhand_yoy":null,"avg_days_on_market":35,"days_yoy":35,"buyers_count":1529,"buyers_yoy":-13,"market_type":"balanced","households":3450,"avg_household_size":3.4},
-    {"city_name":"קרני שומרון","cbs_code":"3640","new_properties":43,"new_properties_yoy":43,"secondhand_properties":80,"secondhand_yoy":14,"avg_days_on_market":38,"days_yoy":-19,"buyers_count":2211,"buyers_yoy":27,"market_type":"balanced","households":2130,"avg_household_size":3.0},
-    {"city_name":"צור הדסה","cbs_code":"1113","new_properties":82,"new_properties_yoy":-23,"secondhand_properties":85,"secondhand_yoy":8,"avg_days_on_market":57,"days_yoy":6,"buyers_count":2947,"buyers_yoy":-23,"market_type":"balanced","households":2990,"avg_household_size":3.5},
-    {"city_name":"אורנית","cbs_code":"3760","new_properties":29,"new_properties_yoy":4,"secondhand_properties":105,"secondhand_yoy":-5,"avg_days_on_market":53,"days_yoy":13,"buyers_count":1726,"buyers_yoy":-25,"market_type":"balanced","households":2400,"avg_household_size":3.4},
-    {"city_name":"כוכב יאיר","cbs_code":"1224","new_properties":17,"new_properties_yoy":-11,"secondhand_properties":84,"secondhand_yoy":12,"avg_days_on_market":56,"days_yoy":12,"buyers_count":2082,"buyers_yoy":9,"market_type":"balanced","households":2920,"avg_household_size":3.1},
-    {"city_name":"קצרין","cbs_code":"4100","new_properties":43,"new_properties_yoy":-2,"secondhand_properties":67,"secondhand_yoy":2,"avg_days_on_market":48,"days_yoy":null,"buyers_count":4755,"buyers_yoy":-3,"market_type":"sellers","households":2720,"avg_household_size":2.8},
-    {"city_name":"להבים","cbs_code":"1271","new_properties":46,"new_properties_yoy":10,"secondhand_properties":93,"secondhand_yoy":12,"avg_days_on_market":53,"days_yoy":-5,"buyers_count":2149,"buyers_yoy":-19,"market_type":"buyers","households":2530,"avg_household_size":3.1},
-    {"city_name":"קריית ארבע","cbs_code":"3611","new_properties":6,"new_properties_yoy":null,"secondhand_properties":47,"secondhand_yoy":31,"avg_days_on_market":46,"days_yoy":-8,"buyers_count":2599,"buyers_yoy":null,"market_type":"sellers","households":null,"avg_household_size":null},
-    {"city_name":"אלפי מנשה","cbs_code":"3750","new_properties":36,"new_properties_yoy":100,"secondhand_properties":114,"secondhand_yoy":16,"avg_days_on_market":40,"days_yoy":11,"buyers_count":1912,"buyers_yoy":-6,"market_type":"balanced","households":null,"avg_household_size":null},
-    {"city_name":"קריית יערים","cbs_code":"1137","new_properties":20,"new_properties_yoy":186,"secondhand_properties":12,"secondhand_yoy":71,"avg_days_on_market":38,"days_yoy":-34,"buyers_count":1220,"buyers_yoy":50,"market_type":"sellers","households":1566,"avg_household_size":4.6},
-    {"city_name":"צור יצחק","cbs_code":"1345","new_properties":75,"new_properties_yoy":3,"secondhand_properties":58,"secondhand_yoy":-15,"avg_days_on_market":54,"days_yoy":4,"buyers_count":2361,"buyers_yoy":3,"market_type":"balanced","households":2140,"avg_household_size":3.4},
-    {"city_name":"כוכב יעקב","cbs_code":"3779","new_properties":7,"new_properties_yoy":null,"secondhand_properties":12,"secondhand_yoy":-37,"avg_days_on_market":41,"days_yoy":-16,"buyers_count":1108,"buyers_yoy":-29,"market_type":"balanced","households":null,"avg_household_size":null}
-  ],
+  "cities": [],
   "skipped": [
-    {"city_name":"אשדוד","cbs_code":"70","reason":"Yadata has no data"},
-    {"city_name":"רהט","cbs_code":"1161","reason":"Yadata has no data"},
-    {"city_name":"טייבה","cbs_code":"2730","reason":"Yadata has no data"},
-    {"city_name":"שפרעם","cbs_code":"8800","reason":"Yadata has no data"},
-    {"city_name":"אום אל-פחם","cbs_code":"2710","reason":"Yadata has no data"},
-    {"city_name":"נתיבות","cbs_code":"246","reason":"Yadata has no data"},
-    {"city_name":"אופקים","cbs_code":"31","reason":"Yadata has no data"},
-    {"city_name":"טמרה","cbs_code":"8900","reason":"Yadata has no data"},
-    {"city_name":"סח'נין","cbs_code":"7500","reason":"Yadata has no data"},
-    {"city_name":"באקה אל-גרביה","cbs_code":"6000","reason":"Yadata has no data"},
-    {"city_name":"כפר יונה","cbs_code":"168","reason":"Yadata has no data"},
-    {"city_name":"גבעת שמואל","cbs_code":"681","reason":"Yadata has no data"},
-    {"city_name":"מגדל העמק","cbs_code":"874","reason":"Yadata has no data"},
-    {"city_name":"כפר קאסם","cbs_code":"634","reason":"Yadata has no data"},
-    {"city_name":"גני תקווה","cbs_code":"229","reason":"Yadata has no data"},
-    {"city_name":"גן יבנה","cbs_code":"166","reason":"Yadata has no data"},
-    {"city_name":"יקנעם עילית","cbs_code":"240","reason":"Yadata has no data"},
-    {"city_name":"קדימה-צורן","cbs_code":"195","reason":"Yadata has no data"},
-    {"city_name":"מזכרת בתיה","cbs_code":"28","reason":"Yadata has no data"},
-    {"city_name":"אבן יהודה","cbs_code":"182","reason":"Yadata has no data"},
-    {"city_name":"רכסים","cbs_code":"922","reason":"Yadata has no data"},
-    {"city_name":"תל מונד","cbs_code":"154","reason":"Yadata has no data"},
-    {"city_name":"אזור","cbs_code":"565","reason":"Yadata has no data"},
-    {"city_name":"ירוחם","cbs_code":"831","reason":"Yadata has no data"},
-    {"city_name":"עתלית","cbs_code":"53","reason":"Yadata has no data"},
-    {"city_name":"קריית עקרון","cbs_code":"469","reason":"Yadata has no data"},
-    {"city_name":"עומר","cbs_code":"666","reason":"Yadata has no data"},
-    {"city_name":"שלומי","cbs_code":"812","reason":"Yadata has no data"},
-    {"city_name":"פרדסייה","cbs_code":"171","reason":"Yadata has no data"},
-    {"city_name":"רמת ישי","cbs_code":"122","reason":"Yadata has no data"},
-    {"city_name":"בית דגן","cbs_code":"466","reason":"Yadata has no data"}
+    {
+      "city_name": "ירושלים",
+      "reason": "cloudflare_challenge"
+    },
+    {
+      "city_name": "תל אביב-יפו",
+      "reason": "error: Protocol error (Runtime.evaluate): Target closed"
+    },
+    {
+      "city_name": "חיפה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "פתח תקווה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ראשון לציון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נתניה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בני ברק",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אשדוד",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "באר שבע",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "חולון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בית שמש",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רמת גן",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אשקלון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רחובות",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בת ים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "הרצליה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "חדרה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מודיעין-מכבים-רעות",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כפר סבא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "לוד",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רמלה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מודיעין עילית",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רעננה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ראש העין",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רהט",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נצרת",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית גת",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נהרייה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "הוד השרון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עפולה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ביתר עילית",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית אתא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אום אל-פחם",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "גבעתיים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "יבנה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נתיבות",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אילת",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עכו",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "טבריה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית מוצקין",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אלעד",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רמת השרון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כרמיאל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נס ציונה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית ביאליק",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "טייבה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "פרדס חנה-כרכור",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נוף הגליל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית אונו",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "שפרעם",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית ים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "חריש",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אור יהודה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אופקים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "דימונה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "צפת",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "באר יעקב",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "שדרות",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "טמרה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מעלה אדומים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "סח'נין",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "טירת כרמל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "יהוד-מונוסון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "גדרה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "באקה אל-גרביה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כפר יונה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ערד",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "גבעת שמואל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מגדל העמק",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כפר קאסם",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית מלאכי",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "טירה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עראבה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מבשרת ציון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אור עקיבא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "גני תקווה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כפר כנא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קלנסווה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "גן יבנה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "יקנעם עילית",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "תל שבע",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית שמונה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "זכרון יעקב",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "שוהם",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מגאר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מעלות-תרשיחא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "חורה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נשר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קדימה-צורן",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כפר מנדא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "גבעת זאב",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כסיפה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אריאל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ערערה-בנגב",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כפר קרע",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ערערה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ריינה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בית שאן",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ג'דיידה-מכר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "לקיה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית טבעון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "יפיע",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "דאלית אל-כרמל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ירכא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "שגב-שלום",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מזכרת בתיה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ג'סר א-זרקא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בנימינה-גבעת עדה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מעלה עירון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מג'ד אל-כרום",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אבן יהודה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אכסאל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רכסים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "טורעאן",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "תל מונד",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אבו סנאן",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עין מאהל",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "נחף",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אעבלין",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "פוריידיס",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עספיא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אזור",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ג'ת",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "דייר אל-אסד",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כאבול",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בית ג'ן",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אפרת",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בסמ\"ה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ירוחם",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עתלית",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מיתר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית עקרון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "מג'דל שמס",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ביר אל-מכסור",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "חצור הגלילית",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ג'לג'וליה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "דבורייה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "דייר חנא",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בועיינה-נוג'ידאת",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כפר יאסיף",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "צור הדסה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קרני שומרון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כוכב יעקב",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אורנית",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כסרא-סמיע",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "זרזיר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עילוט",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "כוכב יאיר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אבו גוש",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "משהד",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בענה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "ראמה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בסמת טבעון",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "שלומי",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "עומר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "אלפי מנשה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "להבים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קצרין",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "פרדסייה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "זמר",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "רמת ישי",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית יערים",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "שעב",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "צור יצחק",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "בית דגן",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "קריית ארבע",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    },
+    {
+      "city_name": "טובא-זנגרייה",
+      "reason": "error: Attempted to use detached Frame 'BA6666335FCD5CE3BC0FCB04B801A66E'."
+    }
   ]
 }

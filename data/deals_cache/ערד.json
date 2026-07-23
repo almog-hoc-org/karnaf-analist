@@ -1,15 +1,15 @@
 {
   "cityName": "ערד",
-  "lastUpdated": "2026-06-24T06:59:44.948Z",
+  "lastUpdated": "2026-07-21T09:19:05.066Z",
   "neighborhoods": [
     {
       "neighborhood": "יהושפט",
-      "totalDeals": 419,
-      "dealsPerYearAvg": 60,
+      "totalDeals": 413,
+      "dealsPerYearAvg": 59,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 359,
+          "totalDeals": 352,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -66,10 +66,10 @@
                   "year": 2025,
                   "sample": {
                     "type": "aggregated",
-                    "count": 62,
+                    "count": 58,
                     "threshold": 15,
-                    "avgPricePerSqm": 12869,
-                    "avgTotalPrice": 1454181,
+                    "avgPricePerSqm": 12865,
+                    "avgTotalPrice": 1460139,
                     "avgArea": 113
                   }
                 },
@@ -168,10 +168,10 @@
                     "pricePerSqm": 13176,
                     "totalPrice": 1120000,
                     "area": 85,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "דוד המלך",
                     "blocksAway": 6,
-                    "dealDate": "2022-04-14T00:00:00Z"
+                    "dealDate": "2022-04-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -182,10 +182,10 @@
                     "pricePerSqm": 9455,
                     "totalPrice": 728000,
                     "area": 77,
-                    "houseNum": "17.0",
+                    "houseNum": 17,
                     "streetName": "דוד המלך",
                     "blocksAway": 6,
-                    "dealDate": "2020-07-09T00:00:00Z"
+                    "dealDate": "2020-07-09T00:00:00.000Z"
                   }
                 }
               ]
@@ -216,10 +216,10 @@
                     "pricePerSqm": 9643,
                     "totalPrice": 945000,
                     "area": 98,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "דוד המלך",
                     "blocksAway": 0,
-                    "dealDate": "2023-09-19T00:00:00Z"
+                    "dealDate": "2023-09-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -230,10 +230,10 @@
                     "pricePerSqm": 9787,
                     "totalPrice": 920000,
                     "area": 94,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "דוד המלך",
                     "blocksAway": 0,
-                    "dealDate": "2021-05-31T00:00:00Z"
+                    "dealDate": "2021-05-31T00:00:00.000Z"
                   }
                 }
               ]
@@ -252,10 +252,10 @@
                     "pricePerSqm": 10305,
                     "totalPrice": 1350000,
                     "area": 131,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "דוד המלך",
                     "blocksAway": 0,
-                    "dealDate": "2026-01-15T00:00:00Z"
+                    "dealDate": "2026-01-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -266,10 +266,10 @@
                     "pricePerSqm": 9065,
                     "totalPrice": 1260000,
                     "area": 139,
-                    "houseNum": "11.0",
+                    "houseNum": 11,
                     "streetName": "דוד המלך",
                     "blocksAway": 0,
-                    "dealDate": "2023-07-12T00:00:00Z"
+                    "dealDate": "2023-07-12T00:00:00.000Z"
                   }
                 },
                 {
@@ -292,7 +292,7 @@
     },
     {
       "neighborhood": "מעוף",
-      "totalDeals": 218,
+      "totalDeals": 219,
       "dealsPerYearAvg": 31,
       "streets": [
         {
@@ -379,10 +379,10 @@
                     "pricePerSqm": 11250,
                     "totalPrice": 900000,
                     "area": 80,
-                    "houseNum": "23.0",
+                    "houseNum": 23,
                     "streetName": "עפרוני",
                     "blocksAway": 11,
-                    "dealDate": "2024-02-15T00:00:00Z"
+                    "dealDate": "2024-02-15T00:00:00.000Z"
                   }
                 },
                 {
@@ -393,10 +393,10 @@
                     "pricePerSqm": 10256,
                     "totalPrice": 800000,
                     "area": 78,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "עפרוני",
                     "blocksAway": 26,
-                    "dealDate": "2021-01-13T00:00:00Z"
+                    "dealDate": "2021-01-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -407,10 +407,10 @@
                     "pricePerSqm": 10256,
                     "totalPrice": 800000,
                     "area": 78,
-                    "houseNum": "8.0",
+                    "houseNum": 8,
                     "streetName": "עפרוני",
                     "blocksAway": 26,
-                    "dealDate": "2021-01-13T00:00:00Z"
+                    "dealDate": "2021-01-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -429,10 +429,10 @@
                     "pricePerSqm": 13529,
                     "totalPrice": 1380000,
                     "area": 102,
-                    "houseNum": "14.0",
+                    "houseNum": 14,
                     "streetName": "עפרוני",
                     "blocksAway": 20,
-                    "dealDate": "2024-04-18T00:00:00Z"
+                    "dealDate": "2024-04-18T00:00:00.000Z"
                   }
                 },
                 {
@@ -443,10 +443,10 @@
                     "pricePerSqm": 12333,
                     "totalPrice": 1480000,
                     "area": 120,
-                    "houseNum": "51.0",
+                    "houseNum": 51,
                     "streetName": "עפרוני",
                     "blocksAway": 17,
-                    "dealDate": "2022-04-04T00:00:00Z"
+                    "dealDate": "2022-04-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -457,10 +457,10 @@
                     "pricePerSqm": 7905,
                     "totalPrice": 830000,
                     "area": 105,
-                    "houseNum": "32.0",
+                    "houseNum": 32,
                     "streetName": "עפרוני",
                     "blocksAway": 2,
-                    "dealDate": "2020-01-13T00:00:00Z"
+                    "dealDate": "2020-01-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -496,10 +496,10 @@
                     "pricePerSqm": 10488,
                     "totalPrice": 1290000,
                     "area": 123,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "עפרוני",
                     "blocksAway": 10,
-                    "dealDate": "2021-11-30T00:00:00Z"
+                    "dealDate": "2021-11-30T00:00:00.000Z"
                   }
                 }
               ]
@@ -509,7 +509,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 637,
+  "totalDealsAnalyzed": 632,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

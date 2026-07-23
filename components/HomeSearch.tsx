@@ -81,8 +81,8 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
           placeholder:text-slate-400
           focus:outline-none
           focus:ring-2
-          focus:ring-cyan-500/20
-          focus:border-cyan-500
+          focus:ring-indigo-500/20
+          focus:border-indigo-500
           transition-all
           duration-200
           shadow-sm
@@ -124,15 +124,16 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
                 <Link
                   key={city.id}
                   href={`/city/${encodeURIComponent(city.city_name)}`}
-                  className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition-colors group"
+                  className="flex items-center justify-between px-5 py-3 hover:bg-indigo-50 transition-colors group"
                 >
-                  <span className="font-semibold text-slate-900 group-hover:text-cyan-700 transition-colors">
+                  <span className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors">
                     {city.city_name}
                   </span>
                   <div className="flex gap-6 text-sm text-slate-600">
+                    {/* second-hand 3y change from real transactions (labeled) */}
                     {city.price_change_pct !== null && (
                       <span>
-                        שינוי מחיר:{" "}
+                        יד-2 3ש׳:{" "}
                         <span className={(city.price_change_pct ?? 0) >= 0 ? "text-emerald-600" : "text-rose-600"}>
                           {formatPct(city.price_change_pct)}
                         </span>

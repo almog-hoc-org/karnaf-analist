@@ -1,15 +1,15 @@
 {
   "cityName": "טבריה",
-  "lastUpdated": "2026-06-24T06:55:08.855Z",
+  "lastUpdated": "2026-07-21T09:10:37.176Z",
   "neighborhoods": [
     {
       "neighborhood": "קריית שמואל",
-      "totalDeals": 760,
+      "totalDeals": 764,
       "dealsPerYearAvg": 109,
       "streets": [
         {
           "streetName": "טבור הארץ",
-          "totalDeals": 90,
+          "totalDeals": 91,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -30,10 +30,10 @@
                     "pricePerSqm": 12111,
                     "totalPrice": 1090000,
                     "area": 90,
-                    "houseNum": "9.0",
+                    "houseNum": 9,
                     "streetName": "טבור הארץ",
                     "blocksAway": 4,
-                    "dealDate": "2023-12-21T00:00:00Z"
+                    "dealDate": "2023-12-21T00:00:00.000Z"
                   }
                 },
                 {
@@ -57,10 +57,10 @@
                     "pricePerSqm": 8929,
                     "totalPrice": 1000000,
                     "area": 112,
-                    "houseNum": "9.0",
+                    "houseNum": 9,
                     "streetName": "טבור הארץ",
                     "blocksAway": 4,
-                    "dealDate": "2025-05-25T00:00:00Z"
+                    "dealDate": "2025-05-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -137,7 +137,7 @@
         },
         {
           "streetName": "יהודה הנשיא",
-          "totalDeals": 86,
+          "totalDeals": 84,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -177,10 +177,10 @@
                     "pricePerSqm": 13750,
                     "totalPrice": 1100000,
                     "area": 80,
-                    "houseNum": "15.0",
+                    "houseNum": 15,
                     "streetName": "יהודה הנשיא",
                     "blocksAway": 2,
-                    "dealDate": "2021-05-13T00:00:00Z"
+                    "dealDate": "2021-05-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -199,10 +199,10 @@
                     "pricePerSqm": 10600,
                     "totalPrice": 1060000,
                     "area": 100,
-                    "houseNum": "21.0",
+                    "houseNum": 21,
                     "streetName": "יהודה הנשיא",
                     "blocksAway": 4,
-                    "dealDate": "2025-11-13T00:00:00Z"
+                    "dealDate": "2025-11-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -226,7 +226,7 @@
                     "threshold": 5,
                     "avgPricePerSqm": 8058,
                     "avgTotalPrice": 862000,
-                    "avgArea": 106
+                    "avgArea": 107
                   }
                 }
               ]
@@ -266,10 +266,10 @@
                   "year": 2020,
                   "sample": {
                     "type": "aggregated",
-                    "count": 10,
-                    "threshold": 10,
-                    "avgPricePerSqm": 6174,
-                    "avgTotalPrice": 778200,
+                    "count": 8,
+                    "threshold": 5,
+                    "avgPricePerSqm": 6803,
+                    "avgTotalPrice": 854000,
                     "avgArea": 127
                   }
                 }
@@ -302,10 +302,10 @@
                     "pricePerSqm": 8022,
                     "totalPrice": 730000,
                     "area": 91,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "הפלמ\"ח",
                     "blocksAway": 6,
-                    "dealDate": "2025-05-25T00:00:00Z"
+                    "dealDate": "2025-05-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -348,10 +348,10 @@
                     "pricePerSqm": 8022,
                     "totalPrice": 730000,
                     "area": 91,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "הפלמ\"ח",
                     "blocksAway": 6,
-                    "dealDate": "2025-05-25T00:00:00Z"
+                    "dealDate": "2025-05-25T00:00:00.000Z"
                   }
                 },
                 {
@@ -362,10 +362,10 @@
                     "pricePerSqm": 6526,
                     "totalPrice": 620000,
                     "area": 95,
-                    "houseNum": "24.0",
+                    "houseNum": 24,
                     "streetName": "הפלמ\"ח",
                     "blocksAway": 6,
-                    "dealDate": "2022-02-02T00:00:00Z"
+                    "dealDate": "2022-02-02T00:00:00.000Z"
                   }
                 },
                 {
@@ -376,10 +376,10 @@
                     "pricePerSqm": 5882,
                     "totalPrice": 500000,
                     "area": 85,
-                    "houseNum": "30.0",
+                    "houseNum": 30,
                     "streetName": "הפלמ\"ח",
                     "blocksAway": 0,
-                    "dealDate": "2020-05-26T00:00:00Z"
+                    "dealDate": "2020-05-26T00:00:00.000Z"
                   }
                 }
               ]
@@ -403,10 +403,10 @@
                     "pricePerSqm": 5539,
                     "totalPrice": 637000,
                     "area": 115,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "הפלמ\"ח",
                     "blocksAway": 28,
-                    "dealDate": "2023-11-26T00:00:00Z"
+                    "dealDate": "2023-11-26T00:00:00.000Z"
                   }
                 },
                 {
@@ -417,10 +417,10 @@
                     "pricePerSqm": 4966,
                     "totalPrice": 735000,
                     "area": 148,
-                    "houseNum": "30.0",
+                    "houseNum": 30,
                     "streetName": "הפלמ\"ח",
                     "blocksAway": 0,
-                    "dealDate": "2020-02-10T00:00:00Z"
+                    "dealDate": "2020-02-10T00:00:00.000Z"
                   }
                 }
               ]
@@ -450,10 +450,10 @@
                     "pricePerSqm": 6143,
                     "totalPrice": 430000,
                     "area": 70,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "הבנים",
                     "blocksAway": 2,
-                    "dealDate": "2021-12-13T00:00:00Z"
+                    "dealDate": "2021-12-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -464,10 +464,10 @@
                     "pricePerSqm": 6143,
                     "totalPrice": 430000,
                     "area": 70,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "הבנים",
                     "blocksAway": 2,
-                    "dealDate": "2021-12-13T00:00:00Z"
+                    "dealDate": "2021-12-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -477,7 +477,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1033,
+  "totalDealsAnalyzed": 1037,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

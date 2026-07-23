@@ -1,15 +1,15 @@
 {
   "cityName": "חיפה",
-  "lastUpdated": "2026-06-24T06:54:51.197Z",
+  "lastUpdated": "2026-07-21T09:10:05.774Z",
   "neighborhoods": [
     {
       "neighborhood": "אחוזה",
-      "totalDeals": 1437,
-      "dealsPerYearAvg": 205,
+      "totalDeals": 1441,
+      "dealsPerYearAvg": 206,
       "streets": [
         {
           "streetName": "יותם",
-          "totalDeals": 122,
+          "totalDeals": 119,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -49,10 +49,10 @@
                     "pricePerSqm": 23231,
                     "totalPrice": 1510000,
                     "area": 65,
-                    "houseNum": "41.0",
+                    "houseNum": 41,
                     "streetName": "יותם",
                     "blocksAway": 6,
-                    "dealDate": "2021-11-21T00:00:00Z"
+                    "dealDate": "2021-11-21T00:00:00.000Z"
                   }
                 }
               ]
@@ -139,10 +139,10 @@
                     "pricePerSqm": 16629,
                     "totalPrice": 1480000,
                     "area": 89,
-                    "houseNum": "23.0",
+                    "houseNum": 23,
                     "streetName": "יותם",
                     "blocksAway": 12,
-                    "dealDate": "2020-07-17T00:00:00Z"
+                    "dealDate": "2020-07-17T00:00:00.000Z"
                   }
                 }
               ]
@@ -151,7 +151,7 @@
         },
         {
           "streetName": "דיזרעאלי",
-          "totalDeals": 117,
+          "totalDeals": 119,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -167,10 +167,10 @@
                     "pricePerSqm": 19853,
                     "totalPrice": 1350000,
                     "area": 68,
-                    "houseNum": "41.0",
+                    "houseNum": 41,
                     "streetName": "דיזרעאלי",
                     "blocksAway": 30,
-                    "dealDate": "2026-04-16T00:00:00Z"
+                    "dealDate": "2026-04-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -225,10 +225,10 @@
                     "pricePerSqm": 26282,
                     "totalPrice": 2050000,
                     "area": 78,
-                    "houseNum": "12.0",
+                    "houseNum": 12,
                     "streetName": "דיזרעאלי",
                     "blocksAway": 1,
-                    "dealDate": "2023-02-12T00:00:00Z"
+                    "dealDate": "2023-02-12T00:00:00.000Z"
                   }
                 },
                 {
@@ -271,10 +271,10 @@
                     "pricePerSqm": 18396,
                     "totalPrice": 1950000,
                     "area": 106,
-                    "houseNum": "61.0",
+                    "houseNum": 61,
                     "streetName": "דיזרעאלי",
                     "blocksAway": 50,
-                    "dealDate": "2022-02-22T00:00:00Z"
+                    "dealDate": "2022-02-22T00:00:00.000Z"
                   }
                 },
                 {
@@ -297,12 +297,12 @@
     },
     {
       "neighborhood": "תל עמל",
-      "totalDeals": 601,
+      "totalDeals": 605,
       "dealsPerYearAvg": 86,
       "streets": [
         {
           "streetName": "פאר",
-          "totalDeals": 173,
+          "totalDeals": 174,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -411,10 +411,10 @@
                     "pricePerSqm": 7789,
                     "totalPrice": 740000,
                     "area": 95,
-                    "houseNum": "78.0",
+                    "houseNum": 78,
                     "streetName": "פאר",
                     "blocksAway": 29,
-                    "dealDate": "2022-02-13T00:00:00Z"
+                    "dealDate": "2022-02-13T00:00:00.000Z"
                   }
                 },
                 {
@@ -425,10 +425,10 @@
                     "pricePerSqm": 8235,
                     "totalPrice": 700000,
                     "area": 85,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "פאר",
                     "blocksAway": 45,
-                    "dealDate": "2020-07-21T00:00:00Z"
+                    "dealDate": "2020-07-21T00:00:00.000Z"
                   }
                 }
               ]
@@ -437,7 +437,7 @@
         },
         {
           "streetName": "יד לבנים",
-          "totalDeals": 161,
+          "totalDeals": 163,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -541,10 +541,10 @@
                     "pricePerSqm": 13500,
                     "totalPrice": 1215000,
                     "area": 90,
-                    "houseNum": "92.0",
+                    "houseNum": 92,
                     "streetName": "יד לבנים",
                     "blocksAway": 0,
-                    "dealDate": "2025-05-16T00:00:00Z"
+                    "dealDate": "2025-05-16T00:00:00.000Z"
                   }
                 },
                 {
@@ -555,10 +555,10 @@
                     "pricePerSqm": 15761,
                     "totalPrice": 1450000,
                     "area": 92,
-                    "houseNum": "60.0",
+                    "houseNum": 60,
                     "streetName": "יד לבנים",
                     "blocksAway": 32,
-                    "dealDate": "2022-02-14T00:00:00Z"
+                    "dealDate": "2022-02-14T00:00:00.000Z"
                   }
                 },
                 {
@@ -574,8 +574,8 @@
     },
     {
       "neighborhood": "רמת התשבי",
-      "totalDeals": 465,
-      "dealsPerYearAvg": 66,
+      "totalDeals": 469,
+      "dealsPerYearAvg": 67,
       "streets": [
         {
           "streetName": "עובדיה",
@@ -595,10 +595,10 @@
                     "pricePerSqm": 20968,
                     "totalPrice": 1300000,
                     "area": 62,
-                    "houseNum": "19.0",
+                    "houseNum": 19,
                     "streetName": "עובדיה",
                     "blocksAway": 14,
-                    "dealDate": "2024-05-12T00:00:00Z"
+                    "dealDate": "2024-05-12T00:00:00.000Z"
                   }
                 },
                 {
@@ -835,10 +835,10 @@
                     "pricePerSqm": 16279,
                     "totalPrice": 1400000,
                     "area": 86,
-                    "houseNum": "100.0",
+                    "houseNum": 100,
                     "streetName": "התשבי",
                     "blocksAway": 96,
-                    "dealDate": "2022-03-10T00:00:00Z"
+                    "dealDate": "2022-03-10T00:00:00.000Z"
                   }
                 },
                 {
@@ -849,10 +849,10 @@
                     "pricePerSqm": 16070,
                     "totalPrice": 1607000,
                     "area": 100,
-                    "houseNum": "65.0",
+                    "houseNum": 65,
                     "streetName": "התשבי",
                     "blocksAway": 61,
-                    "dealDate": "2020-10-22T00:00:00Z"
+                    "dealDate": "2020-10-22T00:00:00.000Z"
                   }
                 }
               ]
@@ -862,7 +862,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 3813,
+  "totalDealsAnalyzed": 3970,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

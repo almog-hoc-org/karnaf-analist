@@ -1,15 +1,15 @@
 {
   "cityName": "לוד",
-  "lastUpdated": "2026-06-24T06:57:00.716Z",
+  "lastUpdated": "2026-07-21T09:14:09.063Z",
   "neighborhoods": [
     {
       "neighborhood": "השופטים",
-      "totalDeals": 309,
-      "dealsPerYearAvg": 44,
+      "totalDeals": 312,
+      "dealsPerYearAvg": 45,
       "streets": [
         {
           "streetName": "(ללא רחוב)",
-          "totalDeals": 87,
+          "totalDeals": 88,
           "sizeBuckets": [
             {
               "label": "~80 מ\"ר",
@@ -119,10 +119,10 @@
                     "pricePerSqm": 13348,
                     "totalPrice": 1535000,
                     "area": 115,
-                    "houseNum": "1.0",
+                    "houseNum": 1,
                     "streetName": "השומר",
                     "blocksAway": 17,
-                    "dealDate": "2025-08-21T00:00:00Z"
+                    "dealDate": "2025-08-21T00:00:00.000Z"
                   }
                 },
                 {
@@ -157,7 +157,7 @@
     },
     {
       "neighborhood": "נווה זית",
-      "totalDeals": 160,
+      "totalDeals": 161,
       "dealsPerYearAvg": 23,
       "streets": [
         {
@@ -183,10 +183,10 @@
                     "pricePerSqm": 16884,
                     "totalPrice": 1165000,
                     "area": 69,
-                    "houseNum": "4.0",
+                    "houseNum": 4,
                     "streetName": "כרמל",
                     "blocksAway": 0,
-                    "dealDate": "2021-05-02T00:00:00Z"
+                    "dealDate": "2021-05-02T00:00:00.000Z"
                   }
                 },
                 {
@@ -197,10 +197,10 @@
                     "pricePerSqm": 17826,
                     "totalPrice": 1230000,
                     "area": 69,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "כרמל",
                     "blocksAway": 2,
-                    "dealDate": "2020-02-02T00:00:00Z"
+                    "dealDate": "2020-02-02T00:00:00.000Z"
                   }
                 }
               ]
@@ -243,10 +243,10 @@
                     "pricePerSqm": 17826,
                     "totalPrice": 1230000,
                     "area": 69,
-                    "houseNum": "6.0",
+                    "houseNum": 6,
                     "streetName": "כרמל",
                     "blocksAway": 2,
-                    "dealDate": "2020-02-02T00:00:00Z"
+                    "dealDate": "2020-02-02T00:00:00.000Z"
                   }
                 }
               ]
@@ -320,10 +320,10 @@
                     "pricePerSqm": 3929,
                     "totalPrice": 330000,
                     "area": 84,
-                    "houseNum": "18.0",
+                    "houseNum": 18,
                     "streetName": "אנילביץ",
                     "blocksAway": 0,
-                    "dealDate": "2022-06-19T00:00:00Z"
+                    "dealDate": "2022-06-19T00:00:00.000Z"
                   }
                 },
                 {
@@ -334,10 +334,10 @@
                     "pricePerSqm": 21160,
                     "totalPrice": 1587000,
                     "area": 75,
-                    "houseNum": "21.0",
+                    "houseNum": 21,
                     "streetName": "אנילביץ",
                     "blocksAway": 3,
-                    "dealDate": "2020-06-03T00:00:00Z"
+                    "dealDate": "2020-06-03T00:00:00.000Z"
                   }
                 }
               ]
@@ -356,10 +356,10 @@
                     "pricePerSqm": 16990,
                     "totalPrice": 1750000,
                     "area": 103,
-                    "houseNum": "21.0",
+                    "houseNum": 21,
                     "streetName": "אנילביץ",
                     "blocksAway": 3,
-                    "dealDate": "2025-05-08T00:00:00Z"
+                    "dealDate": "2025-05-08T00:00:00.000Z"
                   }
                 },
                 {
@@ -370,10 +370,10 @@
                     "pricePerSqm": 10408,
                     "totalPrice": 1020000,
                     "area": 98,
-                    "houseNum": "18.0",
+                    "houseNum": 18,
                     "streetName": "אנילביץ",
                     "blocksAway": 0,
-                    "dealDate": "2021-05-04T00:00:00Z"
+                    "dealDate": "2021-05-04T00:00:00.000Z"
                   }
                 },
                 {
@@ -384,10 +384,10 @@
                     "pricePerSqm": 11531,
                     "totalPrice": 1130000,
                     "area": 98,
-                    "houseNum": "18.0",
+                    "houseNum": 18,
                     "streetName": "אנילביץ",
                     "blocksAway": 0,
-                    "dealDate": "2020-02-19T00:00:00Z"
+                    "dealDate": "2020-02-19T00:00:00.000Z"
                   }
                 }
               ]
@@ -397,7 +397,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 604,
+  "totalDealsAnalyzed": 608,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,

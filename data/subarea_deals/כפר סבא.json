@@ -1,0 +1,2475 @@
+{
+  "cityName": "כפר סבא",
+  "lastUpdated": "2026-07-03T14:49:09.044Z",
+  "totalRawDealsFetched": 2237,
+  "totalDealsKept": 1402,
+  "byYear": {
+    "2016": {
+      "year": 2016,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20060.17923444639,
+              "medianPricePerSqm": 20890.314504772337,
+              "avgPrice": 1667100,
+              "medianPrice": 1631000,
+              "dealCount": 10
+            },
+            "4": {
+              "avgPricePerSqm": 18185.977691394208,
+              "medianPricePerSqm": 17683.96686159844,
+              "avgPrice": 1818733.3333333333,
+              "medianPrice": 1840000,
+              "dealCount": 30
+            },
+            "5+": {
+              "avgPricePerSqm": 16489.233902797794,
+              "medianPricePerSqm": 15827.338129496404,
+              "avgPrice": 2580142.8571428573,
+              "medianPrice": 2400000,
+              "dealCount": 21
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 17366.898281508795,
+              "medianPricePerSqm": 15850,
+              "avgPrice": 1823775.7575757576,
+              "medianPrice": 1585000,
+              "dealCount": 33
+            },
+            "5+": {
+              "avgPricePerSqm": 19037.43516510448,
+              "medianPricePerSqm": 18750,
+              "avgPrice": 2940908.435897436,
+              "medianPrice": 2850000,
+              "dealCount": 39
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 16934.131593685826,
+              "medianPricePerSqm": 17349.36284372904,
+              "avgPrice": 1424750,
+              "medianPrice": 1474500,
+              "dealCount": 4
+            },
+            "4": {
+              "avgPricePerSqm": 17018.99659037636,
+              "medianPricePerSqm": 16550,
+              "avgPrice": 1835600,
+              "medianPrice": 1745000,
+              "dealCount": 15
+            },
+            "5+": {
+              "avgPricePerSqm": 15908.140817582906,
+              "medianPricePerSqm": 15333.333333333334,
+              "avgPrice": 2151153.846153846,
+              "medianPrice": 2116000,
+              "dealCount": 13
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 22225.14682201383,
+              "medianPricePerSqm": 20329.92327365729,
+              "avgPrice": 1441750,
+              "medianPrice": 1407000,
+              "dealCount": 4
+            },
+            "4": {
+              "avgPricePerSqm": 14950.593104893653,
+              "medianPricePerSqm": 15033.48634208744,
+              "avgPrice": 1630000,
+              "medianPrice": 1645000,
+              "dealCount": 4
+            },
+            "5+": {
+              "avgPricePerSqm": 15212.145180461019,
+              "medianPricePerSqm": 14237.28813559322,
+              "avgPrice": 3288333.3333333335,
+              "medianPrice": 3335000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 19107.208860975978,
+              "medianPricePerSqm": 19078.88986013986,
+              "avgPrice": 1868535.7142857143,
+              "medianPrice": 1850000,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 16501.666884307706,
+              "medianPricePerSqm": 16250,
+              "avgPrice": 2356428.5714285714,
+              "medianPrice": 2280000,
+              "dealCount": 7
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 19846.60588929236,
+          "medianPricePerSqm": 20452.23146105549,
+          "avgPrice": 1563166.6666666667,
+          "medianPrice": 1577000,
+          "dealCount": 18
+        },
+        "4": {
+          "avgPricePerSqm": 17721.616868338533,
+          "medianPricePerSqm": 16578.571428571428,
+          "avgPrice": 1822501.0416666667,
+          "medianPrice": 1790000,
+          "dealCount": 96
+        },
+        "5+": {
+          "avgPricePerSqm": 17392.816728547292,
+          "medianPricePerSqm": 17600,
+          "avgPrice": 2729589.0898876404,
+          "medianPrice": 2640000,
+          "dealCount": 89
+        }
+      }
+    },
+    "2017": {
+      "year": 2017,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20671.00076471475,
+              "medianPricePerSqm": 20326.086956521736,
+              "avgPrice": 1765214.2857142857,
+              "medianPrice": 1755000,
+              "dealCount": 14
+            },
+            "4": {
+              "avgPricePerSqm": 19873.66607367319,
+              "medianPricePerSqm": 18871.3689616434,
+              "avgPrice": 1916772.7272727273,
+              "medianPrice": 1820000,
+              "dealCount": 22
+            },
+            "5+": {
+              "avgPricePerSqm": 19698.325299451095,
+              "medianPricePerSqm": 19687.5,
+              "avgPrice": 2793235.294117647,
+              "medianPrice": 2800000,
+              "dealCount": 17
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 21313.185515962865,
+              "medianPricePerSqm": 22589.320388349515,
+              "avgPrice": 2236166.6666666665,
+              "medianPrice": 2290000,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 18502.161989909768,
+              "medianPricePerSqm": 17933.673469387755,
+              "avgPrice": 2806400,
+              "medianPrice": 2720000,
+              "dealCount": 20
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 17901.666666666664,
+              "medianPricePerSqm": 17901.666666666664,
+              "avgPrice": 1473500,
+              "medianPrice": 1473500,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 18055.719268526056,
+              "medianPricePerSqm": 17272.727272727272,
+              "avgPrice": 1891153.8461538462,
+              "medianPrice": 1830000,
+              "dealCount": 13
+            },
+            "5+": {
+              "avgPricePerSqm": 16835.68208302717,
+              "medianPricePerSqm": 16427.277432712217,
+              "avgPrice": 2285833.3333333335,
+              "medianPrice": 2200000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 27597.014925373136,
+              "medianPricePerSqm": 27597.014925373136,
+              "avgPrice": 1849000,
+              "medianPrice": 1849000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 23543.11039484287,
+              "medianPricePerSqm": 23543.11039484287,
+              "avgPrice": 1845000,
+              "medianPrice": 1845000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 16351.51028665014,
+              "medianPricePerSqm": 16981.132075471698,
+              "avgPrice": 1811666.6666666667,
+              "medianPrice": 1800000,
+              "dealCount": 3
+            },
+            "5+": {
+              "avgPricePerSqm": 17297.475024609725,
+              "medianPricePerSqm": 17803.73831775701,
+              "avgPrice": 2991777.777777778,
+              "medianPrice": 2620000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 19512.19512195122,
+              "medianPricePerSqm": 19512.19512195122,
+              "avgPrice": 1600000,
+              "medianPrice": 1600000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 19745.955510616783,
+              "medianPricePerSqm": 21173.91304347826,
+              "avgPrice": 2381666.6666666665,
+              "medianPrice": 2435000,
+              "dealCount": 3
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 27597.014925373136,
+          "medianPricePerSqm": 27597.014925373136,
+          "avgPrice": 1849000,
+          "medianPrice": 1849000,
+          "dealCount": 1
+        },
+        "3": {
+          "avgPricePerSqm": 20682.420268279195,
+          "medianPricePerSqm": 21181.58567774936,
+          "avgPrice": 1741666.6666666667,
+          "medianPrice": 1760000,
+          "dealCount": 18
+        },
+        "4": {
+          "avgPricePerSqm": 19534.70502519813,
+          "medianPricePerSqm": 18656.716417910447,
+          "avgPrice": 1973000,
+          "medianPrice": 1900000,
+          "dealCount": 51
+        },
+        "5+": {
+          "avgPricePerSqm": 18560.800075279363,
+          "medianPricePerSqm": 18387.09677419355,
+          "avgPrice": 2752709.090909091,
+          "medianPrice": 2700000,
+          "dealCount": 55
+        }
+      }
+    },
+    "2018": {
+      "year": 2018,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19058.78176371996,
+              "medianPricePerSqm": 18072.916666666668,
+              "avgPrice": 1724355.5555555555,
+              "medianPrice": 1750000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 20142.458112311957,
+              "medianPricePerSqm": 18934.468524251803,
+              "avgPrice": 2084068.1818181819,
+              "medianPrice": 2032500,
+              "dealCount": 22
+            },
+            "5+": {
+              "avgPricePerSqm": 17087.350116685964,
+              "medianPricePerSqm": 17312.8078817734,
+              "avgPrice": 2964687.5,
+              "medianPrice": 2915000,
+              "dealCount": 16
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 19121.47077066414,
+              "medianPricePerSqm": 19500,
+              "avgPrice": 2168083.3333333335,
+              "medianPrice": 2256500,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 18285.394494173153,
+              "medianPricePerSqm": 17622.950819672133,
+              "avgPrice": 3315526.3157894737,
+              "medianPrice": 3300000,
+              "dealCount": 19
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19020.785922796134,
+              "medianPricePerSqm": 18924.268502581755,
+              "avgPrice": 1590833.3333333333,
+              "medianPrice": 1600000,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 17474.165859716995,
+              "medianPricePerSqm": 17526.652452025584,
+              "avgPrice": 1884875,
+              "medianPrice": 1785000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 16924.35320181877,
+              "medianPricePerSqm": 17142.85714285714,
+              "avgPrice": 2449636.3636363638,
+              "medianPrice": 2400000,
+              "dealCount": 11
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 18450,
+              "medianPricePerSqm": 18450,
+              "avgPrice": 1845000,
+              "medianPrice": 1845000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 17014.719616039663,
+              "medianPricePerSqm": 16136.363636363636,
+              "avgPrice": 2073571.4285714286,
+              "medianPrice": 2100000,
+              "dealCount": 7
+            },
+            "5+": {
+              "avgPricePerSqm": 18065.135351702917,
+              "medianPricePerSqm": 18582.3653532779,
+              "avgPrice": 3368375,
+              "medianPrice": 3196500,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 21060.37342287342,
+              "medianPricePerSqm": 22250,
+              "avgPrice": 2083000,
+              "medianPrice": 1950000,
+              "dealCount": 5
+            },
+            "5+": {
+              "avgPricePerSqm": 18192.175020101848,
+              "medianPricePerSqm": 17167.317073170732,
+              "avgPrice": 2400500,
+              "medianPrice": 2380000,
+              "dealCount": 4
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 19006.484463141027,
+          "medianPricePerSqm": 18510.714285714286,
+          "avgPrice": 1681825,
+          "medianPrice": 1675000,
+          "dealCount": 16
+        },
+        "4": {
+          "avgPricePerSqm": 19199.814055985426,
+          "medianPricePerSqm": 18500,
+          "avgPrice": 2071768.5185185184,
+          "medianPrice": 2090000,
+          "dealCount": 54
+        },
+        "5+": {
+          "avgPricePerSqm": 17659.961471901774,
+          "medianPricePerSqm": 17438.45960231563,
+          "avgPrice": 2998706.896551724,
+          "medianPrice": 2905000,
+          "dealCount": 58
+        }
+      }
+    },
+    "2019": {
+      "year": 2019,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 18719.279046474185,
+              "medianPricePerSqm": 17994.845360824744,
+              "avgPrice": 1839200,
+              "medianPrice": 1861000,
+              "dealCount": 10
+            },
+            "4": {
+              "avgPricePerSqm": 18971.50403411764,
+              "medianPricePerSqm": 17475.728155339806,
+              "avgPrice": 1959296.2962962964,
+              "medianPrice": 1920000,
+              "dealCount": 27
+            },
+            "5+": {
+              "avgPricePerSqm": 17575.542646419515,
+              "medianPricePerSqm": 17826.08695652174,
+              "avgPrice": 2792000,
+              "medianPrice": 2550000,
+              "dealCount": 15
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 19742.11686011963,
+              "medianPricePerSqm": 17474.17514646932,
+              "avgPrice": 2378750,
+              "medianPrice": 2375000,
+              "dealCount": 12
+            },
+            "5+": {
+              "avgPricePerSqm": 18386.929802601753,
+              "medianPricePerSqm": 17410.2377486657,
+              "avgPrice": 3255625,
+              "medianPrice": 3300000,
+              "dealCount": 16
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 17624.19093851133,
+              "medianPricePerSqm": 17498.381877022653,
+              "avgPrice": 1731250,
+              "medianPrice": 1742500,
+              "dealCount": 4
+            },
+            "4": {
+              "avgPricePerSqm": 16364.293233754317,
+              "medianPricePerSqm": 15530.30303030303,
+              "avgPrice": 1979285.7142857143,
+              "medianPrice": 1910000,
+              "dealCount": 7
+            },
+            "5+": {
+              "avgPricePerSqm": 16860.022383746247,
+              "medianPricePerSqm": 16538.46153846154,
+              "avgPrice": 2308638.4615384615,
+              "medianPrice": 2232300,
+              "dealCount": 13
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 30570,
+              "medianPricePerSqm": 30570,
+              "avgPrice": 3057000,
+              "medianPrice": 3057000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 19231.5353074748,
+              "medianPricePerSqm": 19210.992907801417,
+              "avgPrice": 1965625,
+              "medianPrice": 1857500,
+              "dealCount": 16
+            },
+            "5+": {
+              "avgPricePerSqm": 17035.846685500786,
+              "medianPricePerSqm": 17702.962962962964,
+              "avgPrice": 3703750,
+              "medianPrice": 4415000,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 18754.069485700868,
+              "medianPricePerSqm": 16468.25396825397,
+              "avgPrice": 1858333.3333333333,
+              "medianPrice": 2000000,
+              "dealCount": 3
+            },
+            "5+": {
+              "avgPricePerSqm": 17482.246080505516,
+              "medianPricePerSqm": 17745.098039215685,
+              "avgPrice": 2551000,
+              "medianPrice": 2600000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 19217.30361458581,
+          "medianPricePerSqm": 17989.690721649484,
+          "avgPrice": 1891600,
+          "medianPrice": 1850000,
+          "dealCount": 15
+        },
+        "4": {
+          "avgPricePerSqm": 18886.966727009105,
+          "medianPricePerSqm": 18168.31683168317,
+          "avgPrice": 2035784.6153846155,
+          "medianPrice": 2000000,
+          "dealCount": 65
+        },
+        "5+": {
+          "avgPricePerSqm": 17556.18090198519,
+          "medianPricePerSqm": 17480,
+          "avgPrice": 2918724.5614035088,
+          "medianPrice": 2700000,
+          "dealCount": 57
+        }
+      }
+    },
+    "2020": {
+      "year": 2020,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19475.867444355146,
+              "medianPricePerSqm": 18560.42111687519,
+              "avgPrice": 1867107.142857143,
+              "medianPrice": 1820000,
+              "dealCount": 14
+            },
+            "4": {
+              "avgPricePerSqm": 18718.752501197003,
+              "medianPricePerSqm": 17743.119266055044,
+              "avgPrice": 1976523.8095238095,
+              "medianPrice": 1950000,
+              "dealCount": 21
+            },
+            "5+": {
+              "avgPricePerSqm": 18096.81364071867,
+              "medianPricePerSqm": 18048.245614035088,
+              "avgPrice": 2980416.6666666665,
+              "medianPrice": 2842500,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 19829.50368457763,
+              "medianPricePerSqm": 17536.231884057972,
+              "avgPrice": 2404677.419354839,
+              "medianPrice": 2375000,
+              "dealCount": 31
+            },
+            "5+": {
+              "avgPricePerSqm": 19599.87783848024,
+              "medianPricePerSqm": 18852.713178294573,
+              "avgPrice": 3368500,
+              "medianPrice": 3200000,
+              "dealCount": 30
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 15673.076923076924,
+              "medianPricePerSqm": 15673.076923076924,
+              "avgPrice": 1630000,
+              "medianPrice": 1630000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 16855.92936773268,
+              "medianPricePerSqm": 17452.830188679247,
+              "avgPrice": 1875297.3333333333,
+              "medianPrice": 1860000,
+              "dealCount": 15
+            },
+            "5+": {
+              "avgPricePerSqm": 17377.269893721896,
+              "medianPricePerSqm": 15986.394557823129,
+              "avgPrice": 2505909.090909091,
+              "medianPrice": 2440000,
+              "dealCount": 11
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 17875,
+              "medianPricePerSqm": 17875,
+              "avgPrice": 2145000,
+              "medianPrice": 2145000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 21106.465274893246,
+              "medianPricePerSqm": 18894.7628458498,
+              "avgPrice": 2322500,
+              "medianPrice": 2300000,
+              "dealCount": 6
+            },
+            "5+": {
+              "avgPricePerSqm": 18964.88275477636,
+              "medianPricePerSqm": 18651.447896850557,
+              "avgPrice": 3368333.3333333335,
+              "medianPrice": 3140000,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 18116.66652212191,
+              "medianPricePerSqm": 18137.205387205388,
+              "avgPrice": 1995666.6666666667,
+              "medianPrice": 1985000,
+              "dealCount": 6
+            },
+            "5+": {
+              "avgPricePerSqm": 18222.658535158535,
+              "medianPricePerSqm": 17941.017316017314,
+              "avgPrice": 2396250,
+              "medianPrice": 2367500,
+              "dealCount": 4
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 19138.13882150306,
+          "medianPricePerSqm": 18306.706738373934,
+          "avgPrice": 1869656.25,
+          "medianPrice": 1820000,
+          "dealCount": 16
+        },
+        "4": {
+          "avgPricePerSqm": 18936.53351955854,
+          "medianPricePerSqm": 17743.119266055044,
+          "avgPrice": 2153043.7974683545,
+          "medianPrice": 2200000,
+          "dealCount": 79
+        },
+        "5+": {
+          "avgPricePerSqm": 18793.87383872352,
+          "medianPricePerSqm": 18296.08938547486,
+          "avgPrice": 3107101.4492753623,
+          "medianPrice": 3000000,
+          "dealCount": 69
+        }
+      }
+    },
+    "2021": {
+      "year": 2021,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19439.47997922532,
+              "medianPricePerSqm": 19174.757281553397,
+              "avgPrice": 1977741.1764705882,
+              "medianPrice": 1970000,
+              "dealCount": 17
+            },
+            "4": {
+              "avgPricePerSqm": 19930.893482930365,
+              "medianPricePerSqm": 19465.333822450477,
+              "avgPrice": 2092252.75,
+              "medianPrice": 2062500,
+              "dealCount": 32
+            },
+            "5+": {
+              "avgPricePerSqm": 19642.479156532972,
+              "medianPricePerSqm": 19305.014114800375,
+              "avgPrice": 3180000,
+              "medianPrice": 2800000,
+              "dealCount": 30
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 18800.51045820909,
+              "medianPricePerSqm": 17605.6338028169,
+              "avgPrice": 2530232.5581395347,
+              "medianPrice": 2500000,
+              "dealCount": 43
+            },
+            "5+": {
+              "avgPricePerSqm": 20898.018891659354,
+              "medianPricePerSqm": 20426.14904060687,
+              "avgPrice": 3550416.6666666665,
+              "medianPrice": 3332500,
+              "dealCount": 36
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 27806.521739130432,
+              "medianPricePerSqm": 27806.521739130432,
+              "avgPrice": 1337500,
+              "medianPrice": 1337500,
+              "dealCount": 2
+            },
+            "3": {
+              "avgPricePerSqm": 22284.521184344503,
+              "medianPricePerSqm": 19851.77865612648,
+              "avgPrice": 2067500,
+              "medianPrice": 1920000,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 18832.7628144314,
+              "medianPricePerSqm": 18958.333333333332,
+              "avgPrice": 2202692.3076923075,
+              "medianPrice": 2125000,
+              "dealCount": 13
+            },
+            "5+": {
+              "avgPricePerSqm": 18871.19244687656,
+              "medianPricePerSqm": 18024.1935483871,
+              "avgPrice": 2647391.304347826,
+              "medianPrice": 2350000,
+              "dealCount": 23
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 15258.620689655172,
+              "medianPricePerSqm": 15258.620689655172,
+              "avgPrice": 1770000,
+              "medianPrice": 1770000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 20599.394117737927,
+              "medianPricePerSqm": 19841.485507246376,
+              "avgPrice": 2372800,
+              "medianPrice": 2300000,
+              "dealCount": 10
+            },
+            "5+": {
+              "avgPricePerSqm": 20697.90676567847,
+              "medianPricePerSqm": 20383.152173913044,
+              "avgPrice": 3217000,
+              "medianPrice": 3100000,
+              "dealCount": 10
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 27027.027027027027,
+              "medianPricePerSqm": 27027.027027027027,
+              "avgPrice": 2000000,
+              "medianPrice": 2000000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 20895.337663660946,
+              "medianPricePerSqm": 20330.188679245282,
+              "avgPrice": 2170076.923076923,
+              "medianPrice": 2160000,
+              "dealCount": 13
+            },
+            "5+": {
+              "avgPricePerSqm": 18057.053537445696,
+              "medianPricePerSqm": 18401.451489686784,
+              "avgPrice": 2608125,
+              "medianPrice": 2430000,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 27806.521739130432,
+          "medianPricePerSqm": 27806.521739130432,
+          "avgPrice": 1337500,
+          "medianPrice": 1337500,
+          "dealCount": 2
+        },
+        "3": {
+          "avgPricePerSqm": 20258.557378783193,
+          "medianPricePerSqm": 19174.757281553397,
+          "avgPrice": 1991864,
+          "medianPrice": 1970000,
+          "dealCount": 25
+        },
+        "4": {
+          "avgPricePerSqm": 19537.565662606674,
+          "medianPricePerSqm": 18933.823529411766,
+          "avgPrice": 2309244.036036036,
+          "medianPrice": 2350000,
+          "dealCount": 111
+        },
+        "5+": {
+          "avgPricePerSqm": 19879.214738600353,
+          "medianPricePerSqm": 19375,
+          "avgPrice": 3150841.121495327,
+          "medianPrice": 3150000,
+          "dealCount": 107
+        }
+      }
+    },
+    "2022": {
+      "year": 2022,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25043.090950463313,
+              "medianPricePerSqm": 23634.271099744245,
+              "avgPrice": 2312500,
+              "medianPrice": 2305000,
+              "dealCount": 8
+            },
+            "4": {
+              "avgPricePerSqm": 22906.222814971075,
+              "medianPricePerSqm": 22051.28205128205,
+              "avgPrice": 2601000,
+              "medianPrice": 2580000,
+              "dealCount": 15
+            },
+            "5+": {
+              "avgPricePerSqm": 27244.733456361508,
+              "medianPricePerSqm": 27968.91557753444,
+              "avgPrice": 3959800,
+              "medianPrice": 3950000,
+              "dealCount": 10
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 26553.903514346963,
+              "medianPricePerSqm": 26137.706855791963,
+              "avgPrice": 3378700,
+              "medianPrice": 3462500,
+              "dealCount": 10
+            },
+            "5+": {
+              "avgPricePerSqm": 23184.948417353804,
+              "medianPricePerSqm": 23053.892215568863,
+              "avgPrice": 4366111.111111111,
+              "medianPrice": 4400000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 25208.565322720573,
+              "medianPricePerSqm": 23246.753246753247,
+              "avgPrice": 2109000,
+              "medianPrice": 2170000,
+              "dealCount": 5
+            },
+            "4": {
+              "avgPricePerSqm": 21001.908259010645,
+              "medianPricePerSqm": 20229.007633587786,
+              "avgPrice": 2715654.5454545454,
+              "medianPrice": 2570000,
+              "dealCount": 11
+            },
+            "5+": {
+              "avgPricePerSqm": 25558.908200872567,
+              "medianPricePerSqm": 25477.707006369426,
+              "avgPrice": 4032000,
+              "medianPrice": 4000000,
+              "dealCount": 5
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21153.846153846152,
+              "medianPricePerSqm": 21153.846153846152,
+              "avgPrice": 2475000,
+              "medianPrice": 2475000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 18314.881840264883,
+              "medianPricePerSqm": 18602.240744749946,
+              "avgPrice": 2440000,
+              "medianPrice": 2525000,
+              "dealCount": 4
+            },
+            "5+": {
+              "avgPricePerSqm": 26544.22385695548,
+              "medianPricePerSqm": 27955.64427514468,
+              "avgPrice": 4889750,
+              "medianPrice": 4587500,
+              "dealCount": 8
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21363.636363636364,
+              "medianPricePerSqm": 21363.636363636364,
+              "avgPrice": 2350000,
+              "medianPrice": 2350000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 21269.041136213113,
+              "medianPricePerSqm": 21269.041136213113,
+              "avgPrice": 2475000,
+              "medianPrice": 2475000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 23724.262543070843,
+              "medianPricePerSqm": 23724.262543070843,
+              "avgPrice": 3640000,
+              "medianPrice": 3640000,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 24378.680180539883,
+          "medianPricePerSqm": 22734.487734487735,
+          "avgPrice": 2271562.5,
+          "medianPrice": 2305000,
+          "dealCount": 16
+        },
+        "4": {
+          "avgPricePerSqm": 22760.737567872355,
+          "medianPricePerSqm": 22322.448979591834,
+          "avgPrice": 2794861.904761905,
+          "medianPrice": 2650000,
+          "dealCount": 42
+        },
+        "5+": {
+          "avgPricePerSqm": 25550.256684292577,
+          "medianPricePerSqm": 25993.1638480123,
+          "avgPrice": 4277970.588235294,
+          "medianPrice": 4100000,
+          "dealCount": 34
+        }
+      }
+    },
+    "2023": {
+      "year": 2023,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 18318.497611810682,
+              "medianPricePerSqm": 18318.497611810682,
+              "avgPrice": 1775000,
+              "medianPrice": 1775000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 24656.296177429762,
+              "medianPricePerSqm": 24553.571428571428,
+              "avgPrice": 2683055.5555555555,
+              "medianPrice": 2700000,
+              "dealCount": 9
+            },
+            "5+": {
+              "avgPricePerSqm": 22870.540543834006,
+              "medianPricePerSqm": 21923.076923076922,
+              "avgPrice": 3667142.8571428573,
+              "medianPrice": 3500000,
+              "dealCount": 7
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 24341.013249650634,
+              "medianPricePerSqm": 24030.462184873948,
+              "avgPrice": 3404350,
+              "medianPrice": 3300000,
+              "dealCount": 10
+            },
+            "5+": {
+              "avgPricePerSqm": 25616.71182247389,
+              "medianPricePerSqm": 25357.14285714286,
+              "avgPrice": 4838076.923076923,
+              "medianPrice": 4390000,
+              "dealCount": 13
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 20344.25456597182,
+              "medianPricePerSqm": 21782.178217821784,
+              "avgPrice": 2200000,
+              "medianPrice": 2200000,
+              "dealCount": 3
+            },
+            "4": {
+              "avgPricePerSqm": 22906.850243083998,
+              "medianPricePerSqm": 22859.081097748996,
+              "avgPrice": 2723750,
+              "medianPrice": 2712500,
+              "dealCount": 4
+            },
+            "5+": {
+              "avgPricePerSqm": 24617.33915131648,
+              "medianPricePerSqm": 23436.922292343977,
+              "avgPrice": 3490000,
+              "medianPrice": 3425000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 24242.424242424244,
+              "medianPricePerSqm": 24242.424242424244,
+              "avgPrice": 3200000,
+              "medianPrice": 3200000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 24972.1091528567,
+              "medianPricePerSqm": 27338.603425559948,
+              "avgPrice": 6164488,
+              "medianPrice": 6698500,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 22602.04081632653,
+              "medianPricePerSqm": 22602.04081632653,
+              "avgPrice": 2215000,
+              "medianPrice": 2215000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 26295.6275240758,
+              "medianPricePerSqm": 26300.675675675677,
+              "avgPrice": 4172500,
+              "medianPrice": 3900000,
+              "dealCount": 3
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 19533.951784307363,
+          "medianPricePerSqm": 21782.178217821784,
+          "avgPrice": 2030000,
+          "medianPrice": 2200000,
+          "dealCount": 5
+        },
+        "4": {
+          "avgPricePerSqm": 24091.95019003029,
+          "medianPricePerSqm": 24109.654731457802,
+          "avgPrice": 2950615.3846153845,
+          "medianPrice": 2863750,
+          "dealCount": 26
+        },
+        "5+": {
+          "avgPricePerSqm": 24843.845997036136,
+          "medianPricePerSqm": 25357.14285714286,
+          "avgPrice": 4543126.514285714,
+          "medianPrice": 4180000,
+          "dealCount": 35
+        }
+      }
+    },
+    "2024": {
+      "year": 2024,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 27230.540878507927,
+              "medianPricePerSqm": 26407.766990291264,
+              "avgPrice": 2572222.222222222,
+              "medianPrice": 2575000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 24348.917054854333,
+              "medianPricePerSqm": 24255.31914893617,
+              "avgPrice": 2806423.8095238097,
+              "medianPrice": 2725000,
+              "dealCount": 21
+            },
+            "5+": {
+              "avgPricePerSqm": 25489.215881730885,
+              "medianPricePerSqm": 25384.615384615383,
+              "avgPrice": 3631428.5714285714,
+              "medianPrice": 3340000,
+              "dealCount": 7
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 26079.07091115695,
+              "medianPricePerSqm": 25178.571428571428,
+              "avgPrice": 3311538.4615384615,
+              "medianPrice": 3320000,
+              "dealCount": 13
+            },
+            "5+": {
+              "avgPricePerSqm": 25880.442129777806,
+              "medianPricePerSqm": 24848.484848484848,
+              "avgPrice": 5387142.857142857,
+              "medianPrice": 5400000,
+              "dealCount": 7
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 26565.95325019336,
+              "medianPricePerSqm": 27733.333333333332,
+              "avgPrice": 2338888.888888889,
+              "medianPrice": 2400000,
+              "dealCount": 9
+            },
+            "4": {
+              "avgPricePerSqm": 24148.569023488704,
+              "medianPricePerSqm": 23324.074074074073,
+              "avgPrice": 2678857.1428571427,
+              "medianPrice": 2580000,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 23278.15665573331,
+              "medianPricePerSqm": 22756.041426927502,
+              "avgPrice": 3824333.3333333335,
+              "medianPrice": 3682500,
+              "dealCount": 12
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 19819.81981981982,
+              "medianPricePerSqm": 19819.81981981982,
+              "avgPrice": 2200000,
+              "medianPrice": 2200000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 24736.39456303367,
+              "medianPricePerSqm": 24105.555555555555,
+              "avgPrice": 2713750,
+              "medianPrice": 2710000,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 26581.650972512383,
+              "medianPricePerSqm": 26169.912893526707,
+              "avgPrice": 5370100,
+              "medianPrice": 4627500,
+              "dealCount": 10
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 24287.365177195687,
+              "medianPricePerSqm": 24287.365177195687,
+              "avgPrice": 2775000,
+              "medianPrice": 2775000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 23308.96064719594,
+              "medianPricePerSqm": 24615.384615384617,
+              "avgPrice": 2690000,
+              "medianPrice": 2750000,
+              "dealCount": 3
+            },
+            "5+": {
+              "avgPricePerSqm": 27207.882683375155,
+              "medianPricePerSqm": 27422.737306843268,
+              "avgPrice": 3872500,
+              "medianPrice": 3650000,
+              "dealCount": 4
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 26312.52368250108,
+          "medianPricePerSqm": 25847.457627118645,
+          "avgPrice": 2473809.523809524,
+          "medianPrice": 2510000,
+          "dealCount": 21
+        },
+        "4": {
+          "avgPricePerSqm": 24682.257369011528,
+          "medianPricePerSqm": 24255.31914893617,
+          "avgPrice": 2868964.406779661,
+          "medianPrice": 2845000,
+          "dealCount": 59
+        },
+        "5+": {
+          "avgPricePerSqm": 25339.338160199626,
+          "medianPricePerSqm": 25350.985221674877,
+          "avgPrice": 4455325,
+          "medianPrice": 4071000,
+          "dealCount": 40
+        }
+      }
+    },
+    "2025": {
+      "year": 2025,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 21889.754174639773,
+              "medianPricePerSqm": 22559.70924195223,
+              "avgPrice": 2222500,
+              "medianPrice": 2425000,
+              "dealCount": 6
+            },
+            "4": {
+              "avgPricePerSqm": 25967.11174910803,
+              "medianPricePerSqm": 25903.077686770914,
+              "avgPrice": 2643785.714285714,
+              "medianPrice": 2640000,
+              "dealCount": 14
+            },
+            "5+": {
+              "avgPricePerSqm": 21525.63163957903,
+              "medianPricePerSqm": 23026.315789473683,
+              "avgPrice": 3706666.6666666665,
+              "medianPrice": 3690000,
+              "dealCount": 9
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 26465.145390483085,
+              "medianPricePerSqm": 26296.528274874734,
+              "avgPrice": 3413500,
+              "medianPrice": 3400000,
+              "dealCount": 10
+            },
+            "5+": {
+              "avgPricePerSqm": 25876.62771838831,
+              "medianPricePerSqm": 25657.894736842107,
+              "avgPrice": 4732105.263157895,
+              "medianPrice": 4250000,
+              "dealCount": 19
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": 24328.358208955226,
+              "medianPricePerSqm": 24328.358208955226,
+              "avgPrice": 1630000,
+              "medianPrice": 1630000,
+              "dealCount": 1
+            },
+            "3": {
+              "avgPricePerSqm": 26595.744680851065,
+              "medianPricePerSqm": 26595.744680851065,
+              "avgPrice": 2500000,
+              "medianPrice": 2500000,
+              "dealCount": 1
+            },
+            "4": {
+              "avgPricePerSqm": 22862.387223665384,
+              "medianPricePerSqm": 22386.217948717946,
+              "avgPrice": 2826250,
+              "medianPrice": 2767500,
+              "dealCount": 8
+            },
+            "5+": {
+              "avgPricePerSqm": 23197.374968136184,
+              "medianPricePerSqm": 23418.552036199093,
+              "avgPrice": 3582800,
+              "medianPrice": 3730000,
+              "dealCount": 10
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 23462.1755538271,
+              "medianPricePerSqm": 24396.55172413793,
+              "avgPrice": 2676666.6666666665,
+              "medianPrice": 2800000,
+              "dealCount": 3
+            },
+            "5+": {
+              "avgPricePerSqm": 24011.299435028246,
+              "medianPricePerSqm": 24011.299435028246,
+              "avgPrice": 4250000,
+              "medianPrice": 4250000,
+              "dealCount": 2
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 24662.645071704614,
+              "medianPricePerSqm": 24460.08760168052,
+              "avgPrice": 2821666.6666666665,
+              "medianPrice": 2700000,
+              "dealCount": 6
+            },
+            "5+": {
+              "avgPricePerSqm": 23195.859039372124,
+              "medianPricePerSqm": 21332.143715040664,
+              "avgPrice": 3613333.3333333335,
+              "medianPrice": 3640000,
+              "dealCount": 6
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": 24328.358208955226,
+          "medianPricePerSqm": 24328.358208955226,
+          "avgPrice": 1630000,
+          "medianPrice": 1630000,
+          "dealCount": 1
+        },
+        "3": {
+          "avgPricePerSqm": 22562.038532669954,
+          "medianPricePerSqm": 22897.196261682242,
+          "avgPrice": 2262142.8571428573,
+          "medianPrice": 2450000,
+          "dealCount": 7
+        },
+        "4": {
+          "avgPricePerSqm": 25108.597884716477,
+          "medianPricePerSqm": 25000,
+          "avgPrice": 2895560.975609756,
+          "medianPrice": 2830000,
+          "dealCount": 41
+        },
+        "5+": {
+          "avgPricePerSqm": 24012.13291724435,
+          "medianPricePerSqm": 24285.050550104075,
+          "avgPrice": 4114739.1304347827,
+          "medianPrice": 4125000,
+          "dealCount": 46
+        }
+      }
+    },
+    "2026": {
+      "year": 2026,
+      "rows": [
+        {
+          "subareaSlug": "nb0",
+          "subareaLabel": "הדרים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 22249.056603773584,
+              "medianPricePerSqm": 22249.056603773584,
+              "avgPrice": 2290000,
+              "medianPrice": 2290000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 23125.36323950467,
+              "medianPricePerSqm": 22727.272727272728,
+              "avgPrice": 2695000,
+              "medianPrice": 2680000,
+              "dealCount": 5
+            },
+            "5+": {
+              "avgPricePerSqm": 23026.315789473683,
+              "medianPricePerSqm": 23026.315789473683,
+              "avgPrice": 3500000,
+              "medianPrice": 3500000,
+              "dealCount": 1
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb1",
+          "subareaLabel": "הזמר העברי",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 29720.019829314406,
+              "medianPricePerSqm": 30283.01886792453,
+              "avgPrice": 3720000,
+              "medianPrice": 3600000,
+              "dealCount": 3
+            },
+            "5+": {
+              "avgPricePerSqm": 27894.29392446634,
+              "medianPricePerSqm": 27428.571428571428,
+              "avgPrice": 4560666.666666667,
+              "medianPrice": 4532000,
+              "dealCount": 3
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb2",
+          "subareaLabel": "קרית ספיר",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": 18984.176742797434,
+              "medianPricePerSqm": 18984.176742797434,
+              "avgPrice": 1525000,
+              "medianPrice": 1525000,
+              "dealCount": 2
+            },
+            "4": {
+              "avgPricePerSqm": 23070.866141732284,
+              "medianPricePerSqm": 23070.866141732284,
+              "avgPrice": 2930000,
+              "medianPrice": 2930000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 23048.230425720732,
+              "medianPricePerSqm": 22925.925925925927,
+              "avgPrice": 3721666.6666666665,
+              "medianPrice": 3820000,
+              "dealCount": 3
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb3",
+          "subareaLabel": "ותיקים",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 23741.007194244605,
+              "medianPricePerSqm": 23741.007194244605,
+              "avgPrice": 3300000,
+              "medianPrice": 3300000,
+              "dealCount": 1
+            },
+            "5+": {
+              "avgPricePerSqm": 25702.247191011236,
+              "medianPricePerSqm": 25702.247191011236,
+              "avgPrice": 4575000,
+              "medianPrice": 4575000,
+              "dealCount": 1
+            }
+          }
+        },
+        {
+          "subareaSlug": "nb4",
+          "subareaLabel": "צפון",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": 23740.344622697565,
+              "medianPricePerSqm": 23740.344622697565,
+              "avgPrice": 2840000,
+              "medianPrice": 2840000,
+              "dealCount": 2
+            },
+            "5+": {
+              "avgPricePerSqm": 22080.61262409088,
+              "medianPricePerSqm": 22307.69230769231,
+              "avgPrice": 3283333.3333333335,
+              "medianPrice": 3100000,
+              "dealCount": 3
+            }
+          }
+        },
+        {
+          "subareaSlug": "other",
+          "subareaLabel": "אחר / לא ממופה",
+          "byRoom": {
+            "2": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "3": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "4": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            },
+            "5+": {
+              "avgPricePerSqm": null,
+              "medianPricePerSqm": null,
+              "dealCount": 0
+            }
+          }
+        }
+      ],
+      "cityTotalByRoom": {
+        "2": {
+          "avgPricePerSqm": null,
+          "medianPricePerSqm": null,
+          "dealCount": 0
+        },
+        "3": {
+          "avgPricePerSqm": 20616.61667328551,
+          "medianPricePerSqm": 22249.056603773584,
+          "avgPrice": 1907500,
+          "medianPrice": 2115000,
+          "dealCount": 4
+        },
+        "4": {
+          "avgPricePerSqm": 24923.28652223655,
+          "medianPricePerSqm": 23793.580520199226,
+          "avgPrice": 3045416.6666666665,
+          "medianPrice": 3050000,
+          "dealCount": 12
+        },
+        "5+": {
+          "avgPricePerSqm": 24345.270354847158,
+          "medianPricePerSqm": 24645.16129032258,
+          "avgPrice": 3888363.6363636362,
+          "medianPrice": 3850000,
+          "dealCount": 11
+        }
+      }
+    }
+  },
+  "cityAnnual": [
+    {
+      "year": 2016,
+      "avgPrice": 2197194.724137931,
+      "medianPrice": 2025000,
+      "avgPricePerSqm": 17765.885784278184,
+      "medianPricePerSqm": 17476.635514018693,
+      "dealCount": 203
+    },
+    {
+      "year": 2017,
+      "avgPrice": 2281768,
+      "medianPrice": 2200000,
+      "avgPricePerSqm": 19335.956321438935,
+      "medianPricePerSqm": 19086.021505376346,
+      "dealCount": 125
+    },
+    {
+      "year": 2018,
+      "avgPrice": 2443044.53125,
+      "medianPrice": 2290000,
+      "avgPricePerSqm": 18477.902154716983,
+      "medianPricePerSqm": 18070.071778711485,
+      "dealCount": 128
+    },
+    {
+      "year": 2019,
+      "avgPrice": 2387352.5547445253,
+      "medianPrice": 2200000,
+      "avgPricePerSqm": 18369.450386040397,
+      "medianPricePerSqm": 17826.08695652174,
+      "dealCount": 137
+    },
+    {
+      "year": 2020,
+      "avgPrice": 2526798.536585366,
+      "medianPrice": 2370000,
+      "avgPricePerSqm": 18896.18087842132,
+      "medianPricePerSqm": 18074.074074074073,
+      "dealCount": 164
+    },
+    {
+      "year": 2021,
+      "avgPrice": 2636480.3591836733,
+      "medianPrice": 2410000,
+      "avgPricePerSqm": 19827.847932764973,
+      "medianPricePerSqm": 19174.757281553397,
+      "dealCount": 245
+    },
+    {
+      "year": 2022,
+      "avgPrice": 3251958.695652174,
+      "medianPrice": 2910000,
+      "avgPricePerSqm": 24073.02813049156,
+      "medianPricePerSqm": 23395.919574216437,
+      "dealCount": 92
+    },
+    {
+      "year": 2023,
+      "avgPrice": 3725385.272727273,
+      "medianPrice": 3298250,
+      "avgPricePerSqm": 24145.379905433176,
+      "medianPricePerSqm": 24684.19312169312,
+      "dealCount": 66
+    },
+    {
+      "year": 2024,
+      "avgPrice": 3328599.1666666665,
+      "medianPrice": 3075000,
+      "avgPricePerSqm": 25186.580904268245,
+      "medianPricePerSqm": 24607.69230769231,
+      "dealCount": 120
+    },
+    {
+      "year": 2025,
+      "avgPrice": 3425905.263157895,
+      "medianPrice": 3350000,
+      "avgPricePerSqm": 24381.82374109748,
+      "medianPricePerSqm": 24761.904761904763,
+      "dealCount": 95
+    },
+    {
+      "year": 2026,
+      "avgPrice": 3220259.2592592593,
+      "medianPrice": 3100000,
+      "avgPricePerSqm": 24049.773291233316,
+      "medianPricePerSqm": 23741.007194244605,
+      "dealCount": 27
+    }
+  ]
+}

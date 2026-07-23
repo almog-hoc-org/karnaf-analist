@@ -12,6 +12,7 @@ import {
   ComposedChart,
 } from "recharts";
 import { motion } from "framer-motion";
+import { BRAND, INK, SLATE, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 
 interface PermitData {
   year: number;
@@ -58,30 +59,24 @@ export default function PermitsChart({ data, cityName }: PermitsChartProps) {
         >
           <CartesianGrid
             strokeDasharray="3 3"
-            stroke="#e2e8f0"
+            stroke={GRID}
             vertical={false}
           />
           <XAxis
             dataKey="year"
-            tick={{ fill: "#64748b", fontSize: 11 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: "#64748b", fontSize: 11 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             width={50}
             tickFormatter={(v: number) => v.toLocaleString("he-IL")}
           />
           <Tooltip
-            contentStyle={{
-              backgroundColor: "#ffffff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
-              color: "#0f172a",
-              fontSize: 12,
-            }}
+            contentStyle={{ ...tooltipStyle, color: INK }}
             formatter={(value: number, name: string) => [
               value.toLocaleString("he-IL"),
               name,
@@ -90,13 +85,13 @@ export default function PermitsChart({ data, cityName }: PermitsChartProps) {
           />
           <Bar
             dataKey="היתרים"
-            fill="#f59e0b"
+            fill={BRAND}
             radius={[4, 4, 0, 0]}
             maxBarSize={50}
           />
           <Line
             dataKey="ממוצע"
-            stroke="#ef4444"
+            stroke={SLATE}
             strokeDasharray="5 5"
             dot={false}
             strokeWidth={2}

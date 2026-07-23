@@ -1,10 +1,10 @@
 {
   "cityName": "קריית גת",
-  "lastUpdated": "2026-06-24T07:01:01.952Z",
+  "lastUpdated": "2026-07-21T09:21:35.426Z",
   "neighborhoods": [
     {
       "neighborhood": "הפרחים",
-      "totalDeals": 577,
+      "totalDeals": 574,
       "dealsPerYearAvg": 82,
       "streets": [
         {
@@ -25,10 +25,10 @@
                     "pricePerSqm": 7937,
                     "totalPrice": 500000,
                     "area": 63,
-                    "houseNum": "85.0",
+                    "houseNum": 85,
                     "streetName": "הרימון",
                     "blocksAway": 4,
-                    "dealDate": "2026-02-09T00:00:00Z"
+                    "dealDate": "2026-02-09T00:00:00.000Z"
                   }
                 },
                 {
@@ -163,10 +163,10 @@
                     "pricePerSqm": 20370,
                     "totalPrice": 1100000,
                     "area": 54,
-                    "houseNum": "2.0",
+                    "houseNum": 2,
                     "streetName": "רבי דוד דנינו",
                     "blocksAway": 3,
-                    "dealDate": "2022-10-11T00:00:00Z"
+                    "dealDate": "2022-10-11T00:00:00.000Z"
                   }
                 },
                 {
@@ -214,10 +214,10 @@
                     "pricePerSqm": 13500,
                     "totalPrice": 1080000,
                     "area": 80,
-                    "houseNum": "5.0",
+                    "houseNum": 5,
                     "streetName": "רבי דוד דנינו",
                     "blocksAway": 0,
-                    "dealDate": "2021-08-29T00:00:00Z"
+                    "dealDate": "2021-08-29T00:00:00.000Z"
                   }
                 }
               ]
@@ -245,10 +245,10 @@
                   "year": 2022,
                   "sample": {
                     "type": "aggregated",
-                    "count": 11,
+                    "count": 10,
                     "threshold": 10,
-                    "avgPricePerSqm": 15489,
-                    "avgTotalPrice": 1562614,
+                    "avgPricePerSqm": 15644,
+                    "avgTotalPrice": 1606528,
                     "avgArea": 100
                   }
                 },
@@ -298,10 +298,10 @@
                     "pricePerSqm": 9706,
                     "totalPrice": 660000,
                     "area": 68,
-                    "houseNum": "16.0",
+                    "houseNum": 16,
                     "streetName": "שמשון",
                     "blocksAway": 0,
-                    "dealDate": "2022-04-26T00:00:00Z"
+                    "dealDate": "2022-04-26T00:00:00.000Z"
                   }
                 },
                 {
@@ -419,10 +419,10 @@
                     "pricePerSqm": 18382,
                     "totalPrice": 1250000,
                     "area": 68,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "דוד המלך",
                     "blocksAway": 10,
-                    "dealDate": "2024-02-01T00:00:00Z"
+                    "dealDate": "2024-02-01T00:00:00.000Z"
                   }
                 },
                 {
@@ -433,10 +433,10 @@
                     "pricePerSqm": 15809,
                     "totalPrice": 1075000,
                     "area": 68,
-                    "houseNum": "13.0",
+                    "houseNum": 13,
                     "streetName": "דוד המלך",
                     "blocksAway": 10,
-                    "dealDate": "2022-06-06T00:00:00Z"
+                    "dealDate": "2022-06-06T00:00:00.000Z"
                   }
                 },
                 {
@@ -484,10 +484,10 @@
                     "pricePerSqm": 12976,
                     "totalPrice": 1090000,
                     "area": 84,
-                    "houseNum": "15.0",
+                    "houseNum": 15,
                     "streetName": "דוד המלך",
                     "blocksAway": 8,
-                    "dealDate": "2021-11-23T00:00:00Z"
+                    "dealDate": "2021-11-23T00:00:00.000Z"
                   }
                 }
               ]
@@ -530,10 +530,10 @@
                     "pricePerSqm": 10901,
                     "totalPrice": 1210000,
                     "area": 111,
-                    "houseNum": "23.0",
+                    "houseNum": 23,
                     "streetName": "דוד המלך",
                     "blocksAway": 0,
-                    "dealDate": "2020-08-13T00:00:00Z"
+                    "dealDate": "2020-08-13T00:00:00.000Z"
                   }
                 }
               ]
@@ -544,12 +544,12 @@
     },
     {
       "neighborhood": "הקוממיות",
-      "totalDeals": 520,
-      "dealsPerYearAvg": 74,
+      "totalDeals": 522,
+      "dealsPerYearAvg": 75,
       "streets": [
         {
           "streetName": "גת",
-          "totalDeals": 241,
+          "totalDeals": 242,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -687,7 +687,7 @@
         },
         {
           "streetName": "מלכי ישראל",
-          "totalDeals": 128,
+          "totalDeals": 129,
           "sizeBuckets": [
             {
               "label": "~60 מ\"ר",
@@ -815,10 +815,10 @@
                     "pricePerSqm": 10706,
                     "totalPrice": 910000,
                     "area": 85,
-                    "houseNum": "155.0",
+                    "houseNum": 155,
                     "streetName": "מלכי ישראל",
                     "blocksAway": 6,
-                    "dealDate": "2020-03-01T00:00:00Z"
+                    "dealDate": "2020-03-01T00:00:00.000Z"
                   }
                 }
               ]
@@ -828,7 +828,7 @@
       ]
     }
   ],
-  "totalDealsAnalyzed": 1917,
+  "totalDealsAnalyzed": 2101,
   "periodYears": {
     "current": 2025,
     "minus3": 2022,
