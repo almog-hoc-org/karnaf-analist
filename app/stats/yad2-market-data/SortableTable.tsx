@@ -48,7 +48,7 @@ function marketTypeBadge(t: string | null) {
   };
   const entry = map[t] ?? { he: t, cls: "bg-slate-50 text-slate-700 border-slate-200" };
   return (
-    <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full border ${entry.cls}`}>
+    <span className={`inline-block text-2xs font-bold px-2 py-0.5 rounded-full border ${entry.cls}`}>
       {entry.he}
     </span>
   );
@@ -107,13 +107,13 @@ const COLUMNS: ColMeta[] = [
   { key: "city_name", label: "עיר", align: "right", className: "text-slate-500", defaultDir: "asc" },
   { key: "market_type", label: "סוג שוק", align: "center", className: "text-slate-500", defaultDir: "asc" },
   { key: "new_properties", label: "מודעות חדשות", align: "center", className: "text-slate-500", defaultDir: "desc" },
-  { key: "new_properties_yoy", label: "YoY חדשות", align: "center", className: "text-slate-400 text-[10px]", defaultDir: "desc" },
+  { key: "new_properties_yoy", label: "YoY חדשות", align: "center", className: "text-slate-400 text-2xs", defaultDir: "desc" },
   { key: "secondhand_properties", label: "יד שנייה", align: "center", className: "text-slate-500", defaultDir: "desc" },
-  { key: "secondhand_yoy", label: "YoY יד2", align: "center", className: "text-slate-400 text-[10px]", defaultDir: "desc" },
+  { key: "secondhand_yoy", label: "YoY יד2", align: "center", className: "text-slate-400 text-2xs", defaultDir: "desc" },
   { key: "avg_days_on_market", label: "ימים בשוק", align: "center", className: "text-slate-500", defaultDir: "asc" },
-  { key: "days_yoy", label: "YoY ימים", align: "center", className: "text-slate-400 text-[10px]", defaultDir: "asc" },
+  { key: "days_yoy", label: "YoY ימים", align: "center", className: "text-slate-400 text-2xs", defaultDir: "asc" },
   { key: "buyers_count", label: "קונים", align: "center", className: "text-slate-500", defaultDir: "desc" },
-  { key: "buyers_yoy", label: "YoY קונים", align: "center", className: "text-slate-400 text-[10px]", defaultDir: "desc" },
+  { key: "buyers_yoy", label: "YoY קונים", align: "center", className: "text-slate-400 text-2xs", defaultDir: "desc" },
   { key: "households", label: "משקי בית", align: "center", className: "text-slate-500", defaultDir: "desc" },
   { key: "avg_household_size", label: "נפשות/בית", align: "center", className: "text-slate-500", defaultDir: "desc" },
 ];
@@ -185,19 +185,19 @@ export default function SortableTable({ initialRows }: { initialRows: Yad2Row[] 
               </td>
               <td className="py-2.5 px-3 text-center">{marketTypeBadge(r.market_type)}</td>
               <td className="py-2.5 px-3 text-center text-slate-900 font-semibold">{fmt(r.new_properties)}</td>
-              <td className={`py-2.5 px-3 text-center text-[11px] ${pctClass(r.new_properties_yoy)}`}>
+              <td className={`py-2.5 px-3 text-center text-2xs ${pctClass(r.new_properties_yoy)}`}>
                 {fmtPct(r.new_properties_yoy)}
               </td>
               <td className="py-2.5 px-3 text-center text-slate-900 font-semibold">{fmt(r.secondhand_properties)}</td>
-              <td className={`py-2.5 px-3 text-center text-[11px] ${pctClass(r.secondhand_yoy)}`}>
+              <td className={`py-2.5 px-3 text-center text-2xs ${pctClass(r.secondhand_yoy)}`}>
                 {fmtPct(r.secondhand_yoy)}
               </td>
               <td className="py-2.5 px-3 text-center text-slate-900 font-semibold">{fmt(r.avg_days_on_market)}</td>
-              <td className={`py-2.5 px-3 text-center text-[11px] ${pctClass(r.days_yoy, true)}`}>
+              <td className={`py-2.5 px-3 text-center text-2xs ${pctClass(r.days_yoy, true)}`}>
                 {fmtPct(r.days_yoy)}
               </td>
               <td className="py-2.5 px-3 text-center text-slate-900 font-semibold">{fmt(r.buyers_count)}</td>
-              <td className={`py-2.5 px-3 text-center text-[11px] ${pctClass(r.buyers_yoy)}`}>
+              <td className={`py-2.5 px-3 text-center text-2xs ${pctClass(r.buyers_yoy)}`}>
                 {fmtPct(r.buyers_yoy)}
               </td>
               <td className="py-2.5 px-3 text-center text-slate-900 font-semibold">{fmt(r.households)}</td>

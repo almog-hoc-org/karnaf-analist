@@ -12,7 +12,7 @@ import {
   Legend,
 } from "recharts";
 import { motion } from "framer-motion";
-import { BRAND, INK, BRAND_LIGHT, SLATE, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
+import { BRAND, INK, BRAND_LIGHT, SLATE, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
 
 interface NationalData {
   year: number;
@@ -46,6 +46,8 @@ export default function NationalConstructionChart({ data }: Props) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
+      <div className="overflow-x-auto">
+        <div className="min-w-[560px] md:min-w-0">
       <ResponsiveContainer width="100%" height={340}>
         <ComposedChart
           data={chartData}
@@ -60,7 +62,7 @@ export default function NationalConstructionChart({ data }: Props) {
           />
           <XAxis
             dataKey="year"
-            tick={{ fill: AXIS, fontSize: 12 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
           />
@@ -75,34 +77,35 @@ export default function NationalConstructionChart({ data }: Props) {
           />
           <Tooltip
             contentStyle={{ ...tooltipStyle, color: INK, direction: "rtl" }}
-            formatter={(value: number, name: string) => [
+            formatter={tipFmt((value, name) => [
               value.toLocaleString("he-IL") + " דירות",
               name,
-            ]}
+            ])}
           />
           <Legend
-            wrapperStyle={{ fontSize: 12, color: SLATE, direction: "rtl" }}
+            wrapperStyle={{ fontSize: 11, color: SLATE, direction: "rtl" }}
           />
           <Bar
             dataKey="היתרי בנייה"
             fill={BRAND}
             radius={[3, 3, 0, 0]}
             maxBarSize={35}
+            isAnimationActive={false}
           />
-          <Bar
+          <Bar isAnimationActive={false}
             dataKey="התחלות בנייה"
             fill={INK}
             radius={[3, 3, 0, 0]}
             maxBarSize={35}
           />
-          <Bar
+          <Bar isAnimationActive={false}
             dataKey="גמר בנייה"
             fill={BRAND_LIGHT}
             radius={[3, 3, 0, 0]}
             maxBarSize={35}
           />
           {hasTarget && (
-            <Line
+            <Line isAnimationActive={false}
               type="monotone"
               dataKey="יעד שנתי (ועדה)"
               stroke={SLATE}
@@ -114,6 +117,8 @@ export default function NationalConstructionChart({ data }: Props) {
           )}
         </ComposedChart>
       </ResponsiveContainer>
+        </div>
+      </div>
     </motion.div>
   );
 }

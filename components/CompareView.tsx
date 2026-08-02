@@ -28,6 +28,7 @@ import {
 } from "recharts";
 import { SERIES, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 import TrendValue, { fmtSignedPct, trendTextClass } from "@/components/TrendValue";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 // ── Serialized data shapes (plain objects — no Map crosses the boundary) ────
 export interface CompareCityRow {
@@ -176,7 +177,7 @@ function CitySlot({
       </div>
 
       {open && options.length > 0 && (
-        <ul className="absolute z-20 mt-1.5 w-full max-h-72 overflow-y-auto rounded-xl border border-slate-200 bg-white py-1 shadow-lg shadow-slate-900/10">
+        <ul className="absolute z-[100] mt-1.5 w-full max-h-72 overflow-y-auto rounded-xl border border-slate-200 bg-white py-1 shadow-lg shadow-slate-900/10">
           {options.map((c) => (
             <li key={c.city_name}>
               <button
@@ -189,7 +190,7 @@ function CitySlot({
                 className="w-full flex items-baseline justify-between gap-2 px-3 py-2 text-right text-sm text-slate-800 hover:bg-indigo-50 transition-colors"
               >
                 <span className="font-semibold">{c.city_name}</span>
-                <span className="text-[10px] text-slate-400 tabular-nums" dir="ltr">
+                <span className="text-2xs text-slate-400 tabular-nums" dir="ltr">
                   {c.population_2026 != null ? c.population_2026.toLocaleString("he-IL") : ""}
                 </span>
               </button>
@@ -211,6 +212,7 @@ export default function CompareView({
   provenance,
 }: CompareViewProps) {
   const pathname = usePathname();
+  const mobile = useIsMobile();
   const [selected, setSelected] = useState<string[]>(initialCities);
   const [adding, setAdding] = useState(false);
 
@@ -312,7 +314,7 @@ export default function CompareView({
           <span dir="ltr" className="font-semibold text-slate-900 tabular-nums">
             {fmtSignedPct(mm.newPremiumPct)}
             {mm.newPremiumYear != null && (
-              <span className="text-[9px] font-normal text-slate-400"> ({mm.newPremiumYear})</span>
+              <span className="text-2xs font-normal text-slate-400"> ({mm.newPremiumYear})</span>
             )}
           </span>
         );
@@ -353,7 +355,7 @@ export default function CompareView({
         return (
           <span className="tabular-nums text-slate-700">
             {mm.nDeals.toLocaleString("he-IL")}
-            <span className="text-[10px] text-slate-400"> · {mm.distinctYears} שנים</span>
+            <span className="text-2xs text-slate-400"> · {mm.distinctYears} שנים</span>
           </span>
         );
       },
@@ -366,7 +368,7 @@ export default function CompareView({
         const mm = m(c);
         if (!mm) return <span className="text-slate-300">—</span>;
         return (
-          <span className={`inline-block rounded-full px-2.5 py-0.5 text-[11px] font-bold ${CONFIDENCE_CHIP[mm.confidence]}`}>
+          <span className={`inline-block rounded-full px-2.5 py-0.5 text-2xs font-bold ${CONFIDENCE_CHIP[mm.confidence]}`}>
             {CONFIDENCE_HE[mm.confidence]}
           </span>
         );
@@ -429,7 +431,7 @@ export default function CompareView({
             </button>
           )}
         </div>
-        <p className="mt-3 text-[10px] text-slate-400">
+        <p className="mt-3 text-2xs text-slate-400">
           עד {MAX_CITIES} ערים בהשוואה · הקישור בכתובת הדפדפן ניתן לשיתוף
         </p>
       </section>
@@ -452,7 +454,7 @@ export default function CompareView({
             אין נתוני מחירים לערים שנבחרו
           </div>
         ) : (
-          <ResponsiveContainer width="100%" height={340}>
+          <ResponsiveContainer width="100%" height={mobile ? 280 : 340}>
             <LineChart data={chartData} margin={{ top: 8, right: 12, left: 12, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
               <XAxis
@@ -465,7 +467,7 @@ export default function CompareView({
                 tick={{ fill: AXIS, fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
-                width={58}
+                width={mobile ? 40 : 58}
                 tickFormatter={(v: number) => `₪${Math.round(v / 1000)}K`}
               />
               <Tooltip
@@ -478,9 +480,9 @@ export default function CompareView({
                   String(name ?? ""),
                 ]}
               />
-              <Legend verticalAlign="top" height={32} wrapperStyle={{ fontSize: 12, direction: "rtl" }} />
+              <Legend verticalAlign="top" height={mobile ? undefined : 32} wrapperStyle={{ fontSize: 11, direction: "rtl" }} />
               {selected.map((city, i) => (
-                <Line
+                <Line isAnimationActive={false}
                   key={city}
                   type="monotone"
                   dataKey={city}
@@ -511,7 +513,7 @@ export default function CompareView({
           <table className="w-full min-w-[560px] text-sm border-separate border-spacing-0">
             <thead>
               <tr>
-                <th className="py-2.5 pe-2 text-right text-[11px] font-bold text-slate-400 border-b border-slate-200 w-56">
+                <th className="sticky start-0 z-10 bg-white py-2.5 pe-2 text-right text-2xs font-bold text-slate-400 border-b border-slate-200 w-36 md:w-56">
                   מדד
                 </th>
                 {selected.map((city, i) => (
@@ -536,10 +538,10 @@ export default function CompareView({
                 const winner = bestIndex(row);
                 return (
                   <tr key={row.key} className="group">
-                    <td className="py-2.5 pe-2 text-right align-top border-b border-slate-100">
-                      <div className="text-[12px] font-bold text-slate-700 leading-tight">{row.label}</div>
+                    <td className="sticky start-0 z-[1] bg-white py-2.5 pe-2 text-right align-top border-b border-slate-100">
+                      <div className="text-xs font-bold text-slate-700 leading-tight">{row.label}</div>
                       {row.sub && (
-                        <div className="text-[10px] text-slate-400 mt-0.5 leading-tight">{row.sub}</div>
+                        <div className="text-2xs text-slate-400 mt-0.5 leading-tight">{row.sub}</div>
                       )}
                     </td>
                     {selected.map((city, i) => (
@@ -559,7 +561,7 @@ export default function CompareView({
           </table>
         </div>
 
-        <p className="mt-4 text-[10px] text-slate-500">
+        <p className="mt-4 text-2xs text-slate-500">
           <span className="opacity-60" aria-hidden>📎 </span>
           {provenance}
         </p>

@@ -10,7 +10,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
-import { BRAND, BRAND_LIGHT, INK, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
+import { BRAND, BRAND_LIGHT, INK, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 interface PriceTrendDataPoint {
   year: number;
@@ -24,6 +25,7 @@ interface PriceTrendChartProps {
 }
 
 export default function PriceTrendChart({ data, cityName }: PriceTrendChartProps) {
+  const mobile = useIsMobile();
   if (!data || data.length < 2) {
     return (
       <div className="flex items-center justify-center h-40 text-slate-500 text-sm">
@@ -46,7 +48,7 @@ export default function PriceTrendChart({ data, cityName }: PriceTrendChartProps
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
     >
-      <ResponsiveContainer width="100%" height={260}>
+      <ResponsiveContainer width="100%" height={mobile ? 220 : 260}>
         <LineChart
           data={chartData}
           margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
@@ -58,7 +60,7 @@ export default function PriceTrendChart({ data, cityName }: PriceTrendChartProps
           />
           <XAxis
             dataKey="period"
-            tick={{ fill: AXIS, fontSize: 10 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             interval={Math.max(0, Math.floor(chartData.length / 8))}
@@ -67,17 +69,17 @@ export default function PriceTrendChart({ data, cityName }: PriceTrendChartProps
             tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
-            width={55}
+            width={mobile ? 42 : 55}
             tickFormatter={(v: number) => `${(v / 1000000).toFixed(1)}M`}
           />
           <Tooltip
             contentStyle={{ ...tooltipStyle, color: INK }}
-            formatter={(value: number) => [
+            formatter={tipFmt((value) => [
               `₪${value.toLocaleString("he-IL")}`,
               "מחיר חציוני",
-            ]}
+            ])}
           />
-          <Line
+          <Line isAnimationActive={false}
             type="monotone"
             dataKey="מחיר"
             stroke={BRAND}

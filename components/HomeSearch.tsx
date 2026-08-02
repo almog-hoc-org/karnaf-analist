@@ -75,8 +75,8 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
           rounded-2xl
           bg-white
           border border-slate-200
-          px-5 py-4
-          pe-12
+          py-4
+          ps-12 pe-12
           text-base text-slate-900
           placeholder:text-slate-400
           focus:outline-none
@@ -112,7 +112,7 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
 
       {/* Search results dropdown */}
       {query && (
-        <div className="absolute z-50 mt-2 w-full rounded-xl bg-white border border-slate-200 shadow-xl max-h-[400px] overflow-y-auto">
+        <div className="absolute z-[100] mt-2 w-full rounded-xl bg-white border border-slate-200 shadow-xl max-h-[400px] overflow-y-auto">
           {results.length === 0 ? (
             <p className="text-slate-500 px-5 py-4 text-center">לא נמצאו ערים תואמות.</p>
           ) : (
@@ -124,22 +124,22 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
                 <Link
                   key={city.id}
                   href={`/city/${encodeURIComponent(city.city_name)}`}
-                  className="flex items-center justify-between px-5 py-3 hover:bg-indigo-50 transition-colors group"
+                  className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-3 hover:bg-indigo-50 transition-colors group"
                 >
-                  <span className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors">
+                  <span className="min-w-0 flex-1 basis-28 break-words font-semibold leading-tight text-slate-900 group-hover:text-indigo-700 transition-colors">
                     {city.city_name}
                   </span>
-                  <div className="flex gap-6 text-sm text-slate-600">
+                  <div className="flex flex-wrap gap-x-6 gap-y-0.5 text-sm text-slate-600">
                     {/* second-hand 3y change from real transactions (labeled) */}
                     {city.price_change_pct !== null && (
-                      <span>
-                        יד-2 3ש׳:{" "}
+                      <span className="whitespace-nowrap">
+                        יד-2 3 שנים:{" "}
                         <span className={(city.price_change_pct ?? 0) >= 0 ? "text-emerald-600" : "text-rose-600"}>
                           {formatPct(city.price_change_pct)}
                         </span>
                       </span>
                     )}
-                    <span>
+                    <span className="whitespace-nowrap">
                       אוכלוסייה:{" "}
                       <span className="text-slate-800">
                         {formatNumber(city.population_2024 ?? city.population_2022 ?? city.population_2026)}

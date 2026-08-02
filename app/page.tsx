@@ -11,6 +11,9 @@ import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import { loadCityTransactionPrices, loadRankingEligibleCities } from "@/lib/cityTransactionPrices";
 import { computeMarketInsights } from "@/lib/marketInsights";
 import MarketInsightsSection from "@/components/MarketInsightsSection";
+import { loadCbsSales } from "@/lib/cbsSales";
+import CbsSalesChart from "@/components/CbsSalesChart";
+import { loadDiscoveredReports } from "@/lib/data-refresh";
 
 function formatPrice(value: number | null): string {
   if (value === null) return "—";
@@ -102,6 +105,9 @@ export default async function HomePage() {
   // Normalization gate (user rule): rankings admit only cities with 10+ deals of EVERY type.
   const rankEligible = await loadRankingEligibleCities();
   const marketInsights = await computeMarketInsights().catch(() => []);
+  const cbsSales = loadCbsSales();
+  // reports the refresh engine discovered (fix #3: this file was written but never read)
+  const discoveredReports = loadDiscoveredReports(10);
   const top3yGain = (await loadSecondhandChanges(3)).slice(0, 5);
 
   // Compact per-city yearly series for the fully-filterable movers card:
@@ -129,11 +135,13 @@ export default async function HomePage() {
   let deals12m = 0;
   let dealsMaxDate: string | null = null;
   try {
+    // Usable deals only: active (non-excluded) and within the last 10 years — the
+    // exact set that feeds the graphs, so the headline can't over-state the DB.
     const [totals] = await prisma.$queryRawUnsafe<Array<{ n: bigint; maxd: string | null }>>(
-      "SELECT COUNT(*) AS n, MAX(deal_date) AS maxd FROM nadlan_transactions"
+      "SELECT COUNT(*) AS n, MAX(deal_date) AS maxd FROM nadlan_transactions WHERE COALESCE(excluded,0)=0 AND deal_year >= CAST(strftime('%Y','now') AS INTEGER) - 10"
     );
     const [recent] = await prisma.$queryRawUnsafe<Array<{ n: bigint }>>(
-      "SELECT COUNT(*) AS n FROM nadlan_transactions WHERE deal_date >= date('now','-12 months')"
+      "SELECT COUNT(*) AS n FROM nadlan_transactions WHERE COALESCE(excluded,0)=0 AND deal_date >= date('now','-12 months')"
     );
     totalDeals = Number(totals?.n ?? 0);
     deals12m = Number(recent?.n ?? 0);
@@ -238,56 +246,47 @@ export default async function HomePage() {
   const heroDate = new Date().toLocaleDateString("he-IL", { month: "long", year: "numeric" });
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-7xl mx-auto">
+    <main className="min-h-screen page-wrap-wide py-8">
       {/* ── HERO — Compact, screenshot-optimized ───────────────── */}
-      <header className="text-center pt-2 pb-1 animate-fade-up">
-        <div className="flex items-center justify-center gap-2 flex-wrap mb-4">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-50 border border-indigo-200">
+      {/* ── HERO — search-first, exactly one focal point (yad2 lesson) ── */}
+      <header className="animate-fade-up pb-2 pt-6 text-center md:pt-10">
+        <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
+          <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-indigo-600"></span>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-500 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-indigo-600" />
             </span>
-            <p className="text-[10px] font-bold tracking-[0.2em] text-indigo-700 uppercase">
-              Real Estate Intelligence
-            </p>
-          </div>
-          <span className="brand-stamp">
-            <span>📅</span>
-            <span>{heroDate}</span>
+            <span className="t-label text-indigo-700">מאגר עסקאות עצמאי · מתעדכן יומית</span>
           </span>
         </div>
 
-        <h1 className="text-4xl md:text-6xl font-black leading-[0.9] tracking-tight text-balance">
+        <h1 className="t-display text-balance">
           <span className="text-gradient-hero">קרנף אנליסט</span>
         </h1>
-        <p className="text-slate-500 text-sm md:text-base font-medium max-w-xl mx-auto mt-3 leading-relaxed">
-          מחקר וניתוח שוק הנדל״ן בישראל — מחירים, עסקאות אמת, אוכלוסייה ובנייה
+        <p className="mx-auto mt-3 max-w-lg text-slate-500" style={{ fontSize: 16, lineHeight: 1.55 }}>
+          מחקר וניתוח שוק הנדל״ן בישראל — מבוסס עסקאות אמת
         </p>
 
-        <div className="max-w-xl mx-auto mt-5">
+        {/* the one dominant control on the page */}
+        <div className="mx-auto mt-6 max-w-2xl">
           <HomeSearch cities={allCities} />
         </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-2 mt-5 text-sm">
-          <span className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 tabular-nums shadow-sm text-[13px]">
-            <span className="font-bold text-indigo-700">{cityCount}</span>
-            <span className="text-slate-500 mr-1.5">ערים במאגר</span>
-          </span>
-
-        </div>
+        <p className="mt-3 text-slate-400" style={{ fontSize: 13 }}>
+          חפש עיר וקבל מחירים, מגמות והשוואות · {cityCount} ערים במאגר
+        </p>
       </header>
 
       {/* ── HERO KPIs — live values computed from the DB on every render ──
           Each number carries its own explicit time window + provenance caption. */}
-      <section className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <section className="card-grid mt-8 grid-cols-1 sm:grid-cols-3">
         {/* Total deals in the transactions DB */}
         <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
-          <div className="flex items-start justify-between mb-3">
-            <div className="stat-label">סה&quot;כ עסקאות במאגר</div>
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
             <span className="text-xl">🗄️</span>
+            <div className="stat-label min-w-0 break-words">סה&quot;כ עסקאות במאגר</div>
           </div>
           <div className="stat-mega">{totalDeals ? totalDeals.toLocaleString("he-IL") : "—"}</div>
-          <div className="mt-3 flex items-center gap-2">
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
             <span className="trend-pill trend-flat">1998–2026</span>
             <span className="text-xs text-slate-500">כל העסקאות</span>
           </div>
@@ -301,13 +300,13 @@ export default async function HomePage() {
 
         {/* Deals in the trailing 12 months */}
         <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
-          <div className="flex items-start justify-between mb-3">
-            <div className="stat-label">עסקאות — 12 ח׳ אחרונים</div>
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
             <span className="text-xl">🤝</span>
+            <div className="stat-label min-w-0 break-words">עסקאות ב-12 החודשים האחרונים</div>
           </div>
           <div className="stat-mega">{deals12m ? deals12m.toLocaleString("he-IL") : "—"}</div>
-          <div className="mt-3 flex items-center gap-2">
-            <span className="trend-pill trend-flat">חלון נגרר 12 ח׳</span>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+            <span className="trend-pill trend-flat">12 החודשים האחרונים</span>
           </div>
           <NumberCaption
             source='רשות המסים + נדל"ן'
@@ -319,20 +318,20 @@ export default async function HomePage() {
 
         {/* National 3y price change — SECOND-HAND only (real transactions) */}
         <Link href="/cities" className="hero-kpi hero-indigo group cursor-pointer block">
-          <div className="flex items-start justify-between mb-3">
-            <div className="stat-label">שינוי מחיר יד-2 ארצי — 3 שנים</div>
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
             <span className="text-xl">📈</span>
+            <div className="stat-label min-w-0 break-words">שינוי מחיר יד-2 ארצי — 3 שנים</div>
           </div>
-          <div className="text-4xl md:text-5xl leading-none">
+          <div className="leading-none" style={{ fontSize: "clamp(28px, 7.5vw, 44px)" }}>
             <TrendValue pct={median3y} className="font-extrabold tracking-tight" />
           </div>
-          <div className="mt-3 flex items-center gap-2">
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
             <span className="trend-pill trend-flat">יד שנייה בלבד</span>
             <span className="text-xs text-slate-500">חציון {sh3all.length} ערים</span>
           </div>
           <NumberCaption
             source="עסקאות יד-שנייה אמיתיות · רשות המסים"
-            period={`חציון שינוי 3ש׳ בין הערים · ${window3yLabel ?? "—"}`}
+            period={`חציון שינוי 3 שנים בין הערים · ${window3yLabel ?? "—"}`}
             insideLink
           />
         </Link>
@@ -341,16 +340,17 @@ export default async function HomePage() {
       </section>
 
       {/* ── Rankings ─────────────────────────────────────────────── */}
-      <section className="mt-12">
+      <section className="stack mt-14">
         <div className="section-header mb-6">
           <div className="section-header-icon">🏆</div>
           <div>
-            <h2 className="text-lg font-bold text-slate-900">דירוגים מובילים</h2>
+            <h2 className="text-2xl font-black text-slate-900">דירוגים מובילים</h2>
             <p className="text-xs text-slate-500 mt-0.5">חמש הערים המובילות בכל קטגוריה</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 items-start">
+        {/* 4 cards → never more than 4 columns (a 5-col grid squeezed each card to 165px and city names vanished) */}
+        <div className="card-grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
           {rankings.map((ranking) => (
             <RankingCard
               key={ranking.title}
@@ -368,8 +368,26 @@ export default async function HomePage() {
       {/* ── Auto-computed investor insights ────────────────────── */}
       <MarketInsightsSection insights={marketInsights} />
 
-      {/* ── Recent CBS / MoF Reports ───────────────────────────── */}
-      <RecentReportsSection />
+      {/* ── CBS national sales: new vs second-hand ─────────────── */}
+      {cbsSales && (
+        <section className="mt-14">
+          <CbsSalesChart data={cbsSales} />
+        </section>
+      )}
+
+      {/* ── Recent CBS / MoF Reports (curated + auto-discovered by the refresh engine) ── */}
+      <RecentReportsSection
+        discovered={discoveredReports.reports.map((r) => ({
+          id: r.id,
+          title: r.title,
+          publisher: r.publisher,
+          publishedDate: r.publishedDate,
+          pdfUrl: r.pdfUrl,
+          primaryPdfPath: r.primaryPdfPath,
+          highlights: r.highlights,
+        }))}
+        lastRefreshedAt={discoveredReports.lastRefreshedAt}
+      />
 
 
 

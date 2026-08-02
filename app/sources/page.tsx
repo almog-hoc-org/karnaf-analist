@@ -38,10 +38,10 @@ function formatHeDate(d: Date | string | null): string {
 
 export default function SourcesPage() {
   return (
-    <main className="min-h-screen px-4 py-10 max-w-6xl mx-auto">
+    <main className="min-h-screen page-wrap py-8">
       <header className="text-center space-y-4 mb-10">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200">
-          <p className="text-[10px] font-bold tracking-[0.2em] text-indigo-700 uppercase">Data Sources</p>
+          <p className="text-2xs font-bold tracking-[0.2em] text-indigo-700 uppercase">Data Sources</p>
         </div>
         <h1 className="text-4xl md:text-5xl font-black leading-[0.95] tracking-tighter">
           <span className="text-gradient-hero">מקורות מידע</span>
@@ -97,12 +97,12 @@ export default function SourcesPage() {
                         <span className="flex-shrink-0 text-slate-400 group-hover:text-indigo-600 transition-colors text-sm">←</span>
                       </div>
                       <p className="text-xs text-slate-600 mb-2 leading-relaxed">{src.description}</p>
-                      <div className="flex items-start gap-1.5 text-[11px] mb-2">
+                      <div className="flex items-start gap-1.5 text-2xs mb-2">
                         <span className={`font-semibold ${a.text} flex-shrink-0`}>נשתמש בו ל:</span>
                         <span className="text-slate-600">{src.usedFor}</span>
                       </div>
 
-                      <div className="border-t border-slate-100 mt-2 pt-2 flex items-center justify-between gap-2 text-[10px]">
+                      <div className="border-t border-slate-100 mt-2 pt-2 flex items-center justify-between gap-2 text-2xs">
                         <span className="text-slate-500">
                           קצב פרסום:{" "}
                           <span className="font-semibold text-slate-700">{formatScheduleHe(src.publicationSchedule)}</span>
@@ -188,7 +188,7 @@ export default function SourcesPage() {
               })}
             </tbody>
           </table>
-          <div className="px-4 py-3 text-[11px] text-slate-500 bg-slate-50/60 border-t border-slate-100 flex flex-wrap items-center gap-x-4 gap-y-1">
+          <div className="px-4 py-3 text-2xs text-slate-500 bg-slate-50/60 border-t border-slate-100 flex flex-wrap items-center gap-x-4 gap-y-1">
             <span className="font-semibold text-slate-700">מקרא:</span>
             <span className="inline-flex items-center gap-1.5">
               <span className="inline-block w-3 h-3 rounded bg-emerald-500"></span> נתונים נשאבו

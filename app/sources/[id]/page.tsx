@@ -367,7 +367,7 @@ function DataTable({
         </table>
       </div>
       {truncationNote && (
-        <p className="px-5 py-2 text-[11px] text-slate-500 bg-slate-50/50 border-t border-slate-100">{truncationNote}</p>
+        <p className="px-5 py-2 text-2xs text-slate-500 bg-slate-50/50 border-t border-slate-100">{truncationNote}</p>
       )}
     </div>
   );
@@ -380,7 +380,7 @@ function StatsGrid({ stats, note }: { stats: { label: string; value: string }[];
         {stats.map((s) => (
           <div key={s.label} className="text-center p-4 rounded-xl bg-slate-50 border border-slate-200">
             <div className="text-3xl font-extrabold text-slate-900 tabular-nums">{s.value}</div>
-            <div className="text-[11px] text-slate-500 mt-1 uppercase tracking-wider font-semibold">{s.label}</div>
+            <div className="text-2xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">{s.label}</div>
           </div>
         ))}
       </div>
@@ -432,10 +432,10 @@ function FactsList({ title, facts }: { title: string; facts: ScatteredFact[] }) 
               <Link href={`/city/${encodeURIComponent(f.city)}`} className="text-xs font-bold text-cyan-700 hover:underline">
                 {f.city}
               </Link>
-              <span className="text-[10px] text-slate-400">{formatHeDate(f.published)}</span>
+              <span className="text-2xs text-slate-400">{formatHeDate(f.published)}</span>
             </div>
             <p className="text-sm text-slate-700 leading-relaxed">{f.fact}</p>
-            <a href={f.source_url} target="_blank" rel="noopener noreferrer" className="text-[11px] text-slate-500 hover:text-cyan-700 mt-1 inline-block">
+            <a href={f.source_url} target="_blank" rel="noopener noreferrer" className="text-2xs text-slate-500 hover:text-cyan-700 mt-1 inline-block">
               {f.source_name} ↗
             </a>
           </li>
@@ -455,7 +455,7 @@ function StatusBadge({ status }: { status: DocStatus }) {
   };
   const m = map[status];
   return (
-    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold border ${m.cls} whitespace-nowrap`}>
+    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-2xs font-bold border ${m.cls} whitespace-nowrap`}>
       <span aria-hidden>{m.icon}</span>
       <span>{m.he}</span>
     </span>
@@ -481,7 +481,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
           <h3 className="text-sm font-bold text-slate-900">📑 מסמכים ופרסומים ספציפיים</h3>
           <p className="text-xs text-slate-500 mt-0.5">{docs.length} מסמכים בסה"כ</p>
         </div>
-        <div className="flex gap-1.5 text-[10px]">
+        <div className="flex gap-1.5 text-2xs">
           <span className="px-2 py-1 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
             <strong>{extractedCount}</strong> נשאב
           </span>
@@ -498,7 +498,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
           <div key={year} className="px-5 py-3">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-base font-extrabold text-slate-900 tabular-nums">{year}</span>
-              <span className="text-[10px] text-slate-400">({byYear.get(year)!.length} מסמכים)</span>
+              <span className="text-2xs text-slate-400">({byYear.get(year)!.length} מסמכים)</span>
             </div>
             <ul className="space-y-2">
               {byYear.get(year)!.map((d, i) => (
@@ -513,7 +513,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
                     >
                       {d.name}
                     </a>
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-slate-500 mt-0.5">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-2xs text-slate-500 mt-0.5">
                       <span>📅 {d.date}</span>
                       {d.publicationNumber && (
                         <span className="font-mono">פרסום: {d.publicationNumber}</span>
@@ -527,7 +527,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
           </div>
         ))}
       </div>
-      <div className="px-5 py-2 text-[10px] text-slate-500 bg-slate-50 border-t border-slate-100">
+      <div className="px-5 py-2 text-2xs text-slate-500 bg-slate-50 border-t border-slate-100">
         💡 <strong>נשאב</strong> — חולצו ממנו נתונים שמשמשים את האתר.{" "}
         <strong>צוטט</strong> — כיסוי עיתונאי שמסתמך על הפרסום.{" "}
         <strong>במעקב</strong> — הפרסום נרשם בלוח הפרסומים אבל טרם נשאבו ממנו נתונים.
@@ -550,7 +550,7 @@ export default async function SourceDetailPage({ params }: PageProps) {
   const documents = getDocumentsForSource(src.id);
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+    <main className="min-h-screen page-wrap py-8">
       <nav className="flex items-center justify-between mb-6">
         <Link href="/sources" className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-cyan-700 transition-colors">
           <span>←</span>
@@ -567,7 +567,7 @@ export default async function SourceDetailPage({ params }: PageProps) {
             {cat?.icon || "📋"}
           </div>
           <div className="flex-1 min-w-0">
-            <p className={`text-[10px] font-bold uppercase tracking-wider mb-1 ${a.text}`}>
+            <p className={`text-2xs font-bold uppercase tracking-wider mb-1 ${a.text}`}>
               {src.organization}
             </p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">{src.name}</h1>
@@ -616,7 +616,7 @@ export default async function SourceDetailPage({ params }: PageProps) {
           <h3 className="text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider">מזין לטבלאות במערכת</h3>
           <div className="flex flex-wrap gap-1.5">
             {src.feedsTables.map((t) => (
-              <code key={t} className="px-2 py-1 rounded bg-white border border-slate-200 text-[11px] text-slate-700 font-mono">
+              <code key={t} className="px-2 py-1 rounded bg-white border border-slate-200 text-2xs text-slate-700 font-mono">
                 {t}
               </code>
             ))}

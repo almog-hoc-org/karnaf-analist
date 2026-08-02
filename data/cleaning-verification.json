@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-08-02T07:43:57.836Z",
+  "scanned": 739911,
+  "duplicates": {
+    "on": true,
+    "windowDays": 7,
+    "sameBuildingMax": 2,
+    "violations": 0,
+    "samples": []
+  },
+  "luxury": {
+    "on": true,
+    "minPrice": 4500000,
+    "premiumPct": 20,
+    "flaggedActive": 12539,
+    "violations": 0,
+    "samples": []
+  },
+  "reconciliation": {
+    "ok": true,
+    "total": 985321,
+    "active": 739911,
+    "excluded": 245410,
+    "merged": 92025,
+    "dupe": 50694,
+    "anomaly": 68840,
+    "sanity": 33851
+  }
+}

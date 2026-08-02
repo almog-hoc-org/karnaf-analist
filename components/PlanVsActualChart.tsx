@@ -11,7 +11,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { BRAND, INK, BRAND_LIGHT, SLATE, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
+import { BRAND, INK, BRAND_LIGHT, SLATE, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 interface Point {
   year: number;
@@ -22,6 +23,7 @@ interface Point {
 }
 
 export default function PlanVsActualChart({ data }: { data: Point[] }) {
+  const mobile = useIsMobile();
   const series = data.map((d) => ({
     year: d.year.toString(),
     "היתרים": d.permitsCumulative,
@@ -31,25 +33,25 @@ export default function PlanVsActualChart({ data }: { data: Point[] }) {
   }));
 
   return (
-    <div style={{ width: "100%", height: 360 }} dir="ltr">
+    <div style={{ width: "100%", height: mobile ? 300 : 360 }} dir="ltr">
       <ResponsiveContainer>
         <ComposedChart data={series} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
-          <XAxis dataKey="year" tick={{ fontSize: 12, fill: AXIS }} axisLine={false} tickLine={false} />
+          <XAxis dataKey="year" tick={{ fontSize: 11, fill: AXIS }} axisLine={false} tickLine={false} />
           <YAxis
             tick={{ fontSize: 11, fill: AXIS }}
             axisLine={false}
             tickLine={false}
             tickFormatter={(v: number) => `${(v / 1000).toFixed(0)}K`}
-            width={50}
+            width={mobile ? 40 : 50}
           />
           <Tooltip
-            formatter={(v: number) => v.toLocaleString("he-IL") + " יח״ד מצטבר"}
+            formatter={tipFmt((v) => v.toLocaleString("he-IL") + " יח״ד מצטבר")}
             contentStyle={{ ...tooltipStyle, direction: "rtl" }}
           />
           <Legend wrapperStyle={{ fontSize: 11, direction: "rtl" }} />
           {/* Actuals as filled areas — semi-transparent so they stack visually */}
-          <Area
+          <Area isAnimationActive={false}
             type="monotone"
             dataKey="היתרים"
             stroke={BRAND}
@@ -57,7 +59,7 @@ export default function PlanVsActualChart({ data }: { data: Point[] }) {
             fillOpacity={0.14}
             strokeWidth={2}
           />
-          <Area
+          <Area isAnimationActive={false}
             type="monotone"
             dataKey="התחלות"
             stroke={INK}
@@ -65,7 +67,7 @@ export default function PlanVsActualChart({ data }: { data: Point[] }) {
             fillOpacity={0.1}
             strokeWidth={2}
           />
-          <Area
+          <Area isAnimationActive={false}
             type="monotone"
             dataKey="גמר בנייה"
             stroke={BRAND_LIGHT}
@@ -74,7 +76,7 @@ export default function PlanVsActualChart({ data }: { data: Point[] }) {
             strokeWidth={2}
           />
           {/* Committee target as the reference benchmark — dashed neutral line */}
-          <Line
+          <Line isAnimationActive={false}
             type="linear"
             dataKey="יעד הוועדה"
             stroke={SLATE}

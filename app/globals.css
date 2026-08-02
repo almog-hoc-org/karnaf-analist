@@ -29,6 +29,31 @@
     /* Trend-only accents — never decorative */
     --trend-up: #059669;              /* emerald-600 */
     --trend-down: #dc2626;            /* red-600 */
+
+    /* ── Semantic roles ────────────────────────────────────────────
+       Every colour in the UI must map to one of these. Before this,
+       111 distinct colour tokens were in use across 8 families with
+       amber/cyan/rose/purple applied with no defined meaning. */
+    --role-warning: #b45309;          /* amber-700  — caveats, thin data */
+    --role-warning-bg: #fffbeb;       /* amber-50 */
+    --role-warning-border: #fde68a;   /* amber-200 */
+    --role-info: #155e75;             /* brand-700 — neutral information */
+    --role-info-bg: #eef9fb;
+
+    /* ── Elevation — 3 steps, nothing else ───────────────────────── */
+    --shadow-flat:  0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-raised: 0 1px 2px rgba(15, 23, 42, 0.04), 0 2px 8px -2px rgba(15, 23, 42, 0.06);
+    --shadow-overlay: 0 4px 12px -2px rgba(15, 23, 42, 0.10), 0 16px 40px -12px rgba(15, 23, 42, 0.18);
+
+    /* ── Radii — 3 steps (+ full for pills) ──────────────────────── */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    /* ── Motion ──────────────────────────────────────────────────── */
+    --ease-out: cubic-bezier(0.2, 0.8, 0.3, 1);
+    --dur-fast: 120ms;
+    --dur-base: 180ms;
   }
 
   * { box-sizing: border-box; }
@@ -44,40 +69,59 @@
       radial-gradient(ellipse 60% 45% at 8% 65%, rgba(51, 65, 85, 0.035), transparent 60%);
     background-attachment: fixed;
   }
+
+  /* fixed background repaints on every scroll frame in iOS Safari — mobile scrolls it */
+  @media (max-width: 767px) {
+    body { background-attachment: scroll; }
+  }
 }
 
 @layer components {
-  /* ── Card ─────────────────────────────────────────────────────── */
+  /* ── Card ─────────────────────────────────────────────────────────
+     One surface, three elevations (flat / raised / overlay). The old
+     three-layer shadow stacks read as heavy and dated; modern product
+     surfaces are a crisp 1px border plus a whisper of shadow.        */
   .glass-card {
-    @apply bg-white border border-slate-200 rounded-2xl;
-    box-shadow:
-      0 1px 2px rgba(15, 23, 42, 0.04),
-      0 4px 12px -2px rgba(15, 23, 42, 0.06),
-      0 12px 32px -8px rgba(15, 23, 42, 0.05);
+    @apply bg-white border border-slate-200;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-flat);
+    transition: box-shadow var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
   }
 
   .glass-card:hover {
-    border-color: #b5e2ea;
-    box-shadow:
-      0 1px 2px rgba(15, 23, 42, 0.05),
-      0 6px 16px -2px rgba(15, 23, 42, 0.08),
-      0 16px 40px -8px rgba(14, 116, 144, 0.10);
+    border-color: #cbd5e1;
+    box-shadow: var(--shadow-raised);
   }
+
+  /* opt-in emphasis for the ONE card that leads a view */
+  .card-raised { box-shadow: var(--shadow-raised); }
 
   .section-container {
-    @apply bg-white border border-slate-200 rounded-2xl p-6;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    @apply bg-white border border-slate-200 p-4 md:p-6;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-flat);
   }
 
-  /* ── KPI card with top accent bar ─────────────────────────────── */
+  /* ── KPI card ─────────────────────────────────────────────────────
+     The 3px accent bar used to sit on EVERY card, so it signalled
+     nothing. It is now opt-in via .kpi-accent for the card that leads
+     a group; the rest are quiet surfaces and hierarchy comes from
+     size and placement.                                              */
   .kpi-card {
-    @apply relative overflow-hidden bg-white border border-slate-200 rounded-2xl p-4 md:p-5 transition-all duration-300;
-    box-shadow:
-      0 1px 2px rgba(15, 23, 42, 0.04),
-      0 4px 12px -2px rgba(15, 23, 42, 0.05);
+    @apply relative overflow-hidden bg-white border border-slate-200 p-4 md:p-5;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-flat);
+    transition: box-shadow var(--dur-base) var(--ease-out),
+                border-color var(--dur-base) var(--ease-out);
   }
 
-  .kpi-card::before {
+  .kpi-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: var(--shadow-raised);
+  }
+
+  .kpi-accent::before {
     content: '';
     position: absolute;
     top: 0;
@@ -87,25 +131,12 @@
     background: var(--accent-bar, linear-gradient(90deg, #155e75, #17879f));
   }
 
-  .kpi-card:hover {
-    border-color: #b5e2ea;
-    transform: translateY(-2px);
-    box-shadow:
-      0 1px 2px rgba(15, 23, 42, 0.05),
-      0 8px 20px -2px rgba(15, 23, 42, 0.1),
-      0 12px 40px -8px var(--accent-shadow, rgba(14, 116, 144, 0.16));
-  }
-
   /* ── Accent variants — brand + neutral + TREND-ONLY green/red ── */
-  .glow-indigo  { --accent-bar: linear-gradient(90deg, #155e75, #17879f); --accent-shadow: rgba(14, 116, 144, 0.18); }
-  .glow-slate   { --accent-bar: linear-gradient(90deg, #64748b, #94a3b8); --accent-shadow: rgba(100, 116, 139, 0.14); }
+  .glow-indigo  { --accent-bar: linear-gradient(90deg, #155e75, #17879f); }
+  .glow-slate   { --accent-bar: linear-gradient(90deg, #64748b, #94a3b8); }
   /* trend-only: */
-  .glow-emerald { --accent-bar: linear-gradient(90deg, #059669, #10b981); --accent-shadow: rgba(5, 150, 105, 0.2); }
-  .glow-red     { --accent-bar: linear-gradient(90deg, #dc2626, #ef4444); --accent-shadow: rgba(220, 38, 38, 0.2); }
-  /* legacy aliases → unified (kept so stray usages don't break) */
-  .glow-cyan, .glow-blue, .glow-purple, .glow-amber, .glow-rose, .glow-zinc {
-    --accent-bar: linear-gradient(90deg, #155e75, #17879f); --accent-shadow: rgba(14, 116, 144, 0.18);
-  }
+  .glow-emerald { --accent-bar: linear-gradient(90deg, #059669, #10b981); }
+  .glow-red     { --accent-bar: linear-gradient(90deg, #dc2626, #ef4444); }
 
   /* ── Hero KPI — single premium variant ────────────────────────── */
   .hero-kpi {
@@ -136,10 +167,12 @@
 
   .hero-kpi > * { position: relative; z-index: 1; }
 
-  /* user rule: center the copy inside home display windows */
+  /* user rule: center the copy inside home display windows.
+     Centering is done with text-align ONLY — the old descendant overrides
+     (.hero-kpi .flex { justify-content:center } + .stat-label { width:100% })
+     hijacked EVERY flex row inside the card and were a root cause of clipped
+     captions; each row now centers itself in the markup. */
   .hero-kpi { text-align: center; }
-  .hero-kpi .flex { justify-content: center; }
-  .hero-kpi .stat-label { display: block; width: 100%; text-align: center; }
 
   /* single variant + legacy aliases collapse to it */
   .hero-indigo,
@@ -150,8 +183,11 @@
 
   /* ── Section header — one unified style ───────────────────────── */
   .section-header {
-    @apply flex items-center gap-3 mb-5;
+    @apply flex flex-wrap items-center gap-3 mb-5;
   }
+
+  /* children may shrink below intrinsic width (wide titles wrap, never clip) */
+  .section-header > div { min-width: 0; }
 
   .section-header-icon {
     @apply w-10 h-10 rounded-xl flex items-center justify-center text-base flex-shrink-0;
@@ -161,42 +197,67 @@
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
+  /* Same treatment as .section-head — one section heading in the whole site. */
   .section-header h2 {
-    @apply text-xl font-black text-slate-900 tracking-tight;
+    @apply text-2xl font-black text-slate-900 tracking-tight;
   }
 
   .section-header p {
-    @apply text-xs text-slate-500 mt-0.5;
+    @apply text-sm text-slate-500 mt-0.5;
   }
 
   /* ── Statistical typography ───────────────────────────────────── */
   .stat-mega {
-    @apply text-4xl md:text-5xl font-extrabold tracking-tight leading-none text-slate-900;
+    @apply font-extrabold tracking-tight leading-none text-slate-900;
+    /* responsive: shrinks on a 375px phone instead of clipping, tops out at 44px */
+    font-size: clamp(28px, 7.5vw, 44px);
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-hero {
     @apply text-6xl md:text-7xl font-black tracking-tighter leading-[0.85] text-slate-900;
+    /* fluid like .stat-mega: 32px on a 375px phone → today's 44px from ~518px up */
+    font-size: clamp(30px, 8.5vw, 44px);
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-large {
     @apply text-3xl md:text-4xl font-extrabold tracking-tight leading-none text-slate-900;
+    /* fluid: 22.5px on a 375px phone → today's 30px from 500px up (desktop unchanged) */
+    font-size: clamp(22px, 6vw, 30px);
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-value {
     @apply text-2xl font-bold tracking-tight text-slate-900;
+    /* fluid: 18px on a 375px phone → today's 24px from 500px up (desktop unchanged) */
+    font-size: clamp(18px, 4.8vw, 24px);
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-label {
-    @apply text-[11px] text-slate-500 font-semibold leading-tight uppercase tracking-wider;
+    @apply text-2xs text-slate-500 font-semibold leading-tight uppercase tracking-wider;
   }
 
   .section-divider {
     @apply my-10 border-t border-slate-200;
   }
+
+  /* ── Layout rhythm — ONE container policy for every page ──────────
+     Two widths only: reading/content pages, and data pages that need
+     room for wide tables. (Routes previously used seven different
+     ad-hoc max-widths, so no two pages lined up.)                    */
+  .page-wrap      { @apply mx-auto w-full px-4 md:px-6; max-width: 1120px; }
+  .page-wrap-wide { @apply mx-auto w-full px-4 md:px-6; max-width: 1440px; }
+  .stack          { @apply mb-12 md:mb-16; }
+  .card-grid      { @apply grid gap-4 md:gap-5 items-stretch; }
+  .card-grid > *  { height: 100%; }
+
+  /* section header: icon + title + one description line, everywhere */
+  .section-head { @apply mb-5 flex flex-wrap items-center gap-3; }
+  .section-head > div { min-width: 0; }
+  .section-head h2 { font-size: 24px; line-height: 1.25; font-weight: 800; letter-spacing: -0.015em; @apply text-slate-900; }
+  .section-head p  { font-size: 13px; @apply mt-0.5 text-slate-500; }
 
   /* ── Trend pill — the ONLY place green/red live besides TrendValue ── */
   .trend-pill {
@@ -204,12 +265,14 @@
   }
 
   .trend-up   { @apply bg-emerald-50 text-emerald-700 border border-emerald-200; }
-  .trend-down { @apply bg-rose-50 text-rose-700 border border-rose-200; }
+  /* red, not rose: the app had TWO different reds — every other negative
+     signal (TrendValue, --trend-down, 82 classNames) uses red-600. */
+  .trend-down { @apply bg-red-50 text-red-700 border border-red-200; }
   .trend-flat { @apply bg-slate-100 text-slate-600 border border-slate-200; }
 
   .brand-stamp {
     @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full;
-    @apply text-[10px] font-bold uppercase tracking-wider text-slate-600;
+    @apply text-2xs font-bold uppercase tracking-wider text-slate-600;
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid #e2e8f0;
     backdrop-filter: blur(8px);
@@ -235,7 +298,7 @@
   }
 
   .chip-quality {
-    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-bold border;
   }
   .chip-quality-good { @apply bg-indigo-50 text-indigo-700 border-indigo-200; }
   .chip-quality-warn { @apply bg-slate-100 text-slate-500 border-slate-300; }
@@ -243,9 +306,22 @@
 
 @layer utilities {
   .font-heebo {
-    font-family: var(--font-heebo), "Assistant", "Heebo", "Rubik", system-ui, sans-serif;
-    line-height: 1.45;
+    font-family: var(--font-heebo), "Rubik", "Assistant", "Heebo", system-ui, sans-serif;
+    font-size: 16px;              /* one base size, like yad2 */
+    line-height: 1.5;
     font-feature-settings: "kern" 1, "liga" 1, "tnum" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── The whole type scale — four steps, nothing else ──────────────
+     Hierarchy comes from WEIGHT and SPACE, not from a dozen sizes.   */
+  .t-display { font-size: 30px; line-height: 1.12; font-weight: 800; letter-spacing: -0.02em; }
+  .t-title   { font-size: 24px; line-height: 1.25; font-weight: 800; letter-spacing: -0.015em; }
+  .t-body    { font-size: 16px; line-height: 1.55; font-weight: 400; }
+  .t-meta    { font-size: 13px; line-height: 1.45; font-weight: 500; }
+  .t-label   { font-size: 11px; line-height: 1.35; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  @media (min-width: 768px) {
+    .t-display { font-size: 44px; }
   }
 
   .font-heebo h1, .font-heebo h2, .font-heebo h3, .font-heebo h4 {
@@ -296,3 +372,41 @@
 }
 
 .animate-fade-up { animation: fadeUp 0.6s ease-out forwards; }
+
+/* ── Focus ─────────────────────────────────────────────────────────
+   One visible focus ring for every interactive element. The codebase
+   had ZERO focus-visible rules, so keyboard users had no idea where
+   they were. :focus-visible only shows for keyboard/AT, never on click. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Reduced motion ────────────────────────────────────────────────
+   Respect the OS setting (framer-motion animates 8 chart cards). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Mobile hardening (≤639px) ─────────────────────────────────────
+   1. 16px form controls: below that size iOS Safari auto-zooms the whole
+      page on focus. One rule beats ~40 scattered text-xs/text-sm inputs
+      (!important is required to override those utility classes).
+   2. KPI numbers may break to a second line instead of being clipped by
+      the cards' overflow-hidden — wrapped always beats invisible. */
+@media (max-width: 639px) {
+  input, select, textarea { font-size: 16px !important; }
+}
+
+.kpi-card .stat-value,
+.kpi-card .stat-large,
+.hero-kpi .stat-large,
+.hero-kpi .stat-mega {
+  overflow-wrap: anywhere;
+}

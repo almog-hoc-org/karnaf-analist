@@ -12,7 +12,8 @@ import {
   ComposedChart,
 } from "recharts";
 import { motion } from "framer-motion";
-import { BRAND, INK, SLATE, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
+import { BRAND, INK, SLATE, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 interface PermitData {
   year: number;
@@ -25,6 +26,7 @@ interface PermitsChartProps {
 }
 
 export default function PermitsChart({ data, cityName }: PermitsChartProps) {
+  const mobile = useIsMobile();
   if (!data || data.length === 0) {
     return (
       <div className="flex items-center justify-center h-40 text-slate-500 text-sm">
@@ -51,7 +53,7 @@ export default function PermitsChart({ data, cityName }: PermitsChartProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
     >
-      <ResponsiveContainer width="100%" height={260}>
+      <ResponsiveContainer width="100%" height={mobile ? 220 : 260}>
         <ComposedChart
           data={chartDataWithAvg}
           margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
@@ -67,29 +69,31 @@ export default function PermitsChart({ data, cityName }: PermitsChartProps) {
             tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
+            interval={mobile ? "preserveStartEnd" : 0}
+            minTickGap={mobile ? 14 : 5}
           />
           <YAxis
             tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
-            width={50}
+            width={mobile ? 40 : 50}
             tickFormatter={(v: number) => v.toLocaleString("he-IL")}
           />
           <Tooltip
             contentStyle={{ ...tooltipStyle, color: INK }}
-            formatter={(value: number, name: string) => [
+            formatter={tipFmt((value, name) => [
               value.toLocaleString("he-IL"),
               name,
-            ]}
+            ])}
             cursor={{ fill: "rgba(255,255,255,0.04)" }}
           />
-          <Bar
+          <Bar isAnimationActive={false}
             dataKey="היתרים"
             fill={BRAND}
             radius={[4, 4, 0, 0]}
             maxBarSize={50}
           />
-          <Line
+          <Line isAnimationActive={false}
             dataKey="ממוצע"
             stroke={SLATE}
             strokeDasharray="5 5"

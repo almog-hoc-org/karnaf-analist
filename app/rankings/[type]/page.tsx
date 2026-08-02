@@ -44,7 +44,7 @@ const RANKING_CONFIG: Record<RankingType, {
     subtitle: `שינוי ממוצע ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2022→2025, 10+ עסקאות בשתי השנים) — ללא הטיית דירות חדשות`,
     icon: "📈",
     accent: "rose",
-    valueLabel: "שינוי יד-2 3ש׳",
+    valueLabel: "שינוי יד-2 3 שנים",
     source: "מאגר העסקאות הפנימי (רשות המסים) — לפי שנת בנייה",
   },
   "highest-gain-median": {
@@ -52,7 +52,7 @@ const RANKING_CONFIG: Record<RankingType, {
     subtitle: `שינוי חציון ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2022→2025, 10+ עסקאות בשתי השנים)`,
     icon: "📊",
     accent: "rose",
-    valueLabel: "שינוי חציון יד-2 3ש׳",
+    valueLabel: "שינוי חציון יד-2 3 שנים",
     source: "מאגר העסקאות הפנימי (רשות המסים) — לפי שנת בנייה",
   },
   "highest-surplus": {
@@ -174,7 +174,7 @@ export default async function RankingPage({ params }: PageProps) {
   const isTrendRanking = type === "highest-gain" || type === "highest-gain-median" || type === "highest-surplus";
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+    <main className="min-h-screen page-wrap py-8">
       {/* Header */}
       <header className="mb-8">
         <div className="flex items-start gap-4">
@@ -196,7 +196,7 @@ export default async function RankingPage({ params }: PageProps) {
               <span className="px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-500 text-xs">
                 מקור: {cfg.source}
               </span>
-              <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-[11px] font-semibold">
+              <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-2xs font-semibold">
                 ⚖️ {RANKING_ELIGIBILITY_NOTE}
               </span>
             </div>
@@ -214,7 +214,7 @@ export default async function RankingPage({ params }: PageProps) {
                 <th className="py-3 px-4 text-right text-xs text-slate-500 font-semibold w-16">דירוג</th>
                 <th className="py-3 px-4 text-right text-xs text-slate-500 font-semibold">עיר</th>
                 <th className="py-3 px-4 text-left text-xs text-slate-500 font-semibold">{cfg.valueLabel}</th>
-                <th className="py-3 px-4 text-left text-xs text-slate-500 font-semibold w-40">השוואה ויזואלית</th>
+                <th className="py-3 px-4 text-left text-xs text-slate-500 font-semibold w-24 md:w-40">השוואה ויזואלית</th>
               </tr>
             </thead>
             <tbody>
@@ -278,7 +278,7 @@ export default async function RankingPage({ params }: PageProps) {
       {/* Related rankings */}
       <div className="mt-10">
         <h2 className="text-sm font-bold text-slate-900 mb-3">דירוגים אחרים</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-4 gap-3">
           {(Object.keys(RANKING_CONFIG) as RankingType[])
             .filter((t) => t !== type)
             .map((t) => {

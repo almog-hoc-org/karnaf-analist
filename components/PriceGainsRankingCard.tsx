@@ -52,14 +52,13 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear }: {
   }, [series, scope, metric, fromY, toY]);
 
   return (
-    <div className="kpi-card glow-indigo">
+    <div className="glass-card relative flex h-full flex-col overflow-hidden p-5">
       <div className="mb-3">
-        <div className="flex items-center gap-2 mb-2.5">
-          <span className="text-base">📈</span>
-          <h3 className="text-sm font-black text-slate-900">שינויי מחיר — לבחירתך</h3>
+        <div className="mb-2.5 min-w-0">
+          <span className="block break-words text-2xs font-black uppercase leading-snug tracking-wide text-slate-400">📈 שינויי מחיר — לבחירתך</span>
         </div>
         {/* controls: scope pills + metric + year range */}
-        <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold">
+        <div className="flex flex-wrap items-center gap-1.5 text-2xs font-bold">
           {SCOPES.map((s) => (
             <button key={s.key} type="button" onClick={() => setScope(s.key)}
               className={`px-2 py-1 rounded-full border transition-colors ${
@@ -74,7 +73,7 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear }: {
             {metric === 0 ? "ממוצע ₪/מ״ר" : "חציון ₪/מ״ר"} ⇄
           </button>
         </div>
-        <div className="mt-2 flex items-center gap-1.5 text-[11px]">
+        <div className="mt-2 flex flex-wrap items-center gap-1.5 text-2xs">
           <select value={fromY} onChange={(e) => setFromY(Number(e.target.value))}
             className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 font-bold tabular-nums">
             {years.filter((y) => y < toY).map((y) => <option key={y} value={y}>{y}</option>)}
@@ -84,7 +83,7 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear }: {
             className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 font-bold tabular-nums">
             {years.filter((y) => y > fromY).map((y) => <option key={y} value={y}>{y}</option>)}
           </select>
-          <span className="text-[9px] text-slate-400">10+ עסקאות בכל שנה</span>
+          <span className="text-2xs text-slate-400">10+ עסקאות בכל שנה</span>
         </div>
       </div>
 
@@ -93,26 +92,26 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear }: {
           <li className="text-xs text-slate-500 italic py-2 text-center">אין ערים עם דאטה מספק בטווח שנבחר</li>
         )}
         {items.map((it, i) => (
-          <li key={it.city} className="flex items-center gap-2 text-xs">
-            <span className={`w-5 h-5 rounded-full text-[10px] font-black flex items-center justify-center flex-shrink-0 ${
+          <li key={it.city} className="flex min-w-0 flex-wrap items-start gap-x-2 gap-y-0.5 text-xs">
+            <span className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-2xs font-black ${
               i === 0 ? "bg-indigo-600 text-white" : "bg-slate-100 text-slate-700"
             }`}>
               {i + 1}
             </span>
             <Link href={`/city/${encodeURIComponent(it.city)}`}
-              className={`font-bold text-slate-900 hover:text-indigo-700 hover:underline flex-1 truncate ${i === 0 ? "text-sm" : ""}`}>
+              className={`min-w-0 flex-1 break-words font-bold leading-tight text-slate-900 hover:text-indigo-700 hover:underline ${i === 0 ? "text-sm" : ""}`}>
               {it.city}
             </Link>
-            <TrendValue pct={it.pct} className={i === 0 ? "!text-base font-black" : "font-bold"} />
+            <TrendValue pct={it.pct} className={`shrink-0 ${i === 0 ? "!text-base font-black" : "font-bold"}`} />
           </li>
         ))}
       </ul>
 
-      <div className="mt-3 flex items-center justify-between">
-        <Link href="/rankings/highest-gain" className="text-[10px] text-slate-400 hover:text-indigo-700 transition-colors">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+        <Link href="/rankings/highest-gain" className="whitespace-nowrap text-2xs text-slate-400 hover:text-indigo-700 transition-colors">
           כל הדירוג →
         </Link>
-        <span className="text-[9px] text-slate-400">🔵 מאגר העסקאות · {fromY}→{toY}</span>
+        <span className="min-w-0 break-words text-2xs text-slate-400">🔵 מאגר העסקאות · {fromY}→{toY}</span>
       </div>
     </div>
   );

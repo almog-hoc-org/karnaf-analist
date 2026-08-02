@@ -45,3 +45,14 @@ export const tooltipStyle = {
   direction: "rtl" as const,
   color: INK,
 };
+
+/**
+ * recharts v3 widened the Tooltip `formatter` signature (value: ValueType,
+ * name: NameType, item, index, payload). Every formatter in this app is
+ * numeric, so this shim keeps the call sites simple and typed:
+ *
+ *   formatter={tipFmt((value, name) => [fmt(value), label(name)])}
+ */
+export function tipFmt<R>(fn: (value: number, name: string) => R) {
+  return (value: unknown, name: unknown): R => fn(Number(value), String(name ?? ""));
+}

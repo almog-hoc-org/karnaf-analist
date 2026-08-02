@@ -39,12 +39,12 @@ export default async function SupplyCoveragePage() {
   });
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-7xl mx-auto">
+    <main className="min-h-screen page-wrap-wide py-8">
       <header className="mb-8">
         <div className="flex items-start gap-4">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50 text-indigo-700">⚖️</div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-indigo-700">היצע מול ביקוש</p>
+            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">היצע מול ביקוש</p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">פער היצע-ביקוש לפי עיר</h1>
             <p className="text-slate-600 text-base mt-1">
               חישוב הפער עם סולם פולבק: <strong>גמר בנייה ← התחלות בנייה ← היתרי בנייה</strong>.
@@ -55,38 +55,38 @@ export default async function SupplyCoveragePage() {
       </header>
 
       {/* Counters */}
-      <section className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
+      <section className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8 [&>*:nth-child(5)]:col-span-2 md:[&>*:nth-child(5)]:col-span-1">
         <div className="kpi-card glow-indigo">
           <div className="stat-label">היצע מגמר בנייה</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{withCompletions}</div>
-          <div className="text-[10px] text-slate-500 mt-1">ערים עם גמר זמין</div>
+          <div className="text-2xs text-slate-500 mt-1">ערים עם גמר זמין</div>
         </div>
         <div className="kpi-card glow-indigo">
           <div className="stat-label">היצע מהתחלות</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{withStarts}</div>
-          <div className="text-[10px] text-slate-500 mt-1">פולבק שני</div>
+          <div className="text-2xs text-slate-500 mt-1">פולבק שני</div>
         </div>
         <div className="kpi-card glow-indigo">
           <div className="stat-label">היצע מהיתרים</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{withPermits}</div>
-          <div className="text-[10px] text-slate-500 mt-1">פולבק שלישי</div>
+          <div className="text-2xs text-slate-500 mt-1">פולבק שלישי</div>
         </div>
         <div className="kpi-card glow-slate">
           <div className="stat-label">ללא נתוני היצע</div>
           <div className="stat-large text-slate-500 mt-2 tabular-nums">{noSupply}</div>
-          <div className="text-[10px] text-slate-500 mt-1">חסר לגמרי</div>
+          <div className="text-2xs text-slate-500 mt-1">חסר לגמרי</div>
         </div>
         <div className="kpi-card glow-indigo">
           <div className="stat-label">עם חישוב ביקוש</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{withDemand}</div>
-          <div className="text-[10px] text-slate-500 mt-1">מתוך {gaps.length}</div>
+          <div className="text-2xs text-slate-500 mt-1">מתוך {gaps.length}</div>
         </div>
       </section>
 
       {/* Coverage matrix */}
       <div className="glass-card overflow-hidden">
         <div className="h-1 bg-gradient-to-l from-indigo-500 to-indigo-600" />
-        <div className="px-3 py-2 text-[11px] text-slate-500 bg-slate-50 border-b border-slate-100">
+        <div className="px-3 py-2 text-2xs text-slate-500 bg-slate-50 border-b border-slate-100">
           💡 הטבלה ממוינת לפי גודל הפער המוחלט (הכי קיצוני בראש). כל עיר היא קישור לעמוד המלא שלה.
         </div>
         <div className="overflow-x-auto">
@@ -97,9 +97,9 @@ export default async function SupplyCoveragePage() {
                 <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">נפשות/בית</th>
                 <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">גידול אוכלוסייה</th>
                 <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">דירות נדרשות</th>
-                <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">היתרים<br /><span className="text-[9px] text-slate-400">שנים</span></th>
-                <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">התחלות<br /><span className="text-[9px] text-slate-400">שנים</span></th>
-                <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">גמר<br /><span className="text-[9px] text-slate-400">שנים</span></th>
+                <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">היתרים<br /><span className="text-2xs text-slate-400">שנים</span></th>
+                <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">התחלות<br /><span className="text-2xs text-slate-400">שנים</span></th>
+                <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">גמר<br /><span className="text-2xs text-slate-400">שנים</span></th>
                 <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">בסיס</th>
                 <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">פער</th>
                 <th className="py-3 px-3 text-center text-xs text-slate-500 font-semibold">פער %</th>
@@ -122,16 +122,16 @@ export default async function SupplyCoveragePage() {
                     <td className="py-2 px-3 text-center text-slate-500">{fmt(g.totals.popGrowth)}</td>
                     <td className="py-2 px-3 text-center text-slate-700 font-semibold">{fmt(g.totals.demand)}</td>
                     <td className="py-2 px-3 text-center text-slate-700">
-                      {fmt(g.totals.permits)} <span className="text-[9px] text-slate-400">({g.coverage.yearsWithPermits})</span>
+                      {fmt(g.totals.permits)} <span className="text-2xs text-slate-400">({g.coverage.yearsWithPermits})</span>
                     </td>
                     <td className="py-2 px-3 text-center text-slate-700">
-                      {fmt(g.totals.starts)} <span className="text-[9px] text-slate-400">({g.coverage.yearsWithStarts})</span>
+                      {fmt(g.totals.starts)} <span className="text-2xs text-slate-400">({g.coverage.yearsWithStarts})</span>
                     </td>
                     <td className="py-2 px-3 text-center text-slate-700">
-                      {fmt(g.totals.completions)} <span className="text-[9px] text-slate-400">({g.coverage.yearsWithCompletions})</span>
+                      {fmt(g.totals.completions)} <span className="text-2xs text-slate-400">({g.coverage.yearsWithCompletions})</span>
                     </td>
                     <td className="py-2 px-3 text-center">
-                      <span className={`inline-block px-1.5 py-0.5 text-[10px] font-bold rounded border ${meta.cls}`}>{meta.he}</span>
+                      <span className={`inline-block px-1.5 py-0.5 text-2xs font-bold rounded border ${meta.cls}`}>{meta.he}</span>
                     </td>
                     <td className={`py-2 px-3 text-center ${gapClass}`}>
                       {g.totals.gap !== null ? `${g.totals.gap >= 0 ? "+" : ""}${fmt(g.totals.gap)}` : "—"}

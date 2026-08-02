@@ -145,13 +145,55 @@ export interface DiscoveryOptions {
   numbers: string[];
   /** Set of "{subject}:{year}:{num}" already in the system. */
   knownIds: Set<string>;
-  onProgress?: (event: { num: string; status: "skipped" | "tried" | "found" | "miss" }) => void;
+  /**
+   * URL of a PDF KNOWN to exist (e.g. the subject's last find). CRITICAL for
+   * correctness: CBS serves the SAME ~2KB error page for "number not
+   * published" and for "you are rate-limited" (verified 2026-07-30 — a long
+   * scan silently turned every real PDF into a phantom miss). We re-fetch the
+   * control every few probes; when it fails, the pipe is throttled and every
+   * unverified miss since the last good control is DISCARDED, not recorded.
+   */
+  controlUrl?: string;
+  onProgress?: (event: { num: string; status: "skipped" | "tried" | "found" | "miss" | "throttled" }) => void;
 }
 
-export async function discoverCbsReports(
-  opts: DiscoveryOptions
-): Promise<DiscoveredReport[]> {
+export interface DiscoveryResult {
+  reports: DiscoveredReport[];
+  /** true → the scan stopped early because CBS started rejecting requests */
+  throttled: boolean;
+  /** numbers whose absence was VERIFIED (safe to count as real misses) */
+  confirmedMisses: string[];
+}
+
+async function urlAlive(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": UA, Accept: "application/pdf,*/*" },
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) return false;
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    return bytes.length >= 10_000 && bytes[0] === 0x25 && bytes[1] === 0x50;
+  } catch {
+    return false;
+  }
+}
+
+export async function discoverCbsReports(opts: DiscoveryOptions): Promise<DiscoveryResult> {
   const out: DiscoveredReport[] = [];
+  const confirmedMisses: string[] = [];
+  /** misses awaiting verification (flushed on a find or a good control check) */
+  let pendingMisses: string[] = [];
+  let sinceCheck = 0;
+  let throttled = false;
+  let recoveryUsed = false;
+  const CHECK_EVERY = 15;
+
+  const flushPending = () => {
+    for (const n of pendingMisses) { confirmedMisses.push(n); opts.onProgress?.({ num: n, status: "miss" }); }
+    pendingMisses = [];
+  };
+
   for (const num of opts.numbers) {
     const id = `${opts.subject}:${opts.year}:${num}`;
     if (opts.knownIds.has(id)) {
@@ -160,25 +202,56 @@ export async function discoverCbsReports(
     }
     opts.onProgress?.({ num, status: "tried" });
     const bytes = await tryDownloadCbsPdf(opts.year, num, opts.subject);
-    if (!bytes) {
-      opts.onProgress?.({ num, status: "miss" });
-      // 800ms pause between probes — CBS rate-limits at ~1.5/sec
-      await new Promise((r) => setTimeout(r, 800));
+    if (bytes) {
+      // a real download proves the pipe is open → everything before it was a true miss
+      flushPending();
+      sinceCheck = 0;
+      const filename = `cbs_${num}_${opts.year}_${opts.subject}.pdf`;
+      const { localPath } = savePdf(bytes, filename);
+      out.push({
+        publicationNumber: num,
+        year: opts.year,
+        subject: opts.subject,
+        url: buildCbsPdfUrl(opts.year, num, opts.subject),
+        pdfBytes: bytes,
+        localPath,
+      });
+      opts.onProgress?.({ num, status: "found" });
+      await new Promise((r) => setTimeout(r, 1200));
       continue;
     }
-    const filename = `cbs_${num}_${opts.year}_${opts.subject}.pdf`;
-    const { publicPath, localPath } = savePdf(bytes, filename);
-    out.push({
-      publicationNumber: num,
-      year: opts.year,
-      subject: opts.subject,
-      url: buildCbsPdfUrl(opts.year, num, opts.subject),
-      pdfBytes: bytes,
-      localPath,
-    });
-    opts.onProgress?.({ num, status: "found" });
-    // Larger pause after a successful find (download was bandwidth-heavy)
-    await new Promise((r) => setTimeout(r, 1200));
+    pendingMisses.push(num);
+    sinceCheck++;
+    if (opts.controlUrl && sinceCheck >= CHECK_EVERY) {
+      sinceCheck = 0;
+      if (await urlAlive(opts.controlUrl)) {
+        flushPending(); // pipe verified open → those were real misses
+      } else if (!recoveryUsed) {
+        // throttled once → cool down and try to continue the same run
+        recoveryUsed = true;
+        opts.onProgress?.({ num, status: "throttled" });
+        await new Promise((r) => setTimeout(r, 45_000));
+        if (await urlAlive(opts.controlUrl)) {
+          flushPending();
+        } else {
+          pendingMisses = []; // unverifiable — do NOT poison the registry
+          throttled = true;
+          break;
+        }
+      } else {
+        pendingMisses = [];
+        throttled = true;
+        break;
+      }
+    }
+    // 900ms pause between probes — CBS rate-limits aggressively
+    await new Promise((r) => setTimeout(r, 900));
   }
-  return out;
+
+  // tail: verify the pipe once more before trusting the final streak
+  if (!throttled && pendingMisses.length) {
+    if (!opts.controlUrl || (await urlAlive(opts.controlUrl))) flushPending();
+    else { pendingMisses = []; throttled = true; }
+  }
+  return { reports: out, throttled, confirmedMisses };
 }

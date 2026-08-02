@@ -99,7 +99,7 @@ export default async function ComparePage({
     .slice(0, MAX_CITIES);
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-[1400px] mx-auto">
+    <main className="min-h-screen page-wrap-wide py-8">
       <header className="mb-8 text-center">
         <h1 className="text-3xl md:text-5xl font-black tracking-tight text-balance">
           <span className="text-gradient-hero">השוואת ערים</span>

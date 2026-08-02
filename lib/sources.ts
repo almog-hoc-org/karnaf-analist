@@ -249,8 +249,11 @@ export const SOURCES: Source[] = [
     organization: 'הכלכלן הראשי במשרד האוצר',
     category: "mof",
     description: 'סקירה חודשית של מכירות, השכרה, פעילות קבלנים ומשקיעים בשוק הדיור',
-    url: 'https://www.gov.il/he/departments/publications?OfficeId=8baeed5f-31e2-4ad4-8e72-cb5d3a73e7c0&topic=80b3c7a8-7c19-4b16-9d49-83b4ac6c2b5e',
-    monitorUrl: 'https://www.gov.il/he/departments/publications?OfficeId=8baeed5f-31e2-4ad4-8e72-cb5d3a73e7c0',
+    // OfficeId verified live 2026-07-30 via GetOfficesList (the previous GUID
+    // 8baeed5f-… returned 0 results — a root cause of "הרענון לא מוצא כלום").
+    // Discovery itself now goes through lib/govil-fetcher.ts (openapi-gc host).
+    url: 'https://www.gov.il/he/collectors/publications?OfficeId=f41159c1-7867-41c3-bc0a-cbfe0da1bb1a',
+    monitorUrl: 'https://www.gov.il/he/collectors/publications?OfficeId=f41159c1-7867-41c3-bc0a-cbfe0da1bb1a',
     usedFor: 'נתוני מכירות לפי אזור, פעילות משקיעים, רוכשי דירות זרים',
     feedsTables: ['scattered_city_facts'],
     publicationDate: '2026-03-01',

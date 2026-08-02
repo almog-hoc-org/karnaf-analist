@@ -4,7 +4,8 @@ import CitiesTable, { type InvestorRow } from "@/components/CitiesTable";
 import { loadAllCityPriceChanges } from "@/lib/price-changes";
 import { loadCitiesChangeMetrics } from "@/lib/cityChangeMetrics";
 import { computeAllInvestorMetrics, REF_YEAR } from "@/lib/investorMetrics";
-import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
+import { loadCityTransactionPrices, loadActiveDealCounts } from "@/lib/cityTransactionPrices";
+import { getRuleNum } from "@/lib/systemRules";
 
 export const metadata = {
   title: 'טבלת ערים | קרנף אנליסט',
@@ -47,11 +48,13 @@ export default async function CitiesPage() {
   const txPrices = await loadCityTransactionPrices();
   // Per-city yearly value series for the windowed change columns (median / all / second-hand)
   const changeMetrics = await loadCitiesChangeMetrics();
-  // Per-city total collected transactions (internal repository) — shown as a column
-  const dealCountRows = await prisma.$queryRawUnsafe<{ city_name: string; n: bigint }[]>(
-    "SELECT city_name, SUM(n) n FROM nadlan_year_room_stats WHERE scope='all' AND room_bucket='all' GROUP BY city_name"
-  );
-  const dealCountMap = new Map(dealCountRows.map((r) => [r.city_name, Number(r.n)]));
+  // Per-city total collected transactions (internal repository) — shown as a
+  // column AND the basis for the yellow thin-sample tint. Counted from ACTIVE
+  // rows (both sources, each deal once) via the same loader the ranking
+  // exclusion uses, so the tint, the count and the rankings always agree.
+  const dealCountMap = await loadActiveDealCounts();
+  // user rule: cities under this many active deals are tinted yellow + excluded from rankings
+  const minDeals = getRuleNum("city_min_total_deals", 150);
 
   // Investor screener metrics (server-computed Map → serializable plain Record,
   // BigInt-safe via Number()) — passed as a prop to the client table.
@@ -115,7 +118,7 @@ export default async function CitiesPage() {
   });
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-[1400px] mx-auto">
+    <main className="min-h-screen page-wrap-wide py-8">
       <div className="flex items-center justify-between mb-8">
         <Link
           href="/"
@@ -137,7 +140,7 @@ export default async function CitiesPage() {
         </p>
       </header>
 
-      <CitiesTable data={tableData} investor={investor} refYear={REF_YEAR} />
+      <CitiesTable data={tableData} investor={investor} refYear={REF_YEAR} minDeals={minDeals} />
 
       <footer className="mt-12 pt-6 border-t border-slate-200 text-center text-slate-500 text-xs">
         מקור: למ&quot;ס, מחקר פנימי קרנף 2026

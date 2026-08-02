@@ -48,14 +48,14 @@ export default async function Yad2DetailPage() {
   const balancedCount = rows.filter((r) => r.market_type === "balanced").length;
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-7xl mx-auto">
+    <main className="min-h-screen page-wrap-wide py-8">
       <header className="mb-8">
         <div className="flex items-start gap-4">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50 text-indigo-700">
             🏘️
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-indigo-700">יד2</p>
+            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">יד2</p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
               נתוני מצב שוק — לפי עיר
             </h1>
@@ -100,21 +100,21 @@ export default async function Yad2DetailPage() {
       {/* Market type breakdown */}
       <section className="mb-6 glass-card p-4">
         <h3 className="text-sm font-bold text-slate-900 mb-3">סיווג שוק לפי עיר</h3>
-        <div className="grid grid-cols-3 gap-3 text-center">
+        <div className="grid grid-cols-1 gap-3 text-center sm:grid-cols-3">
           <div className="p-3 rounded-xl bg-red-50 border border-red-200">
             <div className="text-2xl font-extrabold text-red-600 tabular-nums">{sellersCount}</div>
             <div className="text-xs text-red-600 font-semibold mt-1">שוק מוכרים</div>
-            <div className="text-[10px] text-slate-600 mt-0.5">היצע נמוך → מחירים עולים</div>
+            <div className="text-2xs text-slate-600 mt-0.5">היצע נמוך → מחירים עולים</div>
           </div>
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <div className="text-2xl font-extrabold text-slate-700 tabular-nums">{balancedCount}</div>
             <div className="text-xs text-slate-700 font-semibold mt-1">שוק מאוזן</div>
-            <div className="text-[10px] text-slate-600 mt-0.5">היצע = ביקוש</div>
+            <div className="text-2xs text-slate-600 mt-0.5">היצע = ביקוש</div>
           </div>
           <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
             <div className="text-2xl font-extrabold text-emerald-700 tabular-nums">{buyersCount}</div>
             <div className="text-xs text-emerald-700 font-semibold mt-1">שוק קונים</div>
-            <div className="text-[10px] text-slate-600 mt-0.5">היצע גבוה → מחירים יורדים</div>
+            <div className="text-2xs text-slate-600 mt-0.5">היצע גבוה → מחירים יורדים</div>
           </div>
         </div>
       </section>
@@ -122,7 +122,7 @@ export default async function Yad2DetailPage() {
       {/* Main table */}
       <div className="glass-card overflow-hidden">
         <div className="h-1 bg-gradient-to-l from-indigo-500 to-indigo-600" />
-        <div className="px-3 py-2 text-[11px] text-slate-500 bg-slate-50 border-b border-slate-100">
+        <div className="px-3 py-2 text-2xs text-slate-500 bg-slate-50 border-b border-slate-100">
           💡 לחיצה על כותרת עמודה ממיינת את הטבלה. לחיצה נוספת הופכת את כיוון המיון.
         </div>
         <SortableTable initialRows={tableRows} />

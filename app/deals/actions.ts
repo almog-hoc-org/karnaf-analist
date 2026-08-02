@@ -2,17 +2,20 @@
 
 import { revalidatePath } from "next/cache";
 import { appDb } from "@/lib/appDb";
+import { workspaceId } from "@/lib/auth";
 
-const USER = "owner"; // auth attaches here later
+// Logged-in user gets their own workspace; anonymous visitors keep the
+// owner workspace so nothing is ever blocked behind a login.
+const USER = () => workspaceId();
 
 export async function addTrackedCity(city: string) {
   if (!city?.trim()) return;
-  appDb().prepare("INSERT OR IGNORE INTO tracked_cities (user_id, city_name) VALUES (?, ?)").run(USER, city.trim());
+  appDb().prepare("INSERT OR IGNORE INTO tracked_cities (user_id, city_name) VALUES (?, ?)").run(USER(), city.trim());
   revalidatePath("/deals");
 }
 
 export async function removeTrackedCity(city: string) {
-  appDb().prepare("DELETE FROM tracked_cities WHERE user_id=? AND city_name=?").run(USER, city);
+  appDb().prepare("DELETE FROM tracked_cities WHERE user_id=? AND city_name=?").run(USER(), city);
   revalidatePath("/deals");
 }
 
@@ -39,7 +42,7 @@ export async function addDeal(input: DealInput) {
     `INSERT INTO client_deals (user_id, city, neighborhood, street, house_num, size, rooms, floor, price, balcony_sqm, parking_spots, storage_sqm, status, listing_url, notes)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).run(
-    USER, input.city.trim(), input.neighborhood?.trim() || null, input.street?.trim() || null,
+    USER(), input.city.trim(), input.neighborhood?.trim() || null, input.street?.trim() || null,
     input.house_num?.trim() || null, input.size ?? null, input.rooms ?? null, input.floor ?? null,
     input.price ?? null, input.balcony_sqm ?? null, input.parking_spots ?? null, input.storage_sqm ?? null,
     input.status || "seen", input.listing_url?.trim() || null, input.notes?.trim() || null
@@ -56,12 +59,12 @@ export async function updateDeal(id: number, patch: Partial<DealInput>) {
   }
   if (!sets.length) return;
   sets.push("updated_at=CURRENT_TIMESTAMP");
-  appDb().prepare(`UPDATE client_deals SET ${sets.join(", ")} WHERE id=? AND user_id=?`).run(...vals, id, USER);
+  appDb().prepare(`UPDATE client_deals SET ${sets.join(", ")} WHERE id=? AND user_id=?`).run(...vals, id, USER());
   revalidatePath("/deals");
 }
 
 export async function deleteDeal(id: number) {
-  appDb().prepare("DELETE FROM client_deals WHERE id=? AND user_id=?").run(id, USER);
+  appDb().prepare("DELETE FROM client_deals WHERE id=? AND user_id=?").run(id, USER());
   appDb().prepare("DELETE FROM deal_tasks WHERE deal_id=?").run(id);
   revalidatePath("/deals");
 }

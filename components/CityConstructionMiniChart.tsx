@@ -10,7 +10,8 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { BRAND, INK, BRAND_LIGHT, SLATE, AXIS, tooltipStyle } from "@/lib/chartColors";
+import { BRAND, INK, BRAND_LIGHT, SLATE, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 interface DataPoint {
   year: number;
@@ -27,6 +28,7 @@ export default function CityConstructionMiniChart({
   data: DataPoint[];
   cityName: string;
 }) {
+  const mobile = useIsMobile();
   if (!data || data.length === 0) return null;
 
   // Filter to only show years with at least some data
@@ -38,7 +40,7 @@ export default function CityConstructionMiniChart({
 
   return (
     <div className="w-full">
-      <ResponsiveContainer width="100%" height={220}>
+      <ResponsiveContainer width="100%" height={mobile ? 200 : 220}>
         <ComposedChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
           <XAxis
             dataKey="year"
@@ -47,7 +49,7 @@ export default function CityConstructionMiniChart({
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: AXIS, fontSize: 10 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
             width={40}
@@ -55,7 +57,7 @@ export default function CityConstructionMiniChart({
           <Tooltip
             contentStyle={{ ...tooltipStyle, direction: "rtl" }}
             labelStyle={{ color: SLATE }}
-            formatter={(value: number, name: string) => {
+            formatter={tipFmt((value, name) => {
               const labels: Record<string, string> = {
                 permits: "היתרי בנייה",
                 starts: "התחלות בנייה",
@@ -63,11 +65,12 @@ export default function CityConstructionMiniChart({
                 housingNeed: "צורך בדירות",
               };
               return [value?.toLocaleString("he-IL") ?? "—", labels[name] || name];
-            }}
+            })}
           />
           <Legend
-            wrapperStyle={{ fontSize: "10px", direction: "rtl" }}
-            formatter={(value: string) => {
+            verticalAlign={mobile ? "top" : "bottom"}
+            wrapperStyle={{ fontSize: "11px", direction: "rtl" }}
+            formatter={tipFmt((value) => {
               const labels: Record<string, string> = {
                 permits: "היתרי בנייה",
                 starts: "התחלות",
@@ -75,12 +78,12 @@ export default function CityConstructionMiniChart({
                 housingNeed: "צורך בדירות",
               };
               return labels[value] || value;
-            }}
+            })}
           />
-          <Bar dataKey="permits" fill={BRAND} opacity={0.7} radius={[2, 2, 0, 0]} />
-          <Bar dataKey="starts" fill={INK} opacity={0.7} radius={[2, 2, 0, 0]} />
-          <Bar dataKey="completions" fill={BRAND_LIGHT} opacity={0.7} radius={[2, 2, 0, 0]} />
-          <Line
+          <Bar isAnimationActive={false} dataKey="permits" fill={BRAND} opacity={0.7} radius={[2, 2, 0, 0]} />
+          <Bar isAnimationActive={false} dataKey="starts" fill={INK} opacity={0.7} radius={[2, 2, 0, 0]} />
+          <Bar isAnimationActive={false} dataKey="completions" fill={BRAND_LIGHT} opacity={0.7} radius={[2, 2, 0, 0]} />
+          <Line isAnimationActive={false}
             dataKey="housingNeed"
             type="monotone"
             stroke={SLATE}

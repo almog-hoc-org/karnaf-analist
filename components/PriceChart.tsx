@@ -11,7 +11,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
-import { BRAND, INK, SLATE, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
+import { BRAND, INK, SLATE, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 interface PriceChartProps {
   price2023: number | null;
@@ -29,6 +30,7 @@ export default function PriceChart({
   price2026,
   cityName,
 }: PriceChartProps) {
+  const mobile = useIsMobile();
   if (price2023 === null && price2026 === null) {
     return (
       <div className="flex items-center justify-center h-40 text-slate-500 text-sm">
@@ -51,7 +53,7 @@ export default function PriceChart({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <ResponsiveContainer width="100%" height={220}>
+      <ResponsiveContainer width="100%" height={mobile ? 200 : 220}>
         <BarChart
           data={data}
           margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
@@ -65,31 +67,33 @@ export default function PriceChart({
           />
           <XAxis
             dataKey="name"
-            tick={{ fill: AXIS, fontSize: 12 }}
+            tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
+            interval={mobile ? "preserveStartEnd" : 0}
+            minTickGap={mobile ? 14 : 5}
           />
           <YAxis
             tickFormatter={formatTick}
             tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
-            width={52}
+            width={mobile ? 40 : 52}
           />
           <Tooltip
             contentStyle={{ ...tooltipStyle, color: INK }}
-            formatter={(value: number, name: string) => [
+            formatter={tipFmt((value, name) => [
               `₪${Math.round(value).toLocaleString("he-IL")}`,
               `מחיר ${name}`,
-            ]}
+            ])}
             cursor={{ fill: "rgba(255,255,255,0.04)" }}
           />
           <Legend
-            wrapperStyle={{ fontSize: 12, color: SLATE }}
+            wrapperStyle={{ fontSize: 11, color: SLATE }}
             iconType="circle"
           />
           {price2023 !== null && (
-            <Bar
+            <Bar isAnimationActive={false}
               dataKey="2023"
               name="2023"
               fill={SLATE}
@@ -98,7 +102,7 @@ export default function PriceChart({
             />
           )}
           {price2026 !== null && (
-            <Bar
+            <Bar isAnimationActive={false}
               dataKey="2026"
               name="2026"
               fill={BRAND}

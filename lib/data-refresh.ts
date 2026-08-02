@@ -1,31 +1,37 @@
 /**
- * Data refresh orchestrator.
+ * Data refresh orchestrator — CBS + Ministry of Finance (rewritten 2026-07-30).
  *
- * Triggered by POST /api/refresh-data. Goal: find new CBS publications since
- * the last refresh, download them, parse them, and update both:
- *   • data/recent_reports.json  (drives the homepage section)
- *   • data/seen_reports.json    (dedup registry)
+ * Every button click scans BOTH sources for ALL publications the system has
+ * not ingested yet (user directive), filters them by TITLE against the
+ * real-estate lexicon, extracts text + tables, auto-integrates numbers into
+ * the site's landing zones (full-automatic mode — the user's explicit choice),
+ * and updates data/recent_reports.json which the homepage reads.
  *
- * Strategy (keeps each refresh under ~30 seconds):
- *   1. Compute the "search window" — the last 6 months of publication numbers
- *      for each subject (prices, construction, transactions).
- *   2. Skip anything already in seen_reports.json.
- *   3. Try-download each candidate (small pauses to be polite).
- *   4. For each NEW PDF: extract text, identify the report type, save under
- *      /public/reports/ + /data/reports/recent/.
- *   5. Append to recent_reports.json + seen_reports.json.
+ * The three root causes of "הרענון לא מוצא כלום" and their fixes:
+ *   1. FROZEN WINDOW — misses were never recorded, so the probe window never
+ *      advanced past February. Fix: data/refresh_probe_state.json records
+ *      every probed number; CBS numbers are GLOBALLY sequential across all
+ *      subjects, so once a HIGHER number is found anywhere, lower missing
+ *      numbers are closed forever and the window rolls forward.
+ *   2. BODY-TEXT FILTER — matched "דיור" inside the CPI release. Fix: filter
+ *      on the extracted TITLE with the full lexicon (incl. גרשיים variants).
+ *   3. FINDS NEVER SHOWN — recent_reports.json was written but nothing read
+ *      it. Fix: the homepage section now receives these entries (loadDiscoveredReports).
  *
- * For now we DON'T also walk the DB tables. That's a follow-up: extracted
- * numbers feed back into national_construction etc. via existing import
- * scripts.
+ * MoF discovery uses the unchallenged openapi-gc.digital.gov.il API
+ * (lib/govil-fetcher.ts) — the old www.gov.il scraper hit Cloudflare and the
+ * OfficeId GUID it used was wrong (returned 0 results even in a browser).
  */
 import fs from "fs";
 import path from "path";
+import { spawn } from "child_process";
 import {
+  buildCbsPdfUrl,
   discoverCbsReports,
   extractPdfText,
   type SubjectKey,
 } from "./cbs-fetcher";
+import { fetchMofPublications, fetchGovilPageContent } from "./govil-fetcher";
 
 export interface RefreshEvent {
   type: "log" | "skip" | "tried" | "found" | "miss" | "parsed" | "saved" | "error" | "summary" | "done";
@@ -52,10 +58,27 @@ export interface RefreshSummary {
 
 const SEEN_FILE = path.resolve(process.cwd(), "data", "seen_reports.json");
 const RECENT_FILE = path.resolve(process.cwd(), "data", "recent_reports.json");
+const PROBE_FILE = path.resolve(process.cwd(), "data", "refresh_probe_state.json");
+const FACTS_FILE = path.resolve(process.cwd(), "data", "scattered_city_facts.json");
+const EXTRACT_DIR = path.resolve(process.cwd(), "data", "reports", "extracted");
 
+/* ── TITLE lexicon (user's list, incl. Hebrew-punctuation variants) ─────── */
+export const TITLE_LEXICON = [
+  "דירה", "דירות", "מגורים", 'נדל"ן', "נדל״ן", "נדלן", "דיור",
+  "בנייה", "בניה", "היתרי בנייה", "היתרי בניה", "התחלות בנייה", "התחלות בניה",
+  "גמר בנייה", "גמר בניה", "שכר דירה", "שכירות", "משכנתא", "משכנתאות",
+  "התחדשות עירונית", "מקרקעין", "שוק הדיור", "מחירי הדיור",
+];
+
+export function titleIsRealEstate(title: string): boolean {
+  const t = title.replace(/[״"']/g, '"'); // normalize gershayim so נדל"ן ≡ נדל״ן
+  return TITLE_LEXICON.some((kw) => t.includes(kw.replace(/[״"']/g, '"')));
+}
+
+/* ── registries ─────────────────────────────────────────────────────────── */
 interface SeenRegistry {
   seen: Record<string, string>;
-  /** Tuple-keyed registry: "{subject}:{year}:{num}" → ISO timestamp */
+  /** "{subject}:{year}:{num}" or "mof:{slug}" → ISO timestamp */
   publications?: Record<string, string>;
 }
 
@@ -69,25 +92,52 @@ function loadSeen(): SeenRegistry {
     return { seen: {}, publications: {} };
   }
 }
-
 function saveSeen(reg: SeenRegistry) {
   fs.mkdirSync(path.dirname(SEEN_FILE), { recursive: true });
   fs.writeFileSync(SEEN_FILE, JSON.stringify(reg, null, 2), "utf-8");
 }
 
-interface RecentReportEntry {
+/** CBS probe state — what makes the window ADVANCE between refreshes. */
+interface ProbeState {
+  year: number;
+  /** highest publication number FOUND per subject (its series frontier) */
+  maxFound: Record<string, number>;
+  /** number (global sequence) → consecutive miss count, per subject */
+  misses: Record<string, Record<string, number>>;
+  /** numbers permanently closed per subject (belong to other CBS series) */
+  closed: Record<string, string[]>;
+}
+function loadProbeState(year: number): ProbeState {
+  try {
+    const s = JSON.parse(fs.readFileSync(PROBE_FILE, "utf-8")) as Partial<ProbeState>;
+    if (s.year === year) {
+      return { year, maxFound: s.maxFound ?? {}, misses: s.misses ?? {}, closed: s.closed ?? {} };
+    }
+  } catch { /* first run / new year */ }
+  return { year, maxFound: {}, misses: {}, closed: {} };
+}
+function saveProbeState(s: ProbeState) {
+  fs.mkdirSync(path.dirname(PROBE_FILE), { recursive: true });
+  fs.writeFileSync(PROBE_FILE, JSON.stringify(s, null, 2), "utf-8");
+}
+
+/* ── recent-reports store (read by the homepage) ────────────────────────── */
+export interface RecentReportEntry {
   id: string;
   title: string;
   publicationNumber: string;
-  subject: SubjectKey;
+  subject: SubjectKey | "mof";
   year: number;
-  publisher: "CBS";
+  publisher: "CBS" | "MoF";
   publishedDate: string | null;
+  /** original document / page URL at the source */
   pdfUrl: string;
-  primaryPdfPath: string;
+  /** local copy served from /public (CBS only — MoF blobs are CF-gated) */
+  primaryPdfPath: string | null;
   discoveredAt: string;
-  /** First 800 chars of extracted text — useful for downstream titling */
   preview: string;
+  /** short extracted headline numbers (MoF reviews) */
+  highlights?: string[];
 }
 
 interface RecentReportsFile {
@@ -103,80 +153,50 @@ function loadRecent(): RecentReportsFile {
     return { reports: [], lastRefreshedAt: "" };
   }
 }
-
 function saveRecent(data: RecentReportsFile) {
   fs.mkdirSync(path.dirname(RECENT_FILE), { recursive: true });
   fs.writeFileSync(RECENT_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
-/**
- * Heuristic: extract a clean title from the PDF text. CBS reports follow a
- * very stable pattern:
- *
- *   <metadata>          — אתר/דוא"ל/פקס/כתבה/לקבלת/מדינת/הודעה/ירושלים lines
- *   <Hebrew date>       — "12 בפברואר, 2026" or "א' בניסן תשפ"ו, 19 במרץ 2026"
- *   <pub_number>        — "047/2026"
- *   <Hebrew title>      — the actual subject of the report (this is what we want)
- *   <English title>     — translation of the Hebrew title
- *
- * The Hebrew title is the FIRST non-metadata Hebrew line that comes after the
- * publication number pattern.
- */
+/** Server-side loader for UI components (homepage reports section). */
+export function loadDiscoveredReports(limit = 12): { reports: RecentReportEntry[]; lastRefreshedAt: string } {
+  const r = loadRecent();
+  // real-estate titles only (early files may hold pre-filter finds like the CPI),
+  // newest publication first regardless of the order discovery inserted them
+  const reports = r.reports
+    .filter((x) => titleIsRealEstate(x.title))
+    .sort((a, b) => (b.publishedDate ?? "").localeCompare(a.publishedDate ?? ""))
+    .slice(0, limit);
+  return { reports, lastRefreshedAt: r.lastRefreshedAt };
+}
+
+/* ── CBS title/date extraction (kept from the previous engine — works) ──── */
 const METADATA_PREFIXES = [
   "אתר", "דוא", "פקס", "כתבה", "לקבלת", "מדינת", "הודעה", "ירושלים",
   "להרחבה", "פרסום", "להסברים", "או באמצעות", "טופס", "לסטטיסטיקאי",
-  "תשפ", "תשפ\"", "כתבו", "תקשור", "תאריך",
+  "תשפ", 'תשפ"', "כתבו", "תקשור", "תאריך",
 ];
 
 function isMetadataLine(line: string): boolean {
-  // Lines with only/mostly underscores, equals signs, or numbers (dates, etc.)
   if (/^[_=\-\s.0-9:/]+$/.test(line)) return true;
   for (const p of METADATA_PREFIXES) {
     if (line.startsWith(p)) return true;
-    if (line.startsWith(":" + p)) return true; // ":אתר www.cbs.gov.il"
+    if (line.startsWith(":" + p)) return true;
   }
-  // Lines with email/URL artifacts
   if (line.includes("@") || line.includes("www.") || line.includes("://")) return true;
-  // Pure numeric or short
   if (line.length < 14) return true;
-  // Just date or publication number lines
   if (/^\d{3}\/\d{4}$/.test(line)) return true;
   return false;
 }
 
-/**
- * Real-estate relevance check.
- *
- * CBS publication subject codes are coarse — "10" covers ALL CBS price indexes
- * including CPI and industrial output prices, not just housing. We require the
- * report's first ~2000 chars to mention one of these housing keywords.
- */
-const REAL_ESTATE_KEYWORDS = [
-  "דירות", "דיור", 'נדל"ן', "נדלן", "התחלות בנייה", "היתרי בנייה",
-  "שוק הדירות", "סיומי בנייה", "גמר בנייה", "שכר דירה", "התחדשות עירונית",
-  "עסקאות נדל", "מחירי הדירות",
-];
-
-function isRealEstateReport(text: string): boolean {
-  const sample = text.slice(0, 2500);
-  return REAL_ESTATE_KEYWORDS.some((kw) => sample.includes(kw));
-}
-
 function extractTitleAndDate(text: string): { title: string; publishedDate: string | null } {
   const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
-
-  // Date: handle 2 formats. CBS PDFs often break lines mid-word, so we look at
-  // the joined text with whitespace collapsed.
-  //   • "15 בפברואר, 2026"  (clean)
-  //   • "15 פברו אר 2026" or "15\nב\nפברואר\n,\n2026" (text-extraction artifacts)
   const HE_MONTHS: Record<string, number> = {
     "ינואר": 1, "פברואר": 2, "מרץ": 3, "אפריל": 4, "מאי": 5, "יוני": 6,
     "יולי": 7, "אוגוסט": 8, "ספטמבר": 9, "אוקטובר": 10, "נובמבר": 11, "דצמבר": 12,
   };
   let publishedDate: string | null = null;
-  // Collapse whitespace + drop the "ב" prefix on months to absorb both forms
   const flat = lines.slice(0, 50).join(" ").replace(/\s+/g, " ");
-  // Match "<day> ב?<month> <year>" allowing optional commas and spaces
   for (const [monthName, monthNum] of Object.entries(HE_MONTHS)) {
     const re = new RegExp(`(\\d{1,2})\\s*ב?\\s*${monthName}\\s*,?\\s*(\\d{4})`);
     const m = flat.match(re);
@@ -189,208 +209,349 @@ function extractTitleAndDate(text: string): { title: string; publishedDate: stri
       }
     }
   }
-
-  // Title: find the publication number line, then the next non-metadata
-  // Hebrew line is the title.
   let title = "";
   let foundPubLine = false;
   for (const line of lines.slice(0, 60)) {
-    if (/^\d{3}\/\d{4}$/.test(line)) {
-      foundPubLine = true;
-      continue;
-    }
+    if (/^\d{3}\/\d{4}$/.test(line)) { foundPubLine = true; continue; }
     if (!foundPubLine) continue;
     if (isMetadataLine(line)) continue;
-    // Stop on English (which comes after the Hebrew title)
     if (/^[A-Za-z]/.test(line)) break;
-    // Require Hebrew characters
-    if (/[֐-׿]/.test(line)) {
-      title = line.replace(/\s+/g, " ").trim();
-      break;
-    }
+    if (/[֐-׿]/.test(line)) { title = line.replace(/\s+/g, " ").trim(); break; }
   }
-
-  // Fallback: scan the whole document for the longest meaningful Hebrew line in the first 40
   if (!title) {
     for (const line of lines.slice(0, 40)) {
       if (isMetadataLine(line)) continue;
-      if (/[֐-׿]/.test(line) && line.length > 20) {
-        title = line.replace(/\s+/g, " ").trim();
-        break;
-      }
+      if (/[֐-׿]/.test(line) && line.length > 20) { title = line.replace(/\s+/g, " ").trim(); break; }
     }
   }
-
   return { title: title || "(טרם זוהה)", publishedDate };
 }
 
-/**
- * Map a subject key to the list of publication numbers we should probe.
- *
- * We pick a window centered around what's already in seen_reports. If nothing
- * is seen yet, we probe a sane default range for 2026.
- *
- * To keep the refresh quick, we probe AT MOST `probeBudget` candidates per
- * subject.
- */
-function buildProbeList(known: Set<string>, year: number, subject: SubjectKey, probeBudget = 25): string[] {
-  // Find the highest publication number already known for this subject
-  let maxKnown = 0;
-  for (const id of known) {
-    const [s, y, num] = id.split(":");
-    if (s === subject && parseInt(y, 10) === year) {
-      const n = parseInt(num, 10);
-      if (n > maxKnown) maxKnown = n;
-    }
-  }
-  // Probe from maxKnown+1 up to maxKnown + budget
-  // If nothing known, start from 040 (CBS press releases typically start ~040 in early Feb)
-  const start = maxKnown > 0 ? maxKnown + 1 : 40;
-  const end = start + probeBudget;
-  const list: string[] = [];
-  for (let n = start; n < end; n++) {
-    list.push(String(n).padStart(3, "0"));
-  }
-  return list;
+/* ── pdfplumber table extraction ────────────────────────────────────────── */
+async function extractPdfTables(pdfPath: string): Promise<Array<{ page: number; rows: string[][] }>> {
+  return new Promise((resolve) => {
+    const py = spawn("python3", [
+      "-c",
+      `import pdfplumber, json, sys
+out=[]
+with pdfplumber.open(sys.argv[1]) as pdf:
+    for pi, page in enumerate(pdf.pages):
+        for t in (page.extract_tables() or []):
+            rows=[[(c or '').strip() for c in row] for row in t if row]
+            if rows: out.append({'page': pi+1, 'rows': rows})
+print(json.dumps(out, ensure_ascii=False))`,
+      pdfPath,
+    ]);
+    let stdout = "";
+    py.stdout.on("data", (d) => (stdout += d.toString()));
+    py.on("close", (code) => {
+      if (code !== 0) return resolve([]);
+      try { resolve(JSON.parse(stdout)); } catch { resolve([]); }
+    });
+    py.on("error", () => resolve([]));
+  });
 }
 
+/* ── auto-integration (full-automatic mode, with sanity checks) ─────────── */
+let CITY_NAMES: Set<string> | null = null;
+function cityNames(): Set<string> {
+  if (!CITY_NAMES) {
+    try {
+      const codes = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "data", "city_cbs_codes.json"), "utf-8"));
+      CITY_NAMES = new Set(Object.keys(codes));
+    } catch { CITY_NAMES = new Set(); }
+  }
+  return CITY_NAMES;
+}
+
+const toNum = (s: string): number | null => {
+  const m = String(s).replace(/[,\s]/g, "").match(/^-?\d+(\.\d+)?$/);
+  return m ? Number(m[0]) : null;
+};
+
 /**
- * Generator-based refresh — yields events for streaming progress to the client.
+ * Pull city rows out of extracted tables and append them as provenance-tagged
+ * facts. Sanity: a fact needs exactly one known city cell + ≥1 plausible
+ * number; values outside the type's range get confidence "low" (never dropped
+ * silently — the user wants full-automatic, we flag instead of block).
  */
+function integrateCityTables(
+  tables: Array<{ page: number; rows: string[][] }>,
+  meta: { title: string; sourceUrl: string; sourceName: string; published: string | null },
+): number {
+  const names = cityNames();
+  if (!names.size || !tables.length) return 0;
+  let facts: { facts: Array<Record<string, unknown>> } & Record<string, unknown>;
+  try { facts = JSON.parse(fs.readFileSync(FACTS_FILE, "utf-8")); }
+  catch { facts = { facts: [] }; }
+  const existingKey = new Set(
+    (facts.facts as Array<{ city?: string; source_url?: string }>).map((f) => `${f.city}|${f.source_url}`),
+  );
+  const category = /התחלות|גמר|בנייה|בניה|היתר/.test(meta.title) ? "construction"
+    : /מחיר|מדד/.test(meta.title) ? "prices" : "market";
+  // plausibility ranges per category (unit-level yearly numbers)
+  const RANGE: Record<string, [number, number]> = {
+    construction: [0, 40_000],
+    prices: [1_000, 200_000],
+    market: [0, 1_000_000],
+  };
+  let added = 0;
+  for (const t of tables) {
+    for (const row of t.rows) {
+      const cityCells = row.filter((c) => names.has(c.trim()));
+      if (cityCells.length !== 1) continue;
+      const city = cityCells[0].trim();
+      const nums = row.map(toNum).filter((v): v is number => v != null && Math.abs(v) < 10_000_000);
+      if (!nums.length) continue;
+      const key = `${city}|${meta.sourceUrl}`;
+      if (existingKey.has(key)) continue;
+      existingKey.add(key);
+      const [lo, hi] = RANGE[category];
+      const inRange = nums.some((v) => v >= lo && v <= hi);
+      (facts.facts as Array<Record<string, unknown>>).push({
+        city,
+        category,
+        fact: `${meta.title} — נתוני ${city}: ${row.filter(Boolean).join(" · ")} (עמ׳ ${t.page})`,
+        source_url: meta.sourceUrl,
+        source_name: meta.sourceName,
+        published: meta.published,
+        confidence: inRange ? "medium" : "low", // auto-extracted → never "high"
+        auto_extracted: true,
+      });
+      added++;
+    }
+  }
+  if (added > 0) {
+    facts.lastUpdated = new Date().toISOString().slice(0, 10);
+    fs.writeFileSync(FACTS_FILE, JSON.stringify(facts, null, 2), "utf-8");
+  }
+  return added;
+}
+
+/** MoF review text → the bullet sentences that carry numbers (highlights). */
+function extractHighlights(text: string, max = 6): string[] {
+  return text
+    .split(/\n+/)
+    .map((l) => l.trim())
+    .filter((l) => l.length > 25 && l.length < 300 && /\d/.test(l) && /[֐-׿]/.test(l))
+    .slice(0, max);
+}
+
+/* ── the refresh generator ──────────────────────────────────────────────── */
 export async function* refreshDataStream(opts?: {
   year?: number;
   probeBudget?: number;
 }): AsyncGenerator<RefreshEvent, RefreshSummary, unknown> {
   const startedAt = new Date();
   const year = opts?.year ?? new Date().getFullYear();
-  const probeBudget = opts?.probeBudget ?? 20;
+  /** how many CBS numbers to probe per subject per click (catch-up pace) */
+  const probeBudget = opts?.probeBudget ?? 120;
 
   const seen = loadSeen();
   const recent = loadRecent();
+  const probe = loadProbeState(year);
 
-  // Seed the "publications" registry from already-known reports
-  const knownIds = new Set<string>();
-  for (const id of Object.keys(seen.publications ?? {})) knownIds.add(id);
+  const knownIds = new Set<string>(Object.keys(seen.publications ?? {}));
   for (const r of recent.reports) knownIds.add(`${r.subject}:${r.year}:${r.publicationNumber}`);
+
+  let attempted = 0, found = 0, skipped = 0, errors = 0;
+  const newReports: RefreshSummary["newReports"] = [];
+  fs.mkdirSync(EXTRACT_DIR, { recursive: true });
 
   yield {
     type: "log",
-    message: `🔍 בודק דוחות חדשים — ${knownIds.size} דוחות כבר במערכת. מחפש ב-3 קטגוריות.`,
-    data: { knownCount: knownIds.size, year, probeBudget },
+    message: `🔍 סריקה מלאה: למ״ס (חלון מספרים מתגלגל) + משרד האוצר (API הפרסומים) · ${knownIds.size} פרסומים כבר במערכת`,
+    data: { knownCount: knownIds.size, year },
   };
 
-  // Only probe subject codes that produce real-estate reports.
-  // Subject "01" (population) rarely yields nadlan-specific content — the
-  // relevance filter would just drop them all, so we skip the lookup work.
-  const subjects: SubjectKey[] = ["prices", "construction"];
-  let attempted = 0;
-  let found = 0;
-  let skipped = 0;
-  let errors = 0;
-  const newReports: RefreshSummary["newReports"] = [];
-
-  for (const subject of subjects) {
-    const numbers = buildProbeList(knownIds, year, subject, probeBudget);
-    yield {
-      type: "log",
-      message: `📋 ${subjectHebrew(subject)} — בודק ${numbers.length} מספרי פרסום (${numbers[0]}-${numbers[numbers.length - 1]})`,
-      data: { subject, count: numbers.length },
-    };
-
-    const discovered = await discoverCbsReports({
-      year,
-      subject,
-      numbers,
-      knownIds,
-      onProgress: () => {
-        // Could yield mid-discovery, but simpler to batch
-      },
-    });
-    attempted += numbers.length;
-
-    for (const d of discovered) {
+  /* ════ 1) Ministry of Finance — real listing API, title-filtered ════ */
+  try {
+    yield { type: "log", message: "🏛️ משרד האוצר — שולף את רשימת הפרסומים העדכנית…" };
+    const pubs = await fetchMofPublications(60);
+    const relevant = pubs.filter((p) => titleIsRealEstate(p.title));
+    yield { type: "log", message: `🏛️ אוצר: ${pubs.length} פרסומים אחרונים, ${relevant.length} בתחום הנדל״ן לפי כותרת` };
+    for (const p of relevant) {
+      const id = `mof:${p.slug}`;
+      attempted++;
+      if (seen.publications![id]) { skipped++; continue; }
       try {
-        const text = await extractPdfText(d.localPath!);
-        // Filter: only keep real-estate-relevant reports
-        if (!isRealEstateReport(text)) {
-          // Delete the PDF — it's not real estate, no reason to keep it
-          try { fs.unlinkSync(d.localPath!); } catch {}
-          try { fs.unlinkSync(path.join(process.cwd(), "public", "reports", path.basename(d.localPath!))); } catch {}
-          // Still mark as seen so we don't re-check it next time
-          seen.publications![`${d.subject}:${d.year}:${d.publicationNumber}`] = new Date().toISOString();
-          knownIds.add(`${d.subject}:${d.year}:${d.publicationNumber}`);
-          yield {
-            type: "skip",
-            message: `⊘ ${d.publicationNumber}/${d.year} — לא בתחום הנדל"ן (סונן ונרשם כידוע)`,
-          };
-          continue;
-        }
-        const { title, publishedDate } = extractTitleAndDate(text);
-        const id = `${d.subject}:${d.year}:${d.publicationNumber}`;
-        const pdfFilename = path.basename(d.localPath!);
+        const content = await fetchGovilPageContent(p.slug);
+        const highlights = extractHighlights(content.text);
+        // keep the extracted text for downstream processing + audit
+        fs.writeFileSync(path.join(EXTRACT_DIR, `${p.slug}.txt`), content.text, "utf-8");
         const entry: RecentReportEntry = {
           id,
-          title,
-          publicationNumber: d.publicationNumber,
-          subject: d.subject,
-          year: d.year,
-          publisher: "CBS",
-          publishedDate,
-          pdfUrl: d.url,
-          primaryPdfPath: `/reports/${pdfFilename}`,
+          title: p.title,
+          publicationNumber: p.slug,
+          subject: "mof",
+          year: Number(p.publishedDate?.slice(0, 4)) || year,
+          publisher: "MoF",
+          publishedDate: p.publishedDate,
+          pdfUrl: content.files[0]?.url ?? p.pageUrl,
+          primaryPdfPath: null, // MoF blob is Cloudflare-gated — link out to gov.il
           discoveredAt: new Date().toISOString(),
-          preview: text.slice(0, 800),
+          preview: content.text.slice(0, 800),
+          highlights,
         };
         recent.reports.unshift(entry);
         seen.publications![id] = new Date().toISOString();
-        knownIds.add(id);
-        newReports.push({
-          publicationNumber: d.publicationNumber,
-          subject: d.subject,
-          title,
-          pdfUrl: d.url,
-          localPath: entry.primaryPdfPath,
-        });
         found++;
-        yield {
-          type: "found",
-          message: `✓ ${subjectHebrew(d.subject)} ${d.publicationNumber}/${d.year} — ${title}`,
-          data: { id, title, publishedDate, pdfUrl: d.url },
-        };
+        newReports.push({ publicationNumber: p.slug, subject: "mof", title: p.title, pdfUrl: entry.pdfUrl, localPath: "" });
+        yield { type: "found", message: `✓ אוצר — ${p.title} (${p.publishedDate ?? "ללא תאריך"})`, data: { id, highlights: highlights.slice(0, 2) } };
+        await new Promise((r) => setTimeout(r, 500));
       } catch (err) {
         errors++;
-        yield {
-          type: "error",
-          message: `✗ שגיאה ב-${d.publicationNumber}: ${err instanceof Error ? err.message : String(err)}`,
-        };
+        yield { type: "error", message: `✗ אוצר ${p.slug}: ${err instanceof Error ? err.message : String(err)}` };
       }
     }
-    skipped += numbers.length - discovered.length;
+  } catch (err) {
+    errors++;
+    yield { type: "error", message: `✗ שליפת פרסומי האוצר נכשלה: ${err instanceof Error ? err.message : String(err)}` };
   }
 
-  // Persist
+  /* ════ 2) CBS — rolling number window that actually advances ════ */
+  // CBS publication numbers are one GLOBAL yearly sequence shared by all
+  // subjects; each subject only "owns" some numbers. A miss on subject S at
+  // number N is closed permanently once ANY subject finds a number > N
+  // (the sequence has moved past it) — this is what un-freezes the window.
+  const subjects: SubjectKey[] = ["prices", "construction"];
+  const globalMax = () => Math.max(0, ...Object.values(probe.maxFound));
+
+  const processCbsFind = async function* (d: { publicationNumber: string; year: number; subject: SubjectKey; url: string; localPath?: string }) {
+    const num = parseInt(d.publicationNumber, 10);
+    probe.maxFound[d.subject] = Math.max(probe.maxFound[d.subject] ?? 0, num);
+    try {
+      const text = await extractPdfText(d.localPath!);
+      const { title, publishedDate } = extractTitleAndDate(text);
+      const id = `${d.subject}:${d.year}:${d.publicationNumber}`;
+      // TITLE-based relevance (fix #2) — the CPI release dies here
+      if (!titleIsRealEstate(title)) {
+        try { fs.unlinkSync(d.localPath!); } catch { /* gone */ }
+        try { fs.unlinkSync(path.join(process.cwd(), "public", "reports", path.basename(d.localPath!))); } catch { /* gone */ }
+        seen.publications![id] = new Date().toISOString();
+        knownIds.add(id);
+        yield { type: "skip" as const, message: `⊘ ${d.publicationNumber}/${d.year} — "${title.slice(0, 60)}" לא בתחום לפי הכותרת` };
+        return;
+      }
+      const pdfFilename = path.basename(d.localPath!);
+      const entry: RecentReportEntry = {
+        id,
+        title,
+        publicationNumber: d.publicationNumber,
+        subject: d.subject,
+        year: d.year,
+        publisher: "CBS",
+        publishedDate,
+        pdfUrl: d.url,
+        primaryPdfPath: `/reports/${pdfFilename}`,
+        discoveredAt: new Date().toISOString(),
+        preview: text.slice(0, 800),
+      };
+      recent.reports.unshift(entry);
+      seen.publications![id] = new Date().toISOString();
+      knownIds.add(id);
+      newReports.push({ publicationNumber: d.publicationNumber, subject: d.subject, title, pdfUrl: d.url, localPath: entry.primaryPdfPath! });
+      found++;
+      yield { type: "found" as const, message: `✓ למ״ס ${d.publicationNumber}/${d.year} — ${title}`, data: { id, publishedDate } };
+
+      // full-automatic integration: tables → city facts (provenance-tagged)
+      const tables = await extractPdfTables(d.localPath!);
+      if (tables.length) {
+        fs.writeFileSync(path.join(EXTRACT_DIR, `cbs_${d.publicationNumber}_${d.year}.tables.json`),
+          JSON.stringify({ source: d.url, title, tables }, null, 2), "utf-8");
+        const added = integrateCityTables(tables, {
+          title, sourceUrl: d.url, sourceName: `למ"ס, ${title}`, published: publishedDate,
+        });
+        if (added > 0) {
+          yield { type: "parsed" as const, message: `📊 חולצו ${tables.length} טבלאות → ${added} עובדות-עיר נוספו (confidence: medium, מתויג מקור)` };
+        }
+      }
+    } catch (err) {
+      errors++;
+      yield { type: "error" as const, message: `✗ עיבוד ${d.publicationNumber} נכשל: ${err instanceof Error ? err.message : String(err)}` };
+    }
+  };
+
+  for (const subject of subjects) {
+    const maxFoundS = probe.maxFound[subject] ?? 0;
+    probe.misses[subject] = probe.misses[subject] ?? {};
+    const closedSet = new Set(probe.closed[subject] ?? []);
+
+    // seed from the legacy registry so an upgraded system doesn't rescan finds
+    for (const id of knownIds) {
+      const [s, y, num] = id.split(":");
+      if (s === subject && parseInt(y, 10) === year) {
+        probe.maxFound[subject] = Math.max(probe.maxFound[subject] ?? 0, parseInt(num, 10));
+      }
+    }
+
+    // Candidates: (a) fresh tail beyond the subject's frontier, (b) catch-up
+    // numbers we haven't closed yet, all bounded by the per-click budget.
+    const candidates: string[] = [];
+    const start = Math.max(maxFoundS, 39) + 1;
+    for (let n = start; candidates.length < probeBudget && n <= start + 400; n++) {
+      const key = String(n).padStart(3, "0");
+      if (closedSet.has(key)) continue;
+      if (knownIds.has(`${subject}:${year}:${key}`)) continue;
+      const missCount = probe.misses[subject][key] ?? 0;
+      // closing rule: the global sequence moved past it and it missed twice+
+      if (n <= globalMax() && missCount >= 2) { closedSet.add(key); continue; }
+      if (missCount >= 4) { closedSet.add(key); continue; } // hard cap
+      candidates.push(key);
+    }
+    probe.closed[subject] = [...closedSet];
+
+    yield {
+      type: "log",
+      message: `📋 למ״ס ${subjectHebrew(subject)} — בודק ${candidates.length} מספרים (${candidates[0] ?? "—"}→${candidates[candidates.length - 1] ?? "—"}) · חזית: ${probe.maxFound[subject] ?? 0}`,
+      data: { subject, count: candidates.length },
+    };
+
+    // control = the subject's own frontier PDF (known to exist). CBS serves the
+    // SAME error page for "not published" and "rate-limited", so misses count
+    // only after the control verifies the pipe was actually open.
+    const ctlNum = probe.maxFound[subject] ?? 0;
+    const controlUrl = ctlNum > 0 ? buildCbsPdfUrl(year, String(ctlNum).padStart(3, "0"), subject) : undefined;
+    const { reports: discovered, throttled, confirmedMisses } = await discoverCbsReports({
+      year, subject, numbers: candidates, knownIds, controlUrl,
+    });
+    for (const num of confirmedMisses) {
+      probe.misses[subject][num] = (probe.misses[subject][num] ?? 0) + 1; // fix #1: record VERIFIED misses
+    }
+    attempted += candidates.length;
+    skipped += candidates.length - discovered.length;
+
+    for (const d of discovered) {
+      yield* processCbsFind(d);
+    }
+    if (throttled) {
+      yield {
+        type: "log",
+        message: `⏳ למ״ס האט את הקצב (הגנת עומס) — הסריקה נעצרה בנקודה הזו ותמשיך מכאן בלחיצה הבאה; אף מספר לא סומן כחסר בטעות`,
+      };
+    }
+    saveProbeState(probe); // persist between subjects — a killed run keeps its progress
+  }
+
+  /* ════ persist ════ */
   recent.lastRefreshedAt = new Date().toISOString();
-  // Cap at 50 most recent
-  recent.reports = recent.reports.slice(0, 50);
+  recent.reports = recent.reports.slice(0, 80);
   saveRecent(recent);
   saveSeen(seen);
+  saveProbeState(probe);
 
   const finishedAt = new Date();
   const summary: RefreshSummary = {
     startedAt: startedAt.toISOString(),
     finishedAt: finishedAt.toISOString(),
     durationMs: finishedAt.getTime() - startedAt.getTime(),
-    attempted,
-    found,
-    skipped,
-    errors,
-    newReports,
+    attempted, found, skipped, errors, newReports,
   };
   yield {
     type: "summary",
     message: found > 0
-      ? `🎉 הסתיים. נמצאו ${found} דוחות חדשים, ${skipped} כבר היו במערכת, ${errors} שגיאות. משך: ${Math.round(summary.durationMs / 1000)} שנ׳.`
-      : `✓ הסתיים. אין דוחות חדשים מאז העדכון האחרון (בדקנו ${attempted}). משך: ${Math.round(summary.durationMs / 1000)} שנ׳.`,
+      ? `🎉 הסתיים: ${found} פרסומים חדשים (למ״ס + אוצר) · ${skipped} דולגו/חסרים · ${errors} שגיאות · ${Math.round(summary.durationMs / 1000)} שנ׳`
+      : `✓ הסתיים: אין פרסומים חדשים בחלון שנסרק (${attempted} נבדקו) · החלון התקדם ויימשך בלחיצה הבאה · ${Math.round(summary.durationMs / 1000)} שנ׳`,
     data: summary as unknown as Record<string, unknown>,
   };
   yield { type: "done", message: "done" };
@@ -398,7 +559,7 @@ export async function* refreshDataStream(opts?: {
 }
 
 function subjectHebrew(s: SubjectKey): string {
-  if (s === "prices") return 'מחירי דירות (מדד)';
-  if (s === "construction") return 'התחלות וגמר בנייה';
+  if (s === "prices") return "מחירי דירות (מדד)";
+  if (s === "construction") return "התחלות וגמר בנייה";
   return "אוכלוסייה";
 }

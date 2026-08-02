@@ -1,4 +1,5 @@
 import { prisma } from "./db";
+import { loadThinSampleCities } from "./cityTransactionPrices";
 
 /**
  * Per-city yearly value series for the cities-table windowed price-change columns
@@ -53,6 +54,15 @@ export async function loadCitiesChangeMetrics(): Promise<Map<string, CityChangeM
       if (r.median_sqm != null) m.secondhand_median[r.year] = r.median_sqm;
     }
   }
+  // MIX-ADJUSTED override (verified 2026-07-29): the raw second-hand series is inflated
+  // by sample-composition drift (TLV showed +12.3% while identical apartments did ~+3%).
+  // Where the fixed-basket series exists it REPLACES the raw values for change metrics.
+  for (const r of statRows) {
+    if (r.scope !== "secondhand_fixedmix" || r.median_sqm == null || r.n < SH_MIN_N) continue;
+    const m = ensure(r.city_name);
+    m.secondhand[r.year] = r.median_sqm;
+    m.secondhand_median[r.year] = r.median_sqm;
+  }
 
   // median — official nadlan (avg quarters → yearly median total ₪)
   const medRows = await prisma.nadlan_price_trends.findMany({
@@ -92,7 +102,9 @@ export interface SecondhandChange {
 
 /**
  * Δ% of second-hand ₪/m² per city over a fixed window ending at SH_REF_YEAR.
- * Gates: room="all", scope="secondhand", n≥10 in BOTH year-cells, |Δ%| ≤ 80.
+ * Gates: room="all", scope="secondhand", n≥10 in BOTH year-cells, |Δ%| ≤ 80,
+ * and the city_min_total_deals rule (thin-sample cities never emit a change —
+ * they are yellow in tables and excluded from every ranking/KPI consumer).
  * `field` picks avg (default) or median ₪/m². Sorted descending by pct.
  */
 export async function loadSecondhandChanges(
@@ -101,28 +113,32 @@ export async function loadSecondhandChanges(
   refYear: number = SH_REF_YEAR
 ): Promise<SecondhandChange[]> {
   const fromYear = refYear - win;
+  const thinCities = await loadThinSampleCities();
   const rows = await prisma.nadlan_year_room_stats.findMany({
     where: {
-      scope: "secondhand",
+      scope: { in: ["secondhand", "secondhand_fixedmix"] },
       room_bucket: "all",
       year: { in: [fromYear, refYear] },
       n: { gte: SH_MIN_N },
     },
-    select: { city_name: true, year: true, avg_sqm: true, median_sqm: true },
+    select: { city_name: true, year: true, scope: true, avg_sqm: true, median_sqm: true },
   });
 
-  const byCity = new Map<string, { from?: number; to?: number }>();
+  // mix-adjusted values win over raw ones (composition-drift fix, 2026-07-29)
+  const byCity = new Map<string, { from?: number; to?: number; fromAdj?: boolean; toAdj?: boolean }>();
   for (const r of rows) {
-    const v = field === "avg_sqm" ? r.avg_sqm : r.median_sqm;
+    const adj = r.scope === "secondhand_fixedmix";
+    const v = adj ? r.median_sqm : field === "avg_sqm" ? r.avg_sqm : r.median_sqm;
     if (v == null || v <= 0) continue;
     const cur = byCity.get(r.city_name) ?? {};
-    if (r.year === fromYear) cur.from = v;
-    else cur.to = v;
+    if (r.year === fromYear) { if (adj || !cur.fromAdj) { cur.from = v; cur.fromAdj = cur.fromAdj || adj; } }
+    else { if (adj || !cur.toAdj) { cur.to = v; cur.toAdj = cur.toAdj || adj; } }
     byCity.set(r.city_name, cur);
   }
 
   const out: SecondhandChange[] = [];
   for (const [city_name, c] of byCity) {
+    if (thinCities.has(city_name)) continue; // city_min_total_deals rule
     if (c.from == null || c.to == null) continue;
     const pct = (c.to / c.from - 1) * 100;
     if (!Number.isFinite(pct) || Math.abs(pct) > SH_MAX_ABS_CHANGE) continue;

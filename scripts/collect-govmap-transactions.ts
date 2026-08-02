@@ -15,13 +15,20 @@
 import { prisma } from "../lib/db";
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
-const REQUEST_DELAY_MS = 350;
-const START_DATE = "2015-01";
+const REQUEST_DELAY_MS = 300;
+// 10-year scope only (user rule: never touch/collect beyond 10 years back)
+const START_DATE = "2016-01";
 const END_DATE = "2026-12";
-const MID_DATE = "2020-06";
+// three windows (was two): denser slicing so a busy polygon's 2000-per-call cap
+// truncates far less history — more deals ⇒ more addresses to merge onto nadlan rows.
+const WINDOWS: readonly (readonly [string, string])[] = [
+  [START_DATE, "2020-01"], ["2020-01", "2023-06"], ["2023-06", END_DATE],
+];
 const SWEEP_RADIUS = 2500;
 const RING_OFFSETS_M = [0, 2000, 4000, 6000];
-const MAX_POLYGONS = 45;
+// 45 polygons dropped whole neighbourhoods in big cities (TLV kept only 36% of deals) —
+// 120 covers the full polygon list almost everywhere; smaller cities are unaffected.
+const MAX_POLYGONS = 120;
 const FRESH_DAYS = 20;
 const MIN_SQM = 2_000, MAX_SQM = 200_000, MIN_AREA = 20, MAX_AREA = 500;
 
@@ -105,7 +112,7 @@ async function collectCity(cityName: string): Promise<{ n: number; years: string
   const seen = new Set<string>();
   const deals: RawDeal[] = [];
   for (const pid of picked) {
-    for (const [s, e] of [[START_DATE, MID_DATE], [MID_DATE, END_DATE]] as const) {
+    for (const [s, e] of WINDOWS) {
       try {
         const d: { data?: RawDeal[] } = await (await gf(`${GOVMAP_BASE}/real-estate/neighborhood-deals/${pid}?limit=2000&startDate=${s}&endDate=${e}`)).json();
         for (const deal of d.data ?? []) {

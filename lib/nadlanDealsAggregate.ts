@@ -12,7 +12,9 @@ import path from "path";
  * govmap sub-area cache (e.g. Lod).
  */
 
-export const SECONDHAND_MIN_AGE = 3;
+import { getRuleNum } from "./systemRules";
+
+export const SECONDHAND_MIN_AGE = getRuleNum("secondhand_min_age", 3);
 const CACHE_DIR = path.resolve(process.cwd(), "data", "nadlan_deals");
 
 // sanity bounds

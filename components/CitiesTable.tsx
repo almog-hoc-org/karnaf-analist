@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, type ReactNode } from "react";
+import { useState, useMemo, useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import type { CityChangeMetrics, ChangeMetric, YearValue } from "@/lib/cityChangeMetrics";
 import TrendValue, { trendTextClass } from "./TrendValue";
@@ -167,7 +167,7 @@ const INV_COLS: InvColDef[] = [
         <span dir="ltr" className="inline-flex items-center gap-1 font-semibold tabular-nums text-slate-900">
           {fmtSigned(m.newPremiumPct)}%
           {m.newPremiumYear != null && (
-            <span className="font-normal text-[9px] text-slate-400">({m.newPremiumYear})</span>
+            <span className="font-normal text-2xs text-slate-400">({m.newPremiumYear})</span>
           )}
         </span>
       ),
@@ -246,12 +246,15 @@ export default function CitiesTable({
   data,
   investor = {},
   refYear = 2025,
+  minDeals = 150,
 }: {
   data: CityRow[];
   /** city_name → serialized investor metrics (from computeAllInvestorMetrics) */
   investor?: Record<string, InvestorRow>;
   /** lib/investorMetrics REF_YEAR — passed from the server page */
   refYear?: number;
+  /** user rule city_min_total_deals: under this → yellow row + no rankings */
+  minDeals?: number;
 }) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<string>("population_2026");
@@ -262,6 +265,94 @@ export default function CitiesTable({
   const [win, setWin] = useState<Record<ChangeMetric, Win>>({ all: 3, secondhand: 3, secondhand_median: 3, new: 3, median: 3 });
   // official median + secondary investor columns are optional, off by default
   const [hidden, setHidden] = useState<Set<string>>(new Set(["chg_median", "inv_premium", "inv_gap", "inv_conf", "tx_median_all", "population_2022"]));
+
+  // Column order (drag & drop) — city stays pinned first. Persisted with the
+  // hidden set so a user's table layout survives refreshes.
+  // user rule: price-CHANGE columns come FIRST ("זה מה שמעניין"), then current
+  // price levels, then the rest (demography/supply), investor metrics last.
+  const DEFAULT_ORDER = useMemo(() => {
+    const priceLevels = ["tx_median_sh", "tx_avg_sh", "tx_avg_all", "tx_median_all"];
+    const rest = columns
+      .filter((c) => c.key !== "city_name" && !priceLevels.includes(c.key as string))
+      .map((c) => c.key as string);
+    return ["city_name", ...CHANGE_COLS.map((c) => c.id), ...priceLevels, ...rest, ...INV_COLS.map((c) => c.id)];
+  }, []);
+  const [order, setOrder] = useState<string[]>(DEFAULT_ORDER);
+  const dragRef = useRef<string | null>(null);
+  const [dragId, setDragIdState] = useState<string | null>(null);
+  const setDragId = (id: string | null) => { dragRef.current = id; setDragIdState(id); };
+  const [dropId, setDropId] = useState<string | null>(null);
+
+  /** Persist explicitly on user actions — no effect races, no first-paint clobber. */
+  const persist = (nextHidden: Set<string>, nextOrder: string[]) => {
+    try {
+      localStorage.setItem("karnaf_cities_cols_v2", JSON.stringify({ hidden: [...nextHidden], order: nextOrder }));
+    } catch { /* storage blocked */ }
+  };
+
+  // Restore the saved layout on mount (client only).
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("karnaf_cities_cols_v2");
+      if (raw) {
+        const saved = JSON.parse(raw) as { hidden?: string[]; order?: string[] };
+        if (saved.hidden) setHidden(new Set(saved.hidden));
+        if (saved.order?.length) {
+          const merged = saved.order.filter((k) => DEFAULT_ORDER.includes(k));
+          for (const k of DEFAULT_ORDER) if (!merged.includes(k)) merged.push(k);
+          setOrder(merged);
+        }
+      }
+    } catch { /* first visit / storage blocked */ }
+  }, [DEFAULT_ORDER]);
+
+  const resetLayout = () => {
+    setOrder(DEFAULT_ORDER);
+    setHidden(new Set(["chg_median", "inv_premium", "inv_gap", "inv_conf", "tx_median_all", "population_2022"]));
+    try { localStorage.removeItem("karnaf_cities_cols_v2"); } catch { /* ignore */ }
+  };
+
+  const toggleColPersist = (key: string) => {
+    const next = new Set(hidden);
+    if (next.has(key)) next.delete(key); else next.add(key);
+    setHidden(next);
+    persist(next, order);
+  };
+
+  const moveColumn = (from: string, to: string) => {
+    if (from === to || from === "city_name" || to === "city_name") return;
+    const next = order.filter((k) => k !== from);
+    const at = next.indexOf(to);
+    next.splice(at < 0 ? next.length : at, 0, from);
+    setOrder(next);
+    persist(hidden, next);
+  };
+
+  /** one-step reorder for touch (HTML5 drag doesn't fire on touch devices) */
+  const moveBy = (id: string, dir: -1 | 1) => {
+    const idx = order.indexOf(id);
+    const swap = idx + dir;
+    if (idx <= 0 || swap <= 0 || swap >= order.length) return; // 0 = pinned city_name
+    const next = [...order];
+    [next[idx], next[swap]] = [next[swap], next[idx]];
+    setOrder(next);
+    persist(hidden, next);
+  };
+
+  /** mobile-only ▲▼ pair inside the column menu (preventDefault so the
+   *  surrounding label doesn't also toggle the checkbox) */
+  const reorderArrows = (id: string) => (
+    <span className="ms-auto flex shrink-0 gap-1 md:hidden">
+      {([-1, 1] as const).map((dir) => (
+        <button key={dir} type="button"
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); moveBy(id, dir); }}
+          aria-label={dir === -1 ? "הזז עמודה קדימה" : "הזז עמודה אחורה"}
+          className="flex h-7 w-7 items-center justify-center rounded border border-slate-200 text-2xs text-slate-500 active:bg-slate-100">
+          {dir === -1 ? "▲" : "▼"}
+        </button>
+      ))}
+    </span>
+  );
   const [showColMenu, setShowColMenu] = useState(false);
   const [preset, setPreset] = useState<string | null>(null);
   const [ranges, setRanges] = useState<Record<RangeKey, Range>>(makeEmptyRanges);
@@ -408,16 +499,30 @@ export default function CitiesTable({
   const visibleInvCols = useMemo(() => INV_COLS.filter((c) => !hidden.has(c.id)), [hidden]);
   const toggleCol = (key: string) => setHidden((s) => { const n = new Set(s); n.has(key) ? n.delete(key) : n.add(key); return n; });
 
-  // Investor columns render right after the city column ("all" mode) or right
-  // after the featured change column (top3y/top5y) — the featured column keeps
-  // its existing spot next to the city name.
-  const invInsertAt =
-    (viewMode === "top3y" && visibleColumns.some((c) => c.key === "price_change_3y_pct")) ||
-    (viewMode === "top5y" && visibleColumns.some((c) => c.key === "price_change_5y_pct"))
-      ? 2
-      : 1;
-  const preCols = visibleColumns.slice(0, invInsertAt);
-  const postCols = visibleColumns.slice(invInsertAt);
+  // ONE ordered list of column ids — the user can drag any of them (city stays
+  // pinned first). Featured change column still jumps to the front in top views.
+  const visibleOrder = useMemo(() => {
+    const shown = order.filter((id) => {
+      if (id === "city_name") return true;
+      if (hidden.has(id)) return false;
+      return true;
+    });
+    const featured = viewMode === "top3y" ? "price_change_3y_pct" : viewMode === "top5y" ? "price_change_5y_pct" : null;
+    if (featured && shown.includes(featured)) {
+      return ["city_name", featured, ...shown.filter((id) => id !== "city_name" && id !== featured)];
+    }
+    return shown;
+  }, [order, hidden, viewMode]);
+
+  const colById = useMemo(() => {
+    const m = new Map<string, { kind: "base" | "inv" | "chg"; def: any }>();
+    for (const c of columns) m.set(c.key as string, { kind: "base", def: c });
+    for (const c of INV_COLS) m.set(c.id, { kind: "inv", def: c });
+    for (const c of CHANGE_COLS) m.set(c.id, { kind: "chg", def: c });
+    return m;
+  }, []);
+
+  const colLabel = (id: string) => colById.get(id)?.def.label ?? id;
 
   const sortLabel =
     columns.find((c) => c.key === sortKey)?.label ??
@@ -434,7 +539,7 @@ export default function CitiesTable({
     <th
       key={col.key}
       onClick={() => handleSort(col.key)}
-      className={`sticky top-14 z-10 border-b border-slate-300 px-3 py-3 text-right font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${
+      className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-3 py-3 text-right font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${
         isFeaturedCol(col.key) ? "bg-indigo-50 text-indigo-700" : "bg-white text-slate-500"
       }`}
     >
@@ -460,8 +565,15 @@ export default function CitiesTable({
         ? "text-emerald-700 font-semibold"
         : "text-red-600 font-semibold"
       : "text-slate-800";
+    // the CITY cell is pinned (sticky start-0) so horizontal scrolling through
+    // ~2,300px of columns never loses the row's identity; opaque bg required.
+    const isCity = col.key === "city_name";
+    const thinCity = (row.dealCount ?? 0) < minDeals;
+    const cityPin = isCity
+      ? `sticky start-0 z-[1] ${thinCity ? "bg-amber-50" : "bg-white"} shadow-[inset_-6px_0_8px_-8px_rgba(15,23,42,0.25)]`
+      : "";
     return (
-      <td key={col.key} className={`px-3 py-2.5 ${isFeaturedCol(col.key) ? "bg-indigo-50/40" : ""}`}>
+      <td key={col.key} className={`px-3 py-2.5 ${isFeaturedCol(col.key) ? "bg-indigo-50/40" : ""} ${cityPin}`}>
         {col.key === "city_name" ? (
           <Link
             href={`/city/${encodeURIComponent(row.city_name)}`}
@@ -507,7 +619,7 @@ export default function CitiesTable({
         >
           🚀 הכי עלו ב-5 שנים
         </button>
-        <span className="text-[10px] text-slate-400 mr-1">
+        <span className="text-2xs text-slate-400 mr-1">
           (מחירים מ-nadlan.gov.il — ממוצע רבעוני שנתי, השוואה מהשנה המוקדמת לאחרונה)
         </span>
       </div>
@@ -546,7 +658,7 @@ export default function CitiesTable({
           onChange={(e) => setSearch(e.target.value)}
           placeholder="חיפוש עיר..."
           dir="rtl"
-          className="rounded-lg bg-slate-50 border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-300 focus:border-indigo-400 w-48"
+          className="rounded-lg bg-slate-50 border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-300 focus:border-indigo-400 w-full sm:w-48"
         />
         <label className="flex items-center gap-2 text-xs text-slate-500 cursor-pointer">
           <input
@@ -576,7 +688,7 @@ export default function CitiesTable({
         >
           סינון מתקדם {showAdv ? "▴" : "▾"}
           {activeRangeCount > 0 && (
-            <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] rounded-full bg-indigo-600 px-1 text-[10px] font-bold text-white">
+            <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] rounded-full bg-indigo-600 px-1 text-2xs font-bold text-white">
               {activeRangeCount}
             </span>
           )}
@@ -593,30 +705,45 @@ export default function CitiesTable({
           </button>
           {showColMenu && (
             <>
-              <div className="fixed inset-0 z-20" onClick={() => setShowColMenu(false)} />
-              <div className="absolute z-30 mt-1 right-0 w-60 max-h-80 overflow-y-auto rounded-xl bg-white border border-slate-200 shadow-lg p-2">
-                <div className="text-[10px] font-bold text-slate-400 px-2 pb-1">מדדי משקיע</div>
-                {INV_COLS.map((c) => (
-                  <label key={c.id} className="flex items-center gap-2 text-xs text-slate-700 px-2 py-1 rounded hover:bg-slate-50 cursor-pointer">
-                    <input type="checkbox" checked={!hidden.has(c.id)} onChange={() => toggleCol(c.id)} className="rounded text-indigo-600" />
-                    {c.label}
-                  </label>
-                ))}
-                <div className="text-[10px] font-bold text-slate-400 px-2 pt-2 pb-1 border-t border-slate-100 mt-1">עמודות שינוי מחיר</div>
+              {/* z-[41]/z-[45]: above the z-40 floating refresh button so the
+                  menu's bottom buttons are never painted under it */}
+              <div className="fixed inset-0 z-[41] max-md:bg-slate-900/20" onClick={() => setShowColMenu(false)} />
+              {/* the ONLY column picker (the old always-open chip bar was removed) —
+                  groups ordered by user priority: price changes first */}
+              {/* desktop: anchored dropdown · mobile: centered fixed sheet that is
+                  always fully on-screen and above the floating refresh button */}
+              <div className="absolute z-[45] mt-1 right-0 w-64 max-h-96 overflow-y-auto rounded-xl bg-white border border-slate-200 shadow-lg p-2 max-md:fixed max-md:inset-x-3 max-md:top-20 max-md:bottom-24 max-md:mt-0 max-md:w-auto max-md:max-h-none">
+                <div className="px-2 pb-1.5 text-2xs leading-snug text-slate-400">
+                  לחץ להצגה/הסתרה · <span className="hidden md:inline">גרירת כותרת בטבלה משנה סדר</span><span className="md:hidden">חצים ▲▼ לשינוי סדר העמודות</span>
+                </div>
+                <div className="text-2xs font-bold text-slate-400 px-2 pb-1 border-t border-slate-100 pt-2">שינויי מחיר</div>
                 {CHANGE_COLS.map((c) => (
                   <label key={c.id} className="flex items-center gap-2 text-xs text-slate-700 px-2 py-1 rounded hover:bg-slate-50 cursor-pointer">
-                    <input type="checkbox" checked={!hidden.has(c.id)} onChange={() => toggleCol(c.id)} className="rounded text-indigo-600" />
-                    {c.label} <span className="text-[10px] text-slate-400">({c.unit})</span>
+                    <input type="checkbox" checked={!hidden.has(c.id)} onChange={() => toggleColPersist(c.id)} className="rounded text-indigo-600" />
+                    <span className="min-w-0 break-words leading-tight">{c.label} <span className="text-2xs text-slate-400">({c.unit})</span></span>
+                    {reorderArrows(c.id)}
                   </label>
                 ))}
-                <div className="text-[10px] font-bold text-slate-400 px-2 pt-2 pb-1 border-t border-slate-100 mt-1">עמודות רגילות</div>
+                <div className="text-2xs font-bold text-slate-400 px-2 pt-2 pb-1 border-t border-slate-100 mt-1">עמודות רגילות</div>
                 {columns.filter((c) => c.key !== "city_name").map((c) => (
                   <label key={c.key} className="flex items-center gap-2 text-xs text-slate-700 px-2 py-1 rounded hover:bg-slate-50 cursor-pointer">
-                    <input type="checkbox" checked={!hidden.has(c.key as string)} onChange={() => toggleCol(c.key as string)} className="rounded text-indigo-600" />
-                    {c.label}
+                    <input type="checkbox" checked={!hidden.has(c.key as string)} onChange={() => toggleColPersist(c.key as string)} className="rounded text-indigo-600" />
+                    <span className="min-w-0 break-words leading-tight">{c.label}</span>
+                    {reorderArrows(c.key as string)}
                   </label>
                 ))}
-                <button onClick={() => setHidden(new Set())} className="w-full mt-1 text-[11px] font-bold text-indigo-700 hover:underline px-2 py-1 text-right">הצג הכל</button>
+                <div className="text-2xs font-bold text-slate-400 px-2 pt-2 pb-1 border-t border-slate-100 mt-1">מדדי משקיע</div>
+                {INV_COLS.map((c) => (
+                  <label key={c.id} className="flex items-center gap-2 text-xs text-slate-700 px-2 py-1 rounded hover:bg-slate-50 cursor-pointer">
+                    <input type="checkbox" checked={!hidden.has(c.id)} onChange={() => toggleColPersist(c.id)} className="rounded text-indigo-600" />
+                    <span className="min-w-0 break-words leading-tight">{c.label}</span>
+                    {reorderArrows(c.id)}
+                  </label>
+                ))}
+                <div className="mt-1 flex items-center justify-between border-t border-slate-100 pt-1">
+                  <button onClick={() => setHidden(new Set())} className="text-2xs font-bold text-indigo-700 hover:underline px-2 py-1">הצג הכל</button>
+                  <button onClick={resetLayout} className="text-2xs font-bold text-slate-500 hover:text-indigo-700 hover:underline px-2 py-1">אפס תצוגה</button>
+                </div>
               </div>
             </>
           )}
@@ -633,7 +760,7 @@ export default function CitiesTable({
         <div className="mb-4 flex flex-wrap items-end gap-x-6 gap-y-3 rounded-xl border border-slate-200 bg-white p-3">
           {RANGE_DEFS.map((def) => (
             <div key={def.key}>
-              <div className="text-[10px] font-bold text-slate-500 mb-1">{def.label(refYear)}</div>
+              <div className="text-2xs font-bold text-slate-500 mb-1">{def.label(refYear)}</div>
               <div className="flex items-center gap-1">
                 <input
                   type="text"
@@ -670,73 +797,112 @@ export default function CitiesTable({
         </div>
       )}
 
-      {/* Table */}
-      <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-x-auto">
+      {/* Table — column visibility lives ONLY in the compact "עמודות ▾" dropdown
+          (user request: the open chip bar overloaded the page and was removed).
+          Mobile: the wrapper is height-capped so it is a REAL scroll container —
+          that's what makes the sticky header row actually stick (the old
+          viewport-sticky top-14 was dead inside overflow-x-auto). */}
+      <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-auto max-h-[70vh] md:max-h-none">
         <table className="w-full text-sm whitespace-nowrap">
           <thead>
             <tr className="border-b border-slate-300">
-              {preCols.map(renderTh)}
-              {visibleInvCols.map((c) => (
-                <th
-                  key={c.id}
-                  onClick={() => handleSort(c.id)}
-                  title={c.title(refYear)}
-                  className="sticky top-14 z-10 bg-white border-b border-slate-300 px-3 py-3 text-right text-slate-500 font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none min-w-[110px]"
-                >
-                  {c.label}
-                  {sortKey === c.id && (
-                    <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>
-                  )}
-                  <div className="text-[9px] text-slate-400 font-normal mt-0.5 leading-tight">{c.sub(refYear)}</div>
-                </th>
-              ))}
-              {postCols.map(renderTh)}
-              {visibleChangeCols.map((cc) => (
-                <th key={cc.id} className="sticky top-14 z-10 border-b border-slate-300 px-3 py-3 text-right text-slate-500 font-medium min-w-[155px] bg-indigo-50 border-r border-indigo-100">
-                  <div className="flex items-center gap-1.5">
-                    <span onClick={() => handleSort(cc.id)} className="cursor-pointer hover:text-indigo-700 select-none">
-                      {cc.label}
-                      {sortKey === cc.id && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
-                    </span>
-                    <select
-                      value={win[cc.metric]}
-                      onChange={(e) => setWin((w) => ({ ...w, [cc.metric]: Number(e.target.value) as Win }))}
-                      onClick={(e) => e.stopPropagation()}
-                      title="בחר פרק זמן"
-                      className="text-[10px] border border-slate-200 rounded px-0.5 py-0.5 bg-white text-slate-600 cursor-pointer"
-                    >
-                      <option value={1}>שנה</option>
-                      <option value={3}>3 שנים</option>
-                      <option value={5}>5 שנים</option>
-                      <option value={10}>10 שנים</option>
-                    </select>
-                  </div>
-                  <div className="text-[9px] text-slate-400 font-normal mt-0.5">{cc.unit}</div>
-                </th>
-              ))}
+              {visibleOrder.map((id) => {
+                const entry = colById.get(id);
+                if (!entry) return null;
+                const draggable = id !== "city_name";
+                const dragProps = draggable
+                  ? {
+                      draggable: true,
+                      onDragStart: () => setDragId(id),
+                      onDragOver: (e: React.DragEvent) => { e.preventDefault(); setDropId(id); },
+                      onDragLeave: () => setDropId((d) => (d === id ? null : d)),
+                      onDrop: (e: React.DragEvent) => { e.preventDefault(); const from = dragRef.current; if (from) moveColumn(from, id); setDragId(null); setDropId(null); },
+                      onDragEnd: () => { setDragId(null); setDropId(null); },
+                    }
+                  : {};
+                const dropRing = dropId === id && dragId && dragId !== id ? "outline outline-2 outline-indigo-500" : "";
+
+                if (entry.kind === "base") {
+                  const col = entry.def;
+                  // city header is double-pinned: vertically with the header row
+                  // AND horizontally (start-0) like its body cells
+                  const cityPin = col.key === "city_name"
+                    ? "start-0 z-20 shadow-[inset_-6px_0_8px_-8px_rgba(15,23,42,0.25)]"
+                    : "";
+                  return (
+                    <th key={id} {...dragProps} onClick={() => handleSort(col.key)}
+                      className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-3 py-3 text-right font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${dropRing} ${cityPin} ${
+                        isFeaturedCol(col.key) ? "bg-indigo-50 text-indigo-700" : "bg-white text-slate-500"
+                      }`}>
+                      {draggable && <span className="ml-1 cursor-grab text-slate-300">⠿</span>}
+                      {col.label}
+                      {sortKey === col.key && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
+                    </th>
+                  );
+                }
+                if (entry.kind === "inv") {
+                  const c = entry.def;
+                  return (
+                    <th key={id} {...dragProps} onClick={() => handleSort(c.id)} title={c.title(refYear)}
+                      className={`sticky top-0 md:top-14 z-10 bg-white border-b border-slate-300 px-3 py-3 text-right text-slate-500 font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none min-w-[110px] ${dropRing}`}>
+                      <span className="ml-1 cursor-grab text-slate-300">⠿</span>
+                      {c.label}
+                      {sortKey === c.id && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
+                      <div className="text-2xs text-slate-400 font-normal mt-0.5 leading-tight">{c.sub(refYear)}</div>
+                    </th>
+                  );
+                }
+                const cc = entry.def as { id: string; label: string; metric: ChangeMetric; unit: string };
+                return (
+                  <th key={id} {...dragProps}
+                    className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-3 py-3 text-right text-slate-500 font-medium min-w-[155px] bg-indigo-50 border-r border-indigo-100 ${dropRing}`}>
+                    <div className="flex items-center gap-1.5">
+                      <span className="cursor-grab text-slate-300">⠿</span>
+                      <span onClick={() => handleSort(cc.id)} className="cursor-pointer hover:text-indigo-700 select-none">
+                        {cc.label}
+                        {sortKey === cc.id && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
+                      </span>
+                      <select value={win[cc.metric]}
+                        onChange={(e) => setWin((w) => ({ ...w, [cc.metric]: Number(e.target.value) as Win }))}
+                        onClick={(e) => e.stopPropagation()} title="בחר פרק זמן"
+                        className="text-2xs border border-slate-200 rounded px-0.5 py-0.5 bg-white text-slate-600 cursor-pointer">
+                        <option value={1}>שנה</option>
+                        <option value={3}>3 שנים</option>
+                        <option value={5}>5 שנים</option>
+                        <option value={10}>10 שנים</option>
+                      </select>
+                    </div>
+                    <div className="text-2xs text-slate-400 font-normal mt-0.5">{cc.unit}</div>
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
             {sorted.map((row, i) => {
               const inv = investor[row.city_name];
+              // user rule city_min_total_deals: a thin-sample city is tinted
+              // yellow (not representative) and is excluded from all rankings
+              const thinCity = (row.dealCount ?? 0) < minDeals;
               return (
                 <tr
                   key={row.city_name}
-                  className={`border-b border-slate-200/40 hover:bg-indigo-50/40 transition-colors ${
-                    i % 2 === 0 ? "" : "bg-slate-50/50"
+                  title={thinCity ? `מדגם קטן: ${(row.dealCount ?? 0).toLocaleString("he-IL")} עסקאות ב-10 שנים (מתחת ל-${minDeals.toLocaleString("he-IL")}) — לא מייצג · העיר לא נכללת בדירוגים` : undefined}
+                  className={`border-b border-slate-200/40 transition-colors ${
+                    thinCity
+                      ? "bg-amber-50/80 hover:bg-amber-100/70"
+                      : `hover:bg-indigo-50/40 ${i % 2 === 0 ? "" : "bg-slate-50/50"}`
                   }`}
                 >
-                  {preCols.map((col) => renderTd(row, col))}
-                  {visibleInvCols.map((c) => (
-                    <td key={c.id} className="px-3 py-2.5">
-                      {c.render(inv)}
-                    </td>
-                  ))}
-                  {postCols.map((col) => renderTd(row, col))}
-                  {visibleChangeCols.map((cc) => {
+                  {visibleOrder.map((id) => {
+                    const entry = colById.get(id);
+                    if (!entry) return null;
+                    if (entry.kind === "base") return renderTd(row, entry.def);
+                    if (entry.kind === "inv") return <td key={id} className="px-3 py-2.5">{entry.def.render(inv)}</td>;
+                    const cc = entry.def as { id: string; metric: ChangeMetric };
                     const r = changePct(row.changeMetrics?.[cc.metric], win[cc.metric]);
                     return (
-                      <td key={cc.id} className="px-3 py-2.5 bg-indigo-50/20 border-r border-indigo-100/60">
+                      <td key={id} className="px-3 py-2.5 bg-indigo-50/20 border-r border-indigo-100/60">
                         <TrendValue pct={r.pct} from={r.pct !== null ? r.from : null} to={r.pct !== null ? r.to : null} />
                       </td>
                     );
@@ -749,8 +915,9 @@ export default function CitiesTable({
       </div>
 
       {/* Provenance — memory rule: source • period • confidence under every metric block */}
-      <p className="mt-2 text-[10px] text-slate-400 text-right">
-        🔵 מחירים ושינויי מחיר: מאגר העסקאות העצמאי (רשות המסים) · יד-2 = 3+ שנים משנת בנייה · שנת ייחוס {refYear} · אמינות לפי עומק דאטה · אוכלוסייה/משקי-בית: 🏛️ למ״ס
+      <p className="mt-2 text-2xs text-slate-400 text-right">
+        🟡 שורה צהובה = פחות מ-{minDeals.toLocaleString("he-IL")} עסקאות פעילות ב-10 שנים (עריך בדשבורד) — מדגם קטן, לא נכלל בדירוגים ·
+        🔵 מחירים ושינויי מחיר: מאגר העסקאות העצמאי (רשות המסים) · יד-2 = 4+ שנים משנת בנייה · שנת ייחוס {refYear} · אמינות לפי עומק דאטה · אוכלוסייה/משקי-בית: 🏛️ למ״ס
       </p>
     </div>
   );

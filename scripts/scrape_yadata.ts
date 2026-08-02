@@ -157,12 +157,6 @@ async function main() {
     }) as unknown as puppeteerCore.Browser;
   }
 
-  const page = await browser.newPage();
-  await page.setUserAgent(
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
-  );
-  await page.setViewport({ width: 1280, height: 800 });
-
   const scraped: ScrapedCity[] = [];
   const skipped: Array<{ city_name: string; reason: string }> = [];
 
@@ -170,13 +164,27 @@ async function main() {
   for (const city of toScrape) {
     i++;
     const prefix = `[${String(i).padStart(3)}/${toScrape.length}]`;
-    const result = await scrapeOne(page, city);
-    if ("skipped" in result) {
-      skipped.push({ city_name: city.city_name, reason: result.reason });
-      console.log(`${prefix} ⊘ ${city.city_name.padEnd(20)} → ${result.reason}`);
-    } else {
-      scraped.push(result);
-      console.log(`${prefix} ✓ ${city.city_name.padEnd(20)} → new=${result.new_properties} sh=${result.secondhand_properties} days=${result.avg_days_on_market} buyers=${result.buyers_count} type=${result.market_type}`);
+    // A fresh page per city: a single detached frame used to kill the shared page
+    // and cascade-fail every remaining city (167/167). Isolated pages recover.
+    const page = await browser.newPage();
+    try {
+      await page.setUserAgent(
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15"
+      );
+      await page.setViewport({ width: 1280, height: 800 });
+      const result = await scrapeOne(page, city);
+      if ("skipped" in result) {
+        skipped.push({ city_name: city.city_name, reason: result.reason });
+        console.log(`${prefix} ⊘ ${city.city_name.padEnd(20)} → ${result.reason}`);
+      } else {
+        scraped.push(result);
+        console.log(`${prefix} ✓ ${city.city_name.padEnd(20)} → new=${result.new_properties} sh=${result.secondhand_properties} days=${result.avg_days_on_market} buyers=${result.buyers_count} type=${result.market_type}`);
+      }
+    } catch (e) {
+      skipped.push({ city_name: city.city_name, reason: e instanceof Error ? e.message : String(e) });
+      console.log(`${prefix} ⊘ ${city.city_name.padEnd(20)} → ${e instanceof Error ? e.message : e}`);
+    } finally {
+      await page.close().catch(() => {});
     }
     // Polite delay
     await new Promise((r) => setTimeout(r, 800));

@@ -9,7 +9,7 @@ import fs from "fs";
 import path from "path";
 import { prisma } from "../lib/db";
 
-const SECONDHAND_MIN_AGE = 3;
+const SECONDHAND_MIN_AGE = 4;
 const DIR = path.resolve(process.cwd(), "data", "nadlan_deals");
 
 function roomBucket(rn: number | undefined): string {

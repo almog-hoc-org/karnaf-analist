@@ -1,9 +1,11 @@
 import { prisma } from "@/lib/db";
 import { listDeals, listTrackedCities } from "@/lib/appDb";
-import { computeStreetComp, type StreetComp } from "@/lib/streetComps";
+import { computeStreetComp } from "@/lib/streetComps";
+import type { StreetComp } from "@/lib/compTypes";
 import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import DealsManager from "@/components/DealsManager";
+import { getCurrentUser, workspaceId } from "@/lib/auth";
 
 export const metadata = { title: 'ניהול והשוואת עסקאות | קרנף אנליסט' };
 export const dynamic = "force-dynamic";
@@ -24,8 +26,8 @@ export interface TrackedCitySummary {
 export default async function DealsPage() {
   const [cities, tracked, deals, txPrices, sh3] = await Promise.all([
     prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } }),
-    Promise.resolve(listTrackedCities()),
-    Promise.resolve(listDeals()),
+    Promise.resolve(listTrackedCities(workspaceId())),
+    Promise.resolve(listDeals(workspaceId())),
     loadCityTransactionPrices(),
     loadSecondhandChanges(3),
   ]);
@@ -38,7 +40,7 @@ export default async function DealsPage() {
       const ch = sh3Map.get(city);
       const [act] = await prisma.$queryRawUnsafe<any[]>(
         `SELECT COUNT(*) n, COUNT(DISTINCT neighborhood) nh FROM nadlan_transactions
-         WHERE city_name=? AND deal_date >= date('now','-12 months')`, city
+         WHERE city_name=? AND COALESCE(excluded,0)=0 AND deal_date >= date('now','-12 months')`, city
       ).catch(() => [{ n: 0, nh: 0 }]);
       return {
         city,
@@ -58,12 +60,12 @@ export default async function DealsPage() {
   const comps: Record<number, StreetComp> = {};
   await Promise.all(
     deals.map(async (d) => {
-      comps[d.id] = await computeStreetComp(d.city, d.street, d.neighborhood);
+      comps[d.id] = await computeStreetComp(d.city, d.street, d.neighborhood, d.rooms, d.size);
     })
   );
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-[1500px] mx-auto">
+    <main className="min-h-screen page-wrap-wide py-8">
       <header className="mb-8">
         <h1 className="text-3xl md:text-4xl font-black tracking-tight">
           <span className="text-gradient-hero">ניהול והשוואת עסקאות</span>

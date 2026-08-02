@@ -10,17 +10,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { motion } from "framer-motion";
-import {
-  BRAND,
-  INK,
-  BRAND_LIGHT,
-  SLATE,
-  BRAND_DARK,
-  SLATE_LIGHT,
-  GRID,
-  AXIS,
-  tooltipStyle,
-} from "@/lib/chartColors";
+import { BRAND, INK, BRAND_LIGHT, SLATE, BRAND_DARK, SLATE_LIGHT, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 interface PopulationDataPoint {
   year: number;
@@ -34,6 +25,7 @@ interface PopulationChartProps {
 }
 
 export default function PopulationChart({ data, cityName }: PopulationChartProps) {
+  const mobile = useIsMobile();
   if (!data || data.length < 2) {
     return (
       <div className="flex items-center justify-center h-40 text-slate-500 text-sm">
@@ -68,7 +60,7 @@ export default function PopulationChart({ data, cityName }: PopulationChartProps
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
     >
-      <ResponsiveContainer width="100%" height={260}>
+      <ResponsiveContainer width="100%" height={mobile ? 220 : 260}>
         <AreaChart
           data={chartData}
           margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
@@ -94,7 +86,7 @@ export default function PopulationChart({ data, cityName }: PopulationChartProps
             tick={{ fill: AXIS, fontSize: 11 }}
             axisLine={false}
             tickLine={false}
-            width={60}
+            width={mobile ? 44 : 60}
             tickFormatter={(v: number) =>
               v >= 1000000
                 ? `${(v / 1000000).toFixed(1)}M`
@@ -105,13 +97,13 @@ export default function PopulationChart({ data, cityName }: PopulationChartProps
           />
           <Tooltip
             contentStyle={{ ...tooltipStyle, color: INK }}
-            formatter={(value: number) => [
+            formatter={tipFmt((value) => [
               value.toLocaleString("he-IL"),
               "אוכלוסייה",
-            ]}
+            ])}
             labelFormatter={(label) => `שנת ${label}`}
           />
-          <Area
+          <Area isAnimationActive={false}
             type="monotone"
             dataKey="אוכלוסייה"
             stroke={BRAND}
@@ -135,7 +127,7 @@ export default function PopulationChart({ data, cityName }: PopulationChartProps
           />
         </AreaChart>
       </ResponsiveContainer>
-      <div className="flex flex-wrap gap-3 mt-2 justify-center text-[10px] text-slate-500">
+      <div className="flex flex-wrap gap-3 mt-2 justify-center text-2xs text-slate-500">
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: BRAND }} /> מרשם אוכלוסין</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: INK }} /> מפקד 2022</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: BRAND_LIGHT }} /> למ&quot;ס 2024</span>

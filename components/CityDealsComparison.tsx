@@ -97,13 +97,13 @@ function getSampleTotalPrice(sample: DealSample | null): number | null {
 // ── UI subcomponents ─────────────────────────────────────────────
 
 function ChangeTag({ value }: { value: number | null }) {
-  if (value === null) return <span className="text-slate-400 text-[10px]">—</span>;
+  if (value === null) return <span className="text-slate-400 text-2xs">—</span>;
   const isPositive = value >= 0;
   const color = isPositive ? "text-emerald-700" : "text-red-600";
   const bg = isPositive ? "bg-emerald-50" : "bg-red-50";
   return (
     <span
-      className={`inline-flex items-center gap-0.5 text-[10px] font-bold px-2 py-0.5 rounded-full ${bg} ${color}`}
+      className={`inline-flex items-center gap-0.5 text-2xs font-bold px-2 py-0.5 rounded-full ${bg} ${color}`}
     >
       {isPositive ? "▲" : "▼"} {isPositive ? "+" : ""}
       {value.toFixed(1)}%
@@ -124,7 +124,7 @@ function SampleBadge({ sample }: { sample: DealSample | null }) {
     };
     return (
       <span
-        className={`inline-block text-[9px] font-medium px-1.5 py-0.5 rounded border ${colorMap[sample.threshold]}`}
+        className={`inline-block text-2xs font-medium px-1.5 py-0.5 rounded border ${colorMap[sample.threshold]}`}
         title={`ממוצע של ${sample.count} עסקאות`}
       >
         ממוצע {sample.count}
@@ -134,7 +134,7 @@ function SampleBadge({ sample }: { sample: DealSample | null }) {
   // single sample
   return (
     <span
-      className="inline-block text-[9px] font-medium px-1.5 py-0.5 rounded border bg-slate-100 text-slate-700 border-slate-200"
+      className="inline-block text-2xs font-medium px-1.5 py-0.5 rounded border bg-slate-100 text-slate-700 border-slate-200"
       title={`עסקה בודדת — ${sample.area} מ"ר, ${sample.blocksAway === 0 ? "אותה כתובת" : `מרחק ${sample.blocksAway} בלוקים`}`}
     >
       עסקה בודדת
@@ -152,7 +152,7 @@ function SampleCell({
   if (!sample) {
     return (
       <td className="px-2 py-2.5 text-center">
-        <span className="text-[11px] text-slate-400">—</span>
+        <span className="text-2xs text-slate-400">—</span>
       </td>
     );
   }
@@ -160,10 +160,10 @@ function SampleCell({
   const total = getSampleTotalPrice(sample);
   return (
     <td className="px-2 py-2.5 text-center">
-      <div className={`text-[11px] font-bold ${isLatest ? "text-indigo-700" : "text-slate-900"}`}>
+      <div className={`text-2xs font-bold ${isLatest ? "text-indigo-700" : "text-slate-900"}`}>
         {formatPricePerSqm(ppsm)}
       </div>
-      <div className="text-[9px] text-slate-500 mt-0.5">{formatPrice(total)}</div>
+      <div className="text-2xs text-slate-500 mt-0.5">{formatPrice(total)}</div>
       <div className="mt-1">
         <SampleBadge sample={sample} />
       </div>
@@ -186,7 +186,7 @@ function StreetTable({
       <table className="w-full text-sm" dir="rtl">
         <thead>
           <tr className="border-b border-slate-200">
-            <th className="px-3 py-2.5 text-right text-[10px] text-slate-500 font-medium w-24 whitespace-nowrap">
+            <th className="px-3 py-2.5 text-right text-2xs text-slate-500 font-medium w-24 whitespace-nowrap">
               גודל
             </th>
             {orderedPeriods.map((p) => {
@@ -195,18 +195,18 @@ function StreetTable({
               return (
                 <th
                   key={p}
-                  className={`px-2 py-2.5 text-center text-[10px] font-medium whitespace-nowrap ${
+                  className={`px-2 py-2.5 text-center text-2xs font-medium whitespace-nowrap ${
                     isLatest ? "text-indigo-700" : "text-slate-500"
                   }`}
                 >
                   {year}
-                  {isLatest && <span className="text-[8px] block">היום</span>}
-                  {p === "minus3" && <span className="text-[8px] block text-slate-400">לפני 3 שנים</span>}
-                  {p === "minus5" && <span className="text-[8px] block text-slate-400">לפני 5 שנים</span>}
+                  {isLatest && <span className="text-2xs block">היום</span>}
+                  {p === "minus3" && <span className="text-2xs block text-slate-400">לפני 3 שנים</span>}
+                  {p === "minus5" && <span className="text-2xs block text-slate-400">לפני 5 שנים</span>}
                 </th>
               );
             })}
-            <th className="px-2 py-2.5 text-center text-[10px] text-slate-500 font-medium whitespace-nowrap">
+            <th className="px-2 py-2.5 text-center text-2xs text-slate-500 font-medium whitespace-nowrap">
               שינוי
             </th>
           </tr>
@@ -228,7 +228,7 @@ function StreetTable({
                 key={bucket.targetArea}
                 className="border-b border-slate-100 hover:bg-slate-50 transition-colors"
               >
-                <td className="px-3 py-2.5 text-[11px] text-slate-700 font-medium whitespace-nowrap">
+                <td className="px-3 py-2.5 text-2xs text-slate-700 font-medium whitespace-nowrap">
                   {bucket.label}
                 </td>
                 {orderedPeriods.map((p, idx) => {
@@ -264,7 +264,7 @@ function StreetBlock({
     <div className="border-t border-slate-100">
       <div className="px-5 py-2 flex items-center justify-between bg-slate-50">
         <span className="text-xs text-slate-700 font-medium">📍 רחוב {street.streetName}</span>
-        <span className="text-[10px] text-slate-500">{street.totalDeals} עסקאות ברחוב</span>
+        <span className="text-2xs text-slate-500">{street.totalDeals} עסקאות ברחוב</span>
       </div>
       <StreetTable street={street} periodYears={periodYears} />
     </div>
@@ -287,8 +287,8 @@ function NeighborhoodCard({
       className="glass-card overflow-hidden"
     >
       <div className="px-5 py-3.5 border-b border-slate-200 bg-slate-50">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900">שכונת {nh.neighborhood}</h3>
+        <div className="flex flex-wrap gap-y-1 items-center justify-between">
+          <h3 className="min-w-0 text-sm font-bold text-slate-900">שכונת {nh.neighborhood}</h3>
           <div className="flex items-center gap-2">
             <span className="text-xs text-slate-500 px-2 py-0.5 rounded-full bg-slate-100">
               {nh.totalDeals} עסקאות
@@ -412,7 +412,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
         <>
           {data.neighborhoods.length > 0 ? (
             <>
-              <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px]">
+              <div className="mb-3 flex flex-wrap items-center gap-2 text-2xs">
                 <span className="text-slate-500">מקרא:</span>
                 <span className="px-1.5 py-0.5 rounded border bg-indigo-100 text-indigo-800 border-indigo-300">
                   ממוצע 15+ עסקאות
@@ -453,7 +453,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
           )}
 
           {data.totalDealsAnalyzed > 0 && (
-            <div className="mt-3 flex items-center justify-between text-[10px] text-slate-400">
+            <div className="mt-3 flex flex-wrap gap-y-1 items-center justify-between text-2xs text-slate-400">
               <span>
                 סה&quot;כ {data.totalDealsAnalyzed} עסקאות נותחו | אופי יישוב: {data.townCharacter}
               </span>
@@ -463,7 +463,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
             </div>
           )}
 
-          <p className="text-[10px] text-slate-400 mt-2">
+          <p className="text-2xs text-slate-400 mt-2">
             * נתונים מבוססים על עסקאות שדווחו לרשות המסים (nadlan.gov.il). מחיר
             למ&quot;ר אחרי סינון חריגים (±2 ס.ת.). תאי טבלה ריקים = אין נתון אמין —
             לא מוצג מספר מומצא.

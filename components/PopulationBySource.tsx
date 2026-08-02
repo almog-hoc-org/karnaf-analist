@@ -63,7 +63,7 @@ export default function PopulationBySource({
                     <td className="py-3 px-3 align-top">
                       <div className="text-lg font-extrabold tabular-nums text-slate-900">{row.year}</div>
                       {!row.uniform && (
-                        <div className="text-[9px] text-slate-600 font-bold mt-0.5">⚠ פערים</div>
+                        <div className="text-2xs text-slate-600 font-bold mt-0.5">⚠ פערים</div>
                       )}
                     </td>
                     <td className="py-2.5 px-3 align-top">
@@ -79,7 +79,7 @@ export default function PopulationBySource({
                               className={`rounded-lg px-2.5 py-1 ring-1 ring-inset ${ring} flex items-center gap-2`}
                               title={e.meta.description}
                             >
-                              <span className={`text-[10px] font-bold ${textCol}`}>{e.meta.label}</span>
+                              <span className={`text-2xs font-bold ${textCol}`}>{e.meta.label}</span>
                               <span className="text-slate-300">|</span>
                               <span className="text-sm font-bold text-slate-900 tabular-nums">
                                 {e.population.toLocaleString("he-IL")}
@@ -91,13 +91,13 @@ export default function PopulationBySource({
                     </td>
                     <td className="py-3 px-3 align-top text-center">
                       {row.uniform ? (
-                        <span className="text-[10px] text-emerald-700 font-semibold">✓ אחיד</span>
+                        <span className="text-2xs text-emerald-700 font-semibold">✓ אחיד</span>
                       ) : (
                         <div>
                           <div className="text-sm font-bold text-slate-900 tabular-nums">
                             {(row.max - row.min).toLocaleString("he-IL")}
                           </div>
-                          <div className="text-[9px] text-slate-500">{row.spreadPct.toFixed(1)}%</div>
+                          <div className="text-2xs text-slate-500">{row.spreadPct.toFixed(1)}%</div>
                         </div>
                       )}
                     </td>
@@ -105,7 +105,7 @@ export default function PopulationBySource({
                       <div className="text-base font-extrabold text-slate-900 tabular-nums">
                         {row.bestPick.value.toLocaleString("he-IL")}
                       </div>
-                      <div className="text-[10px] text-slate-500 truncate">
+                      <div className="text-2xs text-slate-500 truncate">
                         {row.estimates.find((e) => e.source === row.bestPick.source)?.meta.label}
                       </div>
                     </td>
@@ -116,7 +116,7 @@ export default function PopulationBySource({
           </table>
         </div>
 
-        <div className="px-4 py-3 border-t border-slate-100 bg-slate-50/50 text-[11px] text-slate-600 leading-relaxed">
+        <div className="px-4 py-3 border-t border-slate-100 bg-slate-50/50 text-2xs text-slate-600 leading-relaxed">
           <strong className="text-slate-800">איך לקרוא את הטבלה:</strong> כל שנה מציגה את כל האומדנים הרשמיים שמצאנו עבור{" "}
           <strong>{cityName}</strong>. כשהמקורות מסכימים — &quot;✓ אחיד&quot;. כשהם חלוקים — מוצגים גם הפער המוחלט וגם
           ה-% (max-min relative to min). העמודה הימנית מציגה את המומלץ ביותר לפי דירוג איכות המקור:

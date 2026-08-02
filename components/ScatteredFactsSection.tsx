@@ -55,13 +55,13 @@ function FactCard({ fact }: { fact: CityFact }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className={`text-[10px] font-bold uppercase tracking-wider ${cat.accent}`}>
+            <span className={`text-2xs font-bold uppercase tracking-wider ${cat.accent}`}>
               {cat.label}
             </span>
-            <span className="text-[10px] text-slate-400">·</span>
-            <span className="text-[10px] text-slate-500">{formatDate(fact.published)}</span>
+            <span className="text-2xs text-slate-400">·</span>
+            <span className="text-2xs text-slate-500">{formatDate(fact.published)}</span>
             {fact.confidence === "medium" && (
-              <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-300">
+              <span className="text-2xs font-semibold px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-300">
                 אומדן
               </span>
             )}
@@ -71,7 +71,7 @@ function FactCard({ fact }: { fact: CityFact }) {
             href={fact.source_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 mt-2 text-[11px] text-slate-500 hover:text-indigo-700 transition-colors"
+            className="inline-flex items-center gap-1 mt-2 text-2xs text-slate-500 hover:text-indigo-700 transition-colors"
           >
             <span>{fact.source_name}</span>
             <span>↗</span>
@@ -85,16 +85,16 @@ function FactCard({ fact }: { fact: CityFact }) {
 function TimeSeriesCard({ series }: { series: CityTimeSeries }) {
   return (
     <div className="glass-card p-5">
-      <div className="flex items-start justify-between mb-3">
-        <div>
+      <div className="flex flex-wrap gap-y-1 items-start justify-between mb-3">
+        <div className="min-w-0">
           <h3 className="text-sm font-bold text-slate-900">{series.metric}</h3>
-          <p className="text-[11px] text-slate-500 mt-0.5">יחידה: {series.unit}</p>
+          <p className="text-2xs text-slate-500 mt-0.5">יחידה: {series.unit}</p>
         </div>
         <a
           href={series.source_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[10px] text-slate-500 hover:text-indigo-700 transition-colors flex items-center gap-1"
+          className="text-2xs text-slate-500 hover:text-indigo-700 transition-colors flex items-center gap-1"
         >
           <span>{series.source_name}</span>
           <span>↗</span>

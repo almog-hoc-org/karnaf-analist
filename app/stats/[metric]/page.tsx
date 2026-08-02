@@ -114,7 +114,7 @@ export default async function StatPage({ params }: PageProps) {
     });
 
     return (
-      <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+      <main className="min-h-screen page-wrap py-8">
         <PageHeader cfg={cfg} a={a} subInfo={`${rows.length} שנים | ${rows[0]?.year}-${rows[rows.length - 1]?.year}`} />
 
         {/* Chart */}
@@ -173,7 +173,7 @@ export default async function StatPage({ params }: PageProps) {
           </div>
         </div>
 
-        <p className="text-[11px] text-slate-500 mt-4">
+        <p className="text-2xs text-slate-500 mt-4">
           הערה: היתרים לשנים 2016-2018 חסרים בדוחות הזמינים של למ&quot;ס. תאים ריקים מוצגים כ-&ldquo;—&rdquo;.
         </p>
       </main>
@@ -208,7 +208,7 @@ export default async function StatPage({ params }: PageProps) {
     const totalCities = new Set(trends.map((t) => t.city_name)).size;
 
     return (
-      <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+      <main className="min-h-screen page-wrap py-8">
         <PageHeader
           cfg={cfg}
           a={a}
@@ -254,7 +254,7 @@ export default async function StatPage({ params }: PageProps) {
           </div>
         </div>
 
-        <p className="text-[11px] text-slate-500 mt-4">
+        <p className="text-2xs text-slate-500 mt-4">
           הערה: מחיר למ&quot;ר חושב מחציון מחיר העסקה ב-nadlan.gov.il חלקי 75 מ&quot;ר ממוצע לדירה.
           ממוצע על פני כל הערים והרבעונים של אותה שנה.
         </p>
@@ -279,7 +279,7 @@ export default async function StatPage({ params }: PageProps) {
     });
 
     return (
-      <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+      <main className="min-h-screen page-wrap py-8">
         <PageHeader cfg={cfg} a={a} subInfo={`168 ערים במאגר`} />
 
         <div className="glass-card overflow-hidden">
@@ -319,7 +319,7 @@ export default async function StatPage({ params }: PageProps) {
           </div>
         </div>
 
-        <p className="text-[11px] text-slate-500 mt-4">
+        <p className="text-2xs text-slate-500 mt-4">
           הערה: בסיס נתונים מהמפקד הרשמי של למ&quot;ס 2022 + תחזיות לפי קצב הצמיחה השנתי.
         </p>
       </main>
@@ -336,7 +336,7 @@ export default async function StatPage({ params }: PageProps) {
     const total = cities.reduce((s, c) => s + (c.apartments_required ?? 0), 0);
 
     return (
-      <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+      <main className="min-h-screen page-wrap py-8">
         <PageHeader
           cfg={cfg}
           a={a}
@@ -383,7 +383,7 @@ export default async function StatPage({ params }: PageProps) {
           </div>
         </div>
 
-        <p className="text-[11px] text-slate-500 mt-4">
+        <p className="text-2xs text-slate-500 mt-4">
           חישוב: דירות נדרשות = גידול אוכלוסייה ÷ נפשות לדירה. ערים ללא נתון נפשות לדירה אינן נכללות.
         </p>
       </main>
@@ -394,7 +394,7 @@ export default async function StatPage({ params }: PageProps) {
   if (metric === "construction-cost-index") {
     const series = getCbsNationalSeries().construction_input_index;
     return (
-      <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+      <main className="min-h-screen page-wrap py-8">
         <PageHeader cfg={cfg} a={a} subInfo={`${series.length} שנים | ${series[0]?.year}-${series[series.length - 1]?.year}`} />
 
         <div className="glass-card overflow-hidden">
@@ -423,10 +423,10 @@ export default async function StatPage({ params }: PageProps) {
                       <td className="py-3 px-3 text-center text-xs">
                         <TrendCell pct={yoy} />
                       </td>
-                      <td className="py-3 px-3 text-center text-[11px]">
+                      <td className="py-3 px-3 text-center text-2xs">
                         <ConfidencePill c={row.confidence} />
                       </td>
-                      <td className="py-3 px-3 text-right text-[10px] text-slate-500">{row.note ?? ""}</td>
+                      <td className="py-3 px-3 text-right text-2xs text-slate-500">{row.note ?? ""}</td>
                     </tr>
                   );
                 })}
@@ -435,7 +435,7 @@ export default async function StatPage({ params }: PageProps) {
           </div>
         </div>
 
-        <p className="text-[11px] text-slate-500 mt-4">
+        <p className="text-2xs text-slate-500 mt-4">
           מדד מחירי תשומה בבנייה למגורים — מודד את השינוי בעלויות חומרי הגלם, העבודה והציוד בבנייה. מקור: למ&quot;ס.
           ערכים לפני 2019 נאספו ממאגרי מידע משניים — סומנו &quot;medium&quot; מהימנות. ערכים מ-2020 ואילך אומתו ישירות מול הודעות לעיתונות של למ&quot;ס.
         </p>
@@ -449,7 +449,7 @@ export default async function StatPage({ params }: PageProps) {
     const annual = data.housing_price_index_annual;
     const monthly = data.monthly_price_index_recent;
     return (
-      <main className="min-h-screen px-4 py-8 max-w-5xl mx-auto">
+      <main className="min-h-screen page-wrap py-8">
         <PageHeader cfg={cfg} a={a} subInfo={`${annual.length} שנות נתונים שנתיים + ${monthly.length} פרסומים אחרונים`} />
 
         <h3 className="text-lg font-bold text-slate-900 mb-3 mt-4">שינויים חודשיים אחרונים</h3>
@@ -471,7 +471,7 @@ export default async function StatPage({ params }: PageProps) {
                     <td className="py-3 px-3 text-right font-bold text-slate-900">{row.period}</td>
                     <td className="py-3 px-3 text-center"><TrendCell pct={row.national_yoy_pct ?? null} /></td>
                     <td className="py-3 px-3 text-center"><TrendCell pct={row.national_mom_pct ?? null} /></td>
-                    <td className="py-3 px-3 text-right text-[10px]">
+                    <td className="py-3 px-3 text-right text-2xs">
                       {row.source_url ? (
                         <a href={row.source_url} target="_blank" rel="noopener noreferrer" className="text-indigo-700 hover:underline">
                           {row.source_name || "מקור"} ↗
@@ -505,8 +505,8 @@ export default async function StatPage({ params }: PageProps) {
                     <tr key={row.year} className={`border-b border-slate-100 hover:bg-slate-50 transition-colors ${isLatest ? "bg-indigo-50/40" : ""}`}>
                       <td className="py-3 px-3 text-right font-bold text-slate-900">{row.year}</td>
                       <td className="py-3 px-3 text-center"><TrendCell pct={row.annual_pct_change} /></td>
-                      <td className="py-3 px-3 text-center text-[11px]"><ConfidencePill c={row.confidence} /></td>
-                      <td className="py-3 px-3 text-right text-[10px]">
+                      <td className="py-3 px-3 text-center text-2xs"><ConfidencePill c={row.confidence} /></td>
+                      <td className="py-3 px-3 text-right text-2xs">
                         {row.source_url ? (
                           <a href={row.source_url} target="_blank" rel="noopener noreferrer" className="text-indigo-700 hover:underline">
                             {row.source_name || "מקור"} ↗
@@ -521,7 +521,7 @@ export default async function StatPage({ params }: PageProps) {
           </div>
         </div>
 
-        <p className="text-[11px] text-slate-500 mt-4">
+        <p className="text-2xs text-slate-500 mt-4">
           מדד מחירי דירות — שינוי % במחירי דירות יד שנייה לפי מתודולוגיית למ&quot;ס. מקורות: הודעות לעיתונות
           של למ&quot;ס (פרסומים 047/2023-2026, 052/2026 ועוד), אומת מול Calcalist, Ynet, Nadlan Center.
         </p>
@@ -540,7 +540,7 @@ function ConfidencePill({ c }: { c: "high" | "medium" | "low" }) {
   } as const;
   const entry = map[c] ?? map.medium;
   return (
-    <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full border ${entry.cls}`}>
+    <span className={`inline-block text-2xs font-bold px-2 py-0.5 rounded-full border ${entry.cls}`}>
       {entry.he}
     </span>
   );

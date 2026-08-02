@@ -53,7 +53,7 @@ export default function PriceChangePanel({
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-bold text-slate-900">שינוי מחיר חציוני בעיר</h3>
-          <p className="text-[11px] text-slate-500 mt-0.5">
+          <p className="text-2xs text-slate-500 mt-0.5">
             מקור: nadlan.gov.il • חציון רבעוני, ממוצע שנתי
           </p>
         </div>
@@ -85,12 +85,12 @@ export default function PriceChangePanel({
       >
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">
+            <div className="text-2xs font-bold text-slate-500 uppercase tracking-wide">
               {active === "3y" ? "3 שנים" : "5 שנים"}
             </div>
             {activeChange ? (
               <>
-                <div className={`text-5xl font-black tabular-nums leading-none mt-1 ${
+                <div className={`text-4xl sm:text-5xl font-black tabular-nums leading-none mt-1 ${
                   activeChange.pct >= 0 ? "text-emerald-700" : "text-red-700"
                 }`}>
                   {activeChange.pct >= 0 ? "▲ +" : "▼ "}{activeChange.pct.toFixed(1)}%
@@ -109,7 +109,7 @@ export default function PriceChangePanel({
           {/* Context (the inactive window, smaller) */}
           {contextChange && (
             <div className="opacity-50 text-right">
-              <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wide">
+              <div className="text-2xs font-bold text-slate-500 uppercase tracking-wide">
                 לעומת {contextLabel}
               </div>
               <div className={`text-2xl font-bold tabular-nums ${
@@ -117,7 +117,7 @@ export default function PriceChangePanel({
               }`}>
                 {contextChange.pct >= 0 ? "+" : ""}{contextChange.pct.toFixed(1)}%
               </div>
-              <div className="text-[10px] text-slate-500">
+              <div className="text-2xs text-slate-500">
                 {contextChange.fromY}→{contextChange.toY}
               </div>
             </div>
@@ -129,14 +129,14 @@ export default function PriceChangePanel({
       <button
         type="button"
         onClick={() => setExplainerOpen((x) => !x)}
-        className="mt-3 text-[11px] font-semibold text-indigo-700 hover:underline inline-flex items-center gap-1"
+        className="mt-3 text-2xs font-semibold text-indigo-700 hover:underline inline-flex items-center gap-1"
       >
         💡 איך חישבנו (ומה המספר הזה לא אומר)
         <span className="text-slate-400">{explainerOpen ? "▲" : "▼"}</span>
       </button>
 
       {explainerOpen && (
-        <div className="mt-2 rounded-xl bg-indigo-50/50 border border-indigo-100 p-4 text-[12px] text-slate-700 leading-relaxed">
+        <div className="mt-2 rounded-xl bg-indigo-50/50 border border-indigo-100 p-4 text-xs text-slate-700 leading-relaxed">
           <p className="mb-2">
             <strong>השיטה:</strong> אנחנו לוקחים את <strong>חציון</strong> המחירים של כל עסקאות הדירות בעיר{" "}
             <em>{cityName}</em> בכל רבעון, מחשבים ממוצע שנתי, ומשווים בין שנת הבסיס לשנה האחרונה הזמינה.
@@ -158,7 +158,7 @@ export default function PriceChangePanel({
             המדיאן עלה ב-+29% ב-5 שנים — אבל פלורנטין ירדה תוך כדי, וצפון ת&quot;א זינקה. הסתכל על
             <strong> סקציית השכונות</strong> למטה כדי לראות איפה היה גידול ואיפה הייתה ירידה.
           </p>
-          <p className="text-[11px] text-slate-500 mt-2">
+          <p className="text-2xs text-slate-500 mt-2">
             ⚠ הערה: שנת הסיום היא לפעמים <em>חלקית</em> (למשל 2025 כולל רק רבעון 1 לעיתים) — מה שמשקלל את המספר
             כלפי תחילת השנה.
           </p>

@@ -1,0 +1,5025 @@
+{
+ "generatedAt": "2026-08-02T07:44:36.336Z",
+ "params": {
+  "anomaly_deviation_pct": 35,
+  "anomaly_city_mult": 3,
+  "modern_min_year": 2005,
+  "min_cohort": 10,
+  "years_back": 10
+ },
+ "national": {
+  "active": 399385,
+  "flagged": 68840,
+  "flag_rate_pct": 15,
+  "violations_group": 0,
+  "violations_city_net": 0,
+  "pass": true
+ },
+ "worst_flag_rates": [
+  {
+   "city": "נצרת",
+   "active": 1147,
+   "flagged": 524,
+   "flag_rate_pct": 31,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "תל אביב-יפו",
+   "active": 22856,
+   "flagged": 9011,
+   "flag_rate_pct": 28,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עכו",
+   "active": 2080,
+   "flagged": 685,
+   "flag_rate_pct": 25,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קצרין",
+   "active": 1075,
+   "flagged": 315,
+   "flag_rate_pct": 23,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אבן יהודה",
+   "active": 680,
+   "flagged": 203,
+   "flag_rate_pct": 23,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מגדל העמק",
+   "active": 2296,
+   "flagged": 633,
+   "flag_rate_pct": 22,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אופקים",
+   "active": 3212,
+   "flagged": 860,
+   "flag_rate_pct": 21,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "צפת",
+   "active": 2151,
+   "flagged": 563,
+   "flag_rate_pct": 21,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ירושלים",
+   "active": 30719,
+   "flagged": 7503,
+   "flag_rate_pct": 20,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "דימונה",
+   "active": 1892,
+   "flagged": 460,
+   "flag_rate_pct": 20,
+   "violations_group": 0,
+   "violations_city_net": 0
+  }
+ ],
+ "cities_with_violations": [],
+ "cities": [
+  {
+   "city": "ירושלים",
+   "active": 30719,
+   "flagged": 7503,
+   "flag_rate_pct": 20,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "חיפה",
+   "active": 28486,
+   "flagged": 5847,
+   "flag_rate_pct": 17,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "תל אביב-יפו",
+   "active": 22856,
+   "flagged": 9011,
+   "flag_rate_pct": 28,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "פתח תקווה",
+   "active": 19587,
+   "flagged": 2483,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ראשון לציון",
+   "active": 18627,
+   "flagged": 3043,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נתניה",
+   "active": 13371,
+   "flagged": 2251,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אשקלון",
+   "active": 12680,
+   "flagged": 1853,
+   "flag_rate_pct": 13,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רחובות",
+   "active": 12600,
+   "flagged": 1592,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בני ברק",
+   "active": 10902,
+   "flagged": 1970,
+   "flag_rate_pct": 15,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "חולון",
+   "active": 10747,
+   "flagged": 1613,
+   "flag_rate_pct": 13,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "חדרה",
+   "active": 9771,
+   "flagged": 1624,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בית שמש",
+   "active": 9134,
+   "flagged": 1367,
+   "flag_rate_pct": 13,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית גת",
+   "active": 8989,
+   "flagged": 1106,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית אתא",
+   "active": 7834,
+   "flagged": 1001,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נתיבות",
+   "active": 6981,
+   "flagged": 527,
+   "flag_rate_pct": 7,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רמלה",
+   "active": 6837,
+   "flagged": 1182,
+   "flag_rate_pct": 15,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רמת גן",
+   "active": 6720,
+   "flagged": 1374,
+   "flag_rate_pct": 17,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "באר שבע",
+   "active": 6278,
+   "flagged": 598,
+   "flag_rate_pct": 9,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אשדוד",
+   "active": 6128,
+   "flagged": 724,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אילת",
+   "active": 5643,
+   "flagged": 1051,
+   "flag_rate_pct": 16,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עפולה",
+   "active": 5297,
+   "flagged": 740,
+   "flag_rate_pct": 12,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אופקים",
+   "active": 3212,
+   "flagged": 860,
+   "flag_rate_pct": 21,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אלעד",
+   "active": 2825,
+   "flagged": 316,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מודיעין-מכבים-רעות",
+   "active": 2794,
+   "flagged": 152,
+   "flag_rate_pct": 5,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית מלאכי",
+   "active": 2757,
+   "flagged": 175,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "יבנה",
+   "active": 2744,
+   "flagged": 187,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית מוצקין",
+   "active": 2738,
+   "flagged": 291,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ראש העין",
+   "active": 2722,
+   "flagged": 430,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כרמיאל",
+   "active": 2656,
+   "flagged": 336,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "לוד",
+   "active": 2634,
+   "flagged": 472,
+   "flag_rate_pct": 15,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "גבעתיים",
+   "active": 2598,
+   "flagged": 330,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אור יהודה",
+   "active": 2583,
+   "flagged": 351,
+   "flag_rate_pct": 12,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית ביאליק",
+   "active": 2531,
+   "flagged": 183,
+   "flag_rate_pct": 7,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "חריש",
+   "active": 2531,
+   "flagged": 191,
+   "flag_rate_pct": 7,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כפר סבא",
+   "active": 2516,
+   "flagged": 323,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בת ים",
+   "active": 2501,
+   "flagged": 315,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נוף הגליל",
+   "active": 2501,
+   "flagged": 415,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "גבעת שמואל",
+   "active": 2496,
+   "flagged": 185,
+   "flag_rate_pct": 7,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "טבריה",
+   "active": 2477,
+   "flagged": 574,
+   "flag_rate_pct": 19,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית אונו",
+   "active": 2459,
+   "flagged": 298,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "יהוד-מונוסון",
+   "active": 2412,
+   "flagged": 263,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נס ציונה",
+   "active": 2396,
+   "flagged": 539,
+   "flag_rate_pct": 18,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "הרצליה",
+   "active": 2368,
+   "flagged": 379,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מעלה אדומים",
+   "active": 2339,
+   "flagged": 218,
+   "flag_rate_pct": 9,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "טירת כרמל",
+   "active": 2336,
+   "flagged": 239,
+   "flag_rate_pct": 9,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ערד",
+   "active": 2326,
+   "flagged": 228,
+   "flag_rate_pct": 9,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית ים",
+   "active": 2325,
+   "flagged": 255,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מגדל העמק",
+   "active": 2296,
+   "flagged": 633,
+   "flag_rate_pct": 22,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רעננה",
+   "active": 2292,
+   "flagged": 241,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "הוד השרון",
+   "active": 2267,
+   "flagged": 231,
+   "flag_rate_pct": 9,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "פרדס חנה-כרכור",
+   "active": 2232,
+   "flagged": 448,
+   "flag_rate_pct": 17,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אור עקיבא",
+   "active": 2224,
+   "flagged": 371,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "יקנעם עילית",
+   "active": 2194,
+   "flagged": 295,
+   "flag_rate_pct": 12,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רמת השרון",
+   "active": 2191,
+   "flagged": 420,
+   "flag_rate_pct": 16,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "צפת",
+   "active": 2151,
+   "flagged": 563,
+   "flag_rate_pct": 21,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כפר יונה",
+   "active": 2148,
+   "flagged": 153,
+   "flag_rate_pct": 7,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נהרייה",
+   "active": 2105,
+   "flagged": 374,
+   "flag_rate_pct": 15,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נשר",
+   "active": 2103,
+   "flagged": 258,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עכו",
+   "active": 2080,
+   "flagged": 685,
+   "flag_rate_pct": 25,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "באר יעקב",
+   "active": 2069,
+   "flagged": 431,
+   "flag_rate_pct": 17,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "גני תקווה",
+   "active": 2039,
+   "flagged": 163,
+   "flag_rate_pct": 7,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "גדרה",
+   "active": 2013,
+   "flagged": 384,
+   "flag_rate_pct": 16,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מעלות-תרשיחא",
+   "active": 1906,
+   "flagged": 252,
+   "flag_rate_pct": 12,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "דימונה",
+   "active": 1892,
+   "flagged": 460,
+   "flag_rate_pct": 20,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית שמונה",
+   "active": 1848,
+   "flagged": 345,
+   "flag_rate_pct": 16,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "שדרות",
+   "active": 1842,
+   "flagged": 468,
+   "flag_rate_pct": 20,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מודיעין עילית",
+   "active": 1726,
+   "flagged": 243,
+   "flag_rate_pct": 12,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בית שאן",
+   "active": 1706,
+   "flagged": 371,
+   "flag_rate_pct": 18,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ביתר עילית",
+   "active": 1657,
+   "flagged": 139,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מבשרת ציון",
+   "active": 1571,
+   "flagged": 236,
+   "flag_rate_pct": 13,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רכסים",
+   "active": 1557,
+   "flagged": 278,
+   "flag_rate_pct": 15,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "גן יבנה",
+   "active": 1516,
+   "flagged": 221,
+   "flag_rate_pct": 13,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "זכרון יעקב",
+   "active": 1427,
+   "flagged": 195,
+   "flag_rate_pct": 12,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קדימה-צורן",
+   "active": 1291,
+   "flagged": 116,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית טבעון",
+   "active": 1227,
+   "flagged": 242,
+   "flag_rate_pct": 16,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נצרת",
+   "active": 1147,
+   "flagged": 524,
+   "flag_rate_pct": 31,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מזכרת בתיה",
+   "active": 1143,
+   "flagged": 79,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עתלית",
+   "active": 1078,
+   "flagged": 167,
+   "flag_rate_pct": 13,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קצרין",
+   "active": 1075,
+   "flagged": 315,
+   "flag_rate_pct": 23,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אזור",
+   "active": 1004,
+   "flagged": 140,
+   "flag_rate_pct": 12,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ירוחם",
+   "active": 1000,
+   "flagged": 116,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "תל מונד",
+   "active": 877,
+   "flagged": 191,
+   "flag_rate_pct": 18,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רמת ישי",
+   "active": 697,
+   "flagged": 60,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אבן יהודה",
+   "active": 680,
+   "flagged": 203,
+   "flag_rate_pct": 23,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "שלומי",
+   "active": 647,
+   "flagged": 72,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עומר",
+   "active": 606,
+   "flagged": 54,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אפרת",
+   "active": 467,
+   "flagged": 26,
+   "flag_rate_pct": 5,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "צור הדסה",
+   "active": 456,
+   "flagged": 18,
+   "flag_rate_pct": 4,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אריאל",
+   "active": 438,
+   "flagged": 38,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "שוהם",
+   "active": 436,
+   "flagged": 27,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית עקרון",
+   "active": 429,
+   "flagged": 72,
+   "flag_rate_pct": 14,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית יערים",
+   "active": 414,
+   "flagged": 27,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "גבעת זאב",
+   "active": 408,
+   "flagged": 63,
+   "flag_rate_pct": 13,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "צור יצחק",
+   "active": 392,
+   "flagged": 17,
+   "flag_rate_pct": 4,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כוכב יאיר",
+   "active": 391,
+   "flagged": 50,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בית דגן",
+   "active": 376,
+   "flagged": 26,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "חצור הגלילית",
+   "active": 361,
+   "flagged": 79,
+   "flag_rate_pct": 18,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "פרדסייה",
+   "active": 352,
+   "flagged": 24,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מיתר",
+   "active": 340,
+   "flagged": 29,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אלפי מנשה",
+   "active": 316,
+   "flagged": 20,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בנימינה-גבעת עדה",
+   "active": 310,
+   "flagged": 59,
+   "flag_rate_pct": 16,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "להבים",
+   "active": 306,
+   "flagged": 30,
+   "flag_rate_pct": 9,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קרני שומרון",
+   "active": 236,
+   "flagged": 4,
+   "flag_rate_pct": 2,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עין מאהל",
+   "active": 222,
+   "flagged": 5,
+   "flag_rate_pct": 2,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אורנית",
+   "active": 211,
+   "flagged": 24,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ג'סר א-זרקא",
+   "active": 162,
+   "flagged": 32,
+   "flag_rate_pct": 16,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קריית ארבע",
+   "active": 153,
+   "flagged": 5,
+   "flag_rate_pct": 3,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כפר יאסיף",
+   "active": 143,
+   "flagged": 6,
+   "flag_rate_pct": 4,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כפר מנדא",
+   "active": 131,
+   "flagged": 1,
+   "flag_rate_pct": 1,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ריינה",
+   "active": 111,
+   "flagged": 4,
+   "flag_rate_pct": 3,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אבו גוש",
+   "active": 109,
+   "flagged": 7,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "שפרעם",
+   "active": 97,
+   "flagged": 8,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "יפיע",
+   "active": 97,
+   "flagged": 6,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ג'דיידה-מכר",
+   "active": 92,
+   "flagged": 1,
+   "flag_rate_pct": 1,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "באקה אל-גרביה",
+   "active": 66,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אום אל-פחם",
+   "active": 66,
+   "flagged": 1,
+   "flag_rate_pct": 1,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כפר כנא",
+   "active": 47,
+   "flagged": 1,
+   "flag_rate_pct": 2,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "טייבה",
+   "active": 44,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כפר קאסם",
+   "active": 42,
+   "flagged": 2,
+   "flag_rate_pct": 5,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "דאלית אל-כרמל",
+   "active": 37,
+   "flagged": 1,
+   "flag_rate_pct": 3,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "רהט",
+   "active": 35,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "פוריידיס",
+   "active": 29,
+   "flagged": 2,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "דייר חנא",
+   "active": 28,
+   "flagged": 1,
+   "flag_rate_pct": 3,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עספיא",
+   "active": 27,
+   "flagged": 1,
+   "flag_rate_pct": 4,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ג'ת",
+   "active": 27,
+   "flagged": 2,
+   "flag_rate_pct": 7,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כפר קרע",
+   "active": 26,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מגאר",
+   "active": 25,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עראבה",
+   "active": 25,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ג'לג'וליה",
+   "active": 25,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ראמה",
+   "active": 22,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "סח'נין",
+   "active": 21,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מעלה עירון",
+   "active": 21,
+   "flagged": 1,
+   "flag_rate_pct": 5,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "דייר אל-אסד",
+   "active": 20,
+   "flagged": 2,
+   "flag_rate_pct": 9,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אבו סנאן",
+   "active": 19,
+   "flagged": 2,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "דבורייה",
+   "active": 18,
+   "flagged": 2,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "טמרה",
+   "active": 17,
+   "flagged": 1,
+   "flag_rate_pct": 6,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "טירה",
+   "active": 16,
+   "flagged": 2,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ירכא",
+   "active": 16,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אעבלין",
+   "active": 16,
+   "flagged": 2,
+   "flag_rate_pct": 11,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בית ג'ן",
+   "active": 14,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "משהד",
+   "active": 14,
+   "flagged": 4,
+   "flag_rate_pct": 22,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "מג'ד אל-כרום",
+   "active": 12,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "אכסאל",
+   "active": 12,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "נחף",
+   "active": 12,
+   "flagged": 1,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כסרא-סמיע",
+   "active": 12,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ערערה",
+   "active": 11,
+   "flagged": 1,
+   "flag_rate_pct": 8,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "עילוט",
+   "active": 11,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "שגב-שלום",
+   "active": 10,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בסמת טבעון",
+   "active": 10,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "שעב",
+   "active": 10,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ערערה-בנגב",
+   "active": 9,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "זרזיר",
+   "active": 9,
+   "flagged": 1,
+   "flag_rate_pct": 10,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "זמר",
+   "active": 9,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "קלנסווה",
+   "active": 6,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "חורה",
+   "active": 6,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "טורעאן",
+   "active": 6,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "טובא-זנגרייה",
+   "active": 6,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "תל שבע",
+   "active": 5,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בענה",
+   "active": 5,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "ביר אל-מכסור",
+   "active": 4,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כאבול",
+   "active": 4,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בסמ\"ה",
+   "active": 4,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "לקיה",
+   "active": 3,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "כסיפה",
+   "active": 1,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  },
+  {
+   "city": "בועיינה-נוג'ידאת",
+   "active": 1,
+   "flagged": 0,
+   "flag_rate_pct": 0,
+   "violations_group": 0,
+   "violations_city_net": 0
+  }
+ ],
+ "flagged_samples": [
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 29500,
+   "group_median": 19636,
+   "deviation_pct": 50
+  },
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 36818,
+   "group_median": 19636,
+   "deviation_pct": 88
+  },
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 19634,
+   "group_median": 10038,
+   "deviation_pct": 96
+  },
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 32888,
+   "group_median": 14919,
+   "deviation_pct": 120
+  },
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 4795,
+   "group_median": 17022,
+   "deviation_pct": -72
+  },
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 21600,
+   "group_median": 14850,
+   "deviation_pct": 45
+  },
+  {
+   "city": "אשקלון",
+   "year": 2026,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 22727,
+   "group_median": 15873,
+   "deviation_pct": 43
+  },
+  {
+   "city": "אשקלון",
+   "year": 2026,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 19620,
+   "group_median": 11526,
+   "deviation_pct": 70
+  },
+  {
+   "city": "אשקלון",
+   "year": 2026,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 7188,
+   "group_median": 14623,
+   "deviation_pct": -51
+  },
+  {
+   "city": "אשקלון",
+   "year": 2018,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 23784,
+   "group_median": 17390,
+   "deviation_pct": 37
+  },
+  {
+   "city": "אשקלון",
+   "year": 2026,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 27027,
+   "group_median": 18346,
+   "deviation_pct": 47
+  },
+  {
+   "city": "אשקלון",
+   "year": 2024,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 36136,
+   "group_median": 26471,
+   "deviation_pct": 37
+  },
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 37657,
+   "group_median": 20553,
+   "deviation_pct": 83
+  },
+  {
+   "city": "אשקלון",
+   "year": 2025,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 19693,
+   "group_median": 12828,
+   "deviation_pct": 54
+  },
+  {
+   "city": "אשקלון",
+   "year": 2024,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 34407,
+   "group_median": 19497,
+   "deviation_pct": 76
+  },
+  {
+   "city": "אשקלון",
+   "year": 2024,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 11735,
+   "group_median": 21821,
+   "deviation_pct": -46
+  },
+  {
+   "city": "אשקלון",
+   "year": 2024,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 25926,
+   "group_median": 15339,
+   "deviation_pct": 69
+  },
+  {
+   "city": "אשקלון",
+   "year": 2022,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 9167,
+   "group_median": 14618,
+   "deviation_pct": -37
+  },
+  {
+   "city": "אשקלון",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 8910,
+   "group_median": 15160,
+   "deviation_pct": -41
+  },
+  {
+   "city": "אשקלון",
+   "year": 2022,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 23148,
+   "group_median": 14286,
+   "deviation_pct": 62
+  },
+  {
+   "city": "אשקלון",
+   "year": 2022,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 9379,
+   "group_median": 14667,
+   "deviation_pct": -36
+  },
+  {
+   "city": "אשקלון",
+   "year": 2021,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 20500,
+   "group_median": 12826,
+   "deviation_pct": 60
+  },
+  {
+   "city": "אשקלון",
+   "year": 2021,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 19500,
+   "group_median": 12826,
+   "deviation_pct": 52
+  },
+  {
+   "city": "אשקלון",
+   "year": 2022,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 31613,
+   "group_median": 20459,
+   "deviation_pct": 55
+  },
+  {
+   "city": "אשקלון",
+   "year": 2022,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 9117,
+   "group_median": 14407,
+   "deviation_pct": -37
+  },
+  {
+   "city": "אשקלון",
+   "year": 2022,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 18219,
+   "group_median": 10709,
+   "deviation_pct": 70
+  },
+  {
+   "city": "אשקלון",
+   "year": 2023,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 9926,
+   "group_median": 20732,
+   "deviation_pct": -52
+  },
+  {
+   "city": "אשקלון",
+   "year": 2021,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 5938,
+   "group_median": 12823,
+   "deviation_pct": -54
+  },
+  {
+   "city": "אשקלון",
+   "year": 2016,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 26959,
+   "group_median": 11491,
+   "deviation_pct": 135
+  },
+  {
+   "city": "אשקלון",
+   "year": 2017,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 19388,
+   "group_median": 13911,
+   "deviation_pct": 39
+  },
+  {
+   "city": "אשקלון",
+   "year": 2018,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 3834,
+   "group_median": 11872,
+   "deviation_pct": -68
+  },
+  {
+   "city": "אשקלון",
+   "year": 2022,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 17293,
+   "group_median": 10709,
+   "deviation_pct": 61
+  },
+  {
+   "city": "אשקלון",
+   "year": 2020,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 15180,
+   "group_median": 9915,
+   "deviation_pct": 53
+  },
+  {
+   "city": "אשקלון",
+   "year": 2024,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 2276,
+   "group_median": 17545,
+   "deviation_pct": -87
+  },
+  {
+   "city": "אשקלון",
+   "year": 2016,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 48481,
+   "group_median": 12323,
+   "deviation_pct": 293
+  },
+  {
+   "city": "אשקלון",
+   "year": 2018,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 16545,
+   "group_median": 11912,
+   "deviation_pct": 39
+  },
+  {
+   "city": "אשקלון",
+   "year": 2018,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 17361,
+   "group_median": 11912,
+   "deviation_pct": 46
+  },
+  {
+   "city": "אשקלון",
+   "year": 2021,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 22500,
+   "group_median": 16047,
+   "deviation_pct": 40
+  },
+  {
+   "city": "אשקלון",
+   "year": 2021,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 29133,
+   "group_median": 19394,
+   "deviation_pct": 50
+  },
+  {
+   "city": "אשקלון",
+   "year": 2018,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 6250,
+   "group_median": 11416,
+   "deviation_pct": -45
+  },
+  {
+   "city": "בית שמש",
+   "year": 2024,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 37799,
+   "group_median": 22083,
+   "deviation_pct": 71
+  },
+  {
+   "city": "בית שמש",
+   "year": 2025,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 35606,
+   "group_median": 26325,
+   "deviation_pct": 35
+  },
+  {
+   "city": "בית שמש",
+   "year": 2025,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 10594,
+   "group_median": 24935,
+   "deviation_pct": -58
+  },
+  {
+   "city": "בית שמש",
+   "year": 2025,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 38095,
+   "group_median": 24207,
+   "deviation_pct": 57
+  },
+  {
+   "city": "בית שמש",
+   "year": 2025,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 9955,
+   "group_median": 23870,
+   "deviation_pct": -58
+  },
+  {
+   "city": "בית שמש",
+   "year": 2026,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 33453,
+   "group_median": 24561,
+   "deviation_pct": 36
+  },
+  {
+   "city": "בית שמש",
+   "year": 2025,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 11818,
+   "group_median": 23852,
+   "deviation_pct": -50
+  },
+  {
+   "city": "בית שמש",
+   "year": 2025,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 31515,
+   "group_median": 23200,
+   "deviation_pct": 36
+  },
+  {
+   "city": "בית שמש",
+   "year": 2023,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 55955,
+   "group_median": 26948,
+   "deviation_pct": 108
+  },
+  {
+   "city": "בית שמש",
+   "year": 2016,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 17241,
+   "group_median": 11679,
+   "deviation_pct": 48
+  },
+  {
+   "city": "בית שמש",
+   "year": 2022,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 11535,
+   "group_median": 20417,
+   "deviation_pct": -44
+  },
+  {
+   "city": "בית שמש",
+   "year": 2022,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 27569,
+   "group_median": 20085,
+   "deviation_pct": 37
+  },
+  {
+   "city": "בית שמש",
+   "year": 2022,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 9937,
+   "group_median": 15954,
+   "deviation_pct": -38
+  },
+  {
+   "city": "בית שמש",
+   "year": 2022,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 9955,
+   "group_median": 15954,
+   "deviation_pct": -38
+  },
+  {
+   "city": "בית שמש",
+   "year": 2024,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 33430,
+   "group_median": 22337,
+   "deviation_pct": 50
+  },
+  {
+   "city": "בית שמש",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 2300,
+   "group_median": 23008,
+   "deviation_pct": -90
+  },
+  {
+   "city": "בית שמש",
+   "year": 2021,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 28205,
+   "group_median": 19419,
+   "deviation_pct": 45
+  },
+  {
+   "city": "בית שמש",
+   "year": 2022,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 5483,
+   "group_median": 19368,
+   "deviation_pct": -72
+  },
+  {
+   "city": "בית שמש",
+   "year": 2022,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 14900,
+   "group_median": 10849,
+   "deviation_pct": 37
+  },
+  {
+   "city": "בית שמש",
+   "year": 2021,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 9710,
+   "group_median": 17459,
+   "deviation_pct": -44
+  },
+  {
+   "city": "בית שמש",
+   "year": 2022,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 7667,
+   "group_median": 20256,
+   "deviation_pct": -62
+  },
+  {
+   "city": "בית שמש",
+   "year": 2016,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 31915,
+   "group_median": 18478,
+   "deviation_pct": 73
+  },
+  {
+   "city": "בית שמש",
+   "year": 2018,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 15328,
+   "group_median": 10602,
+   "deviation_pct": 45
+  },
+  {
+   "city": "חדרה",
+   "year": 2023,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 11952,
+   "group_median": 19438,
+   "deviation_pct": -39
+  },
+  {
+   "city": "חדרה",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 7407,
+   "group_median": 17361,
+   "deviation_pct": -57
+  },
+  {
+   "city": "חדרה",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 25122,
+   "group_median": 17336,
+   "deviation_pct": 45
+  },
+  {
+   "city": "חדרה",
+   "year": 2025,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 3499,
+   "group_median": 11218,
+   "deviation_pct": -69
+  },
+  {
+   "city": "חדרה",
+   "year": 2026,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 33550,
+   "group_median": 19143,
+   "deviation_pct": 75
+  },
+  {
+   "city": "חדרה",
+   "year": 2026,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 61856,
+   "group_median": 25781,
+   "deviation_pct": 140
+  },
+  {
+   "city": "חדרה",
+   "year": 2019,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 9073,
+   "group_median": 23112,
+   "deviation_pct": -61
+  },
+  {
+   "city": "חדרה",
+   "year": 2021,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 7031,
+   "group_median": 18298,
+   "deviation_pct": -62
+  },
+  {
+   "city": "חדרה",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 5530,
+   "group_median": 17901,
+   "deviation_pct": -69
+  },
+  {
+   "city": "חדרה",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 25287,
+   "group_median": 17917,
+   "deviation_pct": 41
+  },
+  {
+   "city": "חדרה",
+   "year": 2024,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 18519,
+   "group_median": 45657,
+   "deviation_pct": -59
+  },
+  {
+   "city": "חדרה",
+   "year": 2020,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 5263,
+   "group_median": 12068,
+   "deviation_pct": -56
+  },
+  {
+   "city": "חדרה",
+   "year": 2018,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 6217,
+   "group_median": 15986,
+   "deviation_pct": -61
+  },
+  {
+   "city": "חדרה",
+   "year": 2019,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 18966,
+   "group_median": 9899,
+   "deviation_pct": 92
+  },
+  {
+   "city": "חדרה",
+   "year": 2018,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 24292,
+   "group_median": 15326,
+   "deviation_pct": 59
+  },
+  {
+   "city": "חדרה",
+   "year": 2025,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 69643,
+   "group_median": null,
+   "deviation_pct": null
+  },
+  {
+   "city": "חדרה",
+   "year": 2022,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 31220,
+   "group_median": 21570,
+   "deviation_pct": 45
+  },
+  {
+   "city": "חדרה",
+   "year": 2016,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 6061,
+   "group_median": 11762,
+   "deviation_pct": -48
+  },
+  {
+   "city": "חדרה",
+   "year": 2021,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 4496,
+   "group_median": 10850,
+   "deviation_pct": -59
+  },
+  {
+   "city": "חדרה",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 4300,
+   "group_median": 17901,
+   "deviation_pct": -76
+  },
+  {
+   "city": "חדרה",
+   "year": 2019,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 2935,
+   "group_median": 11538,
+   "deviation_pct": -75
+  },
+  {
+   "city": "חדרה",
+   "year": 2018,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 8182,
+   "group_median": 12603,
+   "deviation_pct": -35
+  },
+  {
+   "city": "חדרה",
+   "year": 2023,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 3000,
+   "group_median": 18992,
+   "deviation_pct": -84
+  },
+  {
+   "city": "חדרה",
+   "year": 2021,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 3890,
+   "group_median": 10850,
+   "deviation_pct": -64
+  },
+  {
+   "city": "ירושלים",
+   "year": 2016,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 43103,
+   "group_median": 31875,
+   "deviation_pct": 35
+  },
+  {
+   "city": "ירושלים",
+   "year": 2016,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 29333,
+   "group_median": 21429,
+   "deviation_pct": 37
+  },
+  {
+   "city": "ירושלים",
+   "year": 2016,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 41674,
+   "group_median": 23174,
+   "deviation_pct": 80
+  },
+  {
+   "city": "ירושלים",
+   "year": 2016,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 8190,
+   "group_median": 22885,
+   "deviation_pct": -64
+  },
+  {
+   "city": "ירושלים",
+   "year": 2016,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 29091,
+   "group_median": 21107,
+   "deviation_pct": 38
+  },
+  {
+   "city": "ירושלים",
+   "year": 2016,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 27533,
+   "group_median": 19048,
+   "deviation_pct": 45
+  },
+  {
+   "city": "ירושלים",
+   "year": 2017,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 42958,
+   "group_median": 22295,
+   "deviation_pct": 93
+  },
+  {
+   "city": "ירושלים",
+   "year": 2017,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 35294,
+   "group_median": 23167,
+   "deviation_pct": 52
+  },
+  {
+   "city": "ירושלים",
+   "year": 2017,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 38098,
+   "group_median": 20792,
+   "deviation_pct": 83
+  },
+  {
+   "city": "ירושלים",
+   "year": 2017,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 60900,
+   "group_median": 24102,
+   "deviation_pct": 153
+  },
+  {
+   "city": "ירושלים",
+   "year": 2018,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 11025,
+   "group_median": 19579,
+   "deviation_pct": -44
+  },
+  {
+   "city": "ירושלים",
+   "year": 2018,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 12203,
+   "group_median": 19579,
+   "deviation_pct": -38
+  },
+  {
+   "city": "ירושלים",
+   "year": 2018,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 13006,
+   "group_median": 31228,
+   "deviation_pct": -58
+  },
+  {
+   "city": "ירושלים",
+   "year": 2018,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 10855,
+   "group_median": 28413,
+   "deviation_pct": -62
+  },
+  {
+   "city": "ירושלים",
+   "year": 2018,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 52550,
+   "group_median": 22597,
+   "deviation_pct": 133
+  },
+  {
+   "city": "ירושלים",
+   "year": 2018,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 2048,
+   "group_median": 15690,
+   "deviation_pct": -87
+  },
+  {
+   "city": "ירושלים",
+   "year": 2018,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 12419,
+   "group_median": 21559,
+   "deviation_pct": -42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 25519,
+   "group_median": 18066,
+   "deviation_pct": 41
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 5072,
+   "group_median": 37422,
+   "deviation_pct": -86
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 49297,
+   "group_median": 21401,
+   "deviation_pct": 130
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 31485,
+   "group_median": 22714,
+   "deviation_pct": 39
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 60577,
+   "group_median": 30679,
+   "deviation_pct": 97
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 10363,
+   "group_median": 19444,
+   "deviation_pct": -47
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 31897,
+   "group_median": 21401,
+   "deviation_pct": 49
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 38889,
+   "group_median": 25851,
+   "deviation_pct": 50
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 36250,
+   "group_median": 24775,
+   "deviation_pct": 46
+  },
+  {
+   "city": "ירושלים",
+   "year": 2019,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 37193,
+   "group_median": 23900,
+   "deviation_pct": 56
+  },
+  {
+   "city": "ירושלים",
+   "year": 2020,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 13158,
+   "group_median": 30674,
+   "deviation_pct": -57
+  },
+  {
+   "city": "ירושלים",
+   "year": 2020,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 44643,
+   "group_median": 31837,
+   "deviation_pct": 40
+  },
+  {
+   "city": "ירושלים",
+   "year": 2020,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 5571,
+   "group_median": 15746,
+   "deviation_pct": -65
+  },
+  {
+   "city": "ירושלים",
+   "year": 2020,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 37065,
+   "group_median": 15746,
+   "deviation_pct": 135
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 18421,
+   "group_median": 35000,
+   "deviation_pct": -47
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 3051,
+   "group_median": 28986,
+   "deviation_pct": -89
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 44386,
+   "group_median": 25104,
+   "deviation_pct": 77
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 42105,
+   "group_median": 25104,
+   "deviation_pct": 68
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 36458,
+   "group_median": 24813,
+   "deviation_pct": 47
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 13866,
+   "group_median": 24430,
+   "deviation_pct": -43
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 41852,
+   "group_median": 20314,
+   "deviation_pct": 106
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 6198,
+   "group_median": 19146,
+   "deviation_pct": -68
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 35816,
+   "group_median": 24050,
+   "deviation_pct": 49
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 11483,
+   "group_median": 25104,
+   "deviation_pct": -54
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 49036,
+   "group_median": 27286,
+   "deviation_pct": 80
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 14906,
+   "group_median": 25806,
+   "deviation_pct": -42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 78723,
+   "group_median": 23333,
+   "deviation_pct": 237
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 45842,
+   "group_median": 24430,
+   "deviation_pct": 88
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 17273,
+   "group_median": 29474,
+   "deviation_pct": -41
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 64030,
+   "group_median": 25104,
+   "deviation_pct": 155
+  },
+  {
+   "city": "ירושלים",
+   "year": 2021,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 17937,
+   "group_median": 30882,
+   "deviation_pct": -42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 39535,
+   "group_median": 27830,
+   "deviation_pct": 42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 1,
+   "building": "modern",
+   "price_sqm": 7727,
+   "group_median": null,
+   "deviation_pct": null
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 26455,
+   "group_median": 44224,
+   "deviation_pct": -40
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 52228,
+   "group_median": 27083,
+   "deviation_pct": 93
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 41981,
+   "group_median": 30325,
+   "deviation_pct": 38
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 10030,
+   "group_median": 25616,
+   "deviation_pct": -61
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 11826,
+   "group_median": 25616,
+   "deviation_pct": -54
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 26742,
+   "group_median": 50197,
+   "deviation_pct": -47
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 52586,
+   "group_median": 36290,
+   "deviation_pct": 45
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 20234,
+   "group_median": 36290,
+   "deviation_pct": -44
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 61905,
+   "group_median": 39362,
+   "deviation_pct": 57
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 55172,
+   "group_median": 36013,
+   "deviation_pct": 53
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 5841,
+   "group_median": 40000,
+   "deviation_pct": -85
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 5417,
+   "group_median": 46033,
+   "deviation_pct": -88
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 7955,
+   "group_median": 36154,
+   "deviation_pct": -78
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 44872,
+   "group_median": 32500,
+   "deviation_pct": 38
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 8032,
+   "group_median": 32046,
+   "deviation_pct": -75
+  },
+  {
+   "city": "ירושלים",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 49261,
+   "group_median": 30000,
+   "deviation_pct": 64
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 65000,
+   "group_median": 41596,
+   "deviation_pct": 56
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 20028,
+   "group_median": 33333,
+   "deviation_pct": -40
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 55000,
+   "group_median": 31811,
+   "deviation_pct": 73
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 45721,
+   "group_median": 31871,
+   "deviation_pct": 43
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 7143,
+   "group_median": 37037,
+   "deviation_pct": -81
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 13841,
+   "group_median": 27966,
+   "deviation_pct": -51
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 3725,
+   "group_median": 31293,
+   "deviation_pct": -88
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 168889,
+   "group_median": 43129,
+   "deviation_pct": 292
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 59322,
+   "group_median": 40774,
+   "deviation_pct": 45
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 6319,
+   "group_median": 51098,
+   "deviation_pct": -88
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 23973,
+   "group_median": 36996,
+   "deviation_pct": -35
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 57976,
+   "group_median": 31610,
+   "deviation_pct": 83
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 40830,
+   "group_median": 26317,
+   "deviation_pct": 55
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 21968,
+   "group_median": 45181,
+   "deviation_pct": -51
+  },
+  {
+   "city": "ירושלים",
+   "year": 2023,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 72308,
+   "group_median": 39429,
+   "deviation_pct": 83
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 50420,
+   "group_median": 30797,
+   "deviation_pct": 64
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 21660,
+   "group_median": 39510,
+   "deviation_pct": -45
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 46916,
+   "group_median": 32928,
+   "deviation_pct": 42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 52129,
+   "group_median": 30960,
+   "deviation_pct": 68
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 18864,
+   "group_median": 32928,
+   "deviation_pct": -43
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 52113,
+   "group_median": 37324,
+   "deviation_pct": 40
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 51370,
+   "group_median": 30960,
+   "deviation_pct": 66
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 66163,
+   "group_median": 44186,
+   "deviation_pct": 50
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 13573,
+   "group_median": 31551,
+   "deviation_pct": -57
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 18317,
+   "group_median": 47229,
+   "deviation_pct": -61
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 85859,
+   "group_median": 40737,
+   "deviation_pct": 111
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 15256,
+   "group_median": 40737,
+   "deviation_pct": -63
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 8025,
+   "group_median": 32445,
+   "deviation_pct": -75
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 16366,
+   "group_median": 48525,
+   "deviation_pct": -66
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 50568,
+   "group_median": 30176,
+   "deviation_pct": 68
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 49524,
+   "group_median": 30176,
+   "deviation_pct": 64
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 75312,
+   "group_median": 53100,
+   "deviation_pct": 42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 10571,
+   "group_median": 48278,
+   "deviation_pct": -78
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 5889,
+   "group_median": 30732,
+   "deviation_pct": -81
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 21144,
+   "group_median": 46757,
+   "deviation_pct": -55
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 27136,
+   "group_median": 46757,
+   "deviation_pct": -42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 76667,
+   "group_median": 46986,
+   "deviation_pct": 63
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 46078,
+   "group_median": 33175,
+   "deviation_pct": 39
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 48507,
+   "group_median": 35466,
+   "deviation_pct": 37
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 66327,
+   "group_median": 32000,
+   "deviation_pct": 107
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 32680,
+   "group_median": 18608,
+   "deviation_pct": 76
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 25215,
+   "group_median": 18608,
+   "deviation_pct": 36
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 50000,
+   "group_median": 30176,
+   "deviation_pct": 66
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 60976,
+   "group_median": 33784,
+   "deviation_pct": 80
+  },
+  {
+   "city": "ירושלים",
+   "year": 2024,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 50283,
+   "group_median": 32927,
+   "deviation_pct": 53
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 89815,
+   "group_median": 52512,
+   "deviation_pct": 71
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 46753,
+   "group_median": 34192,
+   "deviation_pct": 37
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 52419,
+   "group_median": 34192,
+   "deviation_pct": 53
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 15047,
+   "group_median": 25978,
+   "deviation_pct": -42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 46512,
+   "group_median": 32696,
+   "deviation_pct": 42
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 8251,
+   "group_median": 36526,
+   "deviation_pct": -77
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 15128,
+   "group_median": 30004,
+   "deviation_pct": -50
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 70756,
+   "group_median": 34231,
+   "deviation_pct": 107
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 79245,
+   "group_median": 43160,
+   "deviation_pct": 84
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 26719,
+   "group_median": 56856,
+   "deviation_pct": -53
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 30172,
+   "group_median": 73519,
+   "deviation_pct": -59
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 22996,
+   "group_median": 48678,
+   "deviation_pct": -53
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 71053,
+   "group_median": 47408,
+   "deviation_pct": 50
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 24760,
+   "group_median": 56856,
+   "deviation_pct": -56
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 72558,
+   "group_median": 48678,
+   "deviation_pct": 49
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 6594,
+   "group_median": 32696,
+   "deviation_pct": -80
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 59480,
+   "group_median": 36526,
+   "deviation_pct": 63
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 60000,
+   "group_median": 36526,
+   "deviation_pct": 64
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 10976,
+   "group_median": 29734,
+   "deviation_pct": -63
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 29630,
+   "group_median": 56856,
+   "deviation_pct": -48
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 38309,
+   "group_median": 17465,
+   "deviation_pct": 119
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 10425,
+   "group_median": 9957,
+   "deviation_pct": 5
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 11162,
+   "group_median": 36526,
+   "deviation_pct": -69
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 6170,
+   "group_median": 33490,
+   "deviation_pct": -82
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 89263,
+   "group_median": 34192,
+   "deviation_pct": 161
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 18214,
+   "group_median": 37013,
+   "deviation_pct": -51
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 46855,
+   "group_median": 33495,
+   "deviation_pct": 40
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 15000,
+   "group_median": 48678,
+   "deviation_pct": -69
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 91892,
+   "group_median": 46467,
+   "deviation_pct": 98
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 64444,
+   "group_median": 46467,
+   "deviation_pct": 39
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 2050,
+   "group_median": 32696,
+   "deviation_pct": -94
+  },
+  {
+   "city": "ירושלים",
+   "year": 2025,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 2560,
+   "group_median": 32105,
+   "deviation_pct": -92
+  },
+  {
+   "city": "ירושלים",
+   "year": 2026,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 9770,
+   "group_median": 32500,
+   "deviation_pct": -70
+  },
+  {
+   "city": "ירושלים",
+   "year": 2026,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 54861,
+   "group_median": 35714,
+   "deviation_pct": 54
+  },
+  {
+   "city": "ירושלים",
+   "year": 2026,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 19268,
+   "group_median": 35714,
+   "deviation_pct": -46
+  },
+  {
+   "city": "ירושלים",
+   "year": 2026,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 7939,
+   "group_median": 40120,
+   "deviation_pct": -80
+  },
+  {
+   "city": "ירושלים",
+   "year": 2026,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 50395,
+   "group_median": 28796,
+   "deviation_pct": 75
+  },
+  {
+   "city": "ירושלים",
+   "year": 2026,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 85061,
+   "group_median": 32421,
+   "deviation_pct": 162
+  },
+  {
+   "city": "ירושלים",
+   "year": 2026,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 43029,
+   "group_median": 31652,
+   "deviation_pct": 36
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 44560,
+   "group_median": 29841,
+   "deviation_pct": 49
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 46667,
+   "group_median": 21659,
+   "deviation_pct": 115
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 36134,
+   "group_median": 23412,
+   "deviation_pct": 54
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 14219,
+   "group_median": 26733,
+   "deviation_pct": -47
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 12038,
+   "group_median": 30008,
+   "deviation_pct": -60
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 6785,
+   "group_median": 23177,
+   "deviation_pct": -71
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 6561,
+   "group_median": 26733,
+   "deviation_pct": -75
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 12737,
+   "group_median": 30008,
+   "deviation_pct": -58
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 15370,
+   "group_median": 31624,
+   "deviation_pct": -51
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 42410,
+   "group_median": 23412,
+   "deviation_pct": 81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 6912,
+   "group_median": 30008,
+   "deviation_pct": -77
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 10500,
+   "group_median": 21135,
+   "deviation_pct": -50
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2016,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 20582,
+   "group_median": 33139,
+   "deviation_pct": -38
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 18056,
+   "group_median": 32283,
+   "deviation_pct": -44
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 46324,
+   "group_median": 27679,
+   "deviation_pct": 67
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 107143,
+   "group_median": 34965,
+   "deviation_pct": 206
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 42775,
+   "group_median": 25245,
+   "deviation_pct": 69
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 4783,
+   "group_median": 31500,
+   "deviation_pct": -85
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 8820,
+   "group_median": 21176,
+   "deviation_pct": -58
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 6551,
+   "group_median": 35103,
+   "deviation_pct": -81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 11509,
+   "group_median": 25245,
+   "deviation_pct": -54
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 37445,
+   "group_median": 25245,
+   "deviation_pct": 48
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 22792,
+   "group_median": 41215,
+   "deviation_pct": -45
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2017,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 4672,
+   "group_median": 21125,
+   "deviation_pct": -78
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 11816,
+   "group_median": 31192,
+   "deviation_pct": -62
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 53177,
+   "group_median": 35940,
+   "deviation_pct": 48
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 23846,
+   "group_median": 15748,
+   "deviation_pct": 51
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 6333,
+   "group_median": 20238,
+   "deviation_pct": -69
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 66667,
+   "group_median": 33531,
+   "deviation_pct": 99
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 6112,
+   "group_median": 31946,
+   "deviation_pct": -81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 72327,
+   "group_median": 31462,
+   "deviation_pct": 130
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 87209,
+   "group_median": 63559,
+   "deviation_pct": 37
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 35959,
+   "group_median": 25974,
+   "deviation_pct": 38
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 36000,
+   "group_median": 20000,
+   "deviation_pct": 80
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 45182,
+   "group_median": 31462,
+   "deviation_pct": 44
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 43421,
+   "group_median": 27966,
+   "deviation_pct": 55
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 7356,
+   "group_median": 25974,
+   "deviation_pct": -72
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 7253,
+   "group_median": 9638,
+   "deviation_pct": -25
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2018,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 19524,
+   "group_median": 31344,
+   "deviation_pct": -38
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 10707,
+   "group_median": 24000,
+   "deviation_pct": -55
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 26275,
+   "group_median": 54311,
+   "deviation_pct": -52
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 24829,
+   "group_median": 17350,
+   "deviation_pct": 43
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 92081,
+   "group_median": 32250,
+   "deviation_pct": 186
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 46154,
+   "group_median": 32877,
+   "deviation_pct": 40
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 52941,
+   "group_median": 34469,
+   "deviation_pct": 54
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 50369,
+   "group_median": 24000,
+   "deviation_pct": 110
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 10204,
+   "group_median": 32877,
+   "deviation_pct": -69
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 12304,
+   "group_median": 30962,
+   "deviation_pct": -60
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 80270,
+   "group_median": 30334,
+   "deviation_pct": 165
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 8727,
+   "group_median": 33019,
+   "deviation_pct": -74
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 3341,
+   "group_median": 30334,
+   "deviation_pct": -89
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2019,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 43787,
+   "group_median": 32026,
+   "deviation_pct": 37
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 73391,
+   "group_median": 34808,
+   "deviation_pct": 111
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 4652,
+   "group_median": 24721,
+   "deviation_pct": -81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 52837,
+   "group_median": 29147,
+   "deviation_pct": 81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 68627,
+   "group_median": 29147,
+   "deviation_pct": 135
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 2282,
+   "group_median": 40860,
+   "deviation_pct": -94
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 17544,
+   "group_median": 34679,
+   "deviation_pct": -49
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 6780,
+   "group_median": 20968,
+   "deviation_pct": -68
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 17598,
+   "group_median": 29147,
+   "deviation_pct": -40
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 58593,
+   "group_median": 41963,
+   "deviation_pct": 40
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 43632,
+   "group_median": 32310,
+   "deviation_pct": 35
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 52857,
+   "group_median": 37819,
+   "deviation_pct": 40
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 6364,
+   "group_median": 23853,
+   "deviation_pct": -73
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 187350,
+   "group_median": 32310,
+   "deviation_pct": 480
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 39834,
+   "group_median": 24721,
+   "deviation_pct": 61
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 17189,
+   "group_median": 38529,
+   "deviation_pct": -55
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 50000,
+   "group_median": 30594,
+   "deviation_pct": 63
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 11449,
+   "group_median": 38158,
+   "deviation_pct": -70
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 17763,
+   "group_median": 31368,
+   "deviation_pct": -43
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 24519,
+   "group_median": 38158,
+   "deviation_pct": -36
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 10000,
+   "group_median": 21897,
+   "deviation_pct": -54
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2020,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 23424,
+   "group_median": 37447,
+   "deviation_pct": -37
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 56929,
+   "group_median": 35605,
+   "deviation_pct": 60
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 25714,
+   "group_median": 40035,
+   "deviation_pct": -36
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 20177,
+   "group_median": 42550,
+   "deviation_pct": -53
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 12895,
+   "group_median": 25963,
+   "deviation_pct": -50
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 68966,
+   "group_median": 40035,
+   "deviation_pct": 72
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 7844,
+   "group_median": 41395,
+   "deviation_pct": -81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 65909,
+   "group_median": 46455,
+   "deviation_pct": 42
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 49865,
+   "group_median": 35362,
+   "deviation_pct": 41
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 78676,
+   "group_median": 54267,
+   "deviation_pct": 45
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 18787,
+   "group_median": 51141,
+   "deviation_pct": -63
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 95542,
+   "group_median": 36178,
+   "deviation_pct": 164
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 68548,
+   "group_median": 43747,
+   "deviation_pct": 57
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 127119,
+   "group_median": 29327,
+   "deviation_pct": 333
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 32132,
+   "group_median": 68461,
+   "deviation_pct": -53
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 4762,
+   "group_median": 40227,
+   "deviation_pct": -88
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 10229,
+   "group_median": 37046,
+   "deviation_pct": -72
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 12133,
+   "group_median": 47619,
+   "deviation_pct": -75
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 7833,
+   "group_median": 18000,
+   "deviation_pct": -56
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 15152,
+   "group_median": 30695,
+   "deviation_pct": -51
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 4745,
+   "group_median": 18640,
+   "deviation_pct": -75
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 45652,
+   "group_median": 17308,
+   "deviation_pct": 164
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 5802,
+   "group_median": 30088,
+   "deviation_pct": -81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 18741,
+   "group_median": 43747,
+   "deviation_pct": -57
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 57444,
+   "group_median": 39521,
+   "deviation_pct": 45
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 2652,
+   "group_median": 38812,
+   "deviation_pct": -93
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 2500,
+   "group_median": 41954,
+   "deviation_pct": -94
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 99709,
+   "group_median": 44315,
+   "deviation_pct": 125
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 91000,
+   "group_median": 48044,
+   "deviation_pct": 89
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 77426,
+   "group_median": 43428,
+   "deviation_pct": 78
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 5,
+   "building": "unknown",
+   "price_sqm": 68325,
+   "group_median": 34154,
+   "deviation_pct": 100
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2021,
+   "rooms": 6,
+   "building": "unknown",
+   "price_sqm": 4160,
+   "group_median": 28297,
+   "deviation_pct": -85
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 21176,
+   "group_median": 45746,
+   "deviation_pct": -54
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 18033,
+   "group_median": 44529,
+   "deviation_pct": -60
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 86093,
+   "group_median": 46277,
+   "deviation_pct": 86
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 83469,
+   "group_median": 46277,
+   "deviation_pct": 80
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 5,
+   "building": "modern",
+   "price_sqm": 3654,
+   "group_median": 46277,
+   "deviation_pct": -92
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 89189,
+   "group_median": 61050,
+   "deviation_pct": 46
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 53543,
+   "group_median": 32212,
+   "deviation_pct": 66
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 92857,
+   "group_median": 65076,
+   "deviation_pct": 43
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 79762,
+   "group_median": 56186,
+   "deviation_pct": 42
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 94677,
+   "group_median": 47665,
+   "deviation_pct": 99
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 2172,
+   "group_median": 42790,
+   "deviation_pct": -95
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 3933,
+   "group_median": 32212,
+   "deviation_pct": -88
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 20335,
+   "group_median": 45746,
+   "deviation_pct": -56
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 48542,
+   "group_median": 28084,
+   "deviation_pct": 73
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 19218,
+   "group_median": 39895,
+   "deviation_pct": -52
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 3,
+   "building": "unknown",
+   "price_sqm": 74379,
+   "group_median": 47665,
+   "deviation_pct": 56
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 7075,
+   "group_median": 56981,
+   "deviation_pct": -88
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 11379,
+   "group_median": 48340,
+   "deviation_pct": -76
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 6579,
+   "group_median": 66279,
+   "deviation_pct": -90
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 5208,
+   "group_median": 41238,
+   "deviation_pct": -87
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 16130,
+   "group_median": 36026,
+   "deviation_pct": -55
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 51370,
+   "group_median": 37671,
+   "deviation_pct": 36
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 28911,
+   "group_median": 45746,
+   "deviation_pct": -37
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 21867,
+   "group_median": 39043,
+   "deviation_pct": -44
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2022,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 52648,
+   "group_median": 20807,
+   "deviation_pct": 153
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 98077,
+   "group_median": 39091,
+   "deviation_pct": 151
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 2,
+   "building": "modern",
+   "price_sqm": 10462,
+   "group_median": 55505,
+   "deviation_pct": -81
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 1,
+   "building": "modern",
+   "price_sqm": 11800,
+   "group_median": 57788,
+   "deviation_pct": -80
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 80406,
+   "group_median": 50847,
+   "deviation_pct": 58
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 35484,
+   "group_median": 54773,
+   "deviation_pct": -35
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 13077,
+   "group_median": 54773,
+   "deviation_pct": -76
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 26421,
+   "group_median": 65323,
+   "deviation_pct": -60
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 8182,
+   "group_median": 22222,
+   "deviation_pct": -63
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 1,
+   "building": "unknown",
+   "price_sqm": 198091,
+   "group_median": 30308,
+   "deviation_pct": 554
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 68929,
+   "group_median": 38418,
+   "deviation_pct": 79
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 16038,
+   "group_median": 42274,
+   "deviation_pct": -62
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 81415,
+   "group_median": 49650,
+   "deviation_pct": 64
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 63729,
+   "group_median": 38418,
+   "deviation_pct": 66
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 73009,
+   "group_median": 39773,
+   "deviation_pct": 84
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 68317,
+   "group_median": 42130,
+   "deviation_pct": 62
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 83602,
+   "group_median": 39773,
+   "deviation_pct": 110
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 75269,
+   "group_median": 39773,
+   "deviation_pct": 89
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 13036,
+   "group_median": 38418,
+   "deviation_pct": -66
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 65789,
+   "group_median": 43548,
+   "deviation_pct": 51
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 24194,
+   "group_median": 49650,
+   "deviation_pct": -51
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 4,
+   "building": "old",
+   "price_sqm": 6158,
+   "group_median": 39773,
+   "deviation_pct": -85
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2023,
+   "rooms": 2,
+   "building": "old",
+   "price_sqm": 22826,
+   "group_median": 46154,
+   "deviation_pct": -51
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 5,
+   "building": "old",
+   "price_sqm": 2147,
+   "group_median": 45200,
+   "deviation_pct": -95
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 6,
+   "building": "modern",
+   "price_sqm": 69161,
+   "group_median": 50310,
+   "deviation_pct": 37
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 1,
+   "building": "old",
+   "price_sqm": 28214,
+   "group_median": 55438,
+   "deviation_pct": -49
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 59694,
+   "group_median": 44058,
+   "deviation_pct": 35
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 62460,
+   "group_median": 44058,
+   "deviation_pct": 42
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 3,
+   "building": "old",
+   "price_sqm": 17545,
+   "group_median": 38224,
+   "deviation_pct": -54
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 16788,
+   "group_median": 33076,
+   "deviation_pct": -49
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 6,
+   "building": "old",
+   "price_sqm": 4741,
+   "group_median": 33076,
+   "deviation_pct": -86
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 3,
+   "building": "modern",
+   "price_sqm": 43750,
+   "group_median": 20260,
+   "deviation_pct": 116
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 4,
+   "building": "modern",
+   "price_sqm": 44525,
+   "group_median": 19154,
+   "deviation_pct": 132
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 2,
+   "building": "unknown",
+   "price_sqm": 116480,
+   "group_median": 52210,
+   "deviation_pct": 123
+  },
+  {
+   "city": "תל אביב-יפו",
+   "year": 2024,
+   "rooms": 4,
+   "building": "unknown",
+   "price_sqm": 150743,
+   "group_median": 40882,
+   "deviation_pct": 269
+  }
+ ]
+}

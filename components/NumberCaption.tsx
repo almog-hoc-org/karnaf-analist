@@ -52,7 +52,7 @@ export default function NumberCaption({
   align,
   insideLink,
 }: NumberCaptionProps) {
-  const textSize = size === "xxs" ? "text-[9px]" : "text-[10px]";
+  const textSize = size === "xxs" ? "text-2xs" : "text-2xs";
   const alignCls = align === "center" ? "justify-center" : align === "start" ? "justify-start" : "";
 
   const sourceNode = sourceHref && !insideLink ? (

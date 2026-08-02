@@ -41,7 +41,7 @@ export default function NewVsSecondhandPanel({
           <h3 className="text-base font-bold text-slate-900">
             עסקאות 2025 — חדשות מול יד שנייה
           </h3>
-          <p className="text-[11px] text-slate-500 mt-0.5">
+          <p className="text-2xs text-slate-500 mt-0.5">
             פילוח רשמי מ-CBS פרסום {CBS_TRANSACTIONS_SOURCE.publicationNumber}, מבדיל קבלן (חדשות) מיד שנייה
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function NewVsSecondhandPanel({
             <div className="flex items-center gap-2">
               <span className="text-lg">📋</span>
               <div>
-                <div className="text-[10px] font-bold text-indigo-700 uppercase tracking-wide">
+                <div className="text-2xs font-bold text-indigo-700 uppercase tracking-wide">
                   Yad2 — מודעות יד שנייה פתוחות (היצע)
                 </div>
                 <div className="text-sm text-slate-600 mt-0.5 leading-tight">
@@ -145,9 +145,9 @@ function SideCard({
   if (value === null) {
     return (
       <div className={`rounded-xl ${accent} border p-4 opacity-50`}>
-        <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">{title}</div>
+        <div className="text-2xs font-bold uppercase tracking-wide text-slate-500">{title}</div>
         <div className="text-3xl font-black text-slate-400 mt-1">—</div>
-        <div className="text-[11px] text-slate-500 mt-1 leading-tight">
+        <div className="text-2xs text-slate-500 mt-1 leading-tight">
           {cityName} לא חצתה את סף 500 עסקאות בקטגוריה זו ב-2025
         </div>
       </div>
@@ -156,14 +156,14 @@ function SideCard({
 
   return (
     <div className={`rounded-xl ${accent} border p-4`}>
-      <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500">{title}</div>
+      <div className="text-2xs font-bold uppercase tracking-wide text-slate-500">{title}</div>
       <div className={`text-3xl font-black tabular-nums leading-none mt-1 ${accentText}`}>
         {value.toLocaleString("he-IL")}
       </div>
-      <div className="text-[10px] text-slate-500 mt-1">עסקאות בשנת 2025</div>
+      <div className="text-2xs text-slate-500 mt-1">עסקאות בשנת 2025</div>
 
       {(yoy24 !== null || yoy23 !== null) && (
-        <div className="mt-3 pt-3 border-t border-slate-200/60 grid grid-cols-2 gap-2 text-[11px]">
+        <div className="mt-3 pt-3 border-t border-slate-200/60 grid grid-cols-2 gap-2 text-2xs">
           {yoy24 !== null && (
             <div>
               <div className="text-slate-500">vs 2024</div>

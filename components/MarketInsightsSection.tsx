@@ -17,11 +17,11 @@ export default function MarketInsightsSection({ insights }: { insights: MarketIn
   const shown = insights.slice((page % pages) * 4, (page % pages) * 4 + 4);
 
   return (
-    <section className="mt-12">
+    <section className="mt-14">
       <div className="section-header mb-6">
         <div className="section-header-icon">💡</div>
-        <div className="flex-1">
-          <h2 className="text-xl font-black text-slate-900">תובנות שוק</h2>
+        <div className="min-w-0 flex-1">
+          <h2 className="text-2xl font-black text-slate-900">תובנות שוק</h2>
           <p className="text-xs text-slate-500 mt-0.5">מחושבות אוטומטית ממאגר העסקאות · לחיצה על תובנה מובילה לעיר</p>
         </div>
         <button
@@ -33,19 +33,19 @@ export default function MarketInsightsSection({ insights }: { insights: MarketIn
         </button>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 items-start">
+      <div className="card-grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
         {shown.map((ins) => (
           <Link
             key={ins.key}
             href={ins.href}
-            className="glass-card group flex flex-col gap-2.5 p-5 transition-transform hover:-translate-y-0.5"
+            className="glass-card group flex h-full flex-col gap-2.5 p-5 transition-transform hover:-translate-y-0.5"
           >
-            <div className="flex items-start justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-base">
+            <div className="flex flex-wrap items-start justify-between gap-2">
+              <div className="flex min-w-0 flex-1 basis-40 items-center gap-2">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-base">
                   {ins.icon}
                 </span>
-                <h3 className="text-sm font-extrabold leading-snug text-slate-900 group-hover:text-indigo-700">
+                <h3 className="min-w-0 break-words text-sm font-extrabold leading-snug text-slate-900 group-hover:text-indigo-700">
                   {ins.title}
                 </h3>
               </div>
@@ -55,15 +55,15 @@ export default function MarketInsightsSection({ insights }: { insights: MarketIn
                 </span>
               )}
             </div>
-            <p className="text-[13px] leading-relaxed text-slate-600">{ins.body}</p>
-            <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-2.5">
-              <span className="text-[10px] font-semibold text-slate-400">{ins.valueLabel}</span>
-              <span className="text-[10px] text-slate-400">{ins.provenance}</span>
+            <p className="text-xs leading-relaxed text-slate-600">{ins.body}</p>
+            <div className="mt-auto flex flex-wrap items-center justify-between gap-x-2 gap-y-0.5 border-t border-slate-100 pt-2.5">
+              <span className="min-w-0 break-words text-2xs font-semibold text-slate-400">{ins.valueLabel}</span>
+              <span className="min-w-0 break-words text-2xs text-slate-400">{ins.provenance}</span>
             </div>
           </Link>
         ))}
       </div>
-      <div className="mt-2 text-center text-[10px] text-slate-400">
+      <div className="mt-2 text-center text-2xs text-slate-400">
         {((page % pages) + 1)} / {pages} · {insights.length} תובנות במאגר
       </div>
     </section>

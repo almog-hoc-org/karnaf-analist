@@ -85,7 +85,7 @@ export default async function NationalDashboard() {
   })();
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-7xl mx-auto">
+    <main className="min-h-screen page-wrap-wide py-8">
       {/* ─── Header ─── */}
       <header className="mb-8">
         <div className="flex items-start gap-4">
@@ -93,7 +93,7 @@ export default async function NationalDashboard() {
             🇮🇱
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-indigo-700">National Overview</p>
+            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">National Overview</p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight flex items-center gap-3 flex-wrap">
               שוק הדיור בישראל — מבט לאומי <SourceBadge kind="external" name='למ"ס + משרד האוצר' />
             </h1>
@@ -105,33 +105,33 @@ export default async function NationalDashboard() {
       </header>
 
       {/* ─── Mega KPIs ─── */}
-      <section className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-10">
+      <section className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-10 [&>*:nth-child(5)]:col-span-2 lg:[&>*:nth-child(5)]:col-span-1">
         <div className="kpi-card glow-indigo">
           <div className="stat-label">אוכלוסייה 2026</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totalPop2026)}</div>
-          <div className="text-[10px] text-slate-500 mt-1">סכום {cities.length} הערים ב-DB</div>
+          <div className="text-2xs text-slate-500 mt-1">סכום {cities.length} הערים ב-DB</div>
         </div>
         <div className="kpi-card glow-indigo">
           <div className="stat-label">היתרי בנייה 10 שנים</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals10y.permits)}</div>
-          <div className="text-[10px] text-slate-500 mt-1">2016-2025</div>
+          <div className="text-2xs text-slate-500 mt-1">2016-2025</div>
         </div>
         <div className="kpi-card glow-indigo">
           <div className="stat-label">התחלות בנייה 10 שנים</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals10y.starts)}</div>
-          <div className="text-[10px] text-slate-500 mt-1">2016-2025</div>
+          <div className="text-2xs text-slate-500 mt-1">2016-2025</div>
         </div>
         <div className="kpi-card glow-indigo">
           <div className="stat-label">גמר בנייה 10 שנים</div>
           <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals10y.completions)}</div>
-          <div className="text-[10px] text-slate-500 mt-1">2016-2025</div>
+          <div className="text-2xs text-slate-500 mt-1">2016-2025</div>
         </div>
-        <div className={`kpi-card ${annualShortfall < 0 ? "glow-red" : "glow-emerald"}`}>
+        <div className={`kpi-card ${annualShortfall < 0 ? "kpi-accent glow-red" : "kpi-accent glow-emerald"}`}>
           <div className="stat-label">פער שנתי מול יעד הוועדה</div>
           <div className={`stat-large mt-2 tabular-nums ${annualShortfall < 0 ? "text-red-600" : "text-emerald-700"}`}>
             {annualShortfall >= 0 ? "+" : ""}{fmtK(annualShortfall)}
           </div>
-          <div className="text-[10px] text-slate-500 mt-1">
+          <div className="text-2xs text-slate-500 mt-1">
             {fmt(avgAnnualCompletions)} בפועל / {fmt(targetAnnual2125)} יעד ({actualVsTargetPct >= 0 ? "+" : ""}{actualVsTargetPct.toFixed(0)}%)
           </div>
         </div>
@@ -139,12 +139,12 @@ export default async function NationalDashboard() {
 
       {/* ─── National construction 10y chart ─── */}
       <section className="glass-card overflow-hidden mb-10">
-        <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-          <div>
+        <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center justify-between gap-y-1">
+          <div className="min-w-0">
             <h2 className="text-base font-bold text-slate-900">בנייה ארצית 2016-2025</h2>
             <p className="text-xs text-slate-500">היתרים → התחלות → גמר • קו עם נקודות = יעד שנתי של הוועדה ({fmt(targetAnnual2125)} יח&quot;ד)</p>
           </div>
-          <Link href="/sources/cbs-national-construction" className="text-[11px] text-indigo-700 hover:underline">מקור: למ&quot;ס →</Link>
+          <Link href="/sources/cbs-national-construction" className="text-2xs text-indigo-700 hover:underline">מקור: למ&quot;ס →</Link>
         </div>
         <div className="p-4">
           <NationalConstructionChart
@@ -164,7 +164,7 @@ export default async function NationalDashboard() {
         <div className="flex items-start gap-3 mb-3">
           <span className="text-3xl">📋</span>
           <div className="flex-1">
-            <p className="text-[10px] font-bold uppercase tracking-wider mb-1 text-indigo-700">דוח הוועדה לפתרון משבר הדיור</p>
+            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">דוח הוועדה לפתרון משבר הדיור</p>
             <h2 className="text-xl font-bold text-slate-900">התוכנית האסטרטגית לדיור 2017-2040 — מעקב יוני 2021</h2>
             <p className="text-sm text-slate-700 mt-1">
               המועצה הלאומית לכלכלה • אגף תכנון אסטרטגי • <Link href="/sources/internal-research" className="text-indigo-700 hover:underline">קישור למסמך המלא</Link>
@@ -196,7 +196,7 @@ export default async function NationalDashboard() {
                 <span className={`${chipCls} flex-shrink-0`}>{chipLabel}</span>
               </div>
               <p className="text-xs text-slate-700 leading-relaxed">{f.text}</p>
-              <p className="text-[10px] text-slate-500 mt-2">דוח עמוד {f.page}</p>
+              <p className="text-2xs text-slate-500 mt-2">דוח עמוד {f.page}</p>
             </div>
           );
         })}
@@ -231,7 +231,7 @@ export default async function NationalDashboard() {
             <div className={`text-sm font-bold mt-2 tabular-nums ${completionsGap2125 < 0 ? "text-red-700" : "text-emerald-700"}`}>
               {completionsGap2125 >= 0 ? "+" : ""}{fmt(completionsGap2125)} ({completionsGap2125 >= 0 ? "+" : ""}{((completionsGap2125 / target2125Cumulative) * 100).toFixed(1)}%)
             </div>
-            <p className="text-[10px] text-slate-500 mt-2 leading-tight">
+            <p className="text-2xs text-slate-500 mt-2 leading-tight">
               ההיצע <strong>שהגיע לשוק</strong> בפועל. כאן הוועדה ביקשה את היעד.
             </p>
           </div>
@@ -247,7 +247,7 @@ export default async function NationalDashboard() {
             <div className={`text-sm font-bold mt-2 tabular-nums ${startsGap2125 < 0 ? "text-red-600" : "text-emerald-700"}`}>
               {startsGap2125 >= 0 ? "+" : ""}{fmt(startsGap2125)} ({startsGap2125 >= 0 ? "+" : ""}{((startsGap2125 / target2125Cumulative) * 100).toFixed(1)}%)
             </div>
-            <p className="text-[10px] text-slate-500 mt-2 leading-tight">
+            <p className="text-2xs text-slate-500 mt-2 leading-tight">
               ההיצע <strong>שעוד יגיע</strong> בעוד 2-3 שנים. מצביע על מגמת החומש הבא.
             </p>
           </div>
@@ -263,7 +263,7 @@ export default async function NationalDashboard() {
             <div className={`text-sm font-bold mt-2 tabular-nums ${permitsGap2125 < 0 ? "text-red-600" : "text-emerald-700"}`}>
               {permitsGap2125 >= 0 ? "+" : ""}{fmt(permitsGap2125)} ({permitsGap2125 >= 0 ? "+" : ""}{((permitsGap2125 / target2125Cumulative) * 100).toFixed(1)}%)
             </div>
-            <p className="text-[10px] text-slate-500 mt-2 leading-tight">
+            <p className="text-2xs text-slate-500 mt-2 leading-tight">
               היתרים שניתנו, גם אם לא כולם יתממשו. הצינור הרחוק ביותר.
             </p>
           </div>

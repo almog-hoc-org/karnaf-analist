@@ -13,7 +13,7 @@
  * recaptcha tokens — we reuse the token the app legitimately produced, staying within the
  * same allowance a user gets by paging.
  *
- * Each kept deal carries yearBuilt → is_secondhand = dealYear - yearBuilt >= 3. We also
+ * Each kept deal carries yearBuilt → is_secondhand = dealYear - yearBuilt >= 4. We also
  * store nadlan's native hok_hamecher (1 = יד ראשונה / new, 0 = יד שנייה) when present.
  *
  * Usage:
@@ -31,7 +31,7 @@ import puppeteerCore from "puppeteer-core";
 import { prisma } from "../lib/db";
 
 const SECRET = "90c3e620192348f1bd46fcd9138c3c68"; // HS256 key from the nadlan JS bundle (mixin_generateTokenForPayload)
-const SECONDHAND_MIN_AGE = 3;
+const SECONDHAND_MIN_AGE = 4;
 const FRESH_DAYS = 20;
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

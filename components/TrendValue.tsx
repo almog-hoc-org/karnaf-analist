@@ -43,7 +43,7 @@ export default function TrendValue({
     >
       {fmtSignedPct(pct)}
       {from != null && to != null && (
-        <span className="font-normal text-[9px] text-slate-400">({from}→{to})</span>
+        <span className="font-normal text-2xs text-slate-400">({from}→{to})</span>
       )}
     </span>
   );

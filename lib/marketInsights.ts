@@ -63,7 +63,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
     // most active street per city, last 24 months (real street-level data)
     prisma.$queryRawUnsafe<Array<{ city_name: string; street: string; n: number }>>(
       `SELECT city_name, street, COUNT(*) n FROM nadlan_transactions
-       WHERE street IS NOT NULL AND deal_date >= date('now','-24 months')
+       WHERE street IS NOT NULL AND COALESCE(excluded,0)=0 AND deal_date >= date('now','-24 months')
        GROUP BY city_name, street HAVING n >= 25 ORDER BY n DESC LIMIT 40`
     ).catch(() => []),
     // yearly deal volume (scope=all) for volume-jump insights
@@ -87,7 +87,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
       title: `${c.city_name} — זינוק ביד שנייה`,
       body: `מחירי יד-2 עלו ‎+${fmt(c.pct)}% בשלוש שנים (${c.fromY}→${c.toY}, ₪/מ"ר ממוצע) — מהעליות החדות בישראל.`,
       cityName: c.city_name, href: `/city/${encodeURIComponent(c.city_name)}`,
-      value: c.pct, valueLabel: `שינוי יד-2 3ש׳ (${c.fromY}→${c.toY})`, provenance: PROV,
+      value: c.pct, valueLabel: `שינוי יד-2 3 שנים (${c.fromY}→${c.toY})`, provenance: PROV,
     });
   }
 
@@ -134,7 +134,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
       title: `${m.cityName} — ביקוש עודף על ההיצע`,
       body: `יד-2 עלתה ‎+${fmt(sh3Map.get(m.cityName)!)}% ב-3 שנים וההיצע החדש מכסה חלק קטן מהביקוש (פער ${fmt(m.gapPctOfDemand, 0)}%) — לחץ מחירים מובנה.`,
       cityName: m.cityName, href: `/city/${encodeURIComponent(m.cityName)}`,
-      value: sh3Map.get(m.cityName)!, valueLabel: `שינוי יד-2 3ש׳ (עד ${REF_YEAR})`,
+      value: sh3Map.get(m.cityName)!, valueLabel: `שינוי יד-2 3 שנים (עד ${REF_YEAR})`,
       provenance: `${PROV} · היצע: למ"ס`,
     });
   }

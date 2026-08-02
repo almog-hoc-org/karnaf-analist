@@ -1,19 +1,21 @@
 /**
- * POST /api/refresh-data — streams Server-Sent Events as the refresh job runs.
+ * POST /api/refresh-data — starts (or re-attaches to) the background scan and
+ * streams its event buffer as SSE. The scan itself runs in lib/refresh-runner
+ * and SURVIVES client disconnects — closing the tab no longer kills it, and
+ * the route's own duration limit no longer caps the scan.
  *
- * Client usage:
- *   const res = await fetch('/api/refresh-data', { method: 'POST' });
- *   const reader = res.body!.getReader();
- *   // consume SSE lines from reader
+ * No cooldown (user directive: EVERY click must scan). Single-flight only —
+ * a click while a scan runs simply attaches to the live progress.
  */
-import { refreshDataStream } from "@/lib/data-refresh";
+import { getRefreshJob, startRefreshJob } from "@/lib/refresh-runner";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
-// Allow long-running refresh
-export const maxDuration = 60;
+export const maxDuration = 60; // caps the SSE attachment only, not the scan
 
 export async function POST() {
+  const started = startRefreshJob(); // false → already running, just attach
+  const job = getRefreshJob();
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({
@@ -21,17 +23,23 @@ export async function POST() {
       const send = (event: object) => {
         controller.enqueue(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
       };
-
+      if (!started) {
+        send({ type: "log", message: "⟳ סריקה כבר רצה ברקע — מתחבר להתקדמות החיה" });
+      }
       try {
-        const gen = refreshDataStream();
-        for await (const event of gen) {
-          send(event);
+        let i = 0;
+        // replay existing events, then follow until the job signals done
+        for (;;) {
+          while (i < job.events.length) {
+            send(job.events[i]);
+            if (job.events[i].type === "done") return;
+            i++;
+          }
+          if (!job.running) { send({ type: "done", message: "done" }); return; }
+          await new Promise((r) => setTimeout(r, 400));
         }
-      } catch (err) {
-        send({
-          type: "error",
-          message: `שגיאה כללית: ${err instanceof Error ? err.message : String(err)}`,
-        });
+      } catch {
+        // client disconnected — the background job keeps running
       } finally {
         controller.close();
       }

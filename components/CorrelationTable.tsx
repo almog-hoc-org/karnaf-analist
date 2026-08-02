@@ -57,7 +57,7 @@ export default function CorrelationTable({
               <th className="py-2.5 px-3 text-right text-slate-500 font-medium">
                 דירות נדרשות
                 {avgHouseholdSize && (
-                  <span className="text-slate-400 block text-[9px]">
+                  <span className="text-slate-400 block text-2xs">
                     (לפי {avgHouseholdSize.toFixed(1)} נפשות/משק בית)
                   </span>
                 )}
@@ -98,7 +98,7 @@ export default function CorrelationTable({
         </table>
       </div>
 
-      <div className="flex flex-wrap gap-4 mt-3 text-[10px] text-slate-400">
+      <div className="flex flex-wrap gap-4 mt-3 text-2xs text-slate-400">
         <span><span className="inline-block w-2 h-2 rounded-full bg-emerald-400 ml-1"></span>עודף (היתרים &gt; נדרש)</span>
         <span><span className="inline-block w-2 h-2 rounded-full bg-slate-400 ml-1"></span>קרוב לאיזון</span>
         <span><span className="inline-block w-2 h-2 rounded-full bg-red-400 ml-1"></span>גרעון (היתרים &lt; נדרש)</span>

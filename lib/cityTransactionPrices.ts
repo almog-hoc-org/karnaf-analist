@@ -15,9 +15,10 @@
  * Year-cells below MIN_N deals are ignored (never price from noise).
  */
 import { prisma } from "./db";
+import { getRuleNum, getRuleBool } from "./systemRules";
 
-export const PRICE_REF_YEAR = 2025;
-const MIN_N = 10;
+export const PRICE_REF_YEAR = getRuleNum("ref_year", 2025);
+const MIN_N = getRuleNum("min_deals_per_year", 10);
 const FALLBACK_YEARS = [PRICE_REF_YEAR, PRICE_REF_YEAR - 1]; // 2025 → 2024
 
 export interface CityTransactionPrices {
@@ -54,7 +55,7 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
     prisma.$queryRawUnsafe<CovRow[]>(
       `SELECT city_name, COUNT(*) total, SUM(is_secondhand) sh,
               MIN(deal_year) ymin, MAX(deal_year) ymax, COUNT(DISTINCT deal_year) yrs
-       FROM nadlan_transactions GROUP BY city_name`
+       FROM nadlan_transactions WHERE COALESCE(excluded,0)=0 GROUP BY city_name`
     ),
   ]);
 
@@ -100,12 +101,43 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
 }
 
 /**
- * Ranking eligibility (user normalization rule): a city may appear in ranking
+ * Active (non-excluded) deals per city, last 10 years — one number per city,
+ * both sources, each deal counted once. Basis for the city_min_total_deals
+ * thin-sample rule (yellow rows + ranking exclusion) and the "עסקאות במאגר"
+ * column, so the tint and the displayed count always agree.
+ */
+export async function loadActiveDealCounts(): Promise<Map<string, number>> {
+  const rows = await prisma.$queryRawUnsafe<Array<{ city_name: string; n: bigint }>>(
+    `SELECT city_name, COUNT(*) n FROM nadlan_transactions
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ${new Date().getFullYear() - 10}
+     GROUP BY city_name`
+  );
+  return new Map(rows.map((r) => [r.city_name, Number(r.n)]));
+}
+
+/** Cities under the city_min_total_deals rule (default 150 active deals/10y). */
+export async function loadThinSampleCities(): Promise<Set<string>> {
+  const minTotal = getRuleNum("city_min_total_deals", 150);
+  const counts = await loadActiveDealCounts();
+  const thin = new Set<string>();
+  for (const [city, n] of counts) if (n < minTotal) thin.add(city);
+  return thin;
+}
+
+/**
+ * Ranking eligibility (user normalization rules): a city may appear in ranking
  * tables ONLY if it has at least minN deals of EVERY type (all / secondhand /
  * new) in a recent full year — a village with 1-5 deals showing +100% must
- * never top a national ranking.
+ * never top a national ranking — AND at least city_min_total_deals active
+ * deals over the decade (thin-sample cities are yellow in tables + excluded).
  */
-export async function loadRankingEligibleCities(minN = 10): Promise<Set<string>> {
+export async function loadRankingEligibleCities(minN = getRuleNum("ranking_min_per_scope", 10)): Promise<Set<string>> {
+  const thin = await loadThinSampleCities();
+  if (!getRuleBool("ranking_normalization_on", true)) {
+    const all = await prisma.$queryRawUnsafe<Array<{ city_name: string }>>(
+      "SELECT DISTINCT city_name FROM nadlan_year_room_stats");
+    return new Set(all.map((r) => r.city_name).filter((c) => !thin.has(c)));
+  }
   const rows = await prisma.$queryRawUnsafe<Array<{ city_name: string }>>(
     `SELECT city_name FROM nadlan_year_room_stats
      WHERE room_bucket='all' AND scope IN ('all','secondhand','new')
@@ -113,11 +145,11 @@ export async function loadRankingEligibleCities(minN = 10): Promise<Set<string>>
      GROUP BY city_name HAVING COUNT(DISTINCT scope) = 3`,
     PRICE_REF_YEAR, PRICE_REF_YEAR - 1, minN
   );
-  return new Set(rows.map((r) => r.city_name));
+  return new Set(rows.map((r) => r.city_name).filter((c) => !thin.has(c)));
 }
 
 export const RANKING_ELIGIBILITY_NOTE =
-  "בדירוג נכללות רק ערים עם 10+ עסקאות מכל סוג (כללי, יד-2, חדשות) בשנה מלאה אחרונה — נרמול נגד עיוותי מדגם קטן";
+  `בדירוג נכללות רק ערים עם ${getRuleNum("ranking_min_per_scope", 10)}+ עסקאות מכל סוג (כללי, יד-2, חדשות) בשנה מלאה אחרונה, ועם ${getRuleNum("city_min_total_deals", 150)}+ עסקאות פעילות ב-10 שנים (עריך בדשבורד) — נרמול נגד עיוותי מדגם קטן`;
 
 /** Caption for any consumer (memory rule: source • period • update). */
 export const TX_PRICE_PROVENANCE = `מאגר העסקאות הפנימי (רשות המסים) · ₪/מ"ר · שנה מלאה אחרונה עם 10+ עסקאות`;

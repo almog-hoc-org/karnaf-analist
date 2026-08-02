@@ -3,7 +3,8 @@
 import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import type { ClientDeal } from "@/lib/appDb";
-import type { StreetComp } from "@/lib/streetComps";
+import type { StreetComp } from "@/lib/compTypes";
+import { addressGranularity, rowAddress } from "@/lib/compTypes";
 import type { TrackedCitySummary } from "@/app/deals/page";
 import TrendValue, { fmtSignedPct } from "@/components/TrendValue";
 import { addTrackedCity, removeTrackedCity, addDeal, updateDeal, deleteDeal, addTask, toggleTask, deleteTask } from "@/app/deals/actions";
@@ -21,6 +22,17 @@ const STATUSES = [
 const statusLabel = (k: string) => STATUSES.find((s) => s.key === k)?.label ?? k;
 
 type SortKey = "updated" | "city" | "price" | "sqm" | "delta";
+
+/** Client-side label for what the comparison matched (mirrors lib/streetComps). */
+const GEO_HE: Record<string, string> = { street: "רחוב", neighborhood: "שכונה", city: "יישוב" };
+function compMatchNote(c: StreetComp): string {
+  if (!c || c.n === 0) return "אין עסקאות דומות";
+  const geo = GEO_HE[c.geoLevel] ?? "";
+  if (c.matchLevel === "tight") return `התאמה מדויקת · ${geo}`;
+  if (c.matchLevel === "wide") return `שטח מורחב · ${geo}`;
+  if (c.matchLevel === "rooms") return `אותו מס׳ חדרים · ${geo}`;
+  return `כל הדירות · ${geo}`;
+}
 
 export default function DealsManager({ allCities, tracked, deals, comps }: {
   allCities: string[];
@@ -89,7 +101,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
             <input value={cityQ} onChange={(e) => setCityQ(e.target.value)} placeholder="+ הוסף עיר למעקב…"
               className="w-52 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs focus:border-indigo-400 focus:outline-none" />
             {citySuggestions.length > 0 && (
-              <div className="absolute top-full right-0 z-30 mt-1 w-52 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+              <div className="absolute top-full right-0 z-[100] mt-1 w-52 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
                 {citySuggestions.map((c) => (
                   <button key={c} onClick={() => { startTransition(() => addTrackedCity(c)); setCityQ(""); }}
                     className="block w-full px-4 py-2 text-right text-xs font-semibold text-slate-700 hover:bg-indigo-50">
@@ -120,12 +132,12 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                     <div className="text-xl font-black tabular-nums text-indigo-700">
                       {t.medianShSqm ? `₪${t.medianShSqm.toLocaleString("he-IL")}` : "—"}
                     </div>
-                    <div className="text-[9px] text-slate-400">{t.priceYear ?? ""}</div>
+                    <div className="text-2xs text-slate-400">{t.priceYear ?? ""}</div>
                   </div>
                   <div>
-                    <div className="stat-label">שינוי יד-2 3ש׳</div>
+                    <div className="stat-label">שינוי יד-2 3 שנים</div>
                     <div className="text-xl"><TrendValue pct={t.chg3y} className="!text-xl font-black" /></div>
-                    <div className="text-[9px] text-slate-400">{t.chg3yWindow ?? ""}</div>
+                    <div className="text-2xs text-slate-400">{t.chg3yWindow ?? ""}</div>
                   </div>
                   <div>
                     <div className="stat-label">עסקאות 12 ח׳</div>
@@ -136,7 +148,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                     <div className="text-base font-bold tabular-nums text-slate-900">{t.activeNeighborhoods}</div>
                   </div>
                 </div>
-                <div className="mt-3 border-t border-slate-100 pt-2 text-[9px] text-slate-400">
+                <div className="mt-3 border-t border-slate-100 pt-2 text-2xs text-slate-400">
                   🔵 {t.totalDeals.toLocaleString("he-IL")} עסקאות במאגר העצמאי
                 </div>
               </div>
@@ -193,14 +205,14 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                 שמור עסקה
               </button>
             </div>
-            <p className="mt-2 text-[10px] text-slate-400">ציון רחוב מדליק השוואה אוטומטית לעסקאות אמת באותו רחוב</p>
+            <p className="mt-2 text-2xs text-slate-400">ציון רחוב מדליק השוואה אוטומטית לעסקאות אמת באותו רחוב</p>
           </div>
         )}
 
         {/* table */}
         <div className="glass-card overflow-x-auto">
           <table className="w-full min-w-[900px] text-xs" dir="rtl">
-            <thead className="bg-slate-50 text-[10px] font-bold text-slate-500">
+            <thead className="bg-slate-50 text-2xs font-bold text-slate-500">
               <tr className="border-b border-slate-200">
                 <th className="px-3 py-2.5 text-right">📍 כתובת</th>
                 <th className="px-3 py-2.5">גודל</th>
@@ -231,14 +243,14 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                     <tr className={`border-b border-slate-100 transition-colors hover:bg-indigo-50/40 ${open ? "bg-indigo-50/60" : ""}`}>
                       <td className="px-3 py-2.5">
                         <div className="font-bold text-slate-900">{d.city}</div>
-                        <div className="text-[10px] text-slate-500">
+                        <div className="text-2xs text-slate-500">
                           {[d.street && `${d.street} ${d.house_num ?? ""}`.trim(), d.neighborhood].filter(Boolean).join(" · ") || "—"}
                         </div>
                       </td>
                       <td className="px-3 py-2.5 text-center tabular-nums">{d.size ? `${d.size} מ״ר` : "—"}</td>
                       <td className="px-3 py-2.5 text-center tabular-nums">{d.rooms ?? "—"}</td>
                       <td className="px-3 py-2.5 text-center tabular-nums">{d.floor ?? "—"}</td>
-                      <td className="px-3 py-2.5 text-center text-[10px] tabular-nums text-slate-600" title="מרפסת · חניות · מחסן">
+                      <td className="px-3 py-2.5 text-center text-2xs tabular-nums text-slate-600" title="מרפסת · חניות · מחסן">
                         {[
                           d.balcony_sqm ? `🌤️${d.balcony_sqm}` : null,
                           d.parking_spots ? `🚗${d.parking_spots}` : null,
@@ -257,15 +269,15 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                             <span dir="ltr" className={`font-black tabular-nums ${dl == null ? "text-slate-400" : dl > 3 ? "text-red-600" : dl < -3 ? "text-emerald-700" : "text-slate-700"}`}>
                               {dl != null ? fmtSignedPct(dl) : "—"}
                             </span>
-                            <span className="block text-[9px] text-slate-400 group-hover:text-indigo-600">
-                              מול ₪{comp.medianSqm.toLocaleString("he-IL")} · {comp.label} ({comp.n}) ▾
+                            <span className="block text-2xs text-slate-400 group-hover:text-indigo-600">
+                              מול ₪{comp.medianSqm.toLocaleString("he-IL")} · {compMatchNote(comp)} ({comp.n}) ▾
                             </span>
                           </button>
                         ) : <span className="text-slate-300">אין דאטה</span>}
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         <select value={d.status} onChange={(e) => startTransition(() => updateDeal(d.id, { status: e.target.value }))}
-                          className="rounded-lg border border-slate-200 bg-white px-1.5 py-1 text-[10px] font-bold">
+                          className="rounded-lg border border-slate-200 bg-white px-1.5 py-1 text-2xs font-bold">
                           {STATUSES.map((st) => <option key={st.key} value={st.key}>{st.label}</option>)}
                         </select>
                       </td>
@@ -276,7 +288,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         <button onClick={() => setOpenRow(open ? null : d.id)}
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${openTasks > 0 ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-500"}`}>
+                          className={`rounded-full px-2 py-0.5 text-2xs font-bold ${openTasks > 0 ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-500"}`}>
                           {openTasks > 0 ? `${openTasks} פתוחות` : "משימות"} ▾
                         </button>
                       </td>
@@ -286,7 +298,11 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                       </td>
                     </tr>
                     {open && (
-                      <tr className="border-b border-slate-100 bg-slate-50/70">
+                      // desktop only: inside the 900px-wide table this row is
+                      // readable; on mobile it would force horizontal scrolling,
+                      // so the detail renders BELOW the table instead (see after
+                      // the wrapper) — same content, reachable layout.
+                      <tr className="max-md:hidden border-b border-slate-100 bg-slate-50/70">
                         <td colSpan={12} className="px-4 py-4">
                           <DealDetail deal={d} comp={comp} askSqm={s} />
                         </td>
@@ -298,8 +314,23 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
             </tbody>
           </table>
         </div>
-        <p className="mt-2 text-[10px] text-slate-400">
-          🔵 השוואת השוק: חציון ₪/מ״ר של עסקאות אמת (רחוב → שכונה → עיר, 24 ח׳ אחרונים) מהמאגר העצמאי · אדום = מעל השוק, ירוק = מתחת · ₪/מ״ר מחושב על שטח הדירה בלבד (מרפסת/מחסן מוצגים בנפרד)
+        {/* mobile: the expanded deal's detail escapes the 900px table and renders
+            full-width here — everything reachable without horizontal scrolling */}
+        {openRow != null && (() => {
+          const d = visibleDeals.find((x) => x.id === openRow);
+          if (!d) return null;
+          return (
+            <div className="mt-3 rounded-2xl border border-indigo-100 bg-slate-50/70 p-4 md:hidden">
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-sm font-black text-slate-900">פירוט — {d.city}</span>
+                <button onClick={() => setOpenRow(null)} className="rounded-lg px-2 py-1 text-2xs font-bold text-slate-500">סגור ✕</button>
+              </div>
+              <DealDetail deal={d} comp={comps[d.id]} askSqm={sqm(d)} />
+            </div>
+          );
+        })()}
+        <p className="mt-2 text-2xs text-slate-400">
+          🔵 ההשוואה מחפשת עסקאות אמת מאותו מספר חדרים ובשטח דומה — קודם ברחוב, ואם אין גם בשכונה וביישוב · אדום = מעל מחיר השוק, ירוק = מתחת · ₪/מ״ר מחושב על שטח הדירה בלבד (מרפסת/מחסן מוצגים בנפרד)
         </p>
       </section>
     </div>
@@ -320,28 +351,45 @@ function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetCom
         <h4 className="mb-2 text-xs font-black text-slate-900">
           עסקאות אחרונות — {comp?.label ?? "אין דאטה"} {comp && <span className="font-normal text-slate-400">({comp.n} עסקאות)</span>}
         </h4>
-        {comp && comp.recent.length > 0 ? (
-          <table className="w-full text-[11px]" dir="rtl">
-            <thead className="text-[9px] font-bold text-slate-400">
-              <tr><th className="py-1 text-right">תאריך</th><th>כתובת</th><th>גודל</th><th>חד׳</th><th>מחיר</th><th>₪/מ״ר</th></tr>
-            </thead>
-            <tbody>
-              {comp.recent.map((r, i) => (
-                <tr key={i} className="border-t border-slate-100">
-                  <td className="py-1.5 text-right tabular-nums text-slate-500">{r.deal_date?.slice(0, 10)}</td>
-                  <td className="text-center text-slate-600">{[r.street, r.house_num].filter(Boolean).join(" ") || "—"}</td>
-                  <td className="text-center tabular-nums">{r.area ? `${r.area}` : "—"}</td>
-                  <td className="text-center tabular-nums">{r.rooms ?? "—"}</td>
-                  <td className="text-center font-bold tabular-nums">₪{Number(r.price ?? 0).toLocaleString("he-IL")}</td>
-                  <td className={`text-center font-bold tabular-nums ${askSqm && r.price_sqm && askSqm > Number(r.price_sqm) ? "text-emerald-700" : "text-slate-700"}`}>
-                    ₪{Number(r.price_sqm ?? 0).toLocaleString("he-IL")}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p className="text-[11px] text-slate-400">אין עסקאות רחוב/שכונה ב-24 החודשים — ההשוואה היא לחציון העירוני</p>
+        {comp && comp.recent.length > 0 ? (() => {
+          // Show the address column only when the source actually carries location.
+          // Big cities → street; some towns → neighborhood; small settlements
+          // (e.g. רמת ישי) expose neither, so we drop the column and say so
+          // honestly rather than printing a row of meaningless dashes.
+          const grain = addressGranularity(comp.recent);
+          const addrHead = grain === "street" ? "כתובת" : grain === "neighborhood" ? "שכונה" : null;
+          return (
+            <>
+              <table className="w-full text-2xs" dir="rtl">
+                <thead className="text-2xs font-bold text-slate-400">
+                  <tr>
+                    <th className="py-1 text-right">תאריך</th>
+                    {addrHead && <th>{addrHead}</th>}
+                    <th>גודל</th><th>חד׳</th><th>מחיר</th><th>₪/מ״ר</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comp.recent.map((r, i) => (
+                    <tr key={i} className="border-t border-slate-100">
+                      <td className="py-1.5 text-right tabular-nums text-slate-500">{r.deal_date?.slice(0, 10)}</td>
+                      {addrHead && <td className="text-center text-slate-600">{rowAddress(r) ?? "—"}</td>}
+                      <td className="text-center tabular-nums">{r.area ? `${r.area}` : "—"}</td>
+                      <td className="text-center tabular-nums">{r.rooms ?? "—"}</td>
+                      <td className="text-center font-bold tabular-nums">₪{Number(r.price ?? 0).toLocaleString("he-IL")}</td>
+                      <td className={`text-center font-bold tabular-nums ${askSqm && r.price_sqm && askSqm > Number(r.price_sqm) ? "text-emerald-700" : "text-slate-700"}`}>
+                        ₪{Number(r.price_sqm ?? 0).toLocaleString("he-IL")}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {grain === "none" && (
+                <p className="mt-1.5 text-2xs text-slate-400">כתובת מדויקת אינה מפורסמת במקור עבור יישוב זה — ההשוואה ברמת היישוב.</p>
+              )}
+            </>
+          );
+        })() : (
+          <p className="text-2xs text-slate-400">לא נמצאו עסקאות דומות בטווח — ההשוואה היא לחציון העירוני</p>
         )}
       </div>
 
@@ -351,7 +399,7 @@ function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetCom
           <h4 className="mb-2 text-xs font-black text-slate-900">✅ משימות</h4>
           <ul className="space-y-1">
             {deal.tasks.map((t) => (
-              <li key={t.id} className="flex items-center gap-2 text-[11px]">
+              <li key={t.id} className="flex items-center gap-2 text-2xs">
                 <input type="checkbox" checked={!!t.done} onChange={(e) => startTransition(() => toggleTask(t.id, e.target.checked))} className="accent-indigo-600" />
                 <span className={t.done ? "text-slate-400 line-through" : "text-slate-700"}>{t.title}</span>
                 <button onClick={() => startTransition(() => deleteTask(t.id))} className="mr-auto text-slate-300 hover:text-red-500">✕</button>
@@ -361,14 +409,14 @@ function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetCom
           <div className="mt-2 flex gap-1.5">
             <input value={taskTitle} onChange={(e) => setTaskTitle(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter" && taskTitle.trim()) { startTransition(() => addTask(deal.id, taskTitle)); setTaskTitle(""); } }}
-              placeholder="משימה חדשה… (Enter לשמירה)" className="flex-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] focus:border-indigo-400 focus:outline-none" />
+              placeholder="משימה חדשה… (Enter לשמירה)" className="flex-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-2xs focus:border-indigo-400 focus:outline-none" />
           </div>
         </div>
         <div>
           <h4 className="mb-1 text-xs font-black text-slate-900">📝 הערות</h4>
           <textarea value={notes} onChange={(e) => setNotes(e.target.value)}
             onBlur={() => { if (notes !== (deal.notes ?? "")) startTransition(() => updateDeal(deal.id, { notes })); }}
-            rows={3} className="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-[11px] focus:border-indigo-400 focus:outline-none"
+            rows={3} className="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-2xs focus:border-indigo-400 focus:outline-none"
             placeholder="הערות על הנכס, המוכר, המתווך…" />
         </div>
       </div>
