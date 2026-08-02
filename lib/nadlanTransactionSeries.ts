@@ -1,6 +1,7 @@
 import { prisma } from "./db";
 import { loadOfficialPriceSeries, type OfficialPricePoint } from "./official-price-series";
 import { getRuleNum } from "./systemRules";
+import { cachedMarket } from "./cache";
 
 /**
  * Data for the per-city price graphs — 100% the collected nadlan deals (no govmap):
@@ -55,7 +56,7 @@ function emptyRoomSeries(): RoomSeries {
   return { "3": [], "4": [], "5": [], all: [] };
 }
 
-export async function loadCityGraphSeries(cityName: string): Promise<CityGraphData> {
+async function loadCityGraphSeriesUncached(cityName: string): Promise<CityGraphData> {
   const [median, statRows, monthRows] = await Promise.all([
     loadOfficialPriceSeries(cityName),
     prisma.nadlan_year_room_stats.findMany({
@@ -103,6 +104,9 @@ export async function loadCityGraphSeries(cityName: string): Promise<CityGraphDa
   };
 }
 
+/** Three queries per city, all against nightly-refreshed tables — cached. */
+export const loadCityGraphSeries = cachedMarket(loadCityGraphSeriesUncached, ["city-graph-series"]);
+
 /**
  * Deals for the drill-down drawer.
  *
@@ -114,7 +118,7 @@ export async function loadCityGraphSeries(cityName: string): Promise<CityGraphDa
  * looked fine, which is why it read as working.
  */
 export const DRAWER_PAGE = 300;
-export async function loadCityDeals(cityName: string, limit = DRAWER_PAGE): Promise<NadlanDeal[]> {
+async function loadCityDealsUncached(cityName: string, limit = DRAWER_PAGE): Promise<NadlanDeal[]> {
   const rows = await prisma.nadlan_transactions.findMany({
     // admin exclusions never reach the UI (null = legacy rows, treated as included)
     where: { city_name: cityName, OR: [{ excluded: null }, { excluded: 0 }] },
@@ -123,6 +127,9 @@ export async function loadCityDeals(cityName: string, limit = DRAWER_PAGE): Prom
   });
   return rows.map(toDeal);
 }
+
+/** First drawer page — same rows for every visitor until the data changes. */
+export const loadCityDeals = cachedMarket(loadCityDealsUncached, ["city-deals-page"]);
 
 // is_secondhand/luxury arrive as boolean through Prisma and as 0/1 through raw SQL
 function toDeal(r: {
@@ -162,7 +169,7 @@ export const cubeKey = (year: number, type: string, age: string, rooms: string) 
  * What the two cleaning rules held back in this city, so the page can say it out
  * loud. A number the reader can't account for is worse than no number.
  */
-export async function loadCityCleaningCounts(cityName: string): Promise<{ dupes: number; luxury: number }> {
+async function loadCityCleaningCountsUncached(cityName: string): Promise<{ dupes: number; luxury: number }> {
   const minYear = new Date().getFullYear() - 10;
   const [row] = await prisma.$queryRawUnsafe<Array<{ dupes: bigint; luxury: bigint }>>(
     `SELECT SUM(CASE WHEN exclusion_reason LIKE 'כפילות-דיווח%' THEN 1 ELSE 0 END) dupes,
@@ -171,7 +178,10 @@ export async function loadCityCleaningCounts(cityName: string): Promise<{ dupes:
   return { dupes: Number(row?.dupes ?? 0), luxury: Number(row?.luxury ?? 0) };
 }
 
-export async function loadDealCountCube(cityName: string): Promise<DealCountCube> {
+/** Full-table aggregate for one city — cached; see lib/cache.ts for the rationale. */
+export const loadCityCleaningCounts = cachedMarket(loadCityCleaningCountsUncached, ["city-cleaning-counts"]);
+
+async function loadDealCountCubeUncached(cityName: string): Promise<DealCountCube> {
   const modernMinYear = getRuleNum("modern_min_year", 2005);
   const rows = await prisma.$queryRawUnsafe<Array<{ deal_year: number; room_bucket: string; is_secondhand: number; year_built: number | null; n: bigint }>>(
     `SELECT deal_year, room_bucket, is_secondhand, year_built, COUNT(*) n
@@ -200,3 +210,15 @@ export async function loadDealCountCube(cityName: string): Promise<DealCountCube
   }
   return cube;
 }
+
+/**
+ * The single most expensive query on the city page: an unbounded GROUP BY over
+ * every non-excluded transaction in the city (~84k rows for Tel Aviv) that
+ * yields under 2KB of counts. Ideal to cache.
+ *
+ * Note it reads `modern_min_year` — a cached cube therefore also freezes that
+ * rule until the tag is invalidated. That is correct, not a bug: the rule only
+ * changes what the data looks like after the pipeline re-runs, and the pipeline
+ * invalidates this tag when it finishes.
+ */
+export const loadDealCountCube = cachedMarket(loadDealCountCubeUncached, ["deal-count-cube"]);

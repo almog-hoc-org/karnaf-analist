@@ -1,16 +1,27 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState } from "react";
 import NumberCaption from "./NumberCaption";
 import type { CityPriceChanges } from "@/lib/price-changes";
 
 /**
- * 3y / 5y price-change panel with URL-param toggle.
+ * 3y / 5y price-change panel. The window lives in local state only.
  *
- * Selecting a window writes `?window=3y|5y` to the URL so the user can deep-link
- * to a specific view and so sibling components (e.g. CityNeighborhoods) can
- * read the same param and stay in sync.
+ * IT USED TO WRITE `?window=3y|5y` TO THE URL. That was removed, because
+ * reading the param server-side made /city/[slug] a request-time render — ~25
+ * DB queries per visitor on the page the public actually lands on — and the
+ * round-trip bought nothing:
+ *
+ *   - `initialWindow` only ever seeded useState, and React ignores that
+ *     argument after the first render, so the value the server recomputed on
+ *     the replace() was already being discarded.
+ *   - `changes` carries BOTH change3y and change5y, so switching is a pick
+ *     between two objects already in memory — no server round-trip needed.
+ *   - The old doc comment claimed sibling components read the same param to
+ *     stay in sync. No such component exists; this was the only reader.
+ *
+ * Cost of the removal: `?window=3y` is no longer deep-linkable, and window
+ * changes no longer appear in browser history.
  *
  * The active window's badge is rendered full-size; the inactive window is
  * dimmed and shown smaller for context. An expandable "💡 איך חישבנו" panel
@@ -25,22 +36,12 @@ export default function PriceChangePanel({
   initialWindow: "3y" | "5y";
   cityName: string;
 }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const sp = useSearchParams();
-  const [isPending, startTransition] = useTransition();
   const [explainerOpen, setExplainerOpen] = useState(false);
-
-  // We track the window in local state too so the UI flips instantly while the
-  // URL update is in transit.
   const [active, setActive] = useState<"3y" | "5y">(initialWindow);
 
   function chooseWindow(w: "3y" | "5y") {
     if (w === active) return;
     setActive(w);
-    const params = new URLSearchParams(sp);
-    params.set("window", w);
-    startTransition(() => router.replace(`${pathname}?${params.toString()}`, { scroll: false }));
   }
 
   const activeChange = active === "3y" ? changes?.change3y : changes?.change5y;
@@ -77,12 +78,10 @@ export default function PriceChangePanel({
         </div>
       </div>
 
-      {/* Active window — big hero */}
-      <div
-        className={`rounded-2xl border p-5 transition-all bg-indigo-50/40 border-indigo-100 ${
-          isPending ? "opacity-60" : "opacity-100"
-        }`}
-      >
+      {/* Active window — big hero.
+          The dim-while-pending state is gone with the URL round-trip: the swap
+          is now a local state update, so there is no in-flight moment to signal. */}
+      <div className="rounded-2xl border p-5 transition-all bg-indigo-50/40 border-indigo-100">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
             <div className="text-2xs font-bold text-slate-500 uppercase tracking-wide">

@@ -6,6 +6,7 @@
 
 import { prisma } from "./db";
 import { computeCityGap, describeSupplySource } from "./gap-analysis";
+import { cachedReference } from "./cache";
 
 export interface CityInsights {
   priceChange: string | null;
@@ -16,7 +17,7 @@ export interface CityInsights {
   populationTrend: string | null;
 }
 
-export async function getNationalAverages() {
+async function getNationalAveragesUncached() {
   const cities = await prisma.city.findMany({
     select: {
       price_change_pct: true,
@@ -43,6 +44,14 @@ export async function getNationalAverages() {
         : null,
   };
 }
+
+/**
+ * Scans the whole cities table to produce two numbers. It is called from
+ * getCityInsights, i.e. once per city-page render — a full-table scan on a page
+ * that renders per visitor. The result is identical for every city, so it is
+ * cached rather than recomputed ~170 different ways.
+ */
+export const getNationalAverages = cachedReference(getNationalAveragesUncached, ["national-averages"]);
 
 function pct(v: number) {
   // v is already in percent (e.g. 36.1 means 36.1%), do NOT multiply by 100

@@ -19,6 +19,7 @@
  */
 
 import { prisma } from "./db";
+import { cachedMarket } from "./cache";
 
 export type SupplySource = "completions" | "starts" | "permits" | "none";
 
@@ -288,10 +289,7 @@ export async function computeCityGap(
   };
 }
 
-/**
- * Compute gaps for every city in a single batch — used by rankings/coverage pages.
- */
-export async function computeAllCityGaps(opts: GapOptions = {}): Promise<GapAnalysis[]> {
+async function computeAllCityGapsUncached(opts: GapOptions = {}): Promise<GapAnalysis[]> {
   const cities = await prisma.city.findMany({ select: { city_name: true } });
   const out: GapAnalysis[] = [];
   for (const c of cities) {
@@ -300,6 +298,26 @@ export async function computeAllCityGaps(opts: GapOptions = {}): Promise<GapAnal
   }
   return out;
 }
+
+/**
+ * Gaps for every city. Used by /stats/supply-coverage and the rankings pages.
+ *
+ * The loop above is ~170 cities × 6 queries each, awaited one at a time — the
+ * single most expensive operation in the app, and until now it ran on EVERY
+ * request to /stats/supply-coverage. (The original comment called it "a single
+ * batch"; it never was.)
+ *
+ * Caching is the fix that matters, because the answer is identical for every
+ * visitor and changes only when the pipeline runs. The loop is deliberately
+ * left serial: the underlying driver is better-sqlite3, which is synchronous,
+ * so firing ~1000 queries concurrently would not overlap any I/O — it would
+ * just build a huge promise backlog against the same blocking connection.
+ *
+ * What remains is a slow FIRST request after each invalidation. If that proves
+ * too slow in practice, the real fix is to rewrite computeCityGap to fetch all
+ * cities in one grouped query rather than to add concurrency here.
+ */
+export const computeAllCityGaps = cachedMarket(computeAllCityGapsUncached, ["all-city-gaps"]);
 
 export function describeSupplySource(s: SupplySource): { he: string; cls: string; long: string } {
   if (s === "completions") return {

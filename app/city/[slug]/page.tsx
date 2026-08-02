@@ -24,8 +24,20 @@ import SourceBadge from "@/components/SourceBadge";
 
 interface PageProps {
   params: { slug: string };
-  searchParams?: { window?: string };
 }
+
+/**
+ * Default price-change window shown on first paint.
+ *
+ * This used to come from `?window=` on the request. Reading searchParams is a
+ * Next.js Dynamic API, so it forced this page — the one a public audience
+ * actually lands on — to re-render per request, ~25 DB queries each time,
+ * including a full GROUP BY over every transaction in the city.
+ *
+ * It bought nothing: the value only seeded useState in PriceChangePanel, and
+ * both windows' data ship together, so the toggle never needed the server.
+ */
+const DEFAULT_PRICE_WINDOW = "5y" as const;
 
 function formatPrice(value: number | null): string {
   if (value === null) return "—";
@@ -56,9 +68,9 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default async function CityPage({ params, searchParams }: PageProps) {
+export default async function CityPage({ params }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
-  const activeWindow: "3y" | "5y" = searchParams?.window === "3y" ? "3y" : "5y";
+  const activeWindow: "3y" | "5y" = DEFAULT_PRICE_WINDOW;
 
   const [city, salesData, buildingPermits, insights, yad2Data, populationByYear, priceTrends, constructionStarts, completionsData] = await Promise.all([
     prisma.city.findUnique({ where: { city_name: cityName } }),

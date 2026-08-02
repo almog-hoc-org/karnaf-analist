@@ -30,11 +30,31 @@ export interface CbsSalesData {
 
 const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 
+/**
+ * Memoized result.
+ *
+ * This function is called from app/page.tsx — the homepage, on every request —
+ * and it did far more than read a file: it re-parsed a 20KB JSON document,
+ * rebuilt and re-sorted the year series, recomputed the latest quarter and
+ * regenerated four Hebrew insight strings, every single time.
+ *
+ * The underlying file only changes when the refresh pipeline writes it, and a
+ * write requires a process restart to matter anywhere else in the app, so a
+ * process-lifetime memo is the right granularity. This mirrors the existing
+ * pattern in lib/cbsNationalSeries.ts, which caches the very same file.
+ *
+ * `undefined` = not computed yet; `null` = computed and the file was unusable
+ * (so a missing file is not retried on every request either).
+ */
+let cached: CbsSalesData | null | undefined;
+
 export function loadCbsSales(): CbsSalesData | null {
+  if (cached !== undefined) return cached;
   let raw: Record<string, unknown>;
   try {
     raw = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "cbs_national_series.json"), "utf8"));
   } catch {
+    cached = null;
     return null;
   }
 
@@ -103,5 +123,6 @@ export function loadCbsSales(): CbsSalesData | null {
     ),
   ].slice(0, 4);
 
-  return { years, latestQuarter, unsoldNew, insights, updatedAt: (raw.lastUpdated as string) ?? null, reportIds };
+  cached = { years, latestQuarter, unsoldNew, insights, updatedAt: (raw.lastUpdated as string) ?? null, reportIds };
+  return cached;
 }
