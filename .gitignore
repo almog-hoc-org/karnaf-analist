@@ -44,9 +44,20 @@ next-env.d.ts
 .env
 .next.nosync
 
-# runtime user data (private) — backed up separately, not in git
-data/app.db
-data/app.db-*
-# analytics DB too large for GitHub (153MB) — snapshot via Releases
-data/realestate.db
-data/realestate.db-*
+# ── databases ────────────────────────────────────────────────────────
+# GitHub rejects any file over 100MB, and realestate.db is 312MB. The deal
+# archive ships as a compressed Release asset instead (scripts/restore-db.sh
+# pulls it back). A blanket rule, not per-file: a new .db added later must not
+# be able to break a push.
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+
+# ── machine-local runtime state ──────────────────────────────────────
+# the tunnel URL is regenerated per run and means nothing on another machine
+data/tunnel_url.txt
+
+# scratch files from ad-hoc analysis
+*.tmp.mjs
+.*.tmp.*
