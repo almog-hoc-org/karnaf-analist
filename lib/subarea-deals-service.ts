@@ -18,6 +18,7 @@
 import fs from "fs";
 import path from "path";
 import { classifySubarea, getSubareas } from "./city-subareas";
+import { cleanDeals } from "./luxuryFilter";
 import { TARGET_YEARS } from "./subarea-deals-types";
 import type {
   TargetYear,
@@ -203,6 +204,19 @@ function stddev(values: number[], mean: number): number {
  */
 export function buildMatrix(cityName: string, deals: RawDeal[]): CitySubareaMatrix {
   let subareas = getSubareas(cityName); // list of sub-areas (incl "אחר" or single whole-city)
+
+  // Site-wide cleaning rules first — these deals arrive live from the API, so the
+  // nightly flaggers never touched them. Same rules, same dashboard parameters as
+  // every other price on the site (lib/luxuryFilter.ts). The govmap feed carries
+  // no floor or street here, so clusters fall back to the strict "same flat"
+  // reading, which is the conservative one.
+  const cleanedInput = cleanDeals(deals, (d) => ({
+    date: d.dealDate,
+    price: d.dealAmount,
+    area: d.assetArea ?? 0,
+    rooms: d.assetRoomNum,
+  }));
+  deals = cleanedInput.kept;
 
   // First pass — filter to valid deals only, attach derived fields
   type Annotated = RawDeal & { year: number; targetYear: TargetYear; bucket: RoomBucket; subareaSlug: string; pricePerSqm: number };

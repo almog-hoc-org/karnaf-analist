@@ -10,6 +10,7 @@
  *  - "Single deal" rule: same address or within 3 house-number blocks
  *  - Never invent: if no data — return null (UI must not render empty cells)
  */
+import { cleanDeals } from "./luxuryFilter";
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 const VALID_ASSET_TYPES = ["דירה", "דירת גן", "דירת גג", "פנטהאוז", "דופלקס"];
@@ -99,6 +100,8 @@ export interface CityDealsData {
   periodYears: { current: number; minus3: number; minus5: number };
   townCharacter: string; // "דירות", "בתים פרטיים", "מעורב", "יישוב קטן"
   note?: string; // shown when fallback bucket sizes used
+  /** how many deals the cleaning rules held back, so the UI can account for them */
+  cleaned?: { dupes: number; luxury: number };
 }
 
 const STANDARD_BUCKETS = [
@@ -719,8 +722,20 @@ export async function getCityDealsData(
     }
   }
 
-  // Step 4: Filter valid deals
-  const validDeals = allDeals.filter(isValidDeal);
+  // Step 4: Filter valid deals, then apply the site-wide cleaning rules. These
+  // deals come live from the API, so the nightly flaggers' columns can't reach
+  // them — without this the neighbourhood tables would be the one place still
+  // averaging duplicate reports and luxury sales.
+  const saneDeals = allDeals.filter(isValidDeal);
+  const cleaned = cleanDeals(saneDeals, (d) => ({
+    date: d.dealDate,
+    price: d.dealAmount,
+    area: d.assetArea ?? 0,
+    rooms: d.assetRoomNum,
+    floor: d.floorNo,
+    address: d.streetNameHeb ? `${d.streetNameHeb}|${d.houseNum ?? ""}` : null,
+  }));
+  const validDeals = cleaned.kept;
   if (validDeals.length === 0)
     return { ...emptyResult, totalDealsAnalyzed: 0 };
 
@@ -855,5 +870,6 @@ export async function getCityDealsData(
     totalDealsAnalyzed: validDeals.length,
     periodYears,
     townCharacter,
+    cleaned: { dupes: cleaned.dupeCount, luxury: cleaned.luxuryCount },
   };
 }

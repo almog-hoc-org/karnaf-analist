@@ -91,7 +91,10 @@ export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorM
     prisma.city.findMany({ select: { city_name: true, households_2022: true } }),
     computeAllCityGaps().catch(() => []),
     prisma.$queryRawUnsafe<{ city_name: string; n: number; yrs: number }[]>(
-      `SELECT city_name, COUNT(*) n, COUNT(DISTINCT deal_year) yrs FROM nadlan_transactions GROUP BY city_name`
+      // coverage must count the SAME rows the stats were built from — an unfiltered
+      // count credited cities for duplicates and unusable rows they never used
+      `SELECT city_name, COUNT(*) n, COUNT(DISTINCT deal_year) yrs FROM nadlan_transactions
+       WHERE COALESCE(excluded,0)=0 GROUP BY city_name`
     ),
   ]);
 

@@ -4,17 +4,28 @@
  * city × year × room_bucket("3"|"4"|"5"|"all") × scope("all"|"secondhand"|"new"):
  * avg/median price + avg/median ₪/m² + n. Sanity-bounded (₪/m² 2k–200k, area 20–500).
  *
- * Source-aware:
- *   - scope "all"        ← govmap rows (רשות המסים, broad 2015→now); nadlan fallback if none.
- *   - scope "secondhand" ← nadlan rows, dealYear − yearBuilt ≥ 3.
+ * Prices come from the NADLAN channel only (deduped). govmap is dropped from ALL
+ * price stats: it is noisy/unreliable for price (TLV +30% vs the official median,
+ * Haifa −10%) and is kept solely for street addresses in /deals.
+ *   - scope "all"        ← nadlan rows (secondhand + new + unclassified) = a true union.
+ *   - scope "secondhand" ← nadlan rows, dealYear − yearBuilt ≥ secondhand_min_age (4).
  *   - scope "new"        ← nadlan rows, has build year AND not second-hand.
- * (govmap has no build year, so second-hand/new come only from the nadlan build-year rows.)
+ * Scope: last 10 years only.
+ *
+ * Two cleaning rules are enforced right here, at the choke point every price on
+ * the site flows through: duplicate reports have already left via `excluded`,
+ * and luxury deals are dropped by `COALESCE(luxury,0)=0` — they happened, so
+ * they stay in the counts and the drill-down, but they do not set the average.
  */
+import { getRuleNum } from "../lib/systemRules";
 import { prisma } from "../lib/db";
 
-const MIN_SQM = 2_000, MAX_SQM = 200_000, MIN_AREA = 20, MAX_AREA = 500;
+// Sanity bounds are admin-editable (lib/systemRules) — defaults match the originals.
+const MIN_SQM = getRuleNum("min_sqm_price", 2_000), MAX_SQM = getRuleNum("max_sqm_price", 200_000);
+const MIN_AREA = getRuleNum("min_area", 20), MAX_AREA = getRuleNum("max_area", 500);
+const MODERN_MIN = getRuleNum("modern_min_year", 2005); // second-hand: modern (≥) vs old building
 
-interface Row { city_name: string; deal_year: number; room_bucket: string; price: number | null; price_sqm: number | null; is_secondhand: number; year_built: number | null; source: string; }
+interface Row { city_name: string; deal_year: number; room_bucket: string; price: number | null; price_sqm: number | null; is_secondhand: number; year_built: number | null; source: string; neighborhood: string | null; rooms_effective: number | null; class_source: string | null; }
 
 function median(v: number[]): number | null {
   if (!v.length) return null;
@@ -36,12 +47,14 @@ function stat(rows: Row[]) {
 const inBucket = (rows: Row[], bucket: string) => (bucket === "all" ? rows : rows.filter((r) => r.room_bucket === bucket));
 
 async function main() {
+  const minYear = new Date().getFullYear() - 10; // last 10 years only
   const rows = await prisma.$queryRawUnsafe<Row[]>(
-    `SELECT city_name, deal_year, room_bucket, price, price_sqm, is_secondhand, year_built, source
+    `SELECT city_name, deal_year, room_bucket, price, price_sqm, is_secondhand, year_built, source, neighborhood, rooms_effective, class_source
      FROM nadlan_transactions
-     WHERE price_sqm >= ${MIN_SQM} AND price_sqm <= ${MAX_SQM} AND area >= ${MIN_AREA} AND area <= ${MAX_AREA}`
+     WHERE price_sqm >= ${MIN_SQM} AND price_sqm <= ${MAX_SQM} AND area >= ${MIN_AREA} AND area <= ${MAX_AREA}
+       AND COALESCE(excluded,0)=0 AND COALESCE(luxury,0)=0 AND deal_year >= ${minYear}`
   );
-  console.log(`aggregating ${rows.length} sane transactions…`);
+  console.log(`aggregating ${rows.length} sane transactions (last 10y, nadlan-priced)…`);
 
   // city -> { govmap: Row[], nadlan: Row[] }
   const byCity = new Map<string, { govmap: Row[]; nadlan: Row[] }>();
@@ -55,8 +68,42 @@ async function main() {
   const out: Out[] = [];
   const byYear = (arr: Row[]) => { const m = new Map<number, Row[]>(); for (const r of arr) { let a = m.get(r.deal_year); if (!a) { a = []; m.set(r.deal_year, a); } a.push(r); } return m; };
 
+  // ── SOURCE CHOICE PER CITY (verified 2026-07-29) ─────────────────────────
+  // govmap measures area ~9% larger than nadlan, so its ₪/m² sits ~10-14% LOWER.
+  // Splicing the two inside one city's line produced phantom jumps of 40-94%
+  // (Dimona +93.8%) — so we NEVER mix sources within a city. Instead: a city whose
+  // nadlan coverage is thin uses govmap for the WHOLE decade (one source, no seam),
+  // flagged so the UI can label it. Second-hand/new stay nadlan-only (need year_built).
+  const GOV_MIN_DEALS = getRuleNum("govmap_only_min_deals", 30);
+  const GOV_MIN_YEARS = getRuleNum("govmap_only_min_years", 8);
+  const yearsWith = (rows: Row[], min: number) => {
+    const c = new Map<number, number>();
+    for (const r of rows) c.set(r.deal_year, (c.get(r.deal_year) ?? 0) + 1);
+    return [...c.values()].filter((n) => n >= min).length;
+  };
+  const govmapOnlyCities = new Set<string>();
   for (const [city, { govmap, nadlan }] of byCity) {
-    const allRows = govmap.length ? govmap : nadlan; // broad source for "all"
+    const gy = yearsWith(govmap, GOV_MIN_DEALS), ny = yearsWith(nadlan, GOV_MIN_DEALS);
+    if (gy >= GOV_MIN_YEARS && gy > ny) govmapOnlyCities.add(city);
+  }
+  console.log(`  govmap-only "all" series for ${govmapOnlyCities.size} cities (thin nadlan coverage)`);
+
+  for (const [city, { govmap, nadlan }] of byCity) {
+    // "all" = one source for the whole decade — govmap where nadlan is too thin.
+    //
+    // In nadlan cities "all" takes CLASSIFIED deals only. The gate used to be
+    // year_built>0, for a good reason: the no-build-year group is heavy with presale
+    // marketing prices (TLV 2025: 28% of deals at ₪60.3K/m² — towers sold on paper),
+    // and as an unlabelled lump it pushed "all" ABOVE both of its own subsets.
+    //
+    // The gate is now class_source, which is strictly wider and keeps that finding
+    // intact: those presale deals are no longer unlabelled — the authority's own
+    // Sale-Law flag identifies them as first-hand, so they land in "new" where they
+    // belong instead of being discarded. Requiring a build year was also throwing
+    // away 44% of Tirat Karmel's deals, leaving that city with no split at all and a
+    // "trend" that only tracked which kind of flat happened to sell that year.
+    // (scripts/classify-sale-channel.ts assigns class_source.)
+    const allRows = govmapOnlyCities.has(city) ? govmap : nadlan.filter((r) => r.class_source != null);
     const allByYear = byYear(allRows);
     const nadByYear = byYear(nadlan);
     const years = new Set<number>([...allByYear.keys(), ...nadByYear.keys()]);
@@ -65,12 +112,57 @@ async function main() {
       const nadY = nadByYear.get(year) ?? [];
       for (const bucket of ["3", "4", "5", "all"]) {
         const a = inBucket(allY, bucket);
-        if (a.length) out.push({ city, year, bucket, scope: "all", s: stat(a) });
+        // govmap-sourced cities need the higher per-year floor (their line is the only one)
+        const minCell = govmapOnlyCities.has(city) ? GOV_MIN_DEALS : 1;
+        if (a.length >= minCell) out.push({ city, year, bucket, scope: govmapOnlyCities.has(city) ? "all_govmap" : "all", s: stat(a) });
         const nb = inBucket(nadY, bucket);
         const sh = nb.filter((r) => r.is_secondhand === 1);
         if (sh.length) out.push({ city, year, bucket, scope: "secondhand", s: stat(sh) });
-        const nw = nb.filter((r) => r.is_secondhand === 0 && (r.year_built ?? 0) > 0);
+        // second-hand split by building age (user rule): modern (built ≥ MODERN_MIN) vs old
+        const shModern = sh.filter((r) => (r.year_built ?? 0) >= MODERN_MIN);
+        if (shModern.length) out.push({ city, year, bucket, scope: "secondhand_modern", s: stat(shModern) });
+        const shOld = sh.filter((r) => (r.year_built ?? 0) > 0 && (r.year_built ?? 0) < MODERN_MIN);
+        if (shOld.length) out.push({ city, year, bucket, scope: "secondhand_old", s: stat(shOld) });
+        const nw = nb.filter((r) => r.is_secondhand === 0 && r.class_source != null);
         if (nw.length) out.push({ city, year, bucket, scope: "new", s: stat(nw) });
+      }
+    }
+
+    // ── MIX-ADJUSTED second-hand series (scope "secondhand_fixedmix") ──────────
+    // The raw median is inflated by SAMPLE-COMPOSITION drift (verified 2026-07-29:
+    // TLV raw +12.3% 2022→2025 while repeat-sales says ~+3% and the official median
+    // is flat — ~10 of the 12.3 points were mix, not price). Fix: a FIXED BASKET of
+    // neighborhood×rooms cells — each year is the weighted mean of its cell medians
+    // using the SAME all-period weights, so a shifting sample can't move the series.
+    {
+      const sh = nadlan.filter((r) => r.is_secondhand === 1 && r.neighborhood && (r.rooms_effective ?? 0) > 0 && r.price_sqm != null && r.price_sqm > 0);
+      const cellOf = (r: Row) => `${r.neighborhood}|${Math.round(r.rooms_effective!)}`;
+      const cellTotal = new Map<string, number>();
+      for (const r of sh) cellTotal.set(cellOf(r), (cellTotal.get(cellOf(r)) ?? 0) + 1);
+      // basket = cells with enough deals overall to have a stable median
+      const basket = new Map([...cellTotal].filter(([, n]) => n >= 10));
+      const totalW = [...basket.values()].reduce((s, v) => s + v, 0);
+      if (totalW >= 100) {
+        const byYearCell = new Map<number, Map<string, number[]>>();
+        for (const r of sh) {
+          const c = cellOf(r);
+          if (!basket.has(c)) continue;
+          let ym = byYearCell.get(r.deal_year); if (!ym) { ym = new Map(); byYearCell.set(r.deal_year, ym); }
+          const a = ym.get(c); if (a) a.push(r.price_sqm!); else ym.set(c, [r.price_sqm!]);
+        }
+        for (const [year, ym] of byYearCell) {
+          let wSum = 0, vSum = 0, nDeals = 0;
+          for (const [c, vals] of ym) {
+            if (vals.length < 3) continue; // cell too thin this year
+            const w = basket.get(c)!;
+            wSum += w; vSum += w * (median(vals) ?? 0); nDeals += vals.length;
+          }
+          // require the year to cover most of the basket, else the constant-mix promise breaks
+          if (wSum / totalW >= 0.5 && vSum > 0) {
+            const adj = vSum / wSum;
+            out.push({ city, year, bucket: "all", scope: "secondhand_fixedmix", s: { avg_price: null, median_price: null, avg_sqm: adj, median_sqm: adj, n: nDeals } });
+          }
+        }
       }
     }
   }
