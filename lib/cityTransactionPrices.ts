@@ -17,9 +17,40 @@
 import { prisma } from "./db";
 import { getRuleNum, getRuleBool } from "./systemRules";
 
-export const PRICE_REF_YEAR = getRuleNum("ref_year", 2025);
-const MIN_N = getRuleNum("min_deals_per_year", 10);
-const FALLBACK_YEARS = [PRICE_REF_YEAR, PRICE_REF_YEAR - 1]; // 2025 → 2024
+/**
+ * These are FUNCTIONS, not module-level constants, and that distinction is the
+ * whole point.
+ *
+ * They used to be `const`s initialised by calling getRuleNum at import time. ES
+ * module top-level code runs exactly once per process, so the value was a
+ * snapshot of system_rules taken at server start and frozen for the process
+ * lifetime. setRule() calls invalidateRuleCache(), but that invalidation could
+ * never reach a binding that would not be evaluated again.
+ *
+ * The failure that produced: an admin edits ref_year or min_deals_per_year and
+ * presses "apply changes". The pipeline scripts are FRESH PROCESSES, so they
+ * pick the new value up and rebuild the aggregates under it — while the
+ * long-running Next.js server keeps filtering and labelling with the old one.
+ * The database and the served page disagree, silently, until someone restarts
+ * the server. In dev this is masked by module reloading; under `next start` it
+ * persists indefinitely.
+ *
+ * Called inside functions, these hit the 5-second rule cache in systemRules.ts,
+ * so the cost is negligible and changes land within seconds.
+ */
+export function priceRefYear(): number {
+  return getRuleNum("ref_year");
+}
+
+function minN(): number {
+  return getRuleNum("min_deals_per_year");
+}
+
+/** Reference year first, then one year back — a city's collection can lag. */
+function fallbackYears(): [number, number] {
+  const y = priceRefYear();
+  return [y, y - 1];
+}
 
 export interface CityTransactionPrices {
   cityName: string;
@@ -45,12 +76,15 @@ interface StatRow { city_name: string; year: number; scope: string; avg_sqm: num
 interface CovRow { city_name: string; total: number; sh: number; ymin: number; ymax: number; yrs: number }
 
 export async function loadCityTransactionPrices(): Promise<Map<string, CityTransactionPrices>> {
+  // Resolved once per call, not once per process — see the note on these helpers.
+  const years = fallbackYears();
+  const threshold = minN();
   const [stats, cov] = await Promise.all([
     prisma.$queryRawUnsafe<StatRow[]>(
       `SELECT city_name, year, scope, avg_sqm, median_sqm, n
        FROM nadlan_year_room_stats
        WHERE room_bucket='all' AND scope IN ('all','secondhand') AND year IN (?, ?)`,
-      FALLBACK_YEARS[0], FALLBACK_YEARS[1]
+      years[0], years[1]
     ),
     prisma.$queryRawUnsafe<CovRow[]>(
       `SELECT city_name, COUNT(*) total, SUM(is_secondhand) sh,
@@ -73,13 +107,13 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
     const scopes = byCity.get(c.city_name);
     // pick the latest fallback year where scope=all clears MIN_N
     let priceYear: number | null = null;
-    for (const y of FALLBACK_YEARS) {
+    for (const y of years) {
       const cell = scopes?.get("all")?.get(y);
-      if (cell && Number(cell.n) >= MIN_N) { priceYear = y; break; }
+      if (cell && Number(cell.n) >= threshold) { priceYear = y; break; }
     }
     const allCell = priceYear != null ? scopes?.get("all")?.get(priceYear) : undefined;
     const shCell = priceYear != null ? scopes?.get("secondhand")?.get(priceYear) : undefined;
-    const shOk = shCell && Number(shCell.n) >= MIN_N;
+    const shOk = shCell && Number(shCell.n) >= threshold;
 
     out.set(c.city_name, {
       cityName: c.city_name,
@@ -131,7 +165,7 @@ export async function loadThinSampleCities(): Promise<Set<string>> {
  * never top a national ranking — AND at least city_min_total_deals active
  * deals over the decade (thin-sample cities are yellow in tables + excluded).
  */
-export async function loadRankingEligibleCities(minN = getRuleNum("ranking_min_per_scope", 10)): Promise<Set<string>> {
+export async function loadRankingEligibleCities(minPerScope = getRuleNum("ranking_min_per_scope")): Promise<Set<string>> {
   const thin = await loadThinSampleCities();
   if (!getRuleBool("ranking_normalization_on", true)) {
     const all = await prisma.$queryRawUnsafe<Array<{ city_name: string }>>(
@@ -143,13 +177,22 @@ export async function loadRankingEligibleCities(minN = getRuleNum("ranking_min_p
      WHERE room_bucket='all' AND scope IN ('all','secondhand','new')
        AND year IN (?, ?) AND n >= ?
      GROUP BY city_name HAVING COUNT(DISTINCT scope) = 3`,
-    PRICE_REF_YEAR, PRICE_REF_YEAR - 1, minN
+    priceRefYear(), priceRefYear() - 1, minPerScope
   );
   return new Set(rows.map((r) => r.city_name).filter((c) => !thin.has(c)));
 }
 
-export const RANKING_ELIGIBILITY_NOTE =
-  `בדירוג נכללות רק ערים עם ${getRuleNum("ranking_min_per_scope", 10)}+ עסקאות מכל סוג (כללי, יד-2, חדשות) בשנה מלאה אחרונה, ועם ${getRuleNum("city_min_total_deals", 150)}+ עסקאות פעילות ב-10 שנים (עריך בדשבורד) — נרמול נגד עיוותי מדגם קטן`;
+/**
+ * A function, for the same reason as the helpers at the top of this file: as a
+ * module-level `const` the template string was interpolated once at import
+ * time, so this user-facing sentence quoted whatever the thresholds were when
+ * the server booted. An admin could raise ranking_min_per_scope, watch the
+ * rankings change, and still read the old number in the explanation directly
+ * beneath them.
+ */
+export function rankingEligibilityNote(): string {
+  return `בדירוג נכללות רק ערים עם ${getRuleNum("ranking_min_per_scope")}+ עסקאות מכל סוג (כללי, יד-2, חדשות) בשנה מלאה אחרונה, ועם ${getRuleNum("city_min_total_deals")}+ עסקאות פעילות ב-10 שנים (עריך בדשבורד) — נרמול נגד עיוותי מדגם קטן`;
+}
 
 /** Caption for any consumer (memory rule: source • period • update). */
 export const TX_PRICE_PROVENANCE = `מאגר העסקאות הפנימי (רשות המסים) · ₪/מ"ר · שנה מלאה אחרונה עם 10+ עסקאות`;

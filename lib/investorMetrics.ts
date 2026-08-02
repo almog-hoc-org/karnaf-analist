@@ -17,8 +17,11 @@
  */
 import { prisma } from "./db";
 import { computeAllCityGaps } from "./gap-analysis";
+import { refYear } from "./refYear";
 
-export const REF_YEAR = 2025; // latest complete deal-year in the DB
+// The reference year is no longer defined here. It was `const REF_YEAR = 2025`,
+// one of three independent copies that drifted apart. Import refYear() from
+// lib/refYear instead — see that file for what the drift produced.
 
 export interface InvestorMetrics {
   cityName: string;
@@ -82,11 +85,14 @@ function percentileRank(values: number[], v: number): number {
 interface StatRow { city_name: string; year: number; scope: string; avg_sqm: number | null; n: number }
 
 export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorMetrics>> {
+  // Resolved once per call: every window below must be measured against the
+  // SAME year, or a 1y and a 3y change could straddle a rule edit mid-run.
+  const ry = refYear();
   const [statRows, cities, gapList, coverage] = await Promise.all([
     prisma.$queryRawUnsafe<StatRow[]>(
       `SELECT city_name, year, scope, avg_sqm, n FROM nadlan_year_room_stats
        WHERE room_bucket='all' AND year BETWEEN ? AND ?`,
-      REF_YEAR - 4, REF_YEAR
+      ry - 4, ry
     ),
     prisma.city.findMany({ select: { city_name: true, households_2022: true } }),
     computeAllCityGaps().catch(() => []),
@@ -117,8 +123,8 @@ export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorM
     const all = scopes.get("all");
     const get = (scope: string, y: number) => scopes.get(scope)?.get(y);
 
-    const chg1y = pctCell(get("all", REF_YEAR), get("all", REF_YEAR - 1));
-    const chg3y = pctCell(get("all", REF_YEAR), get("all", REF_YEAR - 3));
+    const chg1y = pctCell(get("all", ry), get("all", ry - 1));
+    const chg3y = pctCell(get("all", ry), get("all", ry - 3));
     const chg3yAnnual =
       chg3y != null ? (Math.pow(1 + chg3y / 100, 1 / 3) - 1) * 100 : null;
     const momentum = chg1y != null && chg3yAnnual != null ? chg1y - chg3yAnnual : null;
@@ -126,7 +132,7 @@ export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorM
     // premium: latest year (down to REF_YEAR-2) where both scopes have ≥10 deals
     let newPremiumPct: number | null = null;
     let newPremiumYear: number | null = null;
-    for (let y = REF_YEAR; y >= REF_YEAR - 2; y--) {
+    for (let y = ry; y >= ry - 2; y--) {
       const nw = get("new", y);
       const sh = get("secondhand", y);
       if (nw?.avg && sh?.avg && nw.n >= 10 && sh.n >= 10) {
@@ -137,14 +143,14 @@ export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorM
     }
 
     // liquidity
-    const nRef = all?.get(REF_YEAR)?.n ?? 0;
-    const nPrev = all?.get(REF_YEAR - 1)?.n ?? 0;
+    const nRef = all?.get(ry)?.n ?? 0;
+    const nPrev = all?.get(ry - 1)?.n ?? 0;
     const dealsPerYear = nRef > 0 || nPrev > 0 ? Math.round((nRef + nPrev) / ((nRef > 0 ? 1 : 0) + (nPrev > 0 ? 1 : 0))) : null;
     const hh = hhMap.get(city);
     let liquidityPer1k =
       dealsPerYear != null && hh && hh > 0 ? (dealsPerYear / hh) * 1000 : null;
     if (liquidityPer1k != null && (liquidityPer1k < 0 || liquidityPer1k > 200)) liquidityPer1k = null;
-    const n3ago = all?.get(REF_YEAR - 3)?.n ?? 0;
+    const n3ago = all?.get(ry - 3)?.n ?? 0;
     const liquidityTrendPct = nRef >= 30 && n3ago >= 30 ? (nRef / n3ago - 1) * 100 : null;
 
     const gap = gapMap.get(city);
@@ -200,4 +206,7 @@ export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorM
 }
 
 /** Provenance caption for investor metrics (memory rule: source • period • update). */
-export const INVESTOR_PROVENANCE = `מאגר העסקאות הפנימי (רשות המסים + נדל"ן) · שנת ייחוס ${REF_YEAR} · היצע: למ"ס`;
+/** A function: as a const the year was interpolated once at import time. */
+export function investorProvenance(): string {
+  return `מאגר העסקאות הפנימי (רשות המסים + נדל"ן) · שנת ייחוס ${refYear()} · היצע: למ"ס`;
+}

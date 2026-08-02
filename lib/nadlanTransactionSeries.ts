@@ -7,7 +7,8 @@ import { cachedMarket } from "./cache";
  * Data for the per-city price graphs — 100% the collected nadlan deals (no govmap):
  *   1. median      — official nadlan median (nadlan_price_trends), by year.
  *   2. avg all     — nadlan_year_room_stats scope="all", by year×room (inspectable, drill-down).
- *   3. avg 2nd-hand — scope="secondhand" (dealYear − yearBuilt ≥ 3), by year×room.
+ *   3. avg 2nd-hand — scope="secondhand" (dealYear − yearBuilt ≥ secondhand_min_age,
+ *      default 4 — this comment said 3 while the code always used 4), by year×room.
  *   (+ scope="new" — first-hand, has build year AND not second-hand — for period-compare/table.)
  * All average series come from the same collected transactions, inspectable via loadCityDeals.
  */

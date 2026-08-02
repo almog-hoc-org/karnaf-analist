@@ -3,7 +3,8 @@ import Link from "next/link";
 import CitiesTable, { type InvestorRow } from "@/components/CitiesTable";
 import { loadAllCityPriceChanges } from "@/lib/price-changes";
 import { loadCitiesChangeMetrics } from "@/lib/cityChangeMetrics";
-import { computeAllInvestorMetrics, REF_YEAR } from "@/lib/investorMetrics";
+import { computeAllInvestorMetrics } from "@/lib/investorMetrics";
+import { refYear } from "@/lib/refYear";
 import { loadCityTransactionPrices, loadActiveDealCounts } from "@/lib/cityTransactionPrices";
 import { getRuleNum } from "@/lib/systemRules";
 
@@ -140,7 +141,7 @@ export default async function CitiesPage() {
         </p>
       </header>
 
-      <CitiesTable data={tableData} investor={investor} refYear={REF_YEAR} minDeals={minDeals} />
+      <CitiesTable data={tableData} investor={investor} refYear={refYear()} minDeals={minDeals} />
 
       <footer className="mt-12 pt-6 border-t border-slate-200 text-center text-slate-500 text-xs">
         מקור: למ&quot;ס, מחקר פנימי קרנף 2026

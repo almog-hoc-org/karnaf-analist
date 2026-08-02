@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/db";
 import {
   computeAllInvestorMetrics,
-  INVESTOR_PROVENANCE,
-  REF_YEAR,
+  investorProvenance,
 } from "@/lib/investorMetrics";
+import { refYear } from "@/lib/refYear";
 import CompareView, {
   type CompareCityRow,
   type CompareMetrics,
@@ -105,7 +105,7 @@ export default async function ComparePage({
           <span className="text-gradient-hero">השוואת ערים</span>
         </h1>
         <p className="text-slate-500 text-sm md:text-base font-medium max-w-xl mx-auto mt-3 leading-relaxed">
-          2–4 ערים זו מול זו — מחירים מעסקאות אמיתיות, פרמיית חדשות והיצע · שנת ייחוס {REF_YEAR}
+          2–4 ערים זו מול זו — מחירים מעסקאות אמיתיות, פרמיית חדשות והיצע · שנת ייחוס {refYear()}
         </p>
       </header>
 
@@ -114,8 +114,8 @@ export default async function ComparePage({
         metrics={metrics}
         series={series}
         initialCities={initialCities}
-        refYear={REF_YEAR}
-        provenance={INVESTOR_PROVENANCE}
+        refYear={refYear()}
+        provenance={investorProvenance()}
       />
     </main>
   );

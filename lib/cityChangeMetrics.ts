@@ -1,5 +1,6 @@
 import { prisma } from "./db";
 import { loadThinSampleCities } from "./cityTransactionPrices";
+import { refYear } from "./refYear";
 
 /**
  * Per-city yearly value series for the cities-table windowed price-change columns
@@ -87,8 +88,11 @@ export async function loadCitiesChangeMetrics(): Promise<Map<string, CityChangeM
 
 /* ── Second-hand windowed changes (site-wide comparison basis) ───────────── */
 
-/** Latest COMPLETE deal-year in the DB (2026 is partial). */
-export const SH_REF_YEAR = 2025;
+/**
+ * Was a hardcoded 2025, independent of both the `ref_year` rule and
+ * investorMetrics' own copy. See lib/refYear.ts for what that drift produced.
+ */
+export { refYear as shRefYear } from "./refYear";
 /** |Δ%| beyond this is data noise, not a market move (memory rule: verify KPIs). */
 const SH_MAX_ABS_CHANGE = 80;
 
@@ -110,15 +114,15 @@ export interface SecondhandChange {
 export async function loadSecondhandChanges(
   win: number,
   field: "avg_sqm" | "median_sqm" = "avg_sqm",
-  refYear: number = SH_REF_YEAR
+  refYearArg: number = refYear()
 ): Promise<SecondhandChange[]> {
-  const fromYear = refYear - win;
+  const fromYear = refYearArg - win;
   const thinCities = await loadThinSampleCities();
   const rows = await prisma.nadlan_year_room_stats.findMany({
     where: {
       scope: { in: ["secondhand", "secondhand_fixedmix"] },
       room_bucket: "all",
-      year: { in: [fromYear, refYear] },
+      year: { in: [fromYear, refYearArg] },
       n: { gte: SH_MIN_N },
     },
     select: { city_name: true, year: true, scope: true, avg_sqm: true, median_sqm: true },
@@ -142,7 +146,7 @@ export async function loadSecondhandChanges(
     if (c.from == null || c.to == null) continue;
     const pct = (c.to / c.from - 1) * 100;
     if (!Number.isFinite(pct) || Math.abs(pct) > SH_MAX_ABS_CHANGE) continue;
-    out.push({ city_name, pct, fromY: fromYear, toY: refYear });
+    out.push({ city_name, pct, fromY: fromYear, toY: refYearArg });
   }
   return out.sort((a, b) => b.pct - a.pct);
 }

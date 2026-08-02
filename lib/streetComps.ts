@@ -40,7 +40,7 @@ export async function computeStreetComp(
   const minDeals = Math.max(1, getRuleNum("comp_min_deals", 1));
   const minSqmPrice = getRuleNum("min_sqm_price", 2000);
   const shOnly = getRuleBool("comp_secondhand_only", true);
-  const shMinAge = getRuleNum("secondhand_min_age", 3);
+  const shMinAge = getRuleNum("secondhand_min_age");
 
   const hasRooms = rooms != null && rooms > 0;
   const hasSize = size != null && size > 0;

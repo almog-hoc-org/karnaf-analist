@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 /** Bound-check audit for lib/investorMetrics.ts — run before shipping any UI on it. */
-import { computeAllInvestorMetrics, REF_YEAR } from "../lib/investorMetrics";
+import { computeAllInvestorMetrics } from "../lib/investorMetrics";
+import { refYear } from "../lib/refYear";
 import { prisma } from "../lib/db";
 
 async function main() {
@@ -34,7 +35,7 @@ async function main() {
   bad.slice(0, 10).forEach((b) => console.log("  ✗ " + b));
 
   const top = [...withScore].sort((a, b) => (b.score ?? 0) - (a.score ?? 0)).slice(0, 8);
-  console.log(`\nTop-8 by score (ref ${REF_YEAR}):`);
+  console.log(`\nTop-8 by score (ref ${refYear()}):`);
   for (const m of top)
     console.log(
       `  ${m.cityName}: score=${m.score} chg3y=${m.chg3y?.toFixed(1)}% mom=${m.momentum?.toFixed(1)}pp liq=${m.liquidityPer1k?.toFixed(0)}/1k prem=${m.newPremiumPct?.toFixed(0) ?? "—"}% gap=${m.gapPctOfDemand?.toFixed(0) ?? "—"}% conf=${m.confidence}`

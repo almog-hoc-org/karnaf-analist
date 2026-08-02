@@ -5,7 +5,8 @@
  * consecutive window of 4 mixes at least two price tiers (cheap/mid/expensive).
  */
 import { prisma } from "./db";
-import { computeAllInvestorMetrics, REF_YEAR } from "./investorMetrics";
+import { computeAllInvestorMetrics } from "./investorMetrics";
+import { refYear } from "./refYear";
 import { loadSecondhandChanges } from "./cityChangeMetrics";
 import { loadCityTransactionPrices } from "./cityTransactionPrices";
 
@@ -25,7 +26,8 @@ export interface MarketInsight {
 }
 
 const fmt = (v: number, d = 1) => v.toFixed(d).replace(/\.0$/, "");
-const PROV = `מאגר העסקאות העצמאי (רשות המסים) · עד ${REF_YEAR}`;
+/** A function: as a const the year was baked in at import time. */
+const prov = () => `מאגר העסקאות העצמאי (רשות המסים) · עד ${refYear()}`;
 
 function tierOf(medianShSqm: number | null | undefined): PriceTier {
   if (medianShSqm == null) return "mid";
@@ -55,6 +57,8 @@ function interleaveTiers(pool: MarketInsight[]): MarketInsight[] {
 }
 
 export async function computeMarketInsights(): Promise<MarketInsight[]> {
+  // one reference year for every insight produced by this call
+  const ry = refYear();
   const [sh3, sh1, prices, inv, activeStreets, volumeRows] = await Promise.all([
     loadSecondhandChanges(3),
     loadSecondhandChanges(1),
@@ -70,7 +74,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
     prisma.$queryRawUnsafe<Array<{ city_name: string; year: number; n: number }>>(
       `SELECT city_name, year, n FROM nadlan_year_room_stats
        WHERE room_bucket='all' AND scope='all' AND year IN (?, ?)`,
-      REF_YEAR, REF_YEAR - 3
+      ry, ry - 3
     ).catch(() => []),
   ]);
 
@@ -87,7 +91,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
       title: `${c.city_name} — זינוק ביד שנייה`,
       body: `מחירי יד-2 עלו ‎+${fmt(c.pct)}% בשלוש שנים (${c.fromY}→${c.toY}, ₪/מ"ר ממוצע) — מהעליות החדות בישראל.`,
       cityName: c.city_name, href: `/city/${encodeURIComponent(c.city_name)}`,
-      value: c.pct, valueLabel: `שינוי יד-2 3 שנים (${c.fromY}→${c.toY})`, provenance: PROV,
+      value: c.pct, valueLabel: `שינוי יד-2 3 שנים (${c.fromY}→${c.toY})`, provenance: prov(),
     });
   }
 
@@ -102,7 +106,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
       title: `${c.city_name} — העלייה נעצרה`,
       body: `אחרי ‎+${fmt(c.pct)}% ב-3 שנים, יד-2 ${y1.pct < 0 ? `ירדה ‎${fmt(y1.pct)}%` : "נותרה ללא שינוי"} בשנה האחרונה (${y1.fromY}→${y1.toY}).`,
       cityName: c.city_name, href: `/city/${encodeURIComponent(c.city_name)}`,
-      value: y1.pct, valueLabel: `שינוי יד-2 שנתי (${y1.fromY}→${y1.toY})`, provenance: PROV,
+      value: y1.pct, valueLabel: `שינוי יד-2 שנתי (${y1.fromY}→${y1.toY})`, provenance: prov(),
     });
   }
 
@@ -116,7 +120,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
       title: `${m.cityName} — חדשה כמעט במחיר יד-2`,
       body: `פער המחיר למ"ר בין דירה חדשה ליד-שנייה הוא ‎${fmt(m.newPremiumPct)}% בלבד (${m.newPremiumYear}) — נקודת כניסה מעניינת לשוק החדש.`,
       cityName: m.cityName, href: `/city/${encodeURIComponent(m.cityName)}`,
-      value: null, valueLabel: `פרמיית חדשות ${m.newPremiumYear}`, provenance: `${PROV} · לפי שנת בנייה`,
+      value: null, valueLabel: `פרמיית חדשות ${m.newPremiumYear}`, provenance: `${prov()} · לפי שנת בנייה`,
     });
   }
 
@@ -134,8 +138,8 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
       title: `${m.cityName} — ביקוש עודף על ההיצע`,
       body: `יד-2 עלתה ‎+${fmt(sh3Map.get(m.cityName)!)}% ב-3 שנים וההיצע החדש מכסה חלק קטן מהביקוש (פער ${fmt(m.gapPctOfDemand, 0)}%) — לחץ מחירים מובנה.`,
       cityName: m.cityName, href: `/city/${encodeURIComponent(m.cityName)}`,
-      value: sh3Map.get(m.cityName)!, valueLabel: `שינוי יד-2 3 שנים (עד ${REF_YEAR})`,
-      provenance: `${PROV} · היצע: למ"ס`,
+      value: sh3Map.get(m.cityName)!, valueLabel: `שינוי יד-2 3 שנים (עד ${ry})`,
+      provenance: `${prov()} · היצע: למ"ס`,
     });
   }
 
@@ -147,7 +151,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
       title: `${s.city_name} — הרחוב הפעיל בעיר`,
       body: `רחוב ${s.street} ריכז ${Number(s.n).toLocaleString("he-IL")} עסקאות ב-24 החודשים האחרונים — הרחוב הנסחר ביותר בעיר.`,
       cityName: s.city_name, href: `/city/${encodeURIComponent(s.city_name)}`,
-      value: null, valueLabel: `עסקאות ברחוב · 24 ח׳ אחרונים`, provenance: PROV,
+      value: null, valueLabel: `עסקאות ברחוב · 24 ח׳ אחרונים`, provenance: prov(),
     });
   }
 
@@ -155,7 +159,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
   const volByCity = new Map<string, { now?: number; before?: number }>();
   for (const r of volumeRows) {
     const cur = volByCity.get(r.city_name) ?? {};
-    if (Number(r.year) === REF_YEAR) cur.now = Number(r.n);
+    if (Number(r.year) === ry) cur.now = Number(r.n);
     else cur.before = Number(r.n);
     volByCity.set(r.city_name, cur);
   }
@@ -167,9 +171,9 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
     pool.push({
       key: `vol-${v.city}`, icon: "🔄", tier: t(v.city),
       title: `${v.city} — קפיצה במספר העסקאות`,
-      body: `${v.now.toLocaleString("he-IL")} עסקאות ב-${REF_YEAR} — זינוק של ‎${fmt(v.pct, 0)}% לעומת לפני 3 שנים. שוק פעיל בהרבה.`,
+      body: `${v.now.toLocaleString("he-IL")} עסקאות ב-${ry} — זינוק של ‎${fmt(v.pct, 0)}% לעומת לפני 3 שנים. שוק פעיל בהרבה.`,
       cityName: v.city, href: `/city/${encodeURIComponent(v.city)}`,
-      value: v.pct, valueLabel: `שינוי בנפח עסקאות (${REF_YEAR - 3}→${REF_YEAR})`, provenance: PROV,
+      value: v.pct, valueLabel: `שינוי בנפח עסקאות (${ry - 3}→${ry})`, provenance: prov(),
     });
   }
 

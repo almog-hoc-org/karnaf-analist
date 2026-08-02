@@ -1,10 +1,12 @@
 /**
  * The single place the site's methodology numbers are documented FROM CODE.
- * SECONDHAND_MIN_AGE is imported from the real aggregation lib; the collector
- * sanity bounds are mirrored here (scripts/collect-*.ts hold the same values —
- * change BOTH together).
+ * The second-hand threshold is re-exported from the real aggregation lib as a
+ * FUNCTION — it used to be a re-exported const, which froze the rule at server
+ * start and let this "documented from code" number drift from the code it
+ * claimed to document. The collector sanity bounds are mirrored here
+ * (scripts/collect-*.ts hold the same values — change BOTH together).
  */
-export { SECONDHAND_MIN_AGE } from "./nadlanDealsAggregate";
+export { secondhandMinAge } from "./nadlanDealsAggregate";
 
 /** Sanity bounds applied at collection time (mirrors scripts/collect-*.ts). */
 export const SANITY = {

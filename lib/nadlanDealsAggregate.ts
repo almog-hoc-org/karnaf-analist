@@ -14,7 +14,16 @@ import path from "path";
 
 import { getRuleNum } from "./systemRules";
 
-export const SECONDHAND_MIN_AGE = getRuleNum("secondhand_min_age", 3);
+/**
+ * A function, not a `const`. As a module-level constant this froze
+ * secondhand_min_age at server start, so an admin editing the rule changed the
+ * pipeline (fresh processes) but not the running server, with no error to
+ * notice. The old `3` passed as a fallback was also dead — getRuleNum prefers
+ * the RULE_DEFS default (4) whenever the key is declared, which it is.
+ */
+export function secondhandMinAge(): number {
+  return getRuleNum("secondhand_min_age");
+}
 const CACHE_DIR = path.resolve(process.cwd(), "data", "nadlan_deals");
 
 // sanity bounds
@@ -82,10 +91,12 @@ export function loadNadlanCity(cityName: string): NadlanCityAgg | null {
   );
   if (deals.length === 0) return null;
 
+  // resolved once per call rather than once per process
+  const minAge = secondhandMinAge();
   const isSecondHand = (d: RawDeal) => {
     const dy = Number((d.dealDate || "").slice(0, 4));
     const yb = Number(d.yearBuilt);
-    return yb > 0 && dy - yb >= SECONDHAND_MIN_AGE;
+    return yb > 0 && dy - yb >= minAge;
   };
 
   const byRoom = {} as NadlanCityAgg["byRoom"];

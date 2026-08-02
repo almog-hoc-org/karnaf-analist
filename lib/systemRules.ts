@@ -129,11 +129,21 @@ export const RULE_DEFS: RuleDef[] = [
     help: "כמה עסקאות דומות מספיקות כדי להציג השוואה." },
 
   // ── display / sources ─────────────────────────────────────────────
-  { key: "show_source_cbs", label: "הצגת נתוני למ\"ס", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "אוכלוסייה, היתרי בנייה, התחלות/גמר, דוחות." },
-  { key: "show_source_govnadlan", label: "הצגת החציון הרשמי (גוב-נדלן)", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "סדרת החציון הרשמית בגרפים ובכרטיסי המחיר." },
-  { key: "show_source_yad2", label: "הצגת נתוני יד2", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "מדדי מצב שוק (מודעות, ימים בשוק) בדף העיר." },
+  //
+  // ⚠ NOT WIRED UP. A repo-wide search for these four keys finds no reader
+  // outside this file: nothing consults them when rendering a page or building
+  // a series. Toggling "hide Yad2 data" changes nothing, and the operator has
+  // no way to tell.
+  //
+  // They are labelled as inactive rather than deleted, because whether to
+  // implement them or drop them is a product decision. A control that silently
+  // does nothing is worse than one that is absent — so until it is wired, the
+  // dashboard says so.
+  { key: "show_source_cbs", label: "הצגת נתוני למ\"ס", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "⚠ טרם מחובר — המתג אינו משפיע כרגע. אוכלוסייה, היתרי בנייה, התחלות/גמר, דוחות." },
+  { key: "show_source_govnadlan", label: "הצגת החציון הרשמי (גוב-נדלן)", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "⚠ טרם מחובר — המתג אינו משפיע כרגע. סדרת החציון הרשמית בגרפים ובכרטיסי המחיר." },
+  { key: "show_source_yad2", label: "הצגת נתוני יד2", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "⚠ טרם מחובר — המתג אינו משפיע כרגע. מדדי מצב שוק (מודעות, ימים בשוק) בדף העיר." },
   { key: "default_series", label: "סדרות ברירת-מחדל בגרף העיר", group: "מקורות ותצוגה", kind: "text", default: "sh_avg,sh_med",
-    help: "אילו סדרות מסומנות כשנכנסים לדף עיר. אפשרויות: sh_avg, sh_med, all_avg, all_med, new_avg, official." },
+    help: "⚠ טרם מחובר — הערך אינו משפיע כרגע. אילו סדרות מסומנות כשנכנסים לדף עיר. אפשרויות: sh_avg, sh_med, all_avg, all_med, new_avg, official." },
 ];
 
 const DEFAULTS = new Map(RULE_DEFS.map((r) => [r.key, r]));
@@ -169,6 +179,22 @@ function rows(): Map<string, RuleRow> {
 
 export function invalidateRuleCache() { cache = null; cacheAt = 0; }
 
+/**
+ * PRECEDENCE — read this before passing `fallback`:
+ *   1. the stored override in system_rules (when present and enabled)
+ *   2. the default declared in RULE_DEFS
+ *   3. the caller's `fallback` — ONLY when the key is absent from RULE_DEFS
+ *
+ * So for any key that RULE_DEFS declares — which is every key in use — the
+ * `fallback` argument is dead. It reads like a default and never behaves as
+ * one. Three call sites were written `getRuleNum("secondhand_min_age", 3)` and
+ * silently evaluated to 4, which is also where the "≥ 3" claims in the schema
+ * comments came from.
+ *
+ * The precedence itself is correct — RULE_DEFS should win over a scattered
+ * literal — so it is documented rather than changed. Prefer omitting
+ * `fallback` entirely for known keys; it exists for keys not yet declared.
+ */
 export function getRuleNum(key: string, fallback?: number): number {
   const def = Number(DEFAULTS.get(key)?.default ?? fallback ?? 0);
   const r = rows().get(key);

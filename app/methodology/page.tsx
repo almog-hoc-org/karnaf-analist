@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 /** Public methodology page — the numbers here are imported FROM THE CODE. */
 export default async function MethodologyPage() {
   // live values from the admin rules — the page can never drift from reality
-  const SECONDHAND_MIN_AGE = getRuleNum("secondhand_min_age", 3);
+  const SECONDHAND_MIN_AGE = getRuleNum("secondhand_min_age");
   const MIN_N_PER_YEAR = getRuleNum("min_deals_per_year", 10);
   const RANKING_MIN_PER_SCOPE = getRuleNum("ranking_min_per_scope", 10);
   const SANITY = {

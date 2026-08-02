@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { computeAllInvestorMetrics, REF_YEAR } from "@/lib/investorMetrics";
+import { computeAllInvestorMetrics } from "@/lib/investorMetrics";
+import { refYear } from "@/lib/refYear";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
-import { loadCityTransactionPrices, loadRankingEligibleCities, RANKING_ELIGIBILITY_NOTE } from "@/lib/cityTransactionPrices";
+import { loadCityTransactionPrices, loadRankingEligibleCities, rankingEligibilityNote } from "@/lib/cityTransactionPrices";
 import { computeAllCityGaps } from "@/lib/gap-analysis";
 
 interface PageProps {
@@ -25,7 +26,7 @@ const RANKING_CONFIG: Record<RankingType, {
 }> = {
   "new-premium": {
     title: "פרמיית חדשות נמוכה",
-    subtitle: `ערים שבהן דירה חדשה קרובה במחירה ליד-שנייה (₪/מ"ר, לפי שנת בנייה, עד ${REF_YEAR})`,
+    subtitle: `ערים שבהן דירה חדשה קרובה במחירה ליד-שנייה (₪/מ"ר, לפי שנת בנייה, עד ${refYear()})`,
     icon: "🆕",
     accent: "indigo",
     valueLabel: "פרמיית חדשות",
@@ -197,7 +198,7 @@ export default async function RankingPage({ params }: PageProps) {
                 מקור: {cfg.source}
               </span>
               <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-2xs font-semibold">
-                ⚖️ {RANKING_ELIGIBILITY_NOTE}
+                ⚖️ {rankingEligibilityNote()}
               </span>
             </div>
           </div>

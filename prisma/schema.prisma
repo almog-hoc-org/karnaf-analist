@@ -185,7 +185,10 @@ model national_construction {
 
 // Raw audit trail: the sampled 3/4/5-room nadlan settlement deals (WITH build year),
 // collected by paginating the "עסקאות אחרונות ביישוב" view. One row per kept deal.
-// is_secondhand = deal_year - year_built >= 3 (SECONDHAND_MIN_AGE). Source: nadlan.gov.il
+// is_secondhand = deal_year - year_built >= secondhand_min_age (default 4). Source: nadlan.gov.il
+// The threshold is the admin rule, not a literal — it said 3 here while every
+// collector burned 4, because getRuleNum ignores a caller fallback for a
+// declared key. scripts/recompute-secondhand.ts re-derives the column from it.
 // (רשות המסים). Averages/medians are derived into nadlan_year_room_stats.
 model nadlan_transactions {
   id            Int      @id @default(autoincrement())
