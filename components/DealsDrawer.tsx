@@ -14,7 +14,14 @@ function nis(v: number | null): string {
   return v == null ? "—" : `₪${Math.round(v).toLocaleString("he-IL")}`;
 }
 
-export default function DealsDrawer({ deals, accent = "slate" }: { deals: NadlanDeal[]; accent?: "indigo" | "emerald" | "slate" }) {
+export default function DealsDrawer({ deals, accent = "slate", total, onLoadMore, loadingMore }: {
+  deals: NadlanDeal[];
+  accent?: "indigo" | "emerald" | "slate";
+  /** how many deals match the filter in total — the list may be one page of them */
+  total?: number;
+  onLoadMore?: () => void;
+  loadingMore?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const [sort, setSort] = useState<{ key: SortKey; dir: 1 | -1 }>({ key: "dealDate", dir: -1 });
 
@@ -47,16 +54,16 @@ export default function DealsDrawer({ deals, accent = "slate" }: { deals: Nadlan
     <div className="mt-2">
       <button
         onClick={() => setOpen((o) => !o)}
-        className={`inline-flex items-center gap-1.5 text-[11px] font-bold ${accentText} ${accentBg} border rounded-lg px-2.5 py-1 hover:brightness-95 transition`}
+        className={`inline-flex items-center gap-1.5 text-2xs font-bold ${accentText} ${accentBg} border rounded-lg px-2.5 py-1 hover:brightness-95 transition`}
       >
         <span className={`transition-transform ${open ? "rotate-90" : ""}`}>▸</span>
-        {open ? "הסתר עסקאות" : "הצג עסקאות"} ({deals.length.toLocaleString("he-IL")})
+        {open ? "הסתר עסקאות" : "הצג עסקאות"} ({(total ?? deals.length).toLocaleString("he-IL")})
       </button>
 
       {open && (
         <div className={`mt-2 rounded-xl border ${accentBg} overflow-hidden`}>
           <div className="max-h-72 overflow-y-auto overflow-x-auto">
-            <table className="min-w-full text-[11px]">
+            <table className="min-w-full text-2xs">
               <thead className="sticky top-0 bg-white/95 backdrop-blur border-b border-slate-200 z-10">
                 <tr className="text-slate-500 font-bold">
                   {HEADERS.map((h) => (
@@ -76,12 +83,16 @@ export default function DealsDrawer({ deals, accent = "slate" }: { deals: Nadlan
                     <td className="py-1 px-2 text-right tabular-nums whitespace-nowrap">{nis(d.price)}</td>
                     <td className="py-1 px-2 text-right tabular-nums whitespace-nowrap">{nis(d.priceSqm)}</td>
                     <td className="py-1 px-2 text-right tabular-nums">{d.yearBuilt || "—"}</td>
-                    <td className="py-1 px-2 text-center">
+                    <td className="py-1 px-2 text-center whitespace-nowrap">
                       {d.yearBuilt ? (
-                        <span className={`inline-block rounded px-1 text-[9px] font-bold ${d.isSecondHand ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
+                        <span className={`inline-block rounded px-1 text-2xs font-bold ${d.isSecondHand ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>
                           {d.isSecondHand ? "שנייה" : "ראשונה"}
                         </span>
                       ) : <span className="text-slate-300">—</span>}
+                      {/* it happened and it is listed — it just doesn't set the average */}
+                      {d.luxury && (
+                        <span className="ms-1 inline-block rounded bg-violet-100 px-1 text-2xs font-bold text-violet-700" title="עסקת יוקרה — נספרת ומוצגת, אך אינה נכללת בממוצעים ובחציונים">יוקרה</span>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -91,7 +102,21 @@ export default function DealsDrawer({ deals, accent = "slate" }: { deals: Nadlan
               </tbody>
             </table>
           </div>
-          <div className="px-3 py-1.5 text-[10px] text-slate-500 border-t border-slate-200 bg-white/50">
+          {total != null && total > deals.length && onLoadMore && (
+            <div className="border-t border-slate-200 bg-white/60 px-3 py-2 text-center">
+              <button
+                onClick={onLoadMore}
+                disabled={loadingMore}
+                className={`rounded-lg border px-3 py-1 text-2xs font-bold ${accentText} ${accentBg} transition hover:brightness-95 disabled:opacity-50`}
+              >
+                {loadingMore ? "טוען…" : `טען עוד ${Math.min(300, total - deals.length).toLocaleString("he-IL")} עסקאות`}
+              </button>
+              <span className="ms-2 text-2xs text-slate-500">
+                {deals.length.toLocaleString("he-IL")} מתוך {total.toLocaleString("he-IL")}
+              </span>
+            </div>
+          )}
+          <div className="px-3 py-1.5 text-2xs text-slate-500 border-t border-slate-200 bg-white/50">
             מקור: nadlan.gov.il — עסקאות אחרונות ביישוב (רשות המסים) • &quot;יד&quot; לפי שנת בנייה מול שנת עסקה (הפרש ≥ 3 שנים = יד שנייה)
           </div>
         </div>

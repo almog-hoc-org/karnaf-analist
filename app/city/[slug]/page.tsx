@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
 import { computeCityGap, describeSupplySource } from "@/lib/gap-analysis";
 import PriceChart from "@/components/PriceChart";
@@ -17,7 +18,7 @@ import NewVsSecondhandPanel from "@/components/NewVsSecondhandPanel";
 import PopulationBySource from "@/components/PopulationBySource";
 import { loadCityPopulationEstimates } from "@/lib/population-sources";
 import PriceChangeSection from "@/components/PriceChangeSection";
-import { loadCityGraphSeries, loadCityDeals } from "@/lib/nadlanTransactionSeries";
+import { loadCityGraphSeries, loadCityDeals, loadDealCountCube, loadCityCleaningCounts } from "@/lib/nadlanTransactionSeries";
 import Link from "next/link";
 import SourceBadge from "@/components/SourceBadge";
 
@@ -89,11 +90,13 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   // Load scattered facts from CBS/MoF reports (cached file)
   const scattered = getCityScatteredData(cityName);
   // parallel — these were sequential and dominated page latency
-  const [cityPriceChanges, cityPopulationEstimates, cityGraphData, cityDeals] = await Promise.all([
+  const [cityPriceChanges, cityPopulationEstimates, cityGraphData, cityDeals, dealCounts, cleaning] = await Promise.all([
     loadCityPriceChanges(cityName),
     loadCityPopulationEstimates(cityName),
     loadCityGraphSeries(cityName),
     loadCityDeals(cityName),
+    loadDealCountCube(cityName),
+    loadCityCleaningCounts(cityName),
   ]);
 
   if (!city) {
@@ -240,12 +243,12 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   });
 
   return (
-    <main className="min-h-screen px-4 py-8 max-w-6xl mx-auto">
+    <main className="min-h-screen page-wrap py-8">
       {/* ── Header ─────────────────────────────────────────────── */}
       <header className="mb-10">
         <div className="flex items-start gap-4">
           <div className="flex-1">
-            <p className="text-[10px] font-semibold tracking-[0.2em] text-indigo-500/80 uppercase mb-3">
+            <p className="text-2xs font-semibold tracking-[0.2em] text-indigo-500/80 uppercase mb-3">
               City Intelligence Report
             </p>
             <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">
@@ -274,9 +277,9 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Data-trust banner: the site's main numbers come from the independent repository */}
       <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl border border-indigo-100 bg-indigo-50/50 px-4 py-3">
         <SourceBadge kind="internal" />
-        <p className="text-[11px] leading-relaxed text-slate-600">
+        <p className="text-2xs leading-relaxed text-slate-600">
           הנתונים המרכזיים בעמוד מבוססים על עסקאות אמת שנאספו באופן בלתי-תלוי מרשות המסים.
-          עסקת <strong>יד-שנייה</strong> = חלפו 3+ שנים משנת הבנייה לרכישה; <strong>חדשה</strong> = פחות מכך.
+          עסקת <strong>יד-שנייה</strong> = חלפו {getRuleNum("secondhand_min_age", 4)}+ שנים משנת הבנייה לרכישה; <strong>חדשה</strong> = פחות מכך.
           נתונים ממקורות נוספים (למ״ס, גוב-נדלן, יד2) מסומנים 🏛️.
         </p>
       </div>
@@ -317,7 +320,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             />
           </div>
         ) : (
-          <div className="glass-card p-6 text-center text-slate-500 text-sm">
+          <div className="glass-card p-4 md:p-6 text-center text-slate-500 text-sm">
             אין נתוני מחיר זמינים מ-nadlan.gov.il
           </div>
         )}
@@ -381,7 +384,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               <p className="text-sm font-semibold text-slate-800">
                 {yad2Data.market_type === 'sellers' ? 'שוק של מוכרים' : yad2Data.market_type === 'buyers' ? 'שוק של קונים' : 'שוק מאוזן'}
               </p>
-              <p className="text-[10px] text-slate-500">על בסיס יחס קונים-מוכרים וזמן חשיפה</p>
+              <p className="text-2xs text-slate-500">על בסיס יחס קונים-מוכרים וזמן חשיפה</p>
             </div>
             <Link
               href="/stats/yad2-market-data"
@@ -411,48 +414,31 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             </div>
           )}
 
-          {/* Yadata's bespoke indices — market gauge + compromise.
-              Populated by the monthly Yadata scrape; shown only when present. */}
-          {(yad2Data.market_gauge !== null && yad2Data.market_gauge !== undefined) ||
-          (yad2Data.compromise_index !== null && yad2Data.compromise_index !== undefined) ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-              {yad2Data.market_gauge !== null && yad2Data.market_gauge !== undefined && (
-                <div className="rounded-2xl bg-indigo-50/40 border border-indigo-100 p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-[10px] font-bold text-indigo-700 uppercase tracking-wide">
-                        מד השוק (יד2)
-                      </p>
-                      <p className="text-2xl font-black tabular-nums text-slate-900 mt-1">
-                        {formatNumber(yad2Data.market_gauge, 1)}
-                      </p>
-                    </div>
-                    <span className="text-2xl">🎯</span>
+          {/* מדד התפשרות — מוצמד לנתוני מצב-שוק יד-2 (Yad2), מוצג לכל עיר.
+              (כרטיס "מד השוק" הוסר לבקשת המשתמש.) */}
+          {yad2Data && (yad2Data.compromise_index != null || yad2Data.market_type || yad2Data.avg_days_on_market != null) ? (
+            <div className="mt-3">
+              <div className="rounded-2xl bg-indigo-50/40 border border-indigo-100 p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-2xs font-bold text-indigo-700 uppercase tracking-wide">
+                      מדד התפשרות — מצב שוק יד-2
+                    </p>
+                    <p className="text-2xl font-black tabular-nums text-slate-900 mt-1">
+                      {yad2Data.compromise_index != null
+                        ? `${yad2Data.compromise_index >= 0 ? "+" : ""}${formatNumber(yad2Data.compromise_index, 1)}%`
+                        : yad2Data.market_type === "sellers" ? "שוק מוכרים"
+                        : yad2Data.market_type === "buyers" ? "שוק קונים"
+                        : yad2Data.market_type ? "שוק מאוזן" : "—"}
+                    </p>
                   </div>
-                  <p className="text-[10px] text-slate-500 mt-1">
-                    מחוון של Yadata — ככל שגבוה יותר, יותר שוק של מוכרים
-                  </p>
+                  <span className="text-2xl">📉</span>
                 </div>
-              )}
-              {yad2Data.compromise_index !== null && yad2Data.compromise_index !== undefined && (
-                <div className="rounded-2xl bg-indigo-50/40 border border-indigo-100 p-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-[10px] font-bold text-indigo-700 uppercase tracking-wide">
-                        מדד התפשרות (יד2)
-                      </p>
-                      <p className="text-2xl font-black tabular-nums text-slate-900 mt-1">
-                        {yad2Data.compromise_index >= 0 ? "+" : ""}
-                        {formatNumber(yad2Data.compromise_index, 1)}%
-                      </p>
-                    </div>
-                    <span className="text-2xl">📉</span>
-                  </div>
-                  <p className="text-[10px] text-slate-500 mt-1">
-                    פער ממוצע בין מחיר מבוקש למחיר עסקה — חיובי = מוכרים מתפשרים
-                  </p>
-                </div>
-              )}
+                <p className="text-2xs text-slate-500 mt-1">
+                  {yad2Data.avg_days_on_market != null ? `${formatNumber(yad2Data.avg_days_on_market, 0)} ימים ממוצע בשוק · ` : ""}
+                  מבוסס על נתוני מצב-שוק יד-2 (Yad2) — חיובי/שוק-מוכרים = פחות התפשרות
+                </p>
+              </div>
             </div>
           ) : null}
         </section>
@@ -471,8 +457,12 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         priceChanges={cityPriceChanges}
         graphData={cityGraphData}
         deals={cityDeals}
+        dealCounts={dealCounts}
+        cleaning={cleaning}
         initialWindow={activeWindow}
         cityName={city.city_name}
+        secondhandMinAge={getRuleNum("secondhand_min_age", 4)}
+        modernMinYear={getRuleNum("modern_min_year", 2005)}
       />
 
       {/* ═══════════════════════════════════════════════════════════
@@ -502,7 +492,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Population by Year */}
       {populationByYear.length > 2 && (
         <section className="mb-10">
-          <div className="glass-card p-6">
+          <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon">📊</div>
               <div className="flex-1">
@@ -536,7 +526,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Price Trends */}
       {priceTrends.length > 2 && (
         <section className="mb-10">
-          <div className="glass-card p-6">
+          <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon">💰</div>
               <div className="flex-1">
@@ -576,7 +566,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Sales Chart */}
       {salesData && (
         <section className="mb-10">
-          <div className="glass-card p-6">
+          <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon">🏗️</div>
               <div>
@@ -596,7 +586,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Building Permits Chart */}
       {permitsData.length > 0 && (
         <section className="mb-10">
-          <div className="glass-card p-6">
+          <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon">📋</div>
               <div className="flex-1">
@@ -627,7 +617,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Correlation Table */}
       {populationByYear.length > 2 && (
         <section className="mb-10">
-          <div className="glass-card p-6">
+          <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon">🔗</div>
               <div className="flex-1">
@@ -681,17 +671,17 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             <div className="kpi-card glow-indigo">
               <p className="stat-label mb-2">מלאי לא מכור 2025</p>
               <p className="stat-value text-slate-900">{formatNumber(salesData.unsold_inventory_2025)}</p>
-              <p className="text-[10px] text-slate-400 mt-1">דירות</p>
+              <p className="text-2xs text-slate-400 mt-1">דירות</p>
             </div>
             <div className="kpi-card glow-indigo">
               <p className="stat-label mb-2">ממוצע מכירות 3 שנים</p>
               <p className="stat-value text-slate-900">{salesData.avg_sales_3y !== null ? salesData.avg_sales_3y.toFixed(0) : "—"}</p>
-              <p className="text-[10px] text-slate-400 mt-1">דירות לשנה</p>
+              <p className="text-2xs text-slate-400 mt-1">דירות לשנה</p>
             </div>
             <div className="kpi-card glow-indigo">
               <p className="stat-label mb-2">שנים לפינוי מלאי</p>
               <p className="stat-value text-slate-900">{salesData.years_to_clear_avg !== null ? salesData.years_to_clear_avg.toFixed(1) : "—"}</p>
-              <p className="text-[10px] text-slate-400 mt-1">שנים</p>
+              <p className="text-2xs text-slate-400 mt-1">שנים</p>
             </div>
           </div>
         </section>
@@ -706,7 +696,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               <h2>התחדשות עירונית</h2>
             </div>
           </div>
-          <div className="glass-card p-6">
+          <div className="glass-card p-4 md:p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <p className="stat-label mb-1">סטטוס</p>
@@ -776,15 +766,15 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
         {/* Supply-source provenance badge */}
         {chosenSourceMeta && (
-          <div className={`mb-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold ${chosenSourceMeta.cls}`}>
+          <div className={`mb-4 inline-flex flex-wrap min-w-0 items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold ${chosenSourceMeta.cls}`}>
             <span>📐 בסיס חישוב הפער:</span>
             <span className="font-bold">{chosenSourceMeta.he}</span>
-            <span className="text-[10px] font-normal opacity-80">— {chosenSourceMeta.long}</span>
+            <span className="text-2xs font-normal opacity-80">— {chosenSourceMeta.long}</span>
           </div>
         )}
 
         {/* Summary KPIs */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-5 [&>*:nth-child(5)]:col-span-2 lg:[&>*:nth-child(5)]:col-span-1">
           <KpiTile
             label={`דירות נדרשות (${gapAnalysis?.windowStart ?? 2020}-${gapAnalysis?.windowEnd ?? 2024})`}
             value={formatNumber(totalRequired !== null && totalRequired > 0 ? totalRequired : city.apartments_required)}
@@ -859,7 +849,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
                         {formatNumber(row.completions)}
                       </td>
                       <td className="py-2.5 px-4 text-center">
-                        <span className={`inline-block px-1.5 py-0.5 text-[10px] font-bold rounded border ${sourceMeta.cls}`}>
+                        <span className={`inline-block px-1.5 py-0.5 text-2xs font-bold rounded border ${sourceMeta.cls}`}>
                           {sourceMeta.he}
                         </span>
                       </td>
@@ -889,7 +879,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
                   </td>
                   <td className="py-3 px-4 text-center">
                     {chosenSourceMeta && (
-                      <span className={`inline-block px-1.5 py-0.5 text-[10px] font-bold rounded border ${chosenSourceMeta.cls}`}>
+                      <span className={`inline-block px-1.5 py-0.5 text-2xs font-bold rounded border ${chosenSourceMeta.cls}`}>
                         {chosenSourceMeta.he}
                       </span>
                     )}
@@ -901,7 +891,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               </tbody>
             </table>
           </div>
-          <div className="px-5 py-2 border-t border-slate-100 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-slate-500">
+          <div className="px-5 py-2 border-t border-slate-100 flex flex-wrap gap-x-4 gap-y-1 text-2xs text-slate-500">
             <span><span className="text-red-600">●</span> גרעון (היצע &lt; נדרש)</span>
             <span><span className="text-emerald-700">●</span> עודף (היצע &gt; נדרש)</span>
             <span className="text-slate-400">|</span>
@@ -914,7 +904,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           <div className="glass-card p-5">
             <h3 className="text-sm font-semibold text-slate-700 mb-3">היצע מול ביקוש — גרף שנתי</h3>
             <CityConstructionMiniChart data={constructionChartData} cityName={city.city_name} />
-            <p className="text-[10px] text-slate-400 mt-2">
+            <p className="text-2xs text-slate-400 mt-2">
               עמודות: היתרי בנייה (כתום), התחלות (ירוק), גמר (תכלת) | קו אדום מקווקו: צורך בדירות חדשות
             </p>
           </div>
@@ -966,7 +956,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             <h2>כל הנתונים</h2>
           </div>
         </div>
-        <div className="glass-card overflow-hidden">
+        <div className="glass-card overflow-x-auto">
           <table className="w-full text-sm">
             <tbody className="divide-y divide-slate-100">
               {[
@@ -1040,9 +1030,9 @@ function KpiTile({
   const glowMap: Record<AccentColor, string> = {
     cyan: "glow-indigo",
     purple: "glow-indigo",
-    emerald: "glow-emerald",
+    emerald: "kpi-accent glow-emerald",
     amber: "glow-indigo",
-    red: "glow-red",
+    red: "kpi-accent glow-red",
     zinc: "glow-indigo",
   };
 
@@ -1051,7 +1041,7 @@ function KpiTile({
       <div className="flex items-start justify-between gap-2">
         <p className="stat-label">{label}</p>
         {href && (
-          <span className="text-[10px] text-slate-300 group-hover:text-slate-700 transition-colors" title="צפה בטבלה מלאה">
+          <span className="text-2xs text-slate-300 group-hover:text-slate-700 transition-colors" title="צפה בטבלה מלאה">
             ←
           </span>
         )}
@@ -1059,7 +1049,7 @@ function KpiTile({
       <p className={`stat-value mt-1 ${valueClassName ?? accentMap[accent]}`}>
         {value}
       </p>
-      {unit && <p className="text-[10px] text-slate-400 mt-0.5">{unit}</p>}
+      {unit && <p className="text-2xs text-slate-400 mt-0.5">{unit}</p>}
     </>
   );
 
