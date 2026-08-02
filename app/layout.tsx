@@ -4,6 +4,7 @@ import "./globals.css";
 import RefreshDataButton from "@/components/RefreshDataButton";
 import TopNav from "@/components/TopNav";
 import { getCurrentUser } from "@/lib/auth";
+import { isAdminRequest } from "@/lib/adminAuth";
 import SiteFooter from "@/components/SiteFooter";
 import { prisma } from "@/lib/db";
 
@@ -41,6 +42,8 @@ export default async function RootLayout({
     cityNames = [];
   }
 
+  const isAdmin = isAdminRequest();
+
   return (
     <html lang="he" dir="rtl">
       <body
@@ -58,7 +61,9 @@ export default async function RootLayout({
         <TopNav cities={cityNames} user={getCurrentUser()} />
         <div className="relative">{children}</div>
         <SiteFooter />
-        <RefreshDataButton />
+        {/* Operator tool, not a visitor feature — the API behind it is admin-gated,
+            so showing the button to everyone would only offer a 401. */}
+        {isAdmin && <RefreshDataButton />}
       </body>
     </html>
   );

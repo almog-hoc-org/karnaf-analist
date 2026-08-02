@@ -21,6 +21,18 @@ interface Filters {
   luxury?: "yes" | "no" | ""; // luxury deals are ACTIVE — they leave the prices, not the counts
 }
 
+/**
+ * How many of the caller's filter fields actually narrow the query.
+ *
+ * buildWhere() seeds its condition list with "1=1", so a filter object with
+ * nothing set produces `WHERE 1=1` — which the bulk UPDATE below would happily
+ * apply to all ~1.35M rows, emptying the site in one request. A mutation must
+ * therefore prove it is targeted before it is allowed to run.
+ */
+function activeFilterCount(f: Filters): number {
+  return Object.values(f).filter((v) => v !== undefined && v !== null && v !== "").length;
+}
+
 function buildWhere(f: Filters): { where: string; params: unknown[] } {
   const conds: string[] = ["1=1"];
   const params: unknown[] = [];
@@ -114,13 +126,22 @@ export async function POST(req: NextRequest) {
     affected = Number(res);
     filterDesc = `ids: ${ids.length}`;
   } else if (body.filters) {
-    const { where, params } = buildWhere(body.filters as Filters);
+    const filters = body.filters as Filters;
+    // An unfiltered bulk mutation is never a legitimate admin action — it is
+    // either a mistake or an attack, and either way it would blank the archive.
+    if (activeFilterCount(filters) === 0) {
+      return NextResponse.json(
+        { error: "פעולה גורפת ללא סינון נחסמה — יש לציין לפחות מסנן אחד" },
+        { status: 400 }
+      );
+    }
+    const { where, params } = buildWhere(filters);
     const res = await prisma.$executeRawUnsafe(
       `UPDATE nadlan_transactions SET excluded=?, exclusion_reason=? WHERE ${where}`,
       setVal, setVal ? reason || null : null, ...params
     );
     affected = Number(res);
-    filterDesc = JSON.stringify(body.filters);
+    filterDesc = JSON.stringify(filters);
   } else {
     return NextResponse.json({ error: "ids or filters required" }, { status: 400 });
   }

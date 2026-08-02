@@ -5,7 +5,7 @@ import type { StreetComp } from "@/lib/compTypes";
 import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import DealsManager from "@/components/DealsManager";
-import { getCurrentUser, workspaceId } from "@/lib/auth";
+import { requireWorkspaceId } from "@/lib/auth";
 
 export const metadata = { title: 'ניהול והשוואת עסקאות | קרנף אנליסט' };
 export const dynamic = "force-dynamic";
@@ -24,10 +24,14 @@ export interface TrackedCitySummary {
 }
 
 export default async function DealsPage() {
+  // Personal workspace — anonymous visitors are redirected to /login and never
+  // reach the queries below. Every other page on the site stays open.
+  const userId = requireWorkspaceId("/deals");
+
   const [cities, tracked, deals, txPrices, sh3] = await Promise.all([
     prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } }),
-    Promise.resolve(listTrackedCities(workspaceId())),
-    Promise.resolve(listDeals(workspaceId())),
+    Promise.resolve(listTrackedCities(userId)),
+    Promise.resolve(listDeals(userId)),
     loadCityTransactionPrices(),
     loadSecondhandChanges(3),
   ]);

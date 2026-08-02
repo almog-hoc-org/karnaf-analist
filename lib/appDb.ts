@@ -73,14 +73,23 @@ export interface ClientDeal {
   tasks: { id: number; title: string; done: number }[];
 }
 
-export function listDeals(userId = "owner"): ClientDeal[] {
+/**
+ * `userId` is REQUIRED on both readers below — deliberately no default.
+ *
+ * These used to default to "owner". Combined with the old anonymous fallback in
+ * lib/auth.ts that made the shared-workspace leak reachable through a second
+ * door: any caller that simply forgot the argument silently read someone else's
+ * personal data. Making it required moves that from "remember to pass it" to a
+ * compile error.
+ */
+export function listDeals(userId: string): ClientDeal[] {
   const d = appDb();
   const deals = d.prepare("SELECT * FROM client_deals WHERE user_id=? ORDER BY updated_at DESC").all(userId) as any[];
   const taskStmt = d.prepare("SELECT id, title, done FROM deal_tasks WHERE deal_id=? ORDER BY id");
   return deals.map((deal) => ({ ...deal, tasks: taskStmt.all(deal.id) }));
 }
 
-export function listTrackedCities(userId = "owner"): string[] {
+export function listTrackedCities(userId: string): string[] {
   return (appDb().prepare("SELECT city_name FROM tracked_cities WHERE user_id=? ORDER BY id").all(userId) as any[])
     .map((r) => r.city_name);
 }
