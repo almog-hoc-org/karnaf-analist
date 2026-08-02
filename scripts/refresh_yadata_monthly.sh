@@ -14,11 +14,10 @@
 # requests in the same session.
 set -uo pipefail
 
-PROJECT_DIR="/Users/itamarnachliel/Library/Mobile Documents/com~apple~CloudDocs/תיקיות עבודה/ביזנס/עסק/קרנף ליווי וייעוץ/ניהול עסק/קלוד קוד קרנף/my-realestate-project"
-LOG_DIR="$HOME/Library/Logs/Karnaf"
+source "$(dirname "${BASH_SOURCE[0]}")/lib/paths.sh"
 LOG_FILE="$LOG_DIR/yadata-refresh.log"
 CHROME_PROFILE="$HOME/Library/Caches/karnaf-chrome-yadata-profile"
-CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
 
 mkdir -p "$LOG_DIR" "$CHROME_PROFILE"
 

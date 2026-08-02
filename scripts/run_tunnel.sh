@@ -6,7 +6,8 @@ set -u
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 CLOUDFLARED="$HOME/bin/cloudflared"
 URL_FILE="$PROJECT_DIR/data/tunnel_url.txt"
-LOG_FILE="$HOME/Library/Logs/karnaf-tunnel.log"
+source "$(dirname "${BASH_SOURCE[0]}")/lib/paths.sh"
+LOG_FILE="$LOG_DIR/karnaf-tunnel.log"
 
 : > "$LOG_FILE"
 

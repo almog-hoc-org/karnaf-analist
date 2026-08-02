@@ -19,7 +19,7 @@
 #   4. Tell Claude "Chrome מוכן" — it will attach on port 9222 and start.
 set -uo pipefail
 
-CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+source "$(dirname "${BASH_SOURCE[0]}")/lib/paths.sh"
 CHROME_PROFILE="$HOME/Library/Caches/karnaf-chrome-nadlan-profile"
 PORT=9222
 

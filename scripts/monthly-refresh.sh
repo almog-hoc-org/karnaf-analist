@@ -20,8 +20,7 @@ set -u
 
 # Resolve the project dir from this script's own location, so the same script
 # works whether it runs from the iCloud copy (manual) or a local clone (launchd).
-PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LOG_DIR="$HOME/Library/Logs/Karnaf"
+source "$(dirname "${BASH_SOURCE[0]}")/lib/paths.sh"
 LOG_FILE="$LOG_DIR/monthly-refresh.log"
 STATE_FILE="$LOG_DIR/last-monthly-refresh.txt"
 BACKUP_DIR="/tmp/karnaf-deals-backup"

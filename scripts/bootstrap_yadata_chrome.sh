@@ -16,7 +16,7 @@
 #   4. Run scripts/refresh_yadata_monthly.sh to do the actual scrape.
 set -uo pipefail
 
-CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+source "$(dirname "${BASH_SOURCE[0]}")/lib/paths.sh"
 CHROME_PROFILE="$HOME/Library/Caches/karnaf-chrome-yadata-profile"
 
 mkdir -p "$CHROME_PROFILE"

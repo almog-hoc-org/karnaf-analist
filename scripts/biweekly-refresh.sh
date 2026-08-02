@@ -15,7 +15,7 @@
 set -u
 
 PROJECT_DIR="$HOME/Library/Mobile Documents/com~apple~CloudDocs/תיקיות עבודה/ביזנס/עסק/קרנף ליווי וייעוץ/ניהול עסק/קלוד קוד קרנף/my-realestate-project"
-LOG_DIR="$HOME/Library/Logs/Karnaf"
+source "$(dirname "${BASH_SOURCE[0]}")/lib/paths.sh"
 LOG_FILE="$LOG_DIR/refresh.log"
 STATE_FILE="$LOG_DIR/last-refresh.txt"
 INTERVAL_DAYS=14

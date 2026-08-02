@@ -21,6 +21,17 @@ import path from "path";
 import { SOURCES, nextExpectedPublication, type Source } from "./sources";
 import { sendReportNotification, isNotifyConfigured } from "./notify";
 
+/**
+ * Base URL for links inside notification emails.
+ *
+ * These were hardcoded to http://localhost:3000, which is only reachable from
+ * the machine that sent the mail — so every "a new report is available" link
+ * was dead for its recipient. Set KARNAF_SITE_URL in the deployment.
+ */
+function siteUrl(): string {
+  return (process.env.KARNAF_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+}
+
 const SEEN_FILE = path.resolve(process.cwd(), "data", "seen_reports.json");
 const LOG_FILE = path.resolve(process.cwd(), "data", "reports_log.json");
 const USER_AGENT =
@@ -245,7 +256,7 @@ async function main() {
       url: report.url,
       publishedAt: report.publishedAt ?? "תאריך לא ידוע",
       summary: source?.description,
-      systemUrl: `http://localhost:3000/sources/${report.sourceId}`,
+      systemUrl: `${siteUrl()}/sources/${report.sourceId}`,
     });
 
     await sleep(500);
@@ -296,7 +307,7 @@ async function checkOverdueReports(seen: SeenRegistry): Promise<void> {
       url: source.monitorUrl || source.url,
       publishedAt: `צפוי היה ${expected.toLocaleDateString("he-IL")}`,
       summary: `המקור הזה אמור היה לפרסם דוח ב-${expected.toLocaleDateString("he-IL")} ועדיין לא זוהה פרסום חדש. כדאי לבדוק ידנית.`,
-      systemUrl: `http://localhost:3000/sources/${source.id}`,
+      systemUrl: `${siteUrl()}/sources/${source.id}`,
     });
   }
 }
