@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { trackSearch } from "@/lib/track";
 
 interface CityItem {
   id: number;
@@ -41,9 +42,19 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
     if (debounceRef.current) clearTimeout(debounceRef.current);
   };
 
-  const results = query
-    ? cities.filter((c) => c.city_name.includes(query)).slice(0, 20)
-    : [];
+  const matches = query ? cities.filter((c) => c.city_name.includes(query)) : [];
+  const results = matches.slice(0, 20);
+
+  // Fires on the debounced query, so it records what the user settled on rather
+  // than every keystroke on the way there. Routed through the same helper as the
+  // TopNav box so the two can never drift on what counts as "no results".
+  useEffect(() => {
+    if (!query.trim()) return;
+    trackSearch(query, matches.length, "home");
+    // matches is derived from query — depending on it too would re-fire on every
+    // render that rebuilds the array.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
   return (
     <div className="relative w-full">

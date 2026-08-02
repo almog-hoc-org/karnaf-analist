@@ -9,6 +9,7 @@ import SourceBadge from "./SourceBadge";
 import { BRAND, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
+import { setViewState, clearViewState } from "@/lib/viewState";
 
 /**
  * MultiChartStudio — ONE tool for exploring price trends (user spec):
@@ -195,6 +196,22 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const [loadingMore, setLoadingMore] = useState(false);
   const [drawerError, setDrawerError] = useState<string | null>(null);
   const reqId = useRef(0);
+
+  // Publish what the user is looking at, so the feedback widget can attach it.
+  // This state lives only in local useState and never reaches the URL, so
+  // without this a report would say "the chart looks wrong" with no way to
+  // reproduce which chart.
+  useEffect(() => {
+    setViewState({
+      city: cityName,
+      summary: [
+        `סוג: ${dealType}`, `גיל בניין: ${buildingAge}`, `חדרים: ${room}`,
+        `שנים: ${from}–${to}`, `מדד: ${metric}`,
+        `סדרות: ${selected.join(",")}`, `תצוגה: ${view}`,
+      ].join(" · "),
+    });
+    return () => clearViewState();
+  }, [cityName, dealType, buildingAge, room, from, to, metric, selected, view]);
 
   const dealsUrl = (offset: number) =>
     withBasePath(`/api/city-transactions/${encodeURIComponent(cityName)}`) + "?" + new URLSearchParams({

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { withBasePath } from "@/lib/basePath";
+import { trackSearch } from "@/lib/track";
 
 const NAV_ITEMS = [
   { href: "/", label: "בית" },
@@ -37,8 +38,15 @@ export default function TopNav({ cities, user }: { cities: string[]; user?: { na
     if (!q.trim()) { setHits([]); return; }
     const t = setTimeout(() => {
       const needle = q.trim();
-      setHits(cities.filter((c) => c.includes(needle)).slice(0, 8).map((name) => ({ name })));
+      const matches = cities.filter((c) => c.includes(needle));
+      setHits(matches.slice(0, 8).map((name) => ({ name })));
       setFocusIdx(-1);
+      // Instrumented here rather than on submit: this box is on EVERY page and
+      // had no notion of "no matches" at all — it simply rendered nothing, so a
+      // failed search was invisible to the user AND to us. It is also the more
+      // used of the site's two search inputs, so measuring only the homepage one
+      // would have missed most searches.
+      trackSearch(needle, matches.length, "topnav");
     }, 120);
     return () => clearTimeout(t);
   }, [q, cities]);
@@ -107,6 +115,11 @@ export default function TopNav({ cities, user }: { cities: string[]; user?: { na
             aria-label="חיפוש עיר"
             className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
           />
+          {q.trim() && hits.length === 0 && (
+            <div className="absolute top-full z-[100] mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-center text-sm text-slate-500 shadow-xl">
+              לא נמצאו ערים תואמות
+            </div>
+          )}
           {hits.length > 0 && (
             <div className="absolute top-full z-[100] mt-1.5 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
               {hits.map((h, i) => (

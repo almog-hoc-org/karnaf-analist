@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
 import RefreshDataButton from "@/components/RefreshDataButton";
+import FeedbackWidget from "@/components/FeedbackWidget";
 import TopNav from "@/components/TopNav";
 import { getCurrentUser } from "@/lib/auth";
 import { isAdminRequest } from "@/lib/adminAuth";
@@ -64,6 +65,8 @@ export default async function RootLayout({
         {/* Operator tool, not a visitor feature — the API behind it is admin-gated,
             so showing the button to everyone would only offer a 401. */}
         {isAdmin && <RefreshDataButton />}
+        {/* bottom-start; RefreshDataButton holds bottom-end, and for an admin both show */}
+        <FeedbackWidget />
       </body>
     </html>
   );
