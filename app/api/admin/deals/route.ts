@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { isAdminRequest } from "@/lib/adminAuth";
+import { ensureAuditLogPrisma } from "@/lib/auditLog";
 
 export const dynamic = "force-dynamic";
 
@@ -146,6 +147,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "ids or filters required" }, { status: 400 });
   }
 
+  await ensureAuditLogPrisma(prisma); // fresh deployments have no such table — see lib/auditLog.ts
   await prisma.$executeRawUnsafe(
     `INSERT INTO admin_exclusion_log (action, affected, filter_desc, reason) VALUES (?, ?, ?, ?)`,
     action, affected, filterDesc, reason || null

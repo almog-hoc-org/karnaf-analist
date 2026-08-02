@@ -23,6 +23,7 @@
  */
 import Database from "better-sqlite3";
 import path from "path";
+import { ensureAuditLog } from "../lib/auditLog";
 
 const YEARS_BACK = 10;
 const REASON = "מוזג (כפילות בין-ערוצית)";
@@ -34,7 +35,8 @@ interface Row {
 
 function main() {
   const db = new Database(path.resolve("./data/realestate.db"));
-  db.pragma("journal_mode = WAL");   // concurrent reader (dev server) + writer (this script)
+  db.pragma("journal_mode = WAL");
+  ensureAuditLog(db); // seven writers, no owner — see lib/auditLog.ts   // concurrent reader (dev server) + writer (this script)
   db.pragma("busy_timeout = 60000"); // wait up to 60s for any transient lock
   const minYear = new Date().getFullYear() - YEARS_BACK;
 

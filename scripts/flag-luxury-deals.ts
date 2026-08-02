@@ -29,6 +29,7 @@
 import Database from "better-sqlite3";
 import path from "path";
 import { getRuleNum, getRuleBool } from "../lib/systemRules";
+import { ensureAuditLog } from "../lib/auditLog";
 
 const YEARS_BACK = 10;
 
@@ -58,6 +59,7 @@ function main() {
 
   const db = new Database(path.resolve("./data/realestate.db"));
   db.pragma("journal_mode = WAL");
+  ensureAuditLog(db); // seven writers, no owner — see lib/auditLog.ts
   db.pragma("busy_timeout = 60000");
   ensureColumn(db, "nadlan_transactions", "luxury", "luxury INTEGER DEFAULT 0");
   ensureColumn(db, "nadlan_transactions", "luxury_ratio", "luxury_ratio REAL");

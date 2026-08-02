@@ -53,6 +53,16 @@ function main() {
   // which signal decided the class: 'year_built' | 'hok_hamecher' | 'prev_deals' | null
   ensureColumn(db, "nadlan_transactions", "class_source", "class_source TEXT");
 
+  // The two SIGNAL columns this script reads are created by the collectors, not
+  // by prisma/schema.prisma — so a database built from the schema alone (a fresh
+  // deployment, a restore, a dev machine that has not collected yet) has neither,
+  // and this script died with "no such column: hok_hamecher" before doing
+  // anything. Declaring them here makes a fresh database degrade correctly: the
+  // columns exist, hold NULL, and the fallback simply classifies nothing —
+  // which is the honest outcome when the signal was never collected.
+  ensureColumn(db, "nadlan_transactions", "hok_hamecher", "hok_hamecher INTEGER");
+  ensureColumn(db, "nadlan_transactions", "prev_deals", "prev_deals INTEGER");
+
   // idempotent: release only the rows THIS script classified
   const reset = db.prepare(
     `UPDATE nadlan_transactions SET is_secondhand=0, class_source=NULL

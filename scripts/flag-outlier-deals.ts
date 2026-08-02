@@ -22,6 +22,7 @@ import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import path from "path";
 import { getRuleNum } from "../lib/systemRules";
 import { buildingAgeOf } from "../lib/roomClassification";
+import { ensureAuditLogPrisma } from "../lib/auditLog";
 
 const adapter = new PrismaBetterSqlite3({ url: path.resolve("./data/realestate.db") });
 const prisma = new PrismaClient({ adapter });
@@ -112,6 +113,7 @@ async function main() {
       `UPDATE nadlan_transactions SET excluded=1, exclusion_reason=? WHERE id IN (${ids.map(() => "?").join(",")})`,
       reason, ...ids);
   }
+  await ensureAuditLogPrisma(prisma); // seven writers, no owner — see lib/auditLog.ts
   await prisma.$executeRawUnsafe(
     `INSERT INTO admin_exclusion_log (action, affected, reason, created_at) VALUES ('exclude', ?, ?, datetime('now'))`,
     flagged.length, reason).catch(() => {});

@@ -167,17 +167,80 @@ async function main() {
     }
   }
 
-  await prisma.$executeRawUnsafe("DELETE FROM nadlan_year_room_stats");
+  // ── publish ────────────────────────────────────────────────────────
+  //
+  // nadlan_year_room_stats is the table every price graph and price card on the
+  // site reads. Rewriting it used to be: an unqualified DELETE, committed on its
+  // own, followed by ~N/60 separately-committed INSERTs. Three problems, all of
+  // which this block fixes:
+  //
+  //   1. Between the DELETE and the last INSERT the table was EMPTY, then
+  //      partially filled, and every one of those states was visible. SQLite runs
+  //      in WAL mode here, so readers are not blocked by the writer — they see
+  //      the latest committed state, which is exactly what made the gap
+  //      observable rather than serialised away. Visitors got "no data" pages and
+  //      cities silently missing from rankings, with nothing logged.
+  //   2. A failure mid-way left the table permanently truncated, with no
+  //      rollback and no restore path — the old FATAL handler just exited.
+  //   3. The DELETE had no WHERE, so it also destroyed rows outside the 10-year
+  //      window that this run never re-inserts.
+  //
+  // Wrapping the whole rewrite in ONE transaction fixes all three: readers keep
+  // seeing the previous snapshot until COMMIT, and any error rolls the entire
+  // thing back to that same snapshot.
+  const [prevRow] = await prisma.$queryRawUnsafe<Array<{ n: bigint }>>(
+    "SELECT COUNT(*) n FROM nadlan_year_room_stats"
+  );
+  const prevCount = Number(prevRow?.n ?? 0);
+
+  // Delta gate. A run that produces far fewer rows than the last one is a
+  // symptom — an upstream collection failure, a rule edit that excluded too
+  // much, a half-finished pipeline — not something to publish and find out
+  // about from a reader. Growth is always allowed; only a collapse blocks.
+  const MAX_SHRINK_PCT = 2;
+  if (prevCount > 0) {
+    const shrinkPct = ((prevCount - out.length) / prevCount) * 100;
+    if (shrinkPct > MAX_SHRINK_PCT) {
+      console.error(
+        `✗ REFUSING TO PUBLISH: ${out.length} rows vs ${prevCount} previously ` +
+        `(${shrinkPct.toFixed(1)}% smaller, limit ${MAX_SHRINK_PCT}%).`
+      );
+      console.error("  The live table was NOT touched. Investigate before re-running.");
+      console.error("  Override with --force once you know why the count dropped.");
+      if (!process.argv.includes("--force")) {
+        await prisma.$disconnect();
+        process.exit(2); // distinct from a crash: the data is suspect, not the machine
+      }
+      console.error("  --force given; publishing anyway.");
+    }
+  }
+
+  if (out.length === 0) {
+    console.error("✗ REFUSING TO PUBLISH: aggregation produced zero rows. Live table untouched.");
+    await prisma.$disconnect();
+    process.exit(2);
+  }
+
   const COLS = "city_name,year,room_bucket,scope,avg_price,median_price,avg_sqm,median_sqm,n";
   const CHUNK = 60;
-  for (let i = 0; i < out.length; i += CHUNK) {
-    const slice = out.slice(i, i + CHUNK);
-    const vs = slice.map(() => "(?,?,?,?,?,?,?,?,?)").join(",");
-    const params: unknown[] = [];
-    for (const o of slice) params.push(o.city, o.year, o.bucket, o.scope, o.s.avg_price, o.s.median_price, o.s.avg_sqm, o.s.median_sqm, o.s.n);
-    await prisma.$executeRawUnsafe(`INSERT INTO nadlan_year_room_stats (${COLS}) VALUES ${vs}`, ...params);
-  }
-  console.log(`wrote ${out.length} stat rows across ${byCity.size} cities.`);
+  await prisma.$transaction(
+    async (tx) => {
+      await tx.$executeRawUnsafe("DELETE FROM nadlan_year_room_stats");
+      for (let i = 0; i < out.length; i += CHUNK) {
+        const slice = out.slice(i, i + CHUNK);
+        const vs = slice.map(() => "(?,?,?,?,?,?,?,?,?)").join(",");
+        const params: unknown[] = [];
+        for (const o of slice) params.push(o.city, o.year, o.bucket, o.scope, o.s.avg_price, o.s.median_price, o.s.avg_sqm, o.s.median_sqm, o.s.n);
+        await tx.$executeRawUnsafe(`INSERT INTO nadlan_year_room_stats (${COLS}) VALUES ${vs}`, ...params);
+      }
+    },
+    // Generous bounds: this is a bulk rewrite of the whole stats table, and the
+    // defaults (5s) would abort it long before it finishes.
+    { timeout: 20 * 60_000, maxWait: 60_000 }
+  );
+
+  const delta = prevCount ? ` (was ${prevCount}, ${out.length >= prevCount ? "+" : ""}${out.length - prevCount})` : "";
+  console.log(`wrote ${out.length} stat rows across ${byCity.size} cities${delta}.`);
   await prisma.$disconnect();
 }
 main().catch((e) => { console.error("FATAL", e); process.exit(1); });
