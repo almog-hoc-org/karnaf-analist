@@ -203,7 +203,14 @@ model nadlan_transactions {
   neighborhood  String?
   street        String?
   house_num     String?
-  floor         Int?
+  floor         String?  // govmap returns Hebrew floor names ("חמישית", "קומת קרקע")
+  excluded         Int?    @default(0)
+  exclusion_reason String?
+  // A luxury deal is NOT excluded — it happened and is counted. It only leaves the
+  // price statistics (scripts/flag-luxury-deals.ts). luxury_ratio keeps its ₪/m²
+  // over the category median, so the flag can always be explained.
+  luxury           Int?    @default(0)
+  luxury_ratio     Float?
   source        String?  @default("nadlan")
   captured_at   DateTime @default(now())
 

@@ -28,10 +28,16 @@ import puppeteerCore from "puppeteer-core";
 import type { Browser } from "puppeteer-core";
 import { prisma } from "../lib/db";
 
-const NADLAN_METHOD = "v5-neighborhood";
+const NADLAN_METHOD = "v9-saleflags"; // bumped: now stores hokHamecher + prevDeals, the
+// authority's OWN developer-vs-resale signals. They are present on every row, while
+// yearBuilt comes back as 0 on 14-46% of deals depending on the city — which left
+// those cities with no new/second-hand split, and a price series that tracked the
+// sale mix instead of the market.
+// Changing this re-collects EVERY city once (see needsCollection) so the wider
+// matrix reaches deals the old sweep missed — even cities that already met target.
 const GOVMAP_METHOD = "v2-multicand";
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
-const SECONDHAND_MIN_AGE = 3;
+const SECONDHAND_MIN_AGE = 4;
 const MIN_SQM = 2_000, MAX_SQM = 200_000, MIN_AREA = 20, MAX_AREA = 500;
 const SECRET = "90c3e620192348f1bd46fcd9138c3c68";
 
@@ -46,12 +52,12 @@ function normalizeCity(n: string | null | undefined): string { return !n ? "" : 
 function roomBucket(rn: number | null | undefined): string { if (rn == null || isNaN(rn)) return "other"; if (rn >= 2.5 && rn < 3.5) return "3"; if (rn >= 3.5 && rn < 4.5) return "4"; if (rn >= 4.5) return "5"; return "other"; }
 function isResidential(n: string | null | undefined): boolean { if (!n) return false; if (/קבוצת רכישה|קרקע|מסחרי|משרד|חנות|חניה|מחסן|תעשיה|ללא תיכנון|מלון|דיור מוגן/.test(n)) return false; return ["דירה", "דירת גן", "דירת גג", "פנטהאוז", "קוטג'", "בית בודד", "דו משפחתי", "מיני פנטהאוז"].some((p) => n.includes(p)); }
 
-interface DealRow { deal_date: string; deal_year: number; rooms: number | null; area: number | null; price: number | null; price_sqm: number | null; year_built: number | null; is_secondhand: number; neighborhood: string | null; cbs_code: string | null; }
+interface DealRow { deal_date: string; deal_year: number; rooms: number | null; area: number | null; price: number | null; price_sqm: number | null; year_built: number | null; is_secondhand: number; neighborhood: string | null; cbs_code: string | null; hok_hamecher: number | null; prev_deals: number | null; }
 
 // ── manifest ─────────────────────────────────────────────────────
-async function getStatus(city: string, source: string): Promise<{ method_version: string | null; status: string; year_min: number | null; distinct_years: number | null } | null> {
-  const rows = await prisma.$queryRawUnsafe<{ method_version: string | null; status: string; year_min: number | null; distinct_years: number | null }[]>(
-    "SELECT method_version, status, year_min, distinct_years FROM nadlan_collection_status WHERE city_name=? AND source=?", city, source);
+async function getStatus(city: string, source: string): Promise<{ method_version: string | null; status: string; year_min: number | null; distinct_years: number | null; attempts: number | null } | null> {
+  const rows = await prisma.$queryRawUnsafe<{ method_version: string | null; status: string; year_min: number | null; distinct_years: number | null; attempts: number | null }[]>(
+    "SELECT method_version, status, year_min, distinct_years, attempts FROM nadlan_collection_status WHERE city_name=? AND source=?", city, source);
   return rows[0] ?? null;
 }
 async function upsertStatus(city: string, source: string, method: string, rows: DealRow[], status: string, note = "") {
@@ -67,27 +73,39 @@ async function needsCollection(city: string, source: string, method: string, for
   if (force) return true;
   const s = await getStatus(city, source);
   if (source === "nadlan") {
-    // v5 goal: a LONG second-hand history (15–20+ years). Skip when the city already has
-    // ≥15 distinct second-hand years with ≥10 deals each, or this exact method already ran.
-    if (s && s.method_version === method && s.status === "ok") return false;
-    const yrs = await prisma.$queryRawUnsafe<{ c: number }[]>(
+    // A wider matrix (new method version) reaches deals the old sweep couldn't —
+    // so re-collect EVERY city exactly once when the method changes, even if it
+    // already met the coverage target. After that pass method_version matches and
+    // the normal target-met skip resumes. (Union-by-natural-key means this only
+    // ADDS the newly-reachable deals; it never duplicates or loses existing ones.)
+    if (s && s.method_version !== method) return true;
+    // Campaign target (user rule): second-hand coverage for EVERY year 2016–2025
+    // (n≥10 each). The nightly loop keeps retrying a gap city until the target is
+    // met, capped at 6 total attempts per method so anonymously-unreachable
+    // cities stop consuming the night after diminishing returns.
+    const covered = await prisma.$queryRawUnsafe<{ c: number }[]>(
       `SELECT COUNT(*) c FROM (
          SELECT deal_year FROM nadlan_transactions
-         WHERE city_name=? AND source='nadlan' AND is_secondhand=1
+         WHERE city_name=? AND is_secondhand=1 AND deal_year BETWEEN 2016 AND 2025
          GROUP BY deal_year HAVING COUNT(*) >= 10)`, city);
-    return Number(yrs[0]?.c ?? 0) < 15;
+    if (Number(covered[0]?.c ?? 0) >= 10) return false; // target met — full 10 years
+    if (s && s.method_version === method && (s.attempts ?? 0) >= 6) return false; // exhausted
+    return true;
   }
   return !(s && s.method_version === method && s.status === "ok");
 }
 async function saveRows(city: string, source: string, rows: DealRow[]) {
   await prisma.$executeRawUnsafe("DELETE FROM nadlan_transactions WHERE city_name=? AND source=?", city, source);
-  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,source";
+  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,source,hok_hamecher,prev_deals";
   const CHUNK = 60;
   for (let i = 0; i < rows.length; i += CHUNK) {
     const slice = rows.slice(i, i + CHUNK);
-    const vs = slice.map(() => "(?,?,?,?,?,?,?,?,?,?,?,?,?)").join(",");
+    // placeholders are derived from COLS — hand-counted tuples silently desync
+    // the moment a column is added (that is exactly how the v9 run failed)
+    const ph = `(${COLS.split(",").map(() => "?").join(",")})`;
+    const vs = slice.map(() => ph).join(",");
     const params: unknown[] = [];
-    for (const r of slice) params.push(city, r.cbs_code, r.deal_date, r.deal_year, r.rooms, roomBucket(r.rooms), r.area, r.price, r.price_sqm, r.year_built, r.is_secondhand, r.neighborhood, source);
+    for (const r of slice) params.push(city, r.cbs_code, r.deal_date, r.deal_year, r.rooms, roomBucket(r.rooms), r.area, r.price, r.price_sqm, r.year_built, r.is_secondhand, r.neighborhood, source, r.hok_hamecher, r.prev_deals);
     await prisma.$executeRawUnsafe(`INSERT INTO nadlan_transactions (${COLS}) VALUES ${vs}`, ...params);
   }
 }
@@ -117,14 +135,14 @@ async function govmapCity(cityName: string): Promise<DealRow[]> {
   const seen = new Set<string>(); const out: DealRow[] = [];
   for (const pid of picked) for (const [s0, e0] of [["2015-01", "2020-06"], ["2020-06", "2026-12"]] as const) {
     try { const d: { data?: Record<string, unknown>[] } = await (await gf(`${GOVMAP_BASE}/real-estate/neighborhood-deals/${pid}?limit=2000&startDate=${s0}&endDate=${e0}`)).json();
-      for (const deal of d.data ?? []) { if (normalizeCity(deal.settlementNameHeb as string) !== cityKey || !isResidential(deal.dealNatureDescription as string)) continue; const key = String(deal.dealId ?? `${deal.dealDate}-${deal.dealAmount}`); if (seen.has(key)) continue; seen.add(key); const area = (deal.assetArea as number) ?? 0, price = (deal.dealAmount as number) ?? 0, sqm = area > 0 ? price / area : 0, dy = Number(String(deal.dealDate).slice(0, 4)); if (dy > 1990 && area >= MIN_AREA && area <= MAX_AREA && sqm >= MIN_SQM && sqm <= MAX_SQM) out.push({ deal_date: String(deal.dealDate).slice(0, 10), deal_year: dy, rooms: (deal.assetRoomNum as number) ?? null, area, price, price_sqm: Math.round(sqm), year_built: null, is_secondhand: 0, neighborhood: (deal.neighborhood as string) ?? null, cbs_code: deal.settlementId ? String(deal.settlementId) : null }); }
+      for (const deal of d.data ?? []) { if (normalizeCity(deal.settlementNameHeb as string) !== cityKey || !isResidential(deal.dealNatureDescription as string)) continue; const key = String(deal.dealId ?? `${deal.dealDate}-${deal.dealAmount}`); if (seen.has(key)) continue; seen.add(key); const area = (deal.assetArea as number) ?? 0, price = (deal.dealAmount as number) ?? 0, sqm = area > 0 ? price / area : 0, dy = Number(String(deal.dealDate).slice(0, 4)); if (dy > 1990 && area >= MIN_AREA && area <= MAX_AREA && sqm >= MIN_SQM && sqm <= MAX_SQM) out.push({ deal_date: String(deal.dealDate).slice(0, 10), deal_year: dy, rooms: (deal.assetRoomNum as number) ?? null, area, price, price_sqm: Math.round(sqm), year_built: null, is_secondhand: 0, neighborhood: (deal.neighborhood as string) ?? null, cbs_code: deal.settlementId ? String(deal.settlementId) : null, hok_hamecher: null, prev_deals: null }); }
     } catch { /* */ } await sleep(govDelay);
   }
   return out;
 }
 
 // ── nadlan (per-room, build year) ────────────────────────────────
-interface RawItem { dealDate?: string; dealAmount?: number; roomNum?: number; assetArea?: number; yearBuilt?: number; priceSM?: number; neighborhoodName?: string; }
+interface RawItem { dealDate?: string; dealAmount?: number; roomNum?: number; assetArea?: number; yearBuilt?: number; priceSM?: number; neighborhoodName?: string; hokHamecher?: number; prevDeals?: unknown[]; }
 /**
  * Balanced per-year collection (the user's algorithm): for each room (3/4/5) × second-hand
  * filter × BOTH sort directions (newest-first + oldest-first), pull the 2 allowed chunks.
@@ -132,7 +150,7 @@ interface RawItem { dealDate?: string; dealAmount?: number; roomNum?: number; as
  * ~100 up to nadlan's 1,000/query cap. Fresh token every ~6 queries (page reload). Deduped by
  * date|amount|area|rooms. (Big cities keep an unavoidable middle-year gap = the API limit.)
  */
-async function nadlanCity(browser: Browser, city: string, code: string): Promise<DealRow[]> {
+async function nadlanCity(browser: Browser, city: string, code: string, missingYears: number[] = []): Promise<DealRow[]> {
   const all = new Map<string, RawItem>();
   const addItems = (items: RawItem[]) => { for (const d of items) { if (!d.dealDate || !d.dealAmount) continue; const k = `${d.dealDate}|${d.dealAmount}|${d.assetArea}|${d.roomNum}`; if (!all.has(k)) all.set(k, d); } };
   let page: import("puppeteer-core").Page | null = null;
@@ -174,7 +192,10 @@ async function nadlanCity(browser: Browser, city: string, code: string): Promise
     await runQ(p1!, extra);
   };
   // ── v5 neighborhoods machinery ─────────────────────────────────
-  const MAX_NEIGH = 12;
+  const MAX_NEIGH = 50; // visit ALL neighborhoods of even the biggest cities — each
+                        // neighborhood view is its own ≤1,000 window, so more
+                        // neighborhoods = far more distinct deals (TLV has ~146k at
+                        // source vs the ~10k a capped sweep reached).
   const clickNeigh = async (name: string): Promise<Record<string, unknown> | null> => {
     lastPost = "";
     const clicked = await page!.evaluate((nm) => {
@@ -238,8 +259,9 @@ async function nadlanCity(browser: Browser, city: string, code: string): Promise
   };
   try {
     if (await openFreshToken()) {
-      // rooms × BOTH sort directions × 2 chunks = 12 queries ≈ 2 tokens (2 page loads/city).
-      for (const room of ["3", "4", "5"]) for (const order of ["dealDate_down", "dealDate_up"]) {
+      // ALL room buckets (was 3/4/5 only — 1/2/6 apartments were entirely missing)
+      // × BOTH sort directions × 2 chunks. Each room_num filter is its own window.
+      for (const room of ["1", "2", "3", "4", "5", "6"]) for (const order of ["dealDate_down", "dealDate_up"]) {
         await fetchQ({ room_num: room, type_order: order, fetch_number: 1 });
         await fetchQ({ room_num: room, type_order: order, fetch_number: 2 });
       }
@@ -256,13 +278,53 @@ async function nadlanCity(browser: Browser, city: string, code: string): Promise
           await fetchQ({ ...extra, fetch_number: 2 });
         }
       }
+      // v7: DEEP-YEARS pass — deal_date=N is a months-back horizon; pairing long horizons
+      // with the ASCENDING sort makes each 500-window start at the OLDEST deals inside the
+      // horizon, reaching 2016–2020 in cities whose default windows only surface 2023+.
+      // (Dedup by natural key absorbs the overlap in already-deep cities.)
+      for (const months of ["120", "96", "72"]) {
+        for (const extra of [
+          { type_order: "dealDate_up", deal_date: months },
+          { hok_hamecher: "0", type_order: "dealDate_up", deal_date: months },
+        ] as Record<string, unknown>[]) {
+          await fetchQ({ ...extra, fetch_number: 1 });
+          await fetchQ({ ...extra, fetch_number: 2 });
+        }
+      }
+      // v8: YEAR-FILL pass — a DEDICATED horizon per missing year. In big cities every
+      // generic window saturates with 500 deals of one recent year, so mid-years
+      // (2018-2021) stay under the display threshold. deal_date=(now−Y)·12+6 months
+      // with the ASCENDING sort starts the 500-window at year Y itself.
+      if (missingYears.length) {
+        const nowY = new Date().getFullYear();
+        for (const y of missingYears) {
+          const H = String((nowY - y) * 12 + 6);
+          for (const extra of [
+            { type_order: "dealDate_up", deal_date: H },
+            { hok_hamecher: "0", type_order: "dealDate_up", deal_date: H },
+          ] as Record<string, unknown>[]) {
+            await fetchQ({ ...extra, fetch_number: 1 });
+            await fetchQ({ ...extra, fetch_number: 2 });
+          }
+        }
+        console.log(`   ↳ v8 year-fill: targeted ${missingYears.join(",")}`);
+      }
       // v5: NEIGHBORHOOD pass — per-neighborhood pools beat the anonymous ~1,000-deal window,
       // reaching 15–20+ year second-hand history (each neighborhood view mints its own token).
       await neighborhoodsPass();
     }
   } finally { if (page) await page.close().catch(() => {}); }
   const out: DealRow[] = [];
-  for (const d of all.values()) { const dy = Number(String(d.dealDate).slice(0, 4)); if (dy <= 1990) continue; const yb = Number(d.yearBuilt) || null; out.push({ deal_date: String(d.dealDate).slice(0, 10), deal_year: dy, rooms: d.roomNum ?? null, area: d.assetArea ?? null, price: d.dealAmount ?? null, price_sqm: d.priceSM ?? null, year_built: yb, is_secondhand: yb && dy - yb >= SECONDHAND_MIN_AGE ? 1 : 0, neighborhood: d.neighborhoodName ?? null, cbs_code: code }); }
+  for (const d of all.values()) { const dy = Number(String(d.dealDate).slice(0, 4)); if (dy <= 1990) continue; const yb = Number(d.yearBuilt) || null; out.push({ deal_date: String(d.dealDate).slice(0, 10), deal_year: dy, rooms: d.roomNum ?? null, area: d.assetArea ?? null, price: d.dealAmount ?? null, price_sqm: d.priceSM ?? null, year_built: yb, is_secondhand: yb && dy - yb >= SECONDHAND_MIN_AGE ? 1 : 0, neighborhood: d.neighborhoodName ?? null, cbs_code: code,
+    // The authority publishes yearBuilt as 0 for a real share of deals (30% in
+    // Tirat Karmel, 46% in Akko), which left those cities with no new/second-hand
+    // split at all — and a price trend without that split just tracks the mix.
+    // These two fields are present on EVERY row and carry the same information:
+    // hokHamecher = the Sale Law, which only governs a purchase from a developer;
+    // prevDeals = the asset's earlier sales, so a non-empty list means it changed
+    // hands before. Stored raw here; the classification itself is derived later.
+    hok_hamecher: d.hokHamecher == null ? null : Number(d.hokHamecher),
+    prev_deals: Array.isArray(d.prevDeals) ? d.prevDeals.length : null }); }
   return out;
 }
 
@@ -277,7 +339,28 @@ async function main() {
   const doGovmap = srcArg === "all" || srcArg === "govmap";
   const names = argv.filter((a) => !a.startsWith("--") && a !== srcArg);
   const codes = cityCodeMap();
-  const cities = names.length ? names : (await prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } })).map((c) => c.city_name);
+  let cities = names.length ? names : (await prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } })).map((c) => c.city_name);
+  // per-city MISSING years (2016..lastFullYear with <10 active nadlan deals) — these
+  // drive the v8 year-fill pass and force re-collection even when method matches.
+  const nowY = new Date().getFullYear();
+  const minTargetY = nowY - 10, maxTargetY = nowY - 1;
+  const covered = await prisma.$queryRawUnsafe<{ city_name: string; deal_year: number }[]>(
+    `SELECT city_name, deal_year FROM nadlan_transactions
+     WHERE COALESCE(excluded,0)=0 AND source='nadlan' AND deal_year BETWEEN ${minTargetY} AND ${maxTargetY}
+     GROUP BY city_name, deal_year HAVING COUNT(*)>=10`);
+  const coveredBy = new Map<string, Set<number>>();
+  for (const r of covered) { let s = coveredBy.get(r.city_name); if (!s) { s = new Set(); coveredBy.set(r.city_name, s); } s.add(Number(r.deal_year)); }
+  const missingOf = (city: string): number[] => {
+    const have = coveredBy.get(city);
+    if (!have) return []; // no nadlan data at all → the base+v7 passes handle it, no point targeting
+    const miss: number[] = [];
+    for (let y = minTargetY; y <= maxTargetY; y++) if (!have.has(y)) miss.push(y);
+    return miss;
+  };
+  if (!names.length && doNadlan) {
+    // gap cities FIRST — cities missing years get the nightly time budget first.
+    cities = [...cities].sort((a, b) => missingOf(b).length - missingOf(a).length);
+  }
 
   console.log(`\n=== collect-transactions — ${cities.length} cities · source=${srcArg}${force ? " --force" : ""} ===`);
   let browser: Browser | null = null;
@@ -288,7 +371,17 @@ async function main() {
   };
 
   const stats = { gvOk: 0, gvSkip: 0, gvEmpty: 0, ndOk: 0, ndSkip: 0, ndEmpty: 0, err: 0 };
+  // Nightly time budget: stop STARTING new cities after this many minutes so a full
+  // re-collect (all 168 cities on a method bump) never spills into the user's workday.
+  // Resumable — cities left with the old method_version are picked up the next night.
+  // Override with MAX_RUNTIME_MIN; 0/unset on a manual/explicit-city run = no limit.
+  const budgetMin = Number(process.env.MAX_RUNTIME_MIN ?? (names.length ? 0 : 240));
+  const startedAt = Date.now();
   for (let i = 0; i < cities.length; i++) {
+    if (budgetMin > 0 && (Date.now() - startedAt) / 60000 > budgetMin) {
+      console.log(`⏳ time budget (${budgetMin}m) reached — stopping after ${i}/${cities.length}. Rest resume next run.`);
+      break;
+    }
     const city = cities[i]; const code = codes.get(city);
     const tag = `[${i + 1}/${cities.length}] ${city}`;
     // govmap
@@ -299,10 +392,14 @@ async function main() {
     }
     // nadlan (needs a CBS code + Chrome)
     if (doNadlan && code) {
-      if (!(await needsCollection(city, "nadlan", NADLAN_METHOD, force))) { stats.ndSkip++; }
+      const missing = missingOf(city);
+      // a city with missing years is ALWAYS re-collected (year-fill), even if its
+      // method_version matches — that's the whole "10 years in every city" goal.
+      if (!missing.length && !(await needsCollection(city, "nadlan", NADLAN_METHOD, force))) { stats.ndSkip++; }
       else {
+        if (missing.length) console.log(`${tag} nadlan: year-fill for ${missing.join(",")}`);
         for (let attempt = 0; attempt < 2; attempt++) {
-          try { const b = await ensureBrowser(); const collected = await nadlanCity(b, city, code);
+          try { const b = await ensureBrowser(); const collected = await nadlanCity(b, city, code, missing);
             // v4 merges with existing nadlan rows (never lose prior years) — union by natural key.
             const existing = await prisma.$queryRawUnsafe<DealRow[]>(
               "SELECT deal_date, deal_year, rooms, area, price, price_sqm, year_built, is_secondhand, neighborhood, cbs_code FROM nadlan_transactions WHERE city_name=? AND source='nadlan'", city);
