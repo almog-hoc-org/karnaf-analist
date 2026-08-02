@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { withBasePath } from "@/lib/basePath";
 import { redirect } from "next/navigation";
 import { isAdminRequest } from "@/lib/adminAuth";
 import AdminDealsBrowser from "@/components/AdminDealsBrowser";
@@ -101,7 +102,7 @@ export default async function AdminPage() {
         <div>
           <h1 className="text-3xl font-black"><span className="text-gradient-hero">🛠️ ניהול דאטה</span></h1>
           <p className="mt-1 text-xs text-slate-500">
-            המאגר העצמאי · עדכון אחרון {String(kpi?.maxd ?? "—").slice(0, 10)} · <a href="/methodology" className="font-bold text-indigo-700 hover:underline">מתודולוגיה מלאה ←</a>
+            המאגר העצמאי · עדכון אחרון {String(kpi?.maxd ?? "—").slice(0, 10)} · <a href={withBasePath("/methodology")} className="font-bold text-indigo-700 hover:underline">מתודולוגיה מלאה ←</a>
           </p>
         </div>
       </header>

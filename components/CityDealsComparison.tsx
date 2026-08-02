@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { withBasePath } from "@/lib/basePath";
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -354,7 +355,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`/api/city-deals/${encodeURIComponent(cityName)}`);
+        const res = await fetch(withBasePath(`/api/city-deals/${encodeURIComponent(cityName)}`));
         if (!res.ok) throw new Error("Failed to fetch");
         const result = await res.json();
         if (!cancelled) setData(result);
@@ -395,7 +396,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
             onClick={() => {
               setLoading(true);
               setError(null);
-              fetch(`/api/city-deals/${encodeURIComponent(cityName)}`)
+              fetch(withBasePath(`/api/city-deals/${encodeURIComponent(cityName)}`))
                 .then((r) => r.json())
                 .then(setData)
                 .catch(() => setError("שגיאה בטעינת נתוני עסקאות"))

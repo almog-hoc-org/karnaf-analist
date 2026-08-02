@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { withBasePath } from "@/lib/basePath";
 
 interface TableInfo { db: string; name: string; rows: number }
 
@@ -11,11 +12,11 @@ export default function AdminTablesBrowser() {
   const [rows, setRows] = useState<Record<string, unknown>[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => { fetch("/api/admin/tables").then((r) => r.json()).then((d) => setTables(d.tables ?? [])); }, []);
+  useEffect(() => { fetch(withBasePath("/api/admin/tables")).then((r) => r.json()).then((d) => setTables(d.tables ?? [])); }, []);
 
   const open = async (t: TableInfo) => {
     setSel(t); setLoading(true); setRows([]);
-    const res = await fetch(`/api/admin/tables?table=${encodeURIComponent(t.name)}&db=${t.db}`);
+    const res = await fetch(withBasePath(`/api/admin/tables?table=${encodeURIComponent(t.name)}&db=${t.db}`));
     const d = await res.json();
     setRows(d.rows ?? []); setLoading(false);
   };

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { withBasePath } from "@/lib/basePath";
 
 interface ProgressEvent {
   type: string;
@@ -46,7 +47,7 @@ export default function RefreshDataButton() {
     setSummary(null);
     setOpen(true);
     try {
-      const res = await fetch("/api/refresh-data", { method: "POST" });
+      const res = await fetch(withBasePath("/api/refresh-data"), { method: "POST" });
       if (!res.body) throw new Error("no stream");
       const reader = res.body.getReader();
       const decoder = new TextDecoder();

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { withBasePath } from "@/lib/basePath";
 
 /**
  * Admin deals browser — search, filter, sort, paginate the raw repository;
@@ -43,7 +44,7 @@ export default function AdminDealsBrowser({ cities }: { cities: string[] }) {
     Object.entries(f).forEach(([k, v]) => { if (v) sp.set(k, String(v)); });
     sp.set("page", String(p)); sp.set("per", String(per)); sp.set("sort", s.col); sp.set("dir", s.dir);
     try {
-      const res = await fetch(`/api/admin/deals?${sp}`);
+      const res = await fetch(withBasePath(`/api/admin/deals?${sp}`));
       const data = await res.json();
       setRows(data.rows ?? []); setTotal(data.total ?? 0);
     } finally { setLoading(false); }
@@ -63,7 +64,7 @@ export default function AdminDealsBrowser({ cities }: { cities: string[] }) {
       if (checked.size === 0) return alert("סמן עסקאות קודם");
       body.ids = [...checked];
     }
-    const res = await fetch("/api/admin/deals", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const res = await fetch(withBasePath("/api/admin/deals"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     const data = await res.json();
     if (data.ok) { setPendingChanges(true); setChecked(new Set()); query(); }
     else alert(data.error ?? "שגיאה");
@@ -71,7 +72,7 @@ export default function AdminDealsBrowser({ cities }: { cities: string[] }) {
 
   const applyToSite = async () => {
     setApplyState("מריץ אגרגציה…");
-    const res = await fetch("/api/admin/reaggregate", { method: "POST" });
+    const res = await fetch(withBasePath("/api/admin/reaggregate"), { method: "POST" });
     const data = await res.json();
     setApplyState(data.ok ? `✓ הוחל: ${data.statRows?.toLocaleString("he-IL")} שורות סטטיסטיקה` : `✗ ${data.error}`);
     if (data.ok) setPendingChanges(false);

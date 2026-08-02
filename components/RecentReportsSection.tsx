@@ -11,6 +11,7 @@ import {
   type CityDataRow,
   type Tone,
 } from "@/lib/recent-reports";
+import { withBasePath } from "@/lib/basePath";
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Design system — TWO tones only: primary (indigo) + neutral (slate).
@@ -242,7 +243,7 @@ function ReportDetail({ report }: { report: FocusedReport }) {
             📄 הדוח המקורי באתר הלמ&quot;ס ↗
           </a>
           {report.primaryPdfPath && (
-            <a href={report.primaryPdfPath} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-2xs font-bold">
+            <a href={withBasePath(report.primaryPdfPath)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-2xs font-bold">
               ✓ עותק מקומי
             </a>
           )}

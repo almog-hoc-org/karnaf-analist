@@ -29,6 +29,7 @@ import {
 import { SERIES, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 import TrendValue, { fmtSignedPct, trendTextClass } from "@/components/TrendValue";
 import { useIsMobile } from "@/lib/useIsMobile";
+import { withBasePath } from "@/lib/basePath";
 
 // ── Serialized data shapes (plain objects — no Map crosses the boundary) ────
 export interface CompareCityRow {
@@ -224,9 +225,18 @@ export default function CompareView({
   function applySelection(next: string[]) {
     setSelected(next);
     // Shallow URL update — shareable link without re-running the server fetch.
+    //
+    // withBasePath is REQUIRED here and is the least obvious of the basePath
+    // fixes. usePathname() returns the path with the base path already
+    // stripped, so under basePath="/analist" this reads "/compare", and writing
+    // that straight into replaceState would silently rewrite the address bar
+    // from /analist/compare to /compare. Nothing breaks on the spot — the page
+    // is already rendered — but every link the user then copies, bookmarks or
+    // shares is wrong, and a refresh 404s.
     if (typeof window !== "undefined") {
       const qs = next.map((n) => encodeURIComponent(n)).join(",");
-      window.history.replaceState(null, "", qs ? `${pathname}?cities=${qs}` : pathname);
+      const base = withBasePath(pathname);
+      window.history.replaceState(null, "", qs ? `${base}?cities=${qs}` : base);
     }
   }
 

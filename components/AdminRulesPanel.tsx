@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { withBasePath } from "@/lib/basePath";
 
 /** Every parameter the site's numbers rely on — editable, switchable, resettable. */
 interface Rule {
@@ -17,7 +18,7 @@ export default function AdminRulesPanel() {
   const [busy, setBusy] = useState(false);
 
   const load = async () => {
-    const res = await fetch("/api/admin/rules");
+    const res = await fetch(withBasePath("/api/admin/rules"));
     const d = await res.json();
     setRules(d.rules ?? []);
   };
@@ -31,7 +32,7 @@ export default function AdminRulesPanel() {
 
   const save = async (key: string, value: string, enabled: boolean) => {
     setBusy(true);
-    const res = await fetch("/api/admin/rules", {
+    const res = await fetch(withBasePath("/api/admin/rules"), {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ key, value, enabled }),
     });
@@ -42,7 +43,7 @@ export default function AdminRulesPanel() {
 
   const reset = async (key: string) => {
     setBusy(true);
-    const res = await fetch("/api/admin/rules", {
+    const res = await fetch(withBasePath("/api/admin/rules"), {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "reset", key }),
     });
@@ -54,7 +55,7 @@ export default function AdminRulesPanel() {
 
   const applyToSite = async () => {
     setApplyMsg("מריץ חישוב מחדש…");
-    const res = await fetch("/api/admin/reaggregate", { method: "POST" });
+    const res = await fetch(withBasePath("/api/admin/reaggregate"), { method: "POST" });
     const d = await res.json();
     setApplyMsg(d.ok ? `✓ הוחל על האתר (${d.statRows?.toLocaleString("he-IL")} שורות חושבו מחדש)` : `✗ ${d.error}`);
     if (d.ok) setDirty(false);

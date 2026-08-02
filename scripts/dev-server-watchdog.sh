@@ -27,8 +27,15 @@ log() {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG_FILE"
 }
 
+# Health probes hit $BASE_PATH, not "/". Under a basePath the root returns 404,
+# so a hardcoded "/" would read every healthy server as dead and restart it in a
+# loop. /api/health is also a better probe than the homepage: it is cheap and it
+# does not depend on page rendering.
+BASE_PATH="${NEXT_PUBLIC_BASE_PATH:-}"
+HEALTH_URL="http://127.0.0.1:$PORT${BASE_PATH}/api/health"
+
 # Step 1 — is something already serving on :$PORT?
-if curl -sf --max-time 3 "http://127.0.0.1:$PORT/" >/dev/null 2>&1; then
+if curl -sf --max-time 3 "$HEALTH_URL" >/dev/null 2>&1; then
   log "✓ healthy on :$PORT"
   exit 0
 fi
@@ -49,7 +56,7 @@ echo $! > "$PID_FILE"
 
 # Step 4 — wait up to 60s for the server to answer, log result.
 for i in $(seq 1 60); do
-  if curl -sf --max-time 2 "http://127.0.0.1:$PORT/" >/dev/null 2>&1; then
+  if curl -sf --max-time 2 "$HEALTH_URL" >/dev/null 2>&1; then
     log "✓ server up (pid $(cat "$PID_FILE")) after ${i}s"
     exit 0
   fi

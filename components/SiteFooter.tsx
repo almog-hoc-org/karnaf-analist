@@ -1,3 +1,5 @@
+import { withBasePath } from "@/lib/basePath";
+
 export default function SiteFooter() {
   return (
     <footer className="mt-16 border-t border-slate-200 bg-white/60">
@@ -15,7 +17,7 @@ export default function SiteFooter() {
           הנתונים מבוססים על מקורות רשמיים: רשות המסים (נדל״ן), הלמ״ס, data.gov.il ומאגר העסקאות הפנימי במערכת.
         </p>
         <p className="text-2xs text-slate-400">
-          כלי מחקר פנימי · אינו מהווה ייעוץ השקעות · <a href="/methodology" className="font-bold text-indigo-600 hover:underline">איך המספרים מחושבים ←</a>
+          כלי מחקר פנימי · אינו מהווה ייעוץ השקעות · <a href={withBasePath("/methodology")} className="font-bold text-indigo-600 hover:underline">איך המספרים מחושבים ←</a>
         </p>
       </div>
     </footer>

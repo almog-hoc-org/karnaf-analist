@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { withBasePath } from "@/lib/basePath";
 
 const NAV_ITEMS = [
   { href: "/", label: "בית" },
@@ -128,7 +129,7 @@ export default function TopNav({ cities, user }: { cities: string[]; user?: { na
           {user ? (
             <>
               <span className="rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-bold text-indigo-700">שלום, {user.name}</span>
-              <a href="/logout" className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-400 hover:text-slate-700">יציאה</a>
+              <a href={withBasePath("/logout")} className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-400 hover:text-slate-700">יציאה</a>
             </>
           ) : (
             <Link href="/login" className="rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-100 hover:text-slate-800">
@@ -183,7 +184,7 @@ export default function TopNav({ cities, user }: { cities: string[]; user?: { na
               {user ? (
                 <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-3">
                   <span className="text-sm font-bold text-indigo-700">שלום, {user.name}</span>
-                  <a href="/logout" className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500">יציאה</a>
+                  <a href={withBasePath("/logout")} className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500">יציאה</a>
                 </div>
               ) : (
                 <Link href="/login" className="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700">

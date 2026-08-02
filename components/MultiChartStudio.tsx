@@ -8,6 +8,7 @@ import TrendValue from "./TrendValue";
 import SourceBadge from "./SourceBadge";
 import { BRAND, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
 import { useIsMobile } from "@/lib/useIsMobile";
+import { withBasePath } from "@/lib/basePath";
 
 /**
  * MultiChartStudio — ONE tool for exploring price trends (user spec):
@@ -196,7 +197,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const reqId = useRef(0);
 
   const dealsUrl = (offset: number) =>
-    `/api/city-transactions/${encodeURIComponent(cityName)}?` + new URLSearchParams({
+    withBasePath(`/api/city-transactions/${encodeURIComponent(cityName)}`) + "?" + new URLSearchParams({
       year: String(activeDealsYear), from: String(from), to: String(to),
       dealType, buildingAge, room, limit: String(PAGE), offset: String(offset),
     });

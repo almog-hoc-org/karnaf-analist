@@ -13,6 +13,7 @@ import {
   type Source,
 } from "@/lib/sources";
 import { getDocumentsForSource, type SourceDocument, type DocStatus } from "@/lib/source-documents";
+import { withBasePath } from "@/lib/basePath";
 
 interface PageProps {
   params: { id: string };
@@ -506,7 +507,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
                   <StatusBadge status={d.status} />
                   <div className="flex-1 min-w-0">
                     <a
-                      href={d.url}
+                      href={withBasePath(d.url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-semibold text-slate-800 hover:text-cyan-700 hover:underline break-words"
@@ -578,7 +579,7 @@ export default async function SourceDetailPage({ params }: PageProps) {
         <div className="flex flex-wrap gap-2 mt-4">
           {src.url && src.url !== "#" && (
             <a
-              href={src.url}
+              href={withBasePath(src.url)}
               target="_blank"
               rel="noopener noreferrer"
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${a.bgSoft} ${a.text} border border-current/20 hover:opacity-80 transition-opacity`}

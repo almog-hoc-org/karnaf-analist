@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { withBasePath } from "@/lib/basePath";
 
 /**
  * Standard provenance caption for every KPI on the dashboard.
@@ -55,9 +56,12 @@ export default function NumberCaption({
   const textSize = size === "xxs" ? "text-2xs" : "text-2xs";
   const alignCls = align === "center" ? "justify-center" : align === "start" ? "justify-start" : "";
 
+  // withBasePath is applied at the render point rather than at each literal:
+  // every caller passes a public/ path such as "/reports/…pdf", and wrapping
+  // here means a new caller cannot forget it.
   const sourceNode = sourceHref && !insideLink ? (
     <a
-      href={sourceHref}
+      href={withBasePath(sourceHref)}
       target="_blank"
       rel="noopener noreferrer"
       className="text-cyan-700 hover:underline font-semibold"
