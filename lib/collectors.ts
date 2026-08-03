@@ -57,7 +57,7 @@ export const SOURCES: CollectorSource[] = [
     cmd: "npx",
     args: ["tsx", "scripts/collect-govmap-transactions.ts"],
     label: "עסקאות govmap (רשות המסים)",
-    why: "The broad multi-year transaction feed — every deal 2016→now, all cities, no browser needed. This is the source that actually keeps the price series current. It skips any city collected in the last 20 days, so a nightly run touches roughly a twentieth of the country and the full rotation completes every three weeks without a thundering herd.",
+    why: "The broad multi-year transaction feed — every deal 2016→now, all cities, no browser needed. This is the source that actually keeps the price series current. It skips cities collected within KARNAF_GOVMAP_FRESH_DAYS (default 20), so a nightly run touches a slice of the country rather than all of it. Operating this by hand meant running it daily because deals go missing and a re-run finds them, which argues for a shorter window than the backfill default once we have real timings.",
     host: "https://www.govmap.gov.il/api",
     timeoutMs: 90 * MINUTE,
   },

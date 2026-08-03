@@ -29,7 +29,18 @@ const RING_OFFSETS_M = [0, 2000, 4000, 6000];
 // 45 polygons dropped whole neighbourhoods in big cities (TLV kept only 36% of deals) —
 // 120 covers the full polygon list almost everywhere; smaller cities are unaffected.
 const MAX_POLYGONS = 120;
-const FRESH_DAYS = 20;
+/**
+ * Skip a city collected more recently than this.
+ *
+ * Configurable because the right value depends on how the collector is driven.
+ * At 20 days a nightly run touches about a twentieth of the country and a full
+ * rotation takes three weeks — right for a backfill, too coarse for the way this
+ * was actually operated by hand, which was daily, because deals go missing and a
+ * re-run picks them up. A shorter window re-checks each city more often at the
+ * cost of more requests per night; scripts/collect.ts caps the night's total
+ * time, so the two settings bound each other.
+ */
+const FRESH_DAYS = Number(process.env.KARNAF_GOVMAP_FRESH_DAYS ?? 20);
 const MIN_SQM = 2_000, MAX_SQM = 200_000, MIN_AREA = 20, MAX_AREA = 500;
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
