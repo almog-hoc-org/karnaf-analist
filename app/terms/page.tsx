@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { BUSINESS } from "@/lib/legal";
 
 /**
  * Terms of use.
  *
- * ⚠️ DRAFT — needs a lawyer before launch.
+ * Reviewed and approved by counsel (August 2026).
  *
  * The one clause that is NOT boilerplate is the disclaimer: this site publishes
  * property price estimates derived from government transaction data, and people
@@ -29,10 +30,6 @@ export default function TermsPage() {
   return (
     <main className="min-h-screen page-wrap py-10">
       <div className="mx-auto max-w-3xl px-4">
-        <div className="mb-6 rounded-xl border-2 border-amber-300 bg-amber-50 p-4">
-          <p className="text-sm font-bold text-amber-900">⚠️ טיוטה — טרם עברה בדיקה משפטית</p>
-        </div>
-
         <h1 className="mb-2 text-3xl font-black tracking-tight">
           <span className="text-gradient-hero">תנאי שימוש</span>
         </h1>
@@ -87,6 +84,17 @@ export default function TermsPage() {
           </ul>
         </Section>
 
+        <Section title="יצירת קשר">
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+            <p><strong>{BUSINESS.name}</strong> · ח.פ {BUSINESS.companyId}</p>
+            <p className="mt-1">
+              דוא״ל: <a href={`mailto:${BUSINESS.email}`} className="font-bold text-indigo-700 hover:underline" dir="ltr">{BUSINESS.email}</a>
+              {" · "}
+              טלפון: <a href={`tel:${BUSINESS.phoneHref}`} className="font-bold text-indigo-700 hover:underline" dir="ltr">{BUSINESS.phone}</a>
+            </p>
+          </div>
+        </Section>
+
         <Section title="חשבונות">
           <p>
             אתם אחראים לשמירת הסיסמה. אם הזנתם מידע על לקוחות — <strong>האחריות כלפיהם
@@ -102,15 +110,30 @@ export default function TermsPage() {
         </Section>
 
         <Section title="הגבלת אחריות">
-          <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-500">
-            📝 <strong>סעיף שדורש ניסוח משפטי.</strong> הכוונה: אחריות מוגבלת לנזק שנגרם
-            מהסתמכות על הנתונים. יש להתאים לדין הישראלי.
+          <p>
+            השירות ניתן ללא תשלום וכמות שהוא. אנו עושים מאמץ סביר לדיוק הנתונים, אך אין
+            באפשרותנו להתחייב לכך שהם מלאים, מעודכנים או נקיים משגיאות — הם נגזרים ממקורות
+            ציבוריים שאיננו שולטים בהם.
+          </p>
+          <p>
+            <strong>{BUSINESS.name}</strong>, בעליה ומי מטעמה לא יישאו באחריות לנזק ישיר או
+            עקיף שייגרם מהסתמכות על תוכן האתר, לרבות החלטת רכישה, מכירה או השקעה. השימוש
+            באתר נעשה על אחריות המשתמש בלבד.
+          </p>
+          <p>
+            אין באמור כדי לגרוע מזכויות שאינן ניתנות להתניה לפי דין, לרבות חוק הגנת הצרכן.
+          </p>
+          <p className="rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-xs">
+            מצאתם נתון שגוי? <strong>דווחו לנו</strong> דרך כפתור המשוב. אנו מתקנים
+            שגיאות שמדווחות לנו, וזו הדרך היעילה ביותר לשפר את הדיוק עבור כולם.
           </p>
         </Section>
 
         <Section title="דין וסמכות שיפוט">
-          <p>על תנאים אלה יחולו דיני מדינת ישראל.</p>
-          <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-500">📝 להשלמה: סמכות שיפוט ייחודית.</p>
+          <p>
+            על תנאים אלה יחולו דיני מדינת ישראל בלבד. סמכות השיפוט הייחודית בכל עניין
+            הנוגע להם נתונה לבתי המשפט המוסמכים ב{BUSINESS.jurisdiction}.
+          </p>
         </Section>
 
         <div className="mt-10 flex flex-wrap gap-3 border-t border-slate-200 pt-6 text-sm">

@@ -4,6 +4,7 @@ import "./globals.css";
 import RefreshDataButton from "@/components/RefreshDataButton";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import Analytics from "@/components/Analytics";
+import AccessibilityWidget from "@/components/AccessibilityWidget";
 import TopNav from "@/components/TopNav";
 import { getCurrentUser } from "@/lib/auth";
 import { isAdminRequest } from "@/lib/adminAuth";
@@ -51,6 +52,10 @@ export default async function RootLayout({
       <body
         className={`${rubik.variable} font-heebo text-slate-900 antialiased min-h-screen relative`}
       >
+        {/* Skip link — the first focusable element on the page, so a keyboard
+            user can jump past the nav instead of tabbing through it on every
+            page. WCAG 2.4.1. */}
+        <a href="#main-content" className="skip-link">דלג לתוכן הראשי</a>
         {/* Subtle grid texture overlay for depth */}
         <div
           className="fixed inset-0 pointer-events-none opacity-[0.025]"
@@ -61,7 +66,9 @@ export default async function RootLayout({
           }}
         />
         <TopNav cities={cityNames} user={getCurrentUser()} />
-        <div className="relative">{children}</div>
+        {/* The landmark the skip link targets. tabIndex={-1} lets it receive
+            focus programmatically without entering the tab order itself. */}
+        <div id="main-content" tabIndex={-1} className="relative">{children}</div>
         <SiteFooter />
         {/* Operator tool, not a visitor feature — the API behind it is admin-gated,
             so showing the button to everyone would only offer a 401. */}
@@ -71,6 +78,8 @@ export default async function RootLayout({
         {/* Inert until NEXT_PUBLIC_CLARITY_ID is set, and never loads on /deals
             or /admin — see the note in the component. */}
         <Analytics />
+        {/* end-side, clear of the feedback button at start-side */}
+        <AccessibilityWidget />
       </body>
     </html>
   );

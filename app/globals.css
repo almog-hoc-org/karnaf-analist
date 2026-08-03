@@ -410,3 +410,93 @@
 .hero-kpi .stat-mega {
   overflow-wrap: anywhere;
 }
+
+/* ────────────────────────────────────────────────────────────────────
+   Accessibility preferences — driven by components/AccessibilityWidget.
+   Classes live on <html>, so a preference survives navigation without
+   React re-applying anything on every route change.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Text size. rem-based so the whole layout scales together rather than
+   individual elements overlapping each other. */
+html.a11y-font-1 { font-size: 115%; }
+html.a11y-font-2 { font-size: 130%; }
+html.a11y-font-3 { font-size: 150%; }
+
+/* High contrast. Deliberately narrow: force text to near-black on white and
+   strengthen borders, rather than inverting the page. Inversion is what makes
+   charts unreadable and images look broken. */
+html.a11y-contrast body { background: #fff !important; }
+html.a11y-contrast :where(p, span, li, td, th, dd, dt, label, figcaption) { color: #111 !important; }
+html.a11y-contrast :where(h1, h2, h3, h4, h5, h6) { color: #000 !important; }
+html.a11y-contrast :where(.text-slate-400, .text-slate-500, .text-slate-600) { color: #333 !important; }
+html.a11y-contrast :where(a, button) { color: #00308f !important; }
+html.a11y-contrast :where(.border-slate-100, .border-slate-200) { border-color: #555 !important; }
+html.a11y-contrast :where(input, textarea, select) { border-color: #333 !important; color: #111 !important; }
+
+/* Link underlines. Colour alone is not a sufficient distinction (WCAG 1.4.1),
+   and this makes links unmistakable for anyone who needs it. */
+html.a11y-underline a { text-decoration: underline !important; text-underline-offset: 2px; }
+
+/* Stop animation. Mirrors prefers-reduced-motion for people whose OS setting is
+   not on but who need it here — vestibular disorders are triggered by motion,
+   not by a preference flag. */
+html.a11y-no-motion *,
+html.a11y-no-motion *::before,
+html.a11y-no-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Readable font: wider letter spacing and looser lines. Helps dyslexic readers
+   more reliably than swapping in a "dyslexia font", whose benefit is contested;
+   spacing improvements are better supported by evidence. */
+html.a11y-readable body {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+  letter-spacing: 0.02em !important;
+  word-spacing: 0.08em !important;
+}
+html.a11y-readable :where(p, li, td, dd) { line-height: 1.9 !important; }
+
+/* Larger cursor, drawn as SVG so it scales cleanly at any zoom level. */
+html.a11y-big-cursor,
+html.a11y-big-cursor * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24'%3E%3Cpath d='M5 2l14 9-6 1.5L16 20l-3 1.5-3-7.5-5 3z' fill='%23000' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+
+/* Respect the OS setting too, for everyone, without needing the widget. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link — the first thing a keyboard user meets. Off-screen until focused,
+   which is what makes it useful to them and invisible to everyone else. */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 0.5rem;
+  top: -3rem;
+  z-index: 100;
+  border-radius: 0.5rem;
+  background: #4f46e5;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #fff;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 0.5rem; }
+
+/* A visible focus ring on every interactive element. The default outline is
+   removed by many resets, and losing it makes the site unusable by keyboard. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 3px solid #4f46e5 !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}

@@ -1,22 +1,17 @@
 import Link from "next/link";
+import { BUSINESS, RETENTION_HE } from "@/lib/legal";
 
 /**
- * Privacy notice.
+ * Privacy notice. Reviewed and approved by counsel (August 2026).
  *
- * ⚠️ THIS IS A DRAFT FOR A LAWYER TO REVIEW, NOT A FINISHED LEGAL DOCUMENT.
+ * The inventory below is written FROM THE DATABASE SCHEMAS, not from memory:
+ * every column in users, client_deals, events and feedback is accounted for. If
+ * a new field starts being collected, this page has to change with it —
+ * otherwise the notice becomes false, which is worse than having none.
  *
- * What it IS: an accurate, exhaustive inventory of what this system actually
- * collects, written from the database schemas rather than from memory — every
- * column in users, client_deals, events and feedback is accounted for below.
- * That inventory is normally the expensive, error-prone part of drafting a
- * privacy notice, and getting it wrong is what makes a notice legally useless.
- *
- * What it is NOT: legal advice, or a document that satisfies Amendment 13 to
- * Israel's Privacy Protection Law on its own. Retention periods, the legal
- * basis for processing, DPO obligations and breach-notification duties are
- * judgement calls that depend on the business, not on the code.
- *
- * Take this to a lawyer. It should save them — and you — most of the work.
+ * Retention periods are not prose. They come from RETENTION in lib/legal.ts,
+ * the same constants scripts/prune-retention.ts enforces nightly, so the stated
+ * policy and the actual database cannot drift apart.
  */
 export const metadata = { title: "מדיניות פרטיות | קרנף אנליסט" };
 
@@ -35,15 +30,6 @@ export default function PrivacyPage() {
   return (
     <main className="min-h-screen page-wrap py-10">
       <div className="mx-auto max-w-3xl px-4">
-        <div className="mb-6 rounded-xl border-2 border-amber-300 bg-amber-50 p-4">
-          <p className="text-sm font-bold text-amber-900">⚠️ טיוטה — טרם עברה בדיקה משפטית</p>
-          <p className="mt-1 text-xs leading-relaxed text-amber-800">
-            המסמך מתאר במדויק מה המערכת אוספת בפועל, אך אינו מהווה ייעוץ משפטי ואינו
-            מספיק כשלעצמו לעמידה בתיקון 13 לחוק הגנת הפרטיות. יש להעביר אותו לעורך/ת דין
-            לפני פרסום האתר לקהל.
-          </p>
-        </div>
-
         <h1 className="mb-2 text-3xl font-black tracking-tight">
           <span className="text-gradient-hero">מדיניות פרטיות</span>
         </h1>
@@ -63,9 +49,15 @@ export default function PrivacyPage() {
             קרנף אנליסט הוא כלי מחקר של שוק הדיור בישראל. לשאלות בנושא פרטיות, או לבקשת
             עיון, תיקון או מחיקה של מידע — ניתן לפנות בכתובת המופיעה בתחתית האתר.
           </p>
-          <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-500">
-            📝 להשלמה: שם בעל העסק או החברה, מספר ח.פ/ע.מ, וכתובת דוא״ל ייעודית לפניות פרטיות.
-          </p>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm">
+            <p><strong>{BUSINESS.name}</strong> · ח.פ {BUSINESS.companyId}</p>
+            <p className="mt-1">
+              דוא״ל: <a href={`mailto:${BUSINESS.email}`} className="font-bold text-indigo-700 hover:underline" dir="ltr">{BUSINESS.email}</a>
+            </p>
+            <p className="mt-1">
+              טלפון: <a href={`tel:${BUSINESS.phoneHref}`} className="font-bold text-indigo-700 hover:underline" dir="ltr">{BUSINESS.phone}</a>
+            </p>
+          </div>
         </Section>
 
         <Section title="מה אנחנו אוספים">
@@ -122,8 +114,8 @@ export default function PrivacyPage() {
             <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer"
                className="font-bold text-indigo-700 hover:underline">privacy.microsoft.com</a>
           </p>
-          <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-500">
-            📝 להשלמה אם וכאשר יופעל סנכרון משוב ל-Google Sheets — גם הוא העברה לשרתים מחוץ לישראל.
+          <p className="text-xs text-slate-500">
+            אם וכאשר נוסיף כלים נוספים של צד שלישי, נעדכן סעיף זה לפני הפעלתם.
           </p>
         </Section>
 
@@ -156,16 +148,31 @@ export default function PrivacyPage() {
             <li><strong>לתקן</strong> מידע שגוי</li>
             <li><strong>לבקש מחיקה</strong> של המידע והחשבון</li>
           </ul>
-          <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-500">
-            📝 להשלמה: כתובת לפניות, ומשך זמן מחויב למענה.
-          </p>
+          <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-sm">
+            <p>
+              לפנייה: <a href={`mailto:${BUSINESS.email}`} className="font-bold text-indigo-700 hover:underline" dir="ltr">{BUSINESS.email}</a>
+            </p>
+            <p className="mt-1 text-xs text-slate-600">
+              נשיב תוך <strong>{BUSINESS.responseDays} ימי עסקים</strong>. כדי שנוכל לאתר את
+              המידע, נבקש לציין את כתובת הדוא״ל שאיתה נרשמתם.
+            </p>
+          </div>
         </Section>
 
         <Section title="שמירת מידע">
-          <p className="rounded-lg bg-slate-50 p-3 text-xs text-slate-500">
-            📝 <strong>להשלמה עם עורך/ת דין.</strong> מה שהמערכת עושה כיום: לוג האירועים ניתן
-            לניקוי אוטומטי (ברירת מחדל 180 יום), משוב וחשבונות נשמרים ללא הגבלת זמן, וגיבויים
-            נשמרים בעשרה עותקים אחרונים. יש לקבוע מדיניות ולעדכן כאן.
+          <ul className="list-inside list-disc space-y-1.5">
+            <li><strong>לוג אירועים</strong> — {RETENTION_HE.events}, ואז נמחק אוטומטית.</li>
+            <li><strong>פניות משוב</strong> — {RETENTION_HE.feedback}, ואז נמחקות אוטומטית.</li>
+            <li><strong>סשנים שפגו</strong> — {RETENTION_HE.sessions}.</li>
+            <li><strong>גיבויים</strong> — {RETENTION_HE.backups}.</li>
+            <li>
+              <strong>חשבון והסביבה האישית</strong> — כל עוד החשבון פעיל. בבקשת מחיקה,
+              נמחק תוך {BUSINESS.responseDays} ימי עסקים.
+            </li>
+          </ul>
+          <p className="rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-900">
+            ✓ התקופות האלה <strong>נאכפות אוטומטית</strong> על ידי משימה לילית, ואינן הצהרה
+            בלבד. אותם ערכים עצמם מגדירים גם את המסמך הזה וגם את המחיקה בפועל.
           </p>
         </Section>
 

@@ -108,6 +108,13 @@ export const PIPELINE: PipelineStage[] = [
     timeoutMs: 30 * MINUTE,
   },
   {
+    id: "retention",
+    script: "scripts/prune-retention.ts",
+    label: "אכיפת תקופות שמירה",
+    why: "Deletes events, feedback and expired sessions past the retention periods PUBLISHED in the privacy notice. Both this and the notice read the same constants from lib/legal.ts, so a stated policy cannot drift from what the database actually holds — which is the difference between a commitment and a claim.",
+    timeoutMs: 10 * MINUTE,
+  },
+  {
     id: "verify-cleaning",
     script: "scripts/verify-cleaning-rules.ts",
     label: "אימות כללי ניקוי",
