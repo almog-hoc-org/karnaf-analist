@@ -1,0 +1,30 @@
+# Keep the build context small and, more importantly, keep secrets and data OUT
+# of the image. Anything listed here is invisible to `docker build`.
+
+.git
+.github
+node_modules
+.next
+.next.nosync
+npm-debug.log*
+
+# Databases are bind-mounted from the host at run time. Copying a 312MB file
+# into the image would bloat every layer AND bake a stale snapshot into it.
+data/*.db
+data/*.db-wal
+data/*.db-shm
+
+# Secrets never belong in an image — anyone who can pull it can read them.
+.env
+.env.*
+!.env.example
+
+# Generated report PDFs are bind-mounted too.
+public/reports/*.pdf
+
+# Local noise
+.DS_Store
+*.log
+/tmp
+.vscode
+.idea

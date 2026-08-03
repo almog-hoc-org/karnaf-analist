@@ -40,8 +40,13 @@ next-env.d.ts
 # editor backups
 *.bak
 
-# env
+# env — every variant EXCEPT the committed example.
+# .env.production holds ADMIN_PASSWORD, ADMIN_TOKEN_SECRET and REVALIDATE_TOKEN;
+# only ".env" was ignored before, so the production file would have been
+# committed on the first `git add -A` after deployment.
 .env
+.env.*
+!.env.example
 .next.nosync
 
 # ── databases ────────────────────────────────────────────────────────

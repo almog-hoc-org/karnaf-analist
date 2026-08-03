@@ -1,0 +1,81 @@
+# Karnaf Analist — deployment for the Hostinger VPS.
+#
+# CONTEXT THIS IS WRITTEN AGAINST
+# The server already runs two things that must not be disturbed:
+#   1. an OpenClaw bot, as a bare host process on port 18789
+#   2. Traefik, in host network mode, owning :80 and :443 and issuing
+#      Let's Encrypt certificates
+#
+# NOTHING HERE MODIFIES EITHER. Traefik is configured with
+# `--providers.docker=true` and `--providers.docker.exposedbydefault=false`,
+# which means it discovers containers by itself but only ones that opt in. The
+# labels below are that opt-in. Traefik's own compose file is never touched.
+#
+# The app does NOT publish a port to the host. Traefik reaches it over the
+# Docker bridge network, so nothing new is exposed to the internet and there is
+# no chance of colliding with the bot.
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        # Empty = served at the domain root. Set to /analist ONLY when moving
+        # under karnafnadlan.com/analist — it is inlined at build time, so
+        # changing it requires a rebuild, not just a restart.
+        NEXT_PUBLIC_BASE_PATH: "${NEXT_PUBLIC_BASE_PATH:-}"
+    image: karnaf-analist:latest
+    container_name: karnaf-analist
+    restart: unless-stopped
+
+    env_file:
+      - .env.production
+
+    volumes:
+      # ── THE IMPORTANT PART ──────────────────────────────────────────
+      # Databases live on the HOST, outside the image. The container is
+      # disposable and gets rebuilt on every deploy; this directory is not.
+      # Without this split, a deploy would silently destroy 1.35M transactions
+      # and every user account.
+      - /var/lib/karnaf/data:/app/data
+      # Report PDFs the refresh pipeline downloads, served from public/.
+      - /var/lib/karnaf/reports:/app/public/reports
+
+    # ── RESOURCE LIMITS: THIS IS WHAT PROTECTS THE BOT ────────────────
+    # The aggregation step loads roughly a million rows into a JavaScript array.
+    # On a 7.8GB box that also hosts the bot (~560MB) plus Traefik and Docker,
+    # an unbounded spike could get the bot OOM-killed. A hard ceiling means the
+    # worst case is OUR container dying and restarting — never the bot.
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+        reservations:
+          memory: 512M
+    mem_limit: 3g          # honoured by `docker compose up` (non-Swarm)
+    memswap_limit: 3g      # without this, the limit leaks into swap
+    cpus: 1.5              # leaves headroom on the 2-core box for the bot
+
+    labels:
+      # ── Traefik opt-in ──────────────────────────────────────────────
+      - "traefik.enable=true"
+      # Which hostname routes here. Override APP_HOST in .env.production.
+      - "traefik.http.routers.karnaf.rule=Host(`${APP_HOST}`)"
+      - "traefik.http.routers.karnaf.entrypoints=websecure"
+      - "traefik.http.routers.karnaf.tls=true"
+      # Must match the resolver name in Traefik's own command line, or no
+      # certificate is issued and the site serves a browser warning.
+      - "traefik.http.routers.karnaf.tls.certresolver=letsencrypt"
+      - "traefik.http.services.karnaf.loadbalancer.server.port=3000"
+      # Traefik runs in host network mode, so it reaches this container by its
+      # bridge IP. Naming the network explicitly stops it guessing wrong when
+      # the container is attached to more than one.
+      - "traefik.docker.network=bridge"
+
+    logging:
+      # Logs are useful and also grow forever. 3×10MB is plenty to debug a bad
+      # deploy without quietly eating the disk.
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
