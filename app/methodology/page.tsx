@@ -28,6 +28,31 @@ export default async function MethodologyPage() {
 
   const n = Number(totals?.n ?? 0), sh = Number(totals?.sh ?? 0), nw = Number(totals?.nw ?? 0), st = Number(totals?.st ?? 0);
 
+  // Coverage of the "all" price series, measured rather than asserted.
+  //
+  // scripts/aggregate-nadlan-transactions.ts gates that series on class_source
+  // being set, so a nadlan deal with neither a build year nor the authority's
+  // Sale-Law flag is collected, stored, and left out of it. The page used to
+  // claim the gate was "has a build year", which was the OLD rule and understated
+  // the coverage; and it claimed govmap is used for addresses only, which the
+  // aggregation contradicts outright for the thin-coverage cities. Both numbers
+  // now come from the same database the charts read, because a methodology page
+  // that drifts from the code is worse than no methodology page.
+  const [cov] = await prisma.$queryRawUnsafe<Array<{ classified: bigint; nadlan_n: bigint }>>(
+    `SELECT SUM(CASE WHEN class_source IS NOT NULL THEN 1 ELSE 0 END) classified,
+            COUNT(*) nadlan_n
+       FROM nadlan_transactions
+      WHERE COALESCE(excluded,0)=0 AND source='nadlan'
+        AND deal_year >= CAST(strftime('%Y','now') AS INTEGER) - 10`
+  ).catch(() => [{ classified: BigInt(0), nadlan_n: BigInt(0) }]);
+  const classified = Number(cov?.classified ?? 0), nadlanN = Number(cov?.nadlan_n ?? 0);
+  const unclassified = Math.max(0, nadlanN - classified);
+
+  const [govCov] = await prisma.$queryRawUnsafe<Array<{ c: bigint }>>(
+    `SELECT COUNT(DISTINCT city_name) c FROM nadlan_year_room_stats WHERE scope='all_govmap'`
+  ).catch(() => [{ c: BigInt(0) }]);
+  const govCities = Number(govCov?.c ?? 0);
+
   const Section = ({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) => (
     <section className="glass-card mb-6 p-6">
       <h2 className="mb-3 flex items-center gap-2 text-xl font-black text-slate-900">
@@ -50,7 +75,7 @@ export default async function MethodologyPage() {
       </header>
 
       <Section icon="📥" title="שני ערוצי איסוף בלתי-תלויים">
-        <p><B>ערוץ govmap (רשות המסים — שכבת המפה):</B> סריקה גיאוגרפית של פוליגוני עסקאות סביב כל עיר, ללא דפדפן. תורם <B>רחוב, מספר בית וקומה</B> ({st.toLocaleString("he-IL")} עסקאות עם כתובת). אין בו שדה שנת-בנייה. הוא משמש <B>לכתובות בלבד</B> — לא לחישוב מחיר (נמצא רועש: סטייה של עשרות אחוזים מהחציון הרשמי, לשני הכיוונים, בין ערים).</p>
+        <p><B>ערוץ govmap (רשות המסים — שכבת המפה):</B> סריקה גיאוגרפית של פוליגוני עסקאות סביב כל עיר, ללא דפדפן. תורם <B>רחוב, מספר בית וקומה</B> ({st.toLocaleString("he-IL")} עסקאות עם כתובת). אין בו שדה שנת-בנייה. הוא משמש <B>בעיקר לכתובות</B> — ולא לחישוב מחיר, כי נמצא רועש (סטייה של עשרות אחוזים מהחציון הרשמי, לשני הכיוונים, בין ערים).{govCities > 0 && <> יוצא הדופן היחיד: ב-<B>{govCities} ערים</B> שכיסוי nadlan בהן דק מכדי לבנות עשור, סדרת &quot;כללי&quot; נבנית מ-govmap — ובאותן ערים מוצגת הודעה על כך בעמוד העיר עצמו, מעל הגרף.</>}</p>
         <p><B>ערוץ nadlan (רשות המסים — deal-data חתום):</B> ה-API הרשמי עם חתימה קריפטוגרפית, כולל <B>שנת בנייה</B> — הבסיס לסיווג. מכסה אנונימית ~1,000 עסקאות לחלון שאילתה; אנחנו פורשים אותה בפילוחי חדרים, סוג-עסקה, חלונות-זמן ורמת שכונה. רץ אוטומטית כל לילה (02:30) עד השלמת 10 שנים בכל עיר.</p>
       </Section>
 
@@ -58,7 +83,22 @@ export default async function MethodologyPage() {
         <p className="rounded-xl border border-indigo-100 bg-indigo-50/60 p-3 font-bold text-slate-900" dir="rtl">
           שנת עסקה − שנת בנייה ≥ {SECONDHAND_MIN_AGE} ← <span className="text-indigo-700">יד שנייה</span> · פחות מ-{SECONDHAND_MIN_AGE} שנים ← <span className="text-indigo-700">חדשה</span>
         </p>
-        <p>במאגר כרגע: <B>{sh.toLocaleString("he-IL")} יד-שנייה</B> · <B>{nw.toLocaleString("he-IL")} חדשות</B> (מסווגות משנת-בנייה אמיתית). כל סדרות המחיר — כולל "כללי" — מחושבות מעסקאות nadlan (שיש להן שנת-בנייה); govmap משמש לכתובות בלבד.</p>
+        <p>במאגר כרגע: <B>{sh.toLocaleString("he-IL")} יד-שנייה</B> · <B>{nw.toLocaleString("he-IL")} חדשות</B> (מסווגות משנת-בנייה אמיתית).</p>
+        <p>
+          רשות המסים מפרסמת שנת-בנייה <B>0</B> על חלק ניכר מהעסקאות. כשזה קורה אנחנו נשענים על
+          שדה <B>חוק המכר</B> שלה — רכישה מקבלן היא לפי הגדרה דירה חדשה — ורושמים לכל עסקה
+          <B> איזה אות הכריע</B> את הסיווג שלה.
+        </p>
+        <p className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+          <B>מה שלא הצלחנו לסווג — לא נכנס ל&quot;כללי&quot;.</B>{" "}
+          {nadlanN > 0 && <>בעשור האחרון: <B>{classified.toLocaleString("he-IL")}</B> מתוך{" "}
+          <B>{nadlanN.toLocaleString("he-IL")}</B> עסקאות nadlan מסווגות
+          ({((classified / nadlanN) * 100).toFixed(1)}%);{" "}
+          <B>{unclassified.toLocaleString("he-IL")}</B> נותרו ללא סיווג ואינן משתתפות בסדרת &quot;כללי&quot;.</>}{" "}
+          זו החרגה <B>מכוונת</B>: קבוצת חסרי-שנת-הבנייה עשירה במחירי שיווק של מכירה מוקדמת
+          (מגדלים שנמכרים על הנייר), וכגוש לא-מסומן היא דחפה את &quot;כללי&quot; <B>מעל</B> שתי תת-הסדרות
+          שלה עצמה. המשמעות שכן צריך להכיר: הסדרה נוטה במידת-מה כלפי יד-שנייה.
+        </p>
         <p>למה יד-2 היא בסיס ההשוואה באתר? עיר ישנה שבונים בה שכונה חדשה יקרה תראה קפיצת "ממוצע כללי" שאינה משקפת את מגמת השוק — ולכן דירוגי שינוי-מחיר משווים <B>יד-שנייה בלבד</B>.</p>
       </Section>
 
