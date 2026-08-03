@@ -18,6 +18,7 @@ FROM node:22-bookworm-slim
 # python3 is also used by the CBS report parsers at runtime.
 RUN apt-get update && apt-get install -y --no-install-recommends \
       python3 \
+      python3-pip \
       build-essential \
       ca-certificates \
       sqlite3 \
@@ -25,6 +26,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
+# The Python half of the data pipeline. Three TypeScript modules spawn python3
+# to read PDFs and Excel — the formats the CBS and the Chief Economist actually
+# publish in — and none of those libraries were ever installed here. The image
+# had python3 and no packages, so every document-extraction path was dead on
+# arrival while looking, from the outside, like sources that had nothing new.
+#
+# --break-system-packages: Debian bookworm marks its python3 as externally
+# managed (PEP 668). In a container with one application and no OS-level python
+# consumers, a virtualenv buys isolation from nothing, and installing into the
+# system interpreter keeps the spawn calls in lib/*.ts working without a path
+# dance. Its own layer, before COPY . ., so a code change does not reinstall it.
+COPY requirements.txt ./
+RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt \
+    && python3 -c "import pdfplumber, fitz, openpyxl; print('✓ python extraction stack ready')"
 
 # Dependencies first, as their own layer: package.json changes far less often
 # than source, so a normal code deploy skips the slowest step entirely.

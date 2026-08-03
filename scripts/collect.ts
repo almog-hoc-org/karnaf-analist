@@ -73,6 +73,37 @@ async function probe(host: string): Promise<{ ok: boolean; detail: string }> {
   }
 }
 
+/**
+ * Can this machine read the formats the sources publish in?
+ *
+ * Half of these 24 sources are PDFs and spreadsheets, and the extractors for
+ * them are Python libraries spawned from TypeScript. For as long as the server
+ * had been running, none were installed — and the PDF table extractor swallowed
+ * the ImportError and returned an empty list, so a machine that could not read a
+ * single document was indistinguishable from a quiet week at the CBS.
+ *
+ * Reporting reachability without reporting this would answer half the question.
+ * Fetching a PDF you cannot parse is not collection.
+ */
+async function probePython(): Promise<{ ok: boolean; missing: string[] }> {
+  const MODULES = [
+    { mod: "pdfplumber", what: "טבלאות מ-PDF" },
+    { mod: "fitz", what: "טקסט מ-PDF (PyMuPDF)" },
+    { mod: "openpyxl", what: "קבצי Excel של הלמ״ס" },
+  ];
+  const missing: string[] = [];
+  for (const { mod, what } of MODULES) {
+    const ok = await new Promise<boolean>((resolve) => {
+      const p = spawn("python3", ["-c", `import ${mod}`], { stdio: "ignore" });
+      p.on("close", (code) => resolve(code === 0));
+      p.on("error", () => resolve(false));
+    });
+    console.log(`  ${ok ? "✓" : "✗"} ${mod.padEnd(12)} ${what}`);
+    if (!ok) missing.push(mod);
+  }
+  return { ok: missing.length === 0, missing };
+}
+
 function runSource(s: CollectorSource): Promise<void> {
   return new Promise((resolve, reject) => {
     const p = spawn(s.cmd, s.args, { cwd: process.cwd(), env: process.env, stdio: ["ignore", "pipe", "pipe"] });
@@ -143,8 +174,17 @@ async function main() {
   const reachSummary = [...reach.entries()].map(([h, r]) => `${new URL(h).host}=${r.ok ? r.detail : "FAIL"}`).join(", ");
 
   if (has("probe-only")) {
+    console.log(`\n▶ בדיקת מנועי חילוץ מסמכים\n`);
+    const py = await probePython();
     console.log(`\n${anyReachable ? "✓ לפחות מארח אחד עונה" : "✗ אף מארח לא עונה"}`);
-    process.exit(anyReachable ? 0 : 3);
+    if (!py.ok) {
+      console.log(`✗ חסרות ספריות פייתון: ${py.missing.join(", ")}`);
+      console.log(`  PDF ו-Excel לא ייקראו. תיקון: pip3 install --break-system-packages -r requirements.txt`);
+      console.log(`  (בפריסה רגילה זה נכלל ב-Dockerfile — אם זה חסר, האימג׳ ישן.)`);
+    } else {
+      console.log(`✓ מנועי החילוץ מותקנים`);
+    }
+    process.exit(anyReachable && py.ok ? 0 : anyReachable ? 4 : 3);
   }
 
   if (!anyReachable && hosts.length > 0) {

@@ -1,0 +1,20 @@
+# Python side of the data pipeline.
+#
+# Three TypeScript modules shell out to python3 for work Node has no good
+# equivalent for. None of these were installed anywhere — the Dockerfile brought
+# in python3 and nothing else — so every PDF and Excel extraction path was dead
+# on the server. The PDF table extractor failed silently on top of that (see the
+# note in lib/data-refresh.ts), which is why it went unnoticed.
+#
+# Pinned to majors: these parse documents from third parties, and a parser that
+# changes behaviour between deploys turns a data bug into an unreproducible one.
+
+# Table extraction from CBS / Chief-Economist PDFs — lib/data-refresh.ts
+pdfplumber>=0.11,<0.12
+
+# Full-text extraction from the same PDFs — lib/cbs-fetcher.ts
+# (imported as `fitz`)
+PyMuPDF>=1.24,<2.0
+
+# CBS publishes construction series as .xlsx — scripts/import_national_completions.py
+openpyxl>=3.1,<4.0

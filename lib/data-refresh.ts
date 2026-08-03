@@ -228,6 +228,23 @@ function extractTitleAndDate(text: string): { title: string; publishedDate: stri
 }
 
 /* ── pdfplumber table extraction ────────────────────────────────────────── */
+/**
+ * Extract tables from a PDF via pdfplumber.
+ *
+ * ⚠️ THE FAILURE MODE THIS GUARDS AGAINST
+ * Every error path here used to resolve to an empty array, which made two
+ * completely different situations look identical: "this PDF contains no
+ * tables" and "pdfplumber is not installed on this machine". The second was
+ * true on the server for as long as it had been running — the image shipped
+ * python3 with no packages — so document extraction reported a calm, steady
+ * nothing, and looked exactly like the CBS having published nothing worth
+ * parsing.
+ *
+ * An empty result is still returned rather than thrown, because one unparsable
+ * PDF must not abort a refresh that is also fetching other things. But a
+ * MISSING DEPENDENCY is not a property of the document, it is a broken machine,
+ * and it now says so loudly instead of masquerading as an empty table set.
+ */
 async function extractPdfTables(pdfPath: string): Promise<Array<{ page: number; rows: string[][] }>> {
   return new Promise((resolve) => {
     const py = spawn("python3", [
@@ -243,12 +260,31 @@ print(json.dumps(out, ensure_ascii=False))`,
       pdfPath,
     ]);
     let stdout = "";
+    let stderr = "";
     py.stdout.on("data", (d) => (stdout += d.toString()));
+    py.stderr.on("data", (d) => (stderr += d.toString()));
     py.on("close", (code) => {
-      if (code !== 0) return resolve([]);
-      try { resolve(JSON.parse(stdout)); } catch { resolve([]); }
+      if (code !== 0) {
+        // ModuleNotFoundError / ImportError means the toolchain is missing, not
+        // that the document was empty. Never let those two look the same.
+        if (/ModuleNotFoundError|ImportError/.test(stderr)) {
+          console.error(
+            "✗ pdfplumber חסר — חילוץ טבלאות מ-PDF מושבת לחלוטין.\n" +
+            "  התקן:  pip3 install --break-system-packages -r requirements.txt\n" +
+            `  ${stderr.trim().split("\n").pop()}`
+          );
+        } else {
+          console.error(`✗ חילוץ טבלאות נכשל (${pdfPath}): ${stderr.trim().slice(-200)}`);
+        }
+        return resolve([]);
+      }
+      try { resolve(JSON.parse(stdout)); }
+      catch { console.error(`✗ פלט pdfplumber אינו JSON תקין (${pdfPath})`); resolve([]); }
     });
-    py.on("error", () => resolve([]));
+    py.on("error", (e) => {
+      console.error(`✗ לא ניתן להריץ python3: ${e.message}`);
+      resolve([]);
+    });
   });
 }
 
