@@ -14,6 +14,7 @@
  */
 import { prisma } from "../lib/db";
 import { ilFetch, ilProxyUrl } from "../lib/ilFetch";
+import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 const REQUEST_DELAY_MS = 300;
@@ -179,15 +180,18 @@ async function collectCity(cityName: string): Promise<{ n: number; years: string
   }).filter((r) => r.dy > 1990 && r.area >= MIN_AREA && r.area <= MAX_AREA && r.sqm >= MIN_SQM && r.sqm <= MAX_SQM);
   if (rows.length === 0) return { n: 0, years: "" };
 
-  await prisma.$executeRawUnsafe("DELETE FROM nadlan_transactions WHERE city_name = ? AND source = 'govmap'", cityName);
+  // ACCUMULATE rather than replace the city. With a narrowed collection window
+  // (KARNAF_COLLECT_FROM, used by the quarterly top-up) a delete would wipe the
+  // years OUTSIDE the window that this run never re-fetches — turning a
+  // three-month top-up into the loss of a decade.
+  await prisma.$executeRawUnsafe(DEAL_KEY_INDEX_SQL);
   const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,street,house_num,floor,source";
   const CHUNK = 60;
   for (let i = 0; i < rows.length; i += CHUNK) {
     const slice = rows.slice(i, i + CHUNK);
-    const vs = slice.map(() => "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").join(",");
     const params: unknown[] = [];
     for (const r of slice) params.push(cityName, r.d.settlementId ? String(r.d.settlementId) : null, String(r.d.dealDate).slice(0, 10), r.dy, r.d.assetRoomNum ?? null, roomBucket(r.d.assetRoomNum), r.area, r.price, Math.round(r.sqm), null, 0, r.d.neighborhood ?? null, r.d.streetNameHeb ?? null, r.d.houseNum != null ? String(r.d.houseNum) : null, r.d.floorNo ?? null, "govmap");
-    await prisma.$executeRawUnsafe(`INSERT INTO nadlan_transactions (${COLS}) VALUES ${vs}`, ...params);
+    await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, slice.length), ...params);
   }
   const yrs = [...new Set(rows.map((r) => r.dy))].sort();
   return { n: rows.length, years: `${yrs[0]}–${yrs[yrs.length - 1]} (${yrs.length}yr)` };

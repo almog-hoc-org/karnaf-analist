@@ -29,6 +29,7 @@ import path from "path";
 import zlib from "zlib";
 import puppeteerCore from "puppeteer-core";
 import { prisma } from "../lib/db";
+import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
 
 const SECRET = "90c3e620192348f1bd46fcd9138c3c68"; // HS256 key from the nadlan JS bundle (mixin_generateTokenForPayload)
 const SECONDHAND_MIN_AGE = 4;
@@ -138,8 +139,11 @@ async function collectCity(browser: import("puppeteer-core").Browser, city: stri
   }
   if (merged.length === 0) return { n: 0, years: "" };
 
-  // replace only this city's NADLAN rows (keep govmap rows intact)
-  await prisma.$executeRawUnsafe("DELETE FROM nadlan_transactions WHERE city_name = ? AND source = 'nadlan'", city);
+  // ACCUMULATE. This used to delete the city's nadlan rows first, which made
+  // repeated sweeps pointless: an anonymous session returns ~2,400 deals, so ten
+  // years of build-year data for a large city can only be reached by successive
+  // passes adding to each other. Each pass was discarding the last one's work.
+  await prisma.$executeRawUnsafe(DEAL_KEY_INDEX_SQL);
   const rows = merged
     .filter((d) => d.dealDate && d.dealAmount)
     .map((d) => {
@@ -150,20 +154,22 @@ async function collectCity(browser: import("puppeteer-core").Browser, city: stri
     })
     .filter((r) => r.dy > 1990);
 
-  const stmtValues: string[] = [];
+  // 'nadlan' is bound as a parameter like every other column. It used to be
+  // spliced into the placeholder string with a regex, which meant the tuple
+  // shape and the parameter count were maintained in two places — the failure
+  // mode the sibling collector documents as "exactly how the v9 run failed".
+  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,source";
+  const NCOLS = COLS.split(",").length;
   const params: unknown[] = [];
   for (const { dy, yb, isSH, d } of rows) {
-    stmtValues.push("(?,?,?,?,?,?,?,?,?,?,?)");
     params.push(city, code, String(d.dealDate).slice(0, 10), dy, d.roomNum ?? null, roomBucket(d.roomNum),
-      d.assetArea ?? null, d.dealAmount ?? null, d.priceSM ?? null, yb, isSH);
+      d.assetArea ?? null, d.dealAmount ?? null, d.priceSM ?? null, yb, isSH, "nadlan");
   }
-  // chunked insert (SQLite param limit)
-  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,source";
   const CHUNK = 80;
   for (let i = 0; i < rows.length; i += CHUNK) {
-    const slice = stmtValues.slice(i, i + CHUNK).map((v) => v.replace(/\)$/, ",'nadlan')"));
-    const ps = params.slice(i * 11, (i + CHUNK) * 11);
-    await prisma.$executeRawUnsafe(`INSERT INTO nadlan_transactions (${COLS}) VALUES ${slice.join(",")}`, ...ps);
+    const n = Math.min(CHUNK, rows.length - i);
+    const ps = params.slice(i * NCOLS, (i + n) * NCOLS);
+    await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, n), ...ps);
   }
   const years = [...new Set(rows.map((r) => r.dy))].sort();
   return { n: rows.length, years: `${years[0]}–${years[years.length - 1]}` };

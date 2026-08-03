@@ -27,6 +27,7 @@ import zlib from "zlib";
 import puppeteerCore from "puppeteer-core";
 import type { Browser } from "puppeteer-core";
 import { prisma } from "../lib/db";
+import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
 
 const NADLAN_METHOD = "v9-saleflags"; // bumped: now stores hokHamecher + prevDeals, the
 // authority's OWN developer-vs-resale signals. They are present on every row, while
@@ -94,19 +95,32 @@ async function needsCollection(city: string, source: string, method: string, for
   }
   return !(s && s.method_version === method && s.status === "ok");
 }
+/**
+ * ACCUMULATE, never replace.
+ *
+ * This used to open with `DELETE FROM nadlan_transactions WHERE city_name=? AND
+ * source=?`, which made the campaign above impossible: it retries a city up to
+ * six times to reach ten-year second-hand coverage, and an anonymous nadlan
+ * session returns only ~2,400 deals per sweep, so the target can ONLY be reached
+ * by successive passes adding to one another. Every retry was instead discarding
+ * what the last one found — a pass returning 2022-2026 followed by one returning
+ * 2021-2025 left 2021-2025, not the union. The comment above needsCollection
+ * promised union-by-natural-key; now that is what happens.
+ *
+ * See lib/dealKey.ts for what counts as the same deal, and why it is stricter
+ * than the duplicate rule the pipeline applies later.
+ */
 async function saveRows(city: string, source: string, rows: DealRow[]) {
-  await prisma.$executeRawUnsafe("DELETE FROM nadlan_transactions WHERE city_name=? AND source=?", city, source);
+  await prisma.$executeRawUnsafe(DEAL_KEY_INDEX_SQL);
   const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,source,hok_hamecher,prev_deals";
   const CHUNK = 60;
   for (let i = 0; i < rows.length; i += CHUNK) {
     const slice = rows.slice(i, i + CHUNK);
-    // placeholders are derived from COLS — hand-counted tuples silently desync
-    // the moment a column is added (that is exactly how the v9 run failed)
-    const ph = `(${COLS.split(",").map(() => "?").join(",")})`;
-    const vs = slice.map(() => ph).join(",");
     const params: unknown[] = [];
     for (const r of slice) params.push(city, r.cbs_code, r.deal_date, r.deal_year, r.rooms, roomBucket(r.rooms), r.area, r.price, r.price_sqm, r.year_built, r.is_secondhand, r.neighborhood, source, r.hok_hamecher, r.prev_deals);
-    await prisma.$executeRawUnsafe(`INSERT INTO nadlan_transactions (${COLS}) VALUES ${vs}`, ...params);
+    // placeholders are derived from COLS — hand-counted tuples silently desync
+    // the moment a column is added (that is exactly how the v9 run failed)
+    await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, slice.length), ...params);
   }
 }
 

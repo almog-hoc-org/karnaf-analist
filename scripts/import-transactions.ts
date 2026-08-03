@@ -28,21 +28,24 @@
  * pipeline rebuilds it from these rows, and importing a laptop's copy would
  * publish statistics nothing on this machine had verified.
  *
- * REPLACE, NOT UPSERT. The incoming file is a complete 10-year collection, and
- * there is no natural key on a deal that is reliable enough to merge row by row
- * without risking double-counting — which would corrupt every median on the
- * site. Wholesale replacement inside one transaction is the honest operation,
- * and the gates below are what make it safe.
+ * TWO MODES, AND MERGE IS THE DEFAULT.
+ *   merge    (default) add deals this database has never seen, delete nothing.
+ *            The quarterly path, and the safer one: a bad or partial collection
+ *            can add noise but cannot remove history. Identity comes from
+ *            lib/dealKey.ts — the same definition the collectors themselves use.
+ *   replace  wipe and rewrite the two tables from a complete collection. The
+ *            one-time backfill only, and the shrink gates below guard it.
  *
  *   npx tsx scripts/import-transactions.ts /app/data/incoming.db
+ *   npx tsx scripts/import-transactions.ts /app/data/incoming.db --mode=replace
  *   npx tsx scripts/import-transactions.ts /app/data/incoming.db --dry-run
- *   npx tsx scripts/import-transactions.ts /app/data/incoming.db --force
  *
  * EXIT CODES: 0 merged · 1 unusable input · 2 a gate refused the merge.
  */
 import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
+import { DEAL_KEY_COLS, dealKeyMatch, DEAL_KEY_INDEX_SQL } from "../lib/dealKey";
 
 const LIVE_DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
 
@@ -190,19 +193,20 @@ function main() {
    * sales — two identical flats in one building sold the same week is an
    * ordinary event, not a double report.
    */
-  const KEY_COLS = ["city_name", "deal_date", "street", "house_num", "area", "price"];
+  // Identity comes from lib/dealKey.ts, the same definition the collectors
+  // use. Two different answers to "have I seen this deal" would mean rows one
+  // path skips and the other duplicates.
 
   const mergeInsert = db.transaction(() => {
     const table = "nadlan_transactions";
     const shared = columnsOf(db, table).filter((c) => columnsOf(db, table, "src").includes(c) && c !== "id");
-    const usableKey = KEY_COLS.filter((c) => shared.includes(c));
+    const usableKey = DEAL_KEY_COLS.filter((c) => shared.includes(c));
     if (usableKey.length < 3) {
       throw new Error(`אין מספיק עמודות מפתח משותפות (${usableKey.join(",")}) — מסרב למזג בלי זיהוי כפילויות`);
     }
     const cols = shared.map((c) => `"${c}"`).join(",");
-    const match = usableKey
-      .map((c) => `COALESCE(main.${table}."${c}",'') = COALESCE(s."${c}",'')`)
-      .join(" AND ");
+    db.exec(DEAL_KEY_INDEX_SQL);
+    const match = dealKeyMatch(`main.${table}`, "s", usableKey);
 
     const before = Number((db.prepare(`SELECT COUNT(*) c FROM main.${table}`).get() as { c: number }).c);
     const r = db.prepare(
