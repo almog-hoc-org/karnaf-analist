@@ -42,6 +42,24 @@ const TO_YEAR = 2025;
 interface CityCoverage {
   city: string;
   deals: number;
+  population: number | null;
+  /**
+   * Deals per 1,000 residents over the whole window.
+   *
+   * THE ONLY NUMBER THAT SEPARATES TWO VERY DIFFERENT PROBLEMS.
+   * The first baseline showed every one of the 25 worst-covered places to be an
+   * Arab locality — Rahat with 38 deals in ten years against roughly 80,000
+   * residents, Shefa-'Amr with 95. A raw count cannot say whether that is a real
+   * market (much housing there is self-built on family land and changes hands by
+   * inheritance rather than registered sale) or a collector that fails on those
+   * cities. The two call for opposite responses, and guessing between them on a
+   * site published to the public is not acceptable.
+   *
+   * Normalised by population it becomes measurable: compared against the median
+   * rate across all cities, a genuinely thin market sits in a plausible band,
+   * while a collection failure sits orders of magnitude below everything else.
+   */
+  dealsPer1k: number | null;
   /** years in FROM..TO with enough second-hand deals to produce a price point */
   coveredYears: number;
   /** years with any deal at all — the difference is where a pulse can still help */
@@ -77,6 +95,7 @@ function main() {
 
   const rows = db.prepare(`
     SELECT t.city_name AS city,
+           (SELECT c.population_2026 FROM cities c WHERE c.city_name = t.city_name) AS population,
            COUNT(*) AS deals,
            SUM(CASE WHEN t.year_built > 0 THEN 1 ELSE 0 END) AS withBuildYear,
            SUM(CASE WHEN t.class_source IS NOT NULL THEN 1 ELSE 0 END) AS classified,
@@ -84,7 +103,7 @@ function main() {
       FROM nadlan_transactions t
      WHERE COALESCE(t.excluded,0) = 0 AND t.deal_year BETWEEN ? AND ?
      GROUP BY t.city_name
-  `).all(FROM_YEAR, TO_YEAR) as Array<Omit<CityCoverage, "coveredYears" | "statRows">>;
+  `).all(FROM_YEAR, TO_YEAR) as Array<Omit<CityCoverage, "coveredYears" | "statRows" | "dealsPer1k">>;
 
   // A "covered" year is one that can actually produce a second-hand price point.
   // Counting deals would overstate it: a year with nine deals contributes
@@ -102,6 +121,8 @@ function main() {
 
   const cities: CityCoverage[] = rows.map((r) => ({
     ...r,
+    population: r.population != null ? Number(r.population) : null,
+    dealsPer1k: r.population ? (r.deals / Number(r.population)) * 1000 : null,
     coveredYears: Number((coveredStmt.get(r.city, FROM_YEAR, TO_YEAR, MIN_N) as { c: number }).c),
     statRows: Number((statStmt.get(r.city) as { c: number }).c),
   }));
@@ -138,6 +159,26 @@ function main() {
   console.log(`  מסווגות                 ${num(totals.classified)}  (${pct(totals.classified, totals.deals)}%)`);
   if (totals.noStats) {
     console.log(`\n  ⚠ ${totals.noStats} ערים עם עסקאות אך אפס שורות סטטיסטיקה — עמוד ריק לגולש`);
+  }
+
+  // Rate outliers. A city an order of magnitude below the national rate is
+  // either a market that barely trades or a collector that fails on it, and
+  // those need opposite responses — so name them rather than let them sit
+  // inside an aggregate.
+  const rated = cities.filter((c) => c.dealsPer1k != null).sort((a, b) => a.dealsPer1k! - b.dealsPer1k!);
+  if (rated.length > 4) {
+    const median = rated[Math.floor(rated.length / 2)].dealsPer1k!;
+    const suspect = rated.filter((c) => c.dealsPer1k! < median / 10);
+    console.log(`\n  קצב עסקאות ל-1,000 תושבים · חציון ארצי ${median.toFixed(1)}`);
+    console.log(`  הנמוכות ביותר:`);
+    for (const c of rated.slice(0, 8)) {
+      console.log(`    ${c.city.padEnd(20)}${c.dealsPer1k!.toFixed(2).padStart(7)}  (${c.deals.toLocaleString("en")} עסקאות · ${(c.population ?? 0).toLocaleString("en")} תושבים)`);
+    }
+    if (suspect.length) {
+      console.log(`\n  ⚠ ${suspect.length} ערים מתחת לעשירית מהחציון הארצי.`);
+      console.log(`    זה או שוק שכמעט לא נסחר, או כשל איסוף שיטתי — שני דברים`);
+      console.log(`    שדורשים תגובה הפוכה. לבדוק עיר אחת מהן ידנית לפני שמסיקים.`);
+    }
   }
 
   // ── comparison with the last snapshot ────────────────────────────
