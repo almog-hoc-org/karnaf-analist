@@ -81,6 +81,21 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 EXPOSE 3000
 
+# Stash the shipped JSON where the data volume cannot hide it.
+#
+# docker-compose bind-mounts the host's data directory over /app/data, which
+# REPLACES the directory rather than merging with it — so every data/*.json in
+# this image became unreachable at run time. The server was running with 5 of 28
+# files, four of the missing ones read by the site itself, each reader falling
+# back to empty without a word. The entrypoint copies anything absent back in on
+# start, and never overwrites: some of these files are live collector state.
+RUN mkdir -p /app/data-seed && \
+    (cp data/*.json /app/data-seed/ 2>/dev/null || true) && \
+    echo "seed files: $(ls -1 /app/data-seed | wc -l)"
+COPY deploy/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
 # Traefik decides a container is healthy before routing to it; /api/health is a
 # pure liveness probe that touches no database, which is what makes it safe to
 # poll every 30s. (/api/status is the data-freshness check — deliberately NOT
