@@ -1,0 +1,26 @@
+# Nightly schedule for the data pipeline.
+#
+# WHY systemd AND NOT cron
+# `systemctl list-timers` shows the next run and the last result at a glance;
+# cron shows nothing. Output lands in journald instead of a mail spool nobody
+# reads. Persistent=true catches up a run the machine slept through — cron
+# simply skips it, and a skipped night is invisible until the data is stale.
+
+[Unit]
+Description=Karnaf Analist — nightly pipeline schedule
+
+[Timer]
+# 02:30 Israel time. Quiet hours, and comfortably after the government sources
+# publish. The service inherits the system timezone.
+OnCalendar=*-*-* 02:30:00
+
+# Up to 20 minutes of jitter. Nothing else here contends for the slot, but a
+# fixed instant is exactly when a retry storm would line up with something else.
+RandomizedDelaySec=1200
+
+# If the machine was off at 02:30, run once it comes back rather than waiting a
+# full day. This is the property cron lacks.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

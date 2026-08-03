@@ -1,0 +1,46 @@
+# Nightly cleaning + aggregation pipeline.
+#
+# Runs INSIDE the already-running app container rather than as a separate one.
+# That is deliberate: the container carries a 3GB memory ceiling, and the
+# aggregation step loads roughly a million rows into a JavaScript array. Running
+# it inside that ceiling means a memory spike can only ever kill our own
+# container — never the OpenClaw bot sharing the host.
+#
+# Install: bash /opt/karnaf/deploy/install-timers.sh
+# Run now: systemctl start karnaf-pipeline.service
+# Watch:   journalctl -u karnaf-pipeline -f
+
+[Unit]
+Description=Karnaf Analist — nightly data pipeline
+Documentation=file:///opt/karnaf/lib/pipeline.ts
+# Docker must be up; the app container is checked by the script itself.
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/karnaf
+
+# A full run is minutes, not hours. If it is still going after two, something is
+# stuck and a hung run must not overlap with tomorrow's.
+TimeoutStartSec=7200
+
+# Refuse to start rather than fail confusingly if the container is not up.
+ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Service}}" | grep -qx app || { echo "app container is not running — skipping"; exit 1; }'
+
+# -T disables the TTY: systemd has no terminal, and without it docker exec
+# fails with "the input device is not a TTY".
+ExecStart=/usr/bin/docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=nightly
+
+# Exit code 2 means a VERIFICATION GATE failed: the data was written but does
+# not pass its own checks. That is a different problem from a crash and is
+# surfaced as such in the journal, so an operator reading logs can tell
+# "the machine broke" apart from "the numbers are suspect".
+SuccessExitStatus=0
+ExecStopPost=/bin/bash -c 'if [ "$EXIT_STATUS" = "2" ]; then echo "⚠ GATE FAILED — data written but did not pass verification. Investigate before trusting it."; fi'
+
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=multi-user.target
