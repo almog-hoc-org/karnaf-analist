@@ -32,6 +32,27 @@ export const runtime = "nodejs";
 /** Hours after which the data is considered stale. Nightly pipeline ⇒ 36h allows one missed run. */
 const STALE_AFTER_HOURS = 36;
 
+/**
+ * Same idea for COLLECTION, with a longer allowance.
+ *
+ * This is the check that would have caught the failure it was written after: for
+ * a while only the cleaning pipeline was scheduled, so this endpoint reported a
+ * healthy nightly run every night while not one new transaction had entered the
+ * database in weeks. "The pipeline ran" and "the data is current" are different
+ * claims, and only one of them was being made.
+ *
+ * 50h rather than 36: collection talks to third-party government hosts, and one
+ * missed night is ordinary. Two is a pattern.
+ */
+const COLLECT_STALE_AFTER_HOURS = 50;
+
+interface CollectionRunRow {
+  started_at: string;
+  finished_at: string | null;
+  status: string;
+  reachability: string | null;
+}
+
 interface PipelineRunRow {
   started_at: string;
   finished_at: string | null;
@@ -80,6 +101,34 @@ export async function GET() {
     }
   }
 
+  // ── last collection run ──────────────────────────────────────────
+  let lastCollect: CollectionRunRow | null = null;
+  let sourceStates: Array<{ source: string; status: string; at: string }> = [];
+  try {
+    lastCollect = appDb().prepare(
+      `SELECT started_at, finished_at, status, reachability FROM collection_runs
+        WHERE status IN ('ok','partial') ORDER BY id DESC LIMIT 1`
+    ).get() as CollectionRunRow | undefined ?? null;
+
+    // Latest outcome per source. A source that has been failing for a week while
+    // the others succeed keeps the run "partial" — green enough to ignore — so
+    // the per-source state has to be visible, not just the aggregate.
+    sourceStates = appDb().prepare(
+      `SELECT source, status, started_at AS at FROM collection_source_runs
+        WHERE id IN (SELECT MAX(id) FROM collection_source_runs GROUP BY source)
+        ORDER BY source`
+    ).all() as Array<{ source: string; status: string; at: string }>;
+  } catch {
+    // table absent = scripts/collect.ts has never run on this machine
+  }
+
+  const collectAgeHours = hoursSince(lastCollect?.finished_at ?? lastCollect?.started_at);
+  if (collectAgeHours == null) problems.push("no collection run recorded — new data is NOT being fetched");
+  else if (collectAgeHours > COLLECT_STALE_AFTER_HOURS) problems.push(`last collection ${collectAgeHours.toFixed(1)}h ago`);
+
+  const failingSources = sourceStates.filter((s) => s.status === "failed" || s.status === "skipped-unreachable");
+  if (failingSources.length) problems.push(`sources not collecting: ${failingSources.map((s) => s.source).join(", ")}`);
+
   // ── data volume ──────────────────────────────────────────────────
   let dealCount: number | null = null;
   let statRows: number | null = null;
@@ -115,6 +164,14 @@ export async function GET() {
         lastFailure: lastFailure
           ? { at: lastFailure.finished_at ?? lastFailure.started_at, status: lastFailure.status, stage: lastFailure.failed_stage }
           : null,
+      },
+      collection: {
+        lastRunAt: lastCollect?.finished_at ?? lastCollect?.started_at ?? null,
+        ageHours: collectAgeHours != null ? Number(collectAgeHours.toFixed(2)) : null,
+        staleAfterHours: COLLECT_STALE_AFTER_HOURS,
+        status: lastCollect?.status ?? null,
+        reachability: lastCollect?.reachability ?? null,
+        sources: sourceStates,
       },
       data: { dealCount, statRows, latestDealDate },
     },

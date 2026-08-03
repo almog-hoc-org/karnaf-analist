@@ -1,0 +1,54 @@
+# Nightly data COLLECTION — what brings new data in.
+#
+# Companion to karnaf-pipeline.service, which cleans and aggregates. Until this
+# unit existed only the cleaning half was scheduled, so the site re-derived a
+# frozen snapshot every night and no deal published after the last manual
+# collection ever entered the database. See lib/collectors.ts.
+#
+# ORDERING WITH THE CLEANING PIPELINE
+# This starts at 00:30 with a 100-minute budget, so it stops STARTING sources by
+# 02:10 and the 02:30 aggregation never measures a population that is still
+# moving. A source already running is allowed to finish — killing a collector
+# mid-city leaves a half-collected city that the manifest records as complete,
+# which is worse than a late finish.
+#
+# Runs inside the app container for the same reason the pipeline does: the 3GB
+# ceiling means a memory spike can only ever kill our own container, never the
+# OpenClaw bot sharing the host.
+#
+# Install: bash /opt/karnaf/deploy/install-timers.sh
+# Run now: systemctl start karnaf-collect.service
+# Watch:   journalctl -u karnaf-collect -f
+
+[Unit]
+Description=Karnaf Analist — nightly data collection
+Documentation=file:///opt/karnaf/lib/collectors.ts
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/karnaf
+
+# The internal --deadline stops it at 100 minutes; this is the outer backstop
+# for a process that has stopped responding to its own budget.
+TimeoutStartSec=9000
+
+ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Service}}" | grep -qx app || { echo "app container is not running — skipping"; exit 1; }'
+
+ExecStart=/usr/bin/docker compose exec -T app npx tsx scripts/collect.ts --trigger=nightly --deadline=100
+
+# Exit 1 means at least one source failed while others succeeded — normal
+# operational noise for seven third-party government endpoints, and NOT a reason
+# to mark the unit failed and stop trying tomorrow.
+# Exit 3 means nothing on the network answered at all. That is a different
+# problem — connectivity or geo-blocking, not a broken collector — and it is
+# surfaced distinctly so an operator reading the journal can tell them apart.
+SuccessExitStatus=0 1
+ExecStopPost=/bin/bash -c 'if [ "$EXIT_STATUS" = "3" ]; then echo "⚠ NO SOURCE HOST ANSWERED — network or geo-blocking, not a collector bug. Nothing was collected."; fi'
+
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+# Nightly schedule for data collection.
+#
+# 00:30 Israel time, two hours before the cleaning pipeline at 02:30. The gap is
+# the collection budget: --deadline=100 stops it from starting new sources after
+# 02:10, so the aggregation never runs against a population still being written.
+#
+# Persistent=true matters more here than for the cleaning pipeline. A missed
+# cleaning run costs nothing — the next one re-derives everything from the same
+# data. A missed COLLECTION run is a night of deals nobody fetched, and the
+# govmap collector's 20-day freshness window means the affected cities simply
+# wait another three weeks for their turn. Catching up on boot is the difference.
+
+[Unit]
+Description=Karnaf Analist — nightly collection schedule
+
+[Timer]
+OnCalendar=*-*-* 00:30:00
+
+# Government endpoints, not our own servers. A little jitter keeps us from
+# arriving at the same instant every night, which is the pattern rate limiters
+# are built to notice.
+RandomizedDelaySec=900
+
+Persistent=true
+
+[Install]
+WantedBy=timers.target
