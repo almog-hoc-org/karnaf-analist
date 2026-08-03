@@ -23,6 +23,18 @@ die()  { printf "\n\033[31m✗ %s\033[0m\n" "$*"; exit 1; }
 # ── preflight ───────────────────────────────────────────────────────
 [ -f .env.production ] || die ".env.production חסר. הרץ: cp .env.example .env.production && nano .env.production"
 
+# Compose interpolates ${APP_HOST} in the Traefik labels at PARSE time, and it
+# only looks in the shell environment and in a file literally named `.env` —
+# NOT in `env_file:`, which only populates the container's own environment.
+#
+# Without this symlink, running `docker compose up` by hand (rather than through
+# this script) silently produces the label Host(``) with an empty hostname.
+# Traefik then has no route matching the site and answers 404 for every path,
+# while `docker ps` cheerfully reports the container as healthy — which is about
+# the most confusing failure this setup can produce. The symlink makes the
+# manual command behave identically to this script.
+[ -e .env ] || ln -s .env.production .env
+
 # shellcheck disable=SC1091
 set -a; source .env.production; set +a
 [ -n "${APP_HOST:-}" ]       || die "APP_HOST לא מוגדר ב-.env.production"

@@ -85,7 +85,8 @@ cat <<EOF
     2. הגדרות:
          cd $APP_ROOT
          cp .env.example .env.production
-         nano .env.production      # מלא סיסמאות — הוראות בתוך הקובץ
+         ln -s .env.production .env   # נדרש ל-Traefik — ראה הערה ב-deploy.sh
+         nano .env.production         # מלא סיסמאות — הוראות בתוך הקובץ
 
     3. מסד הנתונים:
          העתק את realestate.db ו-app.db אל $DATA_ROOT/data/
