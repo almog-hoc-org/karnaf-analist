@@ -81,6 +81,15 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 10 * MINUTE,
   },
   {
+    id: "cbs-extract",
+    cmd: "npx",
+    args: ["tsx", "scripts/run-refresh.ts"],
+    label: "הורדה וחילוץ מפרסומי הלמ״ס והאוצר",
+    why: "The step that turns a detected publication into NUMBERS. cbs-reports above only notices that something was published and says so; this one pulls the Chief Economist listing API, walks the CBS rolling publication window, downloads the PDFs, runs pdfplumber over them and writes provenance-tagged city facts. Without it the thirteen CBS and MoF sources are monitored and never read — which was the state until now, and is indistinguishable from them having nothing to say.",
+    host: "https://www.gov.il",
+    timeoutMs: 45 * MINUTE,
+  },
+  {
     id: "national-completions",
     cmd: "python3",
     args: ["scripts/import_national_completions.py"],
