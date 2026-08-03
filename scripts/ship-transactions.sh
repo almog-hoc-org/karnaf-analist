@@ -20,9 +20,10 @@
 # does". That is not this. Nothing here runs while visitors are on the site.
 #
 # USAGE
-#   bash scripts/ship-transactions.sh              collect, verify, ship, rebuild
+#   bash scripts/ship-transactions.sh              pull, collect, verify, ship, rebuild
 #   bash scripts/ship-transactions.sh --ship-only  skip collection, ship what is here
-#   bash scripts/ship-transactions.sh --dry-run    collect and verify, ship nothing
+#   bash scripts/ship-transactions.sh --dry-run    pull, collect, verify — ship nothing
+#   bash scripts/ship-transactions.sh --no-pull    keep this machine's database as the base
 #
 # PREREQUISITES ON THE MAC
 #   · this repo, with npm install already run
@@ -42,10 +43,12 @@ STAMP="$(date +%Y%m%d-%H%M%S)"
 
 SHIP_ONLY=false
 DRY_RUN=false
+NO_PULL=false
 for a in "$@"; do
   case "$a" in
     --ship-only) SHIP_ONLY=true ;;
     --dry-run)   DRY_RUN=true ;;
+    --no-pull)   NO_PULL=true ;;
     *) echo "דגל לא מוכר: $a"; exit 1 ;;
   esac
 done
@@ -69,6 +72,41 @@ case "$CT" in
   *)            die "govmap החזיר '$CT' במקום JavaScript.
   זו החסימה הגיאוגרפית. הרץ את הסקריפט ממחשב בישראל, בלי VPN לחו\"ל." ;;
 esac
+
+# ── 0.5 start from the server's copy, not this machine's ─────────────────
+#
+# THE DATABASE IS NOT IN GIT. It is 312MB and GitHub rejects anything over 100,
+# so it ships as a Release asset — a SNAPSHOT, frozen whenever that release was
+# cut. `git pull` brings code and never brings data.
+#
+# Which means a laptop that has been away from this project for a while holds a
+# database that is behind the server, and the server's has since gained
+# everything the nightly run collected. Collecting on top of the stale copy and
+# shipping it back would hand the server less than it already had. The gate
+# would refuse it — correctly — but the right move is not to build that file in
+# the first place.
+#
+# So: pull down, collect on top, ship back. The round trip is what makes the
+# server the single source of truth even though the collection happens here.
+if [ "$NO_PULL" = false ] && [ "$SHIP_ONLY" = false ]; then
+  say "משיכת המסד מהשרת (הוא המקור העדכני, לא הגיט)"
+  LOCAL_BAK="data/realestate.before-pull-$STAMP.db"
+  cp "$LOCAL_DB" "$LOCAL_BAK"
+  ok "גובה המסד המקומי → $LOCAL_BAK"
+
+  ssh "$SERVER" "sqlite3 $REMOTE_DATA/realestate.db \".backup '/tmp/pull-$STAMP.db'\"" \
+    || die "לא הצלחתי לייצר עותק בשרת."
+  if command -v rsync >/dev/null; then
+    rsync -h --progress "$SERVER:/tmp/pull-$STAMP.db" "$LOCAL_DB"
+  else
+    scp "$SERVER:/tmp/pull-$STAMP.db" "$LOCAL_DB"
+  fi
+  ssh "$SERVER" "rm -f /tmp/pull-$STAMP.db"
+
+  read -r PCNT PCIT <<<"$(sqlite3 -separator ' ' "$LOCAL_DB" \
+    "SELECT COUNT(*), COUNT(DISTINCT city_name) FROM nadlan_transactions;")"
+  ok "התקבל: $PCNT עסקאות · $PCIT ערים — האיסוף ירוץ על גבי זה"
+fi
 
 # ── 1. collect ───────────────────────────────────────────────────────────
 if [ "$SHIP_ONLY" = false ]; then
