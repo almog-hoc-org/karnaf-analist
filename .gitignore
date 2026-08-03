@@ -66,3 +66,6 @@ data/tunnel_url.txt
 # scratch files from ad-hoc analysis
 *.tmp.mjs
 .*.tmp.*
+
+# Coverage snapshots are per-machine state, not shipped content.
+data/coverage-snapshot.json
