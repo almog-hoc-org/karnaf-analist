@@ -240,7 +240,23 @@ async function main() {
   );
 
   const delta = prevCount ? ` (was ${prevCount}, ${out.length >= prevCount ? "+" : ""}${out.length - prevCount})` : "";
-  console.log(`wrote ${out.length} stat rows across ${byCity.size} cities${delta}.`);
+
+  // Report the cities that came OUT, not the ones that went in. byCity.size is
+  // the input count and reads as coverage while being nothing of the sort: a
+  // city whose every cohort fell below the minimum cell size contributes zero
+  // rows and shows a visitor an empty page, yet was still counted here. The two
+  // numbers differed by twenty on the first live run and nothing said so.
+  const citiesOut = new Set(out.map((o) => o.city));
+  console.log(`wrote ${out.length} stat rows across ${citiesOut.size} cities${delta}.`);
+
+  const empty = [...byCity.keys()].filter((c) => !citiesOut.has(c));
+  if (empty.length) {
+    const shown = empty.slice(0, 12).join(", ");
+    console.log(
+      `  ${empty.length} cities had transactions but produced no stat rows ` +
+      `(every cohort below the minimum): ${shown}${empty.length > 12 ? " …" : ""}`
+    );
+  }
   await prisma.$disconnect();
 }
 main().catch((e) => { console.error("FATAL", e); process.exit(1); });
