@@ -16,6 +16,7 @@
 
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { track } from "@/lib/track";
 import {
   LineChart,
   Line,
@@ -238,6 +239,12 @@ export default function CompareView({
       const base = withBasePath(pathname);
       window.history.replaceState(null, "", qs ? `${base}?cities=${qs}` : base);
     }
+
+    // Which cities people compare against each other, recorded here rather than
+    // in the three call sites below so add/replace/remove are all covered by one
+    // line. The initial selection arrives from the server and never passes
+    // through this function, so what is logged is a deliberate change only.
+    track("compare_select", { subject: next.join(","), detail: String(next.length) });
   }
 
   const replaceAt = (i: number, name: string) =>

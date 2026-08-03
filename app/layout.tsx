@@ -4,6 +4,7 @@ import "./globals.css";
 import RefreshDataButton from "@/components/RefreshDataButton";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import Analytics from "@/components/Analytics";
+import PageViewTracker from "@/components/PageViewTracker";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import TopNav from "@/components/TopNav";
 import { getCurrentUser } from "@/lib/auth";
@@ -78,6 +79,10 @@ export default async function RootLayout({
         {/* Inert until NEXT_PUBLIC_CLARITY_ID is set, and never loads on /deals
             or /admin — see the note in the component. */}
         <Analytics />
+        {/* First-party page_view. Renders nothing; excludes the same routes as
+            Analytics, because the privacy notice promises /deals appears in
+            neither the recordings nor the event log. */}
+        <PageViewTracker />
         {/* end-side, clear of the feedback button at start-side */}
         <AccessibilityWidget />
       </body>

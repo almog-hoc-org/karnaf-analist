@@ -10,6 +10,7 @@ import { BRAND, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
 import { setViewState, clearViewState } from "@/lib/viewState";
+import { track } from "@/lib/track";
 
 /**
  * MultiChartStudio — ONE tool for exploring price trends (user spec):
@@ -212,6 +213,35 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
     });
     return () => clearViewState();
   }, [cityName, dealType, buildingAge, room, from, to, metric, selected, view]);
+
+  // Which controls people actually touch. Shares the dependency list above
+  // rather than instrumenting eight handlers, so a control added later is
+  // measured automatically instead of being silently absent.
+  //
+  // The first pass is the initial render — that is the default view, not a
+  // choice — so it is skipped and only deliberate changes are recorded. A short
+  // debounce collapses a burst of adjustments (dragging a year, toggling three
+  // series) into the one state the user settled on.
+  const chartSettled = useRef(false);
+  useEffect(() => {
+    if (!chartSettled.current) { chartSettled.current = true; return; }
+    const t = setTimeout(() => {
+      track("chart_action", {
+        subject: cityName,
+        detail: `${dealType}/${buildingAge}/${room}/${from}-${to}/${metric}/${selected.join("+")}/${view}`,
+      });
+    }, 1200);
+    return () => clearTimeout(t);
+  }, [cityName, dealType, buildingAge, room, from, to, metric, selected, view]);
+
+  // Opening the deals table is the strongest signal of intent on the page: it is
+  // the moment someone stops reading a trend and goes looking at the individual
+  // transactions behind it. Year 0 ("whole range") is the default and not a
+  // drill-down, so only a chosen year counts.
+  useEffect(() => {
+    if (activeDealsYear === 0) return;
+    track("drill_down", { subject: cityName, detail: String(activeDealsYear) });
+  }, [cityName, activeDealsYear]);
 
   const dealsUrl = (offset: number) =>
     withBasePath(`/api/city-transactions/${encodeURIComponent(cityName)}`) + "?" + new URLSearchParams({
