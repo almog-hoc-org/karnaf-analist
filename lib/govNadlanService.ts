@@ -11,6 +11,7 @@
  *  - Never invent: if no data — return null (UI must not render empty cells)
  */
 import { cleanDeals } from "./luxuryFilter";
+import { ilFetch } from "./ilFetch";
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 const VALID_ASSET_TYPES = ["דירה", "דירת גן", "דירת גג", "פנטהאוז", "דופלקס"];
@@ -151,8 +152,10 @@ function dealYear(deal: NadlanDeal): number {
 
 // ── API Calls ────────────────────────────────────────────────────
 
+// ilFetch, not fetch: govmap answers non-Israeli IPs with an HTML shell
+// for every path. Without KARNAF_IL_PROXY this is exactly plain fetch.
 async function govmapFetch(url: string, options?: RequestInit): Promise<Response> {
-  const res = await fetch(url, {
+  const res = await ilFetch(url, {
     ...options,
     headers: {
       "Content-Type": "application/json",

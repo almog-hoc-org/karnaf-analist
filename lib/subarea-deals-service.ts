@@ -19,6 +19,7 @@ import fs from "fs";
 import path from "path";
 import { classifySubarea, getSubareas } from "./city-subareas";
 import { cleanDeals } from "./luxuryFilter";
+import { ilFetch } from "./ilFetch";
 import { TARGET_YEARS } from "./subarea-deals-types";
 import type {
   TargetYear,
@@ -126,8 +127,10 @@ function bucketForYear(year: number): TargetYear | null {
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 
+// ilFetch, not fetch: govmap answers non-Israeli IPs with an HTML shell
+// for every path. Without KARNAF_IL_PROXY this is exactly plain fetch.
 async function govmapFetch(url: string, options?: RequestInit): Promise<Response> {
-  const res = await fetch(url, {
+  const res = await ilFetch(url, {
     ...options,
     headers: {
       "Content-Type": "application/json",

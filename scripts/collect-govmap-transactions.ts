@@ -13,6 +13,7 @@
  *   npx tsx scripts/collect-govmap-transactions.ts --force ...
  */
 import { prisma } from "../lib/db";
+import { ilFetch, ilProxyUrl } from "../lib/ilFetch";
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 const REQUEST_DELAY_MS = 300;
@@ -74,8 +75,20 @@ async function gf(url: string, options?: RequestInit): Promise<Response> {
   let lastErr: unknown;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const res = await fetch(url, { ...options, headers: { "Content-Type": "application/json", Accept: "application/json", "User-Agent": "RealEstateDashboard/1.0", ...(options?.headers || {}) } });
+      // ilFetch, not fetch: govmap is geo-restricted to Israel and answers
+      // everyone else with an HTML shell. Without KARNAF_IL_PROXY set this IS
+      // plain fetch, so nothing changes for a run from inside Israel.
+      const res = await ilFetch(url, { ...options, headers: { "Content-Type": "application/json", Accept: "application/json", "User-Agent": "RealEstateDashboard/1.0", ...(options?.headers || {}) } });
       if (!res.ok) throw new Error(`Govmap ${res.status}`);
+      // A 200 carrying HTML is the geo-block, not a deal list. Saying so once
+      // beats 168 cities each reporting "Unexpected token '<'" and leaving the
+      // reader to work out that they all mean the same thing.
+      const ct = res.headers.get("content-type") ?? "";
+      if (!ct.includes("json")) {
+        throw new Error(
+          `Govmap החזיר ${ct || "תוכן לא ידוע"} במקום JSON — ${ilProxyUrl() ? "גם דרך הפרוקסי" : "חסימה גיאוגרפית; הגדר KARNAF_IL_PROXY"}`
+        );
+      }
       return res;
     } catch (e) { lastErr = e; await sleep(800 * (attempt + 1)); }
   }
