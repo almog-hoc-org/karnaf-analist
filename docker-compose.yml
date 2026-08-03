@@ -67,10 +67,12 @@ services:
       # certificate is issued and the site serves a browser warning.
       - "traefik.http.routers.karnaf.tls.certresolver=letsencrypt"
       - "traefik.http.services.karnaf.loadbalancer.server.port=3000"
-      # Traefik runs in host network mode, so it reaches this container by its
-      # bridge IP. Naming the network explicitly stops it guessing wrong when
-      # the container is attached to more than one.
-      - "traefik.docker.network=bridge"
+      # NO traefik.docker.network label on purpose. That label names the network
+      # Traefik should use to reach the container, and it is only needed when a
+      # container sits on several. This one sits on exactly one — the network
+      # compose creates for this project — so Traefik resolves it by itself.
+      # Naming a network the container is NOT on (e.g. the default "bridge")
+      # makes Traefik look up an address that does not exist and answer 404.
 
     logging:
       # Logs are useful and also grow forever. 3×10MB is plenty to debug a bad

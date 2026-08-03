@@ -56,8 +56,18 @@ for db in realestate app; do
   fi
 done
 # Keep the last 10 of each; backups are insurance, not an archive.
-ls -1t "$DATA_ROOT/backups"/realestate-*.db 2>/dev/null | tail -n +11 | xargs -r rm -f
-ls -1t "$DATA_ROOT/backups"/app-*.db        2>/dev/null | tail -n +11 | xargs -r rm -f
+#
+# The `|| true` is load-bearing. With `set -euo pipefail`, `ls` over a glob that
+# matches nothing exits non-zero, pipefail propagates that through the pipeline,
+# and set -e kills the whole script — silently, right after the backup step, on
+# the very FIRST deploy when no backups exist yet. Housekeeping must never be
+# able to abort a deployment.
+prune_backups() {
+  ls -1t "$DATA_ROOT/backups"/"$1"-*.db 2>/dev/null | tail -n +11 | xargs -r rm -f || true
+}
+prune_backups realestate
+prune_backups app
+ok "גיבויים ישנים נוקו (נשמרים 10 אחרונים)"
 
 # ── build ───────────────────────────────────────────────────────────
 # Built BEFORE the running container is stopped, so a build failure leaves the
