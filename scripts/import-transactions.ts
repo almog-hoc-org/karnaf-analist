@@ -82,6 +82,8 @@ function main() {
   const incomingPath = argv.find((a) => !a.startsWith("--"));
   const dry = argv.includes("--dry-run");
   const force = argv.includes("--force");
+  // merge is the quarterly default-by-intent; replace is the one-time backfill.
+  const mode = argv.includes("--mode=replace") ? "replace" : "merge";
 
   if (!incomingPath) {
     console.error("שימוש: npx tsx scripts/import-transactions.ts <נתיב-לקובץ> [--dry-run] [--force]");
@@ -96,7 +98,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`▶ מיזוג עסקאות`);
+  console.log(`▶ ${mode === "merge" ? "הוספת עסקאות חדשות (merge)" : "החלפת טבלת העסקאות (replace)"}`);
   console.log(`  נכנס: ${incomingPath} (${(fs.statSync(incomingPath).size / 1e6).toFixed(0)}MB)`);
   console.log(`  חי:   ${LIVE_DB} (${(fs.statSync(LIVE_DB).size / 1e6).toFixed(0)}MB)\n`);
 
@@ -132,13 +134,16 @@ function main() {
   // ── gates ────────────────────────────────────────────────────────────
   const refusals: string[] = [];
   if (incCount === 0) refusals.push("הקובץ הנכנס ריק");
-  if (liveCount > 0) {
+  // The shrink gates guard REPLACE, where a thin file destroys history. In
+  // merge mode nothing is deleted, so a small delta is the normal case and
+  // refusing it would block the very thing the quarterly run is for.
+  if (mode === "replace" && liveCount > 0) {
     const shrink = ((liveCount - incCount) / liveCount) * 100;
     if (shrink > MAX_SHRINK_PCT) {
       refusals.push(`${shrink.toFixed(1)}% פחות עסקאות מהחי (מגבלה ${MAX_SHRINK_PCT}%)`);
     }
   }
-  if (incCities < liveCities) {
+  if (mode === "replace" && incCities < liveCities) {
     refusals.push(`${liveCities - incCities} ערים פחות מהחי — איסוף חלקי`);
   }
 
@@ -164,6 +169,52 @@ function main() {
   inc.close();
   db.exec(`ATTACH DATABASE '${incomingPath.replace(/'/g, "''")}' AS src`);
 
+  /**
+   * MERGE mode — add what the server has never seen, touch nothing else.
+   *
+   * This is the quarterly path, and it is the safer of the two: the live rows
+   * are never deleted, so a bad or partial collection can add noise but cannot
+   * remove history. It also keeps the transfer to a few MB instead of 312.
+   *
+   * THE KEY, AND WHY IT IS EXACTLY THIS
+   * A duplicated deal is not a cosmetic problem — it corrupts every median on
+   * the site, quietly and permanently. So the identity test is a full natural
+   * key: city, date, address, area, price. Two rows agreeing on all five are
+   * the same reported deal; re-collecting a period simply finds them again and
+   * they are skipped.
+   *
+   * Deliberately NOT the looser rule in flag-duplicate-deals.ts (same price and
+   * area within a 7-day window). That rule exists to catch the authority
+   * reporting one sale twice on different dates, and it runs later in the
+   * pipeline where it belongs. Using it here would drop genuinely distinct
+   * sales — two identical flats in one building sold the same week is an
+   * ordinary event, not a double report.
+   */
+  const KEY_COLS = ["city_name", "deal_date", "street", "house_num", "area", "price"];
+
+  const mergeInsert = db.transaction(() => {
+    const table = "nadlan_transactions";
+    const shared = columnsOf(db, table).filter((c) => columnsOf(db, table, "src").includes(c) && c !== "id");
+    const usableKey = KEY_COLS.filter((c) => shared.includes(c));
+    if (usableKey.length < 3) {
+      throw new Error(`אין מספיק עמודות מפתח משותפות (${usableKey.join(",")}) — מסרב למזג בלי זיהוי כפילויות`);
+    }
+    const cols = shared.map((c) => `"${c}"`).join(",");
+    const match = usableKey
+      .map((c) => `COALESCE(main.${table}."${c}",'') = COALESCE(s."${c}",'')`)
+      .join(" AND ");
+
+    const before = Number((db.prepare(`SELECT COUNT(*) c FROM main.${table}`).get() as { c: number }).c);
+    const r = db.prepare(
+      `INSERT INTO main.${table} (${cols})
+       SELECT ${shared.map((c) => `s."${c}"`).join(",")} FROM src.${table} s
+        WHERE NOT EXISTS (SELECT 1 FROM main.${table} WHERE ${match})`
+    ).run();
+    const skipped = Number((db.prepare(`SELECT COUNT(*) c FROM src.${table}`).get() as { c: number }).c) - r.changes;
+    console.log(`  ${table}: נוספו ${n(r.changes)} · כבר היו ${n(skipped)} · סה"כ ${n(before + r.changes)}`);
+    console.log(`  מפתח זיהוי: ${usableKey.join(" + ")}`);
+  });
+
   const merge = db.transaction(() => {
     for (const table of TABLES) {
       const srcHas = !!db.prepare("SELECT 1 FROM src.sqlite_master WHERE type='table' AND name=?").get(table);
@@ -186,7 +237,7 @@ function main() {
   });
 
   try {
-    merge();
+    if (mode === "merge") mergeInsert(); else merge();
   } catch (e) {
     // One transaction: a failure here leaves the live tables exactly as they
     // were, which is the whole point of not doing this table by table.

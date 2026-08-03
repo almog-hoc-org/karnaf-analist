@@ -18,13 +18,30 @@ import { ilFetch, ilProxyUrl } from "../lib/ilFetch";
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 const REQUEST_DELAY_MS = 300;
 // 10-year scope only (user rule: never touch/collect beyond 10 years back)
-const START_DATE = "2016-01";
+/**
+ * Collection window.
+ *
+ * The default is the full ten years — the one-time backfill. KARNAF_COLLECT_FROM
+ * narrows it for the quarterly top-up, where re-scanning 2016 costs hours and
+ * returns deals the database has held for years. Format "YYYY-MM".
+ */
+const START_DATE = process.env.KARNAF_COLLECT_FROM || "2016-01";
 const END_DATE = "2026-12";
 // three windows (was two): denser slicing so a busy polygon's 2000-per-call cap
 // truncates far less history — more deals ⇒ more addresses to merge onto nadlan rows.
-const WINDOWS: readonly (readonly [string, string])[] = [
-  [START_DATE, "2020-01"], ["2020-01", "2023-06"], ["2023-06", END_DATE],
-];
+// Slicing exists only to stay under the endpoint's 2000-deals-per-call cap, so
+// the slice boundaries have to sit INSIDE the window. Hard-coding them breaks
+// the moment the window narrows: a start of 2021-01 against a fixed first slice
+// ending 2020-01 asks for a range that runs backwards.
+//
+// Derived from the window instead. Ten years gets its three slices exactly as
+// before; a quarterly top-up gets one, because a few months never approach the
+// cap and re-slicing them would fetch the same deals repeatedly.
+const SLICE_MARKS = ["2020-01", "2023-06"];
+const WINDOWS: readonly (readonly [string, string])[] = (() => {
+  const marks = [START_DATE, ...SLICE_MARKS.filter((m) => m > START_DATE && m < END_DATE), END_DATE];
+  return marks.slice(0, -1).map((s, i) => [s, marks[i + 1]] as const);
+})();
 const SWEEP_RADIUS = 2500;
 const RING_OFFSETS_M = [0, 2000, 4000, 6000];
 // 45 polygons dropped whole neighbourhoods in big cities (TLV kept only 36% of deals) —
