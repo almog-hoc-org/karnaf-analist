@@ -46,15 +46,21 @@ services:
     # On a 7.8GB box that also hosts the bot (~560MB) plus Traefik and Docker,
     # an unbounded spike could get the bot OOM-killed. A hard ceiling means the
     # worst case is OUR container dying and restarting — never the bot.
+    # ONE form only. Setting both `deploy.resources.limits` and the legacy
+    # top-level keys (mem_limit / cpus) makes Compose refuse the file outright:
+    # "can't set distinct values on 'cpus' and 'deploy.resources.limits.cpus'".
+    # Compose v2 applies deploy.resources outside Swarm, so this is the modern
+    # form and the legacy keys are gone.
+    #
+    # No memswap limit is needed: this server has no swap configured at all
+    # (`free -h` shows 0B), so the memory ceiling cannot leak into it.
     deploy:
       resources:
         limits:
           memory: 3G
+          cpus: "1.5"      # of 2 cores — leaves headroom for the bot
         reservations:
           memory: 512M
-    mem_limit: 3g          # honoured by `docker compose up` (non-Swarm)
-    memswap_limit: 3g      # without this, the limit leaks into swap
-    cpus: 1.5              # leaves headroom on the 2-core box for the bot
 
     labels:
       # ── Traefik opt-in ──────────────────────────────────────────────
