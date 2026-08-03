@@ -42,6 +42,28 @@ export interface CollectorSource {
   /** Host to probe before running. null = reads local files only, nothing to probe. */
   host: string | null;
   /**
+   * A REAL request against the endpoint the collector actually uses.
+   *
+   * ⚠️ WHY A PLAIN HOST PROBE IS NOT ENOUGH — this cost a full collection run.
+   * The first version fetched the API base URL and treated any answer as
+   * success. govmap returned HTTP 200 for it, the probe went green, and then
+   * every single one of 168 cities failed with "Unexpected token '<'" — the
+   * endpoint was serving an HTML page where the collector expected JSON. The
+   * probe had confirmed that a web server was listening, which is not the
+   * question anyone was asking.
+   *
+   * So a probe now sends the request the collector sends and checks the answer
+   * parses as what the collector will try to parse. A green probe means the
+   * source is usable, not merely present.
+   */
+  probe?: {
+    url: string;
+    method?: "GET" | "POST";
+    body?: unknown;
+    /** Fail the probe unless the response body parses as JSON. */
+    expectJson?: boolean;
+  };
+  /**
    * Needs a real Chrome that has passed reCAPTCHA (KARNAF_CHROME_URL).
    * Skipped — loudly, never silently — when that is not configured.
    */
@@ -59,6 +81,14 @@ export const SOURCES: CollectorSource[] = [
     label: "עסקאות govmap (רשות המסים)",
     why: "The broad multi-year transaction feed — every deal 2016→now, all cities, no browser needed. This is the source that actually keeps the price series current. It skips cities collected within KARNAF_GOVMAP_FRESH_DAYS (default 20), so a nightly run touches a slice of the country rather than all of it. Operating this by hand meant running it daily because deals go missing and a re-run finds them, which argues for a shorter window than the backfill default once we have real timings.",
     host: "https://www.govmap.gov.il/api",
+    // The collector's very first call for every city. If this is not JSON,
+    // nothing downstream can work — which is exactly what happened.
+    probe: {
+      url: "https://www.govmap.gov.il/api/search-service/autocomplete",
+      method: "POST",
+      body: { searchText: "חיפה", language: "he", isAccurate: false, maxResults: 10 },
+      expectJson: true,
+    },
     timeoutMs: 90 * MINUTE,
   },
   {
@@ -123,15 +153,61 @@ export const SOURCES: CollectorSource[] = [
     label: "חימום מטמון העסקאות",
     why: "Writes per-city deal JSON under data/deals_cache so the live UI never waits on govmap. Runs last: it caches what the collectors just brought in, so doing it first would cache the previous night's picture.",
     host: "https://www.govmap.gov.il/api",
+    probe: {
+      url: "https://www.govmap.gov.il/api/search-service/autocomplete",
+      method: "POST",
+      body: { searchText: "חיפה", language: "he", isAccurate: false, maxResults: 10 },
+      expectJson: true,
+    },
     timeoutMs: 60 * MINUTE,
   },
 ];
 
 export const SOURCE_IDS = SOURCES.map((s) => s.id);
 
-/** Distinct hosts worth probing once per run. */
-export function probeHosts(sources: CollectorSource[] = SOURCES): string[] {
-  return [...new Set(sources.map((s) => s.host).filter((h): h is string => !!h))];
+/**
+ * One probe per distinct target. Sources that declare a real request get that
+ * request; the rest fall back to their host, which only ever proves a server is
+ * listening — see the warning on `probe`.
+ */
+export interface ProbeTarget {
+  key: string;
+  label: string;
+  url: string;
+  method: "GET" | "POST";
+  body?: unknown;
+  expectJson: boolean;
+  /** Sources that depend on this target. */
+  sources: string[];
+}
+
+export function probeTargets(sources: CollectorSource[] = SOURCES): ProbeTarget[] {
+  const byKey = new Map<string, ProbeTarget>();
+  for (const s of sources) {
+    const p = s.probe;
+    const url = p?.url ?? s.host;
+    if (!url) continue;
+    const key = url + (p?.method ?? "GET");
+    const existing = byKey.get(key);
+    if (existing) { existing.sources.push(s.id); continue; }
+    byKey.set(key, {
+      key,
+      label: p ? `${new URL(url).host}${new URL(url).pathname}` : new URL(url).host,
+      url,
+      method: p?.method ?? "GET",
+      body: p?.body,
+      expectJson: p?.expectJson ?? false,
+      sources: [s.id],
+    });
+  }
+  return [...byKey.values()];
+}
+
+/** The probe key a source depends on, or null when it needs no network. */
+export function probeKeyFor(s: CollectorSource): string | null {
+  const url = s.probe?.url ?? s.host;
+  if (!url) return null;
+  return url + (s.probe?.method ?? "GET");
 }
 
 /**

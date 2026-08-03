@@ -30,7 +30,7 @@
 import { spawn } from "child_process";
 import Database from "better-sqlite3";
 import path from "path";
-import { SOURCES, SOURCE_IDS, selectSources, probeHosts, type CollectorSource } from "../lib/collectors";
+import { SOURCES, SOURCE_IDS, selectSources, probeTargets, probeKeyFor, type CollectorSource, type ProbeTarget } from "../lib/collectors";
 
 const APP_DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "app.db");
 
@@ -59,14 +59,40 @@ function ensureRunLog(db: Database.Database) {
 }
 
 /**
- * One request per host. A 403 or a 301 still proves the host is reachable — the
- * question here is "does the network let us out and does the server answer",
- * not "is this specific path public".
+ * Probe a target the way its collector will actually use it.
+ *
+ * For a plain host, any answer counts — a 403 or a 301 still proves the network
+ * lets us out and the server responds. For a target that declares expectJson,
+ * the bar is higher and deliberately so: govmap answered 200 to its API base
+ * URL while serving HTML to the endpoint the collector calls, the old probe
+ * called that green, and 168 cities then failed one after another on
+ * "Unexpected token '<'". A probe that cannot distinguish those two is not
+ * telling you anything you needed to know.
  */
-async function probe(host: string): Promise<{ ok: boolean; detail: string }> {
+async function probe(t: ProbeTarget): Promise<{ ok: boolean; detail: string }> {
   try {
-    const res = await fetch(host, { method: "GET", signal: AbortSignal.timeout(20_000), redirect: "manual" });
-    return { ok: true, detail: `HTTP ${res.status}` };
+    const res = await fetch(t.url, {
+      method: t.method,
+      headers: t.body ? { "Content-Type": "application/json" } : undefined,
+      body: t.body ? JSON.stringify(t.body) : undefined,
+      signal: AbortSignal.timeout(20_000),
+      redirect: t.expectJson ? "follow" : "manual",
+    });
+    if (!t.expectJson) return { ok: true, detail: `HTTP ${res.status}` };
+
+    const text = await res.text();
+    try {
+      JSON.parse(text);
+      return { ok: res.ok, detail: `HTTP ${res.status} · JSON תקין` };
+    } catch {
+      // Name what came back instead. "HTML instead of JSON" points at a WAF,
+      // a geo-block or a login wall; a generic failure points nowhere.
+      const looksHtml = /^\s*<(!doctype|html)/i.test(text);
+      return {
+        ok: false,
+        detail: `HTTP ${res.status} · ${looksHtml ? "HTML במקום JSON" : "תשובה שאינה JSON"} (${text.trim().slice(0, 60).replace(/\s+/g, " ")}…)`,
+      };
+    }
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     return { ok: false, detail: msg.slice(0, 80) };
@@ -162,16 +188,18 @@ async function main() {
   }
 
   // ── reachability ────────────────────────────────────────────────────────
-  const hosts = probeHosts(sources);
-  console.log(`▶ בדיקת נגישות — ${hosts.length} מארחים\n`);
+  const targets = probeTargets(sources);
+  console.log(`▶ בדיקת נגישות — ${targets.length} יעדים\n`);
   const reach = new Map<string, { ok: boolean; detail: string }>();
-  for (const h of hosts) {
-    const r = await probe(h);
-    reach.set(h, r);
-    console.log(`  ${r.ok ? "✓" : "✗"} ${h.padEnd(38)} ${r.detail}`);
+  for (const t of targets) {
+    const r = await probe(t);
+    reach.set(t.key, r);
+    console.log(`  ${r.ok ? "✓" : "✗"} ${t.label.padEnd(46)} ${r.detail}`);
   }
   const anyReachable = [...reach.values()].some((r) => r.ok);
-  const reachSummary = [...reach.entries()].map(([h, r]) => `${new URL(h).host}=${r.ok ? r.detail : "FAIL"}`).join(", ");
+  const reachSummary = targets
+    .map((t) => `${t.label}=${reach.get(t.key)?.ok ? "ok" : "FAIL"}`)
+    .join(", ");
 
   if (has("probe-only")) {
     console.log(`\n▶ בדיקת מנועי חילוץ מסמכים\n`);
@@ -187,7 +215,7 @@ async function main() {
     process.exit(anyReachable && py.ok ? 0 : anyReachable ? 4 : 3);
   }
 
-  if (!anyReachable && hosts.length > 0) {
+  if (!anyReachable && targets.length > 0) {
     console.error("\n✗ אף מארח לא עונה. זו בעיית רשת או חסימה גיאוגרפית — לא באג בקולקטורים.");
     console.error("  הקולקטורים לא הורצו, כדי לא לרשום כישלונות שאין להם קשר לקוד.");
     // Still logged, so a run that found the network down leaves a trace.
@@ -234,9 +262,14 @@ async function main() {
       skipCount++;
       continue;
     }
-    if (s.host && !reach.get(s.host)?.ok) {
-      console.log(`\n○ ${head} — דילוג: ${new URL(s.host).host} לא נגיש`);
-      record(s.id, "skipped-unreachable", startedAt, 0, reach.get(s.host)?.detail);
+    // Skip rather than run a collector whose endpoint just failed its probe.
+    // The alternative is what happened on the first live run: 168 cities each
+    // producing the same parse error, ten seconds of log, and a source that
+    // still reported "✓" because its exit code was zero.
+    const pk = probeKeyFor(s);
+    if (pk && !reach.get(pk)?.ok) {
+      console.log(`\n○ ${head} — דילוג: היעד נכשל בבדיקה — ${reach.get(pk)?.detail}`);
+      record(s.id, "skipped-unreachable", startedAt, 0, reach.get(pk)?.detail);
       skipCount++;
       continue;
     }
