@@ -3,6 +3,7 @@ import { Rubik } from "next/font/google";
 import "./globals.css";
 import RefreshDataButton from "@/components/RefreshDataButton";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import Analytics from "@/components/Analytics";
 import TopNav from "@/components/TopNav";
 import { getCurrentUser } from "@/lib/auth";
 import { isAdminRequest } from "@/lib/adminAuth";
@@ -67,6 +68,9 @@ export default async function RootLayout({
         {isAdmin && <RefreshDataButton />}
         {/* bottom-start; RefreshDataButton holds bottom-end, and for an admin both show */}
         <FeedbackWidget />
+        {/* Inert until NEXT_PUBLIC_CLARITY_ID is set, and never loads on /deals
+            or /admin — see the note in the component. */}
+        <Analytics />
       </body>
     </html>
   );

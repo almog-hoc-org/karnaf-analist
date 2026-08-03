@@ -45,6 +45,13 @@ COPY . .
 ARG NEXT_PUBLIC_BASE_PATH=""
 ENV NEXT_PUBLIC_BASE_PATH=$NEXT_PUBLIC_BASE_PATH
 
+# Same rule, same reason: NEXT_PUBLIC_CLARITY_ID is read by a client component,
+# so its value is baked into the browser bundle here. Passing it only at run
+# time does nothing at all — the built bundle would still contain the empty
+# string, and Clarity would silently never load.
+ARG NEXT_PUBLIC_CLARITY_ID=""
+ENV NEXT_PUBLIC_CLARITY_ID=$NEXT_PUBLIC_CLARITY_ID
+
 # The build reads the database (generateStaticParams, and any page that queries
 # during collection). The real database is bind-mounted at run time; here we
 # only need the schema to exist so the build can complete. If a database is

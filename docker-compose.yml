@@ -24,6 +24,9 @@ services:
         # under karnafnadlan.com/analist — it is inlined at build time, so
         # changing it requires a rebuild, not just a restart.
         NEXT_PUBLIC_BASE_PATH: "${NEXT_PUBLIC_BASE_PATH:-}"
+        # Also build-time — see the note in the Dockerfile. Changing it in
+        # .env.production requires `bash scripts/deploy.sh`, not a restart.
+        NEXT_PUBLIC_CLARITY_ID: "${NEXT_PUBLIC_CLARITY_ID:-}"
     image: karnaf-analist:latest
     container_name: karnaf-analist
     restart: unless-stopped

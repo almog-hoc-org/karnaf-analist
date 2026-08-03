@@ -17,8 +17,17 @@ export default function SiteFooter() {
           הנתונים מבוססים על מקורות רשמיים: רשות המסים (נדל״ן), הלמ״ס, data.gov.il ומאגר העסקאות הפנימי במערכת.
         </p>
         <p className="text-2xs text-slate-400">
-          כלי מחקר פנימי · אינו מהווה ייעוץ השקעות · <a href={withBasePath("/methodology")} className="font-bold text-indigo-600 hover:underline">איך המספרים מחושבים ←</a>
+          כלי מחקר · אינו מהווה ייעוץ השקעות · <a href={withBasePath("/methodology")} className="font-bold text-indigo-600 hover:underline">איך המספרים מחושבים ←</a>
         </p>
+        {/* Required notices. A privacy policy that exists but is not reachable
+            from every page is not a notice — this footer is on every page. */}
+        <nav aria-label="מידע משפטי" className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-2xs text-slate-400">
+          <a href={withBasePath("/privacy")} className="hover:text-indigo-600 hover:underline">מדיניות פרטיות</a>
+          <span aria-hidden>·</span>
+          <a href={withBasePath("/terms")} className="hover:text-indigo-600 hover:underline">תנאי שימוש</a>
+          <span aria-hidden>·</span>
+          <a href={withBasePath("/accessibility")} className="hover:text-indigo-600 hover:underline">הצהרת נגישות</a>
+        </nav>
       </div>
     </footer>
   );
