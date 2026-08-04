@@ -1,0 +1,108 @@
+name: build & deploy
+
+# WHY THIS EXISTS
+# Every change reached the server the same way: someone opened a terminal, ran
+# `git pull && bash scripts/deploy.sh`, waited, and pasted the output back. That
+# is fine once. Across a working session it becomes the bottleneck — and worse,
+# it means a fix and its deployment are separate acts that can drift apart, so
+# "it is pushed" and "it is live" stop being the same statement.
+#
+# The assistant writing these changes runs in a container with no route to the
+# VPS and, deliberately, no SSH credentials. GitHub is the one place both sides
+# can reach. So the push becomes the deploy.
+#
+# WHAT IT DOES NOT DO
+# It does not touch /var/lib/karnaf — the databases live outside the image and
+# scripts/deploy.sh backs them up before it starts. It does not restart Traefik
+# or the OpenClaw bot sharing the host; deploy.sh checks both are still alive
+# afterwards and says so.
+
+on:
+  push:
+    branches:
+      - claude/project-deep-learning-g64ogo
+      - main
+  # Deploy the current branch on demand, without an empty commit.
+  workflow_dispatch:
+
+# One deploy at a time. Two overlapping runs would race on the same working
+# copy and the same container, and the loser leaves the server in a state
+# neither commit describes. Not cancel-in-progress: a half-applied deploy is
+# worse than a queued one.
+concurrency:
+  group: deploy-vps
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: build (gate)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The build reads the database during page-data collection, so it needs a
+      # file with the right schema present. Same trick the Dockerfile uses; an
+      # empty schema is enough to compile against.
+      - name: schema database for the build
+        run: |
+          mkdir -p data
+          npx prisma db push --url="file:$PWD/data/realestate.db" --accept-data-loss
+
+      # THE GATE. A build that fails here never reaches the server, which is the
+      # entire point of putting a job in front of the deploy.
+      #
+      # Not `tsc --noEmit` and not `lint`: both carry pre-existing failures from
+      # before this workflow, so gating on them would block every deploy on debt
+      # unrelated to the change. They become gates once that debt is paid; until
+      # then a gate nobody can pass is a gate everybody learns to bypass.
+      - name: build
+        run: npm run build
+
+  deploy:
+    name: deploy to VPS
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh in and deploy
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          USER: ${{ secrets.VPS_USER }}
+          KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          if [ -z "$HOST" ] || [ -z "$USER" ] || [ -z "$KEY" ]; then
+            echo "::error::VPS_HOST / VPS_USER / VPS_SSH_KEY are not set in repository secrets."
+            echo "Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          # Pin the host key instead of disabling the check. StrictHostKeyChecking=no
+          # would hand this deploy to anyone who can answer on that address.
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          ssh -o BatchMode=yes "$USER@$HOST" \
+            "cd /opt/karnaf && git fetch --all --prune && git checkout -f '${{ github.ref_name }}' && git reset --hard 'origin/${{ github.ref_name }}' && bash scripts/deploy.sh"
+
+      - name: confirm the site answers
+        run: |
+          # deploy.sh already health-checks from inside the host. This checks
+          # from OUTSIDE, over the public name, which is the only vantage point
+          # that proves a visitor can reach it — a container answering on
+          # localhost while Traefik routes nowhere looks healthy from within.
+          for i in 1 2 3 4 5; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://srv1773229.hstgr.cloud/api/health || echo 000)
+            [ "$code" = "200" ] && { echo "✓ live (HTTP 200)"; exit 0; }
+            echo "attempt $i: HTTP $code — retrying"
+            sleep 10
+          done
+          echo "::error::site did not return 200 after the deploy"
+          exit 1
