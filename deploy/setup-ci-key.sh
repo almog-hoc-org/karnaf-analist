@@ -47,7 +47,11 @@ cat <<EOF
   Settings → Secrets and variables → Actions → New repository secret
 
   ┌─ VPS_HOST ─────────────────────────────────────────────
-  $(curl -s --max-time 5 ifconfig.me || echo "72.62.7.226")
+  $(curl -4 -s --max-time 5 ifconfig.me || echo "72.62.7.226")
+
+  (IPv4 בכוונה. בלי -4 השאילתה יוצאת ב-IPv6 אם הוא מוגדר,
+   ומדפיסה כתובת v6 — שרנרים של GitHub Actions לא יכולים
+   להגיע אליה בכלל, והכישלון נראה כאילו השרת נפל.)
 
   ┌─ VPS_USER ─────────────────────────────────────────────
   root

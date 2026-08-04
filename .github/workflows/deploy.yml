@@ -89,6 +89,21 @@ jobs:
           HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
           USER=$(printf '%s' "$USER" | tr -d '[:space:]')
 
+          # GitHub-hosted runners have no IPv6 route at all. Connecting to a v6
+          # address from one fails with ENETUNREACH instantly — which reads as
+          # "the server is down" when the server is fine and simply cannot be
+          # addressed from here. Worth its own message, because the obvious
+          # reading sends you to the VPS to debug nothing.
+          #
+          # Testing for a colon is safe to print: it says nothing about the
+          # address beyond its family, and GitHub masks the value itself.
+          case "$HOST" in
+            *:*)
+              echo "::error::VPS_HOST is an IPv6 address, and GitHub-hosted runners cannot reach IPv6."
+              echo "Set VPS_HOST to the server's IPv4 address instead (ssh in and run: curl -4 -s ifconfig.me)."
+              exit 1 ;;
+          esac
+
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$KEY" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
@@ -107,7 +122,9 @@ jobs:
           # happen. The error is the whole value of the step failing.
           if ! ssh-keyscan -T 15 "$HOST" >> ~/.ssh/known_hosts; then
             echo "::error::ssh-keyscan could not read a host key from VPS_HOST."
-            echo "Check that VPS_HOST is the bare address (no user@, no https://, no port) and the VPS is up."
+            echo "'Network is unreachable' above means the address family has no route from this runner (IPv6)."
+            echo "'Connection timed out' means a firewall or a VPS that is down."
+            echo "Otherwise check that VPS_HOST is the bare address — no user@, no https://, no port."
             exit 1
           fi
           if [ ! -s ~/.ssh/known_hosts ]; then
