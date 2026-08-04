@@ -19,6 +19,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import crypto from "crypto";
 import { appDb } from "./appDb";
+import { rethrowIfNextControlFlow } from "./nextControlFlow";
 
 export const SESSION_COOKIE = "karnaf_session";
 const SESSION_DAYS = 30;
@@ -211,7 +212,14 @@ export function getCurrentUser(): AuthUser | null {
        WHERE s.token=? AND s.expires_at > datetime('now')`
     ).get(token) as Pick<UserRow, "id" | "email" | "name" | "tier"> | undefined;
     return row ? { id: `u${row.id}`, email: row.email, name: row.name, tier: row.tier } : null;
-  } catch {
+  } catch (e) {
+    // The catch is here for the DATABASE read — a missing table or a locked
+    // file should degrade to "logged out", not blank the page. But cookies()
+    // is inside this try too, and it throws to tell Next to render this page
+    // dynamically. Swallowing that told the build every page was static while
+    // the running server read cookies on every request, and Next answers 500
+    // to a page that changes from static to dynamic at runtime.
+    rethrowIfNextControlFlow(e);
     return null;
   }
 }

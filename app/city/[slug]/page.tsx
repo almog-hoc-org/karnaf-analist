@@ -58,10 +58,31 @@ function formatNumber(value: number | null, decimals = 0): string {
   return value.toFixed(decimals);
 }
 
-export async function generateStaticParams() {
-  const cities = await prisma.city.findMany({ select: { city_name: true } });
-  return cities.map((c) => ({ slug: encodeURIComponent(c.city_name) }));
-}
+/**
+ * REMOVED, deliberately — it could not have worked, and it is what turned a
+ * framework misconfiguration into a 500 on every city.
+ *
+ * Two independent reasons:
+ *
+ * 1. It returned encodeURIComponent(city_name). Next encodes params itself, so
+ *    Hebrew names were encoded TWICE: the build prerendered /city/%25D7%2597…
+ *    while a visitor asks for /city/%D7%97%D7%99%D7%A4%D7%94. Not one city ever
+ *    matched its own prerendered page, so all 165 fell through to an on-demand
+ *    render — the exact path that then failed. Routes with ASCII slugs
+ *    (/sources/[id], /stats/[metric]) were unaffected, which is why only the
+ *    city pages broke.
+ *
+ * 2. Even with the encoding fixed, this page CANNOT be static: the root layout
+ *    reads cookies on every render, for the admin control and the signed-in
+ *    nav. A prerendered city page would serve one visitor's nav state to
+ *    everyone.
+ *
+ * So the page is dynamic, like the home page already is. Expensive loaders are
+ * cached in lib/cache.ts, which is where that cost belongs — a cache that can
+ * be invalidated, not a prerender that bakes in an auth state.
+ */
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
