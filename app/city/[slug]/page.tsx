@@ -21,6 +21,8 @@ import PriceChangeSection from "@/components/PriceChangeSection";
 import { loadCityGraphSeries, loadCityDeals, loadDealCountCube, loadCityCleaningCounts } from "@/lib/nadlanTransactionSeries";
 import Link from "next/link";
 import SourceBadge from "@/components/SourceBadge";
+import CoverageNotice from "@/components/CoverageNotice";
+import { assessCoverage } from "@/lib/coverage";
 
 interface PageProps {
   params: { slug: string };
@@ -465,6 +467,13 @@ export default async function CityPage({ params }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           PRICE-CHANGE SECTION (boxed) — YoY ₪/sqm graph + matrix + median
           ═══════════════════════════════════════════════════════════ */}
+      {/* Says how much of the decade is actually behind the chart below.
+          Derived from the series already loaded — no extra query, and no city
+          named in code, so a locality that fills in loses its notice by itself. */}
+      <CoverageNotice
+        coverage={assessCoverage(cityGraphData, getRuleNum("min_deals_per_year", 10))}
+        cityName={city.city_name}
+      />
       <PriceChangeSection
         priceChanges={cityPriceChanges}
         graphData={cityGraphData}

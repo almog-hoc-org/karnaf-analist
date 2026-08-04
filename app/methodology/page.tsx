@@ -48,6 +48,25 @@ export default async function MethodologyPage() {
   const classified = Number(cov?.classified ?? 0), nadlanN = Number(cov?.nadlan_n ?? 0);
   const unclassified = Math.max(0, nadlanN - classified);
 
+  // How many localities we cover thinly, counted the same way the city pages
+  // judge themselves: years in the decade with enough second-hand deals to plot
+  // a point. Stated here rather than only on the affected pages, because a
+  // reader comparing cities deserves to know the coverage is uneven BEFORE they
+  // draw a conclusion from a comparison.
+  const [thinCov] = await prisma.$queryRawUnsafe<Array<{ thin: bigint; total: bigint }>>(
+    `SELECT SUM(CASE WHEN covered < 9 THEN 1 ELSE 0 END) thin, COUNT(*) total FROM (
+       SELECT city_name, (
+         SELECT COUNT(*) FROM (
+           SELECT deal_year FROM nadlan_transactions t2
+            WHERE t2.city_name = t1.city_name AND t2.is_secondhand = 1
+              AND COALESCE(t2.excluded,0) = 0 AND t2.deal_year BETWEEN 2016 AND 2025
+            GROUP BY deal_year HAVING COUNT(*) >= ?)) covered
+         FROM nadlan_transactions t1
+        WHERE COALESCE(t1.excluded,0) = 0 AND t1.deal_year BETWEEN 2016 AND 2025
+        GROUP BY city_name)`, MIN_N_PER_YEAR
+  ).catch(() => [{ thin: BigInt(0), total: BigInt(0) }]);
+  const thinCities = Number(thinCov?.thin ?? 0), coveredTotal = Number(thinCov?.total ?? 0);
+
   const [govCov] = await prisma.$queryRawUnsafe<Array<{ c: bigint }>>(
     `SELECT COUNT(DISTINCT city_name) c FROM nadlan_year_room_stats WHERE scope='all_govmap'`
   ).catch(() => [{ c: BigInt(0) }]);
@@ -77,6 +96,28 @@ export default async function MethodologyPage() {
       <Section icon="📥" title="שני ערוצי איסוף בלתי-תלויים">
         <p><B>ערוץ govmap (רשות המסים — שכבת המפה):</B> סריקה גיאוגרפית של פוליגוני עסקאות סביב כל עיר, ללא דפדפן. תורם <B>רחוב, מספר בית וקומה</B> ({st.toLocaleString("he-IL")} עסקאות עם כתובת). אין בו שדה שנת-בנייה. הוא משמש <B>בעיקר לכתובות</B> — ולא לחישוב מחיר, כי נמצא רועש (סטייה של עשרות אחוזים מהחציון הרשמי, לשני הכיוונים, בין ערים).{govCities > 0 && <> יוצא הדופן היחיד: ב-<B>{govCities} ערים</B> שכיסוי nadlan בהן דק מכדי לבנות עשור, סדרת &quot;כללי&quot; נבנית מ-govmap — ובאותן ערים מוצגת הודעה על כך בעמוד העיר עצמו, מעל הגרף.</>}</p>
         <p><B>ערוץ nadlan (רשות המסים — deal-data חתום):</B> ה-API הרשמי עם חתימה קריפטוגרפית, כולל <B>שנת בנייה</B> — הבסיס לסיווג. מכסה אנונימית ~1,000 עסקאות לחלון שאילתה; אנחנו פורשים אותה בפילוחי חדרים, סוג-עסקה, חלונות-זמן ורמת שכונה. רץ אוטומטית כל לילה (02:30) עד השלמת 10 שנים בכל עיר.</p>
+      </Section>
+
+      <Section icon="📉" title="כיסוי לא אחיד בין יישובים">
+        <p>
+          הכיסוי שלנו <B>אינו שווה בכל הארץ</B>.{thinCities > 0 && coveredTotal > 0 && <>{" "}
+          מתוך <B>{coveredTotal}</B> יישובים במאגר, ב-<B>{thinCities}</B> אין מספיק עסקאות
+          בכל שנות העשור כדי להציג סדרת מחירים מלאה.</>}
+        </p>
+        <p className="rounded-xl border border-amber-200 bg-amber-50 p-3">
+          מדדנו את המקור עצמו: באותם יישובים <B>ה-API של רשות המסים מדווח שקיימות עסקאות</B>,
+          ונקודת הקצה שמחזירה את פירוטן מחזירה אפס — 27 אזורים שנבדקו בשלושה יישובים,
+          27 ריקים, ללא שגיאה. אותה בקשה בדיוק מחזירה 1,500 עסקאות בחיפה. זה לא מסנן שלנו
+          ולא באג בבקשה, ואנחנו עדיין בודקים מה כן.
+        </p>
+        <p>
+          עד שנדע — <B>בעמוד של כל יישוב כזה מופיעה הודעה</B> שאומרת כמה עסקאות יש לנו
+          וכמה שנים מכוסות. לא נציג קו מגמה בטוח על בסיס עשרים עסקאות בלי לומר שזה מה שיש.
+        </p>
+        <p className="text-xs text-slate-500">
+          חשוב להבדיל: זהו מצב הנתונים <B>שברשותנו</B>, ולא טענה על מספר העסקאות שהיו באותם
+          יישובים. את המספר האמיתי איננו יודעים, וזו בדיוק הבעיה.
+        </p>
       </Section>
 
       <Section icon="🏷️" title="סיווג יד-שנייה / חדשה">
