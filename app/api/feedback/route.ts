@@ -14,6 +14,7 @@
  * at this scale, is not the threat.
  */
 import { NextRequest, NextResponse } from "next/server";
+import { sendFeedbackNotification } from "@/lib/notify";
 import { saveFeedback } from "@/lib/feedback";
 import { FEEDBACK_KINDS, type FeedbackKind } from "@/lib/feedbackTypes";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
@@ -69,5 +70,21 @@ export async function POST(req: NextRequest) {
   });
 
   if (!res.ok) return NextResponse.json(res, { status: 400 });
+
+  // Email AFTER the database write, and never in front of the response.
+  // The row is the source of truth; this is the notification. A visitor must
+  // not be told their message failed because our mail provider is down when it
+  // is already stored — and must not wait on Resend to see the confirmation.
+  void sendFeedbackNotification({
+    kind: String(kind),
+    message: String(body.message ?? ""),
+    rating: body.rating == null ? null : Number(body.rating),
+    email: typeof body.email === "string" ? body.email : null,
+    path: typeof body.path === "string" ? body.path : null,
+    city: typeof body.city === "string" ? body.city : null,
+    viewState: typeof body.viewState === "string" ? body.viewState : null,
+    viewport: typeof body.viewport === "string" ? body.viewport : null,
+  }).catch(() => { /* logged inside; never reaches the visitor */ });
+
   return NextResponse.json({ ok: true });
 }

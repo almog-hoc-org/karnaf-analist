@@ -1,4 +1,6 @@
 import { withBasePath } from "@/lib/basePath";
+import BrandMark from "./BrandMark";
+import CourseBanner from "./CourseBanner";
 
 export default function SiteFooter() {
   return (
@@ -6,9 +8,7 @@ export default function SiteFooter() {
       {/* mobile pb-24: clearance so the floating refresh button never sits on the links */}
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-2 px-4 py-8 pb-24 text-center md:px-6 md:pb-8">
         <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-indigo-600 text-2xs font-black text-white">
-            ק
-          </span>
+          <BrandMark size={26} />
           <span className="text-sm font-bold text-slate-800">
             קרנף אנליסט — מחקר שוק הדיור בישראל
           </span>
@@ -19,6 +19,11 @@ export default function SiteFooter() {
         <p className="text-2xs text-slate-400">
           כלי מחקר · אינו מהווה ייעוץ השקעות · <a href={withBasePath("/methodology")} className="font-bold text-indigo-600 hover:underline">איך המספרים מחושבים ←</a>
         </p>
+        {/* Course + WhatsApp, compact. On every page but below everything —
+            see the note in CourseBanner on why this never sits above the data. */}
+        <div className="mt-2 border-t border-slate-100 pt-3">
+          <CourseBanner compact />
+        </div>
         {/* Required notices. A privacy policy that exists but is not reachable
             from every page is not a notice — this footer is on every page. */}
         <nav aria-label="מידע משפטי" className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-2xs text-slate-400">

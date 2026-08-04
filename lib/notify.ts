@@ -144,3 +144,102 @@ export async function sendReportNotification(n: ReportNotification): Promise<{
 export function isNotifyConfigured(): boolean {
   return loadConfig().enabled;
 }
+
+/* ── feedback ─────────────────────────────────────────────────────────── */
+
+export interface FeedbackNotification {
+  kind: string;
+  message: string;
+  rating: number | null;
+  /** what the sender typed, if they chose to — never required */
+  email: string | null;
+  path: string | null;
+  city: string | null;
+  viewState: string | null;
+  viewport: string | null;
+}
+
+const KIND_HE: Record<string, string> = {
+  bug: "🐞 באג",
+  idea: "💡 הצעה",
+  data: "📊 נתון שגוי",
+  rating: "⭐ דירוג",
+};
+
+/**
+ * Email one feedback submission.
+ *
+ * WHY THIS EXISTS
+ * The feedback widget wrote to app.db and stopped there. Nothing read that
+ * table and nothing told anyone a message had arrived, so every report sent
+ * since launch sat unseen — a form that silently discards is worse than no
+ * form, because the sender believes they were heard.
+ *
+ * NEVER BLOCKS THE SUBMISSION. The database write is the source of truth and
+ * happens first; this runs after and its failure is logged, not surfaced. A
+ * visitor must not see "failed to send" because OUR mail provider is down when
+ * their message is already safely stored.
+ *
+ * Reply-To carries the sender's address when they gave one, so answering is a
+ * plain reply. From must stay a verified domain — putting the visitor's address
+ * there gets the mail rejected by SPF.
+ */
+export async function sendFeedbackNotification(f: FeedbackNotification): Promise<{ sent: boolean; reason?: string }> {
+  const cfg = loadConfig();
+  const label = KIND_HE[f.kind] ?? f.kind;
+
+  if (!cfg.enabled) {
+    console.log(`📧 [FEEDBACK:console] ${label} — RESEND_API_KEY / NOTIFY_TO_EMAIL not set.`);
+    console.log(`     ${f.message.slice(0, 200)}`);
+    return { sent: false, reason: "RESEND_API_KEY or NOTIFY_TO_EMAIL not set" };
+  }
+
+  const row = (k: string, v: string | null) =>
+    v ? `<tr><td style="padding:4px 10px;color:#64748b;white-space:nowrap">${htmlEscape(k)}</td><td style="padding:4px 10px;color:#0f172a">${htmlEscape(v)}</td></tr>` : "";
+
+  const html = `<!DOCTYPE html><html dir="rtl" lang="he"><head><meta charset="utf-8"/></head>
+<body style="font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;background:#f8fafc;padding:24px">
+  <div style="max-width:620px;margin:0 auto;background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden">
+    <div style="background:#4338ca;color:#fff;padding:14px 18px;font-weight:800">${htmlEscape(label)} — קרנף אנליסט</div>
+    <div style="padding:18px">
+      <div style="white-space:pre-wrap;font-size:15px;line-height:1.7;color:#0f172a;border-inline-start:3px solid #c7d2fe;padding-inline-start:12px">${htmlEscape(f.message)}</div>
+      <table style="margin-top:16px;border-collapse:collapse;font-size:13px">
+        ${row("דירוג", f.rating != null ? `${f.rating}/5` : null)}
+        ${row("מאת", f.email)}
+        ${row("עמוד", f.path)}
+        ${row("עיר", f.city)}
+        ${row("תצוגה", f.viewState)}
+        ${row("מסך", f.viewport)}
+      </table>
+      ${f.email ? `<p style="margin-top:16px;font-size:13px;color:#475569">אפשר להשיב ישירות למייל הזה — התשובה תגיע ל-${htmlEscape(f.email)}.</p>` : `<p style="margin-top:16px;font-size:13px;color:#94a3b8">השולח לא השאיר כתובת, אין למי להשיב.</p>`}
+    </div>
+  </div>
+</body></html>`;
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${cfg.apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: cfg.fromEmail,
+        to: cfg.toEmail,
+        subject: `${label} — קרנף אנליסט${f.city ? ` · ${f.city}` : ""}`,
+        html,
+        // Only when supplied. An invalid Reply-To is rejected outright, so a
+        // malformed address would cost us the whole message.
+        ...(f.email && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email) ? { reply_to: f.email } : {}),
+      }),
+    });
+    if (!res.ok) {
+      const t = await res.text();
+      console.error(`📧 [FEEDBACK:error] Resend ${res.status}: ${t.slice(0, 300)}`);
+      return { sent: false, reason: `Resend ${res.status}` };
+    }
+    console.log(`📧 [FEEDBACK:sent] ${label} → ${cfg.toEmail}`);
+    return { sent: true };
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error(`📧 [FEEDBACK:exception] ${msg}`);
+    return { sent: false, reason: msg };
+  }
+}

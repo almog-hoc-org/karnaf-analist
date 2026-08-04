@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import BrandMark from "./BrandMark";
 import { usePathname, useRouter } from "next/navigation";
 import { withBasePath } from "@/lib/basePath";
 import { trackSearch } from "@/lib/track";
@@ -71,11 +72,11 @@ export default function TopNav({ cities, user }: { cities: string[]; user?: { na
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-4 md:px-6">
-        {/* Brand */}
+        {/* Brand — the mascot, not the indigo square with a letter in it that
+            every generated site ships with. Above the fold on every page, so
+            this is the one instance worth loading eagerly. */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-600 text-sm font-black text-white shadow-sm">
-            ק
-          </span>
+          <BrandMark size={34} priority />
           <span className="text-sm font-extrabold tracking-tight text-slate-900">
             קרנף <span className="text-indigo-600">אנליסט</span>
           </span>

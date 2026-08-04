@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import RankingCard from "@/components/RankingCard";
 import HomeSearch from "@/components/HomeSearch";
+import CourseBanner from "@/components/CourseBanner";
 import Link from "next/link";
 import RecentReportsSection from "@/components/RecentReportsSection";
 import NumberCaption from "@/components/NumberCaption";
@@ -389,9 +390,12 @@ export default async function HomePage() {
         lastRefreshedAt={discoveredReports.lastRefreshedAt}
       />
 
-
-
-
+      {/* The one commercial block on the site, and it comes LAST on purpose —
+          see the note in CourseBanner. A research tool that opens with a pitch
+          has already told the reader which of those it is. */}
+      <div className="px-4 md:px-6">
+        <CourseBanner />
+      </div>
     </main>
   );
 }
