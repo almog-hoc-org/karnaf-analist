@@ -406,7 +406,34 @@ async function main() {
   const doGovmap = srcArg === "all" || srcArg === "govmap";
   const names = argv.filter((a) => !a.startsWith("--") && a !== srcArg);
   const codes = cityCodeMap();
-  let cities = names.length ? names : (await prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } })).map((c) => c.city_name);
+  /**
+   * The city list, with a fallback that exists because its absence made the
+   * quarterly collection a no-op.
+   *
+   * Without explicit names this read prisma.city — which is EMPTY in the one
+   * situation the collection actually runs in. push-recent.sh creates a fresh
+   * scratch database, points KARNAF_DATA_DIR at it, and calls this with no
+   * names; the scratch file has a schema and no rows, so the query returned
+   * nothing, the loop ran zero times, and the script printed "0 עסקאות" and
+   * exited 0. No error, no warning — and "0 deals" is exactly the reading that
+   * means "this source is thin", which is the conclusion the whole campaign
+   * exists to test. A silent zero that impersonates a finding.
+   *
+   * The CBS code map is a file in the repository, not a table, so it is
+   * populated on any machine that has a checkout. Falling back to it means a
+   * scratch database collects the same 167 cities the live one would.
+   */
+  let cities = names.length
+    ? names
+    : (await prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } })).map((c) => c.city_name);
+  if (!names.length && cities.length === 0) {
+    cities = [...codes.keys()];
+    console.log(`ℹ טבלת הערים ריקה (מסד זמני?) — נופל לקובץ הקודים: ${cities.length} ערים`);
+  }
+  if (cities.length === 0) {
+    console.error("✗ אין ערים לאסוף — לא מהמסד ולא מ-data/city_cbs_codes.json. עוצר.");
+    process.exit(1);
+  }
   // per-city MISSING years (2016..lastFullYear with <10 active nadlan deals) — these
   // drive the v8 year-fill pass and force re-collection even when method matches.
   const nowY = new Date().getFullYear();
