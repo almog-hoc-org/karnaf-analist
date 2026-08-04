@@ -198,10 +198,10 @@ function ReportDetail({ report }: { report: FocusedReport }) {
   const hasCities = !!report.cityTable?.length;
 
   const tabs = [
-    { id: "summary" as const, label: "📊 מטריקות עיקריות" },
-    ...(hasDistricts ? [{ id: "districts" as const, label: "🗺️ פירוט מחוז" }] : []),
-    ...(hasCities ? [{ id: "cities" as const, label: "🏙️ פירוט עיר" }] : []),
-    { id: "context" as const, label: "🔗 קישור למאגר" },
+    { id: "summary" as const, icon: "chart", label: "מטריקות עיקריות" },
+    ...(hasDistricts ? [{ id: "districts" as const, icon: "map", label: "פירוט מחוז" }] : []),
+    ...(hasCities ? [{ id: "cities" as const, icon: "building", label: "פירוט עיר" }] : []),
+    { id: "context" as const, icon: "link", label: "קישור למאגר" },
   ];
 
   const max = hasCities && report.cityTable
@@ -241,11 +241,11 @@ function ReportDetail({ report }: { report: FocusedReport }) {
         {/* Footer with source links */}
         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100 text-2xs">
           <a href={report.sourceUrl} target="_blank" rel="noopener noreferrer" className={`${t.text} hover:underline font-bold inline-flex items-center gap-1`}>
-            📄 הדוח המקורי באתר הלמ&quot;ס ↗
+            <Icon name="document" size="1em" /> הדוח המקורי באתר הלמ&quot;ס <Icon name="arrow-out" size="1em" />
           </a>
           {report.primaryPdfPath && (
             <a href={withBasePath(report.primaryPdfPath)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-2xs font-bold">
-              ✓ עותק מקומי
+              <Icon name="check" size="1em" /> עותק מקומי
             </a>
           )}
           <Link href={`/sources/${report.sourcePageId}`} className="text-slate-500 hover:text-indigo-700 font-semibold mr-auto">
@@ -269,7 +269,7 @@ function ReportDetail({ report }: { report: FocusedReport }) {
                   : "text-slate-500 border-transparent hover:text-slate-700"
               }`}
             >
-              {tab.label}
+              <Icon name={tab.icon} size="1em" /> {tab.label}
             </button>
           ))}
         </div>
@@ -312,7 +312,7 @@ function ReportDetail({ report }: { report: FocusedReport }) {
                 </ul>
               </div>
               {report.contextualNote && (
-                <p className="text-2xs text-slate-500 italic leading-relaxed">💬 {report.contextualNote}</p>
+                <p className="text-2xs text-slate-500 italic leading-relaxed"><Icon name="chat" size="1em" /> {report.contextualNote}</p>
               )}
             </div>
           )}
@@ -403,7 +403,7 @@ export default function RecentReportsSection({
           <div className="flex items-center gap-2 mb-1">
             <span className="text-2xs font-bold uppercase tracking-[0.2em] text-indigo-700">Primary-Source Reports</span>
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-2xs font-bold">
-              🏛️ מקור חיצוני: למ״ס
+              <Icon name="institution" size="1em" /> מקור חיצוני: למ״ס
             </span>
           </div>
           <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
@@ -440,7 +440,7 @@ export default function RecentReportsSection({
         <div className="mt-4 rounded-2xl border border-indigo-200 bg-indigo-50/50 p-4">
           <div className="mb-2.5 flex flex-wrap items-center gap-x-3 gap-y-1">
             <span className="inline-flex items-center gap-1.5 text-xs font-black text-indigo-800">
-              🔄 נמצאו ברענון האוטומטי
+              <Icon name="refresh" size="1em" /> נמצאו ברענון האוטומטי
             </span>
             {lastRefreshedAt && (
               <span className="min-w-0 break-words text-2xs text-slate-500">
@@ -462,7 +462,7 @@ export default function RecentReportsSection({
                     {PUBLISHER[r.publisher].he}
                   </span>
                   {r.publishedDate && (
-                    <span className="text-2xs tabular-nums text-slate-500">📅 {r.publishedDate}</span>
+                    <span className="text-2xs tabular-nums text-slate-500"><Icon name="calendar" size="1em" /> {r.publishedDate}</span>
                   )}
                   <span className="ms-auto text-indigo-600 opacity-0 transition-opacity group-hover:opacity-100">↗</span>
                 </div>
@@ -511,7 +511,7 @@ export default function RecentReportsSection({
                       {r.publicationNumber}
                     </span>
                   )}
-                  <span className="text-2xs text-slate-500 tabular-nums mr-auto">📅 {r.publishedDate}</span>
+                  <span className="text-2xs text-slate-500 tabular-nums mr-auto"><Icon name="calendar" size="1em" /> {r.publishedDate}</span>
                   <span className="text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
                 </div>
                 <p className="text-xs font-bold text-slate-900 group-hover:text-indigo-700 transition-colors leading-snug">

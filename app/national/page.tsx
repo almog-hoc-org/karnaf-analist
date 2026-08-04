@@ -186,9 +186,9 @@ export default async function NationalDashboard() {
             f.severity === "amber" ? "דורש מעקב" :
             "חיובי";
           const icon =
-            f.severity === "red" ? "🚨" :
-            f.severity === "amber" ? "⚠️" :
-            "💡";
+            f.severity === "red" ? "warning" :
+            f.severity === "amber" ? "warning" :
+            "idea";
           return (
             <div key={i} className="rounded-xl border border-slate-200 bg-white p-4">
               <div className="flex items-start gap-2 mb-2">
@@ -209,7 +209,7 @@ export default async function NationalDashboard() {
       <section className="mb-10">
         <div className="flex items-start gap-3 mb-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50 text-indigo-700">
-            🎯
+            <Icon name="target" size="1em" />
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-bold text-slate-900">תוכנית הוועדה מול ביצוע בפועל — חומש 2021-2025</h2>
@@ -225,7 +225,7 @@ export default async function NationalDashboard() {
           <div className={`rounded-xl p-4 border-2 ${completionsGap2125 < 0 ? "bg-red-50 border-red-300" : "bg-emerald-50 border-emerald-300"}`}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">גמר בנייה (האמת)</span>
-              <span className="text-2xl">{completionsGap2125 < 0 ? "📉" : "📈"}</span>
+              <span className="text-2xl"><Icon name={completionsGap2125 < 0 ? "trend-down" : "trend-up"} size="1em" /></span>
             </div>
             <div className="text-2xl font-extrabold text-slate-900 tabular-nums">{fmt(actual2125.completions)}</div>
             <div className="text-xs text-slate-600 mt-1">מתוך יעד {fmt(target2125Cumulative)}</div>
@@ -241,7 +241,7 @@ export default async function NationalDashboard() {
           <div className={`rounded-xl p-4 border-2 ${startsGap2125 < 0 ? "bg-slate-50 border-slate-300" : "bg-emerald-50 border-emerald-300"}`}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">התחלות בנייה (צינור)</span>
-              <span className="text-2xl">{startsGap2125 < 0 ? "🔧" : "🚧"}</span>
+              <span className="text-2xl"><Icon name={startsGap2125 < 0 ? "cursor" : "construction"} size="1em" /></span>
             </div>
             <div className="text-2xl font-extrabold text-slate-900 tabular-nums">{fmt(actual2125.starts)}</div>
             <div className="text-xs text-slate-600 mt-1">מתוך יעד {fmt(target2125Cumulative)}</div>
@@ -272,7 +272,7 @@ export default async function NationalDashboard() {
 
         {/* Narrative — what the comparison teaches us */}
         <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 mb-5 text-sm text-slate-800 leading-relaxed">
-          <p className="font-bold text-slate-900 mb-2">💡 מה זה אומר?</p>
+          <p className="font-bold text-slate-900 mb-2"><Icon name="idea" size="1em" /> מה זה אומר?</p>
           <ul className="space-y-1.5 list-disc pr-5">
             <li>
               ישראל <strong>פיגרה ביעד הגמר ב-{fmt(Math.abs(completionsGap2125))} יחידות</strong> ({((completionsGap2125 / target2125Cumulative) * 100).toFixed(1)}%) — לא נבנו מספיק דירות שהגיעו לשוק.

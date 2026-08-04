@@ -11,6 +11,7 @@ import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
 import { setViewState, clearViewState } from "@/lib/viewState";
 import { track } from "@/lib/track";
+import Icon from "@/components/Icon";
 
 /**
  * MultiChartStudio — ONE tool for exploring price trends (user spec):
@@ -306,7 +307,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
             {cleanedNote && <> · {cleanedNote}</>}
           </div>
         </div>
-        <div className="text-2xs text-indigo-100">🔵 המאגר העצמאי · יד-2 = {secondhandMinAge}+ שנים משנת בנייה</div>
+        <div className="text-2xs text-indigo-100"><Icon name="source-own" size="1em" /> המאגר העצמאי · יד-2 = {secondhandMinAge}+ שנים משנת בנייה</div>
       </div>
 
       {/* govmap-sourced city: one source for the whole decade, labeled (never spliced) */}
@@ -394,7 +395,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               </div>
             ))}
             {trends.every((t) => t.pct == null) && <div className="text-sm text-slate-300">—</div>}
-            {hasPartialInRange && <div className="mt-0.5 text-2xs text-amber-600">⚠️ {maxY} חלקית — לא בחישוב</div>}
+            {hasPartialInRange && <div className="mt-0.5 text-2xs text-amber-600"><Icon name="warning" size="1em" /> {maxY} חלקית — לא בחישוב</div>}
           </aside>
         </div>
 
@@ -414,8 +415,8 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                 style={on && !disabled ? { backgroundColor: s.color } : undefined}>
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: on ? "#fff" : s.color }} />
                 {/* mobile: the short name (full label stays in title + tooltip); desktop: full */}
-                <span className="sm:hidden">{s.short}{s.external ? " 🏛️" : ""}</span>
-                <span className="hidden sm:inline">{s.label}{s.external ? " 🏛️" : ""}</span>
+                <span className="sm:hidden">{s.short}{s.external ? <> <Icon name="source-official" size="1em" /></> : ""}</span>
+                <span className="hidden sm:inline">{s.label}{s.external ? <> <Icon name="source-official" size="1em" /></> : ""}</span>
               </button>
             );
           })}
@@ -449,7 +450,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
             </ResponsiveContainer>
           )}
           <div className="mt-2 text-2xs leading-relaxed text-slate-500">
-            שנה עם פחות מ-{MIN_N} עסקאות לא מוצגת · 🔵 סדרות המאגר העצמאי · 🏛️ חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
+            שנה עם פחות מ-{MIN_N} עסקאות לא מוצגת · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
           </div>
         </div>
       ) : (
@@ -512,7 +513,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           </div>
         )}
         <div className="mt-2 text-2xs text-slate-500">
-          🔵 העסקאות מאחורי הגרף · מסונן לפי {DT_LABEL[dealType]}{dealType === "sh" && buildingAge !== "all" ? ` · בניין ${buildingAge === "modern" ? "מודרני" : "ישן"}` : ""} · {room === "all" ? "כל הגדלים" : `${room} חד׳`} · {activeDealsYear === 0 ? `${from}–${to}` : `שנת ${activeDealsYear}`}
+          <Icon name="source-own" size="1em" /> העסקאות מאחורי הגרף · מסונן לפי {DT_LABEL[dealType]}{dealType === "sh" && buildingAge !== "all" ? ` · בניין ${buildingAge === "modern" ? "מודרני" : "ישן"}` : ""} · {room === "all" ? "כל הגדלים" : `${room} חד׳`} · {activeDealsYear === 0 ? `${from}–${to}` : `שנת ${activeDealsYear}`}
         </div>
       </div>
     </div>

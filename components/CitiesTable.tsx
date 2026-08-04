@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import type { CityChangeMetrics, ChangeMetric, YearValue } from "@/lib/cityChangeMetrics";
 import TrendValue, { trendTextClass } from "./TrendValue";
+import Icon from "@/components/Icon";
 
 interface CityRow {
   city_name: string;
@@ -217,7 +218,7 @@ type PresetDef = {
 
 const PRESETS: PresetDef[] = [
   {
-    id: "supply", label: "🏗️ לחץ היצע", title: "פער היצע של 100%+ מהביקוש (מחסור חריף)",
+    id: "supply", label: "לחץ היצע", title: "פער היצע של 100%+ מהביקוש (מחסור חריף)",
     sortId: "inv_gap", dir: "desc",
     test: (m) => !!m && m.gapPctOfDemand != null && m.gapPctOfDemand >= 100,
   },
@@ -608,7 +609,7 @@ export default function CitiesTable({
           aria-pressed={viewMode === "top3y"}
           title="ערים שעלו הכי הרבה ב-3 שנים אחרונות (מ-2022)"
         >
-          📈 הכי עלו ב-3 שנים
+          <Icon name="trend-up" size="1em" /> הכי עלו ב-3 שנים
         </button>
         <button
           type="button"
@@ -617,7 +618,7 @@ export default function CitiesTable({
           aria-pressed={viewMode === "top5y"}
           title="ערים שעלו הכי הרבה ב-5 שנים אחרונות (מ-2020 — אותו חלון שמוצג בעמוד עיר)"
         >
-          🚀 הכי עלו ב-5 שנים
+          <Icon name="sparkle" size="1em" /> הכי עלו ב-5 שנים
         </button>
         <span className="text-2xs text-slate-400 mr-1">
           (מחירים מ-nadlan.gov.il — ממוצע רבעוני שנתי, השוואה מהשנה המוקדמת לאחרונה)
@@ -916,8 +917,8 @@ export default function CitiesTable({
 
       {/* Provenance — memory rule: source • period • confidence under every metric block */}
       <p className="mt-2 text-2xs text-slate-400 text-right">
-        🟡 שורה צהובה = פחות מ-{minDeals.toLocaleString("he-IL")} עסקאות פעילות ב-10 שנים (עריך בדשבורד) — מדגם קטן, לא נכלל בדירוגים ·
-        🔵 מחירים ושינויי מחיר: מאגר העסקאות העצמאי (רשות המסים) · יד-2 = 4+ שנים משנת בנייה · שנת ייחוס {refYear} · אמינות לפי עומק דאטה · אוכלוסייה/משקי-בית: 🏛️ למ״ס
+        <Icon name="dot" size="1em" /> שורה צהובה = פחות מ-{minDeals.toLocaleString("he-IL")} עסקאות פעילות ב-10 שנים (עריך בדשבורד) — מדגם קטן, לא נכלל בדירוגים ·
+        <Icon name="source-own" size="1em" /> מחירים ושינויי מחיר: מאגר העסקאות העצמאי (רשות המסים) · יד-2 = 4+ שנים משנת בנייה · שנת ייחוס {refYear} · אמינות לפי עומק דאטה · אוכלוסייה/משקי-בית: 🏛️ למ״ס
       </p>
     </div>
   );

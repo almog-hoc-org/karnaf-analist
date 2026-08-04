@@ -166,15 +166,15 @@ export default function AccessibilityWidget() {
           </div>
 
           <div className="space-y-1.5">
-            <Toggle label="ניגודיות גבוהה" icon="◐" on={prefs.contrast}
+            <Toggle label="ניגודיות גבוהה" icon="contrast" on={prefs.contrast}
               onClick={() => update({ contrast: !prefs.contrast })} />
-            <Toggle label="הדגשת קישורים" icon="🔗" on={prefs.underlineLinks}
+            <Toggle label="הדגשת קישורים" icon="link" on={prefs.underlineLinks}
               onClick={() => update({ underlineLinks: !prefs.underlineLinks })} />
-            <Toggle label="עצירת אנימציות" icon="⏸" on={prefs.stopAnimations}
+            <Toggle label="עצירת אנימציות" icon="pause" on={prefs.stopAnimations}
               onClick={() => update({ stopAnimations: !prefs.stopAnimations })} />
-            <Toggle label="גופן קריא" icon="🔤" on={prefs.readableFont}
+            <Toggle label="גופן קריא" icon="text-size" on={prefs.readableFont}
               onClick={() => update({ readableFont: !prefs.readableFont })} />
-            <Toggle label="סמן מוגדל" icon="🖱" on={prefs.bigCursor}
+            <Toggle label="סמן מוגדל" icon="cursor" on={prefs.bigCursor}
               onClick={() => update({ bigCursor: !prefs.bigCursor })} />
           </div>
 

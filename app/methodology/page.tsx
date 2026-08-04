@@ -94,12 +94,12 @@ export default async function MethodologyPage() {
         </p>
       </header>
 
-      <Section icon="📥" title="שני ערוצי איסוף בלתי-תלויים">
+      <Section icon="download" title="שני ערוצי איסוף בלתי-תלויים">
         <p><B>ערוץ govmap (רשות המסים — שכבת המפה):</B> סריקה גיאוגרפית של פוליגוני עסקאות סביב כל עיר, ללא דפדפן. תורם <B>רחוב, מספר בית וקומה</B> ({st.toLocaleString("he-IL")} עסקאות עם כתובת). אין בו שדה שנת-בנייה. הוא משמש <B>בעיקר לכתובות</B> — ולא לחישוב מחיר, כי נמצא רועש (סטייה של עשרות אחוזים מהחציון הרשמי, לשני הכיוונים, בין ערים).{govCities > 0 && <> יוצא הדופן היחיד: ב-<B>{govCities} ערים</B> שכיסוי nadlan בהן דק מכדי לבנות עשור, סדרת &quot;כללי&quot; נבנית מ-govmap — ובאותן ערים מוצגת הודעה על כך בעמוד העיר עצמו, מעל הגרף.</>}</p>
         <p><B>ערוץ nadlan (רשות המסים — deal-data חתום):</B> ה-API הרשמי עם חתימה קריפטוגרפית, כולל <B>שנת בנייה</B> — הבסיס לסיווג. מכסה אנונימית ~1,000 עסקאות לחלון שאילתה; אנחנו פורשים אותה בפילוחי חדרים, סוג-עסקה, חלונות-זמן ורמת שכונה. רץ אוטומטית כל לילה (02:30) עד השלמת 10 שנים בכל עיר.</p>
       </Section>
 
-      <Section icon="📉" title="כיסוי לא אחיד בין יישובים">
+      <Section icon="trend-down" title="כיסוי לא אחיד בין יישובים">
         <p>
           הכיסוי שלנו <B>אינו שווה בכל הארץ</B>.{thinCities > 0 && coveredTotal > 0 && <>{" "}
           מתוך <B>{coveredTotal}</B> יישובים במאגר, ב-<B>{thinCities}</B> אין מספיק עסקאות
@@ -121,7 +121,7 @@ export default async function MethodologyPage() {
         </p>
       </Section>
 
-      <Section icon="🏷️" title="סיווג יד-שנייה / חדשה">
+      <Section icon="tag" title="סיווג יד-שנייה / חדשה">
         <p className="rounded-xl border border-indigo-100 bg-indigo-50/60 p-3 font-bold text-slate-900" dir="rtl">
           שנת עסקה − שנת בנייה ≥ {SECONDHAND_MIN_AGE} ← <span className="text-indigo-700">יד שנייה</span> · פחות מ-{SECONDHAND_MIN_AGE} שנים ← <span className="text-indigo-700">חדשה</span>
         </p>
@@ -144,13 +144,13 @@ export default async function MethodologyPage() {
         <p>למה יד-2 היא בסיס ההשוואה באתר? עיר ישנה שבונים בה שכונה חדשה יקרה תראה קפיצת "ממוצע כללי" שאינה משקפת את מגמת השוק — ולכן דירוגי שינוי-מחיר משווים <B>יד-שנייה בלבד</B>.</p>
       </Section>
 
-      <Section icon="🧮" title="חישוב ממוצע וחציון">
+      <Section icon="calculator" title="חישוב ממוצע וחציון">
         <p>לכל עיר × שנה × גודל-דירה × סוג-עסקה: <B>ממוצע ₪/מ"ר</B> = ממוצע חשבוני של מחיר-למ"ר בכל העסקאות בתא · <B>חציון ₪/מ"ר</B> = הערך האמצעי (עמיד לחריגים). אותו חישוב גם למחיר-עסקה מלא.</p>
         <p><B>סדרת יד-2 מתוקננת-הרכב (הבסיס לשינויי-המחיר):</B> חציון גולמי מוטה כשתמהיל-המדגם משתנה בין שנים (יותר דירות קטנות/שכונות יקרות ⇒ "עלייה" מדומה). לכן שינויי-המחיר מחושבים על <B>סל קבוע</B> של תאי שכונה×חדרים: כל שנה = ממוצע משוקלל של חציוני-התאים באותם משקולות בדיוק. אומת מול מכירות-חוזרות של אותן דירות ומול החציון הרשמי.</p>
         <p>תא-שנה נכנס לגרפים ולטבלאות רק אם יש בו <B>{MIN_N_PER_YEAR}+ עסקאות</B> — שנה דלה לא מקבלת נקודת מחיר (ולכן גרף של עיר עם דאטה חלקי נפתח מהשנה שבה מתחיל רצף אמין).</p>
       </Section>
 
-      <Section icon="🧹" title="סינון שפיות (בזמן האיסוף)">
+      <Section icon="broom" title="סינון שפיות (בזמן האיסוף)">
         <ul className="list-inside list-disc space-y-1">
           <li>שטח דירה: <B>{SANITY.MIN_AREA}–{SANITY.MAX_AREA} מ"ר</B></li>
           <li>מחיר למ"ר: <B>₪{SANITY.MIN_SQM.toLocaleString("he-IL")}–₪{SANITY.MAX_SQM.toLocaleString("he-IL")}</B></li>
@@ -162,7 +162,7 @@ export default async function MethodologyPage() {
         </ul>
       </Section>
 
-      <Section icon="👯" title="כפילויות דיווח — אותה מכירה שדווחה פעמיים">
+      <Section icon="users" title="כפילויות דיווח — אותה מכירה שדווחה פעמיים">
         <p className="mb-2">
           רשות המסים מפרסמת לעיתים את אותה עסקה פעמיים בהפרש ימים בודדים (תיקון או פרסום חוזר), ושני ערוצי האיסוף רואים אותה בנפרד.
           מחיר זהה לשקל, שטח זהה, מספר חדרים זהה ושנת בנייה תואמת בתוך חלון של <B>{getRuleNum("dupe_window_days", 7)} ימים</B> = דיווח כפול, לא שתי מכירות.
@@ -176,7 +176,7 @@ export default async function MethodologyPage() {
         <p>עותק כפול אינו עסקה שקרתה, ולכן הוא יוצא <B>גם מהספירות וגם מהמחירים</B>. כל הפרמטרים ניתנים לעריכה בדשבורד הניהול.</p>
       </Section>
 
-      <Section icon="💎" title="עסקאות יוקרה — יוצאות מהמחירים, נשארות בספירה">
+      <Section icon="gem" title="עסקאות יוקרה — יוצאות מהמחירים, נשארות בספירה">
         <p className="mb-2">
           עסקה יקרה מעוותת ממוצע רק אם היא יקרה גם <B>ביחס לקטגוריה שלה</B>. לכן נדרשים שני תנאים במצטבר:
           מחיר מעל <B>₪{getRuleNum("luxury_min_price", 4_500_000).toLocaleString("he-IL")}</B>, <B>וגם</B> מחיר למ״ר גבוה
@@ -192,15 +192,15 @@ export default async function MethodologyPage() {
         </p>
       </Section>
 
-      <Section icon="⚖️" title="נרמול דירוגים">
+      <Section icon="scale" title="נרמול דירוגים">
         <p>לטבלאות "ערים שעלו/ירדו" ולדירוגים נכנסות רק ערים עם <B>{RANKING_MIN_PER_SCOPE}+ עסקאות מכל סוג</B> (כללי, יד-2, חדשות) בשנה מלאה אחרונה — יישוב עם חמש עסקאות ו"+100%" לא יופיע כמוביל ארצי. שינויים דורשים {MIN_N_PER_YEAR}+ עסקאות בשתי שנות ההשוואה.</p>
       </Section>
 
-      <Section icon="🏛️" title="מקורות משלימים (מסומנים תמיד)">
-        <p>לצד המאגר העצמאי (🔵) מוצגים מקורות חיצוניים מסומנים 🏛️: <B>חציון גוב-נדלן הרשמי</B> (סדרה מקווקווה בגרפים), <B>למ"ס</B> (אוכלוסייה, היתרים, התחלות/גמר בנייה, דוחות), ו-<B>יד2/ידאטה</B> (מצב שוק). הם משלימים — לא מקור המחירים הראשי.</p>
+      <Section icon="institution" title="מקורות משלימים (מסומנים תמיד)">
+        <p>לצד המאגר העצמאי (<Icon name="source-own" size="1em" />) מוצגים מקורות חיצוניים מסומנים <Icon name="source-official" size="1em" />: <B>חציון גוב-נדלן הרשמי</B> (סדרה מקווקווה בגרפים), <B>למ"ס</B> (אוכלוסייה, היתרים, התחלות/גמר בנייה, דוחות), ו-<B>יד2/ידאטה</B> (מצב שוק). הם משלימים — לא מקור המחירים הראשי.</p>
       </Section>
 
-      <Section icon="🕒" title="עדכניות — ריצות איסוף אחרונות">
+      <Section icon="clock" title="עדכניות — ריצות איסוף אחרונות">
         <div className="overflow-x-auto">
           <table className="w-full text-xs" dir="rtl">
             <thead><tr className="border-b border-slate-200 text-2xs font-bold text-slate-500">
@@ -210,7 +210,7 @@ export default async function MethodologyPage() {
                 <tr key={i} className="border-b border-slate-100">
                   <td className="py-1.5 text-right font-semibold text-slate-800">{r.city_name}</td>
                   <td className="text-center">{r.source}</td>
-                  <td className="text-center">{r.status === "ok" ? "✓" : r.status}</td>
+                  <td className="text-center">{r.status === "ok" ? <Icon name="check" size="1em" /> : r.status}</td>
                   <td className="text-center tabular-nums">{r.rows?.toLocaleString("he-IL") ?? "—"}</td>
                   <td className="text-center tabular-nums text-slate-500">{String(r.updated_at).slice(0, 16).replace("T", " ")}</td>
                 </tr>

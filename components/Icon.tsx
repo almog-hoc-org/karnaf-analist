@@ -87,6 +87,20 @@ const PATHS: Record<string, string> = {
   // ── communication & access ──────────────────────────────────────────
   chat: "M4 5h16v11H9l-5 4V5zM8 9h8M8 12.5h5",
   accessibility: "M12 3.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM6 9l6 1.5L18 9M12 10.5V15M12 15l-2.5 5.5M12 15l2.5 5.5",
+  contrast: "M12 3a9 9 0 100 18 9 9 0 000-18zM12 3v18a9 9 0 000-18z",
+  pause: "M9 5v14M15 5v14",
+  "text-size": "M3 19l5.5-14L14 19M5 14h7M16 19l3-8 3 8M17 16h4",
+  cursor: "M6 3l12 9-5 1 3 6-2.5 1.5-3-6L6 18z",
+
+  // ── flow ────────────────────────────────────────────────────────────
+  download: "M12 3v12M7 11l5 5 5-5M4 20h16",
+  clock: "M12 3a9 9 0 100 18 9 9 0 000-18zM12 7.5V12l3 2",
+  calendar: "M4 6h16v15H4zM4 10h16M8 3v4M16 3v4",
+  map: "M9 4L3 6.5v14L9 18l6 2.5 6-2.5v-14L15 6.5zM9 4v14M15 6.5v14",
+  "arrow-out": "M7 17L17 7M9 7h8v8",
+  sparkle: "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18 16l.9 2.1L21 19l-2.1.9L18 22l-.9-2.1L15 19l2.1-.9z",
+  dot: "M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7",
+  target: "M12 3a9 9 0 100 18 9 9 0 000-18zM12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9zM12 11a1 1 0 100 2 1 1 0 000-2",
 
   // The mascot keeps its own shape — a horn in profile. It is the one mark on
   // the site that should NOT look like the rest of the family.
@@ -111,6 +125,23 @@ const ALIASES: Record<string, string> = {
   "🗄": "database", "📦": "package", "🔐": "lock", "🔑": "lock", "🛡": "shield", "🧹": "broom",
   "💰": "money", "💎": "gem", "⚖": "scale", "💬": "chat", "📞": "chat", "♿": "accessibility",
   "🦏": "rhino",
+  "📥": "download", "🕒": "clock", "📅": "calendar", "🗓": "calendar", "🗺": "map", "📍": "map",
+  "🔵": "dot", "🟡": "dot", "•": "dot", "↗": "arrow-out", "🆕": "sparkle", "✨": "sparkle",
+  "🎉": "sparkle", "🔥": "sparkle", "◐": "contrast", "⏸": "pause", "🔤": "text-size",
+  "🖱": "cursor", "⚙": "cursor", "🛠": "cursor", "🔧": "cursor",
+
+  /**
+   * PROVENANCE. Not decoration — this pair is how a reader tells a number from
+   * our own archive apart from an official one, and it appears in the same
+   * meaning in the charts, the legends, the tables and the methodology page.
+   *
+   * Named rather than reached through the glyph so the call site says what it
+   * means: `source-own`, not "the blue circle". If the mark ever changes it
+   * changes in one place, and it cannot drift apart between the chart legend
+   * and the page that explains the chart legend.
+   */
+  "source-own": "dot",
+  "source-official": "institution",
 };
 
 export type IconName = keyof typeof PATHS | string;
@@ -121,10 +152,33 @@ export default function Icon({
   className = "",
   ...rest
 }: { name: IconName; size?: number | string } & Omit<SVGProps<SVGSVGElement>, "name" | "size">) {
-  // Accept a raw emoji too, so a not-yet-converted call site degrades to the
-  // right icon instead of to nothing.
-  const d = PATHS[name] ?? PATHS[ALIASES[name] ?? ""];
-  if (!d) return null;
+  // Strip U+FE0F. An emoji presentation selector is invisible in an editor and
+  // in a diff, so "🏷️" and "🏷" look identical and are different strings — five
+  // icons on the methodology page silently rendered nothing because of exactly
+  // that. Normalising here means a call site cannot be wrong in a way nobody
+  // can see.
+  const key = String(name).replace(/️/g, "");
+  const d = PATHS[key] ?? PATHS[ALIASES[key] ?? ""];
+
+  if (!d) {
+    // NEVER null. The first version returned null for an unknown name, so
+    // adding this component DELETED icons from live pages — the accessibility
+    // widget lost all four of its toggle marks — and nothing failed, nothing
+    // logged, and the build stayed green. A component whose failure mode is
+    // silent disappearance is worse than the emoji it replaced.
+    //
+    // So an unresolved name renders as its own text: an unmapped emoji still
+    // shows the emoji, which is exactly the state before this existed. Never
+    // better, but never worse, and visible to whoever is looking at the page.
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`[Icon] no glyph for ${JSON.stringify(name)} — falling back to text`);
+    }
+    return (
+      <span aria-hidden={rest["aria-label"] ? undefined : true} className={className}>
+        {name}
+      </span>
+    );
+  }
 
   return (
     <svg
