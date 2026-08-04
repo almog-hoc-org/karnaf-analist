@@ -82,12 +82,38 @@ jobs:
             exit 1
           fi
 
+          # Normalise the secret rather than trusting it was pasted clean.
+          # A host of "root@1.2.3.4" — the obvious thing to paste — makes
+          # ssh-keyscan fail instantly on an invalid hostname, and a trailing
+          # \r from a copy-paste breaks the key file the same silent way.
+          HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
+          USER=$(printf '%s' "$USER" | tr -d '[:space:]')
+
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$KEY" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
+          if ! ssh-keygen -y -f ~/.ssh/id_ed25519 >/dev/null 2>&1; then
+            echo "::error::VPS_SSH_KEY is not a usable private key."
+            echo "Paste the whole thing, BEGIN and END lines included, from deploy/setup-ci-key.sh."
+            exit 1
+          fi
+
           # Pin the host key instead of disabling the check. StrictHostKeyChecking=no
           # would hand this deploy to anyone who can answer on that address.
-          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          #
+          # NOT 2>/dev/null. The first version of this hid ssh-keyscan's stderr,
+          # and when the scan failed the step aborted under `bash -e` with no
+          # output at all — a deploy that says nothing about why it did not
+          # happen. The error is the whole value of the step failing.
+          if ! ssh-keyscan -T 15 "$HOST" >> ~/.ssh/known_hosts; then
+            echo "::error::ssh-keyscan could not read a host key from VPS_HOST."
+            echo "Check that VPS_HOST is the bare address (no user@, no https://, no port) and the VPS is up."
+            exit 1
+          fi
+          if [ ! -s ~/.ssh/known_hosts ]; then
+            echo "::error::VPS_HOST answered but offered no host key."
+            exit 1
+          fi
 
           ssh -o BatchMode=yes "$USER@$HOST" \
             "cd /opt/karnaf && git fetch --all --prune && git checkout -f '${{ github.ref_name }}' && git reset --hard 'origin/${{ github.ref_name }}' && bash scripts/deploy.sh"
