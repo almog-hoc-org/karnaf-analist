@@ -2,6 +2,7 @@ import type { CityPriceChanges } from "@/lib/price-changes";
 import type { CityGraphData, DealCountCube, NadlanDeal } from "@/lib/nadlanTransactionSeries";
 import MultiChartStudio from "./MultiChartStudio";
 import PriceChangePanel from "./PriceChangePanel";
+import Icon from "@/components/Icon";
 
 /**
  * One bordered section — everything from the COLLECTED nadlan transactions:
@@ -36,7 +37,7 @@ export default function PriceChangeSection({
       {/* Section header */}
       <div className="flex items-start gap-3 mb-5">
         <div className="w-11 h-11 rounded-2xl bg-indigo-600 text-white text-xl flex items-center justify-center flex-shrink-0 shadow">
-          📈
+          <Icon name="trend-up" size="1em" />
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">

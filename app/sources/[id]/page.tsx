@@ -14,6 +14,7 @@ import {
 } from "@/lib/sources";
 import { getDocumentsForSource, type SourceDocument, type DocStatus } from "@/lib/source-documents";
 import { withBasePath } from "@/lib/basePath";
+import Icon from "@/components/Icon";
 
 interface PageProps {
   params: { id: string };
@@ -450,7 +451,7 @@ function FactsList({ title, facts }: { title: string; facts: ScatteredFact[] }) 
 
 function StatusBadge({ status }: { status: DocStatus }) {
   const map: Record<DocStatus, { he: string; cls: string; icon: string }> = {
-    extracted:  { he: "נשאב",     cls: "bg-emerald-50 text-emerald-700 border-emerald-200", icon: "✓" },
+    extracted:  { he: "נשאב",     cls: "bg-emerald-50 text-emerald-700 border-emerald-200", icon: "check" },
     referenced: { he: "צוטט",     cls: "bg-amber-50 text-amber-700 border-amber-200",       icon: "↗" },
     indexed:    { he: "במעקב",    cls: "bg-slate-50 text-slate-600 border-slate-200",       icon: "•" },
   };
@@ -529,7 +530,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
         ))}
       </div>
       <div className="px-5 py-2 text-2xs text-slate-500 bg-slate-50 border-t border-slate-100">
-        💡 <strong>נשאב</strong> — חולצו ממנו נתונים שמשמשים את האתר.{" "}
+        <Icon name="idea" size="1em" /> <strong>נשאב</strong> — חולצו ממנו נתונים שמשמשים את האתר.{" "}
         <strong>צוטט</strong> — כיסוי עיתונאי שמסתמך על הפרסום.{" "}
         <strong>במעקב</strong> — הפרסום נרשם בלוח הפרסומים אבל טרם נשאבו ממנו נתונים.
       </div>

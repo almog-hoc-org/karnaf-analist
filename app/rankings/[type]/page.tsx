@@ -35,7 +35,7 @@ const RANKING_CONFIG: Record<RankingType, {
   "most-expensive": {
     title: "היקרות ביותר — יד שנייה",
     subtitle: `חציון ₪/מ"ר של עסקאות יד-שנייה אמיתיות (שנה מלאה אחרונה עם 10+ עסקאות)`,
-    icon: "👑",
+    icon: "crown",
     accent: "amber",
     valueLabel: 'חציון יד-2 ₪/מ"ר',
     source: "מאגר העסקאות הפנימי (רשות המסים)",
@@ -43,7 +43,7 @@ const RANKING_CONFIG: Record<RankingType, {
   "highest-gain": {
     title: "עליית מחיר — יד שנייה בלבד",
     subtitle: `שינוי ממוצע ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2022→2025, 10+ עסקאות בשתי השנים) — ללא הטיית דירות חדשות`,
-    icon: "📈",
+    icon: "trend-up",
     accent: "rose",
     valueLabel: "שינוי יד-2 3 שנים",
     source: "מאגר העסקאות הפנימי (רשות המסים) — לפי שנת בנייה",
@@ -51,7 +51,7 @@ const RANKING_CONFIG: Record<RankingType, {
   "highest-gain-median": {
     title: "עליית מחיר — חציון יד שנייה",
     subtitle: `שינוי חציון ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2022→2025, 10+ עסקאות בשתי השנים)`,
-    icon: "📊",
+    icon: "chart",
     accent: "rose",
     valueLabel: "שינוי חציון יד-2 3 שנים",
     source: "מאגר העסקאות הפנימי (רשות המסים) — לפי שנת בנייה",
@@ -59,7 +59,7 @@ const RANKING_CONFIG: Record<RankingType, {
   "highest-surplus": {
     title: "עודף היצע הגבוה ביותר",
     subtitle: "היצע חדש מול ביקוש (למ\"ס: השלמות/התחלות/היתרים מול גידול משקי-בית) — שלילי = עודף",
-    icon: "🏗️",
+    icon: "construction",
     accent: "emerald",
     valueLabel: "עודף/מחסור % מהביקוש",
     source: 'למ"ס — חישוב פער היצע',
@@ -67,7 +67,7 @@ const RANKING_CONFIG: Record<RankingType, {
   "highest-inventory": {
     title: "מלאי דירות לא מכורות",
     subtitle: "כל הערים עם נתוני מלאי, מסודרות לפי מלאי דירות 2025",
-    icon: "🏘️",
+    icon: "building",
     accent: "cyan",
     valueLabel: "מלאי דירות",
     source: 'למ"ס',

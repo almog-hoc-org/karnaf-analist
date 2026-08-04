@@ -3,6 +3,7 @@ import { cookies, headers } from "next/headers";
 import crypto from "crypto";
 import { ADMIN_COOKIE, adminToken, adminConfigured } from "@/lib/adminAuth";
 import { rateLimit, rateLimitReset, clientIp } from "@/lib/rateLimit";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: "כניסת מנהל | קרנף אנליסט" };
 export const dynamic = "force-dynamic";
@@ -57,7 +58,7 @@ export default function AdminLogin({ searchParams }: { searchParams?: { err?: st
   return (
     <main className="flex min-h-[70vh] items-center justify-center px-4">
       <form action={login} className="glass-card w-full max-w-sm p-8 text-center">
-        <div className="mb-3 text-3xl">🔐</div>
+        <div className="mb-3 text-3xl"><Icon name="lock" size="1em" /></div>
         <h1 className="mb-1 text-xl font-black text-slate-900">כניסת מנהל</h1>
         <p className="mb-5 text-xs text-slate-500">דשבורד ניהול הדאטה של קרנף אנליסט</p>
 

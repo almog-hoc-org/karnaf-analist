@@ -72,7 +72,14 @@ const OFFICIAL_DEF: SeriesDef = {
  *  the raw median was inflated by sample-composition drift (verified vs repeat-sales). */
 const buildSeries = (dt: DealType): SeriesDef[] => [
   ...(dt === "sh" ? [{
-    key: "adj", label: "יד שנייה — מתוקנן-הרכב (₪/מ״ר)", short: "מתוקנן", color: "#4338ca",
+    // #0f172a, the heaviest ink on the page, because the comment above says this
+    // series IS the headline for second-hand — the colour now says so too. It was
+    // #4338ca, a violet left over from the palette this project replaced: the one
+    // stray reminder of a default theme, sitting in the charts, which are the
+    // product. Moving it here forced `med` lighter, and that is the right order:
+    // two related teals for the two statistics of one series, near-black for the
+    // headline, amber reserved for the external source.
+    key: "adj", label: "יד שנייה — מתוקנן-הרכב (₪/מ״ר)", short: "מתוקנן", color: "#0f172a",
     at: (d, r, m, y) => {
       if (m !== "sqm" || r !== "all") return null; // constant-basket construct: ₪/m², all sizes
       const p = stat(d, "secondhand_fixedmix", "all", y);
@@ -84,7 +91,7 @@ const buildSeries = (dt: DealType): SeriesDef[] => [
     at: (d, r, m, y, ba) => { const p = stat(d, scopeFor(dt, ba, isGovmapCity(d)), r, y); const v = pick(p, m, "avg"); return p && v != null && p.n >= MIN_N ? [v, p.n] : null; },
   },
   {
-    key: "med", label: `${DT_LABEL[dt]} — חציון`, short: "חציון", color: "#0f172a",
+    key: "med", label: `${DT_LABEL[dt]} — חציון`, short: "חציון", color: "#3aa6bc",
     at: (d, r, m, y, ba) => { const p = stat(d, scopeFor(dt, ba, isGovmapCity(d)), r, y); const v = pick(p, m, "med"); return p && v != null && p.n >= MIN_N ? [v, p.n] : null; },
   },
   OFFICIAL_DEF,

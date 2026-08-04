@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { registerUser, verifyLogin, createSession, MIN_PASSWORD_LENGTH } from "@/lib/auth";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: "הרשמה | קרנף אנליסט" };
 export const dynamic = "force-dynamic";
@@ -41,7 +42,7 @@ export default function RegisterPage({ searchParams }: { searchParams?: { err?: 
     <main className="flex min-h-[70vh] items-center justify-center px-4">
       <form action={doRegister} className="glass-card w-full max-w-sm p-8">
         <div className="mb-5 text-center">
-          <div className="mb-2 text-3xl">🦏</div>
+          <div className="mb-2 text-3xl"><Icon name="rhino" size="1em" /></div>
           <h1 className="text-xl font-black text-slate-900">פתיחת חשבון</h1>
           <p className="mt-1 text-xs text-slate-500">שמור את הערים והעסקאות שלך בסביבה אישית</p>
         </div>

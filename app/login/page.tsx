@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { verifyLogin, createSession } from "@/lib/auth";
 import { rateLimit, rateLimitReset, clientIp } from "@/lib/rateLimit";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: "התחברות | קרנף אנליסט" };
 export const dynamic = "force-dynamic";
@@ -43,7 +44,7 @@ export default function LoginPage({ searchParams }: { searchParams?: { err?: str
     <main className="flex min-h-[70vh] items-center justify-center px-4">
       <form action={doLogin} className="glass-card w-full max-w-sm p-8">
         <div className="mb-5 text-center">
-          <div className="mb-2 text-3xl">🦏</div>
+          <div className="mb-2 text-3xl"><Icon name="rhino" size="1em" /></div>
           <h1 className="text-xl font-black text-slate-900">התחברות לקרנף אנליסט</h1>
           <p className="mt-1 text-xs text-slate-500">הסביבה האישית שלך — ערים במעקב ועסקאות</p>
         </div>

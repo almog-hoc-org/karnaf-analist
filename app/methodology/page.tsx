@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import SourceBadge from "@/components/SourceBadge";
 import { RESIDENTIAL_TYPES } from "@/lib/methodologyFacts";
 import { getRuleNum } from "@/lib/systemRules";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: "מתודולוגיה — איך המספרים מחושבים | קרנף אנליסט" };
 export const dynamic = "force-dynamic";
@@ -75,7 +76,7 @@ export default async function MethodologyPage() {
   const Section = ({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) => (
     <section className="glass-card mb-6 p-6">
       <h2 className="mb-3 flex items-center gap-2 text-xl font-black text-slate-900">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-base">{icon}</span>
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-base"><Icon name={icon} size="1em" /></span>
         {title}
       </h2>
       <div className="space-y-2 text-sm leading-relaxed text-slate-600">{children}</div>

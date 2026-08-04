@@ -1,5 +1,6 @@
 import BrandMark from "./BrandMark";
 import { BRAND, whatsappUrl } from "@/lib/brand";
+import Icon from "@/components/Icon";
 
 /**
  * The one commercial call to action on the site: the course, and a way to talk
@@ -35,7 +36,7 @@ export default function CourseBanner({ compact = false }: { compact?: boolean })
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1 font-bold text-emerald-700 hover:underline"
         >
-          <span aria-hidden>💬</span>
+          <span aria-hidden><Icon name="chat" size="1em" /></span>
           וואטסאפ {BRAND.whatsapp.display}
         </a>
       </div>
@@ -76,7 +77,7 @@ export default function CourseBanner({ compact = false }: { compact?: boolean })
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-emerald-300 bg-white px-5 py-2.5 text-sm font-bold text-emerald-800 transition-colors hover:bg-emerald-50"
           >
-            <span aria-hidden>💬</span>
+            <span aria-hidden><Icon name="chat" size="1em" /></span>
             שאלה בוואטסאפ
           </a>
         </div>

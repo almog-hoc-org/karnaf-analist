@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { computeAllCityGaps, describeSupplySource } from "@/lib/gap-analysis";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: 'כיסוי נתוני היצע ופער ביקוש לכל הערים | קרנף אנליסט' };
 
@@ -42,7 +43,7 @@ export default async function SupplyCoveragePage() {
     <main className="min-h-screen page-wrap-wide py-8">
       <header className="mb-8">
         <div className="flex items-start gap-4">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50 text-indigo-700">⚖️</div>
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50 text-indigo-700"><Icon name="scale" size="1em" /></div>
           <div className="flex-1">
             <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">היצע מול ביקוש</p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">פער היצע-ביקוש לפי עיר</h1>

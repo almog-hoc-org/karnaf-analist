@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 /**
  * Premium ranking card: tiny uppercase category label, #1 displayed BIG
@@ -35,7 +36,7 @@ export default function RankingCard({
       {/* category label — no hidden hover-link stealing width; modest tracking for Hebrew */}
       <div className="mb-4 min-w-0">
         <span className="block break-words text-2xs font-black uppercase leading-snug tracking-wide text-slate-400">
-          {icon} {title}
+          <Icon name={icon} size="1em" /> {title}
         </span>
       </div>
 

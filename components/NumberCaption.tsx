@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { withBasePath } from "@/lib/basePath";
+import Icon from "@/components/Icon";
 
 /**
  * Standard provenance caption for every KPI on the dashboard.
@@ -76,7 +77,7 @@ export default function NumberCaption({
 
   return (
     <div className={`flex flex-wrap items-center gap-x-1.5 gap-y-0 mt-1 ${textSize} text-slate-500 ${alignCls}`}>
-      <span className="opacity-60" aria-hidden>📎</span>
+      <span className="opacity-60" aria-hidden><Icon name="attachment" size="1em" /></span>
       {sourceNode}
       <span className="text-slate-400">•</span>
       <span>{period}</span>

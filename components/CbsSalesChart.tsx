@@ -7,6 +7,7 @@ import {
 import type { CbsSalesData } from "@/lib/cbsSales";
 import { BRAND_DARK, BRAND_LIGHT, SLATE_LIGHT, SLATE, GRID, AXIS, tipFmt } from "@/lib/chartColors";
 import { useIsMobile } from "@/lib/useIsMobile";
+import Icon from "@/components/Icon";
 
 /**
  * CBS national apartment transactions — NEW (חדשות) vs SECOND-HAND (יד שנייה).
@@ -30,7 +31,7 @@ export default function CbsSalesChart({ data }: { data: CbsSalesData }) {
   return (
     <div className="glass-card p-5">
       <div className="section-header mb-4">
-        <div className="section-header-icon">🏢</div>
+        <div className="section-header-icon"><Icon name="building" size="1em" /></div>
         <div>
           <h2 className="text-2xl font-black text-slate-900">עסקאות דירות בישראל — חדשות מול יד שנייה</h2>
           <p className="text-sm text-slate-500">היקף העסקאות הארצי לפי סוג דירה, נתוני הלמ״ס</p>

@@ -484,7 +484,7 @@ html.a11y-big-cursor * {
   top: -3rem;
   z-index: 100;
   border-radius: 0.5rem;
-  background: #4f46e5;
+  background: var(--brand-strong);
   padding: 0.6rem 1.1rem;
   font-size: 0.875rem;
   font-weight: 700;
@@ -496,7 +496,7 @@ html.a11y-big-cursor * {
 /* A visible focus ring on every interactive element. The default outline is
    removed by many resets, and losing it makes the site unusable by keyboard. */
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-  outline: 3px solid #4f46e5 !important;
+  outline: 3px solid var(--brand-strong) !important;
   outline-offset: 2px !important;
   border-radius: 4px;
 }

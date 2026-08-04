@@ -3,6 +3,7 @@ import {
   getCbsTransactionsForCity,
   CBS_TRANSACTIONS_SOURCE,
 } from "@/lib/cbs-transactions-by-city";
+import Icon from "@/components/Icon";
 
 /**
  * Per-city panel showing the official CBS split between
@@ -35,7 +36,7 @@ export default function NewVsSecondhandPanel({
     <section className="glass-card p-5 mb-6">
       <div className="flex items-start gap-3 mb-4 flex-wrap">
         <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 text-xl flex items-center justify-center flex-shrink-0">
-          🤝
+          <Icon name="handshake" size="1em" />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-bold text-slate-900">
@@ -70,7 +71,7 @@ export default function NewVsSecondhandPanel({
         </div>
       ) : (
         <div className="rounded-xl bg-slate-50 border border-slate-200 p-4 text-sm text-slate-700">
-          ⚠ <strong>{cityName}</strong> לא מופיעה בלוח ב של CBS 047/2026 (סף ≥500 עסקאות).{" "}
+          <Icon name="warning" size="1em" /> <strong>{cityName}</strong> לא מופיעה בלוח ב של CBS 047/2026 (סף ≥500 עסקאות).{" "}
           הנתון העירוני לעיר זו לא פורסם במאומת — ניתן לראות אומדן כללי בפאנל מחיר חציוני למעלה.
         </div>
       )}
@@ -80,7 +81,7 @@ export default function NewVsSecondhandPanel({
         <div className="mt-3 rounded-xl bg-indigo-50/40 border border-indigo-100 p-3">
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2">
-              <span className="text-lg">📋</span>
+              <span className="text-lg"><Icon name="clipboard" size="1em" /></span>
               <div>
                 <div className="text-2xs font-bold text-indigo-700 uppercase tracking-wide">
                   Yad2 — מודעות יד שנייה פתוחות (היצע)

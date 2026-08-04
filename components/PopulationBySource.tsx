@@ -1,5 +1,6 @@
 import type { PopulationByYearAndSource } from "@/lib/population-sources";
 import NumberCaption from "./NumberCaption";
+import Icon from "@/components/Icon";
 
 /**
  * Per-city multi-source population matrix.
@@ -17,7 +18,7 @@ export default function PopulationBySource({
     return (
       <section className="mb-10">
         <div className="section-header mb-4">
-          <div className="section-header-icon">👥</div>
+          <div className="section-header-icon"><Icon name="users" size="1em" /></div>
           <div><h2>אומדני אוכלוסייה לפי מקור</h2><p>אין נתונים זמינים</p></div>
         </div>
       </section>
@@ -32,7 +33,7 @@ export default function PopulationBySource({
   return (
     <section className="mb-10">
       <div className="section-header mb-4">
-        <div className="section-header-icon">👥</div>
+        <div className="section-header-icon"><Icon name="users" size="1em" /></div>
         <div className="flex-1">
           <h2>אומדני אוכלוסייה לפי מקור</h2>
           <p>

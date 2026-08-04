@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { withBasePath } from "@/lib/basePath";
+import Icon from "@/components/Icon";
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -375,7 +376,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
   return (
     <section className="mb-10">
       <div className="section-header mb-4">
-        <div className="section-header-icon">🏠</div>
+        <div className="section-header-icon"><Icon name="building" size="1em" /></div>
         <div className="flex-1">
           <h2 className="text-base font-bold text-slate-900">
             עסקאות אמיתיות — השוואת מחירים ברחוב

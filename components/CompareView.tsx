@@ -31,6 +31,7 @@ import { SERIES, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
 import TrendValue, { fmtSignedPct, trendTextClass } from "@/components/TrendValue";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
+import Icon from "@/components/Icon";
 
 // ── Serialized data shapes (plain objects — no Map crosses the boundary) ────
 export interface CompareCityRow {
@@ -173,7 +174,7 @@ function CitySlot({
             aria-label={value ? `הסר את ${value}` : "בטל הוספה"}
             className="flex-shrink-0 h-6 w-6 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 text-sm leading-none transition-colors"
           >
-            ✕
+            <Icon name="close" size="1em" />
           </button>
         )}
       </div>
@@ -456,7 +457,7 @@ export default function CompareView({
       {/* ── Section 1: price overlay chart ──────────────────────────────── */}
       <section className="section-container">
         <div className="section-header">
-          <div className="section-header-icon">📈</div>
+          <div className="section-header-icon"><Icon name="trend-up" size="1em" /></div>
           <div>
             <h2>מחיר ממוצע למ&quot;ר לאורך זמן</h2>
             <p>
@@ -519,7 +520,7 @@ export default function CompareView({
       {/* ── Section 2: KPI comparison table ─────────────────────────────── */}
       <section className="section-container">
         <div className="section-header">
-          <div className="section-header-icon">📊</div>
+          <div className="section-header-icon"><Icon name="chart" size="1em" /></div>
           <div>
             <h2>מדדי משקיע — השוואה</h2>
             <p>רקע כחלחל מסמן את הערך הטוב ביותר בשורה · &quot;—&quot; = אין מספיק נתונים</p>
@@ -579,7 +580,7 @@ export default function CompareView({
         </div>
 
         <p className="mt-4 text-2xs text-slate-500">
-          <span className="opacity-60" aria-hidden>📎 </span>
+          <span className="opacity-60" aria-hidden><Icon name="attachment" size="1em" /> </span>
           {provenance}
         </p>
       </section>

@@ -8,6 +8,7 @@ import { addressGranularity, rowAddress } from "@/lib/compTypes";
 import type { TrackedCitySummary } from "@/app/deals/page";
 import TrendValue, { fmtSignedPct } from "@/components/TrendValue";
 import { addTrackedCity, removeTrackedCity, addDeal, updateDeal, deleteDeal, addTask, toggleTask, deleteTask } from "@/app/deals/actions";
+import Icon from "@/components/Icon";
 
 /** Personal deal tracker — the client-facing "apartment hunt" workspace. */
 
@@ -122,7 +123,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
             {tracked.map((t) => (
               <div key={t.city} className="glass-card relative p-5">
                 <button onClick={() => startTransition(() => removeTrackedCity(t.city))}
-                  className="absolute left-3 top-3 text-slate-300 hover:text-red-500" title="הסר מהמעקב">✕</button>
+                  className="absolute left-3 top-3 text-slate-300 hover:text-red-500" title="הסר מהמעקב"><Icon name="close" size="1em" /></button>
                 <Link href={`/city/${encodeURIComponent(t.city)}`} className="text-lg font-black text-slate-900 hover:text-indigo-700">
                   {t.city} ←
                 </Link>
@@ -223,7 +224,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                 <th className="px-3 py-2.5">₪/מ״ר</th>
                 <th className="px-3 py-2.5">השוואת שוק 🔵</th>
                 <th className="px-3 py-2.5">סטטוס</th>
-                <th className="px-3 py-2.5">🔗</th>
+                <th className="px-3 py-2.5"><Icon name="link" size="1em" /></th>
                 <th className="px-3 py-2.5">משימות</th>
                 <th className="px-3 py-2.5"></th>
               </tr>
@@ -283,7 +284,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         {d.listing_url ? (
-                          <a href={d.listing_url} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800" title={d.listing_url}>🔗</a>
+                          <a href={d.listing_url} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800" title={d.listing_url}><Icon name="link" size="1em" /></a>
                         ) : <span className="text-slate-200">—</span>}
                       </td>
                       <td className="px-3 py-2.5 text-center">
@@ -294,7 +295,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         <button onClick={() => { if (confirm(`למחוק את העסקה ב${d.city}?`)) startTransition(() => deleteDeal(d.id)); }}
-                          className="text-slate-300 hover:text-red-500">🗑</button>
+                          className="text-slate-300 hover:text-red-500"><Icon name="trash" size="1em" /></button>
                       </td>
                     </tr>
                     {open && (
@@ -402,7 +403,7 @@ function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetCom
               <li key={t.id} className="flex items-center gap-2 text-2xs">
                 <input type="checkbox" checked={!!t.done} onChange={(e) => startTransition(() => toggleTask(t.id, e.target.checked))} className="accent-indigo-600" />
                 <span className={t.done ? "text-slate-400 line-through" : "text-slate-700"}>{t.title}</span>
-                <button onClick={() => startTransition(() => deleteTask(t.id))} className="mr-auto text-slate-300 hover:text-red-500">✕</button>
+                <button onClick={() => startTransition(() => deleteTask(t.id))} className="mr-auto text-slate-300 hover:text-red-500"><Icon name="close" size="1em" /></button>
               </li>
             ))}
           </ul>

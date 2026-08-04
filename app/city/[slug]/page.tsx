@@ -23,6 +23,7 @@ import Link from "next/link";
 import SourceBadge from "@/components/SourceBadge";
 import CoverageNotice from "@/components/CoverageNotice";
 import { assessCoverage } from "@/lib/coverage";
+import Icon from "@/components/Icon";
 
 interface PageProps {
   params: { slug: string };
@@ -138,7 +139,7 @@ export default async function CityPage({ params }: PageProps) {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4">
         <div className="text-center space-y-4">
-          <p className="text-5xl mb-4">🔍</p>
+          <p className="text-5xl mb-4"><Icon name="search" size="1em" /></p>
           <h1 className="text-2xl font-bold text-slate-900">העיר לא נמצאה</h1>
           <p className="text-slate-500">
             לא נמצאו נתונים עבור &ldquo;{cityName}&rdquo;
@@ -201,22 +202,22 @@ export default async function CityPage({ params }: PageProps) {
 
   const insightEntries: { key: string; text: string; icon: string; color: string }[] = [
     insights.priceChange
-      ? { key: "price", text: insights.priceChange, icon: "📈", color: "border-slate-200 bg-slate-50" }
+      ? { key: "price", text: insights.priceChange, icon: "trend-up", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.supplyBalance
-      ? { key: "supply", text: insights.supplyBalance, icon: "⚖️", color: "border-slate-200 bg-slate-50" }
+      ? { key: "supply", text: insights.supplyBalance, icon: "scale", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.inventoryClearance
-      ? { key: "inventory", text: insights.inventoryClearance, icon: "🏘️", color: "border-slate-200 bg-slate-50" }
+      ? { key: "inventory", text: insights.inventoryClearance, icon: "building", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.peoplePerApartment
-      ? { key: "people", text: insights.peoplePerApartment, icon: "👥", color: "border-slate-200 bg-slate-50" }
+      ? { key: "people", text: insights.peoplePerApartment, icon: "users", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.buildingPermitsTrend
-      ? { key: "permits", text: insights.buildingPermitsTrend, icon: "🏗️", color: "border-slate-200 bg-slate-50" }
+      ? { key: "permits", text: insights.buildingPermitsTrend, icon: "construction", color: "border-slate-200 bg-slate-50" }
       : null,
     insights.populationTrend
-      ? { key: "population", text: insights.populationTrend, icon: "📊", color: "border-slate-200 bg-slate-50" }
+      ? { key: "population", text: insights.populationTrend, icon: "chart", color: "border-slate-200 bg-slate-50" }
       : null,
   ].filter(Boolean) as { key: string; text: string; icon: string; color: string }[];
 
@@ -368,7 +369,7 @@ export default async function CityPage({ params }: PageProps) {
         <section className="mb-10">
           <div className="section-header flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="section-header-icon">🏠</div>
+              <div className="section-header-icon"><Icon name="building" size="1em" /></div>
               <div>
                 <h2 className="flex items-center gap-2 flex-wrap">מצב שוק — נתוני יד2 <SourceBadge kind="external" name="יד2 / ידאטה" /></h2>
                 <p>מודעות, ימים בשוק, סוג שוק | מקור: yad2 / yadata</p>
@@ -467,7 +468,7 @@ export default async function CityPage({ params }: PageProps) {
                         : yad2Data.market_type ? "שוק מאוזן" : "—"}
                     </p>
                   </div>
-                  <span className="text-2xl">📉</span>
+                  <span className="text-2xl"><Icon name="trend-down" size="1em" /></span>
                 </div>
                 <p className="text-2xs text-slate-500 mt-1">
                   {yad2Data.avg_days_on_market != null ? `${formatNumber(yad2Data.avg_days_on_market, 0)} ימים ממוצע בשוק · ` : ""}
@@ -536,7 +537,7 @@ export default async function CityPage({ params }: PageProps) {
         <section className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
-              <div className="section-header-icon">📊</div>
+              <div className="section-header-icon"><Icon name="chart" size="1em" /></div>
               <div className="flex-1">
                 <h2 className="flex items-center gap-2 flex-wrap">מגמת אוכלוסייה <SourceBadge kind="external" name='למ"ס' /></h2>
                 <p>2016-2026 | מקור: data.gov.il מרשם אוכלוסין + מפקד 2022</p>
@@ -570,7 +571,7 @@ export default async function CityPage({ params }: PageProps) {
         <section className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
-              <div className="section-header-icon">💰</div>
+              <div className="section-header-icon"><Icon name="money" size="1em" /></div>
               <div className="flex-1">
                 <h2 className="flex items-center gap-2 flex-wrap">מגמת מחירים חציוניים <SourceBadge kind="external" name="גוב-נדלן" /></h2>
                 <p>מקור: nadlan.gov.il — אתר הנדל&quot;ן הממשלתי</p>
@@ -610,7 +611,7 @@ export default async function CityPage({ params }: PageProps) {
         <section className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
-              <div className="section-header-icon">🏗️</div>
+              <div className="section-header-icon"><Icon name="construction" size="1em" /></div>
               <div>
                 <h2 className="flex items-center gap-2 flex-wrap">מכירות דירות חדשות <SourceBadge kind="external" name='למ"ס' /></h2>
                 <p>מקור: למ&quot;ס — סקר בנייה (22 ערים)</p>
@@ -630,7 +631,7 @@ export default async function CityPage({ params }: PageProps) {
         <section className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
-              <div className="section-header-icon">📋</div>
+              <div className="section-header-icon"><Icon name="clipboard" size="1em" /></div>
               <div className="flex-1">
                 <h2 className="flex items-center gap-2 flex-wrap">היתרי בנייה לפי שנה (2016-2024) <SourceBadge kind="external" name='למ"ס' /></h2>
                 <p>מקור: למ&quot;ס — מחולל לוחות</p>
@@ -661,7 +662,7 @@ export default async function CityPage({ params }: PageProps) {
         <section className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
-              <div className="section-header-icon">🔗</div>
+              <div className="section-header-icon"><Icon name="link" size="1em" /></div>
               <div className="flex-1">
                 <h2>ניתוח קורלציה — גידול מול היצע</h2>
                 <p>מקורות: data.gov.il | למ&quot;ס היתרי בנייה + התחלות בנייה</p>
@@ -703,7 +704,7 @@ export default async function CityPage({ params }: PageProps) {
       {salesData && (
         <section className="mb-10">
           <div className="section-header">
-            <div className="section-header-icon">📦</div>
+            <div className="section-header-icon"><Icon name="package" size="1em" /></div>
             <div>
               <h2 className="flex items-center gap-2 flex-wrap">מלאי ומכירות <SourceBadge kind="external" name='למ"ס' /></h2>
               <p>מקור: למ&quot;ס — סקר בנייה, פרסומי מכירות דירות חדשות</p>
@@ -733,7 +734,7 @@ export default async function CityPage({ params }: PageProps) {
       {city.urban_renewal_status && (
         <section className="mb-10">
           <div className="section-header">
-            <div className="section-header-icon">🔄</div>
+            <div className="section-header-icon"><Icon name="refresh" size="1em" /></div>
             <div>
               <h2>התחדשות עירונית</h2>
             </div>
@@ -765,7 +766,7 @@ export default async function CityPage({ params }: PageProps) {
       {insightEntries.length > 0 && (
         <section className="mb-10">
           <div className="section-header">
-            <div className="section-header-icon">💡</div>
+            <div className="section-header-icon"><Icon name="idea" size="1em" /></div>
             <div>
               <h2>תובנות אנליטיות</h2>
             </div>
@@ -794,7 +795,7 @@ export default async function CityPage({ params }: PageProps) {
           ═══════════════════════════════════════════════════════════ */}
       <section className="mb-10">
         <div className="section-header">
-          <div className="section-header-icon">⚖️</div>
+          <div className="section-header-icon"><Icon name="scale" size="1em" /></div>
           <div>
             <h2 className="flex items-center gap-2 flex-wrap">היצע וביקוש — ניתוח מקיף <SourceBadge kind="external" name='למ"ס' /></h2>
             <p>
@@ -964,7 +965,7 @@ export default async function CityPage({ params }: PageProps) {
           ═══════════════════════════════════════════════════════════ */}
       <section className="mb-10">
         <div className="section-header">
-          <div className="section-header-icon">👥</div>
+          <div className="section-header-icon"><Icon name="users" size="1em" /></div>
           <div>
             <h2 className="flex items-center gap-2 flex-wrap">דמוגרפיה ודיור <SourceBadge kind="external" name='למ"ס' /></h2>
             <p>מקור: data.gov.il מפקד 2022 | למ&quot;ס מרשם אוכלוסין</p>
@@ -993,7 +994,7 @@ export default async function CityPage({ params }: PageProps) {
 
       <section className="mb-10">
         <div className="section-header">
-          <div className="section-header-icon">📋</div>
+          <div className="section-header-icon"><Icon name="clipboard" size="1em" /></div>
           <div>
             <h2>כל הנתונים</h2>
           </div>

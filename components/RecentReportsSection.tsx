@@ -12,6 +12,7 @@ import {
   type Tone,
 } from "@/lib/recent-reports";
 import { withBasePath } from "@/lib/basePath";
+import Icon from "@/components/Icon";
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Design system — TWO tones only: primary (indigo) + neutral (slate).
@@ -486,7 +487,7 @@ export default function RecentReportsSection({
         >
           <span className="text-2xs text-slate-400 group-hover:text-slate-600">{moreOpen ? "סגור ▲" : "פתח ▼"}</span>
           <div className="flex items-center gap-2">
-            <span className="text-base">📚</span>
+            <span className="text-base"><Icon name="book" size="1em" /></span>
             <span className="text-sm font-bold text-slate-700">דוחות נוספים בחלון 3-החודשים ({OTHER_RECENT_REPORTS.length})</span>
           </div>
         </button>

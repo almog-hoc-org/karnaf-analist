@@ -16,6 +16,7 @@ import { loadCbsSales } from "@/lib/cbsSales";
 import CbsSalesChart from "@/components/CbsSalesChart";
 import { loadDiscoveredReports } from "@/lib/data-refresh";
 import { whatsappUrl } from "@/lib/brand";
+import Icon from "@/components/Icon";
 
 function formatPrice(value: number | null): string {
   if (value === null) return "—";
@@ -73,7 +74,7 @@ export default async function HomePage() {
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4">
         <div className="max-w-md text-center space-y-4">
-          <div className="text-5xl mb-6">🦏</div>
+          <div className="text-5xl mb-6"><Icon name="rhino" size="1em" /></div>
           <h1 className="text-2xl font-bold text-slate-900">הנתונים לא נטענים כרגע</h1>
           <p className="text-slate-600 text-lg">
             זו תקלה אצלנו, לא אצלך. אנחנו כבר על זה — נסה שוב בעוד כמה דקות.
@@ -225,7 +226,7 @@ export default async function HomePage() {
   const rankings = [
     {
       title: "היקרות ביותר — חציון יד-2 ₪/מ״ר",
-      icon: "👑",
+      icon: "crown",
       detailHref: "/rankings/most-expensive",
       items: mostExpensiveTx.map((c, i) => ({
         rank: i + 1,
@@ -238,7 +239,7 @@ export default async function HomePage() {
     // (a sibling of <RankingCard>) so it can host the 3y/5y toggle.
     {
       title: "התחלות בנייה 2025 (לפי עיר)",
-      icon: "🏗️",
+      icon: "construction",
       detailHref: "/stats/national-construction",
       items: highestSurplus.map((c, i) => ({
         rank: i + 1,
@@ -251,7 +252,7 @@ export default async function HomePage() {
     },
     {
       title: "מלאי דירות לא מכורות",
-      icon: "🏘️",
+      icon: "building",
       detailHref: "/rankings/highest-inventory",
       items: highestInventory.map((c, i) => ({
         rank: i + 1,
@@ -306,7 +307,7 @@ export default async function HomePage() {
         {/* Total deals in the transactions DB */}
         <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
           <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-xl">🗄️</span>
+            <span className="text-xl"><Icon name="database" size="1em" /></span>
             <div className="stat-label min-w-0 break-words">סה&quot;כ עסקאות במאגר</div>
           </div>
           <div className="stat-mega">{totalDeals ? totalDeals.toLocaleString("he-IL") : "—"}</div>
@@ -325,7 +326,7 @@ export default async function HomePage() {
         {/* Deals in the trailing 12 months */}
         <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
           <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-xl">🤝</span>
+            <span className="text-xl"><Icon name="handshake" size="1em" /></span>
             <div className="stat-label min-w-0 break-words">עסקאות ב-12 החודשים האחרונים</div>
           </div>
           <div className="stat-mega">{deals12m ? deals12m.toLocaleString("he-IL") : "—"}</div>
@@ -343,7 +344,7 @@ export default async function HomePage() {
         {/* National 3y price change — SECOND-HAND only (real transactions) */}
         <Link href="/cities" className="hero-kpi hero-indigo group cursor-pointer block">
           <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-xl">📈</span>
+            <span className="text-xl"><Icon name="trend-up" size="1em" /></span>
             <div className="stat-label min-w-0 break-words">שינוי מחיר יד-2 ארצי — 3 שנים</div>
           </div>
           <div className="leading-none" style={{ fontSize: "clamp(28px, 7.5vw, 44px)" }}>
@@ -366,7 +367,7 @@ export default async function HomePage() {
       {/* ── Rankings ─────────────────────────────────────────────── */}
       <section className="stack mt-14">
         <div className="section-header mb-6">
-          <div className="section-header-icon">🏆</div>
+          <div className="section-header-icon"><Icon name="trophy" size="1em" /></div>
           <div>
             <h2 className="text-2xl font-black text-slate-900">דירוגים מובילים</h2>
             <p className="text-xs text-slate-500 mt-0.5">חמש הערים המובילות בכל קטגוריה</p>

@@ -1,4 +1,5 @@
 import type { CityFact, CityTimeSeries } from "@/lib/scatteredFacts";
+import Icon from "@/components/Icon";
 
 interface Props {
   facts: CityFact[];
@@ -11,25 +12,25 @@ const categoryConfig: Record<
 > = {
   construction: {
     label: "בנייה",
-    icon: "🏗️",
+    icon: "construction",
     accent: "text-indigo-700",
     bg: "bg-indigo-50 border-indigo-100",
   },
   price_index: {
     label: "מחירים",
-    icon: "💰",
+    icon: "money",
     accent: "text-indigo-700",
     bg: "bg-indigo-50 border-indigo-100",
   },
   population: {
     label: "אוכלוסייה",
-    icon: "👥",
+    icon: "users",
     accent: "text-indigo-700",
     bg: "bg-indigo-50 border-indigo-100",
   },
   other: {
     label: "אחר",
-    icon: "📋",
+    icon: "clipboard",
     accent: "text-slate-700",
     bg: "bg-slate-50 border-slate-200",
   },
@@ -51,7 +52,7 @@ function FactCard({ fact }: { fact: CityFact }) {
         <div
           className={`w-9 h-9 rounded-xl flex items-center justify-center text-base flex-shrink-0 ${cat.bg}`}
         >
-          {cat.icon}
+          <Icon name={cat.icon} size="1em" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
@@ -145,7 +146,7 @@ export default function ScatteredFactsSection({ facts, timeSeries }: Props) {
   return (
     <section className="mb-10">
       <div className="section-header mb-5">
-        <div className="section-header-icon">📰</div>
+        <div className="section-header-icon"><Icon name="news" size="1em" /></div>
         <div>
           <h2 className="text-lg font-bold text-slate-900">עדכונים נוספים מדוחות רשמיים</h2>
           <p className="text-xs text-slate-500 mt-0.5">

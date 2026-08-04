@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { MarketInsight } from "@/lib/marketInsights";
 import TrendValue from "@/components/TrendValue";
+import Icon from "@/components/Icon";
 
 /**
  * "תובנות שוק" — 4 insights at a time from a large tier-mixed pool; the
@@ -19,7 +20,7 @@ export default function MarketInsightsSection({ insights }: { insights: MarketIn
   return (
     <section className="mt-14">
       <div className="section-header mb-6">
-        <div className="section-header-icon">💡</div>
+        <div className="section-header-icon"><Icon name="idea" size="1em" /></div>
         <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-black text-slate-900">תובנות שוק</h2>
           <p className="text-xs text-slate-500 mt-0.5">מחושבות אוטומטית ממאגר העסקאות · לחיצה על תובנה מובילה לעיר</p>
@@ -43,7 +44,7 @@ export default function MarketInsightsSection({ insights }: { insights: MarketIn
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="flex min-w-0 flex-1 basis-40 items-center gap-2">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-indigo-100 bg-indigo-50 text-base">
-                  {ins.icon}
+                  <Icon name={ins.icon} size="1em" />
                 </span>
                 <h3 className="min-w-0 break-words text-sm font-extrabold leading-snug text-slate-900 group-hover:text-indigo-700">
                   {ins.title}

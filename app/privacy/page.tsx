@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BUSINESS, RETENTION_HE } from "@/lib/legal";
+import Icon from "@/components/Icon";
 
 /**
  * Privacy notice. Reviewed and approved by counsel (August 2026).
@@ -92,7 +93,7 @@ export default function PrivacyPage() {
             סטטוס, קישור למודעה, והערות חופשיות.
           </p>
           <p className="rounded-lg border border-indigo-200 bg-indigo-50 p-3 text-xs">
-            ⚠️ <strong>אם אתם מזינים פרטים על לקוחות</strong> — אתם אחראים למידע הזה כלפי
+            <Icon name="warning" size="1em" /> <strong>אם אתם מזינים פרטים על לקוחות</strong> — אתם אחראים למידע הזה כלפי
             אותם אנשים. הסביבה נגישה <strong>אך ורק לחשבון שיצר אותה</strong>, ואינה נכללת
             בהקלטות מסך או בלוג האירועים.
           </p>

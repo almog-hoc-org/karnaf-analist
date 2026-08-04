@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import Icon from "@/components/Icon";
 
 /**
  * Floating accessibility panel.
@@ -110,7 +111,7 @@ export default function AccessibilityWidget() {
         on ? "border-indigo-400 bg-indigo-50 text-indigo-800" : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
       }`}
     >
-      <span aria-hidden className="text-base">{icon}</span>
+      <span aria-hidden className="text-base"><Icon name={icon} size="1em" /></span>
       <span className="flex-1">{label}</span>
       <span aria-hidden className={`text-xs ${on ? "text-indigo-600" : "text-slate-300"}`}>{on ? "●" : "○"}</span>
     </button>
@@ -128,7 +129,7 @@ export default function AccessibilityWidget() {
         title="אפשרויות נגישות"
         className="fixed bottom-20 end-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-slate-800 text-xl text-white shadow-lg transition-transform hover:bg-slate-900 active:scale-95 md:bottom-5"
       >
-        <span aria-hidden>♿</span>
+        <span aria-hidden><Icon name="accessibility" size="1em" /></span>
       </button>
 
       {open && (
@@ -140,7 +141,7 @@ export default function AccessibilityWidget() {
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-sm font-black text-slate-900">אפשרויות נגישות</h2>
             <button type="button" onClick={() => setOpen(false)} aria-label="סגירה"
-              className="-me-1 h-7 w-7 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700">✕</button>
+              className="-me-1 h-7 w-7 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"><Icon name="close" size="1em" /></button>
           </div>
 
           <div className="mb-3">

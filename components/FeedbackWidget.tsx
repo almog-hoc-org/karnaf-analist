@@ -5,6 +5,7 @@ import { withBasePath } from "@/lib/basePath";
 import { getViewState } from "@/lib/viewState";
 import { track } from "@/lib/track";
 import { FEEDBACK_KINDS, KIND_LABELS, type FeedbackKind } from "@/lib/feedbackTypes";
+import Icon from "@/components/Icon";
 
 /**
  * Floating feedback button + form.
@@ -88,7 +89,7 @@ export default function FeedbackWidget() {
         aria-expanded={open}
         className="fixed bottom-5 start-5 z-40 flex h-12 items-center gap-2 rounded-full bg-indigo-600 px-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition-transform hover:bg-indigo-700 active:scale-95"
       >
-        <span aria-hidden>💬</span>
+        <span aria-hidden><Icon name="chat" size="1em" /></span>
         <span className="hidden sm:inline">משוב</span>
       </button>
 
@@ -112,7 +113,7 @@ export default function FeedbackWidget() {
                   <p className="mt-0.5 text-2xs text-slate-500">האתר בבנייה — כל הערה עוזרת</p>
                 </div>
                 <button type="button" onClick={() => setOpen(false)} aria-label="סגירה"
-                  className="-me-1 -mt-1 h-7 w-7 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700">✕</button>
+                  className="-me-1 -mt-1 h-7 w-7 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"><Icon name="close" size="1em" /></button>
               </div>
 
               <div className="mb-3 grid grid-cols-2 gap-1.5">

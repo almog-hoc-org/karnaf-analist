@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Coverage } from "@/lib/coverage";
 import { isProminent } from "@/lib/coverage";
+import Icon from "@/components/Icon";
 
 /**
  * Tells the reader how much of this city's decade is actually behind the chart.
@@ -58,7 +59,7 @@ export default function CoverageNotice({ coverage, cityName }: { coverage: Cover
       className="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm leading-relaxed text-amber-950"
     >
       <p className="mb-1 font-black">
-        <span aria-hidden className="me-1.5">⚠️</span>
+        <span aria-hidden className="me-1.5"><Icon name="warning" size="1em" /></span>
         {c.title}
       </p>
       <p>{c.body}</p>

@@ -12,6 +12,7 @@ import DistrictTargetsChart from "@/components/DistrictTargetsChart";
 import ShortfallBarChart from "@/components/ShortfallBarChart";
 import PlanVsActualChart from "@/components/PlanVsActualChart";
 import SourceBadge from "@/components/SourceBadge";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: 'דשבורד לאומי | קרנף אנליסט' };
 
@@ -162,7 +163,7 @@ export default async function NationalDashboard() {
       {/* ─── Committee Report — Background banner ─── */}
       <section className="rounded-2xl bg-indigo-50/50 border border-indigo-100 p-6 mb-6">
         <div className="flex items-start gap-3 mb-3">
-          <span className="text-3xl">📋</span>
+          <span className="text-3xl"><Icon name="clipboard" size="1em" /></span>
           <div className="flex-1">
             <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">דוח הוועדה לפתרון משבר הדיור</p>
             <h2 className="text-xl font-bold text-slate-900">התוכנית האסטרטגית לדיור 2017-2040 — מעקב יוני 2021</h2>
@@ -191,7 +192,7 @@ export default async function NationalDashboard() {
           return (
             <div key={i} className="rounded-xl border border-slate-200 bg-white p-4">
               <div className="flex items-start gap-2 mb-2">
-                <span className="text-2xl flex-shrink-0">{icon}</span>
+                <span className="text-2xl flex-shrink-0"><Icon name={icon} size="1em" /></span>
                 <h3 className="text-sm font-bold text-slate-900 leading-tight flex-1">{f.title}</h3>
                 <span className={`${chipCls} flex-shrink-0`}>{chipLabel}</span>
               </div>
@@ -256,7 +257,7 @@ export default async function NationalDashboard() {
           <div className={`rounded-xl p-4 border-2 ${permitsGap2125 < 0 ? "bg-slate-50 border-slate-300" : "bg-emerald-50 border-emerald-300"}`}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">היתרי בנייה (תכנון)</span>
-              <span className="text-2xl">📋</span>
+              <span className="text-2xl"><Icon name="clipboard" size="1em" /></span>
             </div>
             <div className="text-2xl font-extrabold text-slate-900 tabular-nums">{fmt(actual2125.permits)}</div>
             <div className="text-xs text-slate-600 mt-1">מתוך יעד {fmt(target2125Cumulative)}</div>

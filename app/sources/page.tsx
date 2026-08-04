@@ -8,6 +8,7 @@ import {
   type SourceColor,
 } from "@/lib/sources";
 import { COVERAGE_MATRIX, SOURCE_DOCUMENTS } from "@/lib/source-documents";
+import Icon from "@/components/Icon";
 
 export const metadata = {
   title: 'מקורות מידע | קרנף אנליסט',
@@ -69,7 +70,7 @@ export default function SourcesPage() {
             <section key={cat.key}>
               <div className="flex items-start gap-3 mb-4">
                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${a.bg}`}>
-                  {cat.icon}
+                  <Icon name={cat.icon} size="1em" />
                 </div>
                 <div className="flex-1">
                   <h2 className="text-xl font-bold text-slate-900 tracking-tight">{cat.title}</h2>

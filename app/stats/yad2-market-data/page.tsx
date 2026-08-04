@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import SortableTable, { type Yad2Row } from "./SortableTable";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: 'יד2 — נתוני מצב שוק לפי עיר | קרנף אנליסט' };
 
@@ -52,7 +53,7 @@ export default async function Yad2DetailPage() {
       <header className="mb-8">
         <div className="flex items-start gap-4">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50 text-indigo-700">
-            🏘️
+            <Icon name="building" size="1em" />
           </div>
           <div className="flex-1">
             <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">יד2</p>
