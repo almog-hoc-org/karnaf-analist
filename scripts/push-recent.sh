@@ -100,9 +100,22 @@ KARNAF_DATA_DIR="$SCRATCH_DIR" KARNAF_COLLECT_FROM="$FROM" \
   || warn "האיסוף נכשל חלקית — ממשיך עם מה שנאסף"
 
 say "איסוף nadlan — שנת בנייה וחוק מכר"
+# collect-transactions.ts, NOT collect-nadlan-transactions.ts. The two look
+# interchangeable and are not: only this one stores hok_hamecher and prev_deals,
+# the authority's own developer-vs-resale flags.
+#
+# That distinction decides whether the collection is usable. A probe of six
+# thin localities returned 4,250 deals — Shefa-'Amr alone went from 95 to 1,038 —
+# and 0 of them carried a build year. Without the sale flags those deals arrive
+# unclassifiable: classify-sale-channel leaves class_source NULL, and the
+# aggregation gates the "all" price series on exactly that column. We would
+# collect a thousand deals per town and show none of them.
+#
+# It also maintains nadlan_collection_status, so a partial run resumes instead
+# of starting over.
 if curl -s --max-time 3 http://127.0.0.1:9222/json/version >/dev/null 2>&1; then
   KARNAF_DATA_DIR="$SCRATCH_DIR" \
-    npx tsx scripts/collect-nadlan-transactions.ts --force || warn "nadlan נכשל חלקית"
+    npx tsx scripts/collect-transactions.ts --source nadlan --force || warn "nadlan נכשל חלקית"
   ok "nadlan הושלם"
 else
   warn "אין Chrome עם דיבאג על פורט 9222 — מדלג על nadlan."
@@ -119,6 +132,11 @@ INTEG=$(sqlite3 "$SCRATCH_DB" "PRAGMA integrity_check;" | head -1)
 read -r CNT CITIES YB <<<"$(sqlite3 -separator ' ' "$SCRATCH_DB" \
   "SELECT COUNT(*), COUNT(DISTINCT city_name), SUM(CASE WHEN year_built>0 THEN 1 ELSE 0 END) FROM nadlan_transactions;")"
 ok "$CNT עסקאות · $CITIES ערים · ${YB:-0} עם שנת בנייה"
+# The sale flags matter more than the build year for the thin localities: there
+# yearBuilt comes back 0 and hok_hamecher is the only thing that can classify a
+# deal into the price series at all.
+FLAGS=$(sqlite3 "$SCRATCH_DB" "SELECT COUNT(*) FROM nadlan_transactions WHERE hok_hamecher IS NOT NULL;" 2>/dev/null || echo 0)
+ok "${FLAGS:-0} עם דגלי חוק-מכר (מסווגות גם בלי שנת בנייה)"
 ok "גודל: $(du -h "$SCRATCH_DB" | cut -f1)"
 [ "${CNT:-0}" -gt 0 ] || die "לא נאספה אף עסקה. אל תשלח קובץ ריק."
 

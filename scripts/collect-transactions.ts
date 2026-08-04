@@ -56,6 +56,44 @@ function isResidential(n: string | null | undefined): boolean { if (!n) return f
 interface DealRow { deal_date: string; deal_year: number; rooms: number | null; area: number | null; price: number | null; price_sqm: number | null; year_built: number | null; is_secondhand: number; neighborhood: string | null; cbs_code: string | null; hok_hamecher: number | null; prev_deals: number | null; }
 
 // ── manifest ─────────────────────────────────────────────────────
+
+/**
+ * Create the manifest table if it is absent.
+ *
+ * IT HAD SEVEN WRITERS AND NO CREATOR. nadlan_collection_status is not in
+ * prisma/schema.prisma and no script ever created it — it exists on the live
+ * database only because somebody made it by hand once, years ago, on a laptop.
+ * So this collector, the one that actually tracks coverage targets, crashed on
+ * every fresh database: a new machine, a restore, and the scratch database the
+ * quarterly collection builds.
+ *
+ * That is the same shape as admin_exclusion_log before it, and it is why the
+ * cleaning pipeline could not run on a fresh database either. A table nobody
+ * creates is a table that works until the first time it matters.
+ *
+ * The UNIQUE on (city_name, source) is load-bearing: upsertStatus uses
+ * ON CONFLICT against exactly that pair, and without the constraint the clause
+ * is a syntax error rather than a no-op.
+ */
+async function ensureManifest(): Promise<void> {
+  await prisma.$executeRawUnsafe(`
+    CREATE TABLE IF NOT EXISTS nadlan_collection_status (
+      city_name      TEXT NOT NULL,
+      source         TEXT NOT NULL,
+      n_deals        INTEGER,
+      year_min       INTEGER,
+      year_max       INTEGER,
+      distinct_years INTEGER,
+      secondhand_n   INTEGER,
+      status         TEXT,
+      method_version TEXT,
+      attempts       INTEGER DEFAULT 0,
+      last_collected DATETIME,
+      note           TEXT,
+      UNIQUE (city_name, source)
+    )`);
+}
+
 async function getStatus(city: string, source: string): Promise<{ method_version: string | null; status: string; year_min: number | null; distinct_years: number | null; attempts: number | null } | null> {
   const rows = await prisma.$queryRawUnsafe<{ method_version: string | null; status: string; year_min: number | null; distinct_years: number | null; attempts: number | null }[]>(
     "SELECT method_version, status, year_min, distinct_years, attempts FROM nadlan_collection_status WHERE city_name=? AND source=?", city, source);
@@ -346,6 +384,9 @@ async function nadlanCity(browser: Browser, city: string, code: string, missingY
 function cityCodeMap(): Map<string, string> { const j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "data/city_cbs_codes.json"), "utf8")) as Record<string, number>; return new Map(Object.entries(j).map(([k, v]) => [k.trim(), String(v)])); }
 
 async function main() {
+  // Before anything reads or writes it. See the note on ensureManifest.
+  await ensureManifest();
+
   const argv = process.argv.slice(2);
   const force = argv.includes("--force");
   const srcArg = (argv[argv.indexOf("--source") + 1] && argv.includes("--source")) ? argv[argv.indexOf("--source") + 1] : "all";
