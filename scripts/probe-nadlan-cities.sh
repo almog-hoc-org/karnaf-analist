@@ -46,6 +46,13 @@ curl -s --max-time 3 http://127.0.0.1:9222/json/version >/dev/null 2>&1 \
   עבור את האימות פעם אחת, השאר את החלון פתוח, וחזור לכאן."
 ok "Chrome מחובר"
 
+say "קליינט Prisma"
+# `prisma generate` runs only as part of `npm run build`, never on npm install,
+# so a freshly cloned machine has no client and the collector dies with
+# "Cannot find module '.prisma/client/default'". Seconds, and idempotent.
+npx prisma generate >/dev/null 2>&1 || die "npx prisma generate נכשל."
+ok "נוצר"
+
 say "מסד זמני"
 rm -rf "$PROBE_DIR"; mkdir -p "$PROBE_DIR"
 npx prisma db push --url="file:$PROBE_DIR/realestate.db" --accept-data-loss >/dev/null 2>&1 \
@@ -55,7 +62,22 @@ ok "$PROBE_DIR/realestate.db  (המסד האמיתי לא מעורב)"
 say "איסוף nadlan — ${#CITIES[@]} יישובים"
 # --force because the scratch database is empty: every city is new here, and the
 # freshness manifest belongs to the server's archive, not this one.
-KARNAF_DATA_DIR="$PROBE_DIR" npx tsx scripts/collect-nadlan-transactions.ts --force "${CITIES[@]}" || true
+#
+# ⚠️ THE EXIT CODE IS CHECKED, AND THAT IS THE WHOLE POINT OF THIS SCRIPT.
+# This line ended in `|| true`. A crash therefore printed "0 עסקאות" followed by
+# the reading guide — which is to say, it printed the exact reading that means
+# "the source is thin", the conclusion this script exists to establish. That is
+# the fourth time today a swallowed error has impersonated a real result, and
+# the first time it was mine.
+#
+# A tool whose only job is to interpret a zero MUST distinguish "ran and found
+# nothing" from "did not run". So: no results table and no reading guide unless
+# the collector actually completed.
+if ! KARNAF_DATA_DIR="$PROBE_DIR" npx tsx scripts/collect-nadlan-transactions.ts --force "${CITIES[@]}"; then
+  die "הקולקטור נכשל — אין תוצאה לפרש.
+  אפס עסקאות כאן פירושו שהאיסוף לא רץ, לא שהמקור דליל.
+  תקן את השגיאה למעלה והרץ שוב."
+fi
 
 say "תוצאה"
 sqlite3 -header -column "$PROBE_DIR/realestate.db" "
