@@ -115,7 +115,7 @@ export default function SourcesPage() {
                             }`}
                             title="פרסום הבא צפוי"
                           >
-                            {isOverdue ? "⏰ עיכוב — צפוי " : "📅 צפוי "}
+                            <><Icon name={isOverdue ? "clock" : "calendar"} size="1em" />{isOverdue ? " עיכוב — צפוי " : " צפוי "}</>
                             {formatHeDate(next)}
                           </span>
                         )}
@@ -133,7 +133,7 @@ export default function SourcesPage() {
       <section className="mt-12">
         <div className="flex items-start gap-3 mb-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 bg-indigo-50">
-            🗓️
+            <Icon name="calendar" size="1em" />
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-bold text-slate-900 tracking-tight">כיסוי 10 שנים — 4 סדרות הלמ&quot;ס המרכזיות</h2>
@@ -214,7 +214,7 @@ export default function SourcesPage() {
       </section>
 
       <div className="mt-12 p-6 rounded-2xl bg-slate-50 border border-slate-200">
-        <h3 className="text-base font-bold text-slate-900 mb-2">📋 מתודולוגיה</h3>
+        <h3 className="text-base font-bold text-slate-900 mb-2"><Icon name="clipboard" size="1em" /> מתודולוגיה</h3>
         <ul className="text-sm text-slate-700 space-y-1.5 list-disc pr-5">
           <li><strong>אוכלוסייה:</strong> נתוני בסיס מהמפקד הרשמי של למ&quot;ס 2022; תחזיות 2024-2026 מחושבות מקצב הצמיחה השנתי הממוצע</li>
           <li><strong>מחירים:</strong> חציון רבעוני מ-nadlan.gov.il; מחיר למ&quot;ר מוערך מ-75 מ&quot;ר ממוצע לדירה כאשר לא קיים נתון ישיר</li>

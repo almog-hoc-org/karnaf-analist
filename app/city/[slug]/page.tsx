@@ -316,7 +316,7 @@ export default async function CityPage({ params }: PageProps) {
         <p className="text-2xs leading-relaxed text-slate-600">
           הנתונים המרכזיים בעמוד מבוססים על עסקאות אמת שנאספו באופן בלתי-תלוי מרשות המסים.
           עסקת <strong>יד-שנייה</strong> = חלפו {getRuleNum("secondhand_min_age", 4)}+ שנים משנת הבנייה לרכישה; <strong>חדשה</strong> = פחות מכך.
-          נתונים ממקורות נוספים (למ״ס, גוב-נדלן, יד2) מסומנים 🏛️.
+          נתונים ממקורות נוספים (למ״ס, גוב-נדלן, יד2) מסומנים <Icon name="source-official" size="1em" />.
         </p>
       </div>
 
@@ -414,7 +414,7 @@ export default async function CityPage({ params }: PageProps) {
 
           <div className="mt-3 glass-card p-4 flex items-center gap-3">
             <span className="text-xl">
-              {yad2Data.market_type === 'sellers' ? '🔥' : yad2Data.market_type === 'buyers' ? '❄️' : '⚖️'}
+              <Icon name={yad2Data.market_type === 'sellers' ? "flame" : yad2Data.market_type === 'buyers' ? "snow" : "scale"} size="1em" />
             </span>
             <div className="flex-1">
               <p className="text-sm font-semibold text-slate-800">
@@ -810,7 +810,7 @@ export default async function CityPage({ params }: PageProps) {
         {/* Supply-source provenance badge */}
         {chosenSourceMeta && (
           <div className={`mb-4 inline-flex flex-wrap min-w-0 items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold ${chosenSourceMeta.cls}`}>
-            <span>📐 בסיס חישוב הפער:</span>
+            <span><Icon name="ruler" size="1em" /> בסיס חישוב הפער:</span>
             <span className="font-bold">{chosenSourceMeta.he}</span>
             <span className="text-2xs font-normal opacity-80">— {chosenSourceMeta.long}</span>
           </div>

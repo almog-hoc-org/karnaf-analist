@@ -6,6 +6,7 @@ import { refYear } from "@/lib/refYear";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import { loadCityTransactionPrices, loadRankingEligibleCities, rankingEligibilityNote } from "@/lib/cityTransactionPrices";
 import { computeAllCityGaps } from "@/lib/gap-analysis";
+import Icon from "@/components/Icon";
 
 interface PageProps {
   params: { type: string };
@@ -198,7 +199,7 @@ export default async function RankingPage({ params }: PageProps) {
                 מקור: {cfg.source}
               </span>
               <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-2xs font-semibold">
-                ⚖️ {rankingEligibilityNote()}
+                <Icon name="scale" size="1em" /> {rankingEligibilityNote()}
               </span>
             </div>
           </div>

@@ -30,7 +30,7 @@ export default function MarketInsightsSection({ insights }: { insights: MarketIn
           onClick={() => setPage((p) => p + 1)}
           className="shrink-0 rounded-full border border-indigo-200 bg-white px-4 py-2 text-xs font-bold text-indigo-700 shadow-sm transition-all hover:bg-indigo-50 hover:shadow"
         >
-          🎲 הצג תובנות נוספות
+          <Icon name="refresh" size="1em" /> הצג תובנות נוספות
         </button>
       </div>
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BUSINESS } from "@/lib/legal";
+import Icon from "@/components/Icon";
 
 /**
  * Terms of use.
@@ -36,7 +37,7 @@ export default function TermsPage() {
         <p className="mb-8 text-xs text-slate-500">עודכן: {UPDATED}</p>
 
         <div className="mb-8 rounded-xl border-2 border-red-200 bg-red-50 p-4">
-          <h2 className="mb-2 text-base font-black text-red-900">⚠️ זה אינו ייעוץ</h2>
+          <h2 className="mb-2 text-base font-black text-red-900"><Icon name="warning" size="1em" /> זה אינו ייעוץ</h2>
           <p className="text-sm leading-relaxed text-red-900">
             קרנף אנליסט הוא <strong>כלי מחקר</strong>. המספרים באתר הם עיבוד סטטיסטי של
             עסקאות שדווחו לרשות המסים, ואינם הערכת שווי, שמאות, ייעוץ השקעות או ייעוץ

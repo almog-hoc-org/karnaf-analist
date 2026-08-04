@@ -918,7 +918,7 @@ export default function CitiesTable({
       {/* Provenance — memory rule: source • period • confidence under every metric block */}
       <p className="mt-2 text-2xs text-slate-400 text-right">
         <Icon name="dot" size="1em" /> שורה צהובה = פחות מ-{minDeals.toLocaleString("he-IL")} עסקאות פעילות ב-10 שנים (עריך בדשבורד) — מדגם קטן, לא נכלל בדירוגים ·
-        <Icon name="source-own" size="1em" /> מחירים ושינויי מחיר: מאגר העסקאות העצמאי (רשות המסים) · יד-2 = 4+ שנים משנת בנייה · שנת ייחוס {refYear} · אמינות לפי עומק דאטה · אוכלוסייה/משקי-בית: 🏛️ למ״ס
+        <Icon name="source-own" size="1em" /> מחירים ושינויי מחיר: מאגר העסקאות העצמאי (רשות המסים) · יד-2 = 4+ שנים משנת בנייה · שנת ייחוס {refYear} · אמינות לפי עומק דאטה · אוכלוסייה/משקי-בית: <Icon name="source-official" size="1em" /> למ״ס
       </p>
     </div>
   );

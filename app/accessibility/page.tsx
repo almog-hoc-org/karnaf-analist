@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BUSINESS } from "@/lib/legal";
+import Icon from "@/components/Icon";
 
 /**
  * Accessibility statement.
@@ -30,7 +31,7 @@ export default function AccessibilityPage() {
         <section className="mb-8 space-y-3 text-sm leading-relaxed text-slate-700">
           <h2 className="mb-3 text-lg font-black text-slate-900">כלי הנגישות באתר</h2>
           <p>
-            בפינת המסך יש כפתור <strong>♿ אפשרויות נגישות</strong>. הוא זמין בכל עמוד,
+            בפינת המסך יש כפתור <strong><Icon name="accessibility" size="1em" /> אפשרויות נגישות</strong>. הוא זמין בכל עמוד,
             וההעדפות נשמרות בדפדפן שלכם לביקורים הבאים:
           </p>
           <ul className="list-inside list-disc space-y-1.5">
@@ -83,7 +84,7 @@ export default function AccessibilityPage() {
         <section className="mb-8 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
           <h2 className="mb-2 font-black text-slate-900">נתקלתם בבעיה?</h2>
           <p className="leading-relaxed text-slate-700">
-            אפשר לדווח דרך כפתור המשוב 💬 בפינת המסך. אנו מתייחסים לדיווחי נגישות בעדיפות.
+            אפשר לדווח דרך כפתור המשוב <Icon name="chat" size="1em" /> בפינת המסך. אנו מתייחסים לדיווחי נגישות בעדיפות.
           </p>
           <div className="mt-3 rounded-lg bg-white p-3 text-sm">
             <p className="font-bold text-slate-900">רכז נגישות</p>

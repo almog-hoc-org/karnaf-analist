@@ -137,7 +137,7 @@ async function fetchSourceData(src: Source): Promise<React.ReactNode> {
           <Link href="/stats/construction-cost-index" className="block glass-card p-5 hover:border-amber-300 transition-all group">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-1">📊 דוח אינטראקטיבי במערכת</div>
+                <div className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-1"><Icon name="chart" size="1em" /> דוח אינטראקטיבי במערכת</div>
                 <div className="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition-colors">מדד מחירי תשומה בבנייה — 10 שנים</div>
                 <div className="text-xs text-slate-600 mt-1">11 שנים של ערכים שנתיים, שינוי YoY, רמת מהימנות לכל נקודה</div>
               </div>
@@ -177,7 +177,7 @@ async function fetchSourceData(src: Source): Promise<React.ReactNode> {
             <Link href="/stats/national-hpi" className="block glass-card p-5 mb-5 hover:border-cyan-300 transition-all group">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <div className="text-xs font-bold text-cyan-700 uppercase tracking-wider mb-1">📊 דוח אינטראקטיבי במערכת</div>
+                  <div className="text-xs font-bold text-cyan-700 uppercase tracking-wider mb-1"><Icon name="chart" size="1em" /> דוח אינטראקטיבי במערכת</div>
                   <div className="text-lg font-bold text-slate-900 group-hover:text-cyan-700 transition-colors">מדד מחירי דירות לאומי — שינויים שנתיים וחודשיים</div>
                 </div>
                 <span className="text-2xl text-cyan-700 group-hover:translate-x-[-4px] transition-transform">←</span>
@@ -278,7 +278,7 @@ async function fetchSourceData(src: Source): Promise<React.ReactNode> {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <div className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-1">
-                  📊 דוח אינטראקטיבי במערכת
+                  <Icon name="chart" size="1em" /> דוח אינטראקטיבי במערכת
                 </div>
                 <div className="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition-colors">
                   טבלת מצב שוק יד2 — כל הערים
@@ -480,7 +480,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
     <section className="glass-card overflow-hidden mb-6">
       <div className="px-5 py-3 border-b border-slate-100 flex items-center justify-between flex-wrap gap-2">
         <div>
-          <h3 className="text-sm font-bold text-slate-900">📑 מסמכים ופרסומים ספציפיים</h3>
+          <h3 className="text-sm font-bold text-slate-900"><Icon name="clipboard" size="1em" /> מסמכים ופרסומים ספציפיים</h3>
           <p className="text-xs text-slate-500 mt-0.5">{docs.length} מסמכים בסה"כ</p>
         </div>
         <div className="flex gap-1.5 text-2xs">
@@ -516,7 +516,7 @@ function DocumentsList({ docs }: { docs: SourceDocument[] }) {
                       {d.name}
                     </a>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-2xs text-slate-500 mt-0.5">
-                      <span>📅 {d.date}</span>
+                      <span><Icon name="calendar" size="1em" /> {d.date}</span>
                       {d.publicationNumber && (
                         <span className="font-mono">פרסום: {d.publicationNumber}</span>
                       )}
@@ -566,7 +566,7 @@ export default async function SourceDetailPage({ params }: PageProps) {
       <header className="mb-8">
         <div className="flex items-start gap-4">
           <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${a.bg}`}>
-            {cat?.icon || "📋"}
+            <Icon name={cat?.icon || "clipboard"} size="1em" />
           </div>
           <div className="flex-1 min-w-0">
             <p className={`text-2xs font-bold uppercase tracking-wider mb-1 ${a.text}`}>
@@ -605,7 +605,7 @@ export default async function SourceDetailPage({ params }: PageProps) {
                   : "bg-cyan-50 text-cyan-700 border border-cyan-200"
               }`}
             >
-              {isOverdue ? "⏰ עיכוב — היה צפוי " : "📅 פרסום הבא צפוי "}
+              <><Icon name={isOverdue ? "clock" : "calendar"} size="1em" />{isOverdue ? " עיכוב — היה צפוי " : " פרסום הבא צפוי "}</>
               {formatHeDate(next)}
             </span>
           )}
@@ -631,7 +631,7 @@ export default async function SourceDetailPage({ params }: PageProps) {
 
       {/* Data view */}
       <section>
-        <h2 className="text-lg font-bold text-slate-900 mb-3">📊 ריכוז הנתונים מהמקור</h2>
+        <h2 className="text-lg font-bold text-slate-900 mb-3"><Icon name="chart" size="1em" /> ריכוז הנתונים מהמקור</h2>
         {dataView}
       </section>
 

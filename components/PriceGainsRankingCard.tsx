@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import TrendValue from "@/components/TrendValue";
+import Icon from "@/components/Icon";
 
 /**
  * "שינויי מחיר" ranking card with FULL user control (user spec):
@@ -55,7 +56,7 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear }: {
     <div className="glass-card relative flex h-full flex-col overflow-hidden p-5">
       <div className="mb-3">
         <div className="mb-2.5 min-w-0">
-          <span className="block break-words text-2xs font-black uppercase leading-snug tracking-wide text-slate-400">📈 שינויי מחיר — לבחירתך</span>
+          <span className="block break-words text-2xs font-black uppercase leading-snug tracking-wide text-slate-400"><Icon name="trend-up" size="1em" /> שינויי מחיר — לבחירתך</span>
         </div>
         {/* controls: scope pills + metric + year range */}
         <div className="flex flex-wrap items-center gap-1.5 text-2xs font-bold">
@@ -111,7 +112,7 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear }: {
         <Link href="/rankings/highest-gain" className="whitespace-nowrap text-2xs text-slate-400 hover:text-indigo-700 transition-colors">
           כל הדירוג →
         </Link>
-        <span className="min-w-0 break-words text-2xs text-slate-400">🔵 מאגר העסקאות · {fromY}→{toY}</span>
+        <span className="min-w-0 break-words text-2xs text-slate-400"><Icon name="source-own" size="1em" /> מאגר העסקאות · {fromY}→{toY}</span>
       </div>
     </div>
   );

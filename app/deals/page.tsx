@@ -6,6 +6,7 @@ import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import DealsManager from "@/components/DealsManager";
 import { requireWorkspaceId } from "@/lib/auth";
+import Icon from "@/components/Icon";
 
 export const metadata = { title: 'ניהול והשוואת עסקאות | קרנף אנליסט' };
 export const dynamic = "force-dynamic";
@@ -76,7 +77,7 @@ export default async function DealsPage() {
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-slate-500 leading-relaxed">
           עקוב אחרי דירות בתהליך החיפוש: הזן עסקה, קבל השוואה מיידית מול עסקאות אמת ברחוב ובשכונה,
-          נהל סטטוס, משימות וקישורים — הכל במקום אחד. 🔵 ההשוואות מבוססות מאגר העסקאות העצמאי.
+          נהל סטטוס, משימות וקישורים — הכל במקום אחד. <Icon name="source-own" size="1em" /> ההשוואות מבוססות מאגר העסקאות העצמאי.
         </p>
       </header>
       <DealsManager

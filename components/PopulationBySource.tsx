@@ -64,7 +64,7 @@ export default function PopulationBySource({
                     <td className="py-3 px-3 align-top">
                       <div className="text-lg font-extrabold tabular-nums text-slate-900">{row.year}</div>
                       {!row.uniform && (
-                        <div className="text-2xs text-slate-600 font-bold mt-0.5">⚠ פערים</div>
+                        <div className="text-2xs text-slate-600 font-bold mt-0.5"><Icon name="warning" size="1em" /> פערים</div>
                       )}
                     </td>
                     <td className="py-2.5 px-3 align-top">
@@ -92,7 +92,7 @@ export default function PopulationBySource({
                     </td>
                     <td className="py-3 px-3 align-top text-center">
                       {row.uniform ? (
-                        <span className="text-2xs text-emerald-700 font-semibold">✓ אחיד</span>
+                        <span className="text-2xs text-emerald-700 font-semibold"><Icon name="check" size="1em" /> אחיד</span>
                       ) : (
                         <div>
                           <div className="text-sm font-bold text-slate-900 tabular-nums">
@@ -119,7 +119,7 @@ export default function PopulationBySource({
 
         <div className="px-4 py-3 border-t border-slate-100 bg-slate-50/50 text-2xs text-slate-600 leading-relaxed">
           <strong className="text-slate-800">איך לקרוא את הטבלה:</strong> כל שנה מציגה את כל האומדנים הרשמיים שמצאנו עבור{" "}
-          <strong>{cityName}</strong>. כשהמקורות מסכימים — &quot;✓ אחיד&quot;. כשהם חלוקים — מוצגים גם הפער המוחלט וגם
+          <strong>{cityName}</strong>. כשהמקורות מסכימים — &quot;אחיד&quot;. כשהם חלוקים — מוצגים גם הפער המוחלט וגם
           ה-% (max-min relative to min). העמודה הימנית מציגה את המומלץ ביותר לפי דירוג איכות המקור:
           מפקד 2022 ← מרשם 2025 ← היתרים 2024 ← תחזיות.
         </div>

@@ -265,7 +265,7 @@ function StreetBlock({
   return (
     <div className="border-t border-slate-100">
       <div className="px-5 py-2 flex items-center justify-between bg-slate-50">
-        <span className="text-xs text-slate-700 font-medium">📍 רחוב {street.streetName}</span>
+        <span className="text-xs text-slate-700 font-medium"><Icon name="map" size="1em" /> רחוב {street.streetName}</span>
         <span className="text-2xs text-slate-500">{street.totalDeals} עסקאות ברחוב</span>
       </div>
       <StreetTable street={street} periodYears={periodYears} />

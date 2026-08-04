@@ -103,7 +103,7 @@ export default function FeedbackWidget() {
         >
           {done ? (
             <p className="py-6 text-center text-sm font-bold text-emerald-700">
-              תודה! קיבלנו 🙏
+              תודה! קיבלנו <Icon name="check" size="1em" />
             </p>
           ) : (
             <form onSubmit={submit}>

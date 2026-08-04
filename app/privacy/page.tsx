@@ -172,7 +172,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
           <p className="rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-900">
-            ✓ התקופות האלה <strong>נאכפות אוטומטית</strong> על ידי משימה לילית, ואינן הצהרה
+            <Icon name="check" size="1em" /> התקופות האלה <strong>נאכפות אוטומטית</strong> על ידי משימה לילית, ואינן הצהרה
             בלבד. אותם ערכים עצמם מגדירים גם את המסמך הזה וגם את המחיקה בפועל.
           </p>
         </Section>

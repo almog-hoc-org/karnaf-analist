@@ -52,7 +52,7 @@ export default function NewVsSecondhandPanel({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {/* NEW apartments */}
           <SideCard
-            title="🏗️ דירות חדשות (קבלן)"
+            title="דירות חדשות (קבלן)"
             tone="amber"
             value={cbs.new_sales_2025}
             yoy24={cbs.new_yoy_2024}
@@ -61,7 +61,7 @@ export default function NewVsSecondhandPanel({
           />
           {/* SECOND-HAND apartments */}
           <SideCard
-            title="🏘️ דירות יד שנייה"
+            title="דירות יד שנייה"
             tone="purple"
             value={cbs.secondhand_sales_2025}
             yoy24={cbs.secondhand_yoy_2024}

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Icon from "@/components/Icon";
 import BrandMark from "./BrandMark";
 import { usePathname, useRouter } from "next/navigation";
 import { withBasePath } from "@/lib/basePath";
@@ -13,7 +14,7 @@ const NAV_ITEMS = [
   { href: "/compare", label: "השוואה" },
   { href: "/national", label: "ארצי" },
   { href: "/sources", label: "מקורות" },
-  { href: "/deals", label: "💼 העסקאות שלי", highlight: true },
+  { href: "/deals", label: "העסקאות שלי", highlight: true },
 ];
 
 interface CityHit {
@@ -202,7 +203,7 @@ export default function TopNav({ cities, user }: { cities: string[]; user?: { na
                 </div>
               ) : (
                 <Link href="/login" className="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700">
-                  🔑 התחברות
+                  <Icon name="lock" size="1em" /> התחברות
                 </Link>
               )}
             </div>

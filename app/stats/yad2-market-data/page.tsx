@@ -124,13 +124,13 @@ export default async function Yad2DetailPage() {
       <div className="glass-card overflow-hidden">
         <div className="h-1 bg-gradient-to-l from-indigo-500 to-indigo-600" />
         <div className="px-3 py-2 text-2xs text-slate-500 bg-slate-50 border-b border-slate-100">
-          💡 לחיצה על כותרת עמודה ממיינת את הטבלה. לחיצה נוספת הופכת את כיוון המיון.
+          <Icon name="idea" size="1em" /> לחיצה על כותרת עמודה ממיינת את הטבלה. לחיצה נוספת הופכת את כיוון המיון.
         </div>
         <SortableTable initialRows={tableRows} />
       </div>
 
       <div className="mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200">
-        <h3 className="text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider">📋 מקרא</h3>
+        <h3 className="text-xs font-bold text-slate-900 mb-2 uppercase tracking-wider"><Icon name="clipboard" size="1em" /> מקרא</h3>
         <ul className="text-xs text-slate-700 space-y-1 list-disc pr-5">
           <li><strong>מודעות חדשות</strong>: דירות חדשות בקבלן שעלו לאתר בתקופה האחרונה</li>
           <li><strong>יד שנייה</strong>: דירות יד שנייה במכירה</li>

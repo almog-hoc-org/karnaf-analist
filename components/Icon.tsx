@@ -26,8 +26,12 @@
  * `building`. Naming by meaning is what keeps a set consistent as it grows —
  * the next person reaches for `trend-up`, not for a new drawing of an arrow.
  *
- * Unknown names render nothing rather than throwing: a missing icon must never
- * be able to take down a page, which is the same rule the mascot follows.
+ * AN UNKNOWN NAME RENDERS ITS OWN TEXT, never nothing. The first version
+ * returned null, and adding this component therefore DELETED icons from live
+ * pages — five section marks on the methodology page, all four toggles in the
+ * accessibility widget — with a green build and no warning. So the fallback is
+ * the state that existed before: an unmapped emoji still shows the emoji. Never
+ * better, but never worse, and visible to whoever is looking at the page.
  */
 import type { SVGProps } from "react";
 
@@ -101,6 +105,11 @@ const PATHS: Record<string, string> = {
   sparkle: "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18 16l.9 2.1L21 19l-2.1.9L18 22l-.9-2.1L15 19l2.1-.9z",
   dot: "M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7",
   target: "M12 3a9 9 0 100 18 9 9 0 000-18zM12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9zM12 11a1 1 0 100 2 1 1 0 000-2",
+  // A sellers' market and a buyers' market are opposite states, not decoration:
+  // these two carry that meaning wherever market_type is shown, with `scale`
+  // for the balanced case.
+  flame: "M12 3c3 4 5 6 5 9a5 5 0 01-10 0c0-1.5.7-2.8 1.7-3.8.3 1.3 1 2 1.8 2.3C10.2 8 10.8 5.5 12 3z",
+  snow: "M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9M12 7l-2.2-2M12 7l2.2-2M12 17l-2.2 2M12 17l2.2 2",
 
   // The mascot keeps its own shape — a horn in profile. It is the one mark on
   // the site that should NOT look like the rest of the family.
@@ -127,8 +136,12 @@ const ALIASES: Record<string, string> = {
   "🦏": "rhino",
   "📥": "download", "🕒": "clock", "📅": "calendar", "🗓": "calendar", "🗺": "map", "📍": "map",
   "🔵": "dot", "🟡": "dot", "•": "dot", "↗": "arrow-out", "🆕": "sparkle", "✨": "sparkle",
-  "🎉": "sparkle", "🔥": "sparkle", "◐": "contrast", "⏸": "pause", "🔤": "text-size",
+  "🎉": "sparkle", "◐": "contrast", "⏸": "pause", "🔤": "text-size",
   "🖱": "cursor", "⚙": "cursor", "🛠": "cursor", "🔧": "cursor",
+  // 🔥 is `flame`, not `sparkle` — it marks a sellers' market, which is a state
+  // of the market and not a celebration. It was in both lists; tsc caught the
+  // duplicate key, which is the only reason the wrong one did not win silently.
+  "⏰": "clock", "🔥": "flame", "❄": "snow", "⏳": "clock",
 
   /**
    * PROVENANCE. Not decoration — this pair is how a reader tells a number from

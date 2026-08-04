@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { withBasePath } from "@/lib/basePath";
+import Icon from "@/components/Icon";
 
 interface ProgressEvent {
   type: string;
@@ -98,7 +99,7 @@ export default function RefreshDataButton() {
         title="סריקת פרסומים חדשים — למ״ס + משרד האוצר"
       >
         <span className={`text-base ${running ? "animate-spin" : "group-hover:rotate-180 transition-transform duration-500"}`}>
-          {running ? "⟳" : "🔄"}
+          {running ? "⟳" : <Icon name="refresh" size="1em" />}
         </span>
         <span className="hidden sm:inline">{running ? "מרענן..." : "רענן נתונים"}</span>
       </button>
@@ -116,7 +117,7 @@ export default function RefreshDataButton() {
             {/* Header */}
             <header className="px-5 py-4 border-b border-slate-100 flex items-center gap-3 bg-indigo-50/60">
               <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white text-lg flex items-center justify-center shadow-lg">
-                {running ? <span className="animate-spin">⟳</span> : "🔄"}
+                {running ? <span className="animate-spin">⟳</span> : <Icon name="refresh" size="1em" />}
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-base font-bold text-slate-900 leading-tight">

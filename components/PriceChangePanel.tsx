@@ -3,6 +3,7 @@
 import { useState } from "react";
 import NumberCaption from "./NumberCaption";
 import type { CityPriceChanges } from "@/lib/price-changes";
+import Icon from "@/components/Icon";
 
 /**
  * 3y / 5y price-change panel. The window lives in local state only.
@@ -24,7 +25,7 @@ import type { CityPriceChanges } from "@/lib/price-changes";
  * changes no longer appear in browser history.
  *
  * The active window's badge is rendered full-size; the inactive window is
- * dimmed and shown smaller for context. An expandable "💡 איך חישבנו" panel
+ * dimmed and shown smaller for context. An expandable "<Icon name="idea" size="1em" /> איך חישבנו" panel
  * explains provenance + the median-masks-variation caveat.
  */
 export default function PriceChangePanel({
@@ -130,7 +131,7 @@ export default function PriceChangePanel({
         onClick={() => setExplainerOpen((x) => !x)}
         className="mt-3 text-2xs font-semibold text-indigo-700 hover:underline inline-flex items-center gap-1"
       >
-        💡 איך חישבנו (ומה המספר הזה לא אומר)
+        <Icon name="idea" size="1em" /> איך חישבנו (ומה המספר הזה לא אומר)
         <span className="text-slate-400">{explainerOpen ? "▲" : "▼"}</span>
       </button>
 
@@ -158,7 +159,7 @@ export default function PriceChangePanel({
             <strong> סקציית השכונות</strong> למטה כדי לראות איפה היה גידול ואיפה הייתה ירידה.
           </p>
           <p className="text-2xs text-slate-500 mt-2">
-            ⚠ הערה: שנת הסיום היא לפעמים <em>חלקית</em> (למשל 2025 כולל רק רבעון 1 לעיתים) — מה שמשקלל את המספר
+            <Icon name="warning" size="1em" /> הערה: שנת הסיום היא לפעמים <em>חלקית</em> (למשל 2025 כולל רק רבעון 1 לעיתים) — מה שמשקלל את המספר
             כלפי תחילת השנה.
           </p>
         </div>

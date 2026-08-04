@@ -88,7 +88,7 @@ export default async function SupplyCoveragePage() {
       <div className="glass-card overflow-hidden">
         <div className="h-1 bg-gradient-to-l from-indigo-500 to-indigo-600" />
         <div className="px-3 py-2 text-2xs text-slate-500 bg-slate-50 border-b border-slate-100">
-          💡 הטבלה ממוינת לפי גודל הפער המוחלט (הכי קיצוני בראש). כל עיר היא קישור לעמוד המלא שלה.
+          <Icon name="idea" size="1em" /> הטבלה ממוינת לפי גודל הפער המוחלט (הכי קיצוני בראש). כל עיר היא קישור לעמוד המלא שלה.
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm tabular-nums" dir="rtl">
@@ -149,7 +149,7 @@ export default async function SupplyCoveragePage() {
       </div>
 
       <div className="mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
-        <h3 className="font-bold text-slate-900 mb-2 text-sm">📋 שיטת החישוב</h3>
+        <h3 className="font-bold text-slate-900 mb-2 text-sm"><Icon name="clipboard" size="1em" /> שיטת החישוב</h3>
         <ul className="space-y-1 list-disc pr-5">
           <li><strong>דירות נדרשות (ביקוש)</strong> = גידול אוכלוסייה בחלון ÷ נפשות למשק בית. נפשות נלקח לפי עדיפות: יד2 (2026) ← מפקד 2022 (למ&quot;ס) ← ממוצע ארצי 3.27. קובץ המחקר הפנימי אינו משמש עוד לאמדן אוכלוסייה.</li>
           <li><strong>היצע</strong> נבחר פר שנה לפי סולם פולבק: <strong>גמר בנייה</strong> (איכותי ביותר) ← <strong>התחלות בנייה</strong> ← <strong>היתרי בנייה</strong>. הטבלה מציגה את כל שלושת המקורות כדי לראות שקיפות.</li>
