@@ -500,11 +500,15 @@ function buildStreetComparison(
   for (const bucketDef of bucketsDef) {
     const periods: PeriodData[] = [];
 
+    // `as const` belongs on the ARRAY, not on each label. Marking only the
+    // labels still let the array widen to (string | number)[], so BOTH
+    // destructured names inherited that union: `year` was not a number and
+    // `periodKey` was not a period key.
     for (const [periodKey, year] of [
-      ["current" as const, periodYears.current],
-      ["minus3" as const, periodYears.minus3],
-      ["minus5" as const, periodYears.minus5],
-    ]) {
+      ["current", periodYears.current],
+      ["minus3", periodYears.minus3],
+      ["minus5", periodYears.minus5],
+    ] as const) {
       // Step 1: try to aggregate by street + bucket + year
       const streetBucketYearDeals = streetDeals.filter(
         (d) =>

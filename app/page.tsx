@@ -15,6 +15,7 @@ import MarketInsightsSection from "@/components/MarketInsightsSection";
 import { loadCbsSales } from "@/lib/cbsSales";
 import CbsSalesChart from "@/components/CbsSalesChart";
 import { loadDiscoveredReports } from "@/lib/data-refresh";
+import { whatsappUrl } from "@/lib/brand";
 
 function formatPrice(value: number | null): string {
   if (value === null) return "—";
@@ -52,20 +53,42 @@ export default async function HomePage() {
       });
       lastUpdated = latest?.last_updated ?? null;
     }
-  } catch {
-    // DB not ready
+  } catch (e) {
+    // Was a bare `catch {}`. A database that is down and a database that is
+    // empty then looked identical, and both landed on the screen below — so an
+    // outage was silent in the logs and indistinguishable from first-run.
+    console.error("[home] city count failed:", e);
   }
 
   if (cityCount === 0) {
+    // THIS IS A VISITOR-FACING SCREEN, not a developer one. It used to print
+    // `npx tsx src/lib/import.ts` — a command for whoever runs the server, and
+    // a path that has not existed since the src/ layout was dropped. Anyone
+    // arriving from Instagram during a database blip was shown a shell command
+    // to run on a machine they do not have.
+    //
+    // What a visitor needs is that the problem is ours, that their time is not
+    // being wasted, and a way to reach a person. The operator gets the real
+    // diagnosis from the log line above and /api/health.
     return (
       <main className="min-h-screen flex flex-col items-center justify-center px-4">
-        <div className="text-center space-y-4">
-          <div className="text-5xl mb-6">🏗️</div>
-          <h1 className="text-2xl font-bold text-slate-900">אין נתונים במערכת</h1>
-          <p className="text-slate-600 text-lg">נא להריץ את סקריפט הייבוא.</p>
-          <code className="block mt-4 px-4 py-2 bg-slate-100 border border-slate-200 rounded-lg text-indigo-700 text-sm">
-            npx tsx src/lib/import.ts
-          </code>
+        <div className="max-w-md text-center space-y-4">
+          <div className="text-5xl mb-6">🦏</div>
+          <h1 className="text-2xl font-bold text-slate-900">הנתונים לא נטענים כרגע</h1>
+          <p className="text-slate-600 text-lg">
+            זו תקלה אצלנו, לא אצלך. אנחנו כבר על זה — נסה שוב בעוד כמה דקות.
+          </p>
+          <p className="text-sm text-slate-500">
+            דחוף?{" "}
+            <a
+              href={whatsappUrl("היי, האתר לא טוען לי נתונים")}
+              className="text-indigo-600 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              כתוב לנו בוואטסאפ
+            </a>
+          </p>
         </div>
       </main>
     );

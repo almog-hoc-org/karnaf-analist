@@ -205,19 +205,31 @@ interface RawItem { dealDate?: string; dealAmount?: number; roomNum?: number; as
 async function nadlanCity(browser: Browser, city: string, code: string, missingYears: number[] = []): Promise<DealRow[]> {
   const all = new Map<string, RawItem>();
   const addItems = (items: RawItem[]) => { for (const d of items) { if (!d.dealDate || !d.dealAmount) continue; const k = `${d.dealDate}|${d.dealAmount}|${d.assetArea}|${d.roomNum}`; if (!all.has(k)) all.set(k, d); } };
-  let page: import("puppeteer-core").Page | null = null;
+  // A holder object, not a `let`. TypeScript does not track assignments made
+  // inside a closure, and openFreshToken() below assigns the page from inside
+  // one — so from the compiler's view the variable is still the `null` it was
+  // initialised to, forever. That is why every use in this function carries a
+  // `!`: the assertions were silencing a narrowing that was simply wrong. The
+  // one place nobody asserted, the cleanup in `finally`, is where it surfaced
+  // as `Property 'close' does not exist on type 'never'` — the compiler had
+  // narrowed the type out of existence and stopped checking the call at all.
+  //
+  // Reading through a property defeats that narrowing, so the cleanup is
+  // type-checked again and the `!`s that remain mark real post-await
+  // uncertainty rather than a compiler artefact.
+  const tab: { page: import("puppeteer-core").Page | null } = { page: null };
   let p1: Record<string, unknown> | null = null;
   let lastPost = ""; // rolling: most recent deal-data POST body (SPA view swaps mint fresh tokens — v5 harvests them)
   let qOnToken = 0;
   const parsePost = (s: string): Record<string, unknown> | null => { try { return s ? b64json(unrev(JSON.parse(s)["##"]).split(".")[1]) : null; } catch { return null; } };
   const waitPost = async (): Promise<string> => { for (let w = 0; w < 12 && !lastPost; w++) await sleep(1800); return lastPost; };
   const openFreshToken = async (): Promise<boolean> => {
-    if (page) await page.close().catch(() => {});
-    page = await browser.newPage();
-    page.on("request", (rq) => { if (/\/deal-data/.test(rq.url()) && rq.method() === "POST") lastPost = rq.postData() || lastPost; });
-    page.on("response", async (r) => { if (!/\/deal-data/.test(r.url())) return; try { const d = decode(await r.text()) as { data?: { items?: RawItem[] } }; if (d?.data?.items?.length) addItems(d.data.items); } catch { /* */ } });
+    if (tab.page) await tab.page.close().catch(() => {});
+    tab.page = await browser.newPage();
+    tab.page.on("request", (rq) => { if (/\/deal-data/.test(rq.url()) && rq.method() === "POST") lastPost = rq.postData() || lastPost; });
+    tab.page.on("response", async (r) => { if (!/\/deal-data/.test(r.url())) return; try { const d = decode(await r.text()) as { data?: { items?: RawItem[] } }; if (d?.data?.items?.length) addItems(d.data.items); } catch { /* */ } });
     lastPost = "";
-    await page.goto(`https://www.nadlan.gov.il/?view=settlement&id=${code}&page=deals`, { waitUntil: "networkidle2", timeout: 60000 }).catch(() => {});
+    await tab.page.goto(`https://www.nadlan.gov.il/?view=settlement&id=${code}&page=deals`, { waitUntil: "networkidle2", timeout: 60000 }).catch(() => {});
     p1 = parsePost(await waitPost());
     qOnToken = 0;
     return !!(p1?.sk && p1?.token);
@@ -227,7 +239,7 @@ async function nadlanCity(browser: Browser, city: string, code: string, missingY
     const before = all.size;
     const now = Math.floor(Date.now() / 1000);
     const body = signBody({ base_id: tok.base_id, base_name: tok.base_name, sk: tok.sk, token: tok.token, exp: now + 110, domain: "www.nadlan.gov.il", ...extra });
-    const res = await page!.evaluate(async (bs) => { const r = await fetch("https://api.nadlan.gov.il/deal-data", { method: "POST", headers: { "content-type": "text/plain" }, body: JSON.stringify({ "##": bs }), redirect: "follow" }).catch(() => null); return r ? await r.text() : ""; }, body).catch(() => "");
+    const res = await tab.page!.evaluate(async (bs) => { const r = await fetch("https://api.nadlan.gov.il/deal-data", { method: "POST", headers: { "content-type": "text/plain" }, body: JSON.stringify({ "##": bs }), redirect: "follow" }).catch(() => null); return r ? await r.text() : ""; }, body).catch(() => "");
     let n = 0, minY = 9999, maxY = 0;
     try {
       const d = decode(String(res)) as { data?: { items?: RawItem[] } } | null;
@@ -250,7 +262,7 @@ async function nadlanCity(browser: Browser, city: string, code: string, missingY
                         // source vs the ~10k a capped sweep reached).
   const clickNeigh = async (name: string): Promise<Record<string, unknown> | null> => {
     lastPost = "";
-    const clicked = await page!.evaluate((nm) => {
+    const clicked = await tab.page!.evaluate((nm) => {
       const btn = [...document.querySelectorAll(".otherNeighborhoods button.nav-button1")].find((b) => (b.textContent || "").trim() === nm) as HTMLElement | undefined;
       if (!btn) return false; btn.click(); return true;
     }, name).catch(() => false);
@@ -263,9 +275,9 @@ async function nadlanCity(browser: Browser, city: string, code: string, missingY
     return null;
   };
   const backToSettlement = async (): Promise<boolean> => {
-    await page!.goBack({ waitUntil: "networkidle2", timeout: 30000 }).catch(() => {});
+    await tab.page!.goBack({ waitUntil: "networkidle2", timeout: 30000 }).catch(() => {});
     await sleep(rnd(1500, 2500));
-    if (/view=settlement/.test(page!.url())) return true;
+    if (/view=settlement/.test(tab.page!.url())) return true;
     return openFreshToken(); // SPA back failed → full settlement reload (fresh strip)
   };
   /** one direction on one token: fetch 1, and fetch 2 only when the window is full (n=500). */
@@ -294,7 +306,7 @@ async function nadlanCity(browser: Browser, city: string, code: string, missingY
   };
   const neighborhoodsPass = async (): Promise<void> => {
     if (!(await openFreshToken())) return; // fresh settlement view — the neighborhoods strip lives there
-    const names: string[] = await page!.evaluate(() =>
+    const names: string[] = await tab.page!.evaluate(() =>
       [...document.querySelectorAll(".otherNeighborhoods button.nav-button1")].map((b) => (b.textContent || "").trim()).filter((t) => t.length > 0)
     ).catch(() => []);
     if (!names.length) return;
@@ -305,7 +317,7 @@ async function nadlanCity(browser: Browser, city: string, code: string, missingY
     const before = all.size;
     for (const name of ranked) {
       try { await visitNeighborhood(name); } catch { /* next neighborhood */ }
-      if (!/view=settlement/.test(page!.url()) && !(await openFreshToken())) return; // need the strip for the next click
+      if (!/view=settlement/.test(tab.page!.url()) && !(await openFreshToken())) return; // need the strip for the next click
     }
     console.log(`   ↳ v5 neighborhoods: visited=${ranked.length} uniq+=${all.size - before}`);
   };
@@ -365,7 +377,7 @@ async function nadlanCity(browser: Browser, city: string, code: string, missingY
       // reaching 15–20+ year second-hand history (each neighborhood view mints its own token).
       await neighborhoodsPass();
     }
-  } finally { if (page) await page.close().catch(() => {}); }
+  } finally { if (tab.page) await tab.page.close().catch(() => {}); }
   const out: DealRow[] = [];
   for (const d of all.values()) { const dy = Number(String(d.dealDate).slice(0, 4)); if (dy <= 1990) continue; const yb = Number(d.yearBuilt) || null; out.push({ deal_date: String(d.dealDate).slice(0, 10), deal_year: dy, rooms: d.roomNum ?? null, area: d.assetArea ?? null, price: d.dealAmount ?? null, price_sqm: d.priceSM ?? null, year_built: yb, is_secondhand: yb && dy - yb >= SECONDHAND_MIN_AGE ? 1 : 0, neighborhood: d.neighborhoodName ?? null, cbs_code: code,
     // The authority publishes yearBuilt as 0 for a real share of deals (30% in
@@ -418,11 +430,15 @@ async function main() {
   }
 
   console.log(`\n=== collect-transactions — ${cities.length} cities · source=${srcArg}${force ? " --force" : ""} ===`);
-  let browser: Browser | null = null;
+  // Same closure-narrowing reason as `tab` above: ensureBrowser assigns from
+  // inside a closure, and the reconnect path in the retry handler assigns null
+  // from inside another, so a plain `let` reads as permanently null to the
+  // compiler and the teardown below stops being checked.
+  const conn: { browser: Browser | null } = { browser: null };
   const ensureBrowser = async (): Promise<Browser> => {
-    if (browser && browser.connected) return browser;
-    browser = await puppeteerCore.connect({ browserURL: "http://127.0.0.1:9222", defaultViewport: null });
-    return browser;
+    if (conn.browser && conn.browser.connected) return conn.browser;
+    conn.browser = await puppeteerCore.connect({ browserURL: "http://127.0.0.1:9222", defaultViewport: null });
+    return conn.browser;
   };
 
   const stats = { gvOk: 0, gvSkip: 0, gvEmpty: 0, ndOk: 0, ndSkip: 0, ndEmpty: 0, err: 0 };
@@ -462,13 +478,13 @@ async function main() {
             const fresh = collected.filter((r) => !seenK.has(`${r.deal_date}|${r.price}|${r.area}|${r.rooms}`));
             const rows = [...existing, ...fresh];
             if (rows.length) { await saveRows(city, "nadlan", rows); await upsertStatus(city, "nadlan", NADLAN_METHOD, rows, "ok"); const ys = [...new Set(rows.map((r) => r.deal_year))].sort(); console.log(`${tag} nadlan: +${fresh.length} new → ${rows.length} total ${ys[0]}–${ys[ys.length - 1]} (${rows.filter((r) => r.is_secondhand).length} 2nd)`); stats.ndOk++; } else { await upsertStatus(city, "nadlan", NADLAN_METHOD, [], "empty"); stats.ndEmpty++; } break; }
-          catch (e) { const msg = String(e instanceof Error ? e.message : e); if (/Connection closed|Target closed|disconnected/i.test(msg) && attempt === 0) { browser = null; await sleep(1500); continue; } await upsertStatus(city, "nadlan", NADLAN_METHOD, [], "error", msg); console.log(`${tag} nadlan: ERROR — ${msg.slice(0, 40)}`); stats.err++; break; }
+          catch (e) { const msg = String(e instanceof Error ? e.message : e); if (/Connection closed|Target closed|disconnected/i.test(msg) && attempt === 0) { conn.browser = null; await sleep(1500); continue; } await upsertStatus(city, "nadlan", NADLAN_METHOD, [], "error", msg); console.log(`${tag} nadlan: ERROR — ${msg.slice(0, 40)}`); stats.err++; break; }
         }
       }
       await sleep(rnd(2500, 5000));
     }
   }
-  if (browser?.connected) await browser.disconnect().catch(() => {});
+  if (conn.browser?.connected) await conn.browser.disconnect().catch(() => {});
   console.log(`\n--- Done. govmap ok=${stats.gvOk} skip=${stats.gvSkip} empty=${stats.gvEmpty} | nadlan ok=${stats.ndOk} skip=${stats.ndSkip} empty=${stats.ndEmpty} | err=${stats.err} ---`);
   await prisma.$disconnect();
 }

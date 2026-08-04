@@ -77,12 +77,19 @@ async function main() {
     if (!force && isFresh(city)) { console.log(`${tag}: skip (fresh)`); skip++; continue; }
 
     const page = await browser.newPage();
-    let deal: { data?: { items?: unknown[]; total_rows?: number } } | null = null;
+    // A holder, not a `let`. The response handler below is a closure, and
+    // TypeScript does not follow assignments made inside one — so a plain
+    // variable stays `null` in the compiler's view for the rest of the
+    // function, every read of it narrows to `never`, and the field accesses
+    // that follow are not checked against the shape at all. Reading through a
+    // property keeps the declared type, so `data.items` is type-checked again.
+    type DealResponse = { data?: { items?: unknown[]; total_rows?: number } };
+    const cap: { deal: DealResponse | null } = { deal: null };
     page.on("response", async (r) => {
       if (/\/deal-data/.test(r.url())) {
         try {
-          const d = decode(await r.text()) as typeof deal;
-          if (d?.data?.items?.length) deal = d;
+          const d = decode(await r.text()) as DealResponse | null;
+          if (d?.data?.items?.length) cap.deal = d;
         } catch { /* ignore */ }
       }
     });
@@ -92,14 +99,14 @@ async function main() {
         timeout: 60000,
       }).catch(() => {});
       // wait for the app to mint the token + fire deal-data
-      for (let w = 0; w < 6 && !deal; w++) await sleep(2500);
+      for (let w = 0; w < 6 && !cap.deal; w++) await sleep(2500);
 
-      const items = (deal?.data?.items ?? []) as Record<string, unknown>[];
+      const items = (cap.deal?.data?.items ?? []) as Record<string, unknown>[];
       if (items.length === 0) { console.log(`${tag}: EMPTY (no deals captured)`); empty++; }
       else {
         const payload = {
           city, cbs_code: code, capturedAt: new Date().toISOString(),
-          totalRows: deal?.data?.total_rows ?? null,
+          totalRows: cap.deal?.data?.total_rows ?? null,
           count: items.length,
           deals: items.map((d) => ({
             dealDate: d.dealDate, dealAmount: d.dealAmount, roomNum: d.roomNum,
@@ -108,7 +115,7 @@ async function main() {
           })),
         };
         fs.writeFileSync(path.join(OUT_DIR, safeName(city)), JSON.stringify(payload, null, 1));
-        console.log(`${tag}: ${items.length} deals (of ${deal?.data?.total_rows ?? "?"})`);
+        console.log(`${tag}: ${items.length} deals (of ${cap.deal?.data?.total_rows ?? "?"})`);
         ok++;
       }
     } catch (e) {

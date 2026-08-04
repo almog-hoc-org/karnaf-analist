@@ -17,6 +17,10 @@
  * Limit (test):   npx tsx scripts/scrape_yadata.ts --limit 5
  */
 import puppeteerCore from "puppeteer-core";
+// The default export is a VALUE, so reaching through it for a type reads as
+// a namespace lookup that does not exist, and the annotations below never
+// resolved. Types come from the type-only import.
+import type { Browser } from "puppeteer-core";
 import { addExtra } from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import { PrismaClient } from "@prisma/client";
@@ -137,7 +141,7 @@ async function main() {
   //                  Bypasses Cloudflare bot detection completely (it's a real session).
   //   default      → headless launch with stealth (may fail on CF challenge).
   const connectMode = args.includes("--connect");
-  let browser: puppeteerCore.Browser;
+  let browser: Browser;
   if (connectMode) {
     console.log("   Mode: connecting to existing Chrome at http://127.0.0.1:9222");
     browser = await puppeteerCore.connect({
@@ -154,7 +158,7 @@ async function main() {
         "--disable-setuid-sandbox",
         "--disable-blink-features=AutomationControlled",
       ],
-    }) as unknown as puppeteerCore.Browser;
+    }) as unknown as Browser;
   }
 
   const scraped: ScrapedCity[] = [];
