@@ -505,7 +505,7 @@ async function main() {
             const fresh = collected.filter((r) => !seenK.has(`${r.deal_date}|${r.price}|${r.area}|${r.rooms}`));
             const rows = [...existing, ...fresh];
             if (rows.length) { await saveRows(city, "nadlan", rows); await upsertStatus(city, "nadlan", NADLAN_METHOD, rows, "ok"); const ys = [...new Set(rows.map((r) => r.deal_year))].sort(); console.log(`${tag} nadlan: +${fresh.length} new → ${rows.length} total ${ys[0]}–${ys[ys.length - 1]} (${rows.filter((r) => r.is_secondhand).length} 2nd)`); stats.ndOk++; } else { await upsertStatus(city, "nadlan", NADLAN_METHOD, [], "empty"); stats.ndEmpty++; } break; }
-          catch (e) { const msg = String(e instanceof Error ? e.message : e); if (/Connection closed|Target closed|disconnected/i.test(msg) && attempt === 0) { conn.browser = null; await sleep(1500); continue; } await upsertStatus(city, "nadlan", NADLAN_METHOD, [], "error", msg); console.log(`${tag} nadlan: ERROR — ${msg.slice(0, 40)}`); stats.err++; break; }
+          catch (e) { const msg = String(e instanceof Error ? e.message : e); if (/Connection closed|Target closed|disconnected/i.test(msg) && attempt === 0) { conn.browser = null; await sleep(1500); continue; } await upsertStatus(city, "nadlan", NADLAN_METHOD, [], "error", msg); console.log(`${tag} nadlan: ERROR — ${msg.replace(/\s+/g, " ").slice(0, 300)}`); stats.err++; break; }
         }
       }
       await sleep(rnd(2500, 5000));

@@ -215,6 +215,18 @@ model nadlan_transactions {
   luxury           Int?    @default(0)
   luxury_ratio     Float?
   source        String?  @default("nadlan")
+  // The Tax Authority's OWN developer-vs-resale flags, and the classifier's
+  // verdict column. These existed only on the live database — added by hand,
+  // never here — so every fresh database was born without them and the
+  // collector crashed on its first insert. Found when the quarterly scratch
+  // collection failed on all three probe cities with "no such column":
+  // the same writers-but-no-creator shape as nadlan_collection_status.
+  // hok_hamecher matters most where yearBuilt comes back 0 (14-46% of deals
+  // depending on the city): it is the only signal that can classify those
+  // deals into the price series at all.
+  hok_hamecher  Int?
+  prev_deals    Int?
+  class_source  String?
   captured_at   DateTime @default(now())
 
   @@index([city_name, deal_year, room_bucket], map: "idx_nadlan_tx_city_year_room")
