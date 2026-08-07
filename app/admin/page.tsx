@@ -9,6 +9,7 @@ import AdminTabs from "@/components/AdminTabs";
 import AdminReliabilityPanel, { type ReliabilityReport, type AnomalyVerification, type CleaningVerification } from "@/components/AdminReliabilityPanel";
 import AdminLogicPanel from "@/components/AdminLogicPanel";
 import AdminUsersPanel, { type AdminUserStats, type AdminFeedbackRow } from "@/components/AdminUsersPanel";
+import AdminUsagePanel from "@/components/AdminUsagePanel";
 import { appDb } from "@/lib/appDb";
 import { ravMesserConfigured, crmConfigured } from "@/lib/mailingSync";
 import { ensureFeedbackTable } from "@/lib/feedback";
@@ -148,6 +149,7 @@ export default async function AdminPage() {
         deals={<AdminDealsBrowser cities={cities.map((c) => c.city_name)} />}
         tables={<AdminTablesBrowser />}
         users={<AdminUsersPanel stats={loadUserStats()} feedback={loadRecentFeedback()} ravConfigured={ravMesserConfigured()} crmConfigured={crmConfigured()} />}
+        usage={<AdminUsagePanel />}
         overview={<>
       {/* Reconciliation strip — total = active + excluded(by reason), no mismatch */}
       <div className="mb-4 rounded-xl border border-indigo-100 bg-indigo-50/60 px-4 py-2 text-center text-xs font-bold text-slate-700" dir="rtl">

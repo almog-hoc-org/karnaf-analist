@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { href: "/cities", label: "ערים" },
   { href: "/compare", label: "השוואה" },
   { href: "/national", label: "ארצי" },
+  { href: "/calculators", label: "מחשבונים" },
   { href: "/sources", label: "מקורות" },
   { href: "/deals", label: "העסקאות שלי", highlight: true },
 ];
