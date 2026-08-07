@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import SortableTable, { type Yad2Row } from "./SortableTable";
 import Icon from "@/components/Icon";
 
-export const metadata = { title: 'יד2 — נתוני מצב שוק לפי עיר | קרנף אנליסט' };
+export const metadata = { title: 'מצב שוק חי — לפי עיר | קרנף אנליסט' };
 
 function fmt(v: number | null | undefined): string {
   if (v === null || v === undefined) return "—";
@@ -56,12 +56,12 @@ export default async function Yad2DetailPage() {
             <Icon name="building" size="1em" />
           </div>
           <div className="flex-1">
-            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">יד2</p>
+            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">מדדי לוחות</p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
               נתוני מצב שוק — לפי עיר
             </h1>
             <p className="text-slate-600 text-base mt-1">
-              מודעות חדשות, יד שנייה, ימים בשוק, קונים פעילים וסיווג שוק (קונים/מוכרים) לפי יד2
+              מודעות חדשות, יד שנייה, ימים בשוק, קונים פעילים וסיווג שוק (קונים/מוכרים) — מדדי היצע וביקוש מלוחות הנדל״ן
             </p>
             <div className="flex flex-wrap gap-3 mt-3 text-sm">
               <span className="px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700 tabular-nums shadow-sm">
@@ -135,9 +135,9 @@ export default async function Yad2DetailPage() {
           <li><strong>מודעות חדשות</strong>: דירות חדשות בקבלן שעלו לאתר בתקופה האחרונה</li>
           <li><strong>יד שנייה</strong>: דירות יד שנייה במכירה</li>
           <li><strong>ימים בשוק (ממוצע)</strong>: כמה ימים מודעה ממוצעת חיה לפני שמתבצעת עסקה (נמוך = שוק חם)</li>
-          <li><strong>קונים פעילים</strong>: משתמשי יד2 שביצעו פעולת חיפוש דירות בעיר בחודש האחרון</li>
+          <li><strong>קונים פעילים</strong>: גולשים שביצעו פעולת חיפוש דירות בעיר בחודש האחרון</li>
           <li><strong>YoY</strong>: שינוי לעומת אותה תקופה לפני שנה. עבור ימים בשוק — ירידה (ירוק) משמעותה שוק חם יותר</li>
-          <li><strong>סוג שוק</strong>: סיווג של יד2 לפי יחס היצע לביקוש</li>
+          <li><strong>סוג שוק</strong>: סיווג לפי יחס היצע לביקוש</li>
         </ul>
       </div>
 

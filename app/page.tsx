@@ -301,9 +301,13 @@ export default async function HomePage() {
         </p>
       </header>
 
-      {/* ── HERO KPIs — live values computed from the DB on every render ──
-          Each number carries its own explicit time window + provenance caption. */}
-      <section className="card-grid mt-8 grid-cols-1 sm:grid-cols-3">
+      {/* ── HERO KPIs + the flagship price-change explorer ──
+          One flex column, reordered by breakpoint: on phones the explorer sits
+          directly under the search box (it is the #1 thing users come for —
+          operator decision 8/2026); on desktop it spans a full row beneath the
+          three KPI cubes. One instance, two positions, no duplication. */}
+      <div className="mt-8 flex flex-col">
+      <section className="card-grid order-2 grid-cols-1 sm:order-1 sm:grid-cols-3">
         {/* Total deals in the transactions DB */}
         <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
           <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
@@ -364,6 +368,13 @@ export default async function HomePage() {
 
       </section>
 
+      {/* fully-filterable price-changes ranking (scope × metric × year range) —
+          promoted out of the rankings grid to a full-width row of its own */}
+      <div className="order-1 mb-6 sm:order-2 sm:mb-0 sm:mt-6">
+        <PriceGainsRankingCard series={gainSeries} minYear={2015} maxYear={gainMaxYear} />
+      </div>
+      </div>
+
       {/* ── Rankings ─────────────────────────────────────────────── */}
       <section className="stack mt-14">
         <div className="section-header mb-6">
@@ -374,8 +385,8 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* 4 cards → never more than 4 columns (a 5-col grid squeezed each card to 165px and city names vanished) */}
-        <div className="card-grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+        {/* 3 cards after the price-gains card moved to its own row above */}
+        <div className="card-grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {rankings.map((ranking) => (
             <RankingCard
               key={ranking.title}
@@ -385,8 +396,6 @@ export default async function HomePage() {
               detailHref={ranking.detailHref}
             />
           ))}
-          {/* fully-filterable price-changes ranking (scope × metric × year range) */}
-          <PriceGainsRankingCard series={gainSeries} minYear={2015} maxYear={gainMaxYear} />
         </div>
       </section>
 

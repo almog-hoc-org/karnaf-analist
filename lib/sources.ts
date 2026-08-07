@@ -317,18 +317,10 @@ export const SOURCES: Source[] = [
     publicationSchedule: { type: "continuous" },
     language: "he",
   },
-  {
-    id: "madlan",
-    name: 'מדלן — Madlan',
-    organization: 'Madlan',
-    category: "market",
-    description: 'נתוני מחירי שוק לפי שכונה',
-    url: 'https://www.madlan.co.il',
-    usedFor: 'אימות מחירי שוק לערים ערביות וקהילות התיישבות',
-    feedsTables: ['city.price_per_sqm_2026'],
-    publicationSchedule: { type: "continuous" },
-    language: "he",
-  },
+  // madlan removed from the catalog (operator request, 8/2026): it was listed
+  // as a one-off verification aid, is not a feed, and naming a commercial
+  // competitor on the sources page implied an ongoing dependency that no
+  // longer exists. The historical spot-check it described is documented in git.
   {
     id: "madadirot",
     name: 'מדדי הדירות — Madadirot',

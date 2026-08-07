@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { CityChangeMetrics, ChangeMetric, YearValue } from "@/lib/cityChangeMetrics";
 import TrendValue, { trendTextClass } from "./TrendValue";
 import Icon from "@/components/Icon";
+import InfoTip from "@/components/InfoTip";
 
 interface CityRow {
   city_name: string;
@@ -65,7 +66,7 @@ type SortKey = keyof CityRow;
 type ViewMode = "all" | "top3y" | "top5y";
 type Win = 1 | 3 | 5 | 10;
 
-type ColumnDef = { key: SortKey; label: string; format: (v: any, row?: CityRow) => string; width: string };
+type ColumnDef = { key: SortKey; label: string; format: (v: any, row?: CityRow) => string; width: string; help?: string };
 
 /** The windowed price-change columns (each has its own year-window selector).
  * SECOND-HAND FIRST: the two second-hand columns lead and are the site's basis for
@@ -104,37 +105,50 @@ function fmtSigned(v: number, digits = 1): string {
 
 const columns: ColumnDef[] = [
   { key: "city_name", label: "עיר", format: (v) => v ?? "—", width: "min-w-[120px]" },
-  { key: "dealCount", label: "עסקאות במאגר", format: (v) => (v ? Math.round(v).toLocaleString("he-IL") : "—"), width: "min-w-[95px]" },
+  { key: "dealCount", label: "עסקאות במאגר", format: (v) => (v ? Math.round(v).toLocaleString("he-IL") : "—"), width: "min-w-[95px]",
+    help: "כמה עסקאות אמת מרשות המסים יש לנו על העיר, אחרי ניקוי כפילויות ואנומליות. ככל שיש יותר — המדדים אמינים יותר. עיר עם מעט עסקאות מסומנת בצהוב ולא נכנסת לדירוגים." },
   { key: "population_2024", label: "אוכלוסייה 2024", format: (v, row) => { const val = v ?? row?.population_2022; return val ? Math.round(val).toLocaleString("he-IL") : "—"; }, width: "min-w-[90px]" },
   { key: "population_2022", label: "אוכלוסייה 2022", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
   { key: "population_2026", label: "אוכלוסייה 2026", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
   { key: "households_2022", label: "משקי בית 2022", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
   // Price levels — from REAL collected transactions (₪/m², latest full year with 10+ deals).
   // Four separate metrics; the user picks which to show (עמודות ▾).
-  { key: "tx_median_sh", label: "חציון יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]" },
-  { key: "tx_avg_sh", label: "ממוצע יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]" },
-  { key: "tx_avg_all", label: "ממוצע כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]" },
-  { key: "tx_median_all", label: "חציון כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]" },
+  { key: "tx_median_sh", label: "חציון יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]",
+    help: "המחיר למ״ר של דירת יד-2 האמצעית בעיר — חצי מהעסקאות מעליה וחצי מתחתיה. חסין לעסקאות קיצון, ולכן המדד הטוב ביותר להשוואת רמות מחירים בין ערים." },
+  { key: "tx_avg_sh", label: "ממוצע יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]",
+    help: "ממוצע ₪/מ״ר של עסקאות יד-2 בשנה האחרונה עם נתונים מלאים. רגיש יותר לעסקאות חריגות מהחציון — כשהם רחוקים זה מזה, כנראה שיש בעיר תת-שווקים שונים מאוד." },
+  { key: "tx_avg_all", label: "ממוצע כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]",
+    help: "ממוצע ₪/מ״ר של כל העסקאות — כולל דירות חדשות מקבלן. בעיר עם שכונה חדשה גדולה המספר מוטה כלפי מעלה; להשוואת שוק קיים עדיף מדדי יד-2." },
+  { key: "tx_median_all", label: "חציון כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]",
+    help: "חציון ₪/מ״ר על כל העסקאות, כולל חדשות. שילוב של יציבות החציון עם תמונת השוק המלאה." },
   {
     key: "price_change_3y_pct",
     label: "שינוי 3 שנים",
     format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_3y_from && row?.price_change_3y_to ? ` (${row.price_change_3y_from}→${row.price_change_3y_to})` : ""}`,
     width: "min-w-[130px]",
+    help: "שינוי המחיר החציוני הרשמי (כל העסקאות, מחיר עסקה מלא) על פני 3 שנים, עד השנה המלאה האחרונה. השנים בסוגריים הן טווח ההשוואה בפועל.",
   },
   {
     key: "price_change_5y_pct",
     label: "שינוי 5 שנים",
     format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_5y_from && row?.price_change_5y_to ? ` (${row.price_change_5y_from}→${row.price_change_5y_to})` : ""}`,
     width: "min-w-[130px]",
+    help: "שינוי המחיר החציוני הרשמי על פני 5 שנים, עד השנה המלאה האחרונה — מבט ארוך שמחליק תנודות קצרות.",
   },
   // Removed "% הזהב" column — was based on stale population projections
   // and produced misleading negative percentages for cities like Tel Aviv.
-  { key: "people_per_apartment", label: "נפשות/דירה", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[80px]" },
-  { key: "total_permits", label: "סה״כ היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
-  { key: "avg_permits", label: "ממוצע היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
-  { key: "unsold_inventory", label: "מלאי לא מכור", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
-  { key: "years_to_clear", label: "שנות פינוי", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[80px]" },
-  { key: "construction_4y_gross", label: "בנייה 4 שנים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
+  { key: "people_per_apartment", label: "נפשות/דירה", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[80px]",
+    help: "אוכלוסייה חלקי מלאי דירות. מספר גבוה מהממוצע הארצי מרמז על צפיפות וביקוש כבוש; ירידה לאורך זמן מרמזת שההיצע מדביק את הביקוש." },
+  { key: "total_permits", label: "סה״כ היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+    help: "סך היתרי הבנייה שאושרו בעיר בשנים האחרונות. היתר הוא הצעד לפני התחלת בנייה — אינדיקטור מוקדם להיצע עתידי." },
+  { key: "avg_permits", label: "ממוצע היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+    help: "ממוצע היתרים שנתי — מנרמל שנים חריגות ומאפשר השוואה הוגנת בין ערים." },
+  { key: "unsold_inventory", label: "מלאי לא מכור", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+    help: "דירות חדשות שנבנו וטרם נמכרו. מלאי גדול = לחץ על הקבלנים ומרחב מיקוח; מלאי קטן = ביקוש שאוכל את ההיצע." },
+  { key: "years_to_clear", label: "שנות פינוי", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[80px]",
+    help: "בקצב המכירה הנוכחי — כמה שנים ייקח למכור את המלאי הלא-מכור. מעל ~1.5 שנים נחשב שוק איטי; מתחת לשנה — שוק חם." },
+  { key: "construction_4y_gross", label: "בנייה 4 שנים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+    help: "סך הדירות שנבנו ב-4 השנים האחרונות — ההיצע החדש שנכנס בפועל לעיר, מול הגידול באוכלוסייה." },
   { key: "urban_renewal_status", label: "התחדשות עירונית", format: (v) => v ?? "—", width: "min-w-[110px]" },
 ];
 
@@ -837,6 +851,7 @@ export default function CitiesTable({
                       }`}>
                       {draggable && <span className="ml-1 cursor-grab text-slate-300">⠿</span>}
                       {col.label}
+                      {col.help && <span className="mr-1 inline-block"><InfoTip text={col.help} label={`הסבר: ${col.label}`} /></span>}
                       {sortKey === col.key && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
                     </th>
                   );
@@ -848,6 +863,7 @@ export default function CitiesTable({
                       className={`sticky top-0 md:top-14 z-10 bg-white border-b border-slate-300 px-3 py-3 text-right text-slate-500 font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none min-w-[110px] ${dropRing}`}>
                       <span className="ml-1 cursor-grab text-slate-300">⠿</span>
                       {c.label}
+                      <span className="mr-1 inline-block"><InfoTip text={c.title(refYear)} label={`הסבר: ${c.label}`} /></span>
                       {sortKey === c.id && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
                       <div className="text-2xs text-slate-400 font-normal mt-0.5 leading-tight">{c.sub(refYear)}</div>
                     </th>

@@ -293,7 +293,6 @@ async function fetchSourceData(src: Source): Promise<React.ReactNode> {
         </div>
       );
     }
-    case "madlan":
     case "madadirot":
     case "globes":
     case "calcalist":

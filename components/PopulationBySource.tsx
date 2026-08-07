@@ -47,7 +47,7 @@ export default function PopulationBySource({
 
       <div className="glass-card overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm" dir="rtl">
+          <table className="table-pin-first w-full text-sm" dir="rtl">
             <thead className="bg-slate-50/70">
               <tr className="border-b border-slate-200">
                 <th className="py-3 px-3 text-right text-xs text-slate-500 font-bold w-20">שנה</th>

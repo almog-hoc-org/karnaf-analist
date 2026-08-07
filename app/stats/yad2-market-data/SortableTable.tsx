@@ -109,7 +109,7 @@ const COLUMNS: ColMeta[] = [
   { key: "new_properties", label: "מודעות חדשות", align: "center", className: "text-slate-500", defaultDir: "desc" },
   { key: "new_properties_yoy", label: "YoY חדשות", align: "center", className: "text-slate-400 text-2xs", defaultDir: "desc" },
   { key: "secondhand_properties", label: "יד שנייה", align: "center", className: "text-slate-500", defaultDir: "desc" },
-  { key: "secondhand_yoy", label: "YoY יד2", align: "center", className: "text-slate-400 text-2xs", defaultDir: "desc" },
+  { key: "secondhand_yoy", label: "YoY יד-2", align: "center", className: "text-slate-400 text-2xs", defaultDir: "desc" },
   { key: "avg_days_on_market", label: "ימים בשוק", align: "center", className: "text-slate-500", defaultDir: "asc" },
   { key: "days_yoy", label: "YoY ימים", align: "center", className: "text-slate-400 text-2xs", defaultDir: "asc" },
   { key: "buyers_count", label: "קונים", align: "center", className: "text-slate-500", defaultDir: "desc" },

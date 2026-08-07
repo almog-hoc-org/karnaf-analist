@@ -5,7 +5,9 @@ import type { StreetComp } from "@/lib/compTypes";
 import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import DealsManager from "@/components/DealsManager";
+import CourseBanner from "@/components/CourseBanner";
 import { requireWorkspaceId } from "@/lib/auth";
+import { getRuleNum } from "@/lib/systemRules";
 import Icon from "@/components/Icon";
 
 export const metadata = { title: 'ניהול והשוואת עסקאות | קרנף אנליסט' };
@@ -72,12 +74,21 @@ export default async function DealsPage() {
   return (
     <main className="min-h-screen page-wrap-wide py-8">
       <header className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-          <span className="text-gradient-hero">ניהול והשוואת עסקאות</span>
-        </h1>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight">
+            <span className="text-gradient-hero">ניהול והשוואת עסקאות</span>
+          </h1>
+          {/* the one commercial touchpoint on this page — compact, beside the title */}
+          <div className="rounded-xl border border-indigo-100 bg-indigo-50/60 px-3 py-2">
+            <CourseBanner compact />
+          </div>
+        </div>
         <p className="mt-2 max-w-2xl text-sm text-slate-500 leading-relaxed">
           עקוב אחרי דירות בתהליך החיפוש: הזן עסקה, קבל השוואה מיידית מול עסקאות אמת ברחוב ובשכונה,
           נהל סטטוס, משימות וקישורים — הכל במקום אחד. <Icon name="source-own" size="1em" /> ההשוואות מבוססות מאגר העסקאות העצמאי.
+        </p>
+        <p className="mt-1.5 text-xs font-semibold text-emerald-700">
+          <Icon name="check" size="1em" /> העסקאות והסטטוסים נשמרים בחשבונך — זמינים מכל מכשיר בכל כניסה
         </p>
       </header>
       <DealsManager
@@ -85,6 +96,7 @@ export default async function DealsPage() {
         tracked={summaries}
         deals={deals}
         comps={comps}
+        modernMinYear={getRuleNum("modern_min_year", 2005)}
       />
     </main>
   );

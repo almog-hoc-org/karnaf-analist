@@ -81,7 +81,7 @@ export async function computeStreetComp(
     }
 
     return prisma.$queryRawUnsafe<CompDeal[]>(
-      `SELECT deal_date, area, rooms, price, price_sqm, street, house_num, neighborhood
+      `SELECT deal_date, area, rooms, price, price_sqm, street, house_num, neighborhood, year_built
        FROM nadlan_transactions WHERE ${conds.join(" AND ")}
        ORDER BY deal_date DESC LIMIT 400`,
       ...params

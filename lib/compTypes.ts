@@ -15,6 +15,8 @@ export interface CompDeal {
   street: string | null;
   house_num: string | null;
   neighborhood: string | null;
+  /** build year — a 10-year-old building and a 50-year-old one are different markets */
+  year_built: number | null;
 }
 
 /** What location granularity the comparison rows actually carry, so the UI can

@@ -393,7 +393,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         <p className="text-2xs leading-relaxed text-slate-600">
           הנתונים המרכזיים בעמוד מבוססים על עסקאות אמת שנאספו באופן בלתי-תלוי מרשות המסים.
           עסקת <strong>יד-שנייה</strong> = חלפו {getRuleNum("secondhand_min_age", 4)}+ שנים משנת הבנייה לרכישה; <strong>חדשה</strong> = פחות מכך.
-          נתונים ממקורות נוספים (למ״ס, גוב-נדלן, יד2) מסומנים <Icon name="source-official" size="1em" />.
+          נתונים ממקורות נוספים (למ״ס, גוב-נדלן, מדדי שוק) מסומנים <Icon name="source-official" size="1em" />.
         </p>
       </div>
 
@@ -448,8 +448,8 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             <div className="flex items-center gap-3">
               <div className="section-header-icon"><Icon name="building" size="1em" /></div>
               <div>
-                <h2 className="flex items-center gap-2 flex-wrap">מצב שוק — נתוני יד2 <SourceBadge kind="external" name="יד2 / ידאטה" /></h2>
-                <p>מודעות, ימים בשוק, סוג שוק | מקור: yad2 / yadata</p>
+                <h2 className="flex items-center gap-2 flex-wrap">מצב שוק חי <SourceBadge kind="external" name="מדדי לוחות" /></h2>
+                <p>מודעות פעילות, ימים בשוק וסוג שוק — מדדי היצע וביקוש עדכניים</p>
               </div>
             </div>
             <Link
@@ -512,14 +512,14 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             <div className="grid grid-cols-2 gap-3 mt-3">
               {yad2Data.households && (
                 <KpiTile
-                  label="משקי בית (יד2)"
+                  label="משקי בית (מדדי לוחות)"
                   value={formatNumber(yad2Data.households)}
                   accent="purple"
                 />
               )}
               {yad2Data.avg_household_size && (
                 <KpiTile
-                  label="נפשות למשק בית (יד2)"
+                  label="נפשות למשק בית (מדדי לוחות)"
                   value={formatNumber(yad2Data.avg_household_size, 1)}
                   accent="amber"
                 />
@@ -877,7 +877,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             <h2 className="flex items-center gap-2 flex-wrap">היצע וביקוש — ניתוח מקיף <SourceBadge kind="external" name='למ"ס' /></h2>
             <p>
               חישוב מגידול אוכלוסייה לפי {ppa.toFixed(1)} נפשות/משק בית
-              {gapAnalysis ? ` (מקור: ${gapAnalysis.personsPerHouseholdSource === 'yad2' ? 'יד2' : gapAnalysis.personsPerHouseholdSource === 'census2022' ? 'מפקד 2022' : 'ממוצע ארצי'})` : ''}
+              {gapAnalysis ? ` (מקור: ${gapAnalysis.personsPerHouseholdSource === 'yad2' ? 'מדדי לוחות' : gapAnalysis.personsPerHouseholdSource === 'census2022' ? 'מפקד 2022' : 'ממוצע ארצי'})` : ''}
               {' | '}חלון: {gapAnalysis?.windowStart ?? '—'}-{gapAnalysis?.windowEnd ?? '—'}
               {' | '}סולם היצע: גמר ← התחלות ← היתרים
             </p>

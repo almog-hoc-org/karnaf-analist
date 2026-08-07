@@ -185,7 +185,7 @@ function StreetTable({
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm" dir="rtl">
+      <table className="table-pin-first w-full text-sm" dir="rtl">
         <thead>
           <tr className="border-b border-slate-200">
             <th className="px-3 py-2.5 text-right text-2xs text-slate-500 font-medium w-24 whitespace-nowrap">

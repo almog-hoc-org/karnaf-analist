@@ -3,6 +3,7 @@ import type { CityGraphData, DealCountCube, NadlanDeal } from "@/lib/nadlanTrans
 import MultiChartStudio from "./MultiChartStudio";
 import PriceChangePanel from "./PriceChangePanel";
 import Icon from "@/components/Icon";
+import InfoTip from "@/components/InfoTip";
 
 /**
  * One bordered section — everything from the COLLECTED nadlan transactions:
@@ -60,10 +61,11 @@ export default function PriceChangeSection({
 
       {/* 2. City-wide median price change (different metric — clearly labelled) */}
       <div className="mt-4 rounded-2xl bg-white/70 border border-slate-200 p-1">
-        <div className="px-4 pt-3">
+        <div className="flex items-center gap-1.5 px-4 pt-3">
           <span className="inline-block text-2xs font-bold text-purple-700 bg-purple-50 border border-purple-200 rounded-full px-2 py-0.5">
             מדד משלים — מחיר חציוני כולל לדירה (לא ₪/מ&quot;ר)
           </span>
+          <InfoTip text="בשונה מהגרפים למעלה (₪ למ״ר), הפאנל הזה מודד את מחיר העסקה החציוני המלא מהסדרה הרשמית — כמה עולה 'הדירה האמצעית' בעיר. שני חלונות: 3 ו-5 שנים, שניהם נגמרים בשנה המלאה האחרונה כדי לא להשוות מול שנה חלקית." />
         </div>
         <PriceChangePanel changes={priceChanges} initialWindow={initialWindow} cityName={cityName} />
       </div>

@@ -35,11 +35,13 @@ function compMatchNote(c: StreetComp): string {
   return `כל הדירות · ${geo}`;
 }
 
-export default function DealsManager({ allCities, tracked, deals, comps }: {
+export default function DealsManager({ allCities, tracked, deals, comps, modernMinYear = 2005 }: {
   allCities: string[];
   tracked: TrackedCitySummary[];
   deals: ClientDeal[];
   comps: Record<number, StreetComp>;
+  /** the admin modern_min_year rule — the modern/old tag must match the rest of the site */
+  modernMinYear?: number;
 }) {
   const [, startTransition] = useTransition();
   const [cityQ, setCityQ] = useState("");
@@ -212,7 +214,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
 
         {/* table */}
         <div className="glass-card overflow-x-auto">
-          <table className="w-full min-w-[900px] text-xs" dir="rtl">
+          <table className="table-pin-first w-full min-w-[900px] text-xs" dir="rtl">
             <thead className="bg-slate-50 text-2xs font-bold text-slate-500">
               <tr className="border-b border-slate-200">
                 <th className="px-3 py-2.5 text-right">📍 כתובת</th>
@@ -305,7 +307,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                       // the wrapper) — same content, reachable layout.
                       <tr className="max-md:hidden border-b border-slate-100 bg-slate-50/70">
                         <td colSpan={12} className="px-4 py-4">
-                          <DealDetail deal={d} comp={comp} askSqm={s} />
+                          <DealDetail deal={d} comp={comp} askSqm={s} modernMinYear={modernMinYear} />
                         </td>
                       </tr>
                     )}
@@ -326,7 +328,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
                 <span className="text-sm font-black text-slate-900">פירוט — {d.city}</span>
                 <button onClick={() => setOpenRow(null)} className="rounded-lg px-2 py-1 text-2xs font-bold text-slate-500">סגור ✕</button>
               </div>
-              <DealDetail deal={d} comp={comps[d.id]} askSqm={sqm(d)} />
+              <DealDetail deal={d} comp={comps[d.id]} askSqm={sqm(d)} modernMinYear={modernMinYear} />
             </div>
           );
         })()}
@@ -340,7 +342,7 @@ export default function DealsManager({ allCities, tracked, deals, comps }: {
 
 function FragmentRow({ children }: { children: React.ReactNode }) { return <>{children}</>; }
 
-function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetComp; askSqm: number | null }) {
+function DealDetail({ deal, comp, askSqm, modernMinYear }: { deal: ClientDeal; comp?: StreetComp; askSqm: number | null; modernMinYear: number }) {
   const [, startTransition] = useTransition();
   const [taskTitle, setTaskTitle] = useState("");
   const [notes, setNotes] = useState(deal.notes ?? "");
@@ -361,12 +363,13 @@ function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetCom
           const addrHead = grain === "street" ? "כתובת" : grain === "neighborhood" ? "שכונה" : null;
           return (
             <>
-              <table className="w-full text-2xs" dir="rtl">
+              <div className="overflow-x-auto">
+              <table className="table-pin-first w-full min-w-[560px] text-2xs" dir="rtl">
                 <thead className="text-2xs font-bold text-slate-400">
                   <tr>
                     <th className="py-1 text-right">תאריך</th>
                     {addrHead && <th>{addrHead}</th>}
-                    <th>גודל</th><th>חד׳</th><th>מחיר</th><th>₪/מ״ר</th>
+                    <th>גודל</th><th>חד׳</th><th>שנת בנייה</th><th>מחיר</th><th>₪/מ״ר</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -376,6 +379,18 @@ function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetCom
                       {addrHead && <td className="text-center text-slate-600">{rowAddress(r) ?? "—"}</td>}
                       <td className="text-center tabular-nums">{r.area ? `${r.area}` : "—"}</td>
                       <td className="text-center tabular-nums">{r.rooms ?? "—"}</td>
+                      <td className="text-center tabular-nums">
+                        {r.year_built ? (
+                          <span className="inline-flex items-center gap-1">
+                            {r.year_built}
+                            <span className={`rounded px-1 py-0.5 text-[9px] font-bold ${
+                              r.year_built >= modernMinYear ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+                            }`}>
+                              {r.year_built >= modernMinYear ? "מודרני" : "ישן"}
+                            </span>
+                          </span>
+                        ) : "—"}
+                      </td>
                       <td className="text-center font-bold tabular-nums">₪{Number(r.price ?? 0).toLocaleString("he-IL")}</td>
                       <td className={`text-center font-bold tabular-nums ${askSqm && r.price_sqm && askSqm > Number(r.price_sqm) ? "text-emerald-700" : "text-slate-700"}`}>
                         ₪{Number(r.price_sqm ?? 0).toLocaleString("he-IL")}
@@ -384,6 +399,7 @@ function DealDetail({ deal, comp, askSqm }: { deal: ClientDeal; comp?: StreetCom
                   ))}
                 </tbody>
               </table>
+              </div>
               {grain === "none" && (
                 <p className="mt-1.5 text-2xs text-slate-400">כתובת מדויקת אינה מפורסמת במקור עבור יישוב זה — ההשוואה ברמת היישוב.</p>
               )}

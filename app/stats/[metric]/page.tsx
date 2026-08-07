@@ -129,7 +129,7 @@ export default async function StatPage({ params }: PageProps) {
         <div className="glass-card overflow-hidden">
           <div className={`h-1 bg-gradient-to-l ${a.bar}`} />
           <div className="overflow-x-auto">
-            <table className="w-full text-sm tabular-nums" dir="rtl">
+            <table className="table-pin-first w-full text-sm tabular-nums" dir="rtl">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
@@ -218,7 +218,7 @@ export default async function StatPage({ params }: PageProps) {
         <div className="glass-card overflow-hidden">
           <div className={`h-1 bg-gradient-to-l ${a.bar}`} />
           <div className="overflow-x-auto">
-            <table className="w-full text-sm tabular-nums" dir="rtl">
+            <table className="table-pin-first w-full text-sm tabular-nums" dir="rtl">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
@@ -285,7 +285,7 @@ export default async function StatPage({ params }: PageProps) {
         <div className="glass-card overflow-hidden">
           <div className={`h-1 bg-gradient-to-l ${a.bar}`} />
           <div className="overflow-x-auto">
-            <table className="w-full text-sm tabular-nums" dir="rtl">
+            <table className="table-pin-first w-full text-sm tabular-nums" dir="rtl">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
@@ -346,7 +346,7 @@ export default async function StatPage({ params }: PageProps) {
         <div className="glass-card overflow-hidden">
           <div className={`h-1 bg-gradient-to-l ${a.bar}`} />
           <div className="overflow-x-auto">
-            <table className="w-full text-sm tabular-nums" dir="rtl">
+            <table className="table-pin-first w-full text-sm tabular-nums" dir="rtl">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">עיר</th>
@@ -400,7 +400,7 @@ export default async function StatPage({ params }: PageProps) {
         <div className="glass-card overflow-hidden">
           <div className={`h-1 bg-gradient-to-l ${a.bar}`} />
           <div className="overflow-x-auto">
-            <table className="w-full text-sm tabular-nums" dir="rtl">
+            <table className="table-pin-first w-full text-sm tabular-nums" dir="rtl">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>
@@ -456,7 +456,7 @@ export default async function StatPage({ params }: PageProps) {
         <div className="glass-card overflow-hidden mb-6">
           <div className={`h-1 bg-gradient-to-l ${a.bar}`} />
           <div className="overflow-x-auto">
-            <table className="w-full text-sm tabular-nums" dir="rtl">
+            <table className="table-pin-first w-full text-sm tabular-nums" dir="rtl">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">תקופה</th>
@@ -489,7 +489,7 @@ export default async function StatPage({ params }: PageProps) {
         <div className="glass-card overflow-hidden">
           <div className={`h-1 bg-gradient-to-l ${a.bar}`} />
           <div className="overflow-x-auto">
-            <table className="w-full text-sm tabular-nums" dir="rtl">
+            <table className="table-pin-first w-full text-sm tabular-nums" dir="rtl">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
                   <th className="py-3 px-3 text-right text-xs text-slate-500 font-semibold">שנה</th>

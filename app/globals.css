@@ -500,3 +500,20 @@ html.a11y-big-cursor * {
   outline-offset: 2px !important;
   border-radius: 4px;
 }
+
+/* ── Mobile table pattern (matches CitiesTable) ──────────────────────────
+   Wide tables live inside overflow-x-auto wrappers; pinning the first column
+   (the row's identity — year or city) keeps horizontal scrolling readable on
+   phones. Opt-in per table via .table-pin-first. The inset shadow marks the
+   pinned edge so the scroll affordance is visible. */
+.table-pin-first :is(th, td):first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  background: #fff;
+  z-index: 1;
+  box-shadow: inset -6px 0 8px -8px rgba(15, 23, 42, 0.25);
+}
+.table-pin-first thead th:first-child {
+  background: #f8fafc; /* slate-50 — matches the header row */
+  z-index: 2;
+}

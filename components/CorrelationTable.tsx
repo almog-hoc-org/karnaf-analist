@@ -49,7 +49,7 @@ export default function CorrelationTable({
       transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
     >
       <div className="overflow-x-auto">
-        <table className="w-full text-xs border-collapse">
+        <table className="table-pin-first w-full text-xs border-collapse">
           <thead>
             <tr className="border-b border-slate-200">
               <th className="py-2.5 px-3 text-right text-slate-500 font-medium">שנה</th>
