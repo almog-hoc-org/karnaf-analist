@@ -25,6 +25,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { appDb } from "@/lib/appDb";
+import { refYear } from "@/lib/refYear";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -69,6 +70,19 @@ function hoursSince(iso: string | null | undefined): number | null {
 
 export async function GET() {
   const problems: string[] = [];
+
+  // ── reference-year staleness ─────────────────────────────────────
+  // ref_year (admin rule) is the honest endpoint of every trend window on the
+  // site — the last FULL calendar year. It is bumped by hand once a year, and
+  // nothing used to notice when it lagged: every price-change figure quietly
+  // ended a year early. The external monitor on this endpoint now does.
+  try {
+    const expected = new Date().getFullYear() - 1;
+    const ry = refYear();
+    if (ry < expected) {
+      problems.push(`ref_year is ${ry} but ${expected} is complete — bump it in the admin panel after the quarterly data refresh`);
+    }
+  } catch { /* rules table absent on a fresh machine — nothing to report */ }
 
   // ── last pipeline run ────────────────────────────────────────────
   let lastRun: PipelineRunRow | null = null;

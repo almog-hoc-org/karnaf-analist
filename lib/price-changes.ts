@@ -1,23 +1,31 @@
 /**
- * Centralised 3y / 5y price-change calculation.
+ * Centralised 3y / 5y price-change calculation (official medians).
  *
- * Source: nadlan_price_trends (quarterly median deal prices per city, 2020-2025).
+ * Source: nadlan_price_trends (quarterly median deal prices per city).
  * Method: average all quarters of a year to get an annual median price, then
- * compare the earliest year ≥ window-start against the latest year available.
+ * compare `end − window` against `end`.
+ *
+ * THE END YEAR IS CAPPED AT refYear() — the same site-wide reference year the
+ * second-hand insight metrics use (lib/refYear.ts). Before this cap the end
+ * year was simply "latest year available", which in any running calendar year
+ * means a PARTIAL year: an annual average built from one or two quarters,
+ * compared against full years, presented as a multi-year trend. The homepage
+ * insights already refused to do that (they end at ref_year); the city page
+ * did not, so the two surfaces disagreed about the same city. One anchor now
+ * drives both.
+ *
+ * Window starts are derived from the end year (end−3 / end−5), not hardcoded
+ * calendar years — the previous constants (2022/2020) were correct exactly
+ * until the first ref_year bump and silently wrong after it.
  *
  * Used by:
  *   - /cities — full table with both columns sortable
  *   - /city/[slug] — both numbers shown in the price section
  *   - homepage rankings — top movers in 3y AND 5y
  *   - /rankings/highest-gain — toggleable between windows
- *
- * The 5y window aligns with the supply-demand gap analysis window (2020-onwards);
- * the 3y window is 2022-onwards.
  */
 import { prisma } from "./db";
-
-const WINDOW_3Y_START = 2022;
-const WINDOW_5Y_START = 2020;
+import { refYear } from "./refYear";
 
 export interface PriceChangeWindow {
   /** % change from `fromY` to `toY`. */
@@ -28,26 +36,31 @@ export interface PriceChangeWindow {
   toAvg: number;
   /** First year >= window start that actually has data for this city. */
   fromY: number;
-  /** Latest year available in nadlan for this city. */
+  /** End year: latest data year that does not exceed the site reference year. */
   toY: number;
 }
 
 export interface CityPriceChanges {
   city_name: string;
-  /** 3-year window (2022 → latest). */
+  /** 3-year window ending at the reference year. */
   change3y: PriceChangeWindow | null;
-  /** 5-year window (2020 → latest). */
+  /** 5-year window ending at the reference year. */
   change5y: PriceChangeWindow | null;
 }
 
 /**
- * Compute % change between two windows for a single city's annual averages.
+ * Compute % change over a `win`-year window ending at the latest year ≤ endCap.
  */
-function computeChange(yrs: Map<number, { sum: number; n: number }>, fromYear: number): PriceChangeWindow | null {
-  const years = [...yrs.keys()].sort((a, b) => a - b);
-  const start = years.find((y) => y >= fromYear);
+function computeChange(
+  yrs: Map<number, { sum: number; n: number }>,
+  win: number,
+  endCap: number
+): PriceChangeWindow | null {
+  const years = [...yrs.keys()].filter((y) => y <= endCap).sort((a, b) => a - b);
   const end = years[years.length - 1];
-  if (start === undefined || end === undefined || start >= end) return null;
+  if (end === undefined) return null;
+  const start = years.find((y) => y >= end - win);
+  if (start === undefined || start >= end) return null;
   const a = yrs.get(start)!;
   const b = yrs.get(end)!;
   const fromAvg = a.sum / a.n;
@@ -60,6 +73,17 @@ function computeChange(yrs: Map<number, { sum: number; n: number }>, fromYear: n
     fromY: start,
     toY: end,
   };
+}
+
+function accumulate(
+  into: Map<number, { sum: number; n: number }>,
+  year: number,
+  price: number
+) {
+  const cur = into.get(year) ?? { sum: 0, n: 0 };
+  cur.sum += price;
+  cur.n += 1;
+  into.set(year, cur);
 }
 
 /**
@@ -76,10 +100,7 @@ async function loadCityAnnualAverages(): Promise<Map<string, Map<number, { sum: 
     if (r.median_price === null) continue;
     let yrs = out.get(r.city_name);
     if (!yrs) { yrs = new Map(); out.set(r.city_name, yrs); }
-    const cur = yrs.get(r.year) ?? { sum: 0, n: 0 };
-    cur.sum += r.median_price;
-    cur.n += 1;
-    yrs.set(r.year, cur);
+    accumulate(yrs, r.year, r.median_price);
   }
   return out;
 }
@@ -90,12 +111,13 @@ async function loadCityAnnualAverages(): Promise<Map<string, Map<number, { sum: 
  */
 export async function loadAllCityPriceChanges(): Promise<Map<string, CityPriceChanges>> {
   const averages = await loadCityAnnualAverages();
+  const endCap = refYear();
   const out = new Map<string, CityPriceChanges>();
   for (const [city_name, yrs] of averages) {
     out.set(city_name, {
       city_name,
-      change3y: computeChange(yrs, WINDOW_3Y_START),
-      change5y: computeChange(yrs, WINDOW_5Y_START),
+      change3y: computeChange(yrs, 3, endCap),
+      change5y: computeChange(yrs, 5, endCap),
     });
   }
   return out;
@@ -113,15 +135,13 @@ export async function loadCityPriceChanges(cityName: string): Promise<CityPriceC
   const yrs = new Map<number, { sum: number; n: number }>();
   for (const r of rows) {
     if (r.median_price === null) continue;
-    const cur = yrs.get(r.year) ?? { sum: 0, n: 0 };
-    cur.sum += r.median_price;
-    cur.n += 1;
-    yrs.set(r.year, cur);
+    accumulate(yrs, r.year, r.median_price);
   }
+  const endCap = refYear();
   return {
     city_name: cityName,
-    change3y: computeChange(yrs, WINDOW_3Y_START),
-    change5y: computeChange(yrs, WINDOW_5Y_START),
+    change3y: computeChange(yrs, 3, endCap),
+    change5y: computeChange(yrs, 5, endCap),
   };
 }
 

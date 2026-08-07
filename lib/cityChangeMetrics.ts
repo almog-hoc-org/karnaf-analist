@@ -128,23 +128,33 @@ export async function loadSecondhandChanges(
     select: { city_name: true, year: true, scope: true, avg_sqm: true, median_sqm: true },
   });
 
-  // mix-adjusted values win over raw ones (composition-drift fix, 2026-07-29)
-  const byCity = new Map<string, { from?: number; to?: number; fromAdj?: boolean; toAdj?: boolean }>();
+  // The mix-adjusted series wins over the raw one (composition-drift fix,
+  // 2026-07-29) — but only as a PAIR. The previous per-endpoint override could
+  // take `from` off the raw avg-₪/m² series and `to` off the fixed-basket
+  // median series (or vice versa) whenever fixedmix covered just one of the two
+  // years. Those are different statistics of different populations, and their
+  // ratio is not a price change — spot checks showed up to ~9pp of pure
+  // artifact. Both endpoints now come from the same series, adjusted when it
+  // covers both years, raw otherwise.
+  const byCity = new Map<string, { rawFrom?: number; rawTo?: number; adjFrom?: number; adjTo?: number }>();
   for (const r of rows) {
     const adj = r.scope === "secondhand_fixedmix";
     const v = adj ? r.median_sqm : field === "avg_sqm" ? r.avg_sqm : r.median_sqm;
     if (v == null || v <= 0) continue;
     const cur = byCity.get(r.city_name) ?? {};
-    if (r.year === fromYear) { if (adj || !cur.fromAdj) { cur.from = v; cur.fromAdj = cur.fromAdj || adj; } }
-    else { if (adj || !cur.toAdj) { cur.to = v; cur.toAdj = cur.toAdj || adj; } }
+    if (adj) { if (r.year === fromYear) cur.adjFrom = v; else cur.adjTo = v; }
+    else { if (r.year === fromYear) cur.rawFrom = v; else cur.rawTo = v; }
     byCity.set(r.city_name, cur);
   }
 
   const out: SecondhandChange[] = [];
   for (const [city_name, c] of byCity) {
     if (thinCities.has(city_name)) continue; // city_min_total_deals rule
-    if (c.from == null || c.to == null) continue;
-    const pct = (c.to / c.from - 1) * 100;
+    const adjusted = c.adjFrom != null && c.adjTo != null;
+    const from = adjusted ? c.adjFrom : c.rawFrom;
+    const to = adjusted ? c.adjTo : c.rawTo;
+    if (from == null || to == null) continue;
+    const pct = (to / from - 1) * 100;
     if (!Number.isFinite(pct) || Math.abs(pct) > SH_MAX_ABS_CHANGE) continue;
     out.push({ city_name, pct, fromY: fromYear, toY: refYearArg });
   }
