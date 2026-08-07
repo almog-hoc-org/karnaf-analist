@@ -1,0 +1,17 @@
+# Weekly schedule for the off-server backup.
+#
+# Sunday 04:30 — after the weekend's nightly pipeline (02:30) has finished, so
+# the snapshot captures a cleaned, verified state. Same systemd-over-cron
+# reasoning as the other timers: visible next-run, journald logs, and
+# Persistent=true so a powered-off Sunday still gets its backup on boot.
+
+[Unit]
+Description=Karnaf Analist — weekly backup schedule
+
+[Timer]
+OnCalendar=Sun *-*-* 04:30:00
+RandomizedDelaySec=1200
+Persistent=true
+
+[Install]
+WantedBy=timers.target

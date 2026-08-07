@@ -8,7 +8,9 @@
 # Usage: bash scripts/restore-db.sh [release-tag]
 set -euo pipefail
 
-REPO="${KARNAF_REPO:-almoghoc/karnaf-analist}"
+# default matches where publish-backup.sh publishes (the org repo — the old
+# personal-account default predated the org migration and pointed at nothing)
+REPO="${KARNAF_REPO:-almog-hoc-org/karnaf-analist}"
 DEST="data/realestate.db"
 TAG="${1:-}"
 
@@ -50,3 +52,23 @@ mv "$TMP/realestate.db" "$DEST"
 rm -f "$DEST-wal" "$DEST-shm"
 
 echo "✓ restored $(printf "%'d" "$DEALS" 2>/dev/null || echo "$DEALS") deals → $DEST"
+
+# ── app.db — users, saved deals, feedback, rules ─────────────────────────────
+# Present in releases published by scripts/publish-backup.sh; older hand-made
+# releases only carried the deal archive, so its absence is not an error.
+APP_DEST="data/app.db"
+if gh release download "$TAG" --repo "$REPO" --pattern "app.db.gz" --dir "$TMP" 2>/dev/null; then
+  gunzip -c "$TMP/app.db.gz" > "$TMP/app.db"
+  APP_INTEGRITY=$(sqlite3 "$TMP/app.db" "PRAGMA integrity_check;" 2>&1 | head -1)
+  [ "$APP_INTEGRITY" = "ok" ] || { echo "✗ app.db integrity check failed: $APP_INTEGRITY"; exit 1; }
+  if [ -f "$APP_DEST" ]; then
+    APP_BACKUP="$APP_DEST.replaced-$(date +%Y%m%d-%H%M%S)"
+    mv "$APP_DEST" "$APP_BACKUP"
+    echo "▸ previous app.db kept at $APP_BACKUP"
+  fi
+  mv "$TMP/app.db" "$APP_DEST"
+  rm -f "$APP_DEST-wal" "$APP_DEST-shm"
+  echo "✓ restored app.db (users, saved deals, feedback, rules)"
+else
+  echo "▸ no app.db.gz in $TAG — user data not included in this release"
+fi

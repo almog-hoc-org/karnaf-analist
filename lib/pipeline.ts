@@ -38,12 +38,16 @@ export interface PipelineStage {
   id: string;
   /** Path relative to the repo root. */
   script: string;
+  /** Extra CLI arguments passed to the script. */
+  args?: string[];
   /** Hebrew label for the admin UI. */
   label: string;
   /** Why this stage sits exactly here. Read this before reordering anything. */
   why: string;
   /** A verification gate rather than a mutation: failure means "do not publish". */
   gate?: boolean;
+  /** Pure reporting — writes audit artifacts, never the site's data. Skipped by the admin fast path. */
+  report?: boolean;
   /** Per-stage timeout. Aggregation over ~1M rows is the slow one. */
   timeoutMs: number;
 }
@@ -130,6 +134,23 @@ export const PIPELINE: PipelineStage[] = [
     gate: true,
     timeoutMs: 15 * MINUTE,
   },
+  {
+    id: "audit-reliability",
+    script: "scripts/audit-data-reliability.ts",
+    label: "בקרת אמינות נתונים",
+    why: "Refreshes data-reliability.json — the file the admin reliability panel reads. The panel promised this ran nightly while nothing actually ran it, so the flags on screen were frozen at whenever someone last ran the script by hand. After the gates: the report should describe data that passed its checks.",
+    report: true,
+    timeoutMs: 15 * MINUTE,
+  },
+  {
+    id: "coverage",
+    script: "scripts/coverage-report.ts",
+    args: ["--save"],
+    label: "דוח כיסוי",
+    why: "Snapshots city×year coverage so the next quarterly collection pulse can answer 'did it improve anything?'. Between pulses the data barely moves, so the nightly snapshot converges on the pre-pulse baseline — exactly the comparison the post-pulse run needs.",
+    report: true,
+    timeoutMs: 10 * MINUTE,
+  },
 ];
 
 export const STAGE_IDS = PIPELINE.map((s) => s.id);
@@ -147,5 +168,5 @@ export function stagesFrom(fromId?: string): PipelineStage[] {
 
 /** Mutation stages only — used when a caller wants to skip the verification gates. */
 export function mutationStages(): PipelineStage[] {
-  return PIPELINE.filter((s) => !s.gate);
+  return PIPELINE.filter((s) => !s.gate && !s.report);
 }

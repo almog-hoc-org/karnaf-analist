@@ -53,7 +53,7 @@ function ensureRunLog(db: Database.Database) {
 
 function runStage(stage: PipelineStage): Promise<string> {
   return new Promise((resolve, reject) => {
-    const p = spawn("npx", ["tsx", stage.script], { cwd: process.cwd(), env: process.env, stdio: ["ignore", "pipe", "pipe"] });
+    const p = spawn("npx", ["tsx", stage.script, ...(stage.args ?? [])], { cwd: process.cwd(), env: process.env, stdio: ["ignore", "pipe", "pipe"] });
     let buf = "";
     const onData = (d: Buffer) => { const s = d.toString(); buf += s; process.stdout.write(s); };
     p.stdout.on("data", onData);
@@ -113,7 +113,7 @@ async function main() {
     console.error(`✗ ${e instanceof Error ? e.message : e}`);
     process.exit(1);
   }
-  if (has("skip-gates")) stages = stages.filter((s) => !s.gate);
+  if (has("skip-gates")) stages = stages.filter((s) => !s.gate && !s.report);
 
   if (has("dry-run")) {
     console.log(`would run ${stages.length} stages:`);

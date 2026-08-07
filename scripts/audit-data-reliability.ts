@@ -20,7 +20,8 @@ import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import fs from "fs";
 import path from "path";
 
-const adapter = new PrismaBetterSqlite3({ url: path.resolve("./data/realestate.db") });
+const DATA_DIR = process.env.KARNAF_DATA_DIR ?? "./data";
+const adapter = new PrismaBetterSqlite3({ url: path.resolve(DATA_DIR, "realestate.db") });
 const prisma = new PrismaClient({ adapter });
 
 // ── thresholds (tune here; surfaced in the JSON so the UI can show them) ──
@@ -172,7 +173,7 @@ async function main() {
     citiesWithFlags: cities.filter((c) => c.flagged > 0).length,
   };
 
-  const outPath = path.resolve("./data/data-reliability.json");
+  const outPath = path.resolve(DATA_DIR, "data-reliability.json");
   fs.writeFileSync(outPath, JSON.stringify({ generatedAt: new Date().toISOString(), thresholds: T, summary, cities, flags }, null, 1));
 
   console.log(`\n=== data-reliability audit ===`);

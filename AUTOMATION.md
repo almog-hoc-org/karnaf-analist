@@ -1,5 +1,13 @@
 # Automation — Report Monitor & Email Notifications
 
+> **Scheduling note (2026-08):** the cron instructions further down are
+> OBSOLETE. The monitor now runs automatically every night as part of the
+> `karnaf-collect` systemd service on the server (it is a collector in
+> `lib/collectors.ts` — no crontab needed). The only setup still required is
+> the Resend environment variables below; without them the monitor logs to
+> the journal instead of emailing. For the full nightly schedule see
+> `deploy/install-timers.sh`.
+
 This project includes an automatic monitor that polls CBS and the Ministry of Finance Chief Economist for new housing publications, updates the local registry, and emails you when a new report appears.
 
 ## What's already built

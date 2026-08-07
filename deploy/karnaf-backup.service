@@ -1,0 +1,20 @@
+# Weekly off-server backup — publishes both databases to GitHub Releases.
+#
+# Runs on the HOST, not in the container: it needs the gh CLI and reads the
+# data directory directly at /var/lib/karnaf/data. Auth comes from
+# /etc/karnaf/backup.env, which should contain a single line:
+#   GH_TOKEN=<a token with repo scope on the karnaf-analist repo>
+
+[Unit]
+Description=Karnaf Analist — weekly off-server backup to GitHub Releases
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/karnaf
+Environment=KARNAF_DATA_DIR=/var/lib/karnaf/data
+EnvironmentFile=-/etc/karnaf/backup.env
+ExecStart=/usr/bin/bash scripts/publish-backup.sh
+# a full snapshot + upload of ~60MB compressed should never take this long
+TimeoutStartSec=30min
