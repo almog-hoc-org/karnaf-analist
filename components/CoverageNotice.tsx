@@ -16,6 +16,14 @@ import Icon from "@/components/Icon";
  * Nothing here is per-city text. Every number comes from lib/coverage.ts, which
  * derives them from the series already on the page, so a locality that improves
  * loses its notice without anyone editing a list.
+ *
+ * The footer used to end "we are working on completing coverage." That was true
+ * while the gap looked like a collection bug. It is not any more: the nadlan
+ * channel now pulls a locality's full recorded history, and for the small Druze
+ * and Arab towns that history is genuinely thin — עספיא holds 27 sales across
+ * the last decade, 2–5 a year, which is the real rate and not a number we can
+ * raise by collecting harder. Promising to "complete" it would be a promise we
+ * cannot keep, so the notice states what the sample is and stops there.
  */
 export default function CoverageNotice({ coverage, cityName }: { coverage: Coverage; cityName: string }) {
   const { level, coveredYears, span, totalDeals } = coverage;
@@ -64,8 +72,8 @@ export default function CoverageNotice({ coverage, cityName }: { coverage: Cover
       </p>
       <p>{c.body}</p>
       <p className="mt-2 text-xs text-amber-900">
-        זה מצב הנתונים <strong>אצלנו</strong>, ולא בהכרח מספר העסקאות שהיו ביישוב. אנחנו עובדים על
-        השלמת הכיסוי.{" "}
+        אלה העסקאות שבמאגר שלנו ליישוב — מדגם קטן מכדי לבסס עליו מגמת מחירים אמינה, ולא בהכרח כל
+        העסקאות שהיו בו.{" "}
         <Link href="/methodology" className="font-bold underline hover:no-underline">
           מה זה אומר בדיוק
         </Link>
