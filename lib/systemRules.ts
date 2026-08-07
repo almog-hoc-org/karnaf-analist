@@ -144,6 +144,28 @@ export const RULE_DEFS: RuleDef[] = [
   { key: "show_source_yad2", label: "הצגת נתוני יד2", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "⚠ טרם מחובר — המתג אינו משפיע כרגע. מדדי מצב שוק (מודעות, ימים בשוק) בדף העיר." },
   { key: "default_series", label: "סדרות ברירת-מחדל בגרף העיר", group: "מקורות ותצוגה", kind: "text", default: "sh_avg,sh_med",
     help: "⚠ טרם מחובר — הערך אינו משפיע כרגע. אילו סדרות מסומנות כשנכנסים לדף עיר. אפשרויות: sh_avg, sh_med, all_avg, all_med, new_avg, official." },
+
+  // ── credits & access (the 7.8 model — every number editable, no deploy) ──
+  { key: "paywall_on", label: "חומת הרשמה על עמודי ערים", group: "קרדיטים וגישה", kind: "boolean", default: true, toggleOnly: true,
+    help: "מתג החירום של כל המודל: כבוי = האתר חוזר להתנהגות הפתוחה המלאה (כל עיר לכל גולש, בלי קרדיטים). עמוד הבית והדירוגים פתוחים תמיד." },
+  { key: "demo_city", label: "עיר הדמו הפתוחה לכולם", group: "קרדיטים וגישה", kind: "text", default: "חיפה",
+    help: "עמוד העיר הזו פתוח גם בלי הרשמה — חלון הראווה של עומק המערכת. חייב להיות שם עיר מדויק כפי שמופיע במאגר." },
+  { key: "signup_bonus", label: "קרדיטים בהרשמה", group: "קרדיטים וגישה", kind: "number", default: 10,
+    help: "יתרת הפתיחה של חשבון חדש. פתיחת עיר עולה קרדיט אחד לשבוע, כך שהמתנה = ~10 שבועות-עיר." },
+  { key: "city_unlock_cost", label: "עלות פתיחת עיר", group: "קרדיטים וגישה", kind: "number", default: 1, unit: "קרדיט",
+    help: "מחיר פתיחת עמוד עיר למשתמש רשום. 0 = כל הערים חינם לרשומים (החומה נשארת — רק המחיר יורד)." },
+  { key: "unlock_days", label: "משך פתיחת עיר", group: "קרדיטים וגישה", kind: "number", default: 7, unit: "ימים",
+    help: "כמה ימים עיר שנפתחה נשארת פתוחה. צפיות חוזרות בתוך החלון — חינם." },
+  { key: "deal_save_cost", label: "עלות שמירת עסקה", group: "קרדיטים וגישה", kind: "number", default: 0, unit: "קרדיט",
+    help: "מחיר שמירת עסקה ב-/deals. ברירת המחדל 0 בכוונה: שמירת עסקאות היא פעולת ה-retention החזקה ביותר — המחיר קיים כאן למקרה שתרצה להפעיל אותו (תומך בחצאים, למשל 0.5)." },
+  { key: "referral_bonus", label: "בונוס הזמנת חבר", group: "קרדיטים וגישה", kind: "number", default: 5, unit: "קרדיטים",
+    help: "זיכוי למפנה כשחבר נרשם עם הקוד שלו (מוטמע אוטומטית בקישורי השיתוף). החבר עצמו מקבל את בונוס ההרשמה הרגיל." },
+  { key: "referral_daily_cap", label: "תקרת הפניות מזוכות ביום", group: "קרדיטים וגישה", kind: "number", default: 5,
+    help: "אנטי-abuse: מעבר לכך הפניות באותו יום לא מזכות (החברים עדיין נרשמים כרגיל)." },
+  { key: "feedback_bonus", label: "בונוס משוב שאושר", group: "קרדיטים וגישה", kind: "number", default: 2, unit: "קרדיטים",
+    help: "חד-פעמי למשתמש, ורק אחרי שאישרת את המשוב בלוח הניהול — לא על עצם השליחה." },
+  { key: "monthly_free_grant", label: "מענק חודשי למשתמש חינמי", group: "קרדיטים וגישה", kind: "number", default: 2, unit: "קרדיטים",
+    help: "הגשר עד השקת המנויים: משתמש שנגמרו לו הקרדיטים לא נתקע לצמיתות. לכבות (0) ביום שהמנויים עולים." },
 ];
 
 const DEFAULTS = new Map(RULE_DEFS.map((r) => [r.key, r]));

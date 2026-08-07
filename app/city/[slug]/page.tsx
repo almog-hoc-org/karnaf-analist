@@ -24,9 +24,18 @@ import SourceBadge from "@/components/SourceBadge";
 import CoverageNotice from "@/components/CoverageNotice";
 import { assessCoverage } from "@/lib/coverage";
 import Icon from "@/components/Icon";
+import { revalidatePath } from "next/cache";
+import { getCurrentUser } from "@/lib/auth";
+import { getRuleBool, getRuleText } from "@/lib/systemRules";
+import { balance, isCityUnlocked, unlockCity, CREDIT_RULES } from "@/lib/credits";
+import { whatsappShareUrl } from "@/lib/share";
+import CityWall from "@/components/CityWall";
+import CityShareButton from "@/components/CityShareButton";
 
 interface PageProps {
   params: { slug: string };
+  /** only ?ref= is read — a friend's referral code arriving via a share link */
+  searchParams?: { ref?: string };
 }
 
 /**
@@ -87,14 +96,79 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
+  const title = `${cityName} | קרנף אנליסט`;
+  const description = `נתוני אמת על שוק הנדל״ן ב${cityName}: עסקאות, מחירי ₪/מ״ר, מגמות מחיר, היתרי בנייה ואוכלוסייה — מהמאגר העצמאי של קרנף אנליסט.`;
+  // absolute OG url so shared links unfurl correctly in WhatsApp
+  const base = (process.env.KARNAF_SITE_URL ?? "").replace(/\/$/, "");
   return {
-    title: `${cityName} | קרנף אנליסט`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      locale: "he_IL",
+      ...(base ? { url: `${base}/city/${encodeURIComponent(cityName)}` } : {}),
+    },
   };
 }
 
-export default async function CityPage({ params }: PageProps) {
+export default async function CityPage({ params, searchParams }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
   const activeWindow: "3y" | "5y" = DEFAULT_PRICE_WINDOW;
+  const refRaw = (searchParams?.ref ?? "").toUpperCase();
+  const refCode = /^[A-Z2-9]{4,16}$/.test(refRaw) ? refRaw : "";
+
+  // ── access gate — BEFORE the ~25 queries below; a walled visitor costs one ──
+  // The wall model (7.8): the demo city is open to everyone; every other city
+  // page needs an account, and opening one spends a credit for unlock_days.
+  // paywall_on is the kill switch — off restores the fully-open site.
+  const paywallOn = getRuleBool("paywall_on", true);
+  const demoCity = getRuleText("demo_city", "חיפה");
+  const viewer = getCurrentUser();
+  if (paywallOn && cityName !== demoCity) {
+    const cityExists = await prisma.city.findUnique({ where: { city_name: cityName }, select: { city_name: true } });
+    if (cityExists) {
+      if (!viewer) {
+        return <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} />;
+      }
+      if (!isCityUnlocked(viewer.id, cityName)) {
+        const bal = balance(viewer.id);
+        const cost = CREDIT_RULES.cityUnlockCost();
+        if (bal < cost) {
+          return (
+            <CityWall
+              cityName={cityName}
+              state="insufficient"
+              balanceCredits={bal}
+              costCredits={cost}
+              shareUrl={whatsappShareUrl(`/city/${encodeURIComponent(cityName)}`, viewer.id)}
+            />
+          );
+        }
+        // Unlock happens on POST only — a GET that spends credits would let
+        // the browser's link prefetcher drain the balance.
+        const unlockAction = async () => {
+          "use server";
+          const u = getCurrentUser();
+          if (!u) return;
+          unlockCity(u.id, cityName);
+          revalidatePath(`/city/${params.slug}`);
+        };
+        return (
+          <CityWall
+            cityName={cityName}
+            state="locked"
+            balanceCredits={bal}
+            costCredits={cost}
+            unlockDays={CREDIT_RULES.unlockDays()}
+            unlockAction={unlockAction}
+          />
+        );
+      }
+    }
+    // a nonexistent city falls through to the regular "not found" screen below
+  }
 
   const [city, salesData, buildingPermits, insights, yad2Data, populationByYear, priceTrends, constructionStarts, completionsData] = await Promise.all([
     prisma.city.findUnique({ where: { city_name: cityName } }),
@@ -287,9 +361,12 @@ export default async function CityPage({ params }: PageProps) {
             <p className="text-2xs font-semibold tracking-[0.2em] text-indigo-500/80 uppercase mb-3">
               City Intelligence Report
             </p>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">
-              {city.city_name}
-            </h1>
+            <div className="mb-3 flex flex-wrap items-center gap-3">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                {city.city_name}
+              </h1>
+              <CityShareButton href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)} />
+            </div>
             {city.population_2026 && (
               <div className="flex items-center gap-3 flex-wrap">
                 <span className="text-slate-500 text-lg">

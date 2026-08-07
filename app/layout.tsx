@@ -8,6 +8,7 @@ import PageViewTracker from "@/components/PageViewTracker";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import TopNav from "@/components/TopNav";
 import { getCurrentUser } from "@/lib/auth";
+import { balance } from "@/lib/credits";
 import { isAdminRequest } from "@/lib/adminAuth";
 import SiteFooter from "@/components/SiteFooter";
 import { prisma } from "@/lib/db";
@@ -47,6 +48,7 @@ export default async function RootLayout({
   }
 
   const isAdmin = isAdminRequest();
+  const currentUser = getCurrentUser();
 
   return (
     <html lang="he" dir="rtl">
@@ -66,7 +68,7 @@ export default async function RootLayout({
             backgroundSize: "48px 48px",
           }}
         />
-        <TopNav cities={cityNames} user={getCurrentUser()} />
+        <TopNav cities={cityNames} user={currentUser} credits={currentUser ? balance(currentUser.id) : null} />
         {/* The landmark the skip link targets. tabIndex={-1} lets it receive
             focus programmatically without entering the tab order itself. */}
         <div id="main-content" tabIndex={-1} className="relative">{children}</div>

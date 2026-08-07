@@ -40,6 +40,8 @@ export interface FeedbackInput {
   sessionId?: string | null;
   /** git SHA of the running build, so a fixed bug can be told from a live one */
   buildSha?: string | null;
+  /** numeric users.id when signed in — the hook the feedback credit-bonus hangs on */
+  userId?: number | null;
 }
 
 let ensured = false;
@@ -66,8 +68,15 @@ function ensureTable() {
     CREATE INDEX IF NOT EXISTS idx_feedback_created ON feedback(created_at DESC);
     CREATE INDEX IF NOT EXISTS idx_feedback_unsynced ON feedback(synced_at) WHERE synced_at IS NULL;
   `);
+  // additive migrations for rows created before the credits model
+  const cols = appDb().prepare("PRAGMA table_info(feedback)").all() as Array<{ name: string }>;
+  if (!cols.some((c) => c.name === "user_id")) appDb().exec("ALTER TABLE feedback ADD COLUMN user_id INTEGER");
+  if (!cols.some((c) => c.name === "approved_at")) appDb().exec("ALTER TABLE feedback ADD COLUMN approved_at DATETIME");
   ensured = true;
 }
+
+/** For readers outside this module (the admin panel) — same lazy migration. */
+export function ensureFeedbackTable() { ensureTable(); }
 
 const trim = (v: string | null | undefined, max: number): string | null => {
   const s = (v ?? "").trim();
@@ -94,12 +103,13 @@ export function saveFeedback(input: FeedbackInput): SaveResult {
 
     ensureTable();
     const r = appDb().prepare(
-      `INSERT INTO feedback (kind, message, rating, email, path, city, view_state, viewport, session_id, build_sha)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO feedback (kind, message, rating, email, path, city, view_state, viewport, session_id, build_sha, user_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     ).run(
       input.kind, message ?? "", rating, email,
       trim(input.path, 300), trim(input.city, 120), trim(input.viewState, 1000),
-      trim(input.viewport, 40), trim(input.sessionId, 64), trim(input.buildSha, 60)
+      trim(input.viewport, 40), trim(input.sessionId, 64), trim(input.buildSha, 60),
+      input.userId ?? null
     );
     return { ok: true, id: Number(r.lastInsertRowid) };
   } catch (e) {

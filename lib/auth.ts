@@ -22,6 +22,8 @@ import { appDb } from "./appDb";
 import { rethrowIfNextControlFlow } from "./nextControlFlow";
 
 export const SESSION_COOKIE = "karnaf_session";
+/** Short-lived state cookie for the Google OAuth round-trip (app/api/auth/google). */
+export const OAUTH_COOKIE = "karnaf_oauth";
 const SESSION_DAYS = 30;
 
 export interface AuthUser {
@@ -30,6 +32,15 @@ export interface AuthUser {
   name: string;
   tier: string;     // 'free' for now; subscriptions flip this later
 }
+
+/** Add a column if missing — SQLite has no IF NOT EXISTS for columns. */
+function ensureColumn(column: string, ddl: string) {
+  const cols = appDb().prepare(`PRAGMA table_info(users)`).all() as Array<{ name: string }>;
+  if (!cols.some((c) => c.name === column)) appDb().exec(`ALTER TABLE users ADD COLUMN ${ddl}`);
+}
+
+/** Column migrations run once per process, not once per request. */
+let columnsEnsured = false;
 
 function ensureAuthTables() {
   appDb().exec(`
@@ -49,6 +60,16 @@ function ensureAuthTables() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);
+  if (!columnsEnsured) {
+    ensureColumn("phone", "phone TEXT");                        // optional — CRM sync needs it, email does not
+    ensureColumn("mailing_consent", "mailing_consent INTEGER NOT NULL DEFAULT 0");
+    ensureColumn("google_id", "google_id TEXT");                // Google OAuth subject; login link key
+    ensureColumn("referral_code", "referral_code TEXT");        // this user's own share code
+    ensureColumn("referred_by", "referred_by INTEGER");         // user id of whoever referred them
+    ensureColumn("ravmesser_synced_at", "ravmesser_synced_at DATETIME");
+    ensureColumn("crm_synced_at", "crm_synced_at DATETIME");
+    columnsEnsured = true;
+  }
 }
 
 /**
@@ -108,7 +129,18 @@ function passwordMatches(password: string, salt: string, stored: string): boolea
 
 export const MIN_PASSWORD_LENGTH = 10;
 
-export function registerUser(email: string, name: string, password: string): { ok: true } | { ok: false; error: string } {
+export interface RegisterExtras {
+  /** Optional — the CRM sync only covers users who gave one. */
+  phone?: string;
+  mailingConsent?: boolean;
+}
+
+export function registerUser(
+  email: string,
+  name: string,
+  password: string,
+  extras: RegisterExtras = {}
+): { ok: true; userId: number } | { ok: false; error: string } {
   ensureAuthTables();
   const em = email.trim().toLowerCase();
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return { ok: false, error: "כתובת אימייל לא תקינה" };
@@ -123,9 +155,50 @@ export function registerUser(email: string, name: string, password: string): { o
   const exists = appDb().prepare("SELECT 1 FROM users WHERE email=?").get(em);
   if (exists) return { ok: false, error: "האימייל כבר רשום — נסה להתחבר" };
   const salt = crypto.randomBytes(16).toString("hex");
-  appDb().prepare("INSERT INTO users (email, name, password_hash, salt) VALUES (?, ?, ?, ?)")
-    .run(em, nm, hashPassword(password, salt), salt);
-  return { ok: true };
+  const phone = (extras.phone ?? "").trim().slice(0, 30) || null;
+  const res = appDb().prepare(
+    "INSERT INTO users (email, name, password_hash, salt, phone, mailing_consent) VALUES (?, ?, ?, ?, ?, ?)"
+  ).run(em, nm, hashPassword(password, salt), salt, phone, extras.mailingConsent ? 1 : 0);
+  return { ok: true, userId: Number(res.lastInsertRowid) };
+}
+
+/**
+ * Google sign-in: find the account this Google identity belongs to, creating
+ * it on first sign-in. Match order matters:
+ *   1. by google_id — the durable key; email on a Google account can change.
+ *   2. by email — links Google to an existing password account instead of
+ *      creating a confusing duplicate. Safe because Google verified the email.
+ *   3. create — with an unusable random password (scrypt of 64 random bytes);
+ *      password login stays possible only via a future reset flow.
+ * Returns null only on invalid input.
+ */
+export function findOrCreateGoogleUser(
+  email: string,
+  name: string,
+  googleId: string
+): { user: AuthUser; created: boolean } | null {
+  ensureAuthTables();
+  const em = email.trim().toLowerCase();
+  const gid = googleId.trim();
+  if (!em || !gid || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return null;
+
+  const byGid = appDb().prepare("SELECT * FROM users WHERE google_id=?").get(gid) as UserRow | undefined;
+  if (byGid) return { user: { id: `u${byGid.id}`, email: byGid.email, name: byGid.name, tier: byGid.tier }, created: false };
+
+  const byEmail = appDb().prepare("SELECT * FROM users WHERE email=?").get(em) as UserRow | undefined;
+  if (byEmail) {
+    appDb().prepare("UPDATE users SET google_id=? WHERE id=?").run(gid, byEmail.id);
+    return { user: { id: `u${byEmail.id}`, email: byEmail.email, name: byEmail.name, tier: byEmail.tier }, created: false };
+  }
+
+  const nm = (name.trim() || em.split("@")[0]).slice(0, 80);
+  const salt = crypto.randomBytes(16).toString("hex");
+  const unusable = hashPassword(crypto.randomBytes(64).toString("hex"), salt);
+  const res = appDb().prepare(
+    "INSERT INTO users (email, name, password_hash, salt, google_id) VALUES (?, ?, ?, ?, ?)"
+  ).run(em, nm, unusable, salt, gid);
+  const id = Number(res.lastInsertRowid);
+  return { user: { id: `u${id}`, email: em, name: nm, tier: "free" }, created: true };
 }
 
 /** Shape of a `users` row, as better-sqlite3 hands it back. */

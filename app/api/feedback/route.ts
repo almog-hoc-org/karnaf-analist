@@ -18,6 +18,7 @@ import { sendFeedbackNotification } from "@/lib/notify";
 import { saveFeedback } from "@/lib/feedback";
 import { FEEDBACK_KINDS, type FeedbackKind } from "@/lib/feedbackTypes";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
+import { getCurrentUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -67,6 +68,11 @@ export async function POST(req: NextRequest) {
     viewport: typeof body.viewport === "string" ? body.viewport : null,
     sessionId: typeof body.sessionId === "string" ? body.sessionId : null,
     buildSha: process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.GIT_SHA ?? null,
+    // signed-in feedback is credit-eligible once approved in the admin panel
+    userId: (() => {
+      const u = getCurrentUser();
+      return u ? Number(u.id.slice(1)) : null;
+    })(),
   });
 
   if (!res.ok) return NextResponse.json(res, { status: 400 });

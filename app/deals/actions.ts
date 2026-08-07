@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { appDb } from "@/lib/appDb";
 import { requireWorkspaceIdForAction } from "@/lib/auth";
+import { trySpend, CREDIT_RULES } from "@/lib/credits";
 
 /**
  * Personal-workspace mutations. Every one of these is independently callable
@@ -86,6 +87,14 @@ export async function addDeal(input: DealInput) {
   const userId = requireWorkspaceIdForAction();
   const v = normalize(input);
   if (!v.city) return;
+  // deal_save_cost defaults to 0 (saving is the retention action; charging it
+  // is a knob, not the plan) — but when the admin turns it on, the spend is
+  // atomic and refuses politely instead of saving anyway.
+  const costTenths = Math.round(CREDIT_RULES.dealSaveCost() * 10);
+  if (costTenths > 0) {
+    const spend = trySpend(userId, costTenths, "deal_save", v.city);
+    if (!spend.ok) throw new Error("אין מספיק קרדיטים לשמירת עסקה — הזמן חבר או המתן למענק החודשי");
+  }
   appDb().prepare(
     `INSERT INTO client_deals (user_id, city, neighborhood, street, house_num, size, rooms, floor, price, balcony_sqm, parking_spots, storage_sqm, status, listing_url, notes)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`

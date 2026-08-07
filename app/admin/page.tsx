@@ -8,8 +8,42 @@ import AdminTablesBrowser from "@/components/AdminTablesBrowser";
 import AdminTabs from "@/components/AdminTabs";
 import AdminReliabilityPanel, { type ReliabilityReport, type AnomalyVerification, type CleaningVerification } from "@/components/AdminReliabilityPanel";
 import AdminLogicPanel from "@/components/AdminLogicPanel";
+import AdminUsersPanel, { type AdminUserStats, type AdminFeedbackRow } from "@/components/AdminUsersPanel";
+import { appDb } from "@/lib/appDb";
+import { ravMesserConfigured, crmConfigured } from "@/lib/mailingSync";
+import { ensureFeedbackTable } from "@/lib/feedback";
 import fs from "fs";
 import path from "path";
+
+/** User/mailing/feedback numbers for the users tab — all cheap COUNTs on app.db. */
+function loadUserStats(): AdminUserStats {
+  const empty: AdminUserStats = { total: 0, consenting: 0, withPhone: 0, unsyncedRavmesser: 0, unsyncedCrm: 0, creditsInCirculation: 0 };
+  try {
+    const one = (sql: string) => (appDb().prepare(sql).get() as { n: number } | undefined)?.n ?? 0;
+    return {
+      total: one("SELECT COUNT(*) n FROM users"),
+      consenting: one("SELECT COUNT(*) n FROM users WHERE mailing_consent=1"),
+      withPhone: one("SELECT COUNT(*) n FROM users WHERE phone IS NOT NULL AND phone != ''"),
+      unsyncedRavmesser: one("SELECT COUNT(*) n FROM users WHERE mailing_consent=1 AND ravmesser_synced_at IS NULL"),
+      unsyncedCrm: one("SELECT COUNT(*) n FROM users WHERE phone IS NOT NULL AND phone != '' AND crm_synced_at IS NULL"),
+      creditsInCirculation: Math.round(one("SELECT COALESCE(SUM(delta_tenths),0) n FROM credits_ledger") / 10),
+    };
+  } catch { return empty; } // tables appear with the first signup — an empty tab beats a crash
+}
+
+function loadRecentFeedback(): AdminFeedbackRow[] {
+  try {
+    ensureFeedbackTable();
+    const rows = appDb().prepare(
+      `SELECT id, kind, message, city, email, user_id, approved_at, created_at
+         FROM feedback ORDER BY (approved_at IS NULL) DESC, id DESC LIMIT 40`
+    ).all() as Array<{ id: number; kind: string; message: string; city: string | null; email: string | null; user_id: number | null; approved_at: string | null; created_at: string }>;
+    return rows.map((r) => ({
+      id: r.id, kind: r.kind, message: r.message, city: r.city, email: r.email,
+      hasUser: r.user_id != null, approved: r.approved_at != null, created_at: r.created_at,
+    }));
+  } catch { return []; }
+}
 
 function loadReliabilityReport(): ReliabilityReport | null {
   try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "data-reliability.json"), "utf8")); }
@@ -113,6 +147,7 @@ export default async function AdminPage() {
         rules={<AdminRulesPanel />}
         deals={<AdminDealsBrowser cities={cities.map((c) => c.city_name)} />}
         tables={<AdminTablesBrowser />}
+        users={<AdminUsersPanel stats={loadUserStats()} feedback={loadRecentFeedback()} ravConfigured={ravMesserConfigured()} crmConfigured={crmConfigured()} />}
         overview={<>
       {/* Reconciliation strip — total = active + excluded(by reason), no mismatch */}
       <div className="mb-4 rounded-xl border border-indigo-100 bg-indigo-50/60 px-4 py-2 text-center text-xs font-bold text-slate-700" dir="rtl">
