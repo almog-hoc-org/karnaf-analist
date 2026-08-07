@@ -49,12 +49,30 @@ function ensureCreditTables() {
       PRIMARY KEY (user_id, city_name)
     );
   `);
+  // referral codes must be UNIQUE — applyReferral resolves a code to ONE user,
+  // and a silent duplicate would credit an arbitrary account. The column comes
+  // from ALTER TABLE (no inline constraint possible), so enforce via index.
+  // try: the users table belongs to lib/auth.ts and may not exist yet on a
+  // fresh DB — the index materialises on the first call after it does.
+  try {
+    appDb().exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_referral_code ON users(referral_code)");
+  } catch { /* users table not created yet */ }
   ensured = true;
 }
 
 /** "u123" (AuthUser.id) → 123. Accepts a bare number too. */
 function uid(userId: string | number): number {
   return typeof userId === "number" ? userId : Number(String(userId).replace(/^u/, ""));
+}
+
+/**
+ * credits → tenths, ROUNDED. 0.3*10 is 3.0000000000000004 in JS, and SQLite
+ * happily stores that as REAL in an INTEGER-affinity column — after which
+ * balances stop being exact and `bal < cost` misses by epsilon. Every write
+ * path converts through here.
+ */
+function tenthsOf(credits: number): number {
+  return Math.round(credits * 10);
 }
 
 /* ── rules (all admin-editable; defaults are the decided model) ──────────── */
@@ -136,7 +154,7 @@ export function trySpend(userId: string | number, tenths: number, reason: string
 
 /** Once per account — idempotency keyed on the fixed ref "signup". */
 export function grantSignupBonus(userId: string | number) {
-  grant(userId, CREDIT_RULES.signupBonus() * 10, "signup", "signup");
+  grant(userId, tenthsOf(CREDIT_RULES.signupBonus()), "signup", "signup");
 }
 
 /**
@@ -148,7 +166,7 @@ export function grantMonthlyIfDue(userId: string | number) {
   const monthly = CREDIT_RULES.monthlyFreeGrant();
   if (monthly <= 0) return;
   const month = new Date().toISOString().slice(0, 7);
-  grant(userId, monthly * 10, "monthly_grant", month);
+  grant(userId, tenthsOf(monthly), "monthly_grant", month);
 }
 
 /* ── city unlocks ────────────────────────────────────────────────────────── */
@@ -176,7 +194,7 @@ export function unlockCity(userId: string | number, cityName: string): UnlockRes
 
   grantMonthlyIfDue(id); // a fresh month's grant should count toward this unlock
 
-  const costTenths = CREDIT_RULES.cityUnlockCost() * 10;
+  const costTenths = tenthsOf(CREDIT_RULES.cityUnlockCost());
   const days = Math.max(1, CREDIT_RULES.unlockDays());
   const db = appDb();
   const tx = db.transaction((): UnlockResult => {
@@ -248,10 +266,10 @@ export function applyReferral(code: string, newUserId: string | number): void {
   if (todayCount >= CREDIT_RULES.referralDailyCap()) return;
 
   // idempotent per referred user — re-submitting the form cannot double-credit
-  grant(referrer.id, CREDIT_RULES.referralBonus() * 10, "referral", `u${newId}`);
+  grant(referrer.id, tenthsOf(CREDIT_RULES.referralBonus()), "referral", `u${newId}`);
 }
 
 /** One-time bonus when an admin approves this user's feedback. */
 export function grantFeedbackBonus(userId: string | number) {
-  grant(userId, CREDIT_RULES.feedbackBonus() * 10, "feedback", "first-approved");
+  grant(userId, tenthsOf(CREDIT_RULES.feedbackBonus()), "feedback", "first-approved");
 }

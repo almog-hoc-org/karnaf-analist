@@ -83,17 +83,19 @@ function normalize(input: Partial<DealInput>) {
   };
 }
 
-export async function addDeal(input: DealInput) {
+export async function addDeal(input: DealInput): Promise<{ ok: true } | { ok: false; error: string }> {
   const userId = requireWorkspaceIdForAction();
   const v = normalize(input);
-  if (!v.city) return;
+  if (!v.city) return { ok: false, error: "חסרה עיר" };
   // deal_save_cost defaults to 0 (saving is the retention action; charging it
   // is a knob, not the plan) — but when the admin turns it on, the spend is
-  // atomic and refuses politely instead of saving anyway.
+  // atomic and refuses politely instead of saving anyway. A RETURNED error,
+  // not a thrown one: production Next.js redacts thrown server-action
+  // messages, so the user would see a generic crash instead of the reason.
   const costTenths = Math.round(CREDIT_RULES.dealSaveCost() * 10);
   if (costTenths > 0) {
     const spend = trySpend(userId, costTenths, "deal_save", v.city);
-    if (!spend.ok) throw new Error("אין מספיק קרדיטים לשמירת עסקה — הזמן חבר או המתן למענק החודשי");
+    if (!spend.ok) return { ok: false, error: "אין מספיק קרדיטים לשמירת עסקה — הזמן חבר או המתן למענק החודשי" };
   }
   appDb().prepare(
     `INSERT INTO client_deals (user_id, city, neighborhood, street, house_num, size, rooms, floor, price, balcony_sqm, parking_spots, storage_sqm, status, listing_url, notes)
@@ -103,6 +105,7 @@ export async function addDeal(input: DealInput) {
     v.price, v.balcony_sqm, v.parking_spots, v.storage_sqm, v.status, v.listing_url, v.notes
   );
   revalidatePath("/deals");
+  return { ok: true };
 }
 
 export async function updateDeal(id: number, patch: Partial<DealInput>) {

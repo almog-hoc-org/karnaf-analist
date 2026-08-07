@@ -12,24 +12,25 @@
  */
 import { eventCounts, topMisses } from "@/lib/events";
 
+// keys MUST match EVENT_NAMES in lib/events.ts — an unlabeled event renders
+// as its raw English key, which is how the first version shipped dead labels
 const EVENT_LABELS: Record<string, string> = {
   page_view: "צפיות בעמודים",
   search: "חיפושי עיר",
-  search_miss: "חיפושים כושלים",
-  share: "שיתופים",
+  search_no_results: "חיפושים כושלים",
+  chart_action: "פעולות בגרפים",
+  drill_down: "פתיחות פירוט עסקאות",
+  compare_select: "בחירות בהשוואה",
   feedback_open: "פתיחות טופס משוב",
 };
 
 export default function AdminUsagePanel() {
-  let week: Array<{ name: string; n: number }> = [];
-  let month: Array<{ name: string; n: number }> = [];
-  let misses: Array<{ term: string; n: number }> = [];
-  try {
-    week = eventCounts(7);
-    month = eventCounts(30);
-    misses = topMisses(30, 30);
-  } catch { /* events table appears with the first visitor — empty panel beats a crash */ }
+  // both loaders fail-soft internally (lib/events.ts returns [] on any error)
+  const week = eventCounts(7);
+  const month = eventCounts(30);
+  const misses = topMisses(30, 30);
 
+  const weekByName = new Map(week.map((r) => [r.name, r.n]));
   const monthByName = new Map(month.map((r) => [r.name, r.n]));
   const names = [...new Set([...week.map((r) => r.name), ...month.map((r) => r.name)])];
 
@@ -53,7 +54,7 @@ export default function AdminUsagePanel() {
                 <tr key={name} className="border-t border-slate-100">
                   <td className="py-1.5 text-slate-700">{EVENT_LABELS[name] ?? name}</td>
                   <td className="py-1.5 text-left font-bold tabular-nums text-slate-900">
-                    {(week.find((r) => r.name === name)?.n ?? 0).toLocaleString("he-IL")}
+                    {(weekByName.get(name) ?? 0).toLocaleString("he-IL")}
                   </td>
                   <td className="py-1.5 text-left tabular-nums text-slate-500">
                     {(monthByName.get(name) ?? 0).toLocaleString("he-IL")}

@@ -78,8 +78,8 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
 
   const submitAdd = () => {
     if (!form.city.trim()) return;
-    startTransition(() => {
-      addDeal({
+    startTransition(async () => {
+      const res = await addDeal({
         city: form.city, neighborhood: form.neighborhood, street: form.street, house_num: form.house_num,
         size: form.size ? Number(form.size) : null, rooms: form.rooms ? Number(form.rooms) : null,
         floor: form.floor ? Number(form.floor) : null, price: form.price ? Number(form.price) : null,
@@ -88,6 +88,8 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
         storage_sqm: form.storage ? Number(form.storage) : null,
         listing_url: form.listing_url, notes: form.notes,
       });
+      // the action RETURNS failures (thrown messages are redacted in prod)
+      if (res && !res.ok) alert(res.error);
     });
     setForm({ city: form.city, neighborhood: "", street: "", house_num: "", size: "", rooms: "", floor: "", price: "", balcony: "", parking: "", storage: "", listing_url: "", notes: "" });
   };

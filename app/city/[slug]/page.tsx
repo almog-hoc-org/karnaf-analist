@@ -27,7 +27,7 @@ import Icon from "@/components/Icon";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
 import { getRuleBool, getRuleText } from "@/lib/systemRules";
-import { balance, isCityUnlocked, unlockCity, CREDIT_RULES } from "@/lib/credits";
+import { balance, isCityUnlocked, unlockCity, grantMonthlyIfDue, CREDIT_RULES } from "@/lib/credits";
 import { whatsappShareUrl } from "@/lib/share";
 import CityWall from "@/components/CityWall";
 import CityShareButton from "@/components/CityShareButton";
@@ -116,7 +116,9 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function CityPage({ params, searchParams }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
   const activeWindow: "3y" | "5y" = DEFAULT_PRICE_WINDOW;
-  const refRaw = (searchParams?.ref ?? "").toUpperCase();
+  // String() first — a repeated ?ref=&ref= arrives as an ARRAY, and calling
+  // .toUpperCase() on it 500'd the whole page, demo city included.
+  const refRaw = String(searchParams?.ref ?? "").toUpperCase();
   const refCode = /^[A-Z2-9]{4,16}$/.test(refRaw) ? refRaw : "";
 
   // ── access gate — BEFORE the ~25 queries below; a walled visitor costs one ──
@@ -130,9 +132,13 @@ export default async function CityPage({ params, searchParams }: PageProps) {
     const cityExists = await prisma.city.findUnique({ where: { city_name: cityName }, select: { city_name: true } });
     if (cityExists) {
       if (!viewer) {
-        return <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} />;
+        return <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} signupBonus={CREDIT_RULES.signupBonus()} />;
       }
       if (!isCityUnlocked(viewer.id, cityName)) {
+        // collect a due monthly grant BEFORE deciding which wall to show —
+        // without this, a user at 0 credits in a fresh month was told
+        // "insufficient" by the very gate whose grant would have covered it
+        grantMonthlyIfDue(viewer.id);
         const bal = balance(viewer.id);
         const cost = CREDIT_RULES.cityUnlockCost();
         if (bal < cost) {
@@ -142,6 +148,9 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               state="insufficient"
               balanceCredits={bal}
               costCredits={cost}
+              referralBonus={CREDIT_RULES.referralBonus()}
+              feedbackBonus={CREDIT_RULES.feedbackBonus()}
+              monthlyGrant={CREDIT_RULES.monthlyFreeGrant()}
               shareUrl={whatsappShareUrl(`/city/${encodeURIComponent(cityName)}`, viewer.id)}
             />
           );

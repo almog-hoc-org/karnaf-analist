@@ -23,6 +23,7 @@ export default function InfoTip({ text, label = "הסבר" }: { text: string; la
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
+  const bubbleRef = useRef<HTMLDivElement>(null);
   const id = useId();
 
   useEffect(() => {
@@ -35,17 +36,25 @@ export default function InfoTip({ text, label = "הסבר" }: { text: string; la
       const left = Math.max(12, Math.min(r.left + r.width / 2 - width / 2, window.innerWidth - width - 12));
       setPos({ top: r.bottom + 8, left });
     }
-    const close = () => setOpen(false);
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
-    // capture-phase so a click anywhere (including inside other components
-    // that stopPropagation) still closes the bubble
-    document.addEventListener("click", close, true);
+    // Capture-phase, so clicks inside stopPropagation-happy neighbours still
+    // close the bubble — but it MUST skip the trigger and the bubble itself:
+    // the capture listener fires before the button's own onClick, so a naive
+    // "close on any click" made the toggle re-open on every tap (close→toggle
+    // batched to open), and closed the bubble despite its own stopPropagation.
+    const onDocClick = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (btnRef.current?.contains(t) || bubbleRef.current?.contains(t)) return;
+      setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    const onScroll = () => setOpen(false);
+    document.addEventListener("click", onDocClick, true);
     document.addEventListener("keydown", onKey);
-    window.addEventListener("scroll", close, true);
+    window.addEventListener("scroll", onScroll, true);
     return () => {
-      document.removeEventListener("click", close, true);
+      document.removeEventListener("click", onDocClick, true);
       document.removeEventListener("keydown", onKey);
-      window.removeEventListener("scroll", close, true);
+      window.removeEventListener("scroll", onScroll, true);
     };
   }, [open]);
 
@@ -66,11 +75,11 @@ export default function InfoTip({ text, label = "הסבר" }: { text: string; la
       {open && pos && (
         <div
           id={id}
+          ref={bubbleRef}
           role="tooltip"
           dir="rtl"
           className="fixed z-[70] rounded-xl border border-slate-200 bg-white p-3 text-right text-xs font-normal leading-relaxed text-slate-600 shadow-lg"
           style={{ top: pos.top, left: pos.left, width: Math.min(288, typeof window !== "undefined" ? window.innerWidth - 24 : 288) }}
-          onClick={(e) => e.stopPropagation()}
         >
           {text}
         </div>

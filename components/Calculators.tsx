@@ -19,6 +19,21 @@ import Icon from "@/components/Icon";
 const fmt = (v: number, digits = 0) =>
   Number.isFinite(v) ? v.toLocaleString("he-IL", { maximumFractionDigits: digits }) : "—";
 
+/** signed ₪ display — "+₪800" / "−₪800"; never a double sign */
+const fmtSignedNis = (v: number, digits = 0) =>
+  Number.isFinite(v) ? `${v >= 0 ? "+" : "−"}₪${fmt(Math.abs(v), digits)}` : "—";
+
+/** Spitzer monthly payment. ONE definition — the two calculators using it had
+ *  already drifted apart on the n<=0 guard. NaN = inputs don't form a loan. */
+function monthlyPayment(loan: number, annualPct: number, years: number): number {
+  if (loan <= 0) return 0;
+  const n = years * 12;
+  if (n <= 0) return NaN;
+  const r = annualPct / 100 / 12;
+  if (r === 0) return loan / n;
+  return (loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+}
+
 /* ── shared UI atoms ─────────────────────────────────────────────────────── */
 
 function Field({ label, value, onChange, suffix, step = 1, min = 0 }: {
@@ -61,14 +76,8 @@ function MortgageCalc() {
   const [rate, setRate] = useState(4.9);
   const [years, setYears] = useState(25);
 
-  const r = rate / 100 / 12;
-  const n = years * 12;
-  const monthly = useMemo(() => {
-    if (amount <= 0 || n <= 0) return NaN;
-    if (r === 0) return amount / n;
-    return (amount * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-  }, [amount, r, n]);
-  const total = monthly * n;
+  const monthly = useMemo(() => (amount <= 0 ? NaN : monthlyPayment(amount, rate, years)), [amount, rate, years]);
+  const total = monthly * years * 12;
 
   return (
     <div className="grid gap-5 lg:grid-cols-2">
@@ -139,10 +148,7 @@ function InvestmentCalc() {
     const annualRent = rent * 12 * (1 - vacancyWeeks / 52) - expenses * 12;
     const grossYield = (rent * 12) / price * 100;
     const netYield = annualRent / price * 100;
-    const loan = Math.max(0, price - equity);
-    const r = mortgageRate / 100 / 12;
-    const n = mortgageYears * 12;
-    const pay = loan <= 0 ? 0 : r === 0 ? loan / n : (loan * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const pay = monthlyPayment(Math.max(0, price - equity), mortgageRate, mortgageYears);
     const cashflow = annualRent / 12 - pay;
     return { grossYield, netYield, pay, cashflow };
   }, [price, rent, expenses, vacancyWeeks, equity, mortgageRate, mortgageYears]);
@@ -164,8 +170,8 @@ function InvestmentCalc() {
         <Result label="החזר משכנתא חודשי" value={`₪${fmt(calc.pay)}`} />
         <Result
           label="תזרים חודשי"
-          value={`${calc.cashflow >= 0 ? "+" : "−"}₪${fmt(Math.abs(calc.cashflow))}`}
-          sub={calc.cashflow >= 0 ? "הנכס מכסה את עצמו" : "דורש השלמה מהכיס"}
+          value={fmtSignedNis(calc.cashflow)}
+          sub={!Number.isFinite(calc.cashflow) ? undefined : calc.cashflow >= 0 ? "הנכס מכסה את עצמו" : "דורש השלמה מהכיס"}
         />
       </div>
       <p className="text-2xs leading-relaxed text-slate-400 lg:col-span-2">
@@ -187,7 +193,7 @@ function RenovationCalc() {
   const calc = useMemo(() => {
     const totalIn = buyPrice + renoCost;
     const equityGain = afterValue - totalIn;
-    const roi = renoCost > 0 ? ((afterValue - buyPrice - renoCost) / renoCost) * 100 : NaN;
+    const roi = renoCost > 0 ? (equityGain / renoCost) * 100 : NaN;
     const rentUplift = rentAfter - rentBefore;
     const paybackYears = rentUplift > 0 ? renoCost / (rentUplift * 12) : NaN;
     return { totalIn, equityGain, roi, rentUplift, paybackYears };
@@ -206,11 +212,11 @@ function RenovationCalc() {
         <Result label="סה״כ השקעה" value={`₪${fmt(calc.totalIn)}`} />
         <Result
           label="רווח הוני מהשיפוץ"
-          value={`${calc.equityGain >= 0 ? "+" : "−"}₪${fmt(Math.abs(calc.equityGain))}`}
+          value={fmtSignedNis(calc.equityGain)}
           accent
           sub={Number.isFinite(calc.roi) ? `תשואה על עלות השיפוץ: ${fmt(calc.roi)}%` : undefined}
         />
-        <Result label="תוספת שכירות" value={`+₪${fmt(calc.rentUplift)}/חודש`} />
+        <Result label="תוספת שכירות" value={`${fmtSignedNis(calc.rentUplift)}/חודש`} />
         <Result
           label="החזר השקעה משכירות"
           value={Number.isFinite(calc.paybackYears) ? `${fmt(calc.paybackYears, 1)} שנים` : "—"}

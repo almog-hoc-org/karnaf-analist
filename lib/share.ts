@@ -2,12 +2,25 @@
  * Share-link building — every outbound share carries the sharer's referral
  * code, so "send to a friend" and "earn referral credits" are the same action.
  */
+import { headers } from "next/headers";
 import { referralCodeFor } from "./credits";
 import { withBasePath } from "./basePath";
 
-/** The canonical public origin (same source of truth the logout redirect uses). */
+/**
+ * The canonical public origin. KARNAF_SITE_URL first; when it's unset, fall
+ * back to the request's own Host header — a share link is worthless pointing
+ * at localhost, and the OAuth routes already anticipate exactly this
+ * misconfiguration by using the request origin.
+ */
 export function siteUrl(): string {
-  return (process.env.KARNAF_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const configured = process.env.KARNAF_SITE_URL?.replace(/\/$/, "");
+  if (configured) return configured;
+  try {
+    const h = headers();
+    const host = h.get("x-forwarded-host") ?? h.get("host");
+    if (host) return `${h.get("x-forwarded-proto") ?? "https"}://${host}`;
+  } catch { /* outside a request scope (scripts) — fall through */ }
+  return "http://localhost:3000";
 }
 
 /** Absolute URL for an app path, with the sharer's ref code when signed in. */

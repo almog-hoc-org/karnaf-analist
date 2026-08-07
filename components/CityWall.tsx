@@ -23,6 +23,10 @@ export default function CityWall({
   demoCity,
   shareUrl,
   refCode,
+  signupBonus,
+  referralBonus,
+  feedbackBonus,
+  monthlyGrant,
   unlockAction,
 }: {
   cityName: string;
@@ -34,6 +38,11 @@ export default function CityWall({
   shareUrl?: string;
   /** the sharer's referral code from ?ref= — must survive the trip into /register */
   refCode?: string;
+  /** live rule values — NEVER hardcode these; the admin can change them without a deploy */
+  signupBonus?: number;
+  referralBonus?: number;
+  feedbackBonus?: number;
+  monthlyGrant?: number;
   unlockAction?: (formData: FormData) => Promise<void>;
 }) {
   const refSuffix = refCode ? `&ref=${refCode}` : "";
@@ -50,7 +59,7 @@ export default function CityWall({
           <>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
               עמודי הערים — עם כל הגרפים, העסקאות והדירוגים — פתוחים למשתמשים רשומים.
-              ההרשמה חינם ומקנה <b>10 קרדיטים</b> לפתיחת הערים שמעניינות אותך.
+              ההרשמה חינם ומקנה <b>{signupBonus ?? 10} קרדיטים</b> לפתיחת הערים שמעניינות אותך.
             </p>
             {demoCity && (
               <p className="mt-2 text-xs text-slate-500">
@@ -62,7 +71,7 @@ export default function CityWall({
                 href={`/register?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}${refSuffix}`}
                 className="w-full rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white hover:bg-indigo-700 sm:w-auto"
               >
-                הרשמה חינם — 10 קרדיטים
+                הרשמה חינם — {signupBonus ?? 10} קרדיטים
               </Link>
               <Link
                 href={`/login?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}`}
@@ -96,9 +105,9 @@ export default function CityWall({
             <div className="mx-auto mt-5 max-w-md rounded-2xl border border-indigo-100 bg-indigo-50/60 p-4 text-right text-sm text-slate-700">
               <p className="font-bold text-slate-900">איך מרוויחים עוד קרדיטים?</p>
               <ul className="mt-2 space-y-1.5">
-                <li>🤝 הזמנת חבר שנרשם — <b>+5 קרדיטים</b></li>
-                <li>💬 משוב איכותי שאושר — <b>+2 קרדיטים</b></li>
-                <li>🎁 מענק חודשי קטן מתחדש אוטומטית</li>
+                <li>🤝 הזמנת חבר שנרשם — <b>+{referralBonus ?? 5} קרדיטים</b></li>
+                <li>💬 משוב איכותי שאושר — <b>+{feedbackBonus ?? 2} קרדיטים</b></li>
+                {(monthlyGrant ?? 0) > 0 && <li>🎁 מענק חודשי (+{monthlyGrant}) מתחדש אוטומטית</li>}
               </ul>
             </div>
             {shareUrl && (

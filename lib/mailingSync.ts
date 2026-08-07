@@ -142,7 +142,14 @@ export function consentingUsersCsv(): string {
     `SELECT email, name, phone, mailing_consent, created_at, ravmesser_synced_at, crm_synced_at
        FROM users ORDER BY id`
   ).all() as Array<Record<string, unknown>>;
-  const esc = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  // Quote-escape AND neutralise formula prefixes: a user who registers with
+  // the name `=HYPERLINK(...)` must not become an executable cell on the
+  // operator's machine when the CSV opens in Excel/Sheets.
+  const esc = (v: unknown) => {
+    let s = String(v ?? "").replace(/"/g, '""');
+    if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
+    return `"${s}"`;
+  };
   const header = "email,name,phone,mailing_consent,created_at,ravmesser_synced_at,crm_synced_at";
   return [header, ...rows.map((r) => [r.email, r.name, r.phone, r.mailing_consent, r.created_at, r.ravmesser_synced_at, r.crm_synced_at].map(esc).join(","))].join("\n");
 }
