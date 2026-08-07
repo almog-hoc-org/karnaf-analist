@@ -45,7 +45,7 @@
 import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
-import { DEAL_KEY_COLS, dealKeyMatch, DEAL_KEY_INDEX_SQL } from "../lib/dealKey";
+import { DEAL_KEY_COLS, dealKeyMatch, DEAL_KEY_INDEX_SQL, DEAL_KEY_INDEX_DROP_OLD_SQL } from "../lib/dealKey";
 
 const LIVE_DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
 
@@ -205,6 +205,7 @@ function main() {
       throw new Error(`אין מספיק עמודות מפתח משותפות (${usableKey.join(",")}) — מסרב למזג בלי זיהוי כפילויות`);
     }
     const cols = shared.map((c) => `"${c}"`).join(",");
+    db.exec(DEAL_KEY_INDEX_DROP_OLD_SQL);
     db.exec(DEAL_KEY_INDEX_SQL);
     const match = dealKeyMatch(`main.${table}`, "s", usableKey);
 

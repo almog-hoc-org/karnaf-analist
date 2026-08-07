@@ -82,15 +82,44 @@ export function dealKeyMatch(a: string, b: string, cols: readonly string[] = DEA
 /**
  * Index backing the identity lookup.
  *
- * NOT unique, on purpose. A unique index would reject a real double report at
- * insert time and lose it, and it cannot even be created on the live table,
- * which already holds such rows — that is precisely why flag-duplicate-deals.ts
- * exists. This one only makes "have I seen this deal" fast enough to run per
- * batch instead of per table scan.
+ * IT MUST INDEX THE SAME EXPRESSIONS THE MATCH USES. The first version indexed
+ * the plain columns (city_name, deal_date, price, area) while dealKeyMatch
+ * compares COALESCE(col, sentinel). SQLite cannot use a plain-column index for
+ * a COALESCE(col) comparison, so the NOT EXISTS subquery fell back to a full
+ * scan of the whole table for EVERY incoming row: on a 1.4M-row live database
+ * against a 210k-row batch that is ~3×10¹¹ comparisons, and it ran for over an
+ * hour with the site stopped for the merge before it was killed. An expression
+ * index on exactly COALESCE(col, sentinel) — same sentinels as dealKeyMatch,
+ * '' for text and -1 for numbers — turns each lookup back into a seek.
+ *
+ * Four leading columns are enough to make the seek selective; the remaining key
+ * columns (street, house_num, rooms) are checked against the few candidates the
+ * seek returns. street/house_num are NULL on every nadlan row anyway.
+ *
+ * NEW NAME, on purpose. `CREATE INDEX IF NOT EXISTS` with the OLD name would
+ * see the old plain index already present and silently do nothing, leaving the
+ * slow path in place. The importer drops the old name explicitly; here a fresh
+ * name guarantees the expression index is the one that gets built.
+ *
+ * NOT unique. A unique index would reject a real double report at insert time
+ * and lose it, and cannot be created on the live table which already holds such
+ * rows — that is what flag-duplicate-deals.ts is for. This only makes "have I
+ * seen this deal" fast enough to run per batch instead of per table scan.
  */
 export const DEAL_KEY_INDEX_SQL =
-  `CREATE INDEX IF NOT EXISTS idx_nadlan_tx_dealkey
-     ON nadlan_transactions (city_name, deal_date, price, area)`;
+  `CREATE INDEX IF NOT EXISTS idx_nadlan_tx_dealkey_x
+     ON nadlan_transactions (
+       COALESCE(city_name, ''), COALESCE(deal_date, ''),
+       COALESCE(price, -1), COALESCE(area, -1)
+     )`;
+
+/**
+ * Drop the superseded plain-column index. Runs where multiple statements are
+ * allowed (db.exec in import-transactions); kept separate from the CREATE above
+ * so DEAL_KEY_INDEX_SQL stays a single statement for prisma.$executeRawUnsafe.
+ */
+export const DEAL_KEY_INDEX_DROP_OLD_SQL =
+  `DROP INDEX IF EXISTS idx_nadlan_tx_dealkey`;
 
 /**
  * Batch insert that skips rows already present.
