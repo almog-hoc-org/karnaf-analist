@@ -218,6 +218,44 @@ function main() {
     const skipped = Number((db.prepare(`SELECT COUNT(*) c FROM src.${table}`).get() as { c: number }).c) - r.changes;
     console.log(`  ${table}: נוספו ${n(r.changes)} · כבר היו ${n(skipped)} · סה"כ ${n(before + r.changes)}`);
     console.log(`  מפתח זיהוי: ${usableKey.join(" + ")}`);
+
+    // ── ENRICH existing rows ──────────────────────────────────────────
+    // INSERT-if-absent cannot help a deal that is ALREADY in the database but
+    // was collected before the sale flags existed. It matches on the natural
+    // key, gets skipped as a duplicate, and keeps its NULL hok_hamecher — so the
+    // freshly collected flag is thrown away and the deal stays unclassifiable.
+    //
+    // That is exactly what undercut the coverage campaign. Of עספיא's 549 newly
+    // collected deals, every one carried a sale flag, but the town already had
+    // those deals from an earlier sweep, so the merge skipped 544 of them and
+    // only 5 flags survived. The town's price series stayed empty because 918 of
+    // its deals had no class_source for classify-sale-channel to key on.
+    //
+    // So after adding genuinely new rows, fill the gaps on the old ones: copy a
+    // value from the matching incoming row ONLY where the live row has none.
+    // Never overwrites a value that is already there, never deletes. The
+    // pipeline's classifier then derives is_secondhand and class_source from the
+    // flags, which is what actually lands the deals in the graphs.
+    const em = dealKeyMatch("m", "s", usableKey);
+    let enriched = 0;
+    if (shared.includes("hok_hamecher")) {
+      const setPrev = shared.includes("prev_deals") ? ", prev_deals = s.prev_deals" : "";
+      enriched += db.prepare(
+        `UPDATE main.${table} AS m
+            SET hok_hamecher = s.hok_hamecher${setPrev}
+           FROM src.${table} AS s
+          WHERE ${em} AND m.hok_hamecher IS NULL AND s.hok_hamecher IS NOT NULL`
+      ).run().changes;
+    }
+    if (shared.includes("year_built")) {
+      enriched += db.prepare(
+        `UPDATE main.${table} AS m
+            SET year_built = s.year_built
+           FROM src.${table} AS s
+          WHERE ${em} AND COALESCE(m.year_built, 0) = 0 AND COALESCE(s.year_built, 0) > 0`
+      ).run().changes;
+    }
+    if (enriched) console.log(`  העשרת שורות קיימות שחסרו דגלים/שנת-בנייה: ${n(enriched)}`);
   });
 
   const merge = db.transaction(() => {
