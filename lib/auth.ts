@@ -20,6 +20,7 @@ import { redirect } from "next/navigation";
 import crypto from "crypto";
 import { appDb } from "./appDb";
 import { rethrowIfNextControlFlow } from "./nextControlFlow";
+import { ensureStarterCredits } from "./credits";
 
 export const SESSION_COOKIE = "karnaf_session";
 /** Short-lived state cookie for the Google OAuth round-trip (app/api/auth/google). */
@@ -252,6 +253,10 @@ function sweepExpiredSessions() {
 export function createSession(user: AuthUser) {
   ensureAuthTables();
   sweepExpiredSessions();
+  // Idempotent starter/monthly grants at the one choke point every sign-in
+  // path passes through — this is what retro-credits accounts that existed
+  // before the credits system shipped.
+  try { ensureStarterCredits(user.id); } catch { /* never block a login over credits */ }
   const token = crypto.randomBytes(32).toString("hex");
   const expires = new Date(Date.now() + SESSION_DAYS * 86400_000);
   appDb().prepare("INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)")

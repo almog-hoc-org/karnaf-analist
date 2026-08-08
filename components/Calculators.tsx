@@ -13,7 +13,7 @@
  *
  * Every result carries the disclaimer — these are planning aids, not advice.
  */
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Icon from "@/components/Icon";
 
 const fmt = (v: number, digits = 0) =>
@@ -69,30 +69,142 @@ function Result({ label, value, accent = false, sub }: { label: string; value: s
   );
 }
 
-/* ── 1 · mortgage (שפיצר) ────────────────────────────────────────────────── */
+/* ── 1 · mortgage — multi-track mix (תמהיל) ──────────────────────────────── */
+
+type TrackType = "fixed" | "fixed_linked" | "prime" | "variable_linked";
+
+const TRACK_TYPES: Record<TrackType, { label: string; linked: boolean; primeSensitive: boolean; note: string }> = {
+  fixed:           { label: "קבועה לא צמודה",      linked: false, primeSensitive: false, note: "ההחזר קבוע לכל התקופה — הוודאות המלאה, בדרך כלל הריבית הגבוהה ביותר" },
+  fixed_linked:    { label: "קבועה צמודת מדד",     linked: true,  primeSensitive: false, note: "הריבית קבועה אבל הקרן צמודה למדד — ההחזר מטפס עם האינפלציה" },
+  prime:           { label: "פריים",                linked: false, primeSensitive: true,  note: "פריים = ריבית בנק ישראל + 1.5% — משתנה עם כל החלטת ריבית, לא צמודה למדד" },
+  variable_linked: { label: "משתנה צמודה (כל 5)",  linked: true,  primeSensitive: false, note: "הריבית מתעדכנת כל 5 שנים וגם צמודה למדד" },
+};
+
+interface Track { id: number; type: TrackType; amount: number; rate: number; years: number }
+
+/** the classic starting mix — thirds, at realistic 2026 market rates */
+const DEFAULT_TRACKS: Track[] = [
+  { id: 1, type: "fixed",        amount: 340_000, rate: 5.1,  years: 25 },
+  { id: 2, type: "prime",        amount: 330_000, rate: 5.25, years: 25 },
+  { id: 3, type: "fixed_linked", amount: 330_000, rate: 3.4,  years: 25 },
+];
 
 function MortgageCalc() {
-  const [amount, setAmount] = useState(1_000_000);
-  const [rate, setRate] = useState(4.9);
-  const [years, setYears] = useState(25);
+  const [tracks, setTracks] = useState<Track[]>(DEFAULT_TRACKS);
+  const [inflation, setInflation] = useState(2.5);
+  const [propertyValue, setPropertyValue] = useState(0);
+  const [netIncome, setNetIncome] = useState(0);
+  const nextId = useRef(DEFAULT_TRACKS.length + 1);
 
-  const monthly = useMemo(() => (amount <= 0 ? NaN : monthlyPayment(amount, rate, years)), [amount, rate, years]);
-  const total = monthly * years * 12;
+  const patch = (id: number, p: Partial<Track>) =>
+    setTracks((ts) => ts.map((t) => (t.id === id ? { ...t, ...p } : t)));
+  const remove = (id: number) => setTracks((ts) => ts.filter((t) => t.id !== id));
+  const add = () =>
+    setTracks((ts) => [...ts, { id: nextId.current++, type: "fixed", amount: 200_000, rate: 5.0, years: 20 }]);
+
+  const calc = useMemo(() => {
+    const rows = tracks.map((t) => {
+      const meta = TRACK_TYPES[t.type];
+      const initial = monthlyPayment(t.amount, t.rate, t.years);
+      // CPI-linked tracks: linking compounds like extra interest, so the
+      // AVERAGE payment over the life is approximated by rate+inflation.
+      // Honest approximation for planning — the disclaimer says so.
+      const estAvg = meta.linked ? monthlyPayment(t.amount, t.rate + inflation, t.years) : initial;
+      const estTotal = estAvg * t.years * 12;
+      const primeUp = meta.primeSensitive ? monthlyPayment(t.amount, t.rate + 1, t.years) : null;
+      return { t, meta, initial, estAvg, estTotal, primeUp };
+    });
+    const principal = tracks.reduce((s, t) => s + t.amount, 0);
+    const firstMonthly = rows.reduce((s, r) => s + (Number.isFinite(r.initial) ? r.initial : 0), 0);
+    const estAvgMonthly = rows.reduce((s, r) => s + (Number.isFinite(r.estAvg) ? r.estAvg : 0), 0);
+    const estTotal = rows.reduce((s, r) => s + (Number.isFinite(r.estTotal) ? r.estTotal : 0), 0);
+    const primeUpDelta = rows.reduce((s, r) => s + (r.primeUp != null && Number.isFinite(r.primeUp) ? r.primeUp - r.initial : 0), 0);
+    return { rows, principal, firstMonthly, estAvgMonthly, estTotal, primeUpDelta };
+  }, [tracks, inflation]);
+
+  const ltv = propertyValue > 0 ? (calc.principal / propertyValue) * 100 : null;
+  const payRatio = netIncome > 0 ? (calc.firstMonthly / netIncome) * 100 : null;
+
+  const inputCls = "w-full rounded-lg border border-slate-200 px-2 py-1.5 text-sm tabular-nums focus:border-indigo-400 focus:outline-none";
 
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
-      <div className="space-y-3">
-        <Field label="סכום המשכנתא" value={amount} onChange={setAmount} suffix="₪" step={10000} />
-        <Field label="ריבית שנתית" value={rate} onChange={setRate} suffix="%" step={0.1} />
-        <Field label="תקופה" value={years} onChange={setYears} suffix="שנים" />
+    <div className="space-y-5">
+      {/* track table */}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm" dir="rtl">
+          <thead className="text-2xs font-bold text-slate-400">
+            <tr>
+              <th className="py-1.5 pl-2 text-right">מסלול</th>
+              <th className="text-right">סכום ₪</th>
+              <th className="text-right">ריבית %</th>
+              <th className="text-right">שנים</th>
+              <th className="text-right">החזר ראשון</th>
+              <th className="text-right">ממוצע משוער*</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {calc.rows.map(({ t, meta, initial, estAvg }) => (
+              <tr key={t.id} className="border-t border-slate-100 align-top">
+                <td className="py-2 pl-2">
+                  <select value={t.type} onChange={(e) => patch(t.id, { type: e.target.value as TrackType })}
+                    className="w-full rounded-lg border border-slate-200 px-1.5 py-1.5 text-xs font-semibold text-slate-700">
+                    {Object.entries(TRACK_TYPES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+                  </select>
+                  <p className="mt-1 max-w-[190px] text-[10px] leading-tight text-slate-400">{meta.note}</p>
+                </td>
+                <td className="py-2 pl-2"><input type="number" dir="ltr" step={10000} min={0} value={t.amount || ""} onChange={(e) => patch(t.id, { amount: Number(e.target.value) })} className={inputCls} /></td>
+                <td className="py-2 pl-2"><input type="number" dir="ltr" step={0.05} min={0} value={t.rate || ""} onChange={(e) => patch(t.id, { rate: Number(e.target.value) })} className={inputCls} /></td>
+                <td className="py-2 pl-2"><input type="number" dir="ltr" step={1} min={1} max={30} value={t.years || ""} onChange={(e) => patch(t.id, { years: Number(e.target.value) })} className={inputCls} /></td>
+                <td className="py-2 pl-2 font-bold tabular-nums text-slate-900">₪{fmt(initial)}</td>
+                <td className="py-2 pl-2 tabular-nums text-slate-600">₪{fmt(estAvg)}</td>
+                <td className="py-2 text-left">
+                  {tracks.length > 1 && (
+                    <button onClick={() => remove(t.id)} aria-label="הסר מסלול"
+                      className="rounded-lg px-2 py-1 text-xs font-bold text-slate-300 hover:bg-red-50 hover:text-red-500">✕</button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <div className="grid content-start gap-3 sm:grid-cols-2">
-        <Result label="החזר חודשי" value={`₪${fmt(monthly)}`} accent />
-        <Result label="סה״כ החזר" value={`₪${fmt(total)}`} sub={`מתוכו ריבית ₪${fmt(total - amount)}`} />
+      <button onClick={add} className="rounded-xl border border-dashed border-indigo-300 px-4 py-2 text-xs font-bold text-indigo-600 hover:bg-indigo-50">
+        + הוסף מסלול
+      </button>
+
+      {/* global assumptions */}
+      <div className="grid gap-3 sm:grid-cols-3">
+        <Field label="אינפלציה שנתית צפויה (למסלולים צמודים)" value={inflation} onChange={setInflation} suffix="%" step={0.1} />
+        <Field label="שווי הנכס (לא חובה — לחישוב אחוז מימון)" value={propertyValue} onChange={setPropertyValue} suffix="₪" step={50000} />
+        <Field label="הכנסה חודשית נטו (לא חובה — ליחס החזר)" value={netIncome} onChange={setNetIncome} suffix="₪" step={500} />
       </div>
-      <p className="text-2xs leading-relaxed text-slate-400 lg:col-span-2">
-        לוח שפיצר בריבית קבועה. משכנתא אמיתית מורכבת ממסלולים מעורבים (פריים, צמודה, קבועה) —
-        המספר כאן הוא סדר גודל לתכנון, לא הצעת בנק.
+
+      {/* summary */}
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Result label="סה״כ משכנתא" value={`₪${fmt(calc.principal)}`} />
+        <Result label="החזר חודשי ראשון" value={`₪${fmt(calc.firstMonthly)}`} accent
+          sub={payRatio != null ? `${fmt(payRatio, 1)}% מההכנסה${payRatio > 40 ? " ⚠️ מעל תקרת בנק ישראל (40%)" : ""}` : undefined} />
+        <Result label="החזר ממוצע משוער*" value={`₪${fmt(calc.estAvgMonthly)}`}
+          sub="כולל אומדן הצמדה למדד" />
+        <Result label="סה״כ החזר משוער*" value={`₪${fmt(calc.estTotal)}`}
+          sub={`מזה ריבית והצמדה ₪${fmt(calc.estTotal - calc.principal)}`} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {ltv != null && (
+          <Result label="אחוז מימון (LTV)" value={`${fmt(ltv, 1)}%`}
+            sub={ltv > 75 ? "⚠️ מעל 75% — מעבר לתקרה לדירה יחידה" : ltv > 50 ? "טווח מקובל לדירה יחידה" : "מימון נמוך — עמדת מיקוח טובה"} />
+        )}
+        {calc.primeUpDelta > 0 && (
+          <Result label="רגישות: פריים +1%" value={`+₪${fmt(calc.primeUpDelta)}/חודש`}
+            sub="כמה יקפוץ ההחזר אם ריבית בנק ישראל תעלה באחוז" />
+        )}
+      </div>
+
+      <p className="text-2xs leading-relaxed text-slate-400">
+        * לוח שפיצר. במסלולים צמודי מדד ההחזר מטפס בהדרגה — &quot;הממוצע המשוער&quot; מקרב את עלות ההצמדה
+        לפי האינפלציה שהזנת, וההחזר בפועל מתחיל נמוך יותר ומסיים גבוה יותר. מסלול פריים ומשתנות ישתנו עם
+        השוק. זהו כלי תכנון להשוואת תמהילים — לא תחליף לייעוץ משכנתאות ולא הצעה בנקאית.
       </p>
     </div>
   );
@@ -232,7 +344,7 @@ function RenovationCalc() {
 /* ── shell ───────────────────────────────────────────────────────────────── */
 
 const TABS = [
-  { key: "mortgage", label: "משכנתא", icon: "institution", comp: MortgageCalc },
+  { key: "mortgage", label: "תמהיל משכנתא", icon: "institution", comp: MortgageCalc },
   { key: "investment", label: "כדאיות השקעה", icon: "money", comp: InvestmentCalc },
   { key: "renovation", label: "כדאיות שיפוץ", icon: "bricks", comp: RenovationCalc },
   { key: "compound", label: "ריבית דריבית", icon: "trend-up", comp: CompoundCalc },

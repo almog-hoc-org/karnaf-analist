@@ -145,8 +145,18 @@ export default function TopNav({ cities, user, credits }: { cities: string[]; us
         <div className="hidden shrink-0 items-center gap-1.5 md:flex">
           {user ? (
             <>
-              <Link href="/account" className="rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-bold text-indigo-700 hover:bg-indigo-100" title="החשבון והקרדיטים שלי">
-                שלום, {user.name}{creditsLabel != null && <span className="mr-1.5 rounded-full bg-white px-1.5 py-0.5 text-2xs text-indigo-600">🪙 {creditsLabel}</span>}
+              {creditsLabel != null && (
+                <Link
+                  href="/account"
+                  title="היתרה שלך — לחץ לפירוט ולהרווחת קרדיטים"
+                  className="flex items-center gap-1 rounded-full bg-indigo-600 px-3 py-1 text-xs font-black text-white shadow-sm transition-colors hover:bg-indigo-700"
+                >
+                  🪙 {creditsLabel}
+                  <span className="font-semibold opacity-80">קרדיטים</span>
+                </Link>
+              )}
+              <Link href="/account" className="rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-bold text-indigo-700 hover:bg-indigo-100" title="החשבון שלי">
+                שלום, {user.name}
               </Link>
               <form action={withBasePath("/logout")} method="post" className="inline">
                 <button type="submit" className="rounded-lg px-2 py-1 text-xs font-semibold text-slate-400 hover:text-slate-700">יציאה</button>
@@ -204,8 +214,11 @@ export default function TopNav({ cities, user, credits }: { cities: string[]; us
             <div className="mt-1 border-t border-slate-100 pt-1">
               {user ? (
                 <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-3">
-                  <Link href="/account" className="text-sm font-bold text-indigo-700">
-                    שלום, {user.name}{creditsLabel != null && <span className="mr-1.5 rounded-full bg-indigo-50 px-1.5 py-0.5 text-2xs text-indigo-600">🪙 {creditsLabel}</span>}
+                  <Link href="/account" className="flex items-center gap-2 text-sm font-bold text-indigo-700">
+                    שלום, {user.name}
+                    {creditsLabel != null && (
+                      <span className="rounded-full bg-indigo-600 px-2.5 py-0.5 text-xs font-black text-white">🪙 {creditsLabel} קרדיטים</span>
+                    )}
                   </Link>
                   <form action={withBasePath("/logout")} method="post" className="inline">
                     <button type="submit" className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500">יציאה</button>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
-import { balance, ledgerFor, unlockedCities, referralCodeFor, grantMonthlyIfDue, CREDIT_RULES } from "@/lib/credits";
+import { balance, ledgerFor, unlockedCities, referralCodeFor, ensureStarterCredits, CREDIT_RULES } from "@/lib/credits";
 import { shareUrlFor, whatsappShareUrl } from "@/lib/share";
 import Icon from "@/components/Icon";
 
@@ -28,8 +28,8 @@ export default function AccountPage() {
   const user = getCurrentUser();
   if (!user) redirect("/login?next=/account");
 
-  // visiting the account page in a fresh month collects the monthly grant
-  grantMonthlyIfDue(user.id);
+  // settle anything owed (retro signup bonus for pre-credits accounts, monthly grant)
+  ensureStarterCredits(user.id);
 
   const bal = balance(user.id);
   const entries = ledgerFor(user.id, 30);

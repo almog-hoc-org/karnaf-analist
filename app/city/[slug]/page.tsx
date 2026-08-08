@@ -27,7 +27,7 @@ import Icon from "@/components/Icon";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
 import { getRuleBool, getRuleText } from "@/lib/systemRules";
-import { balance, isCityUnlocked, unlockCity, grantMonthlyIfDue, CREDIT_RULES } from "@/lib/credits";
+import { balance, isCityUnlocked, unlockCity, ensureStarterCredits, CREDIT_RULES } from "@/lib/credits";
 import { whatsappShareUrl } from "@/lib/share";
 import CityWall from "@/components/CityWall";
 import CityShareButton from "@/components/CityShareButton";
@@ -135,10 +135,10 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         return <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} signupBonus={CREDIT_RULES.signupBonus()} />;
       }
       if (!isCityUnlocked(viewer.id, cityName)) {
-        // collect a due monthly grant BEFORE deciding which wall to show —
-        // without this, a user at 0 credits in a fresh month was told
-        // "insufficient" by the very gate whose grant would have covered it
-        grantMonthlyIfDue(viewer.id);
+        // settle all due grants BEFORE deciding which wall to show — a user
+        // owed the signup bonus (pre-credits account) or the monthly grant
+        // must not be told "insufficient" by the gate that owes them credits
+        ensureStarterCredits(viewer.id);
         const bal = balance(viewer.id);
         const cost = CREDIT_RULES.cityUnlockCost();
         if (bal < cost) {

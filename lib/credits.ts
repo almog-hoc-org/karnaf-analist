@@ -161,12 +161,37 @@ export function grantSignupBonus(userId: string | number) {
  * Free-tier monthly grant — the bridge until subscriptions launch (rule to 0
  * to turn it off). Lazy: granted when the user next does anything credit-
  * related in a fresh month, keyed on "YYYY-MM" so it cannot double-fire.
+ *
+ * Skipped in the month the signup bonus landed: a fresh account opening with
+ * "10 + 2" reads like a pricing glitch, and the grant's whole purpose is to
+ * revive accounts whose starter balance ran out — not to pad new ones.
  */
 export function grantMonthlyIfDue(userId: string | number) {
   const monthly = CREDIT_RULES.monthlyFreeGrant();
   if (monthly <= 0) return;
+  ensureCreditTables();
+  const id = uid(userId);
   const month = new Date().toISOString().slice(0, 7);
-  grant(userId, tenthsOf(monthly), "monthly_grant", month);
+  const signedUpThisMonth = appDb().prepare(
+    "SELECT 1 FROM credits_ledger WHERE user_id=? AND reason='signup' AND created_at >= ? || '-01'"
+  ).get(id, month);
+  if (signedUpThisMonth) return;
+  grant(id, tenthsOf(monthly), "monthly_grant", month);
+}
+
+/**
+ * The one call every signed-in surface should make before reading a balance.
+ *
+ * WHY IT EXISTS: the signup bonus used to be granted only inside the
+ * registration handlers — so every account created BEFORE the credits system
+ * shipped (including the operator's own) started at 0, received only the
+ * monthly grant, and hit the paywall with 2 credits wondering where the
+ * promised 10 went. Both grants are idempotent, so calling this on every
+ * login/gate/account view is safe and self-heals all pre-existing accounts.
+ */
+export function ensureStarterCredits(userId: string | number) {
+  grantSignupBonus(userId);
+  grantMonthlyIfDue(userId);
 }
 
 /* ── city unlocks ────────────────────────────────────────────────────────── */

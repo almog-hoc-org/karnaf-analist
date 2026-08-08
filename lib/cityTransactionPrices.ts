@@ -46,10 +46,20 @@ function minN(): number {
   return getRuleNum("min_deals_per_year");
 }
 
-/** Reference year first, then one year back — a city's collection can lag. */
-function fallbackYears(): [number, number] {
+/**
+ * Reference year first, then progressively older years — a city's collection
+ * can lag by more than one year.
+ *
+ * WHY FOUR YEARS AND NOT TWO: with a [y, y-1] window, any city whose archive
+ * ends in 2023 (Beer Sheva, Bat Yam, Kfar Saba — major cities mid-backfill)
+ * rendered a blank price column while sitting on thousands of perfectly good
+ * deals. A 2023 median labelled "(2023)" — the year ALREADY renders next to
+ * every price — beats a dash that reads as "we know nothing about Beer Sheva".
+ * The `thin` flag and reliability audit still gate what qualifies.
+ */
+function fallbackYears(): number[] {
   const y = priceRefYear();
-  return [y, y - 1];
+  return [y, y - 1, y - 2, y - 3];
 }
 
 export interface CityTransactionPrices {
@@ -83,8 +93,8 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
     prisma.$queryRawUnsafe<StatRow[]>(
       `SELECT city_name, year, scope, avg_sqm, median_sqm, n
        FROM nadlan_year_room_stats
-       WHERE room_bucket='all' AND scope IN ('all','secondhand') AND year IN (?, ?)`,
-      years[0], years[1]
+       WHERE room_bucket='all' AND scope IN ('all','secondhand') AND year IN (${years.map(() => "?").join(",")})`,
+      ...years
     ),
     prisma.$queryRawUnsafe<CovRow[]>(
       `SELECT city_name, COUNT(*) total, SUM(is_secondhand) sh,
