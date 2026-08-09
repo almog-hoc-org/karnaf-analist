@@ -76,6 +76,23 @@ services:
       # certificate is issued and the site serves a browser warning.
       - "traefik.http.routers.karnaf.tls.certresolver=letsencrypt"
       - "traefik.http.services.karnaf.loadbalancer.server.port=3000"
+      # ── Legacy hostname → permanent redirect to the canonical domain ──
+      # Set APP_HOST_LEGACY to the OLD hostname when moving domains (e.g.
+      # srv1773229.hstgr.cloud after switching APP_HOST to the real domain),
+      # so every previously shared link keeps working via a 301. The default
+      # is a deliberately unroutable placeholder: it keeps this router valid
+      # when the variable is unset WITHOUT ever matching real traffic — and
+      # because the redirect regex only runs on THIS router, the canonical
+      # host can never redirect to itself.
+      - "traefik.http.routers.karnaf-legacy.rule=Host(`${APP_HOST_LEGACY:-legacy.invalid}`)"
+      - "traefik.http.routers.karnaf-legacy.entrypoints=websecure"
+      - "traefik.http.routers.karnaf-legacy.tls=true"
+      - "traefik.http.routers.karnaf-legacy.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.karnaf-legacy.service=karnaf"
+      - "traefik.http.routers.karnaf-legacy.middlewares=karnaf-canonical"
+      - "traefik.http.middlewares.karnaf-canonical.redirectregex.regex=^https://[^/]+/(.*)"
+      - "traefik.http.middlewares.karnaf-canonical.redirectregex.replacement=https://${APP_HOST}/$${1}"
+      - "traefik.http.middlewares.karnaf-canonical.redirectregex.permanent=true"
       # NO traefik.docker.network label on purpose. That label names the network
       # Traefik should use to reach the container, and it is only needed when a
       # container sits on several. This one sits on exactly one — the network

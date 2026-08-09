@@ -118,6 +118,53 @@ GOOGLE_CLIENT_SECRET=הדבק-את-ה-Secret
 ---
 
 
+## שלב 3.5 · חיבור הדומיין analyst.karnafnadlan.com (15 דקות + זמן התפשטות DNS)
+
+### א. רשומת DNS (איפה שהדומיין karnafnadlan.com מנוהל)
+1. היכנס לניהול ה-DNS של karnafnadlan.com:
+   - אם הדומיין ב-Hostinger: ‏hpanel.hostinger.com ← ‏Domains ← ‏karnafnadlan.com ← ‏DNS / Name Servers
+   - אם האתר הראשי ב-Wix והדומיין מנוהל שם: ‏Wix ← הגדרות ← דומיינים ← ‏karnafnadlan.com ← ‏DNS Records
+2. הוסף **רשומת A** חדשה:
+   - ‏Host/Name: ‏`analyst`
+   - ‏Value/Points to: ‏`72.62.7.226`
+   - ‏TTL: ברירת המחדל
+3. שמור. ההתפשטות לוקחת בין דקות לשעה-שעתיים. בדיקה שהסתיימה:
+   ‏https://dnschecker.org ← הקלד `analyst.karnafnadlan.com` ← אמור להראות 72.62.7.226.
+
+### ב. גוגל — להוסיף את הכתובת החדשה (2 דקות, אפשר מיד)
+1. פתח: https://console.cloud.google.com/auth/clients ← לחץ על `karnaf-analist-web`
+2. תחת Authorized redirect URIs ← **+ Add URI** ← הדבק:
+   `https://analyst.karnafnadlan.com/api/auth/google/callback`
+3. ‏**Save**. (הכתובת הישנה נשארת — שתיהן עובדות במקביל.)
+
+### ג. השרת (אחרי שה-DNS מתפשט!)
+```bash
+nano /opt/karnaf/.env.production
+```
+עדכן/הוסף שלוש שורות:
+```
+APP_HOST=analyst.karnafnadlan.com
+APP_HOST_LEGACY=srv1773229.hstgr.cloud
+KARNAF_SITE_URL=https://analyst.karnafnadlan.com
+```
+שמור (Ctrl+O, Enter, Ctrl+X) ואז:
+```bash
+cd /opt/karnaf && bash scripts/deploy.sh
+```
+בפריסה הזו Traefik יבקש אוטומטית תעודת SSL לדומיין החדש מ-Let's Encrypt
+(חייב DNS מתפשט — לכן סעיף א קודם!), והכתובת הישנה תהפוך להפניית-קבע (301)
+לדומיין החדש, כך ששום קישור ששיתפת לא נשבר.
+
+### ד. אימות
+- ‏https://analyst.karnafnadlan.com נפתח עם מנעול תקין (ייתכן שבדקה הראשונה
+  התעודה עוד מונפקת — רענן אחרי דקה).
+- ‏https://srv1773229.hstgr.cloud מפנה אוטומטית לדומיין החדש.
+- כניסת גוגל עובדת בדומיין החדש.
+- קישור שיתוף מ"החשבון שלי" מציג עכשיו את הדומיין החדש.
+
+---
+
+
 ## שלב 4 · סנכרון רב מסר (10 דקות)
 
 הקוד מדבר בפורמט ה-API הרשמי של רב מסר (אומת מול ערכת הדוגמאות הרשמית שלהם —
