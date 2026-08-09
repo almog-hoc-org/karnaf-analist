@@ -65,37 +65,58 @@ journalctl -u karnaf-backup -f        # Ctrl+C ליציאה כשרואים "✓ 
 
 ---
 
-## שלב 3 · כניסה עם גוגל (20 דקות)
+## שלב 3 · כניסה עם גוגל (15 דקות — לפי הממשק החדש של גוגל, 2025+)
 
-1. גלוש ל-https://console.cloud.google.com (התחבר עם חשבון הגוגל העסקי).
-2. למעלה: בורר הפרויקטים → **New Project** → שם: `karnaf-analist` → Create.
-3. תפריט ☰ → **APIs & Services → OAuth consent screen**:
-   - User type: **External** → Create
-   - App name: `קרנף אנליסט` · Support email: המייל שלך → שמור והמשך עד הסוף (אין צורך ב-scopes מיוחדים).
-   - תחת Publishing status לחץ **Publish app** (אחרת רק אתה תוכל להתחבר).
-4. **APIs & Services → Credentials → + Create Credentials → OAuth client ID**:
-   - Application type: **Web application**
-   - Name: `karnaf-analist-web`
-   - Authorized redirect URIs → **Add URI**:
-     `https://srv1773229.hstgr.cloud/api/auth/google/callback`
-   - Create → העתק את **Client ID** ואת **Client secret**.
-5. בשרת:
-```bash
-nano /opt/karnaf/.env.production
+> גוגל ארגנו מחדש את המסכים האלה ("Google Auth Platform"); מדריכים ישנים
+> מתארים תפריטים שכבר לא קיימים. הקישורים כאן ישירים ומדלגים על התפריטים.
+
+### 3.1 יצירת פרויקט (2 דקות)
+1. פתח את הקישור הישיר: https://console.cloud.google.com/projectcreate
+   (התחבר עם חשבון הגוגל העסקי אם צריך; אם מופיע מסך תנאים — אשר.)
+2. ‏Project name: `karnaf-analist` → כפתור **Create**.
+3. המתן לחלונית "Project created" (פעמון למעלה) ולחץ בה **Select project** —
+   או ודא שלמעלה משמאל כתוב karnaf-analist בבורר הפרויקטים.
+
+### 3.2 אשף ההגדרה (5 דקות)
+1. פתח: https://console.cloud.google.com/auth/overview
+2. לחץ על הכפתור הכחול **Get started**. נפתח אשף של 4 צעדים באותו עמוד:
+   - **App Information** — ‏App name: `קרנף אנליסט` · ‏User support email: בחר את המייל שלך מהרשימה → Next
+   - **Audience** — בחר **External** (חשוב! Internal לא יעבוד לגולשים) → Next
+   - **Contact Information** — המייל שלך → Next
+   - **Finish** — סמן את תיבת ההסכמה → **Continue** → **Create**
+
+### 3.3 יצירת המפתחות (5 דקות)
+1. פתח: https://console.cloud.google.com/auth/clients/create
+2. ‏Application type: **Web application**
+3. ‏Name: `karnaf-analist-web`
+4. גלול ל-**Authorized redirect URIs** → לחץ **+ Add URI** → הדבק בדיוק:
+   `https://srv1773229.hstgr.cloud/api/auth/google/callback`
+5. לחץ **Create**. נפתחת חלונית עם **Client ID** (נגמר ב-apps.googleusercontent.com)
+   ו-**Client secret** (מתחיל ב-GOCSPX). העתק את שניהם למקום זמני — ה-secret
+   מוצג פעם אחת.
+
+### 3.4 פרסום האפליקציה (דקה)
+1. פתח: https://console.cloud.google.com/auth/audience
+2. תחת Publishing status לחץ **Publish app** → ‏Confirm.
+   (בלי זה רק אתה תוכל להתחבר עם גוגל, אף גולש אחר לא.)
+
+### 3.5 הזנה בשרת (3 דקות)
+1. התחבר לשרת (Hostinger → VPS → Browser terminal, או ssh).
+2. ‏`nano /opt/karnaf/.env.production` → מצא/הוסף את השורות:
 ```
-   הוסף בסוף (או מלא את השורות הריקות):
+GOOGLE_CLIENT_ID=הדבק-את-ה-Client-ID
+GOOGLE_CLIENT_SECRET=הדבק-את-ה-Secret
 ```
-GOOGLE_CLIENT_ID=מה-שהעתקת.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=מה-שהעתקת
-```
-   שמור (Ctrl+O, Enter) וצא (Ctrl+X), ואז:
-```bash
-cd /opt/karnaf && bash scripts/deploy.sh
-```
-6. בדיקה: עמוד ההתחברות באתר מציג עכשיו כפתור "המשך עם Google" — נסה אותו.
-7. **בעתיד**, כשעוברים ל-analyst.karnafnadlan.com — חוזרים לשלב 4 ומוסיפים redirect URI נוסף עם הדומיין החדש.
+3. שמור וצא: ‏Ctrl+O ‏← Enter ‏← Ctrl+X
+4. ‏`cd /opt/karnaf && bash scripts/deploy.sh`
+5. בדיקה: פתח את עמוד ההתחברות באתר — כפתור "המשך עם Google" הופיע. נסה אותו.
+
+**בעתיד**, כשעוברים ל-analyst.karnafnadlan.com: חוזרים ל-3.3 (עריכת ה-client
+הקיים ב-https://console.cloud.google.com/auth/clients) ומוסיפים redirect URI
+נוסף עם הדומיין החדש.
 
 ---
+
 
 ## שלב 4 · סנכרון רב מסר (10 דקות)
 
