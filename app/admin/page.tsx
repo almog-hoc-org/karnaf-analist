@@ -13,6 +13,15 @@ import AdminUsagePanel from "@/components/AdminUsagePanel";
 import { appDb } from "@/lib/appDb";
 import { ravMesserConfigured, crmConfigured } from "@/lib/mailingSync";
 import { ensureFeedbackTable } from "@/lib/feedback";
+import { listUsers, type AdminUserRow } from "@/lib/userAdmin";
+import { broadcastConfigured, broadcastHistory, type BroadcastRow } from "@/lib/broadcast";
+
+function loadUserList(): AdminUserRow[] {
+  try { return listUsers(); } catch { return []; }
+}
+function loadBroadcastHistory(): BroadcastRow[] {
+  try { return broadcastHistory(); } catch { return []; }
+}
 import fs from "fs";
 import path from "path";
 
@@ -148,7 +157,15 @@ export default async function AdminPage() {
         rules={<AdminRulesPanel />}
         deals={<AdminDealsBrowser cities={cities.map((c) => c.city_name)} />}
         tables={<AdminTablesBrowser />}
-        users={<AdminUsersPanel stats={loadUserStats()} feedback={loadRecentFeedback()} ravConfigured={ravMesserConfigured()} crmConfigured={crmConfigured()} />}
+        users={<AdminUsersPanel
+          stats={loadUserStats()}
+          feedback={loadRecentFeedback()}
+          ravConfigured={ravMesserConfigured()}
+          crmConfigured={crmConfigured()}
+          users={loadUserList()}
+          broadcastConfigured={broadcastConfigured()}
+          broadcastHistory={loadBroadcastHistory()}
+        />}
         usage={<AdminUsagePanel />}
         overview={<>
       {/* Reconciliation strip — total = active + excluded(by reason), no mismatch */}

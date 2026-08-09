@@ -41,14 +41,66 @@ interface SyncReport {
   errors: string[];
 }
 
-export default function AdminUsersPanel({ stats, feedback, ravConfigured, crmConfigured }: {
+export interface AdminUserListRow {
+  id: number; email: string; name: string; phone: string | null;
+  mailing_consent: number; google_id: string | null; created_at: string;
+  credits: number; deals: number; last_seen: string | null;
+}
+
+export interface BroadcastHistoryRow {
+  id: number; subject: string; recipients: number; sent: number; failed: number; created_at: string;
+}
+
+export default function AdminUsersPanel({ stats, feedback, ravConfigured, crmConfigured, users, broadcastConfigured, broadcastHistory }: {
   stats: AdminUserStats;
   feedback: AdminFeedbackRow[];
   ravConfigured: boolean;
   crmConfigured: boolean;
+  users: AdminUserListRow[];
+  broadcastConfigured: boolean;
+  broadcastHistory: BroadcastHistoryRow[];
 }) {
   const [reports, setReports] = useState<Record<string, SyncReport | "running">>({});
   const [approved, setApproved] = useState<Record<number, boolean>>({});
+  const [busy, setBusy] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [bcSubject, setBcSubject] = useState("");
+  const [bcBody, setBcBody] = useState("");
+  const [bcReport, setBcReport] = useState<string | null>(null);
+
+  async function userAction(action: string, userId: number, extra: Record<string, unknown> = {}) {
+    setBusy(`${action}:${userId}`);
+    setNotice(null);
+    try {
+      const res = await fetch(withBasePath("/api/admin/users"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action, userId, ...extra }),
+      });
+      const data = await res.json();
+      if (!res.ok) setNotice(`שגיאה: ${data.error ?? res.status}`);
+      else if (action === "reset_password") setNotice(`סיסמה זמנית למשתמש #${userId}: ${data.tempPassword} — מוצגת פעם אחת, העבר למשתמש עכשיו`);
+      else { setNotice("בוצע ✓ — רענן את העמוד לתצוגה מעודכנת"); }
+    } catch { setNotice("שגיאת רשת"); }
+    setBusy(null);
+  }
+
+  async function sendBc() {
+    if (!bcSubject.trim() || !bcBody.trim()) { setBcReport("חסר נושא או תוכן"); return; }
+    if (!confirm(`לשלוח את "${bcSubject}" לכל המשתמשים שהסכימו לדיוור?`)) return;
+    setBusy("broadcast"); setBcReport("שולח…");
+    try {
+      const res = await fetch(withBasePath("/api/admin/broadcast"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subject: bcSubject, body: bcBody }),
+      });
+      const d = await res.json();
+      setBcReport(d.errors?.length ? `נשלחו ${d.sent}/${d.recipients} · שגיאות: ${d.errors.join(" · ")}` : `נשלחו ${d.sent} מתוך ${d.recipients} נמענים ✓`);
+      if (d.ok) { setBcSubject(""); setBcBody(""); }
+    } catch { setBcReport("שגיאת רשת"); }
+    setBusy(null);
+  }
 
   async function runSync(target: "ravmesser" | "crm") {
     setReports((r) => ({ ...r, [target]: "running" }));
@@ -106,6 +158,117 @@ export default function AdminUsersPanel({ stats, feedback, ravConfigured, crmCon
             <p className="mt-1 text-2xs font-bold text-slate-500">{label}</p>
           </div>
         ))}
+      </section>
+
+      {notice && (
+        <p className="rounded-xl border border-indigo-200 bg-indigo-50 px-4 py-2.5 text-xs font-bold text-indigo-800" dir="rtl">{notice}</p>
+      )}
+
+      {/* users table */}
+      <section className={card}>
+        <h3 className="text-sm font-bold text-slate-900">👥 המשתמשים במערכת</h3>
+        <div className="mt-3 overflow-x-auto">
+          <table className="table-pin-first w-full min-w-[820px] text-xs" dir="rtl">
+            <thead className="text-2xs font-bold text-slate-400">
+              <tr>
+                <th className="py-1.5 pl-2 text-right">משתמש</th>
+                <th className="text-right">טלפון</th>
+                <th className="text-center">דיוור</th>
+                <th className="text-center">גוגל</th>
+                <th className="text-center">קרדיטים</th>
+                <th className="text-center">עסקאות</th>
+                <th className="text-right">נרשם</th>
+                <th className="text-right">נראה לאחרונה</th>
+                <th className="text-left">פעולות</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u.id} className="border-t border-slate-100">
+                  <td className="py-2 pl-2">
+                    <p className="font-bold text-slate-800">{u.name}</p>
+                    <p className="text-2xs text-slate-400" dir="ltr">{u.email}</p>
+                  </td>
+                  <td dir="ltr" className="text-right text-slate-600">{u.phone ?? "—"}</td>
+                  <td className="text-center">{u.mailing_consent ? "✅" : "—"}</td>
+                  <td className="text-center">{u.google_id ? "🟢" : "—"}</td>
+                  <td className="text-center font-bold tabular-nums">{Number.isInteger(u.credits) ? u.credits : u.credits.toFixed(1)}</td>
+                  <td className="text-center tabular-nums">{u.deals}</td>
+                  <td className="text-right text-2xs text-slate-400" dir="ltr">{u.created_at?.slice(0, 10)}</td>
+                  <td className="text-right text-2xs text-slate-400" dir="ltr">{u.last_seen?.slice(0, 10) ?? "—"}</td>
+                  <td className="py-2 text-left">
+                    <div className="flex flex-wrap justify-end gap-1">
+                      <button disabled={!!busy} onClick={() => userAction("reset_password", u.id)}
+                        className="rounded-lg border border-slate-200 px-2 py-1 text-2xs font-bold text-slate-600 hover:bg-slate-50" title="איפוס סיסמה — מייצר סיסמה זמנית ומנתק את המשתמש מכל המכשירים">
+                        🔑 איפוס
+                      </button>
+                      <button disabled={!!busy} onClick={() => {
+                        const v = prompt("כמה קרדיטים להוסיף? (מספר שלילי מוריד)", "5");
+                        if (v && Number(v)) userAction("adjust_credits", u.id, { credits: Number(v), note: "עדכון ידני מהאדמין" });
+                      }} className="rounded-lg border border-slate-200 px-2 py-1 text-2xs font-bold text-slate-600 hover:bg-slate-50">
+                        🪙 קרדיטים
+                      </button>
+                      <button disabled={!!busy} onClick={() => userAction("set_consent", u.id, { consent: !u.mailing_consent })}
+                        className="rounded-lg border border-slate-200 px-2 py-1 text-2xs font-bold text-slate-600 hover:bg-slate-50" title="הפעלה/כיבוי הסכמת דיוור">
+                        📧 דיוור
+                      </button>
+                      <button disabled={!!busy} onClick={() => {
+                        if (confirm(`למחוק את ${u.email}? כל העסקאות, הקרדיטים וההיסטוריה שלו יימחקו לצמיתות.`)) userAction("delete", u.id);
+                      }} className="rounded-lg border border-red-100 px-2 py-1 text-2xs font-bold text-red-500 hover:bg-red-50">
+                        🗑 מחק
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <button disabled={!!busy} onClick={() => {
+          const email = prompt("אימייל של המשתמש החדש:"); if (!email) return;
+          const name = prompt("שם מלא:"); if (!name) return;
+          const password = prompt("סיסמה (10+ תווים):"); if (!password) return;
+          const phone = prompt("טלפון (לא חובה):") ?? "";
+          fetch(withBasePath("/api/admin/users"), {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "create", email, name, password, phone }),
+          }).then(async (r) => {
+            const d = await r.json();
+            setNotice(r.ok ? `נוצר משתמש ✓ (10 קרדיטים) — רענן את העמוד` : `שגיאה: ${d.error}`);
+          }).catch(() => setNotice("שגיאת רשת"));
+        }} className="mt-3 rounded-xl border border-dashed border-indigo-300 px-4 py-2 text-xs font-bold text-indigo-600 hover:bg-indigo-50">
+          + הוסף משתמש
+        </button>
+      </section>
+
+      {/* broadcast composer */}
+      <section className={card}>
+        <h3 className="text-sm font-bold text-slate-900">📣 דיוור עדכונים לכל המשתמשים</h3>
+        <p className="mt-1 text-xs text-slate-500">
+          נשלח דרך Resend לכל מי שהסכים לדיוור ({stats.consenting} כרגע), עם קישור הסרה אוטומטי. מתאים לעדכוני גרסה, פיצ׳רים חדשים והודעות מערכת.
+          {!broadcastConfigured && <b className="text-amber-600"> ⚠ חסר RESEND_API_KEY / NOTIFY_FROM_EMAIL בשרת.</b>}
+        </p>
+        <input value={bcSubject} onChange={(e) => setBcSubject(e.target.value)} placeholder="נושא — למשל: חדש בקרנף אנליסט: מחשבון תמהיל משכנתא"
+          className="mt-3 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none" />
+        <textarea value={bcBody} onChange={(e) => setBcBody(e.target.value)} rows={6}
+          placeholder={"תוכן ההודעה (טקסט חופשי; שורה ריקה = פסקה חדשה)"}
+          className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm leading-relaxed focus:border-indigo-400 focus:outline-none" />
+        <div className="mt-2 flex items-center gap-3">
+          <button disabled={!!busy || !broadcastConfigured} onClick={sendBc}
+            className="rounded-xl bg-indigo-600 px-5 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-50">
+            שלח לכל המסכימים
+          </button>
+          {bcReport && <span className="text-xs font-semibold text-slate-600">{bcReport}</span>}
+        </div>
+        {broadcastHistory.length > 0 && (
+          <ul className="mt-3 space-y-1 border-t border-slate-100 pt-2 text-2xs text-slate-500">
+            {broadcastHistory.map((b) => (
+              <li key={b.id}>
+                <span dir="ltr">{b.created_at?.slice(0, 16)}</span> · <b className="text-slate-700">{b.subject}</b> · נשלחו {b.sent}/{b.recipients}{b.failed ? ` · נכשלו ${b.failed}` : ""}
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       {/* sync actions */}

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
+import { appDb } from "@/lib/appDb";
 import { balance, ledgerFor, unlockedCities, referralCodeFor, ensureStarterCredits, CREDIT_RULES } from "@/lib/credits";
 import { shareUrlFor, whatsappShareUrl } from "@/lib/share";
 import Icon from "@/components/Icon";
@@ -24,12 +26,24 @@ function fmtCredits(tenths: number): string {
   return Number.isInteger(c) ? String(c) : c.toFixed(1);
 }
 
+async function toggleMailing() {
+  "use server";
+  const u = getCurrentUser();
+  if (!u) return;
+  appDb().prepare("UPDATE users SET mailing_consent = CASE mailing_consent WHEN 1 THEN 0 ELSE 1 END WHERE id=?")
+    .run(Number(u.id.slice(1)));
+  revalidatePath("/account");
+}
+
 export default function AccountPage() {
   const user = getCurrentUser();
   if (!user) redirect("/login?next=/account");
 
   // settle anything owed (retro signup bonus for pre-credits accounts, monthly grant)
   ensureStarterCredits(user.id);
+
+  const mailingOn = !!(appDb().prepare("SELECT mailing_consent FROM users WHERE id=?")
+    .get(Number(user.id.slice(1))) as { mailing_consent: number } | undefined)?.mailing_consent;
 
   const bal = balance(user.id);
   const entries = ledgerFor(user.id, 30);
@@ -43,6 +57,12 @@ export default function AccountPage() {
       <header className="mb-8">
         <h1 className="text-3xl font-black text-slate-900">שלום, {user.name}</h1>
         <p className="mt-1 text-sm text-slate-500">{user.email}</p>
+        {/* the unsubscribe mechanism every broadcast email links to */}
+        <form action={toggleMailing} className="mt-2">
+          <button className="text-xs font-semibold text-slate-500 underline decoration-slate-300 hover:text-slate-700">
+            {mailingOn ? "מקבל עדכוני שוק במייל · לחץ להסרה מרשימת הדיוור" : "לא רשום לדיוור · לחץ להצטרפות לעדכוני שוק במייל"}
+          </button>
+        </form>
       </header>
 
       {/* balance + how to earn */}

@@ -298,3 +298,23 @@ export function applyReferral(code: string, newUserId: string | number): void {
 export function grantFeedbackBonus(userId: string | number) {
   grant(userId, tenthsOf(CREDIT_RULES.feedbackBonus()), "feedback", "first-approved");
 }
+
+/** tenths → whole credits for display (12 → 1.2). */
+export function tenthsToCredits(tenths: number): number {
+  return tenths / 10;
+}
+
+/**
+ * Operator adjustment — the ONLY path that may write a negative delta without
+ * a balance check (a correction is a correction). Always ledgered under
+ * reason 'admin' with the operator's note, so /account shows the user an
+ * honest line item rather than a silent balance jump.
+ */
+export function adminAdjustCredits(userId: string | number, credits: number, note: string): boolean {
+  ensureCreditTables();
+  const tenths = tenthsOf(credits);
+  if (tenths === 0) return false;
+  appDb().prepare("INSERT INTO credits_ledger (user_id, delta_tenths, reason, ref_id) VALUES (?, ?, 'admin', ?)")
+    .run(uid(userId), tenths, note.slice(0, 120) || null);
+  return true;
+}

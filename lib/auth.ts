@@ -206,6 +206,17 @@ export function findOrCreateGoogleUser(
   return { user: { id: `u${id}`, email: em, name: nm, tier: "free" }, created: true };
 }
 
+/**
+ * Operator password reset (lib/userAdmin.ts). Hashes at the CURRENT work
+ * factor; no old-password check — this is the admin lane, gated upstream.
+ */
+export function adminSetUserPassword(userId: number, newPassword: string): void {
+  ensureAuthTables();
+  const salt = crypto.randomBytes(16).toString("hex");
+  appDb().prepare("UPDATE users SET password_hash=?, salt=? WHERE id=?")
+    .run(hashPassword(newPassword, salt), salt, userId);
+}
+
 /** Shape of a `users` row, as better-sqlite3 hands it back. */
 interface UserRow {
   id: number;

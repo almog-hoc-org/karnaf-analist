@@ -73,6 +73,26 @@ export function isAdminRequest(): boolean {
   return !!got && safeEqual(got, expected);
 }
 
+/**
+ * Programmatic admin auth — a Bearer token for the operator's AI ops agent.
+ *
+ * SEPARATE from the human password on purpose: the agent's credential can be
+ * rotated (or revoked by deleting the env var) without locking the human out,
+ * and it never transits a login form. Fail-closed like everything else here:
+ * no ADMIN_API_TOKEN in the environment → no bearer lane at all.
+ *
+ * Use from API routes as: isAdminApiRequest(req) — it accepts EITHER the
+ * human's admin cookie OR the agent's bearer token.
+ */
+export function isAdminApiRequest(req: Request): boolean {
+  if (isAdminRequest()) return true;
+  const configured = process.env.ADMIN_API_TOKEN;
+  if (!configured) return false;
+  const header = req.headers.get("authorization") ?? "";
+  const token = header.startsWith("Bearer ") ? header.slice(7).trim() : "";
+  return !!token && safeEqual(token, configured);
+}
+
 /** Whether an admin password is configured at all — lets the UI explain itself. */
 export function adminConfigured(): boolean {
   return !!process.env.ADMIN_PASSWORD;
