@@ -149,7 +149,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const [buildingAge, setBuildingAge] = useState<Ba>("all");
   const [room, setRoom] = useState<RoomKey>("all");
   const [from, setFrom] = useState(Math.max(minY, Math.max(firstDataYear, maxY - 10)));
-  const [to, setTo] = useState(maxFullY); // default ends on the last FULL year, not a partial one
+  const [to, setTo] = useState(maxY); // default includes the latest collected year, even when partial
   const [selected, setSelected] = useState<string[]>(["adj", "med"]); // adj = mix-adjusted headline (יד-2 only; harmlessly absent elsewhere)
   const [view, setView] = useState<"overlay" | "grid">("overlay");
   const govCity = useMemo(() => isGovmapCity(data), [data]);
@@ -180,6 +180,11 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
     return { def: s, pct: (b.v[0] / a.v[0] - 1) * 100, fromY: a.y, toY: b.y, n: pts.reduce((sum, p) => sum + p.v[1], 0) };
   }), [activeDefs, years, data, room, metric, partialSet, buildingAge]);
   const hasPartialInRange = useMemo(() => years.some((y) => partialSet.has(y)), [years, partialSet]);
+  const latestYearInRange = years.includes(maxY);
+  const latestYearHasVisibleData = useMemo(
+    () => latestYearInRange && activeDefs.some((s) => s.at(data, room, metric, maxY, buildingAge) != null),
+    [latestYearInRange, activeDefs, data, room, metric, maxY, buildingAge]
+  );
 
   // ── drill-down deals ────────────────────────────────────────────────────
   // Counts come from a server-built cube (year × type × age × rooms) so every
@@ -282,8 +287,8 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   };
 
   const quickWin = (n: number | "all") => {
-    setTo(maxFullY); // presets end on the last full year (partial current year excluded from trends)
-    setFrom(n === "all" ? minY : Math.max(minY, maxFullY - n));
+    setTo(maxY); // presets include the latest collected year; trend % still skips partial endpoints
+    setFrom(n === "all" ? minY : Math.max(minY, maxY - n));
   };
 
   const totalShDeals = useMemo(() => data.nadlan.secondhand.all.reduce((s, p) => s + p.n, 0), [data]);
@@ -451,6 +456,8 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           )}
           <div className="mt-2 text-2xs leading-relaxed text-slate-500">
             שנה עם פחות מ-{MIN_N} עסקאות לא מוצגת · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
+            {latestYearInRange && partialSet.has(maxY) && latestYearHasVisibleData && <> · {maxY} מוצגת בגרף כשנה חלקית, ואחוזי השינוי מחושבים עד {maxFullY}</>}
+            {latestYearInRange && partialSet.has(maxY) && !latestYearHasVisibleData && <> · ב-{maxY} אין מספיק עסקאות לבחירה הנוכחית, ולכן אין נקודה בסדרה</>}
           </div>
         </div>
       ) : (
