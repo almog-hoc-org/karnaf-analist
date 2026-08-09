@@ -90,8 +90,14 @@ EXPOSE 3000
 # back to empty without a word. The entrypoint copies anything absent back in on
 # start, and never overwrites: some of these files are live collector state.
 RUN mkdir -p /app/data-seed && \
-    (cp data/*.json /app/data-seed/ 2>/dev/null || true) && \
-    echo "seed files: $(ls -1 /app/data-seed | wc -l)"
+    (tar -C data \
+      --exclude='./realestate.db*' \
+      --exclude='./app.db*' \
+      --exclude='./deals_cache' \
+      --exclude='./nadlan_deals' \
+      --exclude='./subarea_deals' \
+      -cf - . | tar -C /app/data-seed -xf -) && \
+    echo "seed files: $(find /app/data-seed -type f | wc -l)"
 COPY deploy/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

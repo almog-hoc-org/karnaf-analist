@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Seed the data volume with the JSON files that ship in the image.
+# Seed the data volume with source files that ship in the image.
 #
 # WHY THIS EXISTS
 # docker-compose mounts /var/lib/karnaf/data over /app/data. That is correct and
@@ -8,11 +8,10 @@
 # rebuild. But a bind mount REPLACES the directory: every data/*.json committed
 # to the repo became invisible the moment the container started.
 #
-# The server was running with 5 of 28 files present. Four of the missing ones
-# are read by the site itself — cbs_national_series.json, cbs_permits.json,
-# cbs_press.json, scattered_city_facts.json — and every one of those readers
-# catches its own error and falls back to empty. So pages rendered, with
-# sections quietly showing nothing, and nothing anywhere said why.
+# The server was running with 5 of 28 files present. Four of the missing JSONs
+# are read by the site itself, and the national-completions collector also needs
+# a shipped PDF. Each reader catches its own error and falls back to empty or
+# fails one collection step, so pages rendered while data quietly disappeared.
 #
 # NEVER OVERWRITES. Several of these files are live state, not shipped content:
 # seen_reports.json and recent_reports.json are written by the collection run
@@ -27,16 +26,17 @@ DATA_DIR=/app/data
 if [ -d "$SEED_DIR" ]; then
   mkdir -p "$DATA_DIR"
   seeded=0
-  for src in "$SEED_DIR"/*.json; do
-    [ -e "$src" ] || break          # empty glob — nothing shipped, nothing to do
-    dest="$DATA_DIR/$(basename "$src")"
+  while IFS= read -r -d '' src; do
+    rel="${src#"$SEED_DIR"/}"
+    dest="$DATA_DIR/$rel"
     if [ ! -e "$dest" ]; then
+      mkdir -p "$(dirname "$dest")"
       cp "$src" "$dest"
       seeded=$((seeded + 1))
     fi
-  done
+  done < <(find "$SEED_DIR" -type f -print0)
   if [ "$seeded" -gt 0 ]; then
-    echo "seed: הועתקו $seeded קבצי JSON חסרים אל $DATA_DIR"
+    echo "seed: הועתקו $seeded קבצי מקור חסרים אל $DATA_DIR"
   fi
 fi
 
