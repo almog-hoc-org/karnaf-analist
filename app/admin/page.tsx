@@ -26,7 +26,7 @@ function loadUserStats(): AdminUserStats {
       consenting: one("SELECT COUNT(*) n FROM users WHERE mailing_consent=1"),
       withPhone: one("SELECT COUNT(*) n FROM users WHERE phone IS NOT NULL AND phone != ''"),
       unsyncedRavmesser: one("SELECT COUNT(*) n FROM users WHERE mailing_consent=1 AND ravmesser_synced_at IS NULL"),
-      unsyncedCrm: one("SELECT COUNT(*) n FROM users WHERE phone IS NOT NULL AND phone != '' AND crm_synced_at IS NULL"),
+      unsyncedCrm: one("SELECT COUNT(*) n FROM users WHERE crm_synced_at IS NULL"),
       creditsInCirculation: Math.round(one("SELECT COALESCE(SUM(delta_tenths),0) n FROM credits_ledger") / 10),
     };
   } catch { return empty; } // tables appear with the first signup — an empty tab beats a crash

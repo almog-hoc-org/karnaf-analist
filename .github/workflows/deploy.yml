@@ -141,8 +141,10 @@ jobs:
           # from OUTSIDE, over the public name, which is the only vantage point
           # that proves a visitor can reach it — a container answering on
           # localhost while Traefik routes nowhere looks healthy from within.
+          # -L: the legacy hostname 301s to the canonical domain by design —
+          # a redirect that lands on 200 is a HEALTHY site, not a failure.
           for i in 1 2 3 4 5; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://srv1773229.hstgr.cloud/api/health || echo 000)
+            code=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 https://analyst.karnafnadlan.com/api/health || echo 000)
             [ "$code" = "200" ] && { echo "✓ live (HTTP 200)"; exit 0; }
             echo "attempt $i: HTTP $code — retrying"
             sleep 10

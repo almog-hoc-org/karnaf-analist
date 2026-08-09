@@ -113,10 +113,12 @@ export async function syncToCrm(): Promise<SyncReport> {
   const report: SyncReport = { target: "crm", configured: crmConfigured(), candidates: 0, synced: 0, failed: 0, errors: [] };
   if (!report.configured) return report;
 
-  // phone is REQUIRED by the intake endpoint — email-only users stay local
+  // Every registered user is a candidate — the CRM's intake accepts
+  // email-only leads for the analyst-signup source (dedup by email on their
+  // side) and tags them 'קרנף אנליסט'.
   const rows = appDb().prepare(
     `SELECT id, email, name, phone, created_at FROM users
-      WHERE phone IS NOT NULL AND phone != '' AND crm_synced_at IS NULL ORDER BY id`
+      WHERE crm_synced_at IS NULL ORDER BY id`
   ).all() as SyncableUser[];
   report.candidates = rows.length;
 
@@ -127,7 +129,7 @@ export async function syncToCrm(): Promise<SyncReport> {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: u.name,
-          phone: u.phone,
+          ...(u.phone ? { phone: u.phone } : {}),
           email: u.email,
           source: "analyst-signup",
           message: `נרשם לקרנף אנליסט ב-${u.created_at}`,

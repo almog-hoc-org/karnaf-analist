@@ -121,7 +121,7 @@ export default function AdminUsersPanel({ stats, feedback, ravConfigured, crmCon
         </div>
         <div className={card}>
           <h3 className="text-sm font-bold text-slate-900">🦏 karnaf-crm</h3>
-          <p className="mt-1 text-xs text-slate-500">שולח ל-CRM נרשמים חדשים עם טלפון (דרישת ה-intake), במקור analyst-signup.</p>
+          <p className="mt-1 text-xs text-slate-500">שולח ל-CRM את כל הנרשמים החדשים — גם אימייל-בלבד — מתויגים ״קרנף אנליסט״, במקור analyst-signup.</p>
           <button onClick={() => runSync("crm")} disabled={reports.crm === "running"}
             className="mt-3 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 disabled:opacity-50">
             סנכרן ל-CRM {crmConfigured ? "" : "(לא מוגדר)"}
