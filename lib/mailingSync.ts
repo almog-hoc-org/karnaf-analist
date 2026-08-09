@@ -51,6 +51,19 @@ export function ravMesserConfigured(): boolean {
   return !!(process.env.RAVMESSER_API_KEY && process.env.RAVMESSER_LIST_ID);
 }
 
+/**
+ * Wire format verified against Rav Messer's OFFICIAL Postman collection
+ * (github.com/responder/restapi, "Responder API Example"):
+ *
+ *   POST https://api.responder.co.il/main/lists/{listId}/subscribers
+ *   Authorization: <token as-is — no "Bearer " prefix in their examples>
+ *   Content-Type: application/x-www-form-urlencoded
+ *   subscribers=[{"NAME":"...","PHONE":"...","EMAIL":"..."}]   ← JSON ARRAY in a form field
+ *
+ * The array body means batching is native — one request per chunk, not per user.
+ */
+const RAVMESSER_BATCH = 100;
+
 export async function syncToRavMesser(): Promise<SyncReport> {
   const report: SyncReport = { target: "ravmesser", configured: ravMesserConfigured(), candidates: 0, synced: 0, failed: 0, errors: [] };
   if (!report.configured) return report;
@@ -63,29 +76,28 @@ export async function syncToRavMesser(): Promise<SyncReport> {
 
   const listId = process.env.RAVMESSER_LIST_ID!;
   const key = process.env.RAVMESSER_API_KEY!;
-  for (const u of rows) {
+  for (let i = 0; i < rows.length; i += RAVMESSER_BATCH) {
+    const batch = rows.slice(i, i + RAVMESSER_BATCH);
+    const payload = batch.map((u) => ({ NAME: u.name, EMAIL: u.email, ...(u.phone ? { PHONE: u.phone } : {}) }));
     try {
-      const res = await fetch(`https://api.responder.co.il/v1.0/lists/${encodeURIComponent(listId)}/subscribers`, {
+      const res = await fetch(`https://api.responder.co.il/main/lists/${encodeURIComponent(listId)}/subscribers`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Rav Messer's REST auth header. If the account uses the legacy
-          // token pair instead, this is the one line to adjust.
-          Authorization: `Bearer ${key}`,
-        },
-        body: JSON.stringify({ EMAIL: u.email, NAME: u.name, ...(u.phone ? { PHONE: u.phone } : {}) }),
-        signal: AbortSignal.timeout(15_000),
+        headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: key },
+        body: new URLSearchParams({ subscribers: JSON.stringify(payload) }),
+        signal: AbortSignal.timeout(30_000),
       });
-      // 200/201 = subscribed; some deployments answer 400 "already exists" —
-      // for our bookkeeping both mean "this address is on the list".
-      if (res.ok || res.status === 400) {
-        appDb().prepare("UPDATE users SET ravmesser_synced_at=datetime('now') WHERE id=?").run(u.id);
-        report.synced++;
+      if (res.ok) {
+        const mark = appDb().prepare("UPDATE users SET ravmesser_synced_at=datetime('now') WHERE id=?");
+        for (const u of batch) mark.run(u.id);
+        report.synced += batch.length;
       } else {
-        pushErr(report, `${u.email}: HTTP ${res.status}`);
+        const text = (await res.text().catch(() => "")).slice(0, 120);
+        pushErr(report, `batch ${i / RAVMESSER_BATCH + 1}: HTTP ${res.status} ${text}`);
+        report.failed += batch.length - 1; // pushErr counted one
       }
     } catch (e) {
-      pushErr(report, `${u.email}: ${e instanceof Error ? e.message : "network error"}`);
+      pushErr(report, `batch ${i / RAVMESSER_BATCH + 1}: ${e instanceof Error ? e.message : "network error"}`);
+      report.failed += batch.length - 1;
     }
   }
   return report;
