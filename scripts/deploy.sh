@@ -56,6 +56,14 @@ if [ "${1:-}" != "--no-pull" ]; then
   ok "$PREV_SHA → $(git rev-parse --short HEAD)"
 fi
 
+# ── guard the deploy branches against direct pushes from this clone ──
+# The ops agent works in this working copy; a push to a deploy branch from
+# here is an unreviewed production deploy. The hook routes it to agent/*
+# branches + PR instead. Reinstalled on every deploy so it survives re-clones.
+if [ -f scripts/git-hooks/pre-push ]; then
+  install -m 0755 scripts/git-hooks/pre-push .git/hooks/pre-push
+fi
+
 # ── backup before anything can change the data ──────────────────────
 say "גיבוי מסד הנתונים"
 STAMP="$(date +%Y%m%d-%H%M%S)"

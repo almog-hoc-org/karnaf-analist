@@ -22,6 +22,13 @@ on:
     branches:
       - claude/project-deep-learning-g64ogo
       - main
+  # PRs (agent/* branches included) get the BUILD GATE only — the deploy job
+  # is push-gated below, so a red/green check appears on the PR and merging
+  # is what actually ships.
+  pull_request:
+    branches:
+      - claude/project-deep-learning-g64ogo
+      - main
   # Deploy the current branch on demand, without an empty commit.
   workflow_dispatch:
 
@@ -68,6 +75,8 @@ jobs:
   deploy:
     name: deploy to VPS
     needs: build
+    # never deploy from a PR event — the build above is its whole job there
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: ssh in and deploy

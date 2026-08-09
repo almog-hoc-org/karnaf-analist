@@ -1,0 +1,43 @@
+#!/bin/bash
+# Pre-push guard for the SERVER working copy (/opt/karnaf).
+#
+# WHY THIS EXISTS
+# The ops agent (and anyone shelled into the box) works in the same clone the
+# deploys run from. The deploy branches auto-deploy on push — so a direct push
+# from here is an unreviewed production deploy. This hook turns that mistake
+# into a message: agent work goes to agent/* branches and arrives via a PR the
+# operator approves; the merge is what deploys.
+#
+# Installed automatically by scripts/deploy.sh into .git/hooks/pre-push.
+# Human override for emergencies: KARNAF_ALLOW_DEPLOY_PUSH=1 git push …
+set -u
+
+PROTECTED='^refs/heads/(main|claude/project-deep-learning-g64ogo)$'
+
+if [ "${KARNAF_ALLOW_DEPLOY_PUSH:-}" = "1" ]; then
+  exit 0
+fi
+
+blocked=0
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  if [[ "$remote_ref" =~ $PROTECTED ]]; then
+    blocked=1
+    branch="${remote_ref#refs/heads/}"
+    echo "✗ דחיפה ישירה ל-$branch חסומה מהשרת — הענף הזה מתפרס אוטומטית לפרודקשן." >&2
+  fi
+done
+
+if [ "$blocked" = "1" ]; then
+  cat >&2 <<'EOF'
+
+  הזרימה הנכונה לשינויי קוד מהשרת:
+    git checkout -b agent/<שם-קצר-למשימה>
+    git push -u origin agent/<שם-קצר-למשימה>
+    gh pr create --fill --base claude/project-deep-learning-g64ogo
+  ואז: סיכום מנהלים בגוף ה-PR + הודעה למפעיל. המיזוג שלו הוא שמפרס.
+
+  עקיפת חירום (בני אדם בלבד): KARNAF_ALLOW_DEPLOY_PUSH=1 git push …
+EOF
+  exit 1
+fi
+exit 0
