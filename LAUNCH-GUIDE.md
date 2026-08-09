@@ -209,7 +209,7 @@ CRM_INTAKE_URL=https://svkzkpgccahwmyflobvn.functions.supabase.co/website-leads-
 ## שלב 6 · הפעלת Clarity — הקלטות גולשים (10 דקות)
 
 1. גלוש ל-https://clarity.microsoft.com → התחבר (אפשר עם חשבון גוגל).
-2. **New project** → שם: `קרנף אנליסט` → Website: `https://srv1773229.hstgr.cloud`.
+2. **New project** → שם: `קרנף אנליסט` → Website: `https://analyst.karnafnadlan.com`.
 3. אחרי היצירה: **Settings → Setup** → העתק את ה-**Project ID** (מחרוזת קצרה).
 4. בשרת, ב-`.env.production`:
 ```
