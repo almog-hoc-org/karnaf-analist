@@ -40,6 +40,12 @@ async function doRegister(formData: FormData) {
     redirect(`/register?err=${encodeURIComponent("יותר מדי ניסיונות — נסה שוב בעוד שעה")}&next=${encodeURIComponent(next)}`);
   }
 
+  // Consent is REQUIRED to register (operator decision 9.8) — enforced here
+  // as well as in the form, because a form attribute alone is a suggestion.
+  if (!mailingConsent) {
+    redirect(`/register?err=${encodeURIComponent("ההרשמה כוללת הסכמה לקבלת עדכונים במייל")}&next=${encodeURIComponent(next)}`);
+  }
+
   const res = registerUser(email, name, password, { phone, mailingConsent });
   if (!res.ok) redirect(`/register?err=${encodeURIComponent(res.error)}&next=${encodeURIComponent(next)}`);
 
@@ -87,8 +93,8 @@ export default function RegisterPage({ searchParams }: { searchParams?: { err?: 
           minLength={MIN_PASSWORD_LENGTH} autoComplete="new-password" required
           className="mb-3 w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-indigo-400 focus:outline-none" />
         <label className="mb-4 flex items-start gap-2 text-xs text-slate-500">
-          <input type="checkbox" name="mailing_consent" defaultChecked className="mt-0.5" />
-          <span>אשמח לקבל עדכוני שוק ותובנות במייל (אפשר לבטל בכל רגע)</span>
+          <input type="checkbox" name="mailing_consent" defaultChecked required className="mt-0.5" />
+          <span>אני מאשר/ת קבלת עדכוני שוק ותובנות במייל — חלק מההרשמה (אפשר לבטל בכל רגע)</span>
         </label>
         <button className="w-full rounded-xl bg-indigo-600 py-2.5 text-sm font-bold text-white hover:bg-indigo-700">צור חשבון</button>
 
@@ -109,6 +115,9 @@ export default function RegisterPage({ searchParams }: { searchParams?: { err?: 
               </svg>
               המשך עם Google
             </a>
+            <p className="mt-1.5 text-center text-2xs text-slate-400">
+              הרשמה עם גוגל כוללת הסכמה לקבלת עדכוני שוק במייל (ניתן לבטל בכל עת)
+            </p>
           </>
         )}
 

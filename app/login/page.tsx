@@ -82,6 +82,9 @@ export default function LoginPage({ searchParams }: { searchParams?: { err?: str
               </svg>
               המשך עם Google
             </a>
+            <p className="mt-1.5 text-center text-2xs text-slate-400">
+              הרשמה עם גוגל כוללת הסכמה לקבלת עדכוני שוק במייל (ניתן לבטל בכל עת)
+            </p>
           </>
         )}
 

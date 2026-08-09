@@ -188,15 +188,19 @@ export function findOrCreateGoogleUser(
 
   const byEmail = appDb().prepare("SELECT * FROM users WHERE email=?").get(em) as UserRow | undefined;
   if (byEmail) {
-    appDb().prepare("UPDATE users SET google_id=? WHERE id=?").run(gid, byEmail.id);
+    // First Google link also records mailing consent: the sign-in pages
+    // disclose that Google sign-in includes it (operator decision 9.8).
+    appDb().prepare("UPDATE users SET google_id=?, mailing_consent=1 WHERE id=?").run(gid, byEmail.id);
     return { user: { id: `u${byEmail.id}`, email: byEmail.email, name: byEmail.name, tier: byEmail.tier }, created: false };
   }
 
   const nm = (name.trim() || em.split("@")[0]).slice(0, 80);
   const salt = crypto.randomBytes(16).toString("hex");
   const unusable = hashPassword(crypto.randomBytes(64).toString("hex"), salt);
+  // mailing_consent=1: registration via Google includes mailing consent, and
+  // the disclosure line next to the Google button says so before the click.
   const res = appDb().prepare(
-    "INSERT INTO users (email, name, password_hash, salt, google_id) VALUES (?, ?, ?, ?, ?)"
+    "INSERT INTO users (email, name, password_hash, salt, google_id, mailing_consent) VALUES (?, ?, ?, ?, ?, 1)"
   ).run(em, nm, unusable, salt, gid);
   const id = Number(res.lastInsertRowid);
   return { user: { id: `u${id}`, email: em, name: nm, tier: "free" }, created: true };
