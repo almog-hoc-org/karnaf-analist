@@ -10,7 +10,7 @@
  *     signal in the log: every row is a visitor asking for something we
  *     don't cover (or spell differently), ranked by demand.
  */
-import { eventCounts, topMisses } from "@/lib/events";
+import { eventCounts, topMisses, uniqueSessions, firstEventAt } from "@/lib/events";
 
 // keys MUST match EVENT_NAMES in lib/events.ts — an unlabeled event renders
 // as its raw English key, which is how the first version shipped dead labels
@@ -25,10 +25,13 @@ const EVENT_LABELS: Record<string, string> = {
 };
 
 export default function AdminUsagePanel() {
-  // both loaders fail-soft internally (lib/events.ts returns [] on any error)
+  // all loaders fail-soft internally (lib/events.ts returns []/0 on any error)
   const week = eventCounts(7);
   const month = eventCounts(30);
   const misses = topMisses(30, 30);
+  const visits7 = uniqueSessions(7);
+  const visits30 = uniqueSessions(30);
+  const since = firstEventAt();
 
   const weekByName = new Map(week.map((r) => [r.name, r.n]));
   const monthByName = new Map(month.map((r) => [r.name, r.n]));
@@ -36,8 +39,25 @@ export default function AdminUsagePanel() {
 
   return (
     <div className="space-y-6">
+      {/* visits — the "how many actually came" number the raw event counts are not */}
+      <section className="grid grid-cols-2 gap-3 sm:max-w-md">
+        <div className="rounded-2xl border border-indigo-200 bg-indigo-50/60 p-4 text-center">
+          <p className="text-3xl font-black text-indigo-700 tabular-nums">{visits7.toLocaleString("he-IL")}</p>
+          <p className="mt-1 text-2xs font-bold text-slate-600">ביקורים · 7 ימים</p>
+        </div>
+        <div className="rounded-2xl border border-slate-200 bg-white p-4 text-center">
+          <p className="text-3xl font-black text-slate-900 tabular-nums">{visits30.toLocaleString("he-IL")}</p>
+          <p className="mt-1 text-2xs font-bold text-slate-600">ביקורים · 30 ימים</p>
+        </div>
+        <p className="col-span-2 text-2xs leading-relaxed text-slate-400">
+          ביקור = טאב-דפדפן אחד (סשן), לא אדם ייחודי — אותו גולש מחר נספר שוב. מבקרים
+          ייחודיים אמיתיים, מכשירים וזמני שהייה — ב-Clarity.
+          {since && <> · הלוג נאסף מאז <b dir="ltr">{since.slice(0, 10)}</b> — חלון שקצר מזה יראה מספרים זהים לחלון הארוך.</>}
+        </p>
+      </section>
+
       <section className="rounded-2xl border border-slate-200 bg-white p-5">
-        <h3 className="text-sm font-bold text-slate-900">📈 פעילות באתר</h3>
+        <h3 className="text-sm font-bold text-slate-900">📈 פעילות באתר <span className="font-normal text-2xs text-slate-400">(ספירת פעולות — לא אנשים; כולל גם את הגלישה שלך)</span></h3>
         {names.length === 0 ? (
           <p className="mt-2 text-xs text-slate-400">אין אירועים עדיין — הלוג מתחיל להיאסף עם הגולש הראשון אחרי ה-deploy.</p>
         ) : (

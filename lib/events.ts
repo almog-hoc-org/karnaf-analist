@@ -97,6 +97,34 @@ export function recordEvent(e: EventInput): boolean {
   }
 }
 
+/**
+ * Distinct visit count for a window. A "visit" is one browser TAB session
+ * (random per-tab id, gone when the tab closes) — closest first-party
+ * analogue to an analytics "session". It is NOT unique people: the same
+ * person tomorrow, or in a second tab, counts again. Events recorded
+ * without a session id (very old rows, storage-blocked browsers) are
+ * excluded rather than miscounted as one giant visitor.
+ */
+export function uniqueSessions(days = 7): number {
+  try {
+    ensureTable();
+    const row = appDb().prepare(
+      `SELECT COUNT(DISTINCT session_id) n FROM events
+        WHERE session_id IS NOT NULL AND created_at >= datetime('now', ?)`
+    ).get(`-${Math.max(1, Math.floor(days))} days`) as { n: number };
+    return row.n;
+  } catch { return 0; }
+}
+
+/** When collection started — the honest denominator for every window shown. */
+export function firstEventAt(): string | null {
+  try {
+    ensureTable();
+    const row = appDb().prepare("SELECT MIN(created_at) t FROM events").get() as { t: string | null };
+    return row.t;
+  } catch { return null; }
+}
+
 export interface EventSummaryRow { name: string; n: number }
 
 /** Event counts over a window — the shape the admin dashboard needs. */
