@@ -28,7 +28,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { SERIES, GRID, AXIS, tooltipStyle } from "@/lib/chartColors";
-import TrendValue, { fmtSignedPct, trendTextClass } from "@/components/TrendValue";
+import TrendValue, { fmtSignedPct } from "@/components/TrendValue";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
@@ -74,12 +74,6 @@ const MAX_CITIES = 4;
 // ── Small formatters ────────────────────────────────────────────────────────
 const fmtInt = (v: number | null | undefined) =>
   v == null ? "—" : Math.round(v).toLocaleString("he-IL");
-
-/** signed number WITHOUT a % — for percentage-point (pp) values */
-const fmtSignedPp = (v: number) => {
-  const sign = v > 0 ? "+" : v < 0 ? "−" : "";
-  return `${sign}${Math.abs(v).toFixed(1)}`;
-};
 
 const CONFIDENCE_HE: Record<CompareMetrics["confidence"], string> = {
   high: "גבוהה",

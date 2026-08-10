@@ -18,13 +18,10 @@ const nextConfig = {
   // causes random 500s ("Unknown system error -11"). A *.nosync dir is never
   // synced/evicted by iCloud, keeping build artifacts local and stable.
   distDir: process.env.VERCEL ? ".next" : ".next.nosync",
-  // Lint errors (no-explicit-any, unused vars) shouldn't block production builds
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+  // Both checks are ON: the debt that justified skipping them was paid in
+  // 2026-08 (tsc passes clean; lint is 0 errors, stylistic rules downgraded to
+  // warnings in .eslintrc.json). CI runs the same checks on every PR — this
+  // just makes the local build tell the same truth.
   experimental: {
     serverComponentsExternalPackages: ['better-sqlite3', '@prisma/adapter-better-sqlite3'],
     // Bundle the SQLite database into serverless functions on Vercel

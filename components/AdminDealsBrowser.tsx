@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { withBasePath } from "@/lib/basePath";
 
 /**
@@ -193,7 +193,7 @@ export default function AdminDealsBrowser({ cities }: { cities: string[] }) {
               <tr key={r.id} className={`border-b border-slate-100 hover:bg-indigo-50/40 ${r.excluded ? "bg-red-50/50 text-slate-400" : ""}`}>
                 <td className="px-2 py-1.5 text-center">
                   <input type="checkbox" className="h-4 w-4" checked={checked.has(r.id)}
-                    onChange={(e) => setChecked((s) => { const n = new Set(s); e.target.checked ? n.add(r.id) : n.delete(r.id); return n; })} />
+                    onChange={(e) => setChecked((s) => { const n = new Set(s); if (e.target.checked) n.add(r.id); else n.delete(r.id); return n; })} />
                 </td>
                 <td className="whitespace-nowrap px-2 py-1.5 tabular-nums">{r.deal_date?.slice(0, 10)}</td>
                 <td className="whitespace-nowrap px-2 py-1.5 font-semibold text-slate-800">{r.city_name}</td>

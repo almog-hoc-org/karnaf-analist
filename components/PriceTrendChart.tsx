@@ -24,7 +24,7 @@ interface PriceTrendChartProps {
   cityName: string;
 }
 
-export default function PriceTrendChart({ data, cityName }: PriceTrendChartProps) {
+export default function PriceTrendChart({ data }: PriceTrendChartProps) {
   const mobile = useIsMobile();
   if (!data || data.length < 2) {
     return (

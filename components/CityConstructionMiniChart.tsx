@@ -23,7 +23,6 @@ interface DataPoint {
 
 export default function CityConstructionMiniChart({
   data,
-  cityName,
 }: {
   data: DataPoint[];
   cityName: string;

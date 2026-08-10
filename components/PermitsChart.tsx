@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  BarChart,
   Bar,
   XAxis,
   YAxis,
@@ -25,7 +24,7 @@ interface PermitsChartProps {
   cityName: string;
 }
 
-export default function PermitsChart({ data, cityName }: PermitsChartProps) {
+export default function PermitsChart({ data }: PermitsChartProps) {
   const mobile = useIsMobile();
   if (!data || data.length === 0) {
     return (

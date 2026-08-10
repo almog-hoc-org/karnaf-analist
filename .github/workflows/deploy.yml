@@ -65,12 +65,18 @@ jobs:
       # THE GATE. A build that fails here never reaches the server, which is the
       # entire point of putting a job in front of the deploy.
       #
-      # Not `tsc --noEmit` and not `lint`: both carry pre-existing failures from
-      # before this workflow, so gating on them would block every deploy on debt
-      # unrelated to the change. They become gates once that debt is paid; until
-      # then a gate nobody can pass is a gate everybody learns to bypass.
+      # tsc joined the gate once the type debt was actually paid (it passes
+      # clean as of 2026-08). Lint still carries stylistic debt
+      # (no-explicit-any and friends) and stays out until that is settled — a
+      # gate nobody can pass is a gate everybody learns to bypass.
       - name: build
         run: npm run build
+
+      # After build on purpose: `npm run build` is what runs `prisma generate`,
+      # and tsc needs the generated client to exist. Same gate either way — the
+      # deploy job waits for this whole job to pass.
+      - name: typecheck
+        run: npx tsc --noEmit
 
   deploy:
     name: deploy to VPS

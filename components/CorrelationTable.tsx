@@ -37,7 +37,6 @@ function getGapColor(permits: number | null, required: number | null): string {
 
 export default function CorrelationTable({
   data,
-  cityName,
   avgHouseholdSize,
 }: CorrelationTableProps) {
   if (!data || data.length === 0) return null;

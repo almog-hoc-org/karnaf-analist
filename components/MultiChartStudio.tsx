@@ -6,7 +6,7 @@ import type { CityGraphData, DealCountCube, NadlanDeal, RoomKey, StatPoint } fro
 import DealsDrawer from "./DealsDrawer";
 import TrendValue from "./TrendValue";
 import SourceBadge from "./SourceBadge";
-import { BRAND, GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
+import { GRID, AXIS, tooltipStyle, tipFmt } from "@/lib/chartColors";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
 import { setViewState, clearViewState } from "@/lib/viewState";

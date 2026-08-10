@@ -20,8 +20,6 @@ const STATUSES = [
   { key: "closed", label: "✅ נסגר" },
   { key: "dropped", label: "❌ ירד מהפרק" },
 ] as const;
-const statusLabel = (k: string) => STATUSES.find((s) => s.key === k)?.label ?? k;
-
 type SortKey = "updated" | "city" | "price" | "sqm" | "delta";
 
 /** Client-side label for what the comparison matched (mirrors lib/streetComps). */
@@ -65,7 +63,7 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
   };
 
   const visibleDeals = useMemo(() => {
-    let out = deals.filter((d) => (!fCity || d.city === fCity) && (!fStatus || d.status === fStatus));
+    const out = deals.filter((d) => (!fCity || d.city === fCity) && (!fStatus || d.status === fStatus));
     const cmp: Record<SortKey, (a: ClientDeal, b: ClientDeal) => number> = {
       updated: (a, b) => b.updated_at.localeCompare(a.updated_at),
       city: (a, b) => a.city.localeCompare(b.city, "he"),

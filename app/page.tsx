@@ -7,7 +7,6 @@ import RecentReportsSection from "@/components/RecentReportsSection";
 import NumberCaption from "@/components/NumberCaption";
 import PriceGainsRankingCard from "@/components/PriceGainsRankingCard";
 import TrendValue from "@/components/TrendValue";
-import { loadAllCityPriceChanges } from "@/lib/price-changes";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import { loadCityTransactionPrices, loadRankingEligibleCities } from "@/lib/cityTransactionPrices";
 import { computeMarketInsights } from "@/lib/marketInsights";
@@ -18,42 +17,16 @@ import { loadDiscoveredReports } from "@/lib/data-refresh";
 import { whatsappUrl } from "@/lib/brand";
 import Icon from "@/components/Icon";
 
-function formatPrice(value: number | null): string {
-  if (value === null) return "—";
-  return `₪${Math.round(value).toLocaleString("he-IL")}`;
-}
-
-function formatPct(value: number | null): string {
-  if (value === null) return "—";
-  const sign = value >= 0 ? "+" : "";
-  return `${sign}${value.toFixed(1)}%`;
-}
-
 function formatNumber(value: number | null): string {
   if (value === null) return "—";
   return value.toLocaleString("he-IL");
 }
 
-function formatShortMoney(value: number | null): string {
-  if (value === null) return "—";
-  if (value >= 1_000_000) return `₪${(value / 1_000_000).toFixed(1)}M`;
-  if (value >= 1_000) return `₪${(value / 1_000).toFixed(1)}K`;
-  return `₪${value}`;
-}
-
 export default async function HomePage() {
   let cityCount = 0;
-  let lastUpdated: Date | null = null;
 
   try {
     cityCount = await prisma.city.count();
-    if (cityCount > 0) {
-      const latest = await prisma.city.findFirst({
-        orderBy: { last_updated: "desc" },
-        select: { last_updated: true },
-      });
-      lastUpdated = latest?.last_updated ?? null;
-    }
   } catch (e) {
     // Was a bare `catch {}`. A database that is down and a database that is
     // empty then looked identical, and both landed on the screen below — so an
@@ -110,23 +83,9 @@ export default async function HomePage() {
   const sh3ForSearch = new Map((await loadSecondhandChanges(3)).map((c) => [c.city_name, c.pct]));
   const allCities = allCitiesRaw.map((c) => ({ ...c, price_change_pct: sh3ForSearch.get(c.city_name) ?? null }));
 
-  // ── Hero aggregate stats ─────────────────────────────────────────
-  const aggregates = await prisma.city.aggregate({
-    _avg: { price_per_sqm_2026: true, price_change_pct: true, population_growth_pct: true },
-    _max: { price_per_sqm_2026: true, price_change_pct: true },
-    _sum: { population_2026: true, apartments_required: true },
-    where: { price_per_sqm_2026: { not: null } },
-  });
-
-  const avgPricePerSqm = aggregates._avg.price_per_sqm_2026;
-  const avgPriceChange = aggregates._avg.price_change_pct;
-  const totalPopulation = aggregates._sum.population_2026;
-  const totalApartmentsNeeded = aggregates._sum.apartments_required;
-
   // ── Rankings ─────────────────────────────────────────────────────
   // Top movers = SECOND-HAND ONLY (user rule: overall averages are biased
   // upward the moment a new expensive neighborhood is built).
-  const allPriceChanges = await loadAllCityPriceChanges();
   // Normalization gate (user rule): rankings admit only cities with 10+ deals of EVERY type.
   const rankEligible = await loadRankingEligibleCities();
   const marketInsights = await computeMarketInsights().catch(() => []);
@@ -220,9 +179,6 @@ export default async function HomePage() {
     }),
   ]);
 
-  // ── Per-city construction data ──────────────────────────────────
-  const topCitiesForConstruction = ["ירושלים", "תל אביב -יפו", "חיפה", "באר שבע", "ראשון לציון", "פתח תקווה"];
-
   const rankings = [
     {
       title: "היקרות ביותר — חציון יד-2 ₪/מ״ר",
@@ -262,13 +218,6 @@ export default async function HomePage() {
       })),
     },
   ];
-
-  const lastUpdatedFormatted = lastUpdated
-    ? lastUpdated.toLocaleDateString("he-IL", { year: "numeric", month: "long", day: "numeric" })
-    : "לא ידוע";
-
-  // ── Date stamp for hero (current month/year in Hebrew) ──────────
-  const heroDate = new Date().toLocaleDateString("he-IL", { month: "long", year: "numeric" });
 
   return (
     <main className="min-h-screen page-wrap-wide py-8">

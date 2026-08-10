@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import type { CityChangeMetrics, ChangeMetric, YearValue } from "@/lib/cityChangeMetrics";
-import TrendValue, { trendTextClass } from "./TrendValue";
+import TrendValue from "./TrendValue";
 import Icon from "@/components/Icon";
 import InfoTip from "@/components/InfoTip";
 
@@ -491,29 +491,6 @@ export default function CitiesTable({
     }
   };
 
-  // Visible columns: when in a top-mover view, push the relevant change column
-  // and the city name first; otherwise show the default order.
-  const visibleColumns = useMemo(() => {
-    const base = columns.filter((c) => c.key === "city_name" || !hidden.has(c.key as string));
-    if (viewMode === "top3y") {
-      const featured = base.find((c) => c.key === "price_change_3y_pct");
-      const cityCol = base.find((c) => c.key === "city_name")!;
-      const rest = base.filter((c) => c.key !== "price_change_3y_pct" && c.key !== "city_name");
-      return featured ? [cityCol, featured, ...rest] : base;
-    }
-    if (viewMode === "top5y") {
-      const featured = base.find((c) => c.key === "price_change_5y_pct");
-      const cityCol = base.find((c) => c.key === "city_name")!;
-      const rest = base.filter((c) => c.key !== "price_change_5y_pct" && c.key !== "city_name");
-      return featured ? [cityCol, featured, ...rest] : base;
-    }
-    return base;
-  }, [viewMode, hidden]);
-
-  const visibleChangeCols = useMemo(() => CHANGE_COLS.filter((c) => !hidden.has(c.id)), [hidden]);
-  const visibleInvCols = useMemo(() => INV_COLS.filter((c) => !hidden.has(c.id)), [hidden]);
-  const toggleCol = (key: string) => setHidden((s) => { const n = new Set(s); n.has(key) ? n.delete(key) : n.add(key); return n; });
-
   // ONE ordered list of column ids — the user can drag any of them (city stays
   // pinned first). Featured change column still jumps to the front in top views.
   const visibleOrder = useMemo(() => {
@@ -537,8 +514,6 @@ export default function CitiesTable({
     return m;
   }, []);
 
-  const colLabel = (id: string) => colById.get(id)?.def.label ?? id;
-
   const sortLabel =
     columns.find((c) => c.key === sortKey)?.label ??
     CHANGE_COLS.find((c) => c.id === sortKey)?.label ??
@@ -550,23 +525,6 @@ export default function CitiesTable({
     (viewMode === "top5y" && key === "price_change_5y_pct");
 
   /* ── shared cell renderers (regular columns) ── */
-  const renderTh = (col: ColumnDef) => (
-    <th
-      key={col.key}
-      onClick={() => handleSort(col.key)}
-      className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-3 py-3 text-right font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${
-        isFeaturedCol(col.key) ? "bg-indigo-50 text-indigo-700" : "bg-white text-slate-500"
-      }`}
-    >
-      {col.label}
-      {sortKey === col.key && (
-        <span className="mr-1 text-indigo-600">
-          {sortDir === "asc" ? "▲" : "▼"}
-        </span>
-      )}
-    </th>
-  );
-
   const renderTd = (row: CityRow, col: ColumnDef) => {
     const isPctCol =
       col.key === "price_change_pct" ||

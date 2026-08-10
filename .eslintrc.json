@@ -1,3 +1,17 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    // Underscore prefix = deliberately unused (kept for a props contract or
+    // a documented future use); anything else unused is still an error.
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }
+    ],
+    // Stylistic debt, tracked but non-blocking: `any` shows up in the raw-SQL
+    // result mapping layers. Tighten to "error" once those are typed.
+    "@typescript-eslint/no-explicit-any": "warn",
+    // Hebrew copy is full of legitimate quotes and apostrophes; escaping them
+    // as entities hurts readability more than it protects anything.
+    "react/no-unescaped-entities": "off"
+  }
 }

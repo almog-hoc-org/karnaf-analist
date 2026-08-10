@@ -2,7 +2,6 @@ import { prisma } from "@/lib/db";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
 import { computeCityGap, describeSupplySource } from "@/lib/gap-analysis";
-import PriceChart from "@/components/PriceChart";
 import SalesChart from "@/components/SalesChart";
 import PermitsChart from "@/components/PermitsChart";
 import PopulationChart from "@/components/PopulationChart";
@@ -339,7 +338,6 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   const totalRequired = gapAnalysis?.totals.demand ?? null;
   const totalStarts = gapAnalysis?.totals.starts ?? 0;
   const totalCompletions = gapAnalysis?.totals.completions ?? 0;
-  const totalChosenSupply = gapAnalysis?.totals.chosenSupply ?? null;
   const chosenSourceMeta = gapAnalysis ? describeSupplySource(gapAnalysis.totals.chosenSource) : null;
   const totalGap = gapAnalysis?.totals.gap ?? null;
   const totalGapPct = gapAnalysis?.totals.gapPctOfDemand ?? null;

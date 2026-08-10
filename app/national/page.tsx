@@ -35,7 +35,6 @@ export default async function NationalDashboard() {
     select: { population_2021: true, population_2026: true, population_growth_abs: true },
   });
   const totalPop2026 = cities.reduce((s, c) => s + (c.population_2026 ?? 0), 0);
-  const totalGrowth = cities.reduce((s, c) => s + (c.population_growth_abs ?? 0), 0);
 
   // ─── Decade totals from national_construction ───
   const last10 = nat.filter((r) => r.year >= 2016 && r.year <= 2025);

@@ -93,12 +93,6 @@ function fmt(n: number | null, suffix = ""): string {
   return Math.round(n).toLocaleString("he-IL") + suffix;
 }
 
-function fmtPct(prev: number | null, curr: number | null): string {
-  if (!prev || !curr || prev === 0) return "—";
-  const pct = ((curr - prev) / prev) * 100;
-  const sign = pct >= 0 ? "+" : "";
-  return `${sign}${pct.toFixed(1)}%`;
-}
 
 export default async function StatPage({ params }: PageProps) {
   const metric = params.metric as Metric;

@@ -173,7 +173,7 @@ function MortgageCalc() {
         + הוסף מסלול
       </button>
 
-      {/* global assumptions */}
+      {/* shared assumptions for all tracks */}
       <div className="grid gap-3 sm:grid-cols-3">
         <Field label="אינפלציה שנתית צפויה (למסלולים צמודים)" value={inflation} onChange={setInflation} suffix="%" step={0.1} />
         <Field label="שווי הנכס (לא חובה — לחישוב אחוז מימון)" value={propertyValue} onChange={setPropertyValue} suffix="₪" step={50000} />

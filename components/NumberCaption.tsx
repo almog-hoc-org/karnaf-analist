@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
 

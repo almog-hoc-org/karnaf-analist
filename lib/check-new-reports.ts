@@ -109,7 +109,7 @@ async function fetchPage(url: string): Promise<string | null> {
  * CBS pages list <a> tags pointing to /he/mediarelease/... with title text.
  * Date often appears in adjacent <span> or as "תאריך פרסום: dd/mm/yyyy".
  */
-function extractCbsReleases(html: string, baseUrl: string): DetectedReport[] {
+function extractCbsReleases(html: string, _baseUrl: string): DetectedReport[] {
   const out: DetectedReport[] = [];
   // Match links to /he/mediarelease/Pages/YYYY/<slug>.aspx
   const linkRegex = /<a[^>]+href=["']([^"']*\/mediarelease\/Pages\/\d{4}\/[^"']+\.aspx)["'][^>]*>([\s\S]*?)<\/a>/gi;

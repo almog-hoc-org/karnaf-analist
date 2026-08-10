@@ -24,7 +24,7 @@ interface PopulationChartProps {
   cityName: string;
 }
 
-export default function PopulationChart({ data, cityName }: PopulationChartProps) {
+export default function PopulationChart({ data }: PopulationChartProps) {
   const mobile = useIsMobile();
   if (!data || data.length < 2) {
     return (
