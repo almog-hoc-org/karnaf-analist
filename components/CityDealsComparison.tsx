@@ -64,6 +64,8 @@ interface CityDealsData {
   periodYears: { current: number; minus3: number; minus5: number };
   townCharacter: string;
   note?: string;
+  /** Set by the API when there is no cache and the live source is unreachable. */
+  unavailable?: boolean;
 }
 
 // ── Formatters ───────────────────────────────────────────────────
@@ -443,6 +445,15 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
                 ))}
               </div>
             </>
+          ) : data.unavailable ? (
+            <div className="glass-card p-8 text-center">
+              <p className="text-slate-500 text-sm">
+                נתוני השוואת הרחובות אינם זמינים כרגע ל{cityName}
+              </p>
+              <p className="text-slate-400 text-xs mt-1">
+                שאר הנתונים בעמוד מלאים ועדכניים; ההשוואה תופיע כשהמקור יתעדכן
+              </p>
+            </div>
           ) : (
             <div className="glass-card p-8 text-center">
               <p className="text-slate-500 text-sm">

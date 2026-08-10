@@ -66,15 +66,26 @@ async function main() {
     try {
       const startedAt = Date.now();
       const data = await getCityDealsData(cityName);
-      setCachedDeals(cityName, data);
       const took = ((Date.now() - startedAt) / 1000).toFixed(1);
 
       if (data.neighborhoods.length === 0) {
+        // Never let an empty answer clobber a populated cache: a half-blocked
+        // source can return valid-but-empty JSON, and the old cache is worth
+        // more than a fresh nothing.
+        const existing = getCachedDeals(cityName);
+        if (existing && existing.neighborhoods.length > 0) {
+          console.log(
+            `${prefix} ⚠️  empty answer — keeping existing cache (${existing.neighborhoods.length} nh)`
+          );
+        } else {
+          setCachedDeals(cityName, data);
+        }
         console.log(
           `${prefix} ⚠️  empty (${data.totalDealsAnalyzed} deals, ${took}s)`
         );
         empty++;
       } else {
+        setCachedDeals(cityName, data);
         const streetCount = data.neighborhoods.reduce(
           (s, n) => s + n.streets.length,
           0

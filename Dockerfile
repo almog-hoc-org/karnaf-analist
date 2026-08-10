@@ -89,11 +89,16 @@ EXPOSE 3000
 # files, four of the missing ones read by the site itself, each reader falling
 # back to empty without a word. The entrypoint copies anything absent back in on
 # start, and never overwrites: some of these files are live collector state.
+#
+# deals_cache IS seeded (2.2MB): govmap is geo-blocked from this server, so the
+# street-comparison cache can never regenerate here — without the seed, every
+# /api/city-deals call fell through to a live fetch that cannot succeed.
+# nadlan_deals and subarea_deals stay excluded: they are collector working
+# state, not content the site reads at request time.
 RUN mkdir -p /app/data-seed && \
     (tar -C data \
       --exclude='./realestate.db*' \
       --exclude='./app.db*' \
-      --exclude='./deals_cache' \
       --exclude='./nadlan_deals' \
       --exclude='./subarea_deals' \
       -cf - . | tar -C /app/data-seed -xf -) && \
