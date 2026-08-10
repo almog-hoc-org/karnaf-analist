@@ -434,7 +434,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           {activeDefs.length === 0 ? (
             <div className="flex h-[160px] items-center justify-center text-sm text-slate-400">בחר לפחות סדרה אחת למעלה</div>
           ) : (
-            <ResponsiveContainer width="100%" height={mobile ? 260 : 340}>
+            <ResponsiveContainer width="100%" height={mobile ? 260 : 340} initialDimension={{ width: 600, height: 340 }}>
               <ComposedChart data={overlayData} margin={{ top: 8, right: 12, left: 8, bottom: 4 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
                 <XAxis dataKey="year" tick={{ fill: AXIS, fontSize: mobile ? 10 : 11, fontWeight: 700 }} axisLine={false} tickLine={false} interval={mobile ? "preserveStartEnd" : 0} minTickGap={mobile ? 14 : 5} />
@@ -478,7 +478,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                   </h4>
                   <SourceBadge kind={s.external ? "external" : "internal"} name={s.external ? "גוב-נדלן" : undefined} />
                 </div>
-                <ResponsiveContainer width="100%" height={200}>
+                <ResponsiveContainer width="100%" height={200} initialDimension={{ width: 600, height: 200 }}>
                   <ComposedChart data={rows} margin={{ top: 4, right: 8, left: 4, bottom: 2 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
                     <XAxis dataKey="year" tick={{ fill: AXIS, fontSize: mobile ? 10 : 11, fontWeight: 700 }} axisLine={false} tickLine={false} interval={mobile ? "preserveStartEnd" : 0} minTickGap={mobile ? 14 : 5} />

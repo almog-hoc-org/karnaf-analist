@@ -23,7 +23,7 @@ export default function ShortfallBarChart({ data }: { data: ShortfallRow[] }) {
 
   return (
     <div style={{ width: "100%", height: mobile ? 270 : 320 }} dir="ltr">
-      <ResponsiveContainer>
+      <ResponsiveContainer initialDimension={{ width: 600, height: 320 }}>
         <BarChart data={chart} margin={{ top: 20, right: 20, bottom: 10, left: 20 }} barCategoryGap="22%">
           <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
           <XAxis dataKey="district" angle={mobile ? -35 : 0} textAnchor={mobile ? "end" : "middle"} height={mobile ? 60 : undefined} tick={{ fontSize: mobile ? 10 : 11, fill: AXIS }} axisLine={false} tickLine={false} />

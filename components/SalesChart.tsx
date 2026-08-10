@@ -48,7 +48,7 @@ export default function SalesChart({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
     >
-      <ResponsiveContainer width="100%" height={mobile ? 200 : 220}>
+      <ResponsiveContainer width="100%" height={mobile ? 200 : 220} initialDimension={{ width: 600, height: 220 }}>
         <BarChart
           data={data}
           margin={{ top: 5, right: 10, left: 10, bottom: 5 }}

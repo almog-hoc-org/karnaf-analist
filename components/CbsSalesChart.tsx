@@ -42,7 +42,7 @@ export default function CbsSalesChart({ data }: { data: CbsSalesData }) {
         {/* chart */}
         <div className="lg:col-span-2">
           <div style={{ width: "100%", height: mobile ? 240 : 300 }}>
-            <ResponsiveContainer>
+            <ResponsiveContainer initialDimension={{ width: 600, height: 300 }}>
               <ComposedChart data={rows} margin={{ top: 8, right: 8, left: 8, bottom: 4 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
                 <XAxis dataKey="year" tick={{ fill: AXIS, fontSize: mobile ? 10 : 11 }} axisLine={{ stroke: GRID }} tickLine={false} />

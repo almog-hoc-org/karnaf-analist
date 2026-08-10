@@ -34,7 +34,7 @@ export default function PlanVsActualChart({ data }: { data: Point[] }) {
 
   return (
     <div style={{ width: "100%", height: mobile ? 300 : 360 }} dir="ltr">
-      <ResponsiveContainer>
+      <ResponsiveContainer initialDimension={{ width: 600, height: 360 }}>
         <ComposedChart data={series} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
           <XAxis dataKey="year" tick={{ fontSize: 11, fill: AXIS }} axisLine={false} tickLine={false} />

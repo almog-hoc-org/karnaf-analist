@@ -24,7 +24,7 @@ export default function DistrictTargetsChart({ targets }: { targets: DistrictTar
 
   return (
     <div style={{ width: "100%", height: mobile ? 330 : 380 }} dir="ltr">
-      <ResponsiveContainer>
+      <ResponsiveContainer initialDimension={{ width: 600, height: 380 }}>
         <BarChart data={data} margin={{ top: 20, right: 20, bottom: 10, left: 20 }} barCategoryGap="18%" barGap={3}>
           <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
           <XAxis dataKey="district" angle={mobile ? -35 : 0} textAnchor={mobile ? "end" : "middle"} height={mobile ? 60 : undefined} tick={{ fontSize: mobile ? 10 : 11, fill: AXIS }} axisLine={false} tickLine={false} />

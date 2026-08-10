@@ -52,7 +52,7 @@ export default function PermitsChart({ data }: PermitsChartProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: 0.15 }}
     >
-      <ResponsiveContainer width="100%" height={mobile ? 220 : 260}>
+      <ResponsiveContainer width="100%" height={mobile ? 220 : 260} initialDimension={{ width: 600, height: 260 }}>
         <ComposedChart
           data={chartDataWithAvg}
           margin={{ top: 5, right: 10, left: 10, bottom: 5 }}

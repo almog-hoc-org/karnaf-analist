@@ -39,7 +39,7 @@ export default function CityConstructionMiniChart({
 
   return (
     <div className="w-full">
-      <ResponsiveContainer width="100%" height={mobile ? 200 : 220}>
+      <ResponsiveContainer width="100%" height={mobile ? 200 : 220} initialDimension={{ width: 600, height: 220 }}>
         <ComposedChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
           <XAxis
             dataKey="year"

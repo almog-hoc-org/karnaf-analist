@@ -466,7 +466,7 @@ export default function CompareView({
             אין נתוני מחירים לערים שנבחרו
           </div>
         ) : (
-          <ResponsiveContainer width="100%" height={mobile ? 280 : 340}>
+          <ResponsiveContainer width="100%" height={mobile ? 280 : 340} initialDimension={{ width: 600, height: 340 }}>
             <LineChart data={chartData} margin={{ top: 8, right: 12, left: 12, bottom: 4 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
               <XAxis
