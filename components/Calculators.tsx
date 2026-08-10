@@ -255,15 +255,39 @@ function InvestmentCalc() {
   const [equity, setEquity] = useState(750_000);
   const [mortgageRate, setMortgageRate] = useState(4.9);
   const [mortgageYears, setMortgageYears] = useState(20);
+  const [appreciation, setAppreciation] = useState(3.0);
+  const [holdYears, setHoldYears] = useState(10);
 
   const calc = useMemo(() => {
     const annualRent = rent * 12 * (1 - vacancyWeeks / 52) - expenses * 12;
     const grossYield = (rent * 12) / price * 100;
     const netYield = annualRent / price * 100;
-    const pay = monthlyPayment(Math.max(0, price - equity), mortgageRate, mortgageYears);
+    const principal = Math.max(0, price - equity);
+    const pay = monthlyPayment(principal, mortgageRate, mortgageYears);
     const cashflow = annualRent / 12 - pay;
-    return { grossYield, netYield, pay, cashflow };
-  }, [price, rent, expenses, vacancyWeeks, equity, mortgageRate, mortgageYears]);
+
+    // ── Exit scenario (operator request 8/2026): what the sale looks like ──
+    // Value grows at the assumed appreciation; the loan balance falls with
+    // the amortization schedule. Profit at sale = what the sale returns
+    // beyond the remaining loan and the equity put in, plus the cash flow
+    // accumulated along the way. Principal paydown is NOT extra profit — it
+    // is already inside (valueAtSale − remainingBalance).
+    const y = Math.max(1, Math.min(holdYears, mortgageYears));
+    const valueAtSale = price * Math.pow(1 + appreciation / 100, holdYears);
+    const r = mortgageRate / 100 / 12;
+    const n = Math.min(holdYears, mortgageYears) * 12;
+    const remainingBalance = r > 0
+      ? principal * Math.pow(1 + r, n) - pay * ((Math.pow(1 + r, n) - 1) / r)
+      : Math.max(0, principal - pay * n);
+    const cumCashflow = cashflow * 12 * holdYears;
+    const totalProfit = (valueAtSale - Math.max(0, remainingBalance)) - equity + cumCashflow;
+    const roiOnEquity = equity > 0 ? (totalProfit / equity) * 100 : null;
+    const annualizedRoi = roiOnEquity != null && roiOnEquity > -100
+      ? (Math.pow(1 + roiOnEquity / 100, 1 / y) - 1) * 100
+      : null;
+
+    return { grossYield, netYield, pay, cashflow, valueAtSale, totalProfit, roiOnEquity, annualizedRoi };
+  }, [price, rent, expenses, vacancyWeeks, equity, mortgageRate, mortgageYears, appreciation, holdYears]);
 
   return (
     <div className="grid gap-5 lg:grid-cols-2">
@@ -275,19 +299,36 @@ function InvestmentCalc() {
         <Field label="הון עצמי" value={equity} onChange={setEquity} suffix="₪" step={50000} />
         <Field label="ריבית משכנתא" value={mortgageRate} onChange={setMortgageRate} suffix="%" step={0.1} />
         <Field label="שנות משכנתא" value={mortgageYears} onChange={setMortgageYears} suffix="שנים" />
+        <Field label="עליית ערך שנתית צפויה" value={appreciation} onChange={setAppreciation} suffix="%" step={0.5} />
+        <Field label="שנות החזקה עד מכירה" value={holdYears} onChange={setHoldYears} suffix="שנים" />
       </div>
       <div className="grid content-start gap-3 sm:grid-cols-2">
         <Result label="תשואה ברוטו" value={`${fmt(calc.grossYield, 2)}%`} />
-        <Result label="תשואה נטו" value={`${fmt(calc.netYield, 2)}%`} accent />
+        <Result label="תשואה נטו" value={`${fmt(calc.netYield, 2)}%`} />
         <Result label="החזר משכנתא חודשי" value={`₪${fmt(calc.pay)}`} />
         <Result
           label="תזרים חודשי"
           value={fmtSignedNis(calc.cashflow)}
           sub={!Number.isFinite(calc.cashflow) ? undefined : calc.cashflow >= 0 ? "הנכס מכסה את עצמו" : "דורש השלמה מהכיס"}
         />
+        <Result label={`שווי צפוי בעוד ${holdYears} שנים`} value={`₪${fmt(calc.valueAtSale)}`} />
+        <Result
+          label="רווח כולל במכירה"
+          value={fmtSignedNis(calc.totalProfit)}
+          accent
+          sub="עליית ערך + תזרים מצטבר − יתרת משכנתא והון"
+        />
+        {calc.roiOnEquity != null && (
+          <Result
+            label="תשואה כוללת על ההון"
+            value={`${fmt(calc.roiOnEquity, 0)}%`}
+            sub={calc.annualizedRoi != null ? `≈ ${fmt(calc.annualizedRoi, 1)}% לשנה` : undefined}
+          />
+        )}
       </div>
       <p className="text-2xs leading-relaxed text-slate-400 lg:col-span-2">
-        לא כולל מס רכישה, מס שבח, עליית ערך או שיפוצים. השווה את השכירות המבוקשת מול עסקאות אמת בעמוד העיר.
+        עליית הערך היא הנחה שלך — לא תחזית של המערכת; בדוק את קצב השינוי בפועל בעמוד העיר.
+        לא כולל מס רכישה, מס שבח, עלויות מכירה ושיפוצים.
       </p>
     </div>
   );

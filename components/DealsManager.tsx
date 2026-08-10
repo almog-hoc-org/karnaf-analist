@@ -94,6 +94,22 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
 
   const inputCls = "rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs focus:border-indigo-400 focus:outline-none";
 
+  // First-visit demo (operator request 8/2026): one click seeds a realistic
+  // deal in the demo city so a new user sees the comparison engine working —
+  // clearly labeled as a sample and deletable like any other deal.
+  const loadSample = () => {
+    startTransition(async () => {
+      const res = await addDeal({
+        city: "חיפה", neighborhood: "הדר", street: "הרצל", house_num: "20",
+        size: 85, rooms: 3.5, floor: 2, price: 1_190_000,
+        balcony_sqm: null, parking_spots: 1, storage_sqm: null,
+        listing_url: "",
+        notes: "עסקת דוגמה להתרשמות — מחק אותה בכל רגע עם כפתור הפח",
+      });
+      if (res && !res.ok) alert(res.error);
+    });
+  };
+
   return (
     <div className="space-y-8">
       {/* ── tracked cities ─────────────────────────────────────────── */}
@@ -212,8 +228,96 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
           </div>
         )}
 
-        {/* table */}
-        <div className="glass-card overflow-x-auto">
+        {/* ── mobile: card per deal — a 12-column table on a phone is an
+            endless horizontal scroll, so below md each deal is a card with
+            the detail expanding inline. The table below is md+ only. ── */}
+        <div className="space-y-3 md:hidden">
+          {visibleDeals.length === 0 && (
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">
+              <p>אין עסקאות עדיין — הוסף את הראשונה למעלה</p>
+              {deals.length === 0 && (
+                <button onClick={loadSample} className="mt-3 rounded-full border border-indigo-200 bg-white px-4 py-1.5 text-xs font-bold text-indigo-700 hover:bg-indigo-50">
+                  או טען עסקת דוגמה ←
+                </button>
+              )}
+            </div>
+          )}
+          {visibleDeals.map((d) => {
+            const comp = comps[d.id];
+            const s = sqm(d);
+            const dl = delta(d);
+            const open = openRow === d.id;
+            const openTasks = d.tasks.filter((t) => !t.done).length;
+            return (
+              <div key={d.id} className={`glass-card p-4 ${open ? "ring-1 ring-indigo-200" : ""}`}>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="font-black text-slate-900">{d.city}</div>
+                    <div className="text-2xs text-slate-500">
+                      {[d.street && `${d.street} ${d.house_num ?? ""}`.trim(), d.neighborhood].filter(Boolean).join(" · ") || "—"}
+                    </div>
+                  </div>
+                  <button onClick={() => { if (confirm(`למחוק את העסקה ב${d.city}?`)) startTransition(() => deleteDeal(d.id)); }}
+                    className="flex-shrink-0 text-slate-300 hover:text-red-500"><Icon name="trash" size="1em" /></button>
+                </div>
+
+                <div className="mt-2 flex flex-wrap gap-1.5 text-2xs text-slate-600">
+                  {d.size ? <span className="rounded-full bg-slate-100 px-2 py-0.5 tabular-nums">{d.size} מ״ר</span> : null}
+                  {d.rooms ? <span className="rounded-full bg-slate-100 px-2 py-0.5 tabular-nums">{d.rooms} חד׳</span> : null}
+                  {d.floor != null ? <span className="rounded-full bg-slate-100 px-2 py-0.5 tabular-nums">קומה {d.floor}</span> : null}
+                  {d.balcony_sqm ? <span className="rounded-full bg-slate-100 px-2 py-0.5 tabular-nums">🌤️ {d.balcony_sqm}</span> : null}
+                  {d.parking_spots ? <span className="rounded-full bg-slate-100 px-2 py-0.5 tabular-nums">🚗 {d.parking_spots}</span> : null}
+                  {d.storage_sqm ? <span className="rounded-full bg-slate-100 px-2 py-0.5 tabular-nums">📦 {d.storage_sqm}</span> : null}
+                </div>
+
+                <div className="mt-3 flex flex-wrap items-baseline justify-between gap-2">
+                  <span className="text-lg font-black tabular-nums text-slate-900">
+                    {d.price ? `₪${d.price.toLocaleString("he-IL")}` : "—"}
+                  </span>
+                  <span className="text-sm font-bold tabular-nums text-indigo-700">
+                    {s ? `₪${Math.round(s).toLocaleString("he-IL")}/מ״ר` : ""}
+                  </span>
+                </div>
+
+                {comp?.medianSqm ? (
+                  <button onClick={() => setOpenRow(open ? null : d.id)} className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-right">
+                    <span dir="ltr" className={`font-black tabular-nums ${dl == null ? "text-slate-400" : dl > 3 ? "text-red-600" : dl < -3 ? "text-emerald-700" : "text-slate-700"}`}>
+                      {dl != null ? fmtSignedPct(dl) : "—"}
+                    </span>
+                    <span className="mr-2 text-2xs text-slate-500">
+                      מול ₪{comp.medianSqm.toLocaleString("he-IL")} · {compMatchNote(comp)} ({comp.n}) {open ? "▴" : "▾"}
+                    </span>
+                  </button>
+                ) : (
+                  <p className="mt-2 text-2xs text-slate-400">אין דאטה להשוואת שוק</p>
+                )}
+
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <select value={d.status} onChange={(e) => startTransition(() => updateDeal(d.id, { status: e.target.value }))}
+                    className="rounded-lg border border-slate-200 bg-white px-1.5 py-1 text-2xs font-bold">
+                    {STATUSES.map((st) => <option key={st.key} value={st.key}>{st.label}</option>)}
+                  </select>
+                  <button onClick={() => setOpenRow(open ? null : d.id)}
+                    className={`rounded-full px-2.5 py-1 text-2xs font-bold ${openTasks > 0 ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-500"}`}>
+                    {openTasks > 0 ? `${openTasks} משימות פתוחות` : "משימות"} {open ? "▴" : "▾"}
+                  </button>
+                  {d.listing_url && (
+                    <a href={d.listing_url} target="_blank" rel="noopener noreferrer" className="mr-auto text-indigo-600 hover:text-indigo-800"><Icon name="link" size="1em" /></a>
+                  )}
+                </div>
+
+                {open && (
+                  <div className="mt-3 border-t border-slate-100 pt-3">
+                    <DealDetail deal={d} comp={comp} askSqm={s} modernMinYear={modernMinYear} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* table — md+ only */}
+        <div className="glass-card hidden overflow-x-auto md:block">
           <table className="table-pin-first w-full min-w-[900px] text-xs" dir="rtl">
             <thead className="bg-slate-50 text-2xs font-bold text-slate-500">
               <tr className="border-b border-slate-200">
@@ -233,7 +337,14 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
             </thead>
             <tbody>
               {visibleDeals.length === 0 && (
-                <tr><td colSpan={12} className="px-3 py-8 text-center text-slate-400">אין עסקאות עדיין — הוסף את הראשונה למעלה</td></tr>
+                <tr><td colSpan={12} className="px-3 py-8 text-center text-slate-400">
+                  אין עסקאות עדיין — הוסף את הראשונה למעלה
+                  {deals.length === 0 && (
+                    <button onClick={loadSample} className="mr-3 rounded-full border border-indigo-200 bg-white px-4 py-1.5 text-xs font-bold text-indigo-700 hover:bg-indigo-50">
+                      או טען עסקת דוגמה ←
+                    </button>
+                  )}
+                </td></tr>
               )}
               {visibleDeals.map((d) => {
                 const comp = comps[d.id];
@@ -317,21 +428,8 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
             </tbody>
           </table>
         </div>
-        {/* mobile: the expanded deal's detail escapes the 900px table and renders
-            full-width here — everything reachable without horizontal scrolling */}
-        {openRow != null && (() => {
-          const d = visibleDeals.find((x) => x.id === openRow);
-          if (!d) return null;
-          return (
-            <div className="mt-3 rounded-2xl border border-indigo-100 bg-slate-50/70 p-4 md:hidden">
-              <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                <span className="text-sm font-black text-slate-900">פירוט — {d.city}</span>
-                <button onClick={() => setOpenRow(null)} className="rounded-lg px-2 py-1 text-2xs font-bold text-slate-500">סגור ✕</button>
-              </div>
-              <DealDetail deal={d} comp={comps[d.id]} askSqm={sqm(d)} modernMinYear={modernMinYear} />
-            </div>
-          );
-        })()}
+        {/* mobile detail now renders INLINE inside the open card above —
+            no separate block needed */}
         <p className="mt-2 text-2xs text-slate-400">
           🔵 ההשוואה מחפשת עסקאות אמת מאותו מספר חדרים ובשטח דומה — קודם ברחוב, ואם אין גם בשכונה וביישוב · אדום = מעל מחיר השוק, ירוק = מתחת · ₪/מ״ר מחושב על שטח הדירה בלבד (מרפסת/מחסן מוצגים בנפרד)
         </p>

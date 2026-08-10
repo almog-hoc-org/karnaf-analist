@@ -110,7 +110,12 @@ export default async function HomePage() {
       Math.round(Number(r.avg_sqm)), Math.round(Number(r.median_sqm)),
     ];
   }
-  const gainMaxYear = 2025;
+  // Offer every year the stats actually cover, INCLUDING the running calendar
+  // year — but flag it, so the card can label it "חלקית" and never default to
+  // it. (Operator request 8/2026: let the range reach 2026.)
+  const currentYear = new Date().getFullYear();
+  const gainMaxYear = gainRows.reduce((m, r) => Math.max(m, Number(r.year)), 2025);
+  const gainPartialYear = gainMaxYear >= currentYear ? currentYear : null;
 
   // ── Live hero KPIs ──────────────────────────────────────────────
   // nadlan_transactions lives outside the Prisma schema → raw SQL.
@@ -175,9 +180,19 @@ export default async function HomePage() {
       where: { unsold_inventory_2025: { not: null } },
       orderBy: { unsold_inventory_2025: "desc" },
       take: 5,
-      select: { city_name: true, unsold_inventory_2025: true },
+      select: { city_name: true, unsold_inventory_2025: true, avg_sales_3y: true },
     }),
   ]);
+
+  // Inventory digestion: how many YEARS the unsold stock would take to clear
+  // at the city's average sales pace of the last 3 years. The intuitive read
+  // of "8,000 unsold units" depends entirely on whether the city sells 4,000
+  // a year or 400.
+  const yearsToSell = (inv: number | null, avg3y: number | null): string | null => {
+    if (!inv || !avg3y || avg3y <= 0) return null;
+    const years = inv / avg3y;
+    return years >= 10 ? "10+" : years.toFixed(1);
+  };
 
   const rankings = [
     {
@@ -210,12 +225,15 @@ export default async function HomePage() {
       title: "מלאי דירות לא מכורות",
       icon: "building",
       detailHref: "/rankings/highest-inventory",
-      items: highestInventory.map((c, i) => ({
-        rank: i + 1,
-        city: c.city_name,
-        value: formatNumber(c.unsold_inventory_2025),
-        href: `/city/${encodeURIComponent(c.city_name)}`,
-      })),
+      items: highestInventory.map((c, i) => {
+        const yts = yearsToSell(c.unsold_inventory_2025, c.avg_sales_3y);
+        return {
+          rank: i + 1,
+          city: c.city_name,
+          value: `${formatNumber(c.unsold_inventory_2025)}${yts ? ` · ${yts} שנים למכירה` : ""}`,
+          href: `/city/${encodeURIComponent(c.city_name)}`,
+        };
+      }),
     },
   ];
 
@@ -320,7 +338,7 @@ export default async function HomePage() {
       {/* fully-filterable price-changes ranking (scope × metric × year range) —
           promoted out of the rankings grid to a full-width row of its own */}
       <div className="order-1 mb-6 sm:order-2 sm:mb-0 sm:mt-6">
-        <PriceGainsRankingCard series={gainSeries} minYear={2015} maxYear={gainMaxYear} />
+        <PriceGainsRankingCard series={gainSeries} minYear={2015} maxYear={gainMaxYear} partialYear={gainPartialYear} />
       </div>
       </div>
 
