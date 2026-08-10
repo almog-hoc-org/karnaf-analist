@@ -43,6 +43,29 @@ export function listCachedCities(): string[] {
     .map((f) => f.replace(/\.json$/, ""));
 }
 
+/**
+ * Aggregate freshness of the whole cache directory, for /api/status and the
+ * admin panel: how many cities have a cache file, and how old the newest one
+ * is. Uses the LATEST mtime — the question is "when did a refresh last land",
+ * not "which single city is oldest".
+ */
+export function cacheStats(): { files: number; newestAt: string | null } {
+  try {
+    if (!fs.existsSync(CACHE_DIR)) return { files: 0, newestAt: null };
+    let files = 0;
+    let newest = 0;
+    for (const f of fs.readdirSync(CACHE_DIR)) {
+      if (!f.endsWith(".json")) continue;
+      files++;
+      const m = fs.statSync(path.join(CACHE_DIR, f)).mtimeMs;
+      if (m > newest) newest = m;
+    }
+    return { files, newestAt: newest ? new Date(newest).toISOString() : null };
+  } catch {
+    return { files: 0, newestAt: null };
+  }
+}
+
 export function cacheAge(cityName: string): number | null {
   try {
     const file = path.join(CACHE_DIR, safeFileName(cityName));

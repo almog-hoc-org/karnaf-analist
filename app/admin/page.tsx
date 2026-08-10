@@ -55,6 +55,33 @@ function loadRecentFeedback(): AdminFeedbackRow[] {
   } catch { return []; }
 }
 
+import { cacheStats } from "@/lib/dealsCache";
+
+/** Sources that can only refresh from the operator's Israeli machine (geo-block / reCAPTCHA). */
+const QUARTERLY_SOURCES = new Set(["govmap", "prefetch-deals", "nadlan"]);
+
+interface SourceFreshnessRow { source: string; lastStatus: string; lastAt: string; lastOkAt: string | null }
+
+/**
+ * Per-source freshness: latest attempt + latest SUCCESS. The aggregate run
+ * status hides exactly this — a source can be skipped nightly for months while
+ * the run stays green.
+ */
+function loadSourceFreshness(): SourceFreshnessRow[] {
+  try {
+    return appDb().prepare(
+      `SELECT s.source,
+              s.status AS lastStatus,
+              s.started_at AS lastAt,
+              (SELECT MAX(o.started_at) FROM collection_source_runs o
+                WHERE o.source = s.source AND o.status = 'ok') AS lastOkAt
+         FROM collection_source_runs s
+        WHERE s.id IN (SELECT MAX(id) FROM collection_source_runs GROUP BY source)
+        ORDER BY s.source`
+    ).all() as SourceFreshnessRow[];
+  } catch { return []; }
+}
+
 function loadReliabilityReport(): ReliabilityReport | null {
   try { return JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "data-reliability.json"), "utf8")); }
   catch { return null; }
@@ -119,6 +146,8 @@ export default async function AdminPage() {
   try {
     coverage = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "coverage-gaps.json"), "utf8"));
   } catch { /* not generated yet */ }
+
+  const freshness = { sources: loadSourceFreshness(), cache: cacheStats() };
 
   const N = (v: unknown) => Number(v ?? 0);
   const active = N(kpi?.active);
@@ -200,7 +229,7 @@ export default async function AdminPage() {
               </tr>))}</tbody>
           </table>
           </div>
-          <p className="mt-2 text-2xs text-slate-400">איסוף לילי 02:30 · השלמות govmap 13:00 · שניהם אוטומטיים ושקטים</p>
+          <p className="mt-2 text-2xs text-slate-400">איסוף מקורות פתוחים — לילי אוטומטי 02:30 · עסקאות govmap/nadlan — רענון רבעוני מהמק (חסימה גיאוגרפית מהשרת)</p>
         </div>
         <div className="glass-card p-5">
           <h3 className="mb-3 text-sm font-black text-slate-900">📋 יומן החרגות</h3>
@@ -221,6 +250,51 @@ export default async function AdminPage() {
             </table>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Per-source freshness — the honest answer to "when did each source
+          actually succeed", which the aggregate run status hides. */}
+      <section className="mt-6">
+        <div className="glass-card p-5">
+          <h3 className="mb-1 text-sm font-black text-slate-900">🛰️ טריות מקורות</h3>
+          <p className="mb-3 text-2xs text-slate-400">
+            עסקאות אחרונות במאגר: <b className="text-slate-600">{String(kpi?.maxd ?? "—").slice(0, 10)}</b>
+            {" · "}מטמון השוואת רחובות: <b className="text-slate-600">{freshness.cache.files}</b> ערים
+            {freshness.cache.newestAt ? <>, עודכן {when(freshness.cache.newestAt)}</> : null}
+          </p>
+          {freshness.sources.length === 0 ? (
+            <p className="text-xs text-slate-400">אין עדיין ריצות איסוף רשומות במכונה הזו</p>
+          ) : (
+            <div className="overflow-x-auto">
+            <table className="w-full text-2xs" dir="rtl">
+              <thead><tr className="border-b border-slate-200 text-2xs font-bold text-slate-400">
+                <th className="py-1 text-right">מקור</th><th>ניסיון אחרון</th><th>הצלחה אחרונה</th><th className="text-right">מסלול העדכון</th></tr></thead>
+              <tbody>{freshness.sources.map((s) => {
+                const quarterly = QUARTERLY_SOURCES.has(s.source);
+                const skippedAsExpected = quarterly && s.lastStatus.startsWith("skipped");
+                const statusLabel =
+                  s.lastStatus === "ok" ? "✓ הצליח" :
+                  s.lastStatus === "failed" ? "✗ נכשל" :
+                  skippedAsExpected ? "○ מדולג (צפוי)" :
+                  `○ ${s.lastStatus}`;
+                return (
+                  <tr key={s.source} className="border-b border-slate-100">
+                    <td className="py-1.5 text-right font-semibold">{s.source}</td>
+                    <td className={`text-center ${s.lastStatus === "failed" ? "font-bold text-red-600" : s.lastStatus === "ok" ? "text-emerald-700" : "text-slate-500"}`}>
+                      {statusLabel} · {when(s.lastAt)}
+                    </td>
+                    <td className="text-center tabular-nums text-slate-600">{s.lastOkAt ? when(s.lastOkAt) : "—"}</td>
+                    <td className="text-right text-slate-500">{quarterly ? "רבעוני מהמק — דילוג בשרת תקין" : "לילי אוטומטי בשרת"}</td>
+                  </tr>
+                );
+              })}</tbody>
+            </table>
+            </div>
+          )}
+          <p className="mt-2 text-2xs text-slate-400">
+            מקור רבעוני שחלפו יותר מ-130 יום מהעסקה האחרונה שלו יסומן כאזהרה ב-<code>/api/status</code> — זה הסימן להריץ רענון מהמק.
+          </p>
         </div>
       </section>
         </>}

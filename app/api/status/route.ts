@@ -21,17 +21,50 @@
  * stopped updating cannot notice that it stopped — and a server that is down
  * cannot alert at all. That is why this reports state instead of alerting, and
  * why `ok:false` plus a non-200 is the useful contract for a poller.
+ *
+ * THREE LEVELS, TWO STATUS CODES
+ *   healthy   — 200, ok:true,  no findings.
+ *   degraded  — 200, ok:true,  `warnings` non-empty: users are served, but an
+ *               external source is blocked or the data is aging toward its
+ *               quarterly refresh. Operator reads it in the admin panel.
+ *   unhealthy — 503, ok:false, `problems` non-empty: core failure, page someone.
  */
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { appDb } from "@/lib/appDb";
 import { refYear } from "@/lib/refYear";
+import { cacheStats } from "@/lib/dealsCache";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 /** Hours after which the data is considered stale. Nightly pipeline ⇒ 36h allows one missed run. */
 const STALE_AFTER_HOURS = 36;
+
+/**
+ * Sources that CANNOT succeed from this server by design: govmap and nadlan
+ * are geo-restricted to Israeli routes (nadlan additionally needs a browser
+ * past reCAPTCHA). They are refreshed by the quarterly run from the operator's
+ * machine — so "skipped-unreachable" for them is the EXPECTED state here, a
+ * warning at most, never an outage.
+ *
+ * This distinction is what fixes the boy-who-cried-wolf problem this endpoint
+ * had: it answered 503 around the clock because of sources that can never
+ * work from this box, so the external monitor was permanently red and a real
+ * failure would have looked identical to the background noise.
+ */
+const GEO_RESTRICTED_SOURCES = new Set(["govmap", "prefetch-deals", "nadlan"]);
+
+/**
+ * Transactions arrive via the quarterly refresh from the operator's machine:
+ * one quarter (~92 days) plus the tax-authority reporting lag. Beyond this,
+ * the DATA is aging even though every nightly job is green — a warning the
+ * operator acts on by running the refresh, not a server fault.
+ */
+const TRANSACTIONS_STALE_AFTER_DAYS = 130;
+
+/** Street-comparison cache follows the same quarterly rhythm. */
+const DEALS_CACHE_STALE_AFTER_DAYS = 130;
 
 /**
  * Same idea for COLLECTION, with a longer allowance.
@@ -69,7 +102,10 @@ function hoursSince(iso: string | null | undefined): number | null {
 }
 
 export async function GET() {
+  // problems ⇒ unhealthy (503): the site or its core data is actually broken.
+  // warnings ⇒ degraded (200): worth an operator's glance, users unaffected.
   const problems: string[] = [];
+  const warnings: string[] = [];
 
   // ── reference-year staleness ─────────────────────────────────────
   // ref_year (admin rule) is the honest endpoint of every trend window on the
@@ -140,8 +176,30 @@ export async function GET() {
   if (collectAgeHours == null) problems.push("no collection run recorded — new data is NOT being fetched");
   else if (collectAgeHours > COLLECT_STALE_AFTER_HOURS) problems.push(`last collection ${collectAgeHours.toFixed(1)}h ago`);
 
-  const failingSources = sourceStates.filter((s) => s.status === "failed" || s.status === "skipped-unreachable");
-  if (failingSources.length) problems.push(`sources not collecting: ${failingSources.map((s) => s.source).join(", ")}`);
+  // Last SUCCESS per source — the number the aggregate hides. A source can be
+  // "skipped" every night for months and the run still reads ok/partial.
+  let lastSuccessBySource: Array<{ source: string; at: string }> = [];
+  try {
+    lastSuccessBySource = appDb().prepare(
+      `SELECT source, MAX(started_at) AS at FROM collection_source_runs
+        WHERE status = 'ok' GROUP BY source ORDER BY source`
+    ).all() as Array<{ source: string; at: string }>;
+  } catch { /* table absent — reported above */ }
+
+  // A hard failure is a problem anywhere. An unreachable source is a problem
+  // only when the server SHOULD be able to reach it; the geo-restricted ones
+  // are refreshed from the operator's machine and land here as a warning.
+  // skipped-browser counts with skipped-unreachable: Chrome is deliberately
+  // absent on the server, so for a geo-restricted source it is the same
+  // "waiting for the quarterly refresh" state.
+  const hardFailed = sourceStates.filter((s) => s.status === "failed");
+  const unreachable = sourceStates.filter((s) => s.status === "skipped-unreachable" || s.status === "skipped-browser");
+  const unexpectedUnreachable = unreachable.filter((s) => !GEO_RESTRICTED_SOURCES.has(s.source));
+  const expectedUnreachable = unreachable.filter((s) => GEO_RESTRICTED_SOURCES.has(s.source));
+
+  if (hardFailed.length) problems.push(`sources failing: ${hardFailed.map((s) => s.source).join(", ")}`);
+  if (unexpectedUnreachable.length) problems.push(`sources unreachable from the server: ${unexpectedUnreachable.map((s) => s.source).join(", ")}`);
+  if (expectedUnreachable.length) warnings.push(`geo-restricted sources waiting for the quarterly refresh: ${expectedUnreachable.map((s) => s.source).join(", ")}`);
 
   // ── data volume ──────────────────────────────────────────────────
   let dealCount: number | null = null;
@@ -165,12 +223,39 @@ export async function GET() {
   // was written to prevent — worth calling out explicitly rather than as a number.
   if (statRows === 0) problems.push("nadlan_year_room_stats is EMPTY — price series will render blank");
 
+  // ── quarterly-refresh freshness (data SLA, not server health) ────
+  const latestDealAgeDays = (() => {
+    if (!latestDealDate) return null;
+    const t = Date.parse(latestDealDate);
+    return Number.isFinite(t) ? (Date.now() - t) / 86_400_000 : null;
+  })();
+  if (latestDealAgeDays != null && latestDealAgeDays > TRANSACTIONS_STALE_AFTER_DAYS) {
+    warnings.push(`latest transaction is ${Math.round(latestDealAgeDays)} days old — time for the quarterly refresh from the operator's machine`);
+  }
+
+  const deals = cacheStats();
+  const cacheAgeDays = (() => {
+    if (!deals.newestAt) return null;
+    const t = Date.parse(deals.newestAt);
+    return Number.isFinite(t) ? (Date.now() - t) / 86_400_000 : null;
+  })();
+  if (deals.files === 0) {
+    warnings.push("deals_cache is empty — street comparison panels will show their empty state");
+  } else if (cacheAgeDays != null && cacheAgeDays > DEALS_CACHE_STALE_AFTER_DAYS) {
+    warnings.push(`deals_cache newest file is ${Math.round(cacheAgeDays)} days old`);
+  }
+
+  // healthy — all green. degraded — users fine, operator should glance.
+  // unhealthy — the monitor should page someone.
   const ok = problems.length === 0;
+  const level = !ok ? "unhealthy" : warnings.length ? "degraded" : "healthy";
   return NextResponse.json(
     {
       ok,
+      level,
       at: new Date().toISOString(),
       problems,
+      warnings,
       pipeline: {
         lastSuccessAt: lastRun?.finished_at ?? lastRun?.started_at ?? null,
         ageHours: ageHours != null ? Number(ageHours.toFixed(2)) : null,
@@ -186,11 +271,26 @@ export async function GET() {
         status: lastCollect?.status ?? null,
         reachability: lastCollect?.reachability ?? null,
         sources: sourceStates,
+        lastSuccessBySource,
       },
-      data: { dealCount, statRows, latestDealDate },
+      data: {
+        dealCount,
+        statRows,
+        latestDealDate,
+        latestDealAgeDays: latestDealAgeDays != null ? Math.round(latestDealAgeDays) : null,
+        transactionsStaleAfterDays: TRANSACTIONS_STALE_AFTER_DAYS,
+      },
+      dealsCache: {
+        files: deals.files,
+        newestAt: deals.newestAt,
+        ageDays: cacheAgeDays != null ? Math.round(cacheAgeDays) : null,
+        staleAfterDays: DEALS_CACHE_STALE_AFTER_DAYS,
+      },
     },
-    // Non-200 on trouble so a monitor can alert on the status code alone,
-    // without parsing the body.
+    // Non-200 ONLY on core failure, so a monitor can alert on the status code
+    // alone. Degraded (external source blocked, data aging toward its
+    // quarterly refresh) is 200: users are being served, nobody should be
+    // paged, and a permanently-red monitor teaches everyone to ignore red.
     { status: ok ? 200 : 503 }
   );
 }

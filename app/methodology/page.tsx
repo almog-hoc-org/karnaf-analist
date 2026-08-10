@@ -218,7 +218,7 @@ export default async function MethodologyPage() {
             </tbody>
           </table>
         </div>
-        <p className="text-2xs text-slate-400">איסוף לילי אוטומטי 02:30 (nadlan) · השלמות יומיות 13:00 (govmap) · אגרגציה בסוף כל ריצה.</p>
+        <p className="text-2xs text-slate-400">מקורות פתוחים (למ״ס, האוצר) — איסוף לילי אוטומטי · עסקאות (nadlan/govmap) — רענון תקופתי מבוקר, בהתאם לזמינות המקור הממשלתי · אגרגציה בסוף כל ריצה.</p>
       </Section>
 
       <div className="mt-8 flex items-center justify-center gap-2 text-2xs text-slate-400">
