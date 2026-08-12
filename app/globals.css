@@ -424,6 +424,45 @@
   border-radius: var(--radius-sm);
 }
 
+/* ── Press feedback ────────────────────────────────────────────────
+   The single biggest gap in this interface: ~120 clickable elements and,
+   before this rule, three `active:` states in the entire codebase. Hover
+   was doing all the work — and on a phone there is no hover, so a tap
+   produced no acknowledgement at all and people tapped twice.
+
+   Feedback belongs on the PRESS, not on the release: the browser applies
+   :active on pointer-down, which is the instant the user is asking "did
+   that register?". 0.97 and 100ms are small and fast on purpose — this
+   should be felt, not watched.
+
+   Scoped to real controls (never bare <a>, which would shrink text links).
+   Opt out with .no-press where an element must not move — inside a table
+   cell, for instance, where a transform would drag the layout with it.
+
+   Uses the standalone `scale` property, NOT `transform: scale()`. Tailwind
+   builds one composite `transform` string out of CSS variables, so a bare
+   `transform` here would wipe out any translate/rotate utility on the same
+   element (the refresh FAB's translate-y-20, for one). `scale` composes with
+   `transform` instead of replacing it, and it also sidesteps the specificity
+   fight with `hover:scale-105`, which would otherwise outrank :where(). */
+:where(button, [role="button"], summary):not(.no-press) {
+  transition: scale 100ms var(--ease-out);
+}
+
+:where(button, [role="button"], summary):not(:disabled):not(.no-press):active {
+  scale: 0.97;
+}
+
+/* Reduced motion: keep the acknowledgement, drop the movement — the skill's
+   rule is "gentler, not zero". Opacity carries the same message without the
+   vestibular cost. */
+@media (prefers-reduced-motion: reduce) {
+  :where(button, [role="button"], summary):not(:disabled):not(.no-press):active {
+    scale: 1;
+    opacity: 0.7;
+  }
+}
+
 /* ── Reduced motion ────────────────────────────────────────────────
    Respect the OS setting (framer-motion animates 8 chart cards). */
 @media (prefers-reduced-motion: reduce) {

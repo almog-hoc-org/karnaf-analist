@@ -1,8 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
+
+/**
+ * Sheet motion. On a phone this panel is anchored to the bottom edge
+ * (items-end), which makes it a physical object arriving from off-screen —
+ * so it gets a spring, not a fixed-duration curve: a spring animates from
+ * wherever the surface currently is, which is what lets a user dismiss and
+ * re-open it without the motion jumping.
+ *
+ * bounce 0.2 / duration 0.3 is Apple's drawer value (damping ~0.8, response
+ * 0.3). The scrim stays a plain fade — it has no physicality to express.
+ */
+const SHEET_SPRING = { type: "spring", bounce: 0.2, duration: 0.3 } as const;
 
 interface ProgressEvent {
   type: string;
@@ -105,12 +118,25 @@ export default function RefreshDataButton() {
       </button>
 
       {/* Modal */}
+      <AnimatePresence>
       {open && (
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
           className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-end md:items-center justify-center p-4"
           onClick={() => !running && setOpen(false)}
         >
-          <div
+          <motion.div
+            // Enters from below on a phone (where it is a bottom sheet) and
+            // leaves the same way — §7, a thing must exit along the path it
+            // arrived on. On desktop the offset is small enough to read as a
+            // gentle rise rather than a slide.
+            initial={{ y: 24, scale: 0.98, opacity: 0 }}
+            animate={{ y: 0, scale: 1, opacity: 1 }}
+            exit={{ y: 24, scale: 0.98, opacity: 0 }}
+            transition={SHEET_SPRING}
             className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col overflow-hidden border border-slate-200"
             onClick={(e) => e.stopPropagation()}
           >
@@ -191,9 +217,10 @@ export default function RefreshDataButton() {
                 </div>
               </footer>
             )}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </>
   );
 }

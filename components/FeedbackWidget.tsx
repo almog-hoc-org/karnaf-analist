@@ -87,7 +87,7 @@ export default function FeedbackWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label="שליחת משוב"
         aria-expanded={open}
-        className="fixed bottom-5 start-5 z-40 flex h-12 items-center gap-2 rounded-full bg-indigo-600 px-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 transition-transform hover:bg-indigo-700 active:scale-95"
+        className="fixed bottom-5 start-5 z-40 flex h-12 items-center gap-2 rounded-full bg-indigo-600 px-4 text-sm font-bold text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-700"
       >
         <span aria-hidden><Icon name="chat" size="1em" /></span>
         <span className="hidden sm:inline">משוב</span>

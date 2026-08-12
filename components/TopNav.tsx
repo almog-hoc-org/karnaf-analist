@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import BrandMark from "./BrandMark";
@@ -188,14 +189,29 @@ export default function TopNav({ cities, user, credits }: { cities: string[]; us
       {/* Mobile menu — an OVERLAY, not in-flow: an in-flow block inflated the
           sticky header to ~308px and covered the page (and desynced every
           sticky top-14 offset). The header now stays 56px with the menu open. */}
+      <AnimatePresence>
       {open && (
         <>
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className="fixed inset-x-0 top-14 bottom-0 z-40 bg-slate-900/20 md:hidden"
             onClick={() => setOpen(false)}
             aria-hidden
           />
-          <nav
+          <motion.nav
+            // Grows down out of the header it belongs to (origin at the top
+            // edge) and collapses back into it — the panel and its trigger stay
+            // spatially connected. bounce 0 because a tap carries no momentum;
+            // a spring rather than a duration so a fast open-close-open follows
+            // the taps instead of queueing behind a fixed timeline.
+            initial={{ opacity: 0, scaleY: 0.92, y: -8 }}
+            animate={{ opacity: 1, scaleY: 1, y: 0 }}
+            exit={{ opacity: 0, scaleY: 0.92, y: -8 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+            style={{ transformOrigin: "top" }}
             className="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-slate-100 bg-white px-4 py-2 shadow-lg md:hidden"
             aria-label="ניווט נייד"
           >
@@ -230,9 +246,10 @@ export default function TopNav({ cities, user, credits }: { cities: string[]; us
                 </Link>
               )}
             </div>
-          </nav>
+          </motion.nav>
         </>
       )}
+      </AnimatePresence>
     </header>
   );
 }

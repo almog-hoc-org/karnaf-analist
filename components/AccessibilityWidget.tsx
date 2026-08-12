@@ -119,15 +119,19 @@ export default function AccessibilityWidget() {
 
   return (
     <>
-      {/* end-5 keeps it clear of the feedback button at start-5. bottom-20 on
-          mobile clears the refresh button when an admin is signed in. */}
+      {/* end-5 keeps it clear of the feedback button at start-5, and bottom-20
+          is the UPPER slot of that lane at every width. It used to drop to
+          md:bottom-5 on desktop — where RefreshDataButton also sits (bottom-5
+          end-5), so for a signed-in admin the two circles landed on the same
+          48px and one hid the other. Press feedback now comes from the global
+          :active rule in globals.css, so no transition-transform here. */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="אפשרויות נגישות"
         aria-expanded={open}
         title="אפשרויות נגישות"
-        className="fixed bottom-20 end-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-slate-800 text-xl text-white shadow-lg transition-transform hover:bg-slate-900 active:scale-95 md:bottom-5"
+        className="fixed bottom-20 end-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-slate-800 text-xl text-white shadow-lg hover:bg-slate-900"
       >
         <span aria-hidden><Icon name="accessibility" size="1em" /></span>
       </button>
@@ -136,7 +140,7 @@ export default function AccessibilityWidget() {
         <div
           role="dialog"
           aria-label="אפשרויות נגישות"
-          className="fixed bottom-36 end-5 z-40 w-[min(19rem,calc(100vw-2.5rem))] rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl md:bottom-20"
+          className="fixed bottom-36 end-5 z-40 w-[min(19rem,calc(100vw-2.5rem))] rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl"
         >
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-sm font-black text-slate-900">אפשרויות נגישות</h2>

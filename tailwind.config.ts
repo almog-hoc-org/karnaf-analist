@@ -1,6 +1,12 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  // Gate every `hover:` utility behind `@media (hover: hover)`. Touch browsers
+  // emulate hover on tap and then LEAVE IT ON until you tap elsewhere, so all
+  // 227 hover styles in this app were sticking to whatever a phone user last
+  // touched — a row that stays highlighted reads as "selected", which it is
+  // not. Desktop is unaffected.
+  future: { hoverOnlyWhenSupported: true },
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
