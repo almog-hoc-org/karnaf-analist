@@ -22,6 +22,12 @@ data/*.db-shm
 # Generated report PDFs are bind-mounted too.
 public/reports/*.pdf
 
+# Agent skills (npx skills add …) — reference material for whoever works on
+# this repo, not application code. Tracked in git so it survives a fresh
+# clone; kept out of the image because the container never reads it.
+.agents
+.claude
+
 # Local noise
 .DS_Store
 *.log
