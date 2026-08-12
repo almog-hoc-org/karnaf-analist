@@ -199,7 +199,12 @@
 
   /* Same treatment as .section-head — one section heading in the whole site. */
   .section-header h2 {
-    @apply text-2xl font-black text-slate-900 tracking-tight;
+    /* 800, not 900: at 24px black weight closes the counters of ם/ס/ט and the
+       heading reads as a dark block instead of as words. Same values as
+       .section-head h2 below, which had already settled on 800 — there is one
+       section heading in this product, so there is one set of numbers. */
+    @apply text-2xl font-extrabold text-slate-900;
+    letter-spacing: -0.01em;
   }
 
   .section-header p {
@@ -208,35 +213,57 @@
 
   /* ── Statistical typography ───────────────────────────────────── */
   .stat-mega {
-    @apply font-extrabold tracking-tight leading-none text-slate-900;
+    @apply font-extrabold text-slate-900;
     /* responsive: shrinks on a 375px phone instead of clipping, tops out at 44px */
-    font-size: clamp(28px, 7.5vw, 44px);
+    font-size: clamp(1.75rem, 7.5vw, 2.75rem);
+    /* Tracking follows the RENDERED size, not a utility picked for a different
+       one: at 44px, -0.022em matches the 5xl token. */
+    letter-spacing: -0.022em;
+    line-height: 1.05;   /* was leading-none (1.0) — clipped ק/ן/ף/ץ descenders */
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-hero {
-    @apply text-6xl md:text-7xl font-black tracking-tighter leading-[0.85] text-slate-900;
+    @apply font-extrabold text-slate-900;
     /* fluid like .stat-mega: 32px on a 375px phone → today's 44px from ~518px up */
-    font-size: clamp(30px, 8.5vw, 44px);
+    font-size: clamp(1.875rem, 8.5vw, 2.75rem);
+    /* WAS: text-6xl md:text-7xl leading-[0.85] tracking-tighter font-black.
+       Four problems in one line — the 6xl/7xl sizes were dead code (the clamp
+       below overrode them), 0.85 leading cuts Hebrew descenders outright,
+       tracking-tighter (-0.05em) is roughly double what 44px wants, and 900
+       weight at that size closes the counters. 800 + -0.022em reads as the
+       same weight with the letterforms intact. */
+    letter-spacing: -0.022em;
+    line-height: 1.05;
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-large {
-    @apply text-3xl md:text-4xl font-extrabold tracking-tight leading-none text-slate-900;
+    @apply font-extrabold text-slate-900;
     /* fluid: 22.5px on a 375px phone → today's 30px from 500px up (desktop unchanged) */
-    font-size: clamp(22px, 6vw, 30px);
+    font-size: clamp(1.375rem, 6vw, 1.875rem);
+    letter-spacing: -0.015em;   /* matches the 3xl token at the same size */
+    line-height: 1.1;
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-value {
-    @apply text-2xl font-bold tracking-tight text-slate-900;
+    @apply font-bold text-slate-900;
     /* fluid: 18px on a 375px phone → today's 24px from 500px up (desktop unchanged) */
-    font-size: clamp(18px, 4.8vw, 24px);
+    font-size: clamp(1.125rem, 4.8vw, 1.5rem);
+    letter-spacing: -0.01em;    /* matches the 2xl token at the same size */
+    line-height: 1.2;
     font-feature-settings: "tnum" 1, "lnum" 1;
   }
 
   .stat-label {
-    @apply text-2xs text-slate-500 font-semibold leading-tight uppercase tracking-wider;
+    /* `uppercase` is a no-op in Hebrew — there is no letter case — so it only
+       ever shouted at the occasional Latin word, and tracking-wider (0.05em)
+       is tuned for uppercase Latin, not for 11px Hebrew, where it pulls words
+       apart into loose beads. The 2xs token now carries +0.01em, which is the
+       amount small Hebrew actually wants. */
+    @apply text-2xs text-slate-500 font-semibold;
+    line-height: 1.4;
   }
 
   .section-divider {
@@ -256,8 +283,8 @@
   /* section header: icon + title + one description line, everywhere */
   .section-head { @apply mb-5 flex flex-wrap items-center gap-3; }
   .section-head > div { min-width: 0; }
-  .section-head h2 { font-size: 24px; line-height: 1.25; font-weight: 800; letter-spacing: -0.015em; @apply text-slate-900; }
-  .section-head p  { font-size: 13px; @apply mt-0.5 text-slate-500; }
+  .section-head h2 { font-size: 1.5rem; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; @apply text-slate-900; }
+  .section-head p  { font-size: 0.8125rem; line-height: 1.5; @apply mt-0.5 text-slate-500; }
 
   /* ── Trend pill — the ONLY place green/red live besides TrendValue ── */
   .trend-pill {
@@ -307,27 +334,41 @@
 @layer utilities {
   .font-heebo {
     font-family: var(--font-heebo), "Rubik", "Assistant", "Heebo", system-ui, sans-serif;
-    font-size: 16px;              /* one base size, like yad2 */
-    line-height: 1.5;
+    /* 1rem, not 16px: this sits on <body>, so a px value here pinned the base
+       size and defeated the a11y text-size control before any child token
+       even mattered. Identical at the default. */
+    font-size: 1rem;
+    line-height: 1.6;             /* 1.5 reads tight in Hebrew: no x-height relief */
     font-feature-settings: "kern" 1, "liga" 1, "tnum" 1;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   /* ── The whole type scale — four steps, nothing else ──────────────
      Hierarchy comes from WEIGHT and SPACE, not from a dozen sizes.   */
-  .t-display { font-size: 30px; line-height: 1.12; font-weight: 800; letter-spacing: -0.02em; }
-  .t-title   { font-size: 24px; line-height: 1.25; font-weight: 800; letter-spacing: -0.015em; }
-  .t-body    { font-size: 16px; line-height: 1.55; font-weight: 400; }
-  .t-meta    { font-size: 13px; line-height: 1.45; font-weight: 500; }
-  .t-label   { font-size: 11px; line-height: 1.35; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  /* Tracking here MUST equal the fontSize tokens at the same size, or one
+     heading renders differently depending on whether the author reached for
+     .t-title or text-2xl. Weight ladder, four steps and no more:
+     800 display/section · 700 card title & value · 600 label · 400 body. */
+  .t-display { font-size: 1.875rem; line-height: 1.15; font-weight: 800; letter-spacing: -0.015em; }
+  .t-title   { font-size: 1.5rem;   line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; }
+  .t-body    { font-size: 1rem;     line-height: 1.6;  font-weight: 400; }
+  .t-meta    { font-size: 0.8125rem; line-height: 1.5; font-weight: 500; letter-spacing: 0.005em; }
+  /* was 700 + 0.04em + uppercase: uppercase does nothing in Hebrew, and that
+     much tracking at 11px separates letters into unreadable beads. */
+  .t-label   { font-size: 0.6875rem; line-height: 1.4; font-weight: 600; letter-spacing: 0.01em; }
   @media (min-width: 768px) {
-    .t-display { font-size: 44px; }
+    .t-display { font-size: 2.75rem; letter-spacing: -0.022em; }
   }
 
-  .font-heebo h1, .font-heebo h2, .font-heebo h3, .font-heebo h4 {
-    letter-spacing: -0.015em;
-    line-height: 1.15;
-  }
+  /* Per-level tracking. One blanket value gave a 20px h4 the same tightening
+     as a 44px h1 — too tight at the small end, too loose at the large one.
+     These mirror the fontSize tokens. */
+  .font-heebo :is(h1, h2, h3, h4) { line-height: 1.2; }
+  .font-heebo h1 { letter-spacing: -0.022em; line-height: 1.1; }
+  .font-heebo h2 { letter-spacing: -0.015em; }
+  .font-heebo h3 { letter-spacing: -0.01em; }
+  .font-heebo h4 { letter-spacing: -0.005em; }
 
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
