@@ -63,11 +63,35 @@ function main() {
   }
 
   // ── 2. usable deals with no stat row (the QA metric) ─────────────
+  // "Usable" here must mean AGGREGATABLE, not merely priced. The aggregation
+  // refuses — deliberately, with documented rationale — to build a series from
+  // deals that carry no channel classification and no build year (presale
+  // lumps distort "all" upward), and it never mixes govmap into a nadlan
+  // city's line. A city-year of purely-unclassified deals therefore CANNOT
+  // have a stat row under the quality gates; counting it as a violation makes
+  // ok:false the permanent state and turns the contract into alarm fatigue.
+  // So: pairs with ≥minN CLASSIFIABLE deals and no stat row are problems
+  // (the aggregation should have emitted something); pairs rich in raw deals
+  // that are all unclassifiable are reported as a separate, informational
+  // "structural gap" count — visible, never alarming.
+  // Mirror the aggregation's sanity bounds too (same rules, same defaults) —
+  // a deal outside them is excluded from stats by design, not by a bug.
+  const MIN_SQM = getRuleNum("min_sqm_price", 2_000), MAX_SQM = getRuleNum("max_sqm_price", 200_000);
+  const MIN_AREA = getRuleNum("min_area", 20), MAX_AREA = getRuleNum("max_area", 500);
+  const SANE = `t.price_sqm >= ${MIN_SQM} AND t.price_sqm <= ${MAX_SQM} AND t.area >= ${MIN_AREA} AND t.area <= ${MAX_AREA}`;
+  // class_source is added by classify-sale-channel's ensureColumn — absent on a
+  // DB that has never been through classification (fresh clones, dev copies).
+  const hasClassSource = (db.prepare(`PRAGMA table_info(nadlan_transactions)`).all() as Array<{ name: string }>)
+    .some((c) => c.name === "class_source");
+  const CLASSIFIED = hasClassSource
+    ? `(t.class_source IS NOT NULL OR COALESCE(t.year_built,0) > 0)`
+    : `COALESCE(t.year_built,0) > 0`;
+  const AGGREGATABLE = `(${SANE} AND ${CLASSIFIED})`;
   const missing = db.prepare(
     `SELECT t.city_name, t.deal_year, COUNT(*) n
        FROM nadlan_transactions t
       WHERE COALESCE(t.excluded,0)=0 AND COALESCE(t.luxury,0)=0
-        AND t.deal_year >= ? AND t.price_sqm > 0
+        AND t.deal_year >= ? AND t.price_sqm > 0 AND ${AGGREGATABLE}
         AND NOT EXISTS (
           SELECT 1 FROM nadlan_year_room_stats s
            WHERE s.city_name = t.city_name AND s.year = t.deal_year
@@ -78,21 +102,38 @@ function main() {
   ).all(fromYear, minN) as Array<{ city_name: string; deal_year: number; n: number }>;
   const missingDeals = missing.reduce((s, r) => s + r.n, 0);
   if (missing.length) {
-    problems.push(`${missing.length} city×year pairs (${missingDeals} deals) have ≥${minN} usable deals but NO stat row`);
+    problems.push(`${missing.length} city×year pairs (${missingDeals} deals) have ≥${minN} aggregatable deals but NO stat row`);
   }
+
+  // structural gaps — informational only (unclassifiable raw volume the
+  // quality gates keep out of the stats by design)
+  const structural = db.prepare(
+    `SELECT COUNT(*) pairs, COALESCE(SUM(n),0) deals FROM (
+       SELECT t.city_name, t.deal_year, COUNT(*) n
+         FROM nadlan_transactions t
+        WHERE COALESCE(t.excluded,0)=0 AND COALESCE(t.luxury,0)=0
+          AND t.deal_year >= ? AND t.price_sqm > 0 AND NOT ${AGGREGATABLE}
+          AND NOT EXISTS (
+            SELECT 1 FROM nadlan_year_room_stats s
+             WHERE s.city_name = t.city_name AND s.year = t.deal_year
+          )
+        GROUP BY t.city_name, t.deal_year
+       HAVING COUNT(*) >= ?
+     )`
+  ).get(fromYear, minN) as { pairs: number; deals: number };
 
   // ── 3. active city with zero stats ───────────────────────────────
   const emptyCities = db.prepare(
     `SELECT t.city_name, COUNT(*) n
        FROM nadlan_transactions t
-      WHERE COALESCE(t.excluded,0)=0 AND t.deal_year >= ?
+      WHERE COALESCE(t.excluded,0)=0 AND t.deal_year >= ? AND ${AGGREGATABLE}
         AND NOT EXISTS (SELECT 1 FROM nadlan_year_room_stats s WHERE s.city_name = t.city_name)
       GROUP BY t.city_name
      HAVING COUNT(*) >= ?
       ORDER BY n DESC`
   ).all(fromYear, minN * 3) as Array<{ city_name: string; n: number }>;
   if (emptyCities.length) {
-    problems.push(`${emptyCities.length} cities have raw volume but ZERO stat rows: ${emptyCities.slice(0, 5).map((c) => c.city_name).join(", ")}${emptyCities.length > 5 ? "…" : ""}`);
+    problems.push(`${emptyCities.length} cities have aggregatable volume but ZERO stat rows: ${emptyCities.slice(0, 5).map((c) => c.city_name).join(", ")}${emptyCities.length > 5 ? "…" : ""}`);
   }
 
   // ── 4. alias leaks ───────────────────────────────────────────────
@@ -116,6 +157,8 @@ function main() {
     missingStatPairs: missing.length,
     missingStatDeals: missingDeals,
     missingSample: missing.slice(0, 20),
+    /** unclassifiable raw volume kept out of stats BY DESIGN — info, not a problem */
+    structuralGaps: structural,
     citiesWithoutStats: emptyCities,
     aliasLeaks: leaks,
     problems,
@@ -126,6 +169,7 @@ function main() {
 
   console.log(`data-contract: raw ${raw.lo}–${raw.hi} (${raw.n.toLocaleString()} active) · stats ${stats.lo}–${stats.hi} (${stats.n.toLocaleString()} rows)`);
   console.log(`  missing stat rows: ${missing.length} pairs / ${missingDeals.toLocaleString()} deals · cities w/o stats: ${emptyCities.length} · alias leaks: ${leaks.length}`);
+  console.log(`  structural gaps (unclassifiable by design, informational): ${structural.pairs} pairs / ${structural.deals.toLocaleString()} deals`);
   if (problems.length) {
     for (const p of problems) console.log(`  ✗ ${p}`);
   } else {
