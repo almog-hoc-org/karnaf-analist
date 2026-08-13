@@ -78,63 +78,75 @@ function main() {
   }
   console.log(`flag luxury: price > ₪${minPrice.toLocaleString("en")} AND ₪/m² > +${(premium * 100).toFixed(0)}% over the category median · cohort ≥${minCohort} · years≥${minYear}`);
 
-  const rows = db.prepare(
+  // Cohorts key by city first, so scanning PER CITY is semantically identical —
+  // and bounds memory to one city instead of the whole 1998+ scope (the
+  // all-at-once load OOM'd Node inside the 3GB container).
+  const selectRows = db.prepare(
     `SELECT id, city_name, deal_year, rooms_effective, is_secondhand, year_built, price, price_sqm, source
      FROM nadlan_transactions
-     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND price > 0 AND price_sqm > 0`
-  ).all(minYear) as Row[];
-  console.log(`  scanning ${rows.length.toLocaleString("en")} active priced deals…`);
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND city_name = ? AND price > 0 AND price_sqm > 0`);
+  const cities = (db.prepare(
+    `SELECT DISTINCT city_name FROM nadlan_transactions WHERE deal_year >= ?`
+  ).all(minYear) as Array<{ city_name: string }>).map((c) => c.city_name);
 
-  // category keys, widest fallback last
+  // category keys (city fixed by the loop), widest fallback last
   const typeOf = (r: Row) => ((r.year_built ?? 0) > 0 ? (r.is_secondhand ? "sh" : "new") : "unknown");
   const roomsOf = (r: Row) => ((r.rooms_effective ?? 0) > 0 ? String(Math.round(r.rooms_effective!)) : "?");
-  const kFull = (r: Row) => `${r.city_name}|${r.deal_year}|${roomsOf(r)}|${typeOf(r)}`;
-  const kType = (r: Row) => `${r.city_name}|${r.deal_year}|${typeOf(r)}`;
-  const kCity = (r: Row) => `${r.city_name}|${r.deal_year}`;
-
-  const bucket = (keyFn: (r: Row) => string) => {
-    const m = new Map<string, number[]>();
-    for (const r of rows) {
-      const k = keyFn(r);
-      const a = m.get(k);
-      if (a) a.push(r.price_sqm); else m.set(k, [r.price_sqm]);
-    }
-    return m;
-  };
-  const mediansOf = (m: Map<string, number[]>) => {
-    const o = new Map<string, number>();
-    for (const [k, v] of m) if (v.length >= minCohort) o.set(k, median(v));
-    return o;
-  };
-  const mFull = mediansOf(bucket(kFull)), mType = mediansOf(bucket(kType)), mCity = mediansOf(bucket(kCity));
-
-  const flagged: Array<{ id: number; ratio: number }> = [];
-  const perCity = new Map<string, number>();
-  let overPrice = 0, noBaseline = 0, expensiveButNormal = 0;
-
-  for (const r of rows) {
-    if (r.price <= minPrice) continue;
-    overPrice++;
-    const base = mFull.get(kFull(r)) ?? mType.get(kType(r)) ?? mCity.get(kCity(r));
-    if (!base || base <= 0) { noBaseline++; continue; }
-    const ratio = r.price_sqm / base;
-    if (ratio > 1 + premium) {
-      flagged.push({ id: r.id, ratio });
-      perCity.set(r.city_name, (perCity.get(r.city_name) ?? 0) + 1);
-    } else expensiveButNormal++;
-  }
+  const kFull = (r: Row) => `${r.deal_year}|${roomsOf(r)}|${typeOf(r)}`;
+  const kType = (r: Row) => `${r.deal_year}|${typeOf(r)}`;
+  const kCity = (r: Row) => `${r.deal_year}`;
 
   const mark = db.prepare(`UPDATE nadlan_transactions SET luxury=1, luxury_ratio=? WHERE id=?`);
-  db.transaction(() => { for (const f of flagged) mark.run(Number(f.ratio.toFixed(3)), f.id); })();
+  const perCity = new Map<string, number>();
+  let scanned = 0, flaggedTotal = 0, overPrice = 0, noBaseline = 0, expensiveButNormal = 0;
+
+  for (const cityName of cities) {
+    const rows = selectRows.all(minYear, cityName) as Row[];
+    scanned += rows.length;
+
+    const bucket = (keyFn: (r: Row) => string) => {
+      const m = new Map<string, number[]>();
+      for (const r of rows) {
+        const k = keyFn(r);
+        const a = m.get(k);
+        if (a) a.push(r.price_sqm); else m.set(k, [r.price_sqm]);
+      }
+      return m;
+    };
+    const mediansOf = (m: Map<string, number[]>) => {
+      const o = new Map<string, number>();
+      for (const [k, v] of m) if (v.length >= minCohort) o.set(k, median(v));
+      return o;
+    };
+    const mFull = mediansOf(bucket(kFull)), mType = mediansOf(bucket(kType)), mCity = mediansOf(bucket(kCity));
+
+    const flagged: Array<{ id: number; ratio: number }> = [];
+    for (const r of rows) {
+      if (r.price <= minPrice) continue;
+      overPrice++;
+      const base = mFull.get(kFull(r)) ?? mType.get(kType(r)) ?? mCity.get(kCity(r));
+      if (!base || base <= 0) { noBaseline++; continue; }
+      const ratio = r.price_sqm / base;
+      if (ratio > 1 + premium) {
+        flagged.push({ id: r.id, ratio });
+        perCity.set(r.city_name, (perCity.get(r.city_name) ?? 0) + 1);
+      } else expensiveButNormal++;
+    }
+
+    db.transaction(() => { for (const f of flagged) mark.run(Number(f.ratio.toFixed(3)), f.id); })();
+    flaggedTotal += flagged.length;
+  }
+  console.log(`  scanned ${scanned.toLocaleString("en")} active priced deals across ${cities.length} cities…`);
+
 
   // the exclusion log is the site's audit trail — luxury is a price-only rule, so
   // it is written as its own action and never mixed into the excluded counts
   db.prepare(
     `INSERT INTO admin_exclusion_log (action, affected, reason, created_at) VALUES ('luxury', ?, ?, datetime('now'))`
-  ).run(flagged.length, `עסקאות יוקרה (מעל ₪${(minPrice / 1e6).toFixed(1)}M וגם +${(premium * 100).toFixed(0)}% מחציון הקטגוריה) — הוחרגו מהמחירים בלבד`);
+  ).run(flaggedTotal, `עסקאות יוקרה (מעל ₪${(minPrice / 1e6).toFixed(1)}M וגם +${(premium * 100).toFixed(0)}% מחציון הקטגוריה) — הוחרגו מהמחירים בלבד`);
 
   console.log(`  reset ${reset.changes.toLocaleString("en")} prior marks`);
-  console.log(`  over ₪${(minPrice / 1e6).toFixed(1)}M: ${overPrice.toLocaleString("en")} · flagged luxury: ${flagged.length.toLocaleString("en")} (${(flagged.length / rows.length * 100).toFixed(2)}% of active)`);
+  console.log(`  over ₪${(minPrice / 1e6).toFixed(1)}M: ${overPrice.toLocaleString("en")} · flagged luxury: ${flaggedTotal.toLocaleString("en")} (${(scanned ? flaggedTotal / scanned * 100 : 0).toFixed(2)}% of active)`);
   console.log(`  expensive but normal for their category — kept in the averages: ${expensiveButNormal.toLocaleString("en")} · no usable baseline: ${noBaseline.toLocaleString("en")}`);
   for (const [c, n] of [...perCity.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8)) console.log(`    ${c}: ${n.toLocaleString("en")}`);
   db.close();

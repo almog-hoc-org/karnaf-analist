@@ -58,82 +58,93 @@ function main() {
     `UPDATE nadlan_transactions SET excluded=0, exclusion_reason=NULL
      WHERE exclusion_reason LIKE 'מוזג%' AND deal_year >= ?`).run(minYear);
 
-  // 2. load active, in-scope, keyable rows
-  const rows = db.prepare(
-    `SELECT id, city_name, deal_date, price, area, rooms, source, street, house_num, floor
-     FROM nadlan_transactions
-     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND price>0 AND area>0 AND rooms>0`
-  ).all(minYear) as Row[];
-
-  // 3. group by the cross-channel key
-  const groups = new Map<string, { nadlan: Row[]; govmap: Row[] }>();
-  for (const r of rows) {
-    const key = `${r.city_name}|${r.deal_date}|${Math.round(r.price)}|${Math.round(r.area)}|${Math.round(r.rooms)}`;
-    let g = groups.get(key);
-    if (!g) { g = { nadlan: [], govmap: [] }; groups.set(key, g); }
-    if (r.source === "nadlan") g.nadlan.push(r);
-    else if (r.source === "govmap") g.govmap.push(r);
-  }
-
-  // 4. merge inside a single transaction
+  // 2-4 run PER CITY. Every grouping key below starts with city_name, so the
+  // chunking changes nothing semantically — but it bounds memory to one city's
+  // rows. Loading the whole 1998+ scope at once (1.4M rows with address
+  // strings) blew Node's heap inside the 3GB container on the first full run.
   const enrich = db.prepare(
     `UPDATE nadlan_transactions SET street=COALESCE(street,?), house_num=COALESCE(house_num,?), floor=COALESCE(floor,?) WHERE id=?`);
   const exclude = db.prepare(`UPDATE nadlan_transactions SET excluded=1, exclusion_reason=? WHERE id=?`);
+  const SOFT_REASON = "מוזג (התאמה רכה — כפילות בין-ערוצית)";
+  const selectRows = db.prepare(
+    `SELECT id, city_name, deal_date, price, area, rooms, source, street, house_num, floor
+     FROM nadlan_transactions
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND city_name = ? AND price>0 AND area>0`);
+  const selectTargets = db.prepare(
+    `SELECT id, city_name, deal_date, price, area FROM nadlan_transactions
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND city_name = ? AND source='nadlan' AND street IS NULL AND price>0 AND area>0`);
+  const selectDonors = db.prepare(
+    `SELECT id, city_name, deal_date, price, area, street, house_num, floor, COALESCE(excluded,0) ex
+     FROM nadlan_transactions WHERE deal_year >= ? AND city_name = ? AND source='govmap' AND street IS NOT NULL AND price>0 AND area>0`);
+
+  const cities = (db.prepare(
+    `SELECT DISTINCT city_name FROM nadlan_transactions WHERE deal_year >= ?`
+  ).all(minYear) as Array<{ city_name: string }>).map((c) => c.city_name);
+
   let enriched = 0, excluded = 0, mergedGroups = 0;
-  const run = db.transaction(() => {
-    for (const g of groups.values()) {
-      if (!g.nadlan.length || !g.govmap.length) continue;
-      mergedGroups++;
-      const donor = g.govmap.find((x) => x.street) ?? g.govmap[0]; // best address donor
-      for (const n of g.nadlan) {
-        if (!n.street && donor.street) { enrich.run(donor.street, donor.house_num, donor.floor, n.id); enriched++; }
-      }
-      for (const gm of g.govmap) { exclude.run(REASON, gm.id); excluded++; } // drop the duplicate copies
+  let softEnriched = 0, softExcluded = 0, ambiguous = 0;
+
+  for (const city of cities) {
+    // 2. load this city's active, in-scope, keyable rows
+    const rows = selectRows.all(minYear, city) as Row[];
+
+    // 3. group by the cross-channel key (city fixed by the loop)
+    const groups = new Map<string, { nadlan: Row[]; govmap: Row[] }>();
+    for (const r of rows) {
+      const key = `${r.deal_date}|${Math.round(r.price)}|${Math.round(r.area)}|${Math.round(r.rooms)}`;
+      let g = groups.get(key);
+      if (!g) { g = { nadlan: [], govmap: [] }; groups.set(key, g); }
+      if (r.source === "nadlan") g.nadlan.push(r);
+      else if (r.source === "govmap") g.govmap.push(r);
     }
-  });
-  run();
+
+    // 4. merge inside one transaction per city
+    db.transaction(() => {
+      for (const g of groups.values()) {
+        if (!g.nadlan.length || !g.govmap.length) continue;
+        mergedGroups++;
+        const donor = g.govmap.find((x) => x.street) ?? g.govmap[0]; // best address donor
+        for (const n of g.nadlan) {
+          if (!n.street && donor.street) { enrich.run(donor.street, donor.house_num, donor.floor, n.id); enriched++; }
+        }
+        for (const gm of g.govmap) { exclude.run(REASON, gm.id); excluded++; } // drop the duplicate copies
+      }
+    })();
+
+    // ── PASS 2 (soft): the strict key misses real twins over sub-m² area / rooms
+    // disagreements between the two feeds. For nadlan rows STILL without an address,
+    // match govmap by date+exact-price only, with an area tolerance of ≤2 m².
+    // Guard: if candidate donors disagree on the street → skip (never guess).
+    const targets = selectTargets.all(minYear, city) as Row[];
+    // donors: every govmap row with an address (incl. ones excluded in pass 1 — address donation is harmless)
+    const donors = selectDonors.all(minYear, city) as (Row & { ex: number })[];
+    const byLoose = new Map<string, (Row & { ex: number })[]>();
+    for (const d of donors) {
+      const k = `${d.deal_date}|${Math.round(d.price)}`;
+      const a = byLoose.get(k); if (a) a.push(d); else byLoose.set(k, [d]);
+    }
+    db.transaction(() => {
+      for (const t of targets) {
+        const cands = (byLoose.get(`${t.deal_date}|${Math.round(t.price)}`) ?? [])
+          .filter((d) => Math.abs(d.area - t.area) <= 2);
+        if (!cands.length) continue;
+        const streets = new Set(cands.map((d) => d.street));
+        if (streets.size > 1) { ambiguous++; continue; } // conflicting addresses → don't guess
+        const donor = cands[0];
+        enrich.run(donor.street, donor.house_num, donor.floor, t.id);
+        softEnriched++;
+        for (const d of cands) if (!d.ex) { exclude.run(SOFT_REASON, d.id); d.ex = 1; softExcluded++; }
+      }
+    })();
+  }
 
   if (excluded) db.prepare(
     `INSERT INTO admin_exclusion_log (action, affected, reason, created_at) VALUES ('exclude', ?, ?, datetime('now'))`
   ).run(excluded, REASON);
-
-  // ── PASS 2 (soft): the strict key misses real twins over sub-m² area / rooms
-  // disagreements between the two feeds. For nadlan rows STILL without an address,
-  // match govmap by city+date+exact-price only, with an area tolerance of ≤2 m².
-  // Guard: if candidate donors disagree on the street → skip (never guess).
-  const SOFT_REASON = "מוזג (התאמה רכה — כפילות בין-ערוצית)";
-  const targets = db.prepare(
-    `SELECT id, city_name, deal_date, price, area FROM nadlan_transactions
-     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND source='nadlan' AND street IS NULL AND price>0 AND area>0`
-  ).all(minYear) as Row[];
-  // donors: every govmap row with an address (incl. ones excluded in pass 1 — address donation is harmless)
-  const donors = db.prepare(
-    `SELECT id, city_name, deal_date, price, area, street, house_num, floor, COALESCE(excluded,0) ex
-     FROM nadlan_transactions WHERE deal_year >= ? AND source='govmap' AND street IS NOT NULL AND price>0 AND area>0`
-  ).all(minYear) as (Row & { ex: number })[];
-  const byLoose = new Map<string, (Row & { ex: number })[]>();
-  for (const d of donors) {
-    const k = `${d.city_name}|${d.deal_date}|${Math.round(d.price)}`;
-    const a = byLoose.get(k); if (a) a.push(d); else byLoose.set(k, [d]);
-  }
-  let softEnriched = 0, softExcluded = 0, ambiguous = 0;
-  const soft = db.transaction(() => {
-    for (const t of targets) {
-      const cands = (byLoose.get(`${t.city_name}|${t.deal_date}|${Math.round(t.price)}`) ?? [])
-        .filter((d) => Math.abs(d.area - t.area) <= 2);
-      if (!cands.length) continue;
-      const streets = new Set(cands.map((d) => d.street));
-      if (streets.size > 1) { ambiguous++; continue; } // conflicting addresses → don't guess
-      const donor = cands[0];
-      enrich.run(donor.street, donor.house_num, donor.floor, t.id);
-      softEnriched++;
-      for (const d of cands) if (!d.ex) { exclude.run(SOFT_REASON, d.id); d.ex = 1; softExcluded++; }
-    }
-  });
-  soft();
   if (softExcluded) db.prepare(
     `INSERT INTO admin_exclusion_log (action, affected, reason, created_at) VALUES ('exclude', ?, ?, datetime('now'))`
   ).run(softExcluded, SOFT_REASON);
+
 
   console.log(`merge-cross-channel (since ${minYear}): reset ${reset.changes} prior · ` +
     `${mergedGroups.toLocaleString("en")} groups merged · ${enriched.toLocaleString("en")} nadlan rows enriched with address · ` +

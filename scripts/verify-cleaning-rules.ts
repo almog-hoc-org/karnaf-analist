@@ -52,84 +52,97 @@ function main() {
   const minYear = historyFromYear();
 
   const db = new Database(path.resolve("./data/realestate.db"), { readonly: true });
-  const rows = db.prepare(
+  // Both checks key their groups by city (block keys start with city_name,
+  // luxury cohorts are city-scoped), so verifying PER CITY is semantically
+  // identical — and bounds memory to one city's rows instead of the whole
+  // 1998+ scope, which OOM'd Node inside the 3GB container.
+  const selectRows = db.prepare(
     `SELECT id, city_name, deal_date, deal_year, price, area, rooms, rooms_effective, year_built,
             is_secondhand, price_sqm, floor, street, house_num, COALESCE(luxury,0) luxury
      FROM nadlan_transactions
-     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND price > 0 AND area > 0`
-  ).all(minYear) as Row[];
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND city_name = ? AND price > 0 AND area > 0`);
+  const cities = (db.prepare(
+    `SELECT DISTINCT city_name FROM nadlan_transactions WHERE deal_year >= ?`
+  ).all(minYear) as Array<{ city_name: string }>).map((c) => c.city_name);
 
-  // ── check 1: duplicate reports ────────────────────────────────────────
   const dupeViolations: string[] = [];
-  if (dupesOn) {
-    const blocks = new Map<string, Row[]>();
-    for (const r of rows) {
-      const k = priceTol === 0 && areaTol === 0 ? `${r.city_name}|${r.price}|${r.area}|${r.rooms ?? "?"}` : r.city_name;
-      const a = blocks.get(k);
-      if (a) a.push(r); else blocks.set(k, [r]);
-    }
-    for (const list of blocks.values()) {
-      if (list.length < 2) continue;
-      list.sort((a, b) => dayOf(a.deal_date) - dayOf(b.deal_date));
-      for (let i = 0; i < list.length; i++) {
-        // how many identical, in-window deals follow this one?
-        const grp = [list[i]];
-        for (let j = i + 1; j < list.length && dayOf(list[j].deal_date) - dayOf(list[i].deal_date) <= windowDays; j++) {
-          const a = list[i], b = list[j];
-          if (Math.abs(b.price - a.price) > priceTol || Math.abs(b.area - a.area) > areaTol) continue;
-          if ((a.rooms ?? -1) !== (b.rooms ?? -1)) continue;
-          if (a.year_built != null && b.year_built != null && a.year_built !== b.year_built) continue;
-          grp.push(b);
-        }
-        if (grp.length < 2) continue;
+  const luxViolations: string[] = [];
+  let luxActive = 0;
+  let scanned = 0;
 
-        const addrs = grp.map((r) => (r.street ? `${r.street}|${r.house_num ?? ""}` : null)).filter(Boolean);
-        const floors = grp.map((r) => r.floor).filter((f) => f != null);
-        const differentBuildings = requireSameUnit && addrs.length >= 2 && new Set(addrs).size > 1;
-        const sameBuilding = requireSameUnit && !differentBuildings && floors.length >= 2 && new Set(floors.map(String)).size > 1;
-        const allowed = differentBuildings ? Infinity : sameBuilding ? sameBuildingMax : 1;
-        if (grp.length > allowed) {
-          dupeViolations.push(
-            `${grp[0].city_name} ${grp[0].deal_date.slice(0, 10)} ₪${Math.round(grp[0].price).toLocaleString("he-IL")} ` +
-            `${grp[0].area}מ״ר — ${grp.length} עסקאות פעילות, מותר ${allowed}`);
+  for (const cityName of cities) {
+    const rows = selectRows.all(minYear, cityName) as Row[];
+    scanned += rows.length;
+
+    // ── check 1: duplicate reports ──────────────────────────────────────
+    if (dupesOn) {
+      const blocks = new Map<string, Row[]>();
+      for (const r of rows) {
+        const k = priceTol === 0 && areaTol === 0 ? `${r.price}|${r.area}|${r.rooms ?? "?"}` : "*";
+        const a = blocks.get(k);
+        if (a) a.push(r); else blocks.set(k, [r]);
+      }
+      for (const list of blocks.values()) {
+        if (list.length < 2) continue;
+        list.sort((a, b) => dayOf(a.deal_date) - dayOf(b.deal_date));
+        for (let i = 0; i < list.length; i++) {
+          // how many identical, in-window deals follow this one?
+          const grp = [list[i]];
+          for (let j = i + 1; j < list.length && dayOf(list[j].deal_date) - dayOf(list[i].deal_date) <= windowDays; j++) {
+            const a = list[i], b = list[j];
+            if (Math.abs(b.price - a.price) > priceTol || Math.abs(b.area - a.area) > areaTol) continue;
+            if ((a.rooms ?? -1) !== (b.rooms ?? -1)) continue;
+            if (a.year_built != null && b.year_built != null && a.year_built !== b.year_built) continue;
+            grp.push(b);
+          }
+          if (grp.length < 2) continue;
+
+          const addrs = grp.map((r) => (r.street ? `${r.street}|${r.house_num ?? ""}` : null)).filter(Boolean);
+          const floors = grp.map((r) => r.floor).filter((f) => f != null);
+          const differentBuildings = requireSameUnit && addrs.length >= 2 && new Set(addrs).size > 1;
+          const sameBuilding = requireSameUnit && !differentBuildings && floors.length >= 2 && new Set(floors.map(String)).size > 1;
+          const allowed = differentBuildings ? Infinity : sameBuilding ? sameBuildingMax : 1;
+          if (grp.length > allowed) {
+            dupeViolations.push(
+              `${grp[0].city_name} ${grp[0].deal_date.slice(0, 10)} ₪${Math.round(grp[0].price).toLocaleString("he-IL")} ` +
+              `${grp[0].area}מ״ר — ${grp.length} עסקאות פעילות, מותר ${allowed}`);
+          }
         }
       }
     }
-  }
 
-  // ── check 2: luxury deals that still feed an average ──────────────────
-  const luxViolations: string[] = [];
-  let luxActive = 0;
-  if (luxOn) {
-    const priced = rows.filter((r) => r.luxury === 0 && r.price_sqm > 0);
-    luxActive = rows.filter((r) => r.luxury === 1).length;
-    const typeOf = (r: Row) => ((r.year_built ?? 0) > 0 ? (r.is_secondhand ? "sh" : "new") : "unknown");
-    const roomsOf = (r: Row) => ((r.rooms_effective ?? 0) > 0 ? String(Math.round(r.rooms_effective!)) : "?");
-    const keys = [
-      (r: Row) => `${r.city_name}|${r.deal_year}|${roomsOf(r)}|${typeOf(r)}`,
-      (r: Row) => `${r.city_name}|${r.deal_year}|${typeOf(r)}`,
-      (r: Row) => `${r.city_name}|${r.deal_year}`,
-    ];
-    // Cohort medians must be built from the SAME population the flagger used —
-    // every active priced deal, luxury ones included. "20% above a similar
-    // apartment" means above the market for that category, and the market
-    // contains those sales. Rebuilding the median on the post-flag subset would
-    // lower it and manufacture violations that aren't breaches of the rule.
-    const cohortPool = rows.filter((r) => r.price_sqm > 0);
-    const medians = keys.map((k) => {
-      const m = new Map<string, number[]>();
-      for (const r of cohortPool) { const key = k(r); const a = m.get(key); if (a) a.push(r.price_sqm); else m.set(key, [r.price_sqm]); }
-      const o = new Map<string, number>();
-      for (const [key, v] of m) if (v.length >= minCohort) o.set(key, median(v));
-      return o;
-    });
-    for (const r of priced) {
-      if (r.price <= minPrice) continue;
-      const base = medians[0].get(keys[0](r)) ?? medians[1].get(keys[1](r)) ?? medians[2].get(keys[2](r));
-      if (!base || base <= 0) continue;
-      const ratio = r.price_sqm / base;
-      if (ratio > 1 + premium + 1e-6) {
-        luxViolations.push(`${r.city_name} ${r.deal_date.slice(0, 10)} ₪${Math.round(r.price).toLocaleString("he-IL")} · ₪${Math.round(r.price_sqm).toLocaleString("he-IL")}/מ״ר = ${(ratio * 100 - 100).toFixed(0)}% מעל החציון`);
+    // ── check 2: luxury deals that still feed an average ────────────────
+    if (luxOn) {
+      const priced = rows.filter((r) => r.luxury === 0 && r.price_sqm > 0);
+      luxActive += rows.filter((r) => r.luxury === 1).length;
+      const typeOf = (r: Row) => ((r.year_built ?? 0) > 0 ? (r.is_secondhand ? "sh" : "new") : "unknown");
+      const roomsOf = (r: Row) => ((r.rooms_effective ?? 0) > 0 ? String(Math.round(r.rooms_effective!)) : "?");
+      const keys = [
+        (r: Row) => `${r.deal_year}|${roomsOf(r)}|${typeOf(r)}`,
+        (r: Row) => `${r.deal_year}|${typeOf(r)}`,
+        (r: Row) => `${r.deal_year}`,
+      ];
+      // Cohort medians must be built from the SAME population the flagger used —
+      // every active priced deal, luxury ones included. "20% above a similar
+      // apartment" means above the market for that category, and the market
+      // contains those sales. Rebuilding the median on the post-flag subset would
+      // lower it and manufacture violations that aren't breaches of the rule.
+      const cohortPool = rows.filter((r) => r.price_sqm > 0);
+      const medians = keys.map((k) => {
+        const m = new Map<string, number[]>();
+        for (const r of cohortPool) { const key = k(r); const a = m.get(key); if (a) a.push(r.price_sqm); else m.set(key, [r.price_sqm]); }
+        const o = new Map<string, number>();
+        for (const [key, v] of m) if (v.length >= minCohort) o.set(key, median(v));
+        return o;
+      });
+      for (const r of priced) {
+        if (r.price <= minPrice) continue;
+        const base = medians[0].get(keys[0](r)) ?? medians[1].get(keys[1](r)) ?? medians[2].get(keys[2](r));
+        if (!base || base <= 0) continue;
+        const ratio = r.price_sqm / base;
+        if (ratio > 1 + premium + 1e-6) {
+          luxViolations.push(`${r.city_name} ${r.deal_date.slice(0, 10)} ₪${Math.round(r.price).toLocaleString("he-IL")} · ₪${Math.round(r.price_sqm).toLocaleString("he-IL")}/מ״ר = ${(ratio * 100 - 100).toFixed(0)}% מעל החציון`);
+        }
       }
     }
   }
@@ -149,7 +162,7 @@ function main() {
 
   const report = {
     generatedAt: new Date().toISOString(),
-    scanned: rows.length,
+    scanned,
     duplicates: { on: dupesOn, windowDays, sameBuildingMax, violations: dupeViolations.length, samples: dupeViolations.slice(0, 5) },
     luxury: { on: luxOn, minPrice, premiumPct: premium * 100, flaggedActive: luxActive, violations: luxViolations.length, samples: luxViolations.slice(0, 5) },
     reconciliation: {
@@ -159,7 +172,7 @@ function main() {
   };
   fs.writeFileSync(path.resolve("./data/cleaning-verification.json"), JSON.stringify(report, null, 2));
 
-  console.log(`verify-cleaning-rules: scanned ${rows.length.toLocaleString("en")} active deals (since ${minYear})`);
+  console.log(`verify-cleaning-rules: scanned ${scanned.toLocaleString("en")} active deals (since ${minYear})`);
   console.log(`  duplicates: ${dupeViolations.length} violations`);
   dupeViolations.slice(0, 3).forEach((v) => console.log(`    ✗ ${v}`));
   console.log(`  luxury: ${luxActive.toLocaleString("en")} flagged · ${luxViolations.length} still feeding an average`);
