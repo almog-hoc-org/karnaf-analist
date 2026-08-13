@@ -245,7 +245,10 @@ export default async function HomePage() {
         return {
           rank: i + 1,
           city: c.city_name,
-          value: `${formatNumber(c.unsold_inventory_2025)}${yts ? ` · ${yts} שנים למכירה` : ""}`,
+          value: formatNumber(c.unsold_inventory_2025),
+          // separate visual channel for the pace metric (operator spec 8/2026:
+          // the two numbers blended into one unreadable string)
+          badge: yts ? `${yts} שנים למכירה` : undefined,
           href: `/city/${encodeURIComponent(c.city_name)}`,
         };
       }),
@@ -256,7 +259,11 @@ export default async function HomePage() {
     <main className="min-h-screen page-wrap-wide py-8">
       {/* ── HERO — Compact, screenshot-optimized ───────────────── */}
       {/* ── HERO — search-first, exactly one focal point (yad2 lesson) ── */}
-      <header className="animate-fade-up pb-2 pt-6 text-center md:pt-10">
+      {/* relative z-30: animate-fade-up leaves a forwards-fill transform on
+          this header, creating a stacking context — without an explicit z the
+          search dropdown (z-[100] INSIDE that context) painted UNDER the
+          hero-kpi cards that follow in DOM order. */}
+      <header className="animate-fade-up relative z-30 pb-2 pt-6 text-center md:pt-10">
         <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
           <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1">
             <span className="relative flex h-1.5 w-1.5">

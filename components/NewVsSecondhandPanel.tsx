@@ -5,6 +5,8 @@ import {
 } from "@/lib/cbs-transactions-by-city";
 import Icon from "@/components/Icon";
 
+const YEAR = CBS_TRANSACTIONS_SOURCE.dataYear;
+
 /**
  * Per-city panel showing the official CBS split between
  *   • new (contractor) apartment sales
@@ -40,10 +42,10 @@ export default function NewVsSecondhandPanel({
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-bold text-slate-900">
-            עסקאות 2025 — חדשות מול יד שנייה
+            עסקאות {YEAR} — חדשות מול יד שנייה
           </h3>
           <p className="text-2xs text-slate-500 mt-0.5">
-            פילוח רשמי מ-CBS פרסום {CBS_TRANSACTIONS_SOURCE.publicationNumber}, מבדיל קבלן (חדשות) מיד שנייה
+            פילוח רשמי — למ״ס {CBS_TRANSACTIONS_SOURCE.publicationNumber}
           </p>
         </div>
       </div>
@@ -113,7 +115,7 @@ export default function NewVsSecondhandPanel({
       <NumberCaption
         source={`למ"ס ${CBS_TRANSACTIONS_SOURCE.publicationNumber}`}
         sourceHref={CBS_TRANSACTIONS_SOURCE.pdfUrl}
-        period="שנת 2025 קלנדרית"
+        period={`שנת ${YEAR} קלנדרית`}
         method="לוח ב — יישובים עם ≥500 עסקאות"
         updated={CBS_TRANSACTIONS_SOURCE.publishedDate.split("-").reverse().join(".").slice(0, 8)}
       />
@@ -145,29 +147,32 @@ function SideCard({
 
   if (value === null) {
     return (
-      <div className={`rounded-xl ${accent} border p-4 opacity-50`}>
-        <div className="text-2xs font-bold uppercase tracking-wide text-slate-500">{title}</div>
+      <div className={`rounded-xl ${accent} border p-4 text-center opacity-50`}>
+        <div className="text-2xs font-bold text-slate-500">{title}</div>
         <div className="text-3xl font-black text-slate-400 mt-1">—</div>
         <div className="text-2xs text-slate-500 mt-1 leading-tight">
-          {cityName} לא חצתה את סף 500 עסקאות בקטגוריה זו ב-2025
+          {cityName} מתחת לסף 500 עסקאות ({YEAR})
         </div>
       </div>
     );
   }
 
+  // Numbers CENTERED and DOMINANT (operator spec 8/2026): this panel is a
+  // number-first rubric, especially on a phone — the copy shrinks, the
+  // figures grow.
   return (
-    <div className={`rounded-xl ${accent} border p-4`}>
-      <div className="text-2xs font-bold uppercase tracking-wide text-slate-500">{title}</div>
-      <div className={`text-3xl font-black tabular-nums leading-none mt-1 ${accentText}`}>
+    <div className={`rounded-xl ${accent} border p-4 text-center`}>
+      <div className="text-2xs font-bold text-slate-500">{title}</div>
+      <div className={`text-4xl font-black tabular-nums mt-1.5 ${accentText}`} style={{ lineHeight: 1.1 }}>
         {value.toLocaleString("he-IL")}
       </div>
-      <div className="text-2xs text-slate-500 mt-1">עסקאות בשנת 2025</div>
+      <div className="text-2xs text-slate-400 mt-1">עסקאות ב-{YEAR}</div>
 
       {(yoy24 !== null || yoy23 !== null) && (
         <div className="mt-3 pt-3 border-t border-slate-200/60 grid grid-cols-2 gap-2 text-2xs">
           {yoy24 !== null && (
-            <div>
-              <div className="text-slate-500">vs 2024</div>
+            <div className="text-center">
+              <div className="text-slate-500">מול {YEAR - 1}</div>
               <div
                 className={`font-bold tabular-nums ${
                   yoy24 >= 0 ? "text-emerald-700" : "text-red-700"
@@ -179,8 +184,8 @@ function SideCard({
             </div>
           )}
           {yoy23 !== null && (
-            <div>
-              <div className="text-slate-500">vs 2023</div>
+            <div className="text-center">
+              <div className="text-slate-500">מול {YEAR - 2}</div>
               <div
                 className={`font-bold tabular-nums ${
                   yoy23 >= 0 ? "text-emerald-700" : "text-red-700"

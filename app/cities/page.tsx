@@ -126,14 +126,14 @@ export default async function CitiesPage() {
       <div className="flex items-center justify-between mb-8">
         <Link
           href="/"
-          className="text-sm text-slate-500 hover:text-cyan-700 transition-colors"
+          className="text-sm text-slate-500 hover:text-indigo-700 transition-colors"
         >
           ← חזרה לדף הבית
         </Link>
       </div>
 
       <header className="mb-8">
-        <p className="text-xs font-medium tracking-widest text-cyan-500 uppercase mb-2">
+        <p className="text-xs font-medium tracking-widest text-indigo-500 uppercase mb-2">
           All Cities Data
         </p>
         <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">

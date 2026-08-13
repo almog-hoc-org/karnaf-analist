@@ -39,6 +39,9 @@ export interface CompareCityRow {
   population_2026: number | null;
   households_2022: number | null;
   price_per_sqm_2026: number | null;
+  /** unsold new-build stock + its clearing pace (CBS CitySales) */
+  unsold_inventory: number | null;
+  years_to_clear: number | null;
 }
 
 export interface CompareMetrics {
@@ -333,20 +336,31 @@ export default function CompareView({
       },
       best: "min", // lower premium = cheaper entry to new-build
     },
+    // "פער היצע" removed (operator spec 8/2026): too abstract — it confused
+    // more than it informed. Replaced by the two concrete supply numbers below.
     {
-      key: "gap",
-      label: "פער היצע (% מהביקוש)",
-      sub: "חיובי = מחסור בדירות; שלילי = עודף",
-      value: (c) => m(c)?.gapPctOfDemand ?? null,
+      key: "inventory",
+      label: "מלאי חדש למכירה",
+      sub: "דירות חדשות שנבנו וטרם נמכרו (למ״ס)",
+      value: (c) => cityRowMap.get(c)?.unsold_inventory ?? null,
       render: (c) => {
-        const v = m(c)?.gapPctOfDemand;
-        return v == null ? (
-          <span dir="ltr" className="text-slate-300 tabular-nums">—</span>
-        ) : (
-          <span dir="ltr" className="font-semibold text-slate-900 tabular-nums">{fmtSignedPct(v)}</span>
-        );
+        const v = cityRowMap.get(c)?.unsold_inventory;
+        return v == null ? <span className="text-slate-300">—</span>
+          : <span className="tabular-nums text-slate-700">{v.toLocaleString("he-IL")}</span>;
       },
-      // no "best": shortage is upside for a landlord, downside for a buyer
+      // no "best": big inventory = buyer leverage but seller pain
+    },
+    {
+      key: "yearsToClear",
+      label: "שנים למכירת המלאי",
+      sub: "בקצב המכירה הממוצע של 3 השנים האחרונות",
+      value: (c) => cityRowMap.get(c)?.years_to_clear ?? null,
+      render: (c) => {
+        const v = cityRowMap.get(c)?.years_to_clear;
+        return v == null ? <span className="text-slate-300">—</span>
+          : <span className="tabular-nums text-slate-700">{v.toFixed(1)}</span>;
+      },
+      // no "best": a fast market is hot for sellers, expensive for buyers
     },
     {
       key: "dealsPerYear",

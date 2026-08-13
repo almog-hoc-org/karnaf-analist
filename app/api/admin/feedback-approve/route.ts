@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
   if (!row.approved_at) {
     appDb().prepare("UPDATE feedback SET approved_at=datetime('now') WHERE id=?").run(id);
-    if (row.user_id) grantFeedbackBonus(row.user_id);
+    if (row.user_id) grantFeedbackBonus(row.user_id, row.id);
   }
   return NextResponse.json({ ok: true, credited: !!row.user_id && !row.approved_at });
 }

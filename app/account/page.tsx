@@ -76,7 +76,7 @@ export default function AccountPage() {
           <p className="text-sm font-bold text-slate-900">להרוויח עוד קרדיטים</p>
           <ul className="mt-2 space-y-1.5 text-sm text-slate-600">
             <li>🤝 חבר שנרשם דרך הקישור שלך — <b>+{CREDIT_RULES.referralBonus()}</b></li>
-            <li>💬 משוב איכותי שאושר — <b>+{CREDIT_RULES.feedbackBonus()}</b> (חד-פעמי)</li>
+            <li>💬 כל משוב איכותי שאושר — <b>+{CREDIT_RULES.feedbackBonus()}</b>{CREDIT_RULES.feedbackMonthlyCap() > 0 && <> (עד {CREDIT_RULES.feedbackMonthlyCap()} בחודש)</>}</li>
             {CREDIT_RULES.monthlyFreeGrant() > 0 && (
               <li>🎁 מענק חודשי — <b>+{CREDIT_RULES.monthlyFreeGrant()}</b> אוטומטית</li>
             )}

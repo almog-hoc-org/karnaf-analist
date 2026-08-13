@@ -400,21 +400,15 @@ export default function RecentReportsSection({
       {/* ── Section header — light, compact ── */}
       <div className="mb-6 flex flex-wrap items-end gap-3">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-2xs font-bold uppercase tracking-[0.2em] text-indigo-700">Primary-Source Reports</span>
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-2xs font-bold">
-              <Icon name="institution" size="1em" /> מקור חיצוני: למ״ס
-            </span>
-          </div>
           <h2 className="text-2xl font-black text-slate-900 tracking-tight leading-tight">
             דוחות עדכניים מהלמ&quot;ס
           </h2>
           <p className="text-xs text-slate-500 mt-1 leading-snug max-w-2xl">
-            בחר דוח כדי לראות פירוט מאקרו, פירוט פר מחוז וטבלת ערים מלאה.
+            בחירת דוח פותחת פירוט לפי מחוז ועיר.
           </p>
         </div>
         <Link href="/sources" className="text-2xs text-indigo-700 hover:underline font-bold inline-flex items-center gap-1 mr-auto self-center">
-          כל המקורות עם מטריצת כיסוי 10 שנים →
+          כל המקורות →
         </Link>
       </div>
 
@@ -444,7 +438,7 @@ export default function RecentReportsSection({
             </span>
             {lastRefreshedAt && (
               <span className="min-w-0 break-words text-2xs text-slate-500">
-                סריקה אחרונה: {new Date(lastRefreshedAt).toLocaleString("he-IL", { day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" })} · למ״ס + אוצר · סינון לפי כותרת
+                סריקה אחרונה: {new Date(lastRefreshedAt).toLocaleString("he-IL", { day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" })}
               </span>
             )}
           </div>

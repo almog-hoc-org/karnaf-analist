@@ -24,7 +24,7 @@ export default function CbsSalesChart({ data }: { data: CbsSalesData }) {
     year: String(y.year),
     "יד שנייה": y.existing ?? 0,
     "חדשות": y.neww ?? 0,
-    'סה״כ': y.totalOnly ?? 0,
+    'ללא פילוח': y.totalOnly ?? 0, // years CBS published a total only — NOT a sum of the other two bars
     share: y.newSharePct,
   }));
 
@@ -45,10 +45,10 @@ export default function CbsSalesChart({ data }: { data: CbsSalesData }) {
             <ResponsiveContainer initialDimension={{ width: 600, height: 300 }}>
               <ComposedChart data={rows} margin={{ top: 8, right: 8, left: 8, bottom: 4 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={GRID} vertical={false} />
-                <XAxis dataKey="year" tick={{ fill: AXIS, fontSize: mobile ? 10 : 11 }} axisLine={{ stroke: GRID }} tickLine={false} />
-                <YAxis yAxisId="v" width={mobile ? 34 : undefined} tick={{ fill: AXIS, fontSize: mobile ? 10 : 11 }} axisLine={false} tickLine={false}
+                <XAxis dataKey="year" tick={{ fill: AXIS, fontSize: 12 }} axisLine={{ stroke: GRID }} tickLine={false} />
+                <YAxis yAxisId="v" width={mobile ? 34 : undefined} tick={{ fill: AXIS, fontSize: 12 }} axisLine={false} tickLine={false}
                   tickFormatter={(v: number) => (v >= 1000 ? `${Math.round(v / 1000)}k` : String(v))} />
-                <YAxis yAxisId="s" orientation="right" width={mobile ? 28 : undefined} domain={[0, 60]} unit="%" tick={{ fill: SLATE, fontSize: mobile ? 10 : 11 }} axisLine={false} tickLine={false} />
+                <YAxis yAxisId="s" orientation="right" width={mobile ? 28 : undefined} domain={[0, 60]} unit="%" tick={{ fill: SLATE, fontSize: 12 }} axisLine={false} tickLine={false} />
                 <Tooltip
                   contentStyle={{ background: "#fff", border: `1px solid ${GRID}`, borderRadius: 12, fontSize: 12, direction: "rtl" }}
                   formatter={tipFmt((val, name) => (name === "share" ? [`${val}%`, "נתח חדשות"] : [fmt(val), name]))}
@@ -56,13 +56,13 @@ export default function CbsSalesChart({ data }: { data: CbsSalesData }) {
                 <Legend wrapperStyle={{ fontSize: 11, direction: "rtl" }} />
                 <Bar isAnimationActive={false} yAxisId="v" dataKey="יד שנייה" stackId="a" fill={BRAND_DARK} radius={[0, 0, 0, 0]} />
                 <Bar isAnimationActive={false} yAxisId="v" dataKey="חדשות" stackId="a" fill={BRAND_LIGHT} radius={[4, 4, 0, 0]} />
-                <Bar isAnimationActive={false} yAxisId="v" dataKey='סה״כ' stackId="a" fill={SLATE_LIGHT} radius={[4, 4, 0, 0]} />
+                <Bar isAnimationActive={false} yAxisId="v" dataKey='ללא פילוח' stackId="a" fill={SLATE_LIGHT} radius={[4, 4, 0, 0]} />
                 <Line isAnimationActive={false} yAxisId="s" dataKey="share" name="share" stroke={SLATE} strokeWidth={2} dot={{ r: 3, fill: SLATE }} connectNulls />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
           <p className="mt-1 text-2xs text-slate-400">
-            עמודות = מספר עסקאות (יד שנייה + חדשות) · קו = נתח הדירות החדשות (%). 2021–2022: הלמ״ס פרסמה סך-הכול ללא פילוח.
+            עמודות = עסקאות · קו = נתח החדשות (%)
           </p>
         </div>
 

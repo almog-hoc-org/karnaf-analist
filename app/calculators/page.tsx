@@ -1,4 +1,6 @@
 import Calculators from "@/components/Calculators";
+import FeedbackBanner from "@/components/FeedbackBanner";
+import { CREDIT_RULES } from "@/lib/credits";
 import Icon from "@/components/Icon";
 
 export const metadata = {
@@ -20,6 +22,9 @@ export default function CalculatorsPage() {
         <p className="mt-1.5 text-2xs text-slate-400">כלי עזר לתכנון בלבד · אינו מהווה ייעוץ השקעות או ייעוץ משכנתאות</p>
       </header>
       <Calculators />
+      <div className="mt-8">
+        <FeedbackBanner bonus={CREDIT_RULES.feedbackBonus()} />
+      </div>
     </main>
   );
 }

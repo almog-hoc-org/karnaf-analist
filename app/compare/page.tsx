@@ -44,6 +44,7 @@ export default async function ComparePage({
         population_2026: true,
         households_2022: true,
         price_per_sqm_2026: true,
+        sales: { select: { unsold_inventory_2025: true, years_to_clear_avg: true } },
       },
       orderBy: { population_2026: "desc" },
     }),
@@ -60,6 +61,8 @@ export default async function ComparePage({
     population_2026: c.population_2026 != null ? Number(c.population_2026) : null,
     households_2022: c.households_2022 != null ? Number(c.households_2022) : null,
     price_per_sqm_2026: c.price_per_sqm_2026 != null ? Number(c.price_per_sqm_2026) : null,
+    unsold_inventory: c.sales?.unsold_inventory_2025 != null ? Number(c.sales.unsold_inventory_2025) : null,
+    years_to_clear: c.sales?.years_to_clear_avg != null ? Number(c.sales.years_to_clear_avg) : null,
   }));
 
   const metrics: Record<string, CompareMetrics> = {};

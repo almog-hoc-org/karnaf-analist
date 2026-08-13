@@ -15,7 +15,9 @@ const NAV_ITEMS = [
   { href: "/compare", label: "השוואה" },
   { href: "/national", label: "ארצי" },
   { href: "/calculators", label: "מחשבונים" },
-  { href: "/sources", label: "מקורות" },
+  // "מקורות" moved to the footer (operator spec 8/2026) — a methodology page
+  // is reference material, not a daily destination; the top bar earns its
+  // slots by frequency of use.
   { href: "/deals", label: "העסקאות שלי", highlight: true },
 ];
 

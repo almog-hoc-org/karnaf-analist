@@ -64,7 +64,7 @@ export interface InvestorRow {
 }
 
 type SortKey = keyof CityRow;
-type ViewMode = "all" | "top3y" | "top5y";
+type ViewMode = "all" | "top3y" | "top5y" | "down3y" | "down5y";
 type Win = 1 | 3 | 5 | 10;
 
 type ColumnDef = { key: SortKey; label: string; format: (v: any, row?: CityRow) => string; width: string; help?: string };
@@ -391,6 +391,12 @@ export default function CitiesTable({
     } else if (mode === "top5y") {
       setSortKey("price_change_5y_pct");
       setSortDir("desc");
+    } else if (mode === "down3y") {
+      setSortKey("price_change_3y_pct");
+      setSortDir("asc");
+    } else if (mode === "down5y") {
+      setSortKey("price_change_5y_pct");
+      setSortDir("asc");
     } else {
       setSortKey("population_2026");
       setSortDir("desc");
@@ -433,9 +439,9 @@ export default function CitiesTable({
     if (filterHasPermits) {
       result = result.filter((c) => c.total_permits !== null && c.total_permits > 0);
     }
-    if (viewMode === "top3y") {
+    if (viewMode === "top3y" || viewMode === "down3y") {
       result = result.filter((c) => c.price_change_3y_pct !== null);
-    } else if (viewMode === "top5y") {
+    } else if (viewMode === "top5y" || viewMode === "down5y") {
       result = result.filter((c) => c.price_change_5y_pct !== null);
     }
     if (preset) {
@@ -500,7 +506,10 @@ export default function CitiesTable({
       if (hidden.has(id)) return false;
       return true;
     });
-    const featured = viewMode === "top3y" ? "price_change_3y_pct" : viewMode === "top5y" ? "price_change_5y_pct" : null;
+    const featured =
+      viewMode === "top3y" || viewMode === "down3y" ? "price_change_3y_pct"
+      : viewMode === "top5y" || viewMode === "down5y" ? "price_change_5y_pct"
+      : null;
     if (featured && shown.includes(featured)) {
       return ["city_name", featured, ...shown.filter((id) => id !== "city_name" && id !== featured)];
     }
@@ -522,8 +531,8 @@ export default function CitiesTable({
     String(sortKey);
 
   const isFeaturedCol = (key: SortKey) =>
-    (viewMode === "top3y" && key === "price_change_3y_pct") ||
-    (viewMode === "top5y" && key === "price_change_5y_pct");
+    ((viewMode === "top3y" || viewMode === "down3y") && key === "price_change_3y_pct") ||
+    ((viewMode === "top5y" || viewMode === "down5y") && key === "price_change_5y_pct");
 
   /* ── shared cell renderers (regular columns) ── */
   const renderTd = (row: CityRow, col: ColumnDef) => {
@@ -592,6 +601,26 @@ export default function CitiesTable({
           title="ערים שעלו הכי הרבה ב-5 שנים אחרונות (מ-2020 — אותו חלון שמוצג בעמוד עיר)"
         >
           <Icon name="sparkle" size="1em" /> הכי עלו ב-5 שנים
+        </button>
+        {/* the mirror filters (operator spec 8/2026) — where prices FELL is
+            information the portals don't surface, and the data is identical */}
+        <button
+          type="button"
+          onClick={() => applyViewMode("down3y")}
+          className={`control-pill ${viewMode === "down3y" ? "control-pill-active" : ""}`}
+          aria-pressed={viewMode === "down3y"}
+          title="ערים שירדו הכי הרבה ב-3 שנים אחרונות"
+        >
+          ▼ הכי ירדו ב-3 שנים
+        </button>
+        <button
+          type="button"
+          onClick={() => applyViewMode("down5y")}
+          className={`control-pill ${viewMode === "down5y" ? "control-pill-active" : ""}`}
+          aria-pressed={viewMode === "down5y"}
+          title="ערים שירדו הכי הרבה ב-5 שנים אחרונות"
+        >
+          ▼ הכי ירדו ב-5 שנים
         </button>
         <span className="text-2xs text-slate-400 mr-1">
           (מחירים מ-nadlan.gov.il — ממוצע רבעוני שנתי, השוואה מהשנה המוקדמת לאחרונה)

@@ -82,9 +82,12 @@ export const CREDIT_RULES = {
   cityUnlockCost: () => getRuleNum("city_unlock_cost", 1),
   unlockDays: () => getRuleNum("unlock_days", 7),
   dealSaveCost: () => getRuleNum("deal_save_cost", 0),
-  referralBonus: () => getRuleNum("referral_bonus", 5),
-  referralDailyCap: () => getRuleNum("referral_daily_cap", 5),
-  feedbackBonus: () => getRuleNum("feedback_bonus", 2),
+  referralBonus: () => getRuleNum("referral_bonus", 10),
+  /** 0 = unlimited (operator spec 8/2026: "חבר מביא חבר — ללא הגבלה") */
+  referralDailyCap: () => getRuleNum("referral_daily_cap", 0),
+  feedbackBonus: () => getRuleNum("feedback_bonus", 5),
+  /** monthly ceiling on TOTAL feedback credits per user (spec: עד 20 בחודש) */
+  feedbackMonthlyCap: () => getRuleNum("feedback_monthly_cap", 20),
   monthlyFreeGrant: () => getRuleNum("monthly_free_grant", 2),
 };
 
@@ -284,19 +287,38 @@ export function applyReferral(code: string, newUserId: string | number): void {
 
   appDb().prepare("UPDATE users SET referred_by=? WHERE id=? AND referred_by IS NULL").run(referrer.id, newId);
 
-  // daily cap — a burst of self-made accounts stops paying after N
-  const todayCount = (appDb().prepare(
-    "SELECT COUNT(*) n FROM credits_ledger WHERE user_id=? AND reason='referral' AND created_at >= date('now')"
-  ).get(referrer.id) as { n: number }).n;
-  if (todayCount >= CREDIT_RULES.referralDailyCap()) return;
+  // daily cap — a burst of self-made accounts stops paying after N.
+  // 0 = unlimited (the current default per operator spec 8/2026); the
+  // per-referred-user idempotency below remains the abuse backstop either way.
+  const dailyCap = CREDIT_RULES.referralDailyCap();
+  if (dailyCap > 0) {
+    const todayCount = (appDb().prepare(
+      "SELECT COUNT(*) n FROM credits_ledger WHERE user_id=? AND reason='referral' AND created_at >= date('now')"
+    ).get(referrer.id) as { n: number }).n;
+    if (todayCount >= dailyCap) return;
+  }
 
   // idempotent per referred user — re-submitting the form cannot double-credit
   grant(referrer.id, tenthsOf(CREDIT_RULES.referralBonus()), "referral", `u${newId}`);
 }
 
-/** One-time bonus when an admin approves this user's feedback. */
-export function grantFeedbackBonus(userId: string | number) {
-  grant(userId, tenthsOf(CREDIT_RULES.feedbackBonus()), "feedback", "first-approved");
+/**
+ * Bonus when an admin approves this user's feedback — PER approved feedback
+ * (operator spec 8/2026; was once-per-lifetime via a fixed refId), bounded by
+ * a monthly credits ceiling so feedback earns steadily without becoming a
+ * faucet. Idempotent per feedback id: re-approving cannot double-credit.
+ */
+export function grantFeedbackBonus(userId: string | number, feedbackId: number) {
+  const bonus = CREDIT_RULES.feedbackBonus();
+  const cap = CREDIT_RULES.feedbackMonthlyCap();
+  if (cap > 0) {
+    const grantedTenths = (appDb().prepare(
+      `SELECT COALESCE(SUM(delta_tenths),0) t FROM credits_ledger
+        WHERE user_id=? AND reason='feedback' AND created_at >= date('now','start of month')`
+    ).get(uid(userId)) as { t: number }).t;
+    if (grantedTenths / 10 + bonus > cap) return; // this month's ceiling reached
+  }
+  grant(userId, tenthsOf(bonus), "feedback", `fb${feedbackId}`);
 }
 
 /** tenths → whole credits for display (12 → 1.2). */

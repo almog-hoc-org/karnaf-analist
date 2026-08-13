@@ -20,6 +20,7 @@ import NewVsSecondhandPanel from "@/components/NewVsSecondhandPanel";
 import PopulationBySource from "@/components/PopulationBySource";
 import { loadCityPopulationEstimates } from "@/lib/population-sources";
 import PriceChangeSection from "@/components/PriceChangeSection";
+import RoomPriceSummary from "@/components/RoomPriceSummary";
 import { loadCityGraphSeries, loadCityDeals, loadDealCountCube, loadCityCleaningCounts } from "@/lib/nadlanTransactionSeries";
 import Link from "next/link";
 import SourceBadge from "@/components/SourceBadge";
@@ -368,47 +369,39 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   return (
     <main className="min-h-screen page-wrap py-8">
       {/* ── Header ─────────────────────────────────────────────── */}
-      <header className="mb-10">
-        <div className="flex items-start gap-4">
-          <div className="flex-1">
-            <p className="text-2xs font-semibold tracking-[0.2em] text-indigo-500/80 uppercase mb-3">
-              City Intelligence Report
-            </p>
-            <div className="mb-3 flex flex-wrap items-center gap-3">
-              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-                {city.city_name}
-              </h1>
-              <CityShareButton href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)} />
-            </div>
-            {city.population_2026 && (
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="text-slate-500 text-lg">
-                  {formatNumber(city.population_2026)} תושבים
-                </span>
-                {city.population_growth_pct !== null && (
-                  <span className={`text-sm px-2.5 py-0.5 rounded-full font-medium ${
-                    city.population_growth_pct >= 0
-                      ? "bg-emerald-50 text-emerald-700"
-                      : "bg-red-50 text-red-600"
-                  }`}>
-                    {city.population_growth_pct >= 0 ? '+' : ''}{city.population_growth_pct.toFixed(1)}% גידול
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
+      {/* Header, COMPACT (operator spec 8/2026): the old stack — English
+          eyebrow, mb-10 header, then a three-sentence trust banner with mb-8 —
+          pushed the first number below the fold. The eyebrow is gone (it said
+          nothing in the site's language), population sits beside the name, and
+          the trust line is one sentence on the same block. */}
+      <header className="mb-5">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+            {city.city_name}
+          </h1>
+          {city.population_2026 && (
+            <span className="text-slate-500 text-base">
+              {formatNumber(city.population_2026)} תושבים
+            </span>
+          )}
+          {city.population_growth_pct !== null && (
+            <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${
+              (city.population_growth_pct ?? 0) >= 0
+                ? "bg-emerald-50 text-emerald-700"
+                : "bg-red-50 text-red-600"
+            }`}>
+              {(city.population_growth_pct ?? 0) >= 0 ? '+' : ''}{city.population_growth_pct?.toFixed(1)}% גידול
+            </span>
+          )}
+          <CityShareButton href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)} />
+        </div>
+        <div className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <SourceBadge kind="internal" />
+          <p className="text-2xs text-slate-500">
+            עסקאות אמת שנאספו בלתי-תלוי מרשות המסים · יד-שנייה = {getRuleNum("secondhand_min_age", 4)}+ שנים משנת הבנייה · מקורות חיצוניים מסומנים <Icon name="source-official" size="1em" />
+          </p>
         </div>
       </header>
-
-      {/* Data-trust banner: the site's main numbers come from the independent repository */}
-      <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl border border-indigo-100 bg-indigo-50/50 px-4 py-3">
-        <SourceBadge kind="internal" />
-        <p className="text-2xs leading-relaxed text-slate-600">
-          הנתונים המרכזיים בעמוד מבוססים על עסקאות אמת שנאספו באופן בלתי-תלוי מרשות המסים.
-          עסקת <strong>יד-שנייה</strong> = חלפו {getRuleNum("secondhand_min_age", 4)}+ שנים משנת הבנייה לרכישה; <strong>חדשה</strong> = פחות מכך.
-          נתונים ממקורות נוספים (למ״ס, גוב-נדלן, מדדי שוק) מסומנים <Icon name="source-official" size="1em" />.
-        </p>
-      </div>
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1: PRICES
@@ -605,6 +598,13 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         modernMinYear={getRuleNum("modern_min_year", 2005)}
         classificationRate={classRate?.rate ?? null}
       />
+
+      {/* Room-size price rubric (operator spec 8/2026) — the numbers people
+          actually quote, pulled out of the chart into plain text, right under
+          the price graphs it summarizes. */}
+      {cityGraphData && (
+        <RoomPriceSummary data={cityGraphData} classificationRate={classRate?.rate ?? null} />
+      )}
 
       {/* ═══════════════════════════════════════════════════════════
           NEW (CONTRACTOR) vs SECOND-HAND — CBS 047/2026 hard numbers

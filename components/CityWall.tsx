@@ -105,8 +105,8 @@ export default function CityWall({
             <div className="mx-auto mt-5 max-w-md rounded-2xl border border-indigo-100 bg-indigo-50/60 p-4 text-right text-sm text-slate-700">
               <p className="font-bold text-slate-900">איך מרוויחים עוד קרדיטים?</p>
               <ul className="mt-2 space-y-1.5">
-                <li>🤝 הזמנת חבר שנרשם — <b>+{referralBonus ?? 5} קרדיטים</b></li>
-                <li>💬 משוב איכותי שאושר — <b>+{feedbackBonus ?? 2} קרדיטים</b></li>
+                <li>🤝 הזמנת חבר שנרשם — <b>+{referralBonus ?? 10} קרדיטים</b> (ללא הגבלה)</li>
+                <li>💬 כל משוב איכותי שאושר — <b>+{feedbackBonus ?? 5} קרדיטים</b></li>
                 {(monthlyGrant ?? 0) > 0 && <li>🎁 מענק חודשי (+{monthlyGrant}) מתחדש אוטומטית</li>}
               </ul>
             </div>

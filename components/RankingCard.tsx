@@ -13,6 +13,10 @@ interface RankingItem {
   href: string;
   /** optional numeric for the relative mini-bar (falls back to rank-based) */
   numeric?: number;
+  /** secondary metric in its OWN visual channel (amber chip) — e.g. the
+   *  inventory ranking's "X שנים למכירה" pace, which used to blend into the
+   *  unit count as one unreadable string (operator spec 8/2026) */
+  badge?: string;
 }
 
 export default function RankingCard({
@@ -48,6 +52,11 @@ export default function RankingCard({
           <span className="min-w-0 flex-1 break-words text-lg font-black leading-tight text-slate-900">{first.city}</span>
         </div>
         <div dir="ltr" className="mt-2 text-right text-xl font-black tabular-nums leading-none text-indigo-700">{first.value}</div>
+        {first.badge && (
+          <div className="mt-1.5 text-right">
+            <span className="inline-block rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-2xs font-bold text-amber-700">{first.badge}</span>
+          </div>
+        )}
       </Link>
 
       {/* 2–5 — rows WRAP when tight: the value drops under the name instead of clipping */}
@@ -67,7 +76,12 @@ export default function RankingCard({
                   </span>
                 )}
               </span>
-              <span dir="ltr" className="ms-auto whitespace-nowrap text-xs font-bold tabular-nums text-slate-700">{it.value}</span>
+              <span className="ms-auto flex flex-col items-end gap-0.5">
+                <span dir="ltr" className="whitespace-nowrap text-xs font-bold tabular-nums text-slate-700">{it.value}</span>
+                {it.badge && (
+                  <span className="rounded-full border border-amber-200 bg-amber-50 px-1.5 py-px text-[10px] font-bold text-amber-700">{it.badge}</span>
+                )}
+              </span>
             </Link>
           </li>
         ))}

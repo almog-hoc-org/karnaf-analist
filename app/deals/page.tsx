@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/db";
+import FeedbackBanner from "@/components/FeedbackBanner";
+import { CREDIT_RULES } from "@/lib/credits";
 import { ALIAS_NAMES } from "@/lib/cityAliases";
 import { listDeals, listTrackedCities } from "@/lib/appDb";
 import { computeStreetComp } from "@/lib/streetComps";
@@ -6,7 +8,6 @@ import type { StreetComp } from "@/lib/compTypes";
 import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import DealsManager from "@/components/DealsManager";
-import CourseBanner from "@/components/CourseBanner";
 import { requireWorkspaceId } from "@/lib/auth";
 import { getRuleNum } from "@/lib/systemRules";
 import Icon from "@/components/Icon";
@@ -79,10 +80,10 @@ export default async function DealsPage() {
           <h1 className="text-3xl md:text-4xl font-black tracking-tight">
             <span className="text-gradient-hero">ניהול והשוואת עסקאות</span>
           </h1>
-          {/* the one commercial touchpoint on this page — compact, beside the title */}
-          <div className="rounded-xl border border-indigo-100 bg-indigo-50/60 px-3 py-2">
-            <CourseBanner compact />
-          </div>
+          {/* CourseBanner removed from the header (operator spec 8/2026):
+              it sat ABOVE the user's own workspace — violating the
+              component's own placement rule — and the global footer already
+              carries the compact pitch on this page. */}
         </div>
         <p className="mt-2 max-w-2xl text-sm text-slate-500 leading-relaxed">
           עקוב אחרי דירות בתהליך החיפוש: הזן עסקה, קבל השוואה מיידית מול עסקאות אמת ברחוב ובשכונה,
@@ -99,6 +100,10 @@ export default async function DealsPage() {
         comps={comps}
         modernMinYear={getRuleNum("modern_min_year", 2005)}
       />
+      {/* feedback invitation beside the workspace (operator spec 8/2026) */}
+      <div className="mt-8">
+        <FeedbackBanner bonus={CREDIT_RULES.feedbackBonus()} />
+      </div>
     </main>
   );
 }

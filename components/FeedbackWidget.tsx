@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CREDIT_EVENT } from "@/lib/feedbackOpen";
 import { withBasePath } from "@/lib/basePath";
 import { getViewState } from "@/lib/viewState";
 import { track } from "@/lib/track";
@@ -23,6 +24,14 @@ import Icon from "@/components/Icon";
  */
 export default function FeedbackWidget() {
   const [open, setOpen] = useState(false);
+
+  // Inline FeedbackBanners around the site open THIS widget — one feedback
+  // flow, one spam defense, one inbox.
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener(CREDIT_EVENT, onOpen);
+    return () => window.removeEventListener(CREDIT_EVENT, onOpen);
+  }, []);
   const [kind, setKind] = useState<FeedbackKind>("idea");
   const [message, setMessage] = useState("");
   const [rating, setRating] = useState(0);

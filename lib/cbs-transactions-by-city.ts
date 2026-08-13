@@ -144,6 +144,8 @@ export function allCbsTransactionsCities(): CbsTransactionsRow[] {
 
 export const CBS_TRANSACTIONS_SOURCE = {
   publicationNumber: "047/2026",
+  /** the calendar year the table describes — every display derives from this */
+  dataYear: 2025,
   pdfUrl: "/reports/cbs_047_2026_transactions.pdf",
   pdfUrlCbs:
     "https://www.cbs.gov.il/he/mediarelease/DocLib/2026/047/04_26_047b.pdf",

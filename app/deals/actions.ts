@@ -104,6 +104,11 @@ export async function addDeal(input: DealInput): Promise<{ ok: true } | { ok: fa
     userId, v.city, v.neighborhood, v.street, v.house_num, v.size, v.rooms, v.floor,
     v.price, v.balcony_sqm, v.parking_spots, v.storage_sqm, v.status, v.listing_url, v.notes
   );
+  // Auto-track the deal's city (operator spec 8/2026): someone recording a
+  // deal in חדרה is obviously following חדרה — the live-summary card should
+  // appear without a second, separate gesture. INSERT OR IGNORE = no dupes,
+  // and removal stays one click away.
+  appDb().prepare("INSERT OR IGNORE INTO tracked_cities (user_id, city_name) VALUES (?, ?)").run(userId, v.city);
   revalidatePath("/deals");
   return { ok: true };
 }

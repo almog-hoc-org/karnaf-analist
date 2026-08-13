@@ -19,6 +19,22 @@ export default function SiteFooter() {
         <p className="text-2xs text-slate-400">
           כלי מחקר · אינו מהווה ייעוץ השקעות · <a href={withBasePath("/methodology")} className="font-bold text-indigo-600 hover:underline">איך המספרים מחושבים ←</a>
         </p>
+        {/* Site navigation — "מקורות" lives HERE, not in the top bar (operator
+            spec 8/2026): reference material earns a footer slot, daily
+            destinations earn the header. */}
+        <nav aria-label="ניווט תחתון" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-semibold text-slate-500">
+          <a href={withBasePath("/cities")} className="hover:text-indigo-600 hover:underline">ערים</a>
+          <span aria-hidden>·</span>
+          <a href={withBasePath("/compare")} className="hover:text-indigo-600 hover:underline">השוואה</a>
+          <span aria-hidden>·</span>
+          <a href={withBasePath("/national")} className="hover:text-indigo-600 hover:underline">ארצי</a>
+          <span aria-hidden>·</span>
+          <a href={withBasePath("/calculators")} className="hover:text-indigo-600 hover:underline">מחשבונים</a>
+          <span aria-hidden>·</span>
+          <a href={withBasePath("/sources")} className="hover:text-indigo-600 hover:underline">מקורות הנתונים</a>
+          <span aria-hidden>·</span>
+          <a href={withBasePath("/deals")} className="hover:text-indigo-600 hover:underline">העסקאות שלי</a>
+        </nav>
         {/* Course + WhatsApp, compact. On every page but below everything —
             see the note in CourseBanner on why this never sits above the data. */}
         <div className="mt-2 border-t border-slate-100 pt-3">

@@ -50,7 +50,7 @@ function Field({ label, value, onChange, suffix, step = 1, min = 0 }: {
           min={min}
           step={step}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm tabular-nums focus:border-indigo-400 focus:outline-none"
+          className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm tabular-nums text-center focus:border-indigo-400 focus:outline-none"
           dir="ltr"
         />
         {suffix && <span className="shrink-0 text-xs text-slate-400">{suffix}</span>}
@@ -125,7 +125,7 @@ function MortgageCalc() {
   const ltv = propertyValue > 0 ? (calc.principal / propertyValue) * 100 : null;
   const payRatio = netIncome > 0 ? (calc.firstMonthly / netIncome) * 100 : null;
 
-  const inputCls = "w-full rounded-lg border border-slate-200 px-2 py-1.5 text-sm tabular-nums focus:border-indigo-400 focus:outline-none";
+  const inputCls = "w-full rounded-lg border border-slate-200 px-2 py-1.5 text-sm tabular-nums text-center focus:border-indigo-400 focus:outline-none";
 
   return (
     <div className="space-y-5">
@@ -146,19 +146,19 @@ function MortgageCalc() {
           <tbody>
             {calc.rows.map(({ t, meta, initial, estAvg }) => (
               <tr key={t.id} className="border-t border-slate-100 align-top">
-                <td className="py-2 pl-2">
+                <td className="py-2 pe-2">
                   <select value={t.type} onChange={(e) => patch(t.id, { type: e.target.value as TrackType })}
                     className="w-full rounded-lg border border-slate-200 px-1.5 py-1.5 text-xs font-semibold text-slate-700">
                     {Object.entries(TRACK_TYPES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
                   </select>
                   <p className="mt-1 max-w-[190px] text-[10px] leading-tight text-slate-400">{meta.note}</p>
                 </td>
-                <td className="py-2 pl-2"><input type="number" dir="ltr" step={10000} min={0} value={t.amount || ""} onChange={(e) => patch(t.id, { amount: Number(e.target.value) })} className={inputCls} /></td>
-                <td className="py-2 pl-2"><input type="number" dir="ltr" step={0.05} min={0} value={t.rate || ""} onChange={(e) => patch(t.id, { rate: Number(e.target.value) })} className={inputCls} /></td>
-                <td className="py-2 pl-2"><input type="number" dir="ltr" step={1} min={1} max={30} value={t.years || ""} onChange={(e) => patch(t.id, { years: Number(e.target.value) })} className={inputCls} /></td>
+                <td className="py-2 pe-2"><input type="number" dir="ltr" step={10000} min={0} value={t.amount || ""} onChange={(e) => patch(t.id, { amount: Number(e.target.value) })} className={inputCls} /></td>
+                <td className="py-2 pe-2"><input type="number" dir="ltr" step={0.05} min={0} value={t.rate || ""} onChange={(e) => patch(t.id, { rate: Number(e.target.value) })} className={inputCls} /></td>
+                <td className="py-2 pe-2"><input type="number" dir="ltr" step={1} min={1} max={30} value={t.years || ""} onChange={(e) => patch(t.id, { years: Number(e.target.value) })} className={inputCls} /></td>
                 <td className="py-2 pl-2 font-bold tabular-nums text-slate-900">₪{fmt(initial)}</td>
                 <td className="py-2 pl-2 tabular-nums text-slate-600">₪{fmt(estAvg)}</td>
-                <td className="py-2 text-left">
+                <td className="py-2 text-start">
                   {tracks.length > 1 && (
                     <button onClick={() => remove(t.id)} aria-label="הסר מסלול"
                       className="rounded-lg px-2 py-1 text-xs font-bold text-slate-300 hover:bg-red-50 hover:text-red-500">✕</button>

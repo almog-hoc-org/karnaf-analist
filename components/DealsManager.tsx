@@ -74,6 +74,24 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
     return [...out].sort(cmp[sort]);
   }, [deals, fCity, fStatus, sort, comps]);
 
+  // Per-city GROUPS (operator spec 8/2026): deals from באר שבע and טירת כרמל
+  // in one undivided list read as comparable rows when they are not — every
+  // "פער מהשוק" is measured against its own city's median. With more than one
+  // city visible, the table and the card list split under city headers.
+  // Groups follow the current sort's first-appearance order, so "מיין לפי
+  // מחיר" still ranks the groups by their top deal.
+  const dealGroups = useMemo(() => {
+    const cities = new Set(visibleDeals.map((d) => d.city));
+    if (cities.size <= 1) return [{ city: null as string | null, deals: visibleDeals }];
+    const order: string[] = [];
+    const byCity = new Map<string, ClientDeal[]>();
+    for (const d of visibleDeals) {
+      if (!byCity.has(d.city)) { byCity.set(d.city, []); order.push(d.city); }
+      byCity.get(d.city)!.push(d);
+    }
+    return order.map((city) => ({ city: city as string | null, deals: byCity.get(city)! }));
+  }, [visibleDeals]);
+
   const submitAdd = () => {
     if (!form.city.trim()) return;
     startTransition(async () => {
@@ -242,7 +260,15 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
               )}
             </div>
           )}
-          {visibleDeals.map((d) => {
+          {dealGroups.map((g) => (
+            <div key={g.city ?? "__all__"} className="space-y-3">
+              {g.city && (
+                <div className="flex items-center gap-2 pt-1">
+                  <span className="text-sm font-black text-slate-900">{g.city}</span>
+                  <span className="text-2xs text-slate-400">({g.deals.length}) · הפער נמדד מול השוק של {g.city}</span>
+                </div>
+              )}
+              {g.deals.map((d) => {
             const comp = comps[d.id];
             const s = sqm(d);
             const dl = delta(d);
@@ -313,7 +339,9 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                 )}
               </div>
             );
-          })}
+              })}
+            </div>
+          ))}
         </div>
 
         {/* table — md+ only */}
@@ -346,7 +374,17 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                   )}
                 </td></tr>
               )}
-              {visibleDeals.map((d) => {
+              {dealGroups.map((g) => (
+                <FragmentRow key={g.city ?? "__all__"}>
+                  {g.city && (
+                    <tr className="bg-slate-50/80">
+                      <td colSpan={12} className="px-3 py-1.5 text-right">
+                        <span className="text-xs font-black text-slate-900">{g.city}</span>
+                        <span className="mr-2 text-2xs text-slate-400">({g.deals.length}) · הפער נמדד מול השוק של {g.city}</span>
+                      </td>
+                    </tr>
+                  )}
+                  {g.deals.map((d) => {
                 const comp = comps[d.id];
                 const s = sqm(d);
                 const dl = delta(d);
@@ -424,7 +462,9 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                     )}
                   </FragmentRow>
                 );
-              })}
+                  })}
+                </FragmentRow>
+              ))}
             </tbody>
           </table>
         </div>
