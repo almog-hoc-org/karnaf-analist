@@ -154,7 +154,16 @@ export default async function HomePage() {
   const median3y = sh3all.length
     ? (sh3all[Math.floor((sh3all.length - 1) / 2)] + sh3all[Math.ceil((sh3all.length - 1) / 2)]) / 2
     : null;
-  const window3yLabel = top3yGain.length ? `${top3yGain[0].fromY}→${top3yGain[0].toY}` : null;
+  // With the bounded window slide, cities can legitimately differ in their
+  // start year — the label discloses the RANGE instead of pretending the
+  // first city's window speaks for all of them.
+  const window3yLabel = (() => {
+    if (!top3yGain.length) return null;
+    const froms = top3yGain.map((c) => c.fromY);
+    const lo = Math.min(...froms), hi = Math.max(...froms);
+    const to = top3yGain[0].toY;
+    return lo === hi ? `${lo}→${to}` : `${lo}–${hi}→${to}`;
+  })();
 
   // Most-expensive = second-hand median ₪/m² from REAL transactions
   const txPricesForRank = await loadCityTransactionPrices();

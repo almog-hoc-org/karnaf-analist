@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { canonicalCityName } from "@/lib/cityAliases";
+import { cityClassificationRate } from "@/lib/classificationRate";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
 import { computeCityGap, describeSupplySource } from "@/lib/gap-analysis";
@@ -214,13 +215,14 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   // Load scattered facts from CBS/MoF reports (cached file)
   const scattered = getCityScatteredData(cityName);
   // parallel — these were sequential and dominated page latency
-  const [cityPriceChanges, cityPopulationEstimates, cityGraphData, cityDeals, dealCounts, cleaning] = await Promise.all([
+  const [cityPriceChanges, cityPopulationEstimates, cityGraphData, cityDeals, dealCounts, cleaning, classRate] = await Promise.all([
     loadCityPriceChanges(cityName),
     loadCityPopulationEstimates(cityName),
     loadCityGraphSeries(cityName),
     loadCityDeals(cityName),
     loadDealCountCube(cityName),
     loadCityCleaningCounts(cityName),
+    cityClassificationRate(cityName),
   ]);
 
   if (!city) {
@@ -309,15 +311,13 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       : null,
   ].filter(Boolean) as { key: string; text: string; icon: string; color: string }[];
 
-  // Derive price KPIs from nadlan.gov.il trends (Q1 data)
-  const q1Prices = priceTrends.filter(p => p.quarter === 1 && p.median_price && p.median_price > 0);
-  const earliestQ1 = q1Prices.length > 0 ? q1Prices[0] : null;
-  const latestQ1 = q1Prices.length > 0 ? q1Prices[q1Prices.length - 1] : null;
-  const latestPrice = latestQ1?.median_price ?? null;
-  const earliestPrice = earliestQ1?.median_price ?? null;
-  const nadlanPriceChange = (earliestPrice && latestPrice && earliestPrice > 0)
-    ? ((latestPrice - earliestPrice) / earliestPrice * 100)
-    : null;
+  // Price KPIs come from the SAME engine as the price-change panel below
+  // (loadCityPriceChanges): annual averages of all quarters, end capped at
+  // ref_year, sliding start disclosed via fromY. The old inline version here
+  // compared earliest-Q1-ever vs latest-Q1 — no year cap, no sample floor —
+  // so this strip and the panel under it showed two different "median price
+  // change" numbers for the same city on the same page.
+  const headlineWindow = cityPriceChanges?.change5y ?? cityPriceChanges?.change3y ?? null;
 
   // ── Supply/demand gap (correct formula with fallback ladder) ────────────
   // demand = pop_growth / persons_per_household
@@ -421,33 +421,40 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             <p>מחיר חציוני לדירה | מקור: nadlan.gov.il</p>
           </div>
         </div>
-        {latestPrice ? (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            <KpiTile
-              label={`מחיר חציוני Q1/${earliestQ1?.year ?? ''}`}
-              value={formatPrice(earliestPrice)}
-              accent="zinc"
-            />
-            <KpiTile
-              label={`מחיר חציוני Q1/${latestQ1?.year ?? ''}`}
-              value={formatPrice(latestPrice)}
-              accent="cyan"
-            />
-            <KpiTile
-              label={`שינוי מחיר ${earliestQ1?.year ?? ''}–${latestQ1?.year ?? ''}`}
-              value={nadlanPriceChange !== null ? `${nadlanPriceChange >= 0 ? '+' : ''}${nadlanPriceChange.toFixed(1)}%` : '—'}
-              accent={nadlanPriceChange !== null && nadlanPriceChange >= 0 ? "emerald" : "red"}
-              valueClassName={nadlanPriceChange !== null && nadlanPriceChange >= 0 ? "text-emerald-700" : "text-red-600"}
-            />
-            <KpiTile
-              label="נקודות מחיר זמינות"
-              value={`${q1Prices.length} רבעונים`}
-              accent="purple"
-            />
-          </div>
+        {headlineWindow ? (
+          <>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <KpiTile
+                label={`מחיר חציוני ${headlineWindow.fromY}`}
+                value={formatPrice(headlineWindow.fromAvg)}
+                accent="zinc"
+              />
+              <KpiTile
+                label={`מחיר חציוני ${headlineWindow.toY}`}
+                value={formatPrice(headlineWindow.toAvg)}
+                accent="cyan"
+              />
+              <KpiTile
+                label={`שינוי מחיר ${headlineWindow.fromY}–${headlineWindow.toY}`}
+                value={`${headlineWindow.pct >= 0 ? '+' : ''}${headlineWindow.pct.toFixed(1)}%`}
+                accent={headlineWindow.pct >= 0 ? "emerald" : "red"}
+                valueClassName={headlineWindow.pct >= 0 ? "text-emerald-700" : "text-red-600"}
+              />
+              <KpiTile
+                label="בסיס הנתון"
+                value={`${headlineWindow.fromQuarters + headlineWindow.toQuarters} רבעונים`}
+                accent="purple"
+              />
+            </div>
+            {headlineWindow.thin && (
+              <p className="mt-2 text-2xs font-semibold text-amber-600">
+                ⚠ מדגם דל — אחת משנות הקצה נשענת על רבעון בודד או שהחלון הוזז בגלל שנים חסרות; קרא את המספר בזהירות
+              </p>
+            )}
+          </>
         ) : (
           <div className="glass-card p-4 md:p-6 text-center text-slate-500 text-sm">
-            אין נתוני מחיר זמינים מ-nadlan.gov.il
+            אין מספיק נתוני מחיר רציפים מ-nadlan.gov.il להצגת מגמה אמינה
           </div>
         )}
       </section>
@@ -596,6 +603,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         cityName={city.city_name}
         secondhandMinAge={getRuleNum("secondhand_min_age", 4)}
         modernMinYear={getRuleNum("modern_min_year", 2005)}
+        classificationRate={classRate?.rate ?? null}
       />
 
       {/* ═══════════════════════════════════════════════════════════
@@ -675,17 +683,16 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               }))}
               cityName={city.city_name}
             />
-            {priceTrends.length >= 2 && (() => {
-              const first = priceTrends.find(p => p.median_price)?.median_price ?? 0;
-              const last = [...priceTrends].reverse().find(p => p.median_price)?.median_price ?? 0;
-              const changePct = first > 0 ? ((last - first) / first * 100).toFixed(1) : '—';
-              return (
-                <p className="text-xs text-slate-500 mt-2 text-center">
-                  שינוי מחיר חציוני: <span className={Number(changePct) >= 0 ? 'text-emerald-700' : 'text-red-600'}>{changePct}%</span>
-                  {' '}(₪{formatNumber(first)} → ₪{formatNumber(last)})
-                </p>
-              );
-            })()}
+            {headlineWindow && (
+              <p className="text-xs text-slate-500 mt-2 text-center">
+                שינוי מחיר חציוני {headlineWindow.fromY}–{headlineWindow.toY}:{' '}
+                <span className={headlineWindow.pct >= 0 ? 'text-emerald-700' : 'text-red-600'}>
+                  {headlineWindow.pct >= 0 ? '+' : ''}{headlineWindow.pct.toFixed(1)}%
+                </span>
+                {' '}(₪{formatNumber(headlineWindow.fromAvg)} → ₪{formatNumber(headlineWindow.toAvg)})
+                {headlineWindow.thin ? ' · מדגם דל' : ''}
+              </p>
+            )}
           </div>
         </section>
       )}

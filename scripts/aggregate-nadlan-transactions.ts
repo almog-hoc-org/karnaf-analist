@@ -225,6 +225,22 @@ async function main() {
     process.exit(2);
   }
 
+  // ── per-city classification rate ──────────────────────────────────
+  // The share of a city's nadlan deals that carry a sale-channel class. The
+  // new/second-hand split is only as honest as this number — in בת ים it is
+  // ~12%, and a "new vs second-hand" trend built on 12% of the market is not
+  // a trend. Computed here (the one place that already read every row) and
+  // published in the same transaction, so the split's evidence always matches
+  // the stats it gates. Read via lib/classificationRate.ts.
+  const classByCity = new Map<string, { nadlanN: number; classifiedN: number }>();
+  for (const [city, c] of byCity) {
+    const nadlan = c.nadlan;
+    classByCity.set(city, {
+      nadlanN: nadlan.length,
+      classifiedN: nadlan.filter((r) => r.class_source != null).length,
+    });
+  }
+
   const COLS = "city_name,year,room_bucket,scope,avg_price,median_price,avg_sqm,median_sqm,n";
   const CHUNK = 60;
   await prisma.$transaction(
@@ -236,6 +252,30 @@ async function main() {
         const params: unknown[] = [];
         for (const o of slice) params.push(o.city, o.year, o.bucket, o.scope, o.s.avg_price, o.s.median_price, o.s.avg_sqm, o.s.median_sqm, o.s.n);
         await tx.$executeRawUnsafe(`INSERT INTO nadlan_year_room_stats (${COLS}) VALUES ${vs}`, ...params);
+      }
+
+      await tx.$executeRawUnsafe(
+        `CREATE TABLE IF NOT EXISTS city_classification_rate (
+           city_name TEXT PRIMARY KEY,
+           nadlan_n INTEGER NOT NULL,
+           classified_n INTEGER NOT NULL,
+           rate REAL NOT NULL,
+           from_year INTEGER NOT NULL,
+           updated_at TEXT NOT NULL
+         )`
+      );
+      await tx.$executeRawUnsafe("DELETE FROM city_classification_rate");
+      const now = new Date().toISOString();
+      const entries = [...classByCity.entries()].filter(([, v]) => v.nadlanN > 0);
+      for (let i = 0; i < entries.length; i += CHUNK) {
+        const slice = entries.slice(i, i + CHUNK);
+        const vs = slice.map(() => "(?,?,?,?,?,?)").join(",");
+        const params: unknown[] = [];
+        for (const [city, v] of slice) params.push(city, v.nadlanN, v.classifiedN, v.classifiedN / v.nadlanN, minYear, now);
+        await tx.$executeRawUnsafe(
+          `INSERT INTO city_classification_rate (city_name, nadlan_n, classified_n, rate, from_year, updated_at) VALUES ${vs}`,
+          ...params
+        );
       }
     },
     // Generous bounds: this is a bulk rewrite of the whole stats table, and the

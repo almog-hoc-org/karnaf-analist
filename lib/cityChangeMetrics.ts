@@ -47,6 +47,9 @@ export async function loadCitiesChangeMetrics(): Promise<Map<string, CityChangeM
   });
   for (const r of statRows) {
     if (r.scope === "all" || r.scope === "new") {
+      // Same floor as second-hand. These two scopes had NO gate at all, so the
+      // Δ-כללי / Δ-חדשות columns happily built ±40% "trends" on 4-deal years.
+      if (r.n < SH_MIN_N) continue;
       if (r.avg_sqm != null) ensure(r.city_name)[r.scope][r.year] = r.avg_sqm;
     } else if (r.scope === "secondhand") {
       if (r.n < SH_MIN_N) continue;
@@ -117,12 +120,22 @@ export async function loadSecondhandChanges(
   refYearArg: number = refYear()
 ): Promise<SecondhandChange[]> {
   const fromYear = refYearArg - win;
+  // BOUNDED SLIDE (QA fix 2026-08-13). The exact-pair demand — a usable cell
+  // at PRECISELY refYear−win — was the third window policy on one homepage,
+  // and the strictest: קריית ביאליק and לוד were ranking-eligible yet absent
+  // from every default list because 10+ deals existed at ry−2 but not ry−3.
+  // The start may now slide FORWARD up to 2 years; the years actually used
+  // are returned in fromY/toY, and consumers display them. The end never
+  // slides — a partial window end is a different, dishonest number.
+  const SLIDE = 2;
+  const candidateYears = [refYearArg];
+  for (let y = fromYear; y <= Math.min(fromYear + SLIDE, refYearArg - 1); y++) candidateYears.push(y);
   const thinCities = await loadThinSampleCities();
   const rows = await prisma.nadlan_year_room_stats.findMany({
     where: {
       scope: { in: ["secondhand", "secondhand_fixedmix"] },
       room_bucket: "all",
-      year: { in: [fromYear, refYearArg] },
+      year: { in: candidateYears },
       n: { gte: SH_MIN_N },
     },
     select: { city_name: true, year: true, scope: true, avg_sqm: true, median_sqm: true },
@@ -136,27 +149,33 @@ export async function loadSecondhandChanges(
   // ratio is not a price change — spot checks showed up to ~9pp of pure
   // artifact. Both endpoints now come from the same series, adjusted when it
   // covers both years, raw otherwise.
-  const byCity = new Map<string, { rawFrom?: number; rawTo?: number; adjFrom?: number; adjTo?: number }>();
+  type Series = { from?: number; fromY?: number; to?: number };
+  const byCity = new Map<string, { raw: Series; adj: Series }>();
   for (const r of rows) {
     const adj = r.scope === "secondhand_fixedmix";
     const v = adj ? r.median_sqm : field === "avg_sqm" ? r.avg_sqm : r.median_sqm;
     if (v == null || v <= 0) continue;
-    const cur = byCity.get(r.city_name) ?? {};
-    if (adj) { if (r.year === fromYear) cur.adjFrom = v; else cur.adjTo = v; }
-    else { if (r.year === fromYear) cur.rawFrom = v; else cur.rawTo = v; }
+    const cur = byCity.get(r.city_name) ?? { raw: {}, adj: {} };
+    const side = adj ? cur.adj : cur.raw;
+    if (r.year === refYearArg) {
+      side.to = v;
+    } else if (side.fromY == null || r.year < side.fromY) {
+      // earliest usable start wins — closest to the nominal window
+      side.from = v; side.fromY = r.year;
+    }
     byCity.set(r.city_name, cur);
   }
 
   const out: SecondhandChange[] = [];
   for (const [city_name, c] of byCity) {
     if (thinCities.has(city_name)) continue; // city_min_total_deals rule
-    const adjusted = c.adjFrom != null && c.adjTo != null;
-    const from = adjusted ? c.adjFrom : c.rawFrom;
-    const to = adjusted ? c.adjTo : c.rawTo;
-    if (from == null || to == null) continue;
-    const pct = (to / from - 1) * 100;
+    // The mix-adjusted series wins — but only as a PAIR (see comment above).
+    const adjusted = c.adj.from != null && c.adj.to != null;
+    const s = adjusted ? c.adj : c.raw;
+    if (s.from == null || s.to == null || s.fromY == null) continue;
+    const pct = (s.to / s.from - 1) * 100;
     if (!Number.isFinite(pct) || Math.abs(pct) > SH_MAX_ABS_CHANGE) continue;
-    out.push({ city_name, pct, fromY: fromYear, toY: refYearArg });
+    out.push({ city_name, pct, fromY: s.fromY, toY: refYearArg });
   }
   return out.sort((a, b) => b.pct - a.pct);
 }

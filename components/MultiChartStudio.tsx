@@ -107,11 +107,13 @@ const fmtVal = (v: number, metric: Metric) =>
 const fmtAxis = (v: number, metric: Metric) =>
   metric === "sqm" ? `₪${Math.round(v / 1000)}K` : `₪${(v / 1_000_000).toFixed(1)}M`;
 
-export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, secondhandMinAge = 4, modernMinYear = 2005 }: {
+export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, secondhandMinAge = 4, modernMinYear = 2005, classificationRate = null }: {
   data: CityGraphData; deals: NadlanDeal[]; dealCounts?: DealCountCube;
   /** what the two cleaning rules held back in this city — shown, never hidden */
   cleaning?: { dupes: number; luxury: number };
   cityName: string; secondhandMinAge?: number; modernMinYear?: number;
+  /** share of the city's deals carrying a sale-channel class (lib/classificationRate) — gates the split's confidence */
+  classificationRate?: number | null;
 }) {
   const allYears = useMemo(() => {
     const s = new Set<number>([...data.median.map((m) => m.year), ...data.nadlanYears]);
@@ -145,7 +147,12 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const mobile = useIsMobile(); // compact chart geometry + short labels below 640px
   const [metric, setMetric] = useState<Metric>("sqm");
   // selection hierarchy (top→down): deal-type → building modern/old (יד-2 only) → rooms
-  const [dealType, setDealType] = useState<DealType>(data.nadlan.all_govmap.all.length > 0 ? "all" : "sh");
+  // Default view: "all" when the city is govmap-sourced OR when fewer than
+  // 20% of its deals are classified — a second-hand series built on a 12%
+  // classification rate (בת ים) is not a safe default lens.
+  const [dealType, setDealType] = useState<DealType>(
+    data.nadlan.all_govmap.all.length > 0 || (classificationRate != null && classificationRate < 0.2) ? "all" : "sh"
+  );
   const [buildingAge, setBuildingAge] = useState<Ba>("all");
   const [room, setRoom] = useState<RoomKey>("all");
   const [from, setFrom] = useState(Math.max(minY, Math.max(firstDataYear, maxY - 10)));
@@ -324,6 +331,26 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
         </div>
       )}
 
+      {/* Classification-confidence gate (QA spec 2026-08-13). The new/second-
+          hand split is only as honest as the share of deals that actually
+          carry a class — in בת ים that is ~12%, and a split built on 12% of
+          the market is a guess wearing a chart. <20% opens on "כללי" and says
+          why; 20-35% shows a softer caveat. */}
+      {!govCity && classificationRate != null && classificationRate < 0.35 && (
+        <div className={`mb-4 rounded-xl border px-4 py-2.5 text-xs leading-relaxed ${
+          classificationRate < 0.2
+            ? "border-amber-300 bg-amber-50 text-amber-800"
+            : "border-slate-200 bg-slate-50 text-slate-600"
+        }`}>
+          {classificationRate < 0.2 ? (
+            <><b>פילוח בזהירות:</b> רק {Math.round(classificationRate * 100)}% מהעסקאות ב{cityName} מסווגות
+            לחדש/יד-שנייה — סדרות הפילוח מייצגות חלק קטן מהשוק, ולכן ברירת המחדל כאן היא &quot;כללי&quot;.</>
+          ) : (
+            <>{Math.round(classificationRate * 100)}% מהעסקאות ב{cityName} מסווגות לחדש/יד-שנייה — פילוח חלקי, קרא את סדרות היד-2/חדשות בזהירות.</>
+          )}
+        </div>
+      )}
+
       {/* control bar — sticky on desktop only: at phone width the full bar is
           taller than the viewport and STICKING it buried the chart it controls
           (user: "חפיפה ודריסה"). On mobile it lays out as tidy stacked rows. */}
@@ -447,15 +474,16 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                   formatter={(v) => { const d = seriesDefs.find((s) => s.key === v); return d ? (mobile ? d.short : d.label) : String(v); }}
                   wrapperStyle={{ fontSize: 11, ...(mobile ? { paddingBottom: 6 } : {}) }} />
                 {activeDefs.map((s) => (
+                  // a year suppressed for thin sample is a GAP, not a smooth segment
                   <Line isAnimationActive={false} key={s.key} type="monotone" dataKey={s.key} stroke={s.color} strokeWidth={s.external ? 2 : 3}
-                    connectNulls dot={{ r: 3, fill: s.color, strokeWidth: 0 }} activeDot={{ r: 5 }}
+                    connectNulls={false} dot={{ r: 3, fill: s.color, strokeWidth: 0 }} activeDot={{ r: 5 }}
                     strokeDasharray={s.external ? "6 3" : undefined} />
                 ))}
               </ComposedChart>
             </ResponsiveContainer>
           )}
           <div className="mt-2 text-2xs leading-relaxed text-slate-500">
-            שנה עם פחות מ-{MIN_N} עסקאות לא מוצגת · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
+            שנה עם פחות מ-{MIN_N} עסקאות לא מוצגת — הקו נשבר שם, לא מגושר · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
             {latestYearInRange && partialSet.has(maxY) && latestYearHasVisibleData && <> · {maxY} מוצגת בגרף כשנה חלקית, ואחוזי השינוי מחושבים עד {maxFullY}</>}
             {latestYearInRange && partialSet.has(maxY) && !latestYearHasVisibleData && <> · ב-{maxY} אין מספיק עסקאות לבחירה הנוכחית, ולכן אין נקודה בסדרה</>}
           </div>
@@ -487,7 +515,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                     <Tooltip contentStyle={{ ...tooltipStyle }}
                       formatter={tipFmt((value, name) => name === "n" ? [Number(value).toLocaleString("he-IL"), "עסקאות"] : [fmtVal(value, metric), s.label])} />
                     {!s.external && <Bar isAnimationActive={false} yAxisId="vol" dataKey="n" fill="#b5e2ea" opacity={0.5} radius={[2, 2, 0, 0]} maxBarSize={18} />}
-                    <Line isAnimationActive={false} type="monotone" dataKey="price" stroke={s.color} strokeWidth={2.5} connectNulls dot={{ r: 2.5, fill: s.color, strokeWidth: 0 }} activeDot={{ r: 4 }} />
+                    <Line isAnimationActive={false} type="monotone" dataKey="price" stroke={s.color} strokeWidth={2.5} connectNulls={false} dot={{ r: 2.5, fill: s.color, strokeWidth: 0 }} activeDot={{ r: 4 }} />
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>

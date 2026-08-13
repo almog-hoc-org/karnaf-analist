@@ -80,6 +80,10 @@ export interface CityTransactionPrices {
   distinctYears: number;
   /** thin = no year passed MIN_N — show an explicit "בהשלמה" warning, not numbers */
   thin: boolean;
+  /** price levels come from the govmap-only series (city has no nadlan
+   *  coverage) — display with a "מקור חלופי" disclosure, and never compare
+   *  the LEVEL against nadlan-priced cities. */
+  govmapSource: boolean;
 }
 
 interface StatRow { city_name: string; year: number; scope: string; avg_sqm: number | null; median_sqm: number | null; n: number }
@@ -93,7 +97,7 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
     prisma.$queryRawUnsafe<StatRow[]>(
       `SELECT city_name, year, scope, avg_sqm, median_sqm, n
        FROM nadlan_year_room_stats
-       WHERE room_bucket='all' AND scope IN ('all','secondhand') AND year IN (${years.map(() => "?").join(",")})`,
+       WHERE room_bucket='all' AND scope IN ('all','all_govmap','secondhand') AND year IN (${years.map(() => "?").join(",")})`,
       ...years
     ),
     prisma.$queryRawUnsafe<CovRow[]>(
@@ -115,13 +119,24 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
   const out = new Map<string, CityTransactionPrices>();
   for (const c of cov) {
     const scopes = byCity.get(c.city_name);
-    // pick the latest fallback year where scope=all clears MIN_N
+    // pick the latest fallback year where scope=all clears MIN_N; a city whose
+    // "all" series lives under all_govmap (no nadlan coverage — pipeline
+    // decision, scripts/aggregate-nadlan-transactions.ts) falls through to
+    // that series instead of being mislabeled "בהשלמה" while sitting on a
+    // decade of perfectly good govmap data.
     let priceYear: number | null = null;
+    let govmapSource = false;
     for (const y of years) {
       const cell = scopes?.get("all")?.get(y);
       if (cell && Number(cell.n) >= threshold) { priceYear = y; break; }
     }
-    const allCell = priceYear != null ? scopes?.get("all")?.get(priceYear) : undefined;
+    if (priceYear == null) {
+      for (const y of years) {
+        const cell = scopes?.get("all_govmap")?.get(y);
+        if (cell && Number(cell.n) >= threshold) { priceYear = y; govmapSource = true; break; }
+      }
+    }
+    const allCell = priceYear != null ? scopes?.get(govmapSource ? "all_govmap" : "all")?.get(priceYear) : undefined;
     const shCell = priceYear != null ? scopes?.get("secondhand")?.get(priceYear) : undefined;
     const shOk = shCell && Number(shCell.n) >= threshold;
 
@@ -139,6 +154,7 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
       yearMax: c.ymax != null ? Number(c.ymax) : null,
       distinctYears: Number(c.yrs),
       thin: priceYear == null,
+      govmapSource,
     });
   }
   return out;

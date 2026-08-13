@@ -22,6 +22,7 @@ export default function PriceChangeSection({
   cityName,
   secondhandMinAge = 4,
   modernMinYear = 2005,
+  classificationRate = null,
 }: {
   priceChanges: CityPriceChanges | null;
   graphData: CityGraphData | null;
@@ -32,6 +33,7 @@ export default function PriceChangeSection({
   cityName: string;
   secondhandMinAge?: number;
   modernMinYear?: number;
+  classificationRate?: number | null;
 }) {
   return (
     <section className="mb-10 rounded-3xl border-2 border-indigo-200/70 bg-gradient-to-b from-indigo-50/40 to-white p-4 sm:p-6 shadow-sm">
@@ -52,7 +54,7 @@ export default function PriceChangeSection({
 
       {/* 1. The three price graphs + shared controls + period compare + drill-down */}
       {graphData ? (
-        <MultiChartStudio data={graphData} deals={deals} dealCounts={dealCounts} cleaning={cleaning} cityName={cityName} secondhandMinAge={secondhandMinAge} modernMinYear={modernMinYear} />
+        <MultiChartStudio data={graphData} deals={deals} dealCounts={dealCounts} cleaning={cleaning} cityName={cityName} secondhandMinAge={secondhandMinAge} modernMinYear={modernMinYear} classificationRate={classificationRate} />
       ) : (
         <div className="rounded-2xl bg-white border border-slate-200 p-4 text-sm text-slate-500 mb-4">
           אין נתוני עסקאות מ-nadlan עבור {cityName} עדיין.

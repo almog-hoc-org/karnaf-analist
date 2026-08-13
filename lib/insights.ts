@@ -53,10 +53,8 @@ async function getNationalAveragesUncached() {
  */
 export const getNationalAverages = cachedReference(getNationalAveragesUncached, ["national-averages"]);
 
-function pct(v: number) {
-  // v is already in percent (e.g. 36.1 means 36.1%), do NOT multiply by 100
-  return `${v.toFixed(1)}%`;
-}
+// (the pct() formatter left with the legacy Excel price insight — live
+// numbers format inline where they are built)
 
 function round2(v: number) {
   return Math.round(v * 100) / 100;
@@ -85,16 +83,20 @@ export async function getCityInsights(cityName: string): Promise<CityInsights> {
   const nationals = await getNationalAverages();
 
   // ── Price change insight ──────────────────────────────────────────────────
+  // LIVE numbers from the shared price-change engine — not the legacy Excel
+  // column (price_change_pct) whose hardcoded "בין 2023 ל-2026" label drifted
+  // from whatever window the number actually described. Thin windows (single
+  // quarter endpoints, slid start) produce no insight rather than a shaky one.
   let priceChange: string | null = null;
-  if (city.price_change_pct !== null) {
-    const cityPct = pct(city.price_change_pct);
-    if (nationals.avg_price_change_pct !== null) {
-      const natPct = pct(nationals.avg_price_change_pct);
-      priceChange = `המחיר למ"ר עלה ב-${cityPct} בין 2023 ל-2026, לעומת ממוצע ארצי של ${natPct}`;
-    } else {
-      priceChange = `המחיר למ"ר עלה ב-${cityPct} בין 2023 ל-2026`;
+  try {
+    const { loadCityPriceChanges } = await import("./price-changes");
+    const pc = await loadCityPriceChanges(cityName);
+    const w = pc?.change3y ?? pc?.change5y ?? null;
+    if (w && !w.thin) {
+      const dir = w.pct >= 0 ? "עלה" : "ירד";
+      priceChange = `המחיר החציוני לדירה ${dir} ב-${Math.abs(w.pct).toFixed(1)}% בין ${w.fromY} ל-${w.toY} (נדל"ן גוב)`;
     }
-  }
+  } catch { /* price trends absent — no insight beats a wrong one */ }
 
   // ── Supply balance (new ladder: completions → starts → permits) ──────────
   // Replaces the legacy golden_multiplier which used construction_4y_gross

@@ -34,13 +34,25 @@ export default function PriceTrendChart({ data }: PriceTrendChartProps) {
     );
   }
 
-  const chartData = data
-    .filter((d) => d.median_price !== null)
-    .map((d) => ({
-      period: `Q${d.quarter}/${d.year}`,
-      מחיר: d.median_price,
-      מחירMil: d.median_price ? d.median_price / 1000000 : 0,
-    }));
+  // FULL quarter axis, gaps included. The old version filtered missing
+  // quarters OUT of the array — a categorical X axis then collapses, so
+  // Q1/2020 could sit adjacent to Q3/2022 with an unbroken line between
+  // them, erasing a two-year hole from the picture. Every quarter between
+  // the first and last data point now gets a tick; missing ones carry null
+  // and the line breaks there (connectNulls={false}).
+  const present = new Map(
+    data.filter((d) => d.median_price !== null).map((d) => [`${d.year}-${d.quarter}`, d.median_price as number])
+  );
+  const withData = data.filter((d) => d.median_price !== null);
+  const first = withData[0], last = withData[withData.length - 1];
+  const chartData: Array<{ period: string; מחיר: number | null }> = [];
+  if (first && last) {
+    for (let y = first.year, q = first.quarter; y < last.year || (y === last.year && q <= last.quarter); ) {
+      chartData.push({ period: `Q${q}/${y}`, מחיר: present.get(`${y}-${q}`) ?? null });
+      q++; if (q > 4) { q = 1; y++; }
+    }
+  }
+  const gapCount = chartData.filter((c) => c.מחיר === null).length;
 
   return (
     <motion.div
@@ -84,11 +96,17 @@ export default function PriceTrendChart({ data }: PriceTrendChartProps) {
             dataKey="מחיר"
             stroke={BRAND}
             strokeWidth={2.5}
+            connectNulls={false}
             dot={{ fill: BRAND, r: 3, strokeWidth: 0 }}
             activeDot={{ r: 5, fill: BRAND_LIGHT }}
           />
         </LineChart>
       </ResponsiveContainer>
+      {gapCount > 0 && (
+        <p className="mt-1 text-2xs text-slate-400 text-center">
+          {gapCount} רבעונים ללא נתון בטווח — הקו נשבר שם בכוונה
+        </p>
+      )}
     </motion.div>
   );
 }

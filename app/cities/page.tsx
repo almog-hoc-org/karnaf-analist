@@ -117,6 +117,7 @@ export default async function CitiesPage() {
       tx_year_min: txPrices.get(c.city_name)?.yearMin ?? null,
       tx_year_max: txPrices.get(c.city_name)?.yearMax ?? null,
       tx_thin: txPrices.get(c.city_name)?.thin ?? true,
+      tx_govmap: txPrices.get(c.city_name)?.govmapSource ?? false,
     };
   });
 

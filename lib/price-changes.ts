@@ -38,6 +38,12 @@ export interface PriceChangeWindow {
   fromY: number;
   /** End year: latest data year that does not exceed the site reference year. */
   toY: number;
+  /** Quarters behind each endpoint — the evidence. 1-quarter years are weak. */
+  fromQuarters: number;
+  toQuarters: number;
+  /** True when either endpoint rests on a single quarter, OR the window slid
+   *  more than 2 years past its nominal start. Display with a caveat. */
+  thin: boolean;
 }
 
 export interface CityPriceChanges {
@@ -59,8 +65,12 @@ function computeChange(
   const years = [...yrs.keys()].filter((y) => y <= endCap).sort((a, b) => a - b);
   const end = years[years.length - 1];
   if (end === undefined) return null;
+  // Slide is bounded: a "3-year change" that actually compares end-0.5y is
+  // not a 3-year change. Up to 2 years of forward slide is disclosed via
+  // fromY; beyond that the window is refused rather than mislabeled.
   const start = years.find((y) => y >= end - win);
   if (start === undefined || start >= end) return null;
+  if (start > end - win + 2) return null;
   const a = yrs.get(start)!;
   const b = yrs.get(end)!;
   const fromAvg = a.sum / a.n;
@@ -72,6 +82,12 @@ function computeChange(
     toAvg,
     fromY: start,
     toY: end,
+    fromQuarters: a.n,
+    toQuarters: b.n,
+    // No deal counts exist in nadlan_price_trends (official medians), so the
+    // evidence unit is QUARTERS: an annual "median" built from one quarter is
+    // a weak endpoint and the UI must say so.
+    thin: a.n < 2 || b.n < 2 || start > end - win,
   };
 }
 
