@@ -20,7 +20,7 @@
  */
 import Database from "better-sqlite3";
 import path from "path";
-import { canonicalCityName } from "./cityAliases";
+import { canonicalCityName, normalizeCity } from "./cityAliases";
 
 const CKAN = "https://data.gov.il/api/3/action";
 const DB_PATH = path.resolve("./data/realestate.db");
@@ -136,13 +136,16 @@ interface ProjectRow {
 function mapRecords(records: Rec[]): ProjectRow[] {
   if (!records.length) return [];
   const keys = Object.keys(records[0]);
-  const kCity = findKey(keys, [/^(שם\s*)?(ה)?(רשות|יישוב|ישוב|עיר)/, /(רשות מקומית|יישוב|ישוב)/]);
-  const kSite = findKey(keys, [/שם\s*(ה)?מתחם/, /מתחם/, /שם\s*(ה)?(פרויקט|אתר|שכונה)/], /מספר|כמות/);
-  const kTrack = findKey(keys, [/מסלול/]);
-  const kStatus = findKey(keys, [/סט(א)?טוס/, /שלב/]);
-  const kExisting = findKey(keys, [/יח.{0,4}ד.*קיימ/, /קיימ.*יח.{0,4}ד/, /דירות.*קיימ/]);
-  const kProposed = findKey(keys, [/יח.{0,4}ד.*(מוצע|מתוכנ|תוספת|חדש)/, /(מוצע|מתוכנ).*יח.{0,4}ד/, /דירות.*(מוצע|מתוכנ)/]);
-  const kPlan = findKey(keys, [/מספר\s*ת(ו)?כנית/, /ת(ו)?כנית/]);
+  // Each field carries BOTH spellings the authority has actually used: Hebrew
+  // headers, and the transliterated-Latin headers of the current upload
+  // (Yeshuv, ShemMitcham, YachadMutza… — observed live 2026-08-13).
+  const kCity = findKey(keys, [/^Yeshuv$/i, /^(שם\s*)?(ה)?(רשות|יישוב|ישוב|עיר)/, /(רשות מקומית|יישוב|ישוב)/], /semel|סמל/i);
+  const kSite = findKey(keys, [/^ShemMitc?ham$/i, /שם\s*(ה)?מתחם/, /מתחם/, /Mitc?ham/i, /שם\s*(ה)?(פרויקט|אתר|שכונה)/], /מספר|כמות|mispar/i);
+  const kTrack = findKey(keys, [/^Maslul$/i, /מסלול/]);
+  const kStatus = findKey(keys, [/^Status$/i, /סט(א)?טוס/, /שלב/]);
+  const kExisting = findKey(keys, [/^YachadKayam$/i, /יח.{0,4}ד.*קיימ/, /קיימ.*יח.{0,4}ד/, /דירות.*קיימ/]);
+  const kProposed = findKey(keys, [/^YachadMutza$/i, /יח.{0,4}ד.*(מוצע|מתוכנ|תוספת|חדש)/, /(מוצע|מתוכנ).*יח.{0,4}ד/, /דירות.*(מוצע|מתוכנ)/, /^YachadTosafti$/i]);
+  const kPlan = findKey(keys, [/^MisparToc?hnit$/i, /מספר\s*ת(ו)?כנית/, /ת(ו)?כנית/]);
 
   if (!kCity) throw new Error(`לא זוהתה עמודת יישוב. עמודות: ${keys.join(" | ")}`);
   console.log(
@@ -203,6 +206,19 @@ async function main() {
 
   const db = new Database(DB_PATH);
   try {
+    // Fold each incoming settlement name onto the EXACT spelling our cities
+    // table uses ("תל אביב -יפו" → "תל אביב-יפו"), so the city page's join is
+    // a plain equality. Unmatched names (regional councils etc.) keep their own
+    // spelling — they simply have no city page to appear on.
+    const byNorm = new Map(
+      (db.prepare("SELECT city_name FROM cities").all() as Array<{ city_name: string }>)
+        .map((c) => [normalizeCity(c.city_name), c.city_name])
+    );
+    for (const r of rows) {
+      const exact = byNorm.get(normalizeCity(r.city_name));
+      if (exact) r.city_name = exact;
+    }
+
     db.exec(`CREATE TABLE IF NOT EXISTS urban_renewal_projects (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       city_name TEXT NOT NULL,

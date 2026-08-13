@@ -208,11 +208,16 @@ jobs:
           set -e
           cd /opt/karnaf
 
+          # </dev/null on every docker exec is load-bearing: this script arrives
+          # on bash's stdin (bash -s), and `docker compose exec -T` forwards its
+          # stdin to the container — without the redirect the first exec swallows
+          # the rest of the script and the run "succeeds" having done nothing.
+
           echo "── urban-renewal collector (fails soft, never destructive) ──"
-          docker compose exec -T app npx tsx lib/collect-urban-renewal.ts || true
+          docker compose exec -T app npx tsx lib/collect-urban-renewal.ts </dev/null || true
 
           echo "── full pipeline (same command as the 02:30 nightly) ──"
-          docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=ops-dispatch
+          docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=ops-dispatch </dev/null
 
           echo "── verification ──"
           docker compose exec -T app node -e '
@@ -230,7 +235,7 @@ jobs:
               console.log("data-contract ok:", dc.ok, "| raw:", JSON.stringify(dc.raw), "| stats:", JSON.stringify(dc.stats));
               if (dc.problems?.length) console.log("data-contract problems:", dc.problems.join(" ; "));
             } catch { console.log("data-contract.json: not found"); }
-          '
+          ' </dev/null
           REMOTE
 
       - name: confirm the site still answers
