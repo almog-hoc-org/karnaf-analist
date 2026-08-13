@@ -129,6 +129,20 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 15 * MINUTE,
   },
   {
+    id: "urban-renewal",
+    cmd: "npx",
+    args: ["tsx", "lib/collect-urban-renewal.ts"],
+    label: "מתחמי התחדשות עירונית (data.gov.il)",
+    why: "The national declared-districts list from the Governmental Authority for Urban Renewal, via the open-data portal's CKAN API. Resource id is discovered at run time (uploads get replaced, ids rot), field names matched by pattern (Hebrew headers drift between revisions). Fails soft: unreachable portal or a suspiciously small fetch leaves the existing table untouched.",
+    host: "https://data.gov.il",
+    probe: {
+      url: "https://data.gov.il/api/3/action/package_search?q=%D7%94%D7%AA%D7%97%D7%93%D7%A9%D7%95%D7%AA&rows=1",
+      method: "GET",
+      expectJson: true,
+    },
+    timeoutMs: 15 * MINUTE,
+  },
+  {
     id: "import-updates",
     cmd: "npx",
     args: ["tsx", "lib/import-updates.ts"],

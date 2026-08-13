@@ -2,6 +2,8 @@ import { prisma } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { canonicalCityName } from "@/lib/cityAliases";
 import { cityClassificationRate } from "@/lib/classificationRate";
+import { cityUrbanRenewalProjects } from "@/lib/urbanRenewal";
+import UrbanRenewalSection from "@/components/UrbanRenewalSection";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
 import { computeCityGap, describeSupplySource } from "@/lib/gap-analysis";
@@ -225,6 +227,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
     loadCityCleaningCounts(cityName),
     cityClassificationRate(cityName),
   ]);
+  const urbanRenewalProjects = await cityUrbanRenewalProjects(cityName);
 
   if (!city) {
     return (
@@ -827,37 +830,13 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         </section>
       )}
 
-      {/* Urban Renewal */}
-      {city.urban_renewal_status && (
-        <section className="mb-10">
-          <div className="section-header">
-            <div className="section-header-icon"><Icon name="refresh" size="1em" /></div>
-            <div>
-              <h2>התחדשות עירונית</h2>
-            </div>
-          </div>
-          <div className="glass-card p-4 md:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <p className="stat-label mb-1">סטטוס</p>
-                <p className="text-lg font-bold text-slate-900">{city.urban_renewal_status}</p>
-              </div>
-              {city.urban_renewal_proposed_units !== null && (
-                <div>
-                  <p className="stat-label mb-1">יחידות מוצעות</p>
-                  <p className="text-lg font-bold text-slate-900">{formatNumber(city.urban_renewal_proposed_units)}</p>
-                </div>
-              )}
-              {city.urban_renewal_existing_units !== null && (
-                <div>
-                  <p className="stat-label mb-1">יחידות קיימות</p>
-                  <p className="text-lg font-bold text-slate-700">{formatNumber(city.urban_renewal_existing_units)}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Urban Renewal — live district list when the collector has run, static snapshot otherwise */}
+      <UrbanRenewalSection
+        projects={urbanRenewalProjects}
+        staticStatus={city.urban_renewal_status}
+        staticExisting={city.urban_renewal_existing_units}
+        staticProposed={city.urban_renewal_proposed_units}
+      />
 
       {/* Insights */}
       {insightEntries.length > 0 && (

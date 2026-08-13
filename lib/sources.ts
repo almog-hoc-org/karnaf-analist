@@ -404,6 +404,18 @@ export const SOURCES: Source[] = [
     publicationSchedule: { type: "continuous" },
     language: "he",
   },
+  {
+    id: "urban-renewal-districts",
+    name: 'מתחמי התחדשות עירונית',
+    organization: 'הרשות הממשלתית להתחדשות עירונית',
+    category: "internal",
+    description: 'רשימת המתחמים המוכרזים להתחדשות עירונית — מסלול, סטטוס תכנוני, יח"ד קיימות ומוצעות — דרך פורטל הנתונים הפתוחים',
+    url: 'https://data.gov.il',
+    usedFor: 'מודול ההתחדשות העירונית בעמודי הערים (טבלת מתחמים פר עיר)',
+    feedsTables: ['urban_renewal_projects'],
+    publicationSchedule: { type: "irregular" },
+    language: "he",
+  },
 ];
 
 export function getSourceById(id: string): Source | null {
