@@ -29,8 +29,18 @@ on:
     branches:
       - claude/project-deep-learning-g64ogo
       - main
-  # Deploy the current branch on demand, without an empty commit.
+  # Deploy the current branch on demand, without an empty commit. The optional
+  # input also runs the full data pipeline on the live DB right after — the one
+  # operation push-to-deploy cannot express, needed when a code change alters
+  # what the aggregation produces and waiting for the 02:30 nightly means a day
+  # of stale stats. It lives here rather than in its own workflow because
+  # GitHub only registers dispatchable workflows from the default branch.
   workflow_dispatch:
+    inputs:
+      run_pipeline:
+        description: "אחרי הפריסה: להריץ את ה-pipeline המלא על ה-DB החי ולהדפיס אימות"
+        type: boolean
+        default: false
 
 # One deploy at a time. Two overlapping runs would race on the same working
 # copy and the same container, and the loser leaves the server in a state
@@ -165,4 +175,71 @@ jobs:
             sleep 10
           done
           echo "::error::site did not return 200 after the deploy"
+          exit 1
+
+  # Optional third act, workflow_dispatch + run_pipeline only: run the exact
+  # command the 02:30 nightly runs, on the container the deploy above just
+  # confirmed healthy, and print the verification numbers into this log where
+  # both the operator and the agent can read them. Sequential job in the same
+  # run — the deploy-vps concurrency group already guarantees nothing swaps
+  # the container mid-aggregation.
+  pipeline:
+    name: run data pipeline on VPS
+    needs: deploy
+    if: github.event_name == 'workflow_dispatch' && inputs.run_pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: ssh in and run the pipeline
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          USER: ${{ secrets.VPS_USER }}
+          KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          # Same normalisation + host-key pinning as the deploy job above.
+          HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
+          USER=$(printf '%s' "$USER" | tr -d '[:space:]')
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -T 15 "$HOST" >> ~/.ssh/known_hosts
+
+          ssh -o BatchMode=yes "$USER@$HOST" 'bash -s' <<'REMOTE'
+          set -e
+          cd /opt/karnaf
+
+          echo "── urban-renewal collector (fails soft, never destructive) ──"
+          docker compose exec -T app npx tsx lib/collect-urban-renewal.ts || true
+
+          echo "── full pipeline (same command as the 02:30 nightly) ──"
+          docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=ops-dispatch
+
+          echo "── verification ──"
+          docker compose exec -T app node -e '
+            const Database = require("better-sqlite3");
+            const db = new Database("/app/data/realestate.db", { readonly: true });
+            const s = db.prepare("SELECT COUNT(*) n, MIN(year) a, MAX(year) b FROM nadlan_year_room_stats").get();
+            console.log(`nadlan_year_room_stats: ${s.n} rows, years ${s.a}-${s.b}`);
+            try {
+              const u = db.prepare("SELECT COUNT(*) n, COUNT(DISTINCT city_name) c FROM urban_renewal_projects").get();
+              console.log(`urban_renewal_projects: ${u.n} rows, ${u.c} cities`);
+            } catch { console.log("urban_renewal_projects: not created yet (collector skipped)"); }
+            try {
+              const fs = require("fs");
+              const dc = JSON.parse(fs.readFileSync("/app/data/data-contract.json", "utf8"));
+              console.log("data-contract ok:", dc.ok, "| raw:", JSON.stringify(dc.raw), "| stats:", JSON.stringify(dc.stats));
+              if (dc.problems?.length) console.log("data-contract problems:", dc.problems.join(" ; "));
+            } catch { console.log("data-contract.json: not found"); }
+          '
+          REMOTE
+
+      - name: confirm the site still answers
+        run: |
+          for i in 1 2 3 4 5; do
+            code=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 https://analyst.karnafnadlan.com/api/health || echo 000)
+            [ "$code" = "200" ] && { echo "✓ live (HTTP 200)"; exit 0; }
+            echo "attempt $i: HTTP $code — retrying"
+            sleep 10
+          done
+          echo "::error::site did not return 200 after the pipeline run"
           exit 1
