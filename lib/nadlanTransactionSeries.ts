@@ -1,6 +1,7 @@
 import { prisma } from "./db";
 import { loadOfficialPriceSeries, type OfficialPricePoint } from "./official-price-series";
 import { getRuleNum } from "./systemRules";
+import { historyFromYear } from "./historyWindow";
 import { cachedMarket } from "./cache";
 
 /**
@@ -171,7 +172,10 @@ export const cubeKey = (year: number, type: string, age: string, rooms: string) 
  * loud. A number the reader can't account for is worse than no number.
  */
 async function loadCityCleaningCountsUncached(cityName: string): Promise<{ dupes: number; luxury: number }> {
-  const minYear = new Date().getFullYear() - 10;
+  // Cleaning now runs over the full history window, so the held-back counts
+  // must cover the same range — a decade-scoped count under a 1998+ chart
+  // would under-report what the reader is owed.
+  const minYear = historyFromYear();
   const [row] = await prisma.$queryRawUnsafe<Array<{ dupes: bigint; luxury: bigint }>>(
     `SELECT SUM(CASE WHEN exclusion_reason LIKE 'כפילות-דיווח%' THEN 1 ELSE 0 END) dupes,
             SUM(CASE WHEN COALESCE(excluded,0)=0 AND COALESCE(luxury,0)=1 THEN 1 ELSE 0 END) luxury

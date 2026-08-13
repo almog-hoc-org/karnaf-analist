@@ -34,8 +34,11 @@ import Database from "better-sqlite3";
 import path from "path";
 import { getRuleNum, getRuleBool } from "../lib/systemRules";
 import { ensureAuditLog } from "../lib/auditLog";
+import { historyFromYear } from "../lib/historyWindow";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 const REASON_PREFIX = "כפילות-דיווח";
 /** guard against a pathological admin tolerance turning the sweep quadratic */
 const MAX_LOOKAHEAD = 250;
@@ -63,7 +66,7 @@ function main() {
   const windowDays = getRuleNum("dupe_window_days", 7);
   const priceTol = getRuleNum("dupe_price_tolerance", 0);
   const areaTol = getRuleNum("dupe_area_tolerance", 0);
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
 
   const db = new Database(path.resolve("./data/realestate.db"));
   db.pragma("journal_mode = WAL");

@@ -13,6 +13,7 @@
  *   npx tsx scripts/collect-govmap-transactions.ts --force ...
  */
 import { prisma } from "../lib/db";
+import { normalizeCity } from "../lib/cityAliases";
 import { ilFetch, ilProxyUrl } from "../lib/ilFetch";
 import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
 
@@ -71,10 +72,7 @@ interface RawDeal {
   streetNameHeb?: string | null; houseNum?: string | number | null; floorNo?: number | null;
 }
 
-function normalizeCity(name: string | null | undefined): string {
-  if (!name) return "";
-  return name.replace(/["'`]/g, "").replace(/[-–]/g, " ").replace(/יי/g, "י").replace(/וו/g, "ו").replace(/\s+/g, " ").trim();
-}
+// normalizeCity: shared copy — lib/cityAliases.
 function isResidentialApartment(nature: string | null | undefined): boolean {
   if (!nature) return false;
   if (/קבוצת רכישה|קרקע|מסחרי|משרד|חנות|חניה|מחסן|תעשיה|ללא תיכנון|מלון|דיור מוגן/.test(nature)) return false;

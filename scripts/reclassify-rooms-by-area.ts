@@ -14,8 +14,11 @@
 import Database from "better-sqlite3";
 import path from "path";
 import { getRoomRanges, effectiveRoomsWithRanges, roomBucketOf } from "../lib/roomClassification";
+import { historyFromYear } from "../lib/historyWindow";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 
 function ensureColumn(db: Database.Database, table: string, col: string, ddl: string) {
   const cols = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
@@ -26,7 +29,7 @@ function main() {
   const db = new Database(path.resolve("./data/realestate.db"));
   db.pragma("journal_mode = WAL");
   db.pragma("busy_timeout = 60000");
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
   const ranges = getRoomRanges();
   console.log(`reclassify-rooms-by-area: ranges 2=${ranges[2]} 3=${ranges[3]} 4=${ranges[4]} 5=${ranges[5]} 6=${ranges[6]} · years≥${minYear}`);
 

@@ -30,8 +30,11 @@ import Database from "better-sqlite3";
 import path from "path";
 import { getRuleNum, getRuleBool } from "../lib/systemRules";
 import { ensureAuditLog } from "../lib/auditLog";
+import { historyFromYear } from "../lib/historyWindow";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 
 interface Row {
   id: number; city_name: string; deal_year: number; rooms_effective: number | null;
@@ -55,7 +58,7 @@ function main() {
   const minPrice = getRuleNum("luxury_min_price", 4_500_000);
   const premium = getRuleNum("luxury_sqm_premium_pct", 20) / 100;
   const minCohort = Math.max(2, getRuleNum("luxury_min_cohort", 10));
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
 
   const db = new Database(path.resolve("./data/realestate.db"));
   db.pragma("journal_mode = WAL");

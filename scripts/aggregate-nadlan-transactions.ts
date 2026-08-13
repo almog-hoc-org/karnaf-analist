@@ -18,6 +18,7 @@
  * they stay in the counts and the drill-down, but they do not set the average.
  */
 import { getRuleNum } from "../lib/systemRules";
+import { historyFromYear } from "../lib/historyWindow";
 import { prisma } from "../lib/db";
 
 // Sanity bounds are admin-editable (lib/systemRules) — defaults match the originals.
@@ -47,14 +48,17 @@ function stat(rows: Row[]) {
 const inBucket = (rows: Row[], bucket: string) => (bucket === "all" ? rows : rows.filter((r) => r.room_bucket === bucket));
 
 async function main() {
-  const minYear = new Date().getFullYear() - 10; // last 10 years only
+  // The shared history floor (default 1998) — NOT a rolling decade. The raw
+  // table reaches back to 1998; capping this at now-10 was what left every
+  // chart starting at 2016 while 20k+ usable transactions had no stat row.
+  const minYear = historyFromYear();
   const rows = await prisma.$queryRawUnsafe<Row[]>(
     `SELECT city_name, deal_year, room_bucket, price, price_sqm, is_secondhand, year_built, source, neighborhood, rooms_effective, class_source
      FROM nadlan_transactions
      WHERE price_sqm >= ${MIN_SQM} AND price_sqm <= ${MAX_SQM} AND area >= ${MIN_AREA} AND area <= ${MAX_AREA}
        AND COALESCE(excluded,0)=0 AND COALESCE(luxury,0)=0 AND deal_year >= ${minYear}`
   );
-  console.log(`aggregating ${rows.length} sane transactions (last 10y, nadlan-priced)…`);
+  console.log(`aggregating ${rows.length} sane transactions (since ${minYear}, nadlan-priced)…`);
 
   // city -> { govmap: Row[], nadlan: Row[] }
   const byCity = new Map<string, { govmap: Row[]; nadlan: Row[] }>();

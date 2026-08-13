@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { ALIAS_NAMES } from "@/lib/cityAliases";
 import {
   computeAllInvestorMetrics,
   investorProvenance,
@@ -37,6 +38,7 @@ export default async function ComparePage({
 }) {
   const [cityRows, metricsMap, seriesRows] = await Promise.all([
     prisma.city.findMany({
+      where: { city_name: { notIn: ALIAS_NAMES } },
       select: {
         city_name: true,
         population_2026: true,

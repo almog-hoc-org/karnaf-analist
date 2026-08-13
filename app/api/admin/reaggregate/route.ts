@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
-import { isAdminRequest } from "@/lib/adminAuth";
+import { isAdminApiRequest } from "@/lib/adminAuth";
 import { spawn } from "child_process";
 import { mutationStages, type PipelineStage } from "@/lib/pipeline";
 import { TAGS } from "@/lib/cache";
@@ -42,8 +42,11 @@ function runScript(stage: PipelineStage): Promise<string> {
   });
 }
 
-export async function POST() {
-  if (!isAdminRequest()) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+export async function POST(req: Request) {
+  // Cookie (human in the admin panel) OR Bearer ADMIN_API_TOKEN (the ops
+  // agent) — the agent needs this to trigger a rebuild right after a deploy
+  // that changed pipeline behavior, instead of waiting for the 02:30 run.
+  if (!isAdminApiRequest(req)) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   if (running) return NextResponse.json({ error: "already-running" }, { status: 409 });
   running = true;
   try {

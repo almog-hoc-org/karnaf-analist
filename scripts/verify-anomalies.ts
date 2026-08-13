@@ -19,8 +19,11 @@ import path from "path";
 import fs from "fs";
 import { getRuleNum } from "../lib/systemRules";
 import { buildingAgeOf } from "../lib/roomClassification";
+import { historyFromYear } from "../lib/historyWindow";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 const MIN_COHORT = 10;
 
 interface Row {
@@ -37,7 +40,7 @@ function main() {
   const modernMin = getRuleNum("modern_min_year", 2005);
   const MIN_SQM = getRuleNum("min_sqm_price", 2000), MAX_SQM = getRuleNum("max_sqm_price", 200000);
   const MIN_AREA = getRuleNum("min_area", 20), MAX_AREA = getRuleNum("max_area", 500);
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
 
   const db = new Database(path.resolve("./data/realestate.db"), { readonly: true });
   db.pragma("busy_timeout = 60000");
@@ -94,7 +97,7 @@ function main() {
 
   const report = {
     generatedAt: new Date().toISOString(),
-    params: { anomaly_deviation_pct: pct * 100, anomaly_city_mult: cityMult, modern_min_year: modernMin, min_cohort: MIN_COHORT, years_back: YEARS_BACK },
+    params: { anomaly_deviation_pct: pct * 100, anomaly_city_mult: cityMult, modern_min_year: modernMin, min_cohort: MIN_COHORT, from_year: minYear },
     national: { active: nat.active, flagged: nat.flagged, flag_rate_pct: Math.round((100 * nat.flagged) / Math.max(1, nat.active + nat.flagged)), violations_group: nat.vg, violations_city_net: nat.vc, pass: nat.vg === 0 && nat.vc === 0 },
     worst_flag_rates: [...cities].filter((c) => c.active + c.flagged >= 200).sort((a, b) => b.flag_rate_pct - a.flag_rate_pct).slice(0, 10),
     cities_with_violations: cities.filter((c) => c.violations_group > 0 || c.violations_city_net > 0),

@@ -18,8 +18,11 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
 import { getRuleNum, getRuleBool } from "../lib/systemRules";
+import { historyFromYear } from "../lib/historyWindow";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 
 interface Row {
   id: number; city_name: string; deal_date: string; deal_year: number;
@@ -46,7 +49,7 @@ function main() {
   const minPrice = getRuleNum("luxury_min_price", 4_500_000);
   const premium = getRuleNum("luxury_sqm_premium_pct", 20) / 100;
   const minCohort = Math.max(2, getRuleNum("luxury_min_cohort", 10));
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
 
   const db = new Database(path.resolve("./data/realestate.db"), { readonly: true });
   const rows = db.prepare(
@@ -156,7 +159,7 @@ function main() {
   };
   fs.writeFileSync(path.resolve("./data/cleaning-verification.json"), JSON.stringify(report, null, 2));
 
-  console.log(`verify-cleaning-rules: scanned ${rows.length.toLocaleString("en")} active deals (last ${YEARS_BACK}y)`);
+  console.log(`verify-cleaning-rules: scanned ${rows.length.toLocaleString("en")} active deals (since ${minYear})`);
   console.log(`  duplicates: ${dupeViolations.length} violations`);
   dupeViolations.slice(0, 3).forEach((v) => console.log(`    ✗ ${v}`));
   console.log(`  luxury: ${luxActive.toLocaleString("en")} flagged · ${luxViolations.length} still feeding an average`);

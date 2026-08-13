@@ -29,8 +29,11 @@
 import Database from "better-sqlite3";
 import path from "path";
 import { getRuleNum } from "../lib/systemRules";
+import { historyFromYear } from "../lib/historyWindow";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 
 function main() {
   const dryRun = process.argv.includes("--dry-run");
@@ -48,7 +51,7 @@ function main() {
   db.pragma("journal_mode = WAL");
   db.pragma("busy_timeout = 60000");
 
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
   console.log(`recompute-secondhand: secondhand_min_age=${minAge} · years≥${minYear}${dryRun ? " · DRY RUN" : ""}`);
 
   // Only rows we can actually judge: a usable build year and a deal year.

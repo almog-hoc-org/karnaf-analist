@@ -34,8 +34,11 @@
 import Database from "better-sqlite3";
 import path from "path";
 import { getRuleNum, getRuleBool } from "../lib/systemRules";
+import { historyFromYear } from "../lib/historyWindow";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 
 function ensureColumn(db: Database.Database, table: string, col: string, ddl: string) {
   const cols = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
@@ -45,7 +48,7 @@ function ensureColumn(db: Database.Database, table: string, col: string, ddl: st
 function main() {
   const on = getRuleBool("class_fallback_on", true);
   const usePrev = getRuleBool("class_use_prev_deals", true);
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
 
   const db = new Database(path.resolve("./data/realestate.db"));
   db.pragma("journal_mode = WAL");
@@ -103,7 +106,7 @@ function main() {
      WHERE COALESCE(excluded,0)=0 AND source='nadlan' AND deal_year >= ?`).all(minYear) as any[];
 
   const pct = (v: number) => `${(v / Math.max(1, Number(cov.n)) * 100).toFixed(1)}%`;
-  console.log(`classify-sale-channel (last ${YEARS_BACK}y, nadlan rows):`);
+  console.log(`classify-sale-channel (since ${minYear}, nadlan rows):`);
   console.log(`  released ${reset.changes.toLocaleString("en")} prior fallbacks · stamped ${stamped.changes.toLocaleString("en")} build-year rows`);
   console.log(`  filled by חוק מכר: ${byHok.changes.toLocaleString("en")} · by עסקאות קודמות: ${byPrev.changes.toLocaleString("en")}`);
   console.log(`  coverage: ${Number(cov.classified).toLocaleString("en")}/${Number(cov.n).toLocaleString("en")} (${pct(Number(cov.classified))}) ` +

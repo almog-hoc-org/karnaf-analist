@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { ALIAS_NAMES } from "@/lib/cityAliases";
 import { listDeals, listTrackedCities } from "@/lib/appDb";
 import { computeStreetComp } from "@/lib/streetComps";
 import type { StreetComp } from "@/lib/compTypes";
@@ -32,7 +33,7 @@ export default async function DealsPage() {
   const userId = requireWorkspaceId("/deals");
 
   const [cities, tracked, deals, txPrices, sh3] = await Promise.all([
-    prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } }),
+    prisma.city.findMany({ where: { city_name: { notIn: ALIAS_NAMES } }, select: { city_name: true }, orderBy: { population_2026: "desc" } }),
     Promise.resolve(listTrackedCities(userId)),
     Promise.resolve(listDeals(userId)),
     loadCityTransactionPrices(),

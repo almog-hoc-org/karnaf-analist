@@ -21,6 +21,7 @@
  *   npx tsx scripts/collect-transactions.ts --source govmap --force "לוד" "יבנה"
  */
 import crypto from "crypto";
+import { normalizeCity } from "../lib/cityAliases";
 import fs from "fs";
 import path from "path";
 import zlib from "zlib";
@@ -49,7 +50,7 @@ const unrev = (s: string) => s.split("").reverse().join("");
 function b64json(s: string): Record<string, unknown> | null { s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; try { return JSON.parse(Buffer.from(s, "base64").toString("utf8")); } catch { return null; } }
 function signBody(p: Record<string, unknown>): string { const h = b64url(JSON.stringify({ alg: "HS256" })), b = b64url(JSON.stringify(p)); const sig = crypto.createHmac("sha256", Buffer.from(SECRET, "utf8")).update(`${h}.${b}`).digest("base64url"); return unrev(`${h}.${b}.${sig}`); }
 function decode(txt: string): unknown { const t = txt.trim(); if (t.startsWith("{")) return JSON.parse(t); try { return JSON.parse(zlib.gunzipSync(Buffer.from(t, "base64")).toString("utf8")); } catch { return null; } }
-function normalizeCity(n: string | null | undefined): string { return !n ? "" : n.replace(/["'`]/g, "").replace(/[-–]/g, " ").replace(/יי/g, "י").replace(/וו/g, "ו").replace(/\s+/g, " ").trim(); }
+// normalizeCity: shared copy — lib/cityAliases.
 function roomBucket(rn: number | null | undefined): string { if (rn == null || isNaN(rn)) return "other"; if (rn >= 2.5 && rn < 3.5) return "3"; if (rn >= 3.5 && rn < 4.5) return "4"; if (rn >= 4.5) return "5"; return "other"; }
 function isResidential(n: string | null | undefined): boolean { if (!n) return false; if (/קבוצת רכישה|קרקע|מסחרי|משרד|חנות|חניה|מחסן|תעשיה|ללא תיכנון|מלון|דיור מוגן/.test(n)) return false; return ["דירה", "דירת גן", "דירת גג", "פנטהאוז", "קוטג'", "בית בודד", "דו משפחתי", "מיני פנטהאוז"].some((p) => n.includes(p)); }
 

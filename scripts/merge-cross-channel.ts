@@ -24,8 +24,12 @@
 import Database from "better-sqlite3";
 import path from "path";
 import { ensureAuditLog } from "../lib/auditLog";
+import { historyFromYear } from "../lib/historyWindow";
+import { CITY_ALIASES } from "../lib/cityAliases";
 
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 const REASON = "מוזג (כפילות בין-ערוצית)";
 
 interface Row {
@@ -38,7 +42,16 @@ function main() {
   db.pragma("journal_mode = WAL");
   ensureAuditLog(db); // seven writers, no owner — see lib/auditLog.ts   // concurrent reader (dev server) + writer (this script)
   db.pragma("busy_timeout = 60000"); // wait up to 60s for any transient lock
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
+
+  // 0. canonical city names — BEFORE anything groups by city_name. "מכבים
+  //    רעות" lived as a whole second city beside מודיעין-מכבים-רעות (own
+  //    stats, own page) because nothing ever folded aliases in the raw data.
+  //    Idempotent: rows already canonical don't match the WHERE.
+  for (const [alias, canonical] of Object.entries(CITY_ALIASES)) {
+    const r = db.prepare(`UPDATE nadlan_transactions SET city_name = ? WHERE city_name = ?`).run(canonical, alias);
+    if (r.changes > 0) console.log(`alias: ${alias} → ${canonical} (${r.changes} rows)`);
+  }
 
   // 1. idempotent reset — un-exclude our own prior merge marks (in scope)
   const reset = db.prepare(
@@ -122,7 +135,7 @@ function main() {
     `INSERT INTO admin_exclusion_log (action, affected, reason, created_at) VALUES ('exclude', ?, ?, datetime('now'))`
   ).run(softExcluded, SOFT_REASON);
 
-  console.log(`merge-cross-channel (last ${YEARS_BACK}y): reset ${reset.changes} prior · ` +
+  console.log(`merge-cross-channel (since ${minYear}): reset ${reset.changes} prior · ` +
     `${mergedGroups.toLocaleString("en")} groups merged · ${enriched.toLocaleString("en")} nadlan rows enriched with address · ` +
     `${excluded.toLocaleString("en")} govmap duplicates excluded`);
   console.log(`  soft pass: +${softEnriched.toLocaleString("en")} addresses (area ≤2m² tolerance) · ` +

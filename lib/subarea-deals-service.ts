@@ -16,6 +16,7 @@
  * export them publicly so we re-implement the orchestration here.
  */
 import fs from "fs";
+import { normalizeCity } from "./cityAliases";
 import path from "path";
 import { classifySubarea, getSubareas } from "./city-subareas";
 import { cleanDeals } from "./luxuryFilter";
@@ -86,21 +87,7 @@ function isResidentialApartment(nature: string | null | undefined): boolean {
   return RESIDENTIAL_NATURE_PATTERNS.some((p) => nature.includes(p));
 }
 
-/** Normalise a city name so spelling/spacing variants compare equal
- *  (e.g. "תל אביב-יפו" / "תל אביב -יפו" / "תל אביב יפו"). */
-function normalizeCity(name: string | null | undefined): string {
-  if (!name) return "";
-  return name
-    .replace(/["'`]/g, "")
-    .replace(/[-–]/g, " ")   // hyphens → space
-    // Collapse ktiv-male/haser variants so spelling differences compare equal:
-    //   הרצלייה ↔ הרצליה  (double yod)
-    //   פתח תקווה ↔ פתח תקוה  (double vav)
-    .replace(/יי/g, "י")
-    .replace(/וו/g, "ו")
-    .replace(/\s+/g, " ")     // collapse whitespace
-    .trim();
-}
+// normalizeCity moved to lib/cityAliases — ONE copy instead of five.
 
 const EMPTY_CELL: MatrixCell = { avgPricePerSqm: null, medianPricePerSqm: null, dealCount: 0 };
 

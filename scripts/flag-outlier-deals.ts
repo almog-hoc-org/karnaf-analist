@@ -23,13 +23,16 @@ import path from "path";
 import { getRuleNum } from "../lib/systemRules";
 import { buildingAgeOf } from "../lib/roomClassification";
 import { ensureAuditLogPrisma } from "../lib/auditLog";
+import { historyFromYear } from "../lib/historyWindow";
 
 const adapter = new PrismaBetterSqlite3({ url: path.resolve("./data/realestate.db") });
 const prisma = new PrismaClient({ adapter });
 
 const REASON = "אנומליית מחיר";
 const MIN_COHORT = 10;
-const YEARS_BACK = 10;
+// Window comes from the shared history floor (lib/historyWindow) — every
+// stage must process the SAME range or later stages aggregate rows earlier
+// stages never cleaned. Was a private `YEARS_BACK = 10` per script.
 
 interface Row { id: number; city_name: string; neighborhood: string | null; deal_year: number; rr: number; year_built: number | null; area: number | null; price_sqm: number }
 
@@ -46,7 +49,7 @@ async function main() {
   const modernMinYear = getRuleNum("modern_min_year", 2005);
   const MIN_SQM = getRuleNum("min_sqm_price", 2000), MAX_SQM = getRuleNum("max_sqm_price", 200000);
   const MIN_AREA = getRuleNum("min_area", 20), MAX_AREA = getRuleNum("max_area", 500);
-  const minYear = new Date().getFullYear() - YEARS_BACK;
+  const minYear = historyFromYear();
   console.log(`flag price-anomaly: >${(pct * 100).toFixed(0)}% from median · cohort=city×year×room-type×building-age(modern≥${modernMinYear}) · years≥${minYear}`);
 
   // 1. undo our own prior flags (in scope) — re-runnable. (also clears legacy reasons)

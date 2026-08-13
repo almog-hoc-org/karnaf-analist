@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/db";
+import { historyFromYear } from "@/lib/historyWindow";
+import { ALIAS_NAMES } from "@/lib/cityAliases";
 import RankingCard from "@/components/RankingCard";
 import HomeSearch from "@/components/HomeSearch";
 import CourseBanner from "@/components/CourseBanner";
@@ -71,6 +73,7 @@ export default async function HomePage() {
   // Load all cities for client-side search — the % shown per city is the
   // SECOND-HAND 3y change from real transactions (not the old Excel field).
   const allCitiesRaw = await prisma.city.findMany({
+    where: { city_name: { notIn: ALIAS_NAMES } },
     orderBy: { city_name: "asc" },
     select: {
       id: true,
@@ -100,7 +103,7 @@ export default async function HomePage() {
     Array<{ city_name: string; scope: string; year: number; avg_sqm: number | null; median_sqm: number | null }>
   >(
     `SELECT city_name, scope, year, avg_sqm, median_sqm FROM nadlan_year_room_stats
-     WHERE room_bucket='all' AND year >= 2015 AND n >= 10`
+     WHERE room_bucket='all' AND year >= ${historyFromYear()} AND n >= 10`
   );
   const gainSeries: Record<string, Record<string, Record<number, [number, number]>>> = {};
   for (const r of gainRows) {
@@ -115,6 +118,9 @@ export default async function HomePage() {
   // it. (Operator request 8/2026: let the range reach 2026.)
   const currentYear = new Date().getFullYear();
   const gainMaxYear = gainRows.reduce((m, r) => Math.max(m, Number(r.year)), 2025);
+  // The picker opens at the oldest year the stats actually carry (post
+  // history-extension that reaches 1998) — not a hardcoded 2015.
+  const gainMinYear = gainRows.reduce((m, r) => Math.min(m, Number(r.year)), 2015);
   const gainPartialYear = gainMaxYear >= currentYear ? currentYear : null;
 
   // ── Live hero KPIs ──────────────────────────────────────────────
@@ -338,7 +344,7 @@ export default async function HomePage() {
       {/* fully-filterable price-changes ranking (scope × metric × year range) —
           promoted out of the rankings grid to a full-width row of its own */}
       <div className="order-1 mb-6 sm:order-2 sm:mb-0 sm:mt-6">
-        <PriceGainsRankingCard series={gainSeries} minYear={2015} maxYear={gainMaxYear} partialYear={gainPartialYear} />
+        <PriceGainsRankingCard series={gainSeries} minYear={gainMinYear} maxYear={gainMaxYear} partialYear={gainPartialYear} />
       </div>
       </div>
 

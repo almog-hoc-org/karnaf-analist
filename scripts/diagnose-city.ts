@@ -39,6 +39,7 @@
  *   npx tsx scripts/diagnose-city.ts "כסיפה" "רהט" "מעלה עירון"
  */
 import { ilFetch } from "../lib/ilFetch";
+import { normalizeCity } from "../lib/cityAliases";
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 const SWEEP_RADIUS = 2500;
@@ -46,11 +47,7 @@ const RING_OFFSETS_M = [0, 2000, 4000, 6000];
 const MAX_POLYGONS = 120;
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-/** Copied verbatim from the collector — the point is to measure what IT does. */
-function normalizeCity(name: string | null | undefined): string {
-  if (!name) return "";
-  return name.replace(/["'`]/g, "").replace(/[-–]/g, " ").replace(/יי/g, "י").replace(/וו/g, "ו").replace(/\s+/g, " ").trim();
-}
+// Uses the collector's exact function — now the shared lib/cityAliases copy.
 function isResidentialApartment(nature: string | null | undefined): boolean {
   if (!nature) return false;
   if (/קבוצת רכישה|קרקע|מסחרי|משרד|חנות|חניה|מחסן|תעשיה|ללא תיכנון|מלון|דיור מוגן/.test(nature)) return false;

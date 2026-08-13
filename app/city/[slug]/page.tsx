@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/db";
+import { redirect } from "next/navigation";
+import { canonicalCityName } from "@/lib/cityAliases";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
 import { computeCityGap, describeSupplySource } from "@/lib/gap-analysis";
@@ -114,6 +116,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function CityPage({ params, searchParams }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
+  // An alias URL ("מכבים רעות") lands on the canonical city instead of an
+  // empty duplicate page — old shared links keep working after unification.
+  const canonical = canonicalCityName(cityName);
+  if (canonical !== cityName) redirect(`/city/${encodeURIComponent(canonical)}`);
   const activeWindow: "3y" | "5y" = DEFAULT_PRICE_WINDOW;
   // String() first — a repeated ?ref=&ref= arrives as an ARRAY, and calling
   // .toUpperCase() on it 500'd the whole page, demo city included.

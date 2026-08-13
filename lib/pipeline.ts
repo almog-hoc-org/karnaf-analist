@@ -151,6 +151,14 @@ export const PIPELINE: PipelineStage[] = [
     report: true,
     timeoutMs: 10 * MINUTE,
   },
+  {
+    id: "data-contract",
+    script: "scripts/verify-data-contract.ts",
+    label: "חוזה raw↔stats",
+    why: "Checks the NEGATIVE space every other audit misses: usable transactions with no stat row, active cities with no stats at all, year-range drift between raw and stats, and alias names the merge stage failed to fold. This is the check that would have caught the silent 2016 floor — 20k usable deals with no chart point — the day it happened instead of at a QA deep-dive months later.",
+    report: true,
+    timeoutMs: 10 * MINUTE,
+  },
 ];
 
 export const STAGE_IDS = PIPELINE.map((s) => s.id);

@@ -28,7 +28,11 @@ import type { CityGraphData } from "./nadlanTransactionSeries";
  * without anyone remembering to add it back.
  */
 
-/** The decade every rule, chart and aggregation in this project assumes. */
+/** The QUALITY decade — the product-critical window coverage is judged on.
+ *  Deliberately narrower than the full processed history (history_from_year,
+ *  1998+): "is the recent decade complete" is a different question from "how
+ *  far back does the archive go", and a city with perfect 1998-2008 coverage
+ *  but nothing since is NOT well-covered. */
 export const COVERAGE_FROM = 2016;
 export const COVERAGE_TO = 2025;
 const SPAN = COVERAGE_TO - COVERAGE_FROM + 1;

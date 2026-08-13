@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { ALIAS_NAMES } from "@/lib/cityAliases";
 import Link from "next/link";
 import CitiesTable, { type InvestorRow } from "@/components/CitiesTable";
 import { loadAllCityPriceChanges } from "@/lib/price-changes";
@@ -14,6 +15,7 @@ export const metadata = {
 
 export default async function CitiesPage() {
   const cities = await prisma.city.findMany({
+    where: { city_name: { notIn: ALIAS_NAMES } },
     orderBy: { population_2026: "desc" },
     include: {
       sales: {
