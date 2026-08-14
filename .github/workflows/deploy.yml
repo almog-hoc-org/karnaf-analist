@@ -202,7 +202,17 @@ jobs:
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           printf '%s\n' "$KEY" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -T 15 "$HOST" >> ~/.ssh/known_hosts
+          # keyscan flakes on some runners (~15s silent timeout, twice observed)
+          # while the deploy job's scan on another runner succeeds — so retry.
+          for i in 1 2 3 4 5; do
+            ssh-keyscan -T 20 "$HOST" >> ~/.ssh/known_hosts 2>&1 && [ -s ~/.ssh/known_hosts ] && break
+            echo "keyscan attempt $i failed — retrying in 5s"
+            sleep 5
+          done
+          if [ ! -s ~/.ssh/known_hosts ]; then
+            echo "::error::ssh-keyscan could not read a host key after 5 attempts"
+            exit 1
+          fi
 
           ssh -o BatchMode=yes "$USER@$HOST" 'bash -s' <<'REMOTE'
           set -e
