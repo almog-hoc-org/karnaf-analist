@@ -275,6 +275,25 @@ jobs:
               console.log(`city_classification_rate: ${cr.n} cities`);
             } catch { console.log("city_classification_rate: MISSING"); }
           ' </dev/null
+
+          echo "── clarity diagnostic ──"
+          # The ID is inlined into the client bundle AT BUILD TIME from the
+          # host .env via a compose build arg — so a wrong/empty value at any
+          # link leaves the site silently untracked. The ID itself is public
+          # (it ships in every visitor's HTML), safe to print.
+          echo "  .env lines mentioning clarity:"
+          grep -n -i clarity /opt/karnaf/.env | sed 's/^/    /' || echo "    (none)"
+          CID=$(grep -E '^NEXT_PUBLIC_CLARITY_ID=' /opt/karnaf/.env | tail -1 | cut -d= -f2- | tr -d '"' | tr -d "'" | tr -d '[:space:]')
+          echo "  effective id: ${CID:-<EMPTY>}"
+          if [ -n "$CID" ]; then
+            if docker compose exec -T app sh -c "grep -rl -- '$CID' /app/.next/static/chunks 2>/dev/null | head -2" </dev/null | grep -q .; then
+              echo "  ✓ id is baked into the built JS chunks"
+            else
+              echo "  ✗ id NOT FOUND in built chunks — the running image was built without it"
+            fi
+            docker compose exec -T app sh -c "grep -rlo 'clarity.ms' /app/.next/static/chunks 2>/dev/null | head -2" </dev/null \
+              && echo "  ✓ clarity.ms loader present in chunks" || echo "  ✗ clarity.ms loader NOT in chunks"
+          fi
           REMOTE
 
       - name: live page checks from outside
