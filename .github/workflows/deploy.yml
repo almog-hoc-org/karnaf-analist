@@ -247,25 +247,28 @@ jobs:
             } catch { console.log("data-contract.json: not found"); }
 
             // ── deep checks: the QA city list — stats depth, headline sample sizes ──
+            // (string literals go through bind parameters: the container SQLite
+            //  rejects double-quoted strings, and this script sits inside a
+            //  single-quoted shell string)
             const QA = ["נתניה","בת ים","קריית ביאליק","חיפה","ירושלים","תל אביב","באר שבע","אשדוד","לוד","רעננה","ראש העין","מודיעין","ירוחם"];
             const perCity = db.prepare(`
               SELECT city_name, COUNT(*) cnt, MIN(year) lo, MAX(year) hi,
-                     SUM(CASE WHEN scope IN ("all","all_govmap") AND room_bucket="all" THEN 1 ELSE 0 END) allYears
+                     SUM(CASE WHEN scope IN (?,?) AND room_bucket = ? THEN 1 ELSE 0 END) allYears
                 FROM nadlan_year_room_stats WHERE city_name LIKE ? GROUP BY city_name`);
             const latestN = db.prepare(`
               SELECT year, scope, n FROM nadlan_year_room_stats
-               WHERE city_name = ? AND room_bucket = "all" AND scope IN ("all","all_govmap","secondhand")
+               WHERE city_name = ? AND room_bucket = ? AND scope IN (?,?,?)
                ORDER BY year DESC LIMIT 4`);
             console.log("── QA cities ──");
             for (const q of QA) {
-              const rows = perCity.all(`%${q}%`);
+              const rows = perCity.all("all", "all_govmap", "all", `%${q}%`);
               if (!rows.length) { console.log(`  ✗ ${q}: NO STATS AT ALL`); continue; }
               for (const r of rows) {
-                const tail = latestN.all(r.city_name).map((x) => `${x.year} ${x.scope} n=${x.n}`).join(" · ");
+                const tail = latestN.all(r.city_name, "all", "all", "all_govmap", "secondhand").map((x) => `${x.year} ${x.scope} n=${x.n}`).join(" · ");
                 console.log(`  ${r.city_name}: ${r.cnt} rows, ${r.lo}-${r.hi}, all-scope years=${r.allYears} | ${tail}`);
               }
             }
-            const alias = db.prepare(`SELECT COUNT(*) n FROM nadlan_transactions WHERE city_name = "מכבים רעות"`).get();
+            const alias = db.prepare(`SELECT COUNT(*) n FROM nadlan_transactions WHERE city_name = ?`).get("מכבים רעות");
             console.log(`alias leak (מכבים רעות in raw): ${alias.n}`);
             try {
               const cr = db.prepare(`SELECT COUNT(*) n FROM city_classification_rate`).get();
