@@ -177,43 +177,23 @@ jobs:
           echo "::error::site did not return 200 after the deploy"
           exit 1
 
-  # Optional third act, workflow_dispatch + run_pipeline only: run the exact
-  # command the 02:30 nightly runs, on the container the deploy above just
-  # confirmed healthy, and print the verification numbers into this log where
-  # both the operator and the agent can read them. Sequential job in the same
-  # run — the deploy-vps concurrency group already guarantees nothing swaps
-  # the container mid-aggregation.
-  pipeline:
-    name: run data pipeline on VPS
-    needs: deploy
-    if: github.event_name == 'workflow_dispatch' && inputs.run_pipeline
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    steps:
-      - name: ssh in and run the pipeline
+
+      # Optional third act, workflow_dispatch + run_pipeline only: run the exact
+      # command the 02:30 nightly runs, on the container the deploy above just
+      # confirmed healthy, and print the verification numbers into this log.
+      # SAME JOB as the deploy on purpose: a separate job lands on a fresh
+      # runner whose keyscan flaked repeatedly (likely connection rate-limiting
+      # on the host) — this step reuses the ssh key and pinned host key the
+      # deploy step already proved working from this very runner.
+      - name: run data pipeline on VPS
+        if: github.event_name == 'workflow_dispatch' && inputs.run_pipeline
         env:
           HOST: ${{ secrets.VPS_HOST }}
           USER: ${{ secrets.VPS_USER }}
-          KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
-          # Same normalisation + host-key pinning as the deploy job above.
+          # key + known_hosts were written by the deploy step on this runner
           HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
           USER=$(printf '%s' "$USER" | tr -d '[:space:]')
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          printf '%s\n' "$KEY" | tr -d '\r' > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          # keyscan flakes on some runners (~15s silent timeout, twice observed)
-          # while the deploy job's scan on another runner succeeds — so retry.
-          for i in 1 2 3 4 5; do
-            ssh-keyscan -T 20 "$HOST" >> ~/.ssh/known_hosts 2>&1 && [ -s ~/.ssh/known_hosts ] && break
-            echo "keyscan attempt $i failed — retrying in 5s"
-            sleep 5
-          done
-          if [ ! -s ~/.ssh/known_hosts ]; then
-            echo "::error::ssh-keyscan could not read a host key after 5 attempts"
-            exit 1
-          fi
-
           ssh -o BatchMode=yes "$USER@$HOST" 'bash -s' <<'REMOTE'
           set -e
           cd /opt/karnaf
@@ -297,6 +277,7 @@ jobs:
           REMOTE
 
       - name: live page checks from outside
+        if: github.event_name == 'workflow_dispatch' && inputs.run_pipeline
         run: |
           check() {  # path, expected marker (fixed string, empty = status only)
             local path="$1" marker="$2"
@@ -321,14 +302,3 @@ jobs:
           echo "── /api/status ──"
           curl -sL --max-time 30 https://analyst.karnafnadlan.com/api/status | head -c 2000; echo
           exit $FAIL
-
-      - name: confirm the site still answers
-        run: |
-          for i in 1 2 3 4 5; do
-            code=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 20 https://analyst.karnafnadlan.com/api/health || echo 000)
-            [ "$code" = "200" ] && { echo "✓ live (HTTP 200)"; exit 0; }
-            echo "attempt $i: HTTP $code — retrying"
-            sleep 10
-          done
-          echo "::error::site did not return 200 after the pipeline run"
-          exit 1
