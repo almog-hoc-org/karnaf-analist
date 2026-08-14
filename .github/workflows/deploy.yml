@@ -235,8 +235,60 @@ jobs:
               console.log("data-contract ok:", dc.ok, "| raw:", JSON.stringify(dc.raw), "| stats:", JSON.stringify(dc.stats));
               if (dc.problems?.length) console.log("data-contract problems:", dc.problems.join(" ; "));
             } catch { console.log("data-contract.json: not found"); }
+
+            // ── deep checks: the QA city list — stats depth, headline sample sizes ──
+            const QA = ["נתניה","בת ים","קריית ביאליק","חיפה","ירושלים","תל אביב","באר שבע","אשדוד","לוד","רעננה","ראש העין","מודיעין","ירוחם"];
+            const perCity = db.prepare(`
+              SELECT city_name, COUNT(*) cnt, MIN(year) lo, MAX(year) hi,
+                     SUM(CASE WHEN scope IN ("all","all_govmap") AND room_bucket="all" THEN 1 ELSE 0 END) allYears
+                FROM nadlan_year_room_stats WHERE city_name LIKE ? GROUP BY city_name`);
+            const latestN = db.prepare(`
+              SELECT year, scope, n FROM nadlan_year_room_stats
+               WHERE city_name = ? AND room_bucket = "all" AND scope IN ("all","all_govmap","secondhand")
+               ORDER BY year DESC LIMIT 4`);
+            console.log("── QA cities ──");
+            for (const q of QA) {
+              const rows = perCity.all(`%${q}%`);
+              if (!rows.length) { console.log(`  ✗ ${q}: NO STATS AT ALL`); continue; }
+              for (const r of rows) {
+                const tail = latestN.all(r.city_name).map((x) => `${x.year} ${x.scope} n=${x.n}`).join(" · ");
+                console.log(`  ${r.city_name}: ${r.cnt} rows, ${r.lo}-${r.hi}, all-scope years=${r.allYears} | ${tail}`);
+              }
+            }
+            const alias = db.prepare(`SELECT COUNT(*) n FROM nadlan_transactions WHERE city_name = "מכבים רעות"`).get();
+            console.log(`alias leak (מכבים רעות in raw): ${alias.n}`);
+            try {
+              const cr = db.prepare(`SELECT COUNT(*) n FROM city_classification_rate`).get();
+              console.log(`city_classification_rate: ${cr.n} cities`);
+            } catch { console.log("city_classification_rate: MISSING"); }
           ' </dev/null
           REMOTE
+
+      - name: live page checks from outside
+        run: |
+          check() {  # path, expected marker (fixed string, empty = status only)
+            local path="$1" marker="$2"
+            local url="https://analyst.karnafnadlan.com${path}"
+            local body code
+            body=$(curl -sL --max-time 30 "$url") || { echo "✗ $path — fetch failed"; FAIL=1; return; }
+            code=$(curl -sL -o /dev/null -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            if [ "$code" != "200" ]; then echo "✗ $path — HTTP $code"; FAIL=1; return; fi
+            if [ -n "$marker" ] && ! printf '%s' "$body" | grep -qF -- "$marker"; then
+              echo "✗ $path — 200 but marker \"$marker\" not found"; FAIL=1; return
+            fi
+            echo "✓ $path"
+          }
+          FAIL=0
+          check "/" "קרנף"
+          check "/cities" ""
+          check "/compare" ""
+          check "/calculators" ""
+          check "/deals" ""
+          check "/methodology" ""
+          check "/sources" ""
+          echo "── /api/status ──"
+          curl -sL --max-time 30 https://analyst.karnafnadlan.com/api/status | head -c 2000; echo
+          exit $FAIL
 
       - name: confirm the site still answers
         run: |
