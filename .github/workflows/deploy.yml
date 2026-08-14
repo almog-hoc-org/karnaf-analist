@@ -257,23 +257,22 @@ jobs:
           ' </dev/null
 
           echo "── clarity diagnostic ──"
-          # The ID is inlined into the client bundle AT BUILD TIME from the
-          # host .env via a compose build arg — so a wrong/empty value at any
-          # link leaves the site silently untracked. The ID itself is public
-          # (it ships in every visitor's HTML), safe to print.
-          echo "  .env lines mentioning clarity:"
-          grep -n -i clarity /opt/karnaf/.env | sed 's/^/    /' || echo "    (none)"
-          CID=$(grep -E '^NEXT_PUBLIC_CLARITY_ID=' /opt/karnaf/.env | tail -1 | cut -d= -f2- | tr -d '"' | tr -d "'" | tr -d '[:space:]')
-          echo "  effective id: ${CID:-<EMPTY>}"
-          if [ -n "$CID" ]; then
-            if docker compose exec -T app sh -c "grep -rl -- '$CID' /app/.next/static/chunks 2>/dev/null | head -2" </dev/null | grep -q .; then
-              echo "  ✓ id is baked into the built JS chunks"
-            else
-              echo "  ✗ id NOT FOUND in built chunks — the running image was built without it"
-            fi
-            docker compose exec -T app sh -c "grep -rlo 'clarity.ms' /app/.next/static/chunks 2>/dev/null | head -2" </dev/null \
-              && echo "  ✓ clarity.ms loader present in chunks" || echo "  ✗ clarity.ms loader NOT in chunks"
-          fi
+          # The ID is inlined into the client bundle AT BUILD TIME. Chain:
+          # .env.production --(deploy.sh: set -a source)--> shell env
+          # --(compose ${VAR:-})--> build arg --(Dockerfile ENV)--> npm run build.
+          # Compose gives SHELL env precedence over the .env file, so if .env
+          # and .env.production disagree, the sourced one wins — print both.
+          # The ID itself is public (it ships in every visitor's HTML).
+          echo "  file identities:"
+          ls -la /opt/karnaf/.env /opt/karnaf/.env.production 2>&1 | sed 's/^/    /'
+          echo "  .env clarity lines:";            grep -n -i clarity /opt/karnaf/.env            | sed 's/^/    /' || echo "    (none)"
+          echo "  .env.production clarity lines:"; grep -n -i clarity /opt/karnaf/.env.production | sed 's/^/    /' || echo "    (none)"
+          echo "  compose would pass NOW (config resolution):"
+          docker compose config 2>/dev/null | grep -i clarity | sed 's/^/    /' || echo "    (nothing)"
+          echo "  what the RUNNING image was built with (ENV persisted from build arg):"
+          docker compose exec -T app sh -c 'printf "    NEXT_PUBLIC_CLARITY_ID=[%s]\n" "$NEXT_PUBLIC_CLARITY_ID"' </dev/null
+          echo "  inlined value in the shipped JS (60 chars around clarity.ms):"
+          docker compose exec -T app sh -c "grep -rho -m1 -- '.\{0,40\}clarity\.ms.\{0,60\}' /app/.next/static/chunks 2>/dev/null | head -2" </dev/null | sed 's/^/    /' || true
           REMOTE
 
       - name: live page checks from outside
