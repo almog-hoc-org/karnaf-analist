@@ -272,7 +272,7 @@ jobs:
           echo "  what the RUNNING image was built with (ENV persisted from build arg):"
           docker compose exec -T app sh -c 'printf "    NEXT_PUBLIC_CLARITY_ID=[%s]\n" "$NEXT_PUBLIC_CLARITY_ID"' </dev/null
           echo "  inlined value in the shipped JS (60 chars around clarity.ms):"
-          docker compose exec -T app sh -c "grep -rho -m1 -- '.\{0,40\}clarity\.ms.\{0,60\}' /app/.next/static/chunks 2>/dev/null | head -2" </dev/null | sed 's/^/    /' || true
+          docker compose exec -T app sh -c "grep -rho -m1 -- '.\{0,40\}clarity\.ms.\{0,60\}' /app/.next.nosync/static/chunks 2>/dev/null | head -2" </dev/null | sed 's/^/    /' || true
           REMOTE
 
       - name: live page checks from outside
@@ -298,6 +298,15 @@ jobs:
           check "/deals" ""
           check "/methodology" ""
           check "/sources" ""
+          echo "── clarity in the shipped bundle (what a visitor's browser gets) ──"
+          html=$(curl -sL --max-time 30 https://analyst.karnafnadlan.com/)
+          chunk=$(printf '%s' "$html" | grep -o '/_next/static/chunks/app/layout-[^"]*\.js' | head -1)
+          echo "layout chunk: ${chunk:-NOT FOUND IN HTML}"
+          if [ -n "$chunk" ]; then
+            js=$(curl -sL --max-time 30 "https://analyst.karnafnadlan.com$chunk")
+            printf '%s' "$js" | grep -q 'clarity\.ms' && echo "✓ clarity loader in shipped JS" || { echo "✗ clarity loader NOT in shipped JS"; FAIL=1; }
+            printf '%s' "$js" | grep -q 'xwkhx8p1bs' && echo "✓ project id xwkhx8p1bs in shipped JS" || { echo "✗ project id NOT in shipped JS"; FAIL=1; }
+          fi
           echo "── /api/status ──"
           curl -sL --max-time 30 https://analyst.karnafnadlan.com/api/status | head -c 2000; echo
           exit $FAIL
