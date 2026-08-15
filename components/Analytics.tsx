@@ -42,7 +42,14 @@ export default function Analytics() {
   if (EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return null;
 
   return (
-    <Script id="clarity" strategy="afterInteractive">
+    // ⚠️ The id must NEVER be "clarity". A DOM element's id becomes a global
+    // (window.clarity = the <script> ELEMENT), and Clarity's bootstrap does
+    // `c[a]=c[a]||function(){…}` — the truthy element wins, the queue function
+    // is never installed, and the tag loads but records nothing, for every
+    // visitor, silently. Proven in a clean browser: id="clarity" → element,
+    // any other id → working queue. This exact bug shipped and cost weeks of
+    // "why is the dashboard empty".
+    <Script id="clarity-analytics" strategy="afterInteractive">
       {`(function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
           t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
