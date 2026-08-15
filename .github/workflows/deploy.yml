@@ -352,9 +352,25 @@ jobs:
               await p.waitForTimeout(1500);
             }
             await p.waitForTimeout(15000);
-            console.log(hits.join('\n') || '✗ NO clarity requests at all');
-            const collect = hits.filter(h => h.includes('/collect'));
-            console.log(collect.length ? '✓ COLLECT upload fired: ' + collect.length + ' request(s)' : '✗ collect upload NEVER fired — tag loads but refuses to record this browser');
+            const verdict = (label) => {
+              const collect = hits.filter(h => h.includes('/collect'));
+              console.log(label + ': ' + (collect.length ? '✓ COLLECT fired (' + collect.length + ')' : '✗ no collect'));
+            };
+            verdict('phase 1 — plain visit');
+
+            // The tag embeds the PROJECT's own config. If the project requires
+            // cookie consent, the tag loads but records nothing until
+            // clarity("consent") is called — print any consent-ish config, then
+            // try granting consent live and see if the upload unlocks.
+            const tagSrc = await p.evaluate(() => fetch('https://www.clarity.ms/tag/xwkhx8p1bs').then(r => r.text()).catch(e => 'FETCH-ERR ' + e));
+            const mentions = (tagSrc.match(/.{0,50}consent.{0,50}/gi) || []).slice(0, 4);
+            console.log('tag consent mentions: ' + (mentions.join('  ||  ') || 'none'));
+            await p.evaluate(() => { if (window.clarity) { window.clarity('consent'); window.clarity('consent', true); } });
+            await p.mouse.wheel(0, 400);
+            await p.waitForTimeout(12000);
+            verdict('phase 2 — after clarity("consent")');
+            console.log('--- full request log ---');
+            console.log(hits.join('\n') || '(empty)');
             await b.close();
           })().catch(e => { console.error('browser test failed:', e.message); process.exit(1); });
           JS
