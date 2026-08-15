@@ -325,15 +325,36 @@ jobs:
           cat > test.js <<'JS'
           const { chromium } = require('playwright');
           (async () => {
-            const b = await chromium.launch();
-            const p = await b.newPage();
+            // Disguised as a real visitor: Clarity's tag detects headless/bot
+            // browsers and silently skips the session upload — the first test
+            // saw the tag load and cookie-sync but never a /collect, which is
+            // exactly that skip. Real UA + no webdriver flag + human-ish
+            // interaction, then watch specifically for the collect upload.
+            const b = await chromium.launch({ args: ['--disable-blink-features=AutomationControlled'] });
+            const ctx = await b.newContext({
+              userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+              viewport: { width: 1366, height: 768 },
+              locale: 'he-IL',
+            });
+            await ctx.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => undefined }));
+            const p = await ctx.newPage();
             const hits = [];
-            p.on('request',  r => { if (r.url().includes('clarity')) hits.push('REQ  ' + r.url().slice(0, 120)); });
-            p.on('response', r => { if (r.url().includes('clarity')) hits.push('RES ' + r.status() + ' ' + r.url().slice(0, 120)); });
-            p.on('console',  m => { if (m.type() === 'error') hits.push('JSERR ' + m.text().slice(0, 160)); });
+            const tag = (u) => u.includes('clarity') || u.includes('c.bing.com');
+            p.on('request',  r => { if (tag(r.url())) hits.push('REQ  ' + r.method() + ' ' + r.url().slice(0, 110)); });
+            p.on('response', r => { if (tag(r.url())) hits.push('RES ' + r.status() + ' ' + r.url().slice(0, 110)); });
+            p.on('requestfailed', r => { if (tag(r.url())) hits.push('FAILED ' + r.url().slice(0, 110) + ' ← ' + (r.failure()?.errorText ?? '?')); });
+            p.on('console',  m => { if (m.type() === 'error') hits.push('JSERR ' + m.text().slice(0, 140)); });
             await p.goto('https://analyst.karnafnadlan.com/', { waitUntil: 'load', timeout: 45000 });
-            await p.waitForTimeout(12000); // afterInteractive + tag boot + first upload
-            console.log(hits.length ? hits.join('\n') : '✗ NO clarity requests fired from a real browser');
+            // human-ish activity — clarity batches uploads around interaction
+            for (let i = 0; i < 6; i++) {
+              await p.mouse.move(200 + i * 90, 300 + i * 40);
+              await p.mouse.wheel(0, 500);
+              await p.waitForTimeout(1500);
+            }
+            await p.waitForTimeout(15000);
+            console.log(hits.join('\n') || '✗ NO clarity requests at all');
+            const collect = hits.filter(h => h.includes('/collect'));
+            console.log(collect.length ? '✓ COLLECT upload fired: ' + collect.length + ' request(s)' : '✗ collect upload NEVER fired — tag loads but refuses to record this browser');
             await b.close();
           })().catch(e => { console.error('browser test failed:', e.message); process.exit(1); });
           JS
