@@ -311,12 +311,21 @@ jobs:
           curl -sL --max-time 30 https://analyst.karnafnadlan.com/api/status | head -c 2000; echo
           exit $FAIL
 
+  # Independent of the deploy ON PURPOSE: it needs only the runner and the
+  # public site, and the deploy job's SSH has been rate-limited by the host
+  # after many CI connections — this must not die with it.
+  clarity-test:
+    name: clarity end-to-end browser test
+    needs: build
+    if: github.event_name == 'workflow_dispatch' && inputs.run_pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
       # A curl can prove the id is IN the bundle; only a real browser proves the
       # tag actually FIRES. Loads the homepage headless and logs every request
       # and response touching clarity.ms — the ground truth for "is Microsoft
       # receiving anything from this site".
-      - name: clarity end-to-end browser test
-        if: github.event_name == 'workflow_dispatch' && inputs.run_pipeline
+      - name: run the browser test
         run: |
           mkdir -p /tmp/cltest && cd /tmp/cltest
           npm init -y >/dev/null 2>&1
