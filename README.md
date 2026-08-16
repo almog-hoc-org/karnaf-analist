@@ -71,10 +71,13 @@ RESEND_API_KEY=<אופציונלי>       # להתראות מייל על תקל�
 **ההגדרה החיה היא `lib/pipeline.ts`** — הרשימה כאן תיאור, לא מקור אמת. הסדר קריטי; כל שלב מניח שהקודם הסתיים:
 
 ```
+ensure-indexes                אינדקסים לקריאה על ה-DB החי (migrations לא מוחלות עליו)
+normalize-column-types        התאמת טיפוסי עמודות למה שהסכימה מצהירה
 merge-cross-channel           מיזוג אותה עסקה משני הערוצים
 reclassify-rooms-by-area      השטח אמין יותר ממספר החדרים המדווח
 recompute-secondhand          גזירת יד-שנייה מחדש מכלל הגיל העדכני
 classify-sale-channel         יד-1/יד-2 כשאין שנת בנייה (לפני יוקרה — קוראת is_secondhand)
+flag-subsidized-cells         סימון שנות מחיר-למשתכן (גילוי, לא החרגה)
 flag-duplicate-deals          דיווח כפול של אותה מכירה
 flag-outlier-deals            אנומליות מחיר
 flag-luxury-deals             יוקרה — יוצאת מהמחירים, נשארת בספירה
@@ -85,6 +88,8 @@ verify-anomalies      [GATE]
 audit-data-reliability        מרענן את פאנל האמינות באדמין
 coverage-report --save        תמונת כיסוי להשוואת הפעימה הבאה
 ```
+
+**למה טיפוסי עמודות מוקדם:** SQLite לא אוכף את הטיפוס המוצהר של עמודה, אבל Prisma מאמת בקריאה ופוסל את *כל השורה* — כלומר מספר אחד שנכתב לעמודת טקסט מחזיר שגיאת שרת לכל מי שנכנס לאותה עיר. השלב הזה מתקן גם את הטיפוס המוצהר וגם את הערכים; המרה בלבד לא נדבקת בעמודה נומרית, כי ההשמה ממירה את המחרוזת בחזרה למספר.
 
 **למה כפילויות לפני אנומליות:** חציוני הקוהורט שמחליטים מה חריג לא יכולים להיות מחושבים על מחירים שנספרו פעמיים.
 
@@ -116,6 +121,8 @@ npx tsx scripts/pipeline.ts --list    # כל שלב + הסיבה למיקומו
 npx tsx scripts/verify-cleaning-rules.ts   # כפילויות + יוקרה + התאמת ספירות
 npx tsx scripts/verify-anomalies.ts        # אנומליות מחיר
 npx tsx scripts/verify-charts.ts           # שומר רגרסיה לגרפים
+npx tsx scripts/probe-city-page.ts --all   # מרנדר כל עמוד עיר כמשתמש מחובר, מול ה-DB החי
+npm test                                   # בדיקות יחידה לפונקציות טהורות (ב-gate של ה-CI)
 npx tsx scripts/audit-data-reliability.ts  # ביקורת אמינות
 ```
 
