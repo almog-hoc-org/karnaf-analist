@@ -42,6 +42,29 @@ function sessionId(): string | null {
 export interface TrackOptions {
   subject?: string | null;
   detail?: string | null;
+  /** milliseconds the page was open — only meaningful on page_leave */
+  dwellMs?: number | null;
+}
+
+/**
+ * Which kind of screen this is — mobile / tablet / desktop.
+ *
+ * Derived from viewport width and pointer type, NOT from the user-agent. The
+ * operator's question is "does this need to work on a phone", and a bucket
+ * answers it; a UA string would answer it too while also handing the event log
+ * a fingerprint it has no use for. The breakpoints match the ones the layout
+ * itself uses, so the answer describes the layout people actually saw.
+ */
+function deviceBucket(): "mobile" | "tablet" | "desktop" {
+  try {
+    const w = window.innerWidth || 1024;
+    const coarse = window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
+    if (w < 640) return "mobile";
+    if (w < 1024) return coarse ? "tablet" : "desktop";
+    return "desktop";
+  } catch {
+    return "desktop";
+  }
 }
 
 export function track(name: EventName, opts: TrackOptions = {}): void {
@@ -53,6 +76,11 @@ export function track(name: EventName, opts: TrackOptions = {}): void {
       subject: opts.subject ?? null,
       detail: opts.detail ?? null,
       sessionId: sessionId(),
+      device: deviceBucket(),
+      dwellMs: opts.dwellMs ?? null,
+      // NOTE: no account id here on purpose. The API route reads it from the
+      // session cookie instead — a client-supplied user id would let anyone
+      // write events attributed to anyone.
     });
     const url = withBasePath("/api/events");
 
@@ -84,4 +112,62 @@ export function trackSearch(term: string, resultCount: number, where: string): v
   if (!t) return;
   track("search", { subject: where, detail: t });
   if (resultCount === 0) track("search_no_results", { subject: where, detail: t });
+}
+
+
+/**
+ * Start measuring time on the current page, and report it when the visitor
+ * leaves. Returns a cleanup function for the caller's effect.
+ *
+ * WHY IT IS NOT A TIMER
+ * The obvious implementation polls every few seconds and adds up. This one
+ * measures only the spans in which the tab was actually VISIBLE, because a tab
+ * left open behind another one is not a person reading — and on a phone,
+ * switching apps and coming back an hour later is the normal case, not the
+ * edge case. Backgrounded time is excluded rather than clamped away later.
+ *
+ * `pagehide` rather than `unload`: unload is unreliable on mobile Safari and
+ * blocks the back/forward cache. Both handlers flush through sendBeacon, which
+ * is the one request kind that survives a page being closed.
+ */
+export function trackPageTime(path?: string): () => void {
+  if (typeof window === "undefined") return () => {};
+  let visibleSince = document.visibilityState === "visible" ? Date.now() : 0;
+  let accumulated = 0;
+  let sent = false;
+
+  const settle = () => {
+    if (visibleSince) {
+      accumulated += Date.now() - visibleSince;
+      visibleSince = 0;
+    }
+  };
+
+  const flush = () => {
+    settle();
+    // A sub-second view is a redirect or a mis-click, not a read. Recording it
+    // would drag every average down while telling nobody anything.
+    if (sent || accumulated < 1000) return;
+    sent = true;
+    track("page_leave", { subject: path ?? null, dwellMs: accumulated });
+  };
+
+  const onVisibility = () => {
+    if (document.visibilityState === "visible") {
+      visibleSince = Date.now();
+    } else {
+      // Flush on hide too: on mobile, "hidden" is very often the last event a
+      // page gets, and waiting for pagehide loses the whole visit.
+      flush();
+    }
+  };
+
+  document.addEventListener("visibilitychange", onVisibility);
+  window.addEventListener("pagehide", flush);
+
+  return () => {
+    flush();
+    document.removeEventListener("visibilitychange", onVisibility);
+    window.removeEventListener("pagehide", flush);
+  };
 }

@@ -17,6 +17,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { recordEvent, EVENT_NAMES, type EventName } from "@/lib/events";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
+import { getCurrentUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -36,6 +37,13 @@ export async function POST(req: NextRequest) {
     return NO_CONTENT;
   }
 
+  // The account is read HERE, from the session cookie, and never from the
+  // payload. The endpoint is public and unauthenticated by necessity, so a
+  // client-supplied user id would let anyone write events as anyone — which
+  // would make the per-user usage panel worse than having none.
+  const viewer = getCurrentUser();
+  const userId = viewer ? Number(String(viewer.id).replace(/^u/, "")) : null;
+
   // Accept one event or a small batch — sendBeacon on unload may flush several.
   const items = Array.isArray(body) ? body.slice(0, 20) : [body];
   for (const raw of items) {
@@ -49,6 +57,9 @@ export async function POST(req: NextRequest) {
       subject: typeof e.subject === "string" ? e.subject : null,
       detail: typeof e.detail === "string" ? e.detail : null,
       sessionId: typeof e.sessionId === "string" ? e.sessionId : null,
+      device: typeof e.device === "string" ? e.device : null,
+      dwellMs: typeof e.dwellMs === "number" ? e.dwellMs : null,
+      userId: Number.isInteger(userId) ? userId : null,
     });
   }
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { track } from "@/lib/track";
+import { track, trackPageTime } from "@/lib/track";
 
 /**
  * Emits `page_view` on every navigation.
@@ -59,6 +59,15 @@ export default function PageViewTracker() {
     if (lastSent.current === pathname) return;
     lastSent.current = pathname;
     track("page_view", { subject: subjectFor(pathname) });
+  }, [pathname]);
+
+  // Time on page, as its own effect keyed on the path: a client-side
+  // navigation unmounts nothing, so the cleanup here IS the "left the page"
+  // moment for every route change after the first.
+  useEffect(() => {
+    if (!pathname) return;
+    if (EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
+    return trackPageTime(subjectFor(pathname) ?? undefined);
   }, [pathname]);
 
   return null;
