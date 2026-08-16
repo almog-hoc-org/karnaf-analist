@@ -15,6 +15,11 @@ import { SOURCES } from "@/lib/sources";
  * Priorities encode what this site is FOR. City pages are the product and the
  * long tail ("מחירי דירות ב-X"), so they rank above the marketing pages.
  */
+// NOT statically generated. The build runs against an empty schema database
+// (the CI gate creates one just to compile), so a prerendered sitemap listed
+// zero cities — 48 URLs instead of ~200, verified in production. It has to be
+// generated per request, against the real data, and cached for a day.
+export const dynamic = "force-dynamic";
 export const revalidate = 86_400; // a day; the city list moves once a quarter at most
 
 const STATIC_PATHS: Array<[string, number, MetadataRoute.Sitemap[number]["changeFrequency"]]> = [

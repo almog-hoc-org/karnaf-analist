@@ -26,7 +26,9 @@ const nextConfig = {
     serverComponentsExternalPackages: ['better-sqlite3', '@prisma/adapter-better-sqlite3'],
     // Bundle the SQLite database into serverless functions on Vercel
     outputFileTracingIncludes: {
-      '/**/*': ['./data/realestate.db'],
+      // The OG font must travel with the build — file tracing cannot see a
+      // path built at runtime, and a missing font is a 502 on every share card.
+      '/**/*': ['./data/realestate.db', './assets/**'],
     },
   },
 
