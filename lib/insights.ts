@@ -7,6 +7,7 @@
 import { prisma } from "./db";
 import { computeCityGap, describeSupplySource } from "./gap-analysis";
 import { cachedReference } from "./cache";
+import { nationalPersonsPerDwelling, dwellingsFor, dwellingRank } from "./dwellings";
 
 export interface CityInsights {
   priceChange: string | null;
@@ -129,17 +130,26 @@ export async function getCityInsights(cityName: string): Promise<CityInsights> {
     inventoryClearance = `במלאי הנוכחי ובקצב מכירה ממוצע, ייקח ${years} שנים למכור את כל הדירות`;
   }
 
-  // ── People per apartment ─────────────────────────────────────────────────
+  // ── Persons per dwelling ─────────────────────────────────────────────────
+  //
+  // The national benchmark is the PUBLISHED ratio (total population ÷ total
+  // dwellings), not the mean of the per-city ratios this file used to compute.
+  // That average weighs Beitar Illit and Tel Aviv equally and therefore
+  // described our own table rather than the country — and it moved whenever a
+  // city gained or lost a value, which is not something a national average is
+  // allowed to do.
   let peoplePerApartment: string | null = null;
-  if (city.people_per_apartment !== null) {
-    const ppa = round2(city.people_per_apartment);
-    if (nationals.avg_people_per_apartment !== null) {
-      const natPpa = round2(nationals.avg_people_per_apartment);
-      const comparison =
-        city.people_per_apartment > nationals.avg_people_per_apartment
-          ? "מעל"
-          : "מתחת";
-      peoplePerApartment = `נפשות לדירה: ${ppa} — ${comparison} לממוצע הארצי ${natPpa}`;
+  const dw = dwellingsFor(cityName);
+  const ppaValue = dw?.ratio ?? city.people_per_apartment;
+  if (ppaValue != null) {
+    const ppa = round2(ppaValue);
+    const natPpa = nationalPersonsPerDwelling() ?? nationals.avg_people_per_apartment;
+    if (natPpa != null) {
+      const comparison = ppaValue > natPpa ? "מעל" : "מתחת";
+      const rank = dwellingRank(cityName);
+      peoplePerApartment =
+        `נפשות לדירה: ${ppa} — ${comparison} לממוצע הארצי ${round2(natPpa)}` +
+        (rank ? ` (מקום ${rank.rank} מתוך ${rank.of} הערים הגדולות)` : "");
     } else {
       peoplePerApartment = `נפשות לדירה: ${ppa}`;
     }

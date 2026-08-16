@@ -6,6 +6,8 @@ import { cityUrbanRenewalProjects } from "@/lib/urbanRenewal";
 import { subsidizedWindowNote, citySubsidizedYears } from "@/lib/subsidizedYears";
 import UrbanRenewalSection from "@/components/UrbanRenewalSection";
 import NeighborhoodPrices from "@/components/NeighborhoodPrices";
+import DwellingStockCard from "@/components/DwellingStockCard";
+import { dwellingsFor, dwellingRank, nationalPersonsPerDwelling, bigCityPersonsPerDwelling, dwellingsProvenance } from "@/lib/dwellings";
 import { neighborhoodSummary, neighborhoodMinDeals } from "@/lib/neighborhoods";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
@@ -906,6 +908,22 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           </div>
         </section>
       )}
+
+      {/* Dwelling stock — CBS 2025, only for settlements of 50k+ */}
+      {(() => {
+        const dw = dwellingsFor(city.city_name);
+        if (!dw) return null;
+        return (
+          <DwellingStockCard
+            cityName={city.city_name}
+            row={dw}
+            national={nationalPersonsPerDwelling()}
+            bigCity={bigCityPersonsPerDwelling()}
+            rank={dwellingRank(city.city_name)}
+            provenance={dwellingsProvenance()}
+          />
+        );
+      })()}
 
       {/* Intra-city spread — from neighborhood_year_stats (aggregation stage) */}
       <NeighborhoodPrices

@@ -3,6 +3,7 @@ import { gradeTrend } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
 import { PIPELINE, STAGE_IDS, stagesFrom, mutationStages } from "@/lib/pipeline";
+import { dwellingsFile, dwellingsFor, nationalPersonsPerDwelling } from "@/lib/dwellings";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -120,5 +121,42 @@ describe("pipeline order", () => {
     expect(stagesFrom("aggregate")[0].id).toBe("aggregate");
     expect(() => stagesFrom("no-such-stage")).toThrow();
     expect(stagesFrom().length).toBe(PIPELINE.length);
+  });
+});
+
+describe("CBS dwelling stock 2025", () => {
+  // The table was transcribed from a published image. Arithmetic is the only
+  // check that can catch a mistyped digit, so it lives here rather than in a
+  // one-off script that ran once and was deleted.
+  it("reconciles every city's ratio with population ÷ dwellings", () => {
+    const file = dwellingsFile()!;
+    expect(file).toBeTruthy();
+    for (const c of file.cities) {
+      expect(Math.abs(c.population / c.dwellings - c.ratio)).toBeLessThan(0.006);
+    }
+  });
+
+  it("sums to the published 50k+ totals", () => {
+    const file = dwellingsFile()!;
+    const d = file.cities.reduce((a, c) => a + c.dwellings, 0);
+    const p = file.cities.reduce((a, c) => a + c.population, 0);
+    expect(d).toBe(file.national.citiesOver50k.dwellings);
+    // Two people out of ~6M: rounding inside the CBS table itself, not a typo.
+    expect(Math.abs(p - file.national.citiesOver50k.population)).toBeLessThanOrEqual(5);
+  });
+
+  it("uses the published national ratio, not a mean of city ratios", () => {
+    const file = dwellingsFile()!;
+    const meanOfRatios = file.cities.reduce((a, c) => a + c.ratio, 0) / file.cities.length;
+    expect(nationalPersonsPerDwelling()).toBe(3.27);
+    // The two genuinely differ — which is why the distinction is worth a test.
+    expect(Math.abs(meanOfRatios - 3.27)).toBeGreaterThan(0.1);
+  });
+
+  it("finds a city despite the publication's spelling", () => {
+    // The table writes הרצלייה; the database stores הרצליה.
+    expect(dwellingsFor("הרצליה")?.dwellings).toBe(42199);
+    expect(dwellingsFor("תל אביב יפו")?.ratio).toBe(2.11);
+    expect(dwellingsFor("עיר שלא קיימת")).toBeNull();
   });
 });

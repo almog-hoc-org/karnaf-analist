@@ -88,6 +88,20 @@ export const CATEGORIES: Category[] = [
 export const SOURCES: Source[] = [
   // ───── CBS ─────
   {
+    id: "cbs-dwellings-2025",
+    name: 'יחס אוכלוסייה למספר דירות ביישובים מעל 50 אלף תושבים — 2025',
+    organization: 'הלשכה המרכזית לסטטיסטיקה',
+    category: "cbs",
+    description: 'מספר דירות (2025) מול אוכלוסייה (סוף יוני 2025) ב-40 היישובים הגדולים, והיחס ביניהם. הארצי: 3,015,855 דירות מול 9,862,317 תושבים = 3.27 נפשות לדירה.',
+    url: 'https://www.cbs.gov.il/he/publications/Pages/2025/%D7%93%D7%99%D7%A8%D7%95%D7%AA.aspx',
+    monitorUrl: 'https://www.cbs.gov.il/he/publications/Pages/2025/%D7%93%D7%99%D7%A8%D7%95%D7%AA.aspx',
+    usedFor: 'מלאי הדירות בעיר ונפשות לדירה — כרטיס מלאי הדירות בעמוד העיר, עמודת "נפשות/דירה" בטבלת הערים, וההשוואה הארצית בתובנות',
+    feedsTables: ['city.total_apartments', 'city.people_per_apartment', 'city.dwellings_year', 'city.dwellings_population'],
+    publicationDate: '2025-06-30',
+    publicationSchedule: { type: "irregular", note: "פרסום שנתי של הלמ״ס; מכוסים רק יישובים מעל 50 אלף תושבים" },
+    language: "he",
+  },
+  {
     id: "cbs-census-2022",
     name: 'נתוני אוכלוסייה לפי יישוב — מפקד 2022',
     organization: 'הלשכה המרכזית לסטטיסטיקה',

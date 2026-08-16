@@ -70,6 +70,13 @@ export const PIPELINE: PipelineStage[] = [
     timeoutMs: 10 * MINUTE,
   },
   {
+    id: "dwellings",
+    script: "scripts/import-cbs-dwellings.ts",
+    label: "מלאי דירות ונפשות לדירה (למ״ס)",
+    why: "total_apartments and people_per_apartment are read by the city page, the insights engine and the rankings, and nothing wrote them on a schedule — they carried whatever an old import left behind, with no year attached. Running the published CBS table every night makes the source the definition of those columns instead of something that happened to them once. Only covers settlements of 50k+; every other city keeps what it has.",
+    timeoutMs: 5 * MINUTE,
+  },
+  {
     id: "merge",
     script: "scripts/merge-cross-channel.ts",
     label: "מיזוג ערוצים",
