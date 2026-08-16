@@ -8,7 +8,7 @@
  * the site showed before it shipped.
  */
 import { prisma } from "./db";
-import { cachedMarket } from "./cache";
+import { cachedMap } from "./cache";
 
 export interface UrbanRenewalProject {
   siteName: string | null;
@@ -54,7 +54,7 @@ async function loadAllUncached(): Promise<Map<string, UrbanRenewalProject[]>> {
   }
 }
 
-const loadAll = cachedMarket(loadAllUncached, ["urban-renewal-projects"]);
+const loadAll = cachedMap(loadAllUncached, ["urban-renewal-projects"]);
 
 export async function cityUrbanRenewalProjects(cityName: string): Promise<UrbanRenewalProject[]> {
   return (await loadAll()).get(cityName) ?? [];

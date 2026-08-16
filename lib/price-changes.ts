@@ -25,6 +25,7 @@
  *   - /rankings/highest-gain — toggleable between windows
  */
 import { prisma } from "./db";
+import { cachedMap } from "./cache";
 import { refYear } from "./refYear";
 
 export interface PriceChangeWindow {
@@ -125,7 +126,7 @@ async function loadCityAnnualAverages(): Promise<Map<string, Map<number, { sum: 
  * Compute 3y + 5y price-change for every city in nadlan_price_trends.
  * Returns a Map keyed by city_name for O(1) lookup.
  */
-export async function loadAllCityPriceChanges(): Promise<Map<string, CityPriceChanges>> {
+async function loadAllCityPriceChangesUncached(): Promise<Map<string, CityPriceChanges>> {
   const averages = await loadCityAnnualAverages();
   const endCap = refYear();
   const out = new Map<string, CityPriceChanges>();
@@ -179,3 +180,8 @@ export function topMoversByWindow(
   items.sort((a, b) => b.pct - a.pct);
   return items.slice(0, limit);
 }
+
+/* Cached: the all-cities variant re-reads nadlan_price_trends whole. The
+ * per-city loadCityPriceChanges stays uncached on purpose — it is one narrow
+ * indexed query and caching 168 separate entries would cost more than it saves. */
+export const loadAllCityPriceChanges = cachedMap(loadAllCityPriceChangesUncached, ["all-city-price-changes"]);

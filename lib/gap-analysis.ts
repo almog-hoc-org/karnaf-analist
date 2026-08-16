@@ -18,6 +18,7 @@
  * This module is read-only — it queries Prisma directly and never mutates state.
  */
 
+import { cache } from "react";
 import { prisma } from "./db";
 import { cachedMarket } from "./cache";
 
@@ -118,42 +119,86 @@ function dominantSource(rows: GapWindowYear[]): SupplySource {
   return best;
 }
 
+/**
+ * REQUEST-SCOPED DEDUPE. The city page called this once directly and once more
+ * inside getCityInsights, with the same window — 12 queries where 6 would do,
+ * on the site's busiest page. React's cache() collapses identical calls within
+ * a single render pass.
+ *
+ * The key must be PRIMITIVES: cache() compares arguments by identity, and two
+ * `{ windowStart: 2020, windowEnd: 2024 }` literals are different objects, so
+ * passing the options object straight through would dedupe nothing. Hence the
+ * inner function takes two numbers and the public wrapper unpacks.
+ */
+const computeCityGapCached = cache(
+  async (cityName: string, windowStart: number, windowEnd: number): Promise<GapAnalysis | null> =>
+    computeCityGapUncached(cityName, windowStart, windowEnd)
+);
+
 export async function computeCityGap(
   cityName: string,
   opts: GapOptions = {}
 ): Promise<GapAnalysis | null> {
-  const windowStart = opts.windowStart ?? DEFAULT_WINDOW_START;
-  const windowEnd = opts.windowEnd ?? DEFAULT_WINDOW_END;
+  return computeCityGapCached(
+    cityName,
+    opts.windowStart ?? DEFAULT_WINDOW_START,
+    opts.windowEnd ?? DEFAULT_WINDOW_END
+  );
+}
 
-  // Pull all the inputs in parallel
-  const [city, yad2, popRows, permits, startsRows, pressRows] = await Promise.all([
-    prisma.city.findUnique({
-      where: { city_name: cityName },
-      select: {
-        avgHouseholdSize2022: true,
-        people_per_apartment: true,
-        population_growth_abs: true,
-        apartments_required: true,
-      },
-    }),
-    prisma.yad2_market_data.findUnique({
-      where: { city_name: cityName },
-      select: { avg_household_size: true },
-    }),
-    prisma.population_by_year.findMany({
-      where: { city_name: cityName, year: { gte: windowStart - 1, lte: windowEnd } },
-      orderBy: { year: "asc" },
-    }),
-    prisma.buildingPermit.findMany({
-      where: { city_name: cityName, year: { gte: windowStart, lte: windowEnd } },
-    }),
-    prisma.construction_starts.findMany({
-      where: { city_name: cityName, year: { gte: windowStart, lte: windowEnd } },
-    }),
-    prisma.cbsPressData.findMany({
-      where: { city_name: cityName, year: { gte: windowStart, lte: windowEnd } },
-    }),
-  ]);
+/**
+ * The six per-city inputs the gap math needs. When a caller has already loaded
+ * them for every city (see loadGapInputsForAllCities), it passes them in and
+ * the function issues no queries at all — same arithmetic, same result.
+ */
+interface GapInputs {
+  city: { avgHouseholdSize2022: number | null; people_per_apartment: number | null; population_growth_abs: number | null; apartments_required: number | null } | null;
+  yad2: { avg_household_size: number | null } | null;
+  popRows: Array<{ year: number; population: number | null }>;
+  permits: Array<{ year: number; permits: number | null }>;
+  startsRows: Array<{ year: number; starts: number | null }>;
+  pressRows: Array<{ year: number; construction_starts: number | null; construction_completions: number | null }>;
+}
+
+async function computeCityGapUncached(
+  cityName: string,
+  windowStart: number,
+  windowEnd: number,
+  preloaded?: GapInputs
+): Promise<GapAnalysis | null> {
+
+  // Pull all the inputs in parallel — unless the caller already has them.
+  const { city, yad2, popRows, permits, startsRows, pressRows } = preloaded ?? await (async () => {
+    const [city, yad2, popRows, permits, startsRows, pressRows] = await Promise.all([
+      prisma.city.findUnique({
+        where: { city_name: cityName },
+        select: {
+          avgHouseholdSize2022: true,
+          people_per_apartment: true,
+          population_growth_abs: true,
+          apartments_required: true,
+        },
+      }),
+      prisma.yad2_market_data.findUnique({
+        where: { city_name: cityName },
+        select: { avg_household_size: true },
+      }),
+      prisma.population_by_year.findMany({
+        where: { city_name: cityName, year: { gte: windowStart - 1, lte: windowEnd } },
+        orderBy: { year: "asc" },
+      }),
+      prisma.buildingPermit.findMany({
+        where: { city_name: cityName, year: { gte: windowStart, lte: windowEnd } },
+      }),
+      prisma.construction_starts.findMany({
+        where: { city_name: cityName, year: { gte: windowStart, lte: windowEnd } },
+      }),
+      prisma.cbsPressData.findMany({
+        where: { city_name: cityName, year: { gte: windowStart, lte: windowEnd } },
+      }),
+    ]);
+    return { city, yad2, popRows, permits, startsRows, pressRows } as GapInputs;
+  })();
 
   if (!city) return null;
 
@@ -289,11 +334,68 @@ export async function computeCityGap(
   };
 }
 
-async function computeAllCityGapsUncached(opts: GapOptions = {}): Promise<GapAnalysis[]> {
-  const cities = await prisma.city.findMany({ select: { city_name: true } });
-  const out: GapAnalysis[] = [];
+/**
+ * Every input the gap math needs, for every city, in SIX queries.
+ *
+ * This replaces ~170 × 6 = ~1,020 serial round-trips. better-sqlite3 is
+ * synchronous, so those could never overlap — they were 1,020 blocking calls
+ * on the one connection that also serves page renders, paid on the first
+ * request after every deploy and every cache invalidation.
+ */
+async function loadGapInputsForAllCities(
+  windowStart: number,
+  windowEnd: number
+): Promise<Map<string, GapInputs>> {
+  const [cities, yad2Rows, popRows, permitRows, startRows, pressRows] = await Promise.all([
+    prisma.city.findMany({
+      select: {
+        city_name: true,
+        avgHouseholdSize2022: true,
+        people_per_apartment: true,
+        population_growth_abs: true,
+        apartments_required: true,
+      },
+    }),
+    prisma.yad2_market_data.findMany({ select: { city_name: true, avg_household_size: true } }),
+    prisma.population_by_year.findMany({
+      where: { year: { gte: windowStart - 1, lte: windowEnd } },
+      orderBy: { year: "asc" },
+    }),
+    prisma.buildingPermit.findMany({ where: { year: { gte: windowStart, lte: windowEnd } } }),
+    prisma.construction_starts.findMany({ where: { year: { gte: windowStart, lte: windowEnd } } }),
+    prisma.cbsPressData.findMany({ where: { year: { gte: windowStart, lte: windowEnd } } }),
+  ]);
+
+  const out = new Map<string, GapInputs>();
   for (const c of cities) {
-    const g = await computeCityGap(c.city_name, opts);
+    out.set(c.city_name, {
+      city: {
+        avgHouseholdSize2022: c.avgHouseholdSize2022,
+        people_per_apartment: c.people_per_apartment,
+        population_growth_abs: c.population_growth_abs,
+        apartments_required: c.apartments_required,
+      },
+      yad2: null, popRows: [], permits: [], startsRows: [], pressRows: [],
+    });
+  }
+  // Bucket each row list onto its city. Rows for cities absent from `cities`
+  // are dropped, exactly as the per-city version did (it returned null there).
+  for (const r of yad2Rows) { const g = out.get(r.city_name); if (g) g.yad2 = { avg_household_size: r.avg_household_size }; }
+  for (const r of popRows) { const g = out.get(r.city_name); if (g) g.popRows.push(r); }
+  for (const r of permitRows) { const g = out.get(r.city_name); if (g) g.permits.push(r); }
+  for (const r of startRows) { const g = out.get(r.city_name); if (g) g.startsRows.push(r); }
+  for (const r of pressRows) { const g = out.get(r.city_name); if (g) g.pressRows.push(r); }
+  return out;
+}
+
+async function computeAllCityGapsUncached(opts: GapOptions = {}): Promise<GapAnalysis[]> {
+  const windowStart = opts.windowStart ?? DEFAULT_WINDOW_START;
+  const windowEnd = opts.windowEnd ?? DEFAULT_WINDOW_END;
+  const inputs = await loadGapInputsForAllCities(windowStart, windowEnd);
+
+  const out: GapAnalysis[] = [];
+  for (const [cityName, preloaded] of inputs) {
+    const g = await computeCityGapUncached(cityName, windowStart, windowEnd, preloaded);
     if (g) out.push(g);
   }
   return out;
@@ -302,20 +404,18 @@ async function computeAllCityGapsUncached(opts: GapOptions = {}): Promise<GapAna
 /**
  * Gaps for every city. Used by /stats/supply-coverage and the rankings pages.
  *
- * The loop above is ~170 cities × 6 queries each, awaited one at a time — the
- * single most expensive operation in the app, and until now it ran on EVERY
- * request to /stats/supply-coverage. (The original comment called it "a single
- * batch"; it never was.)
+ * Two layers, and both are needed:
  *
- * Caching is the fix that matters, because the answer is identical for every
- * visitor and changes only when the pipeline runs. The loop is deliberately
- * left serial: the underlying driver is better-sqlite3, which is synchronous,
- * so firing ~1000 queries concurrently would not overlap any I/O — it would
- * just build a huge promise backlog against the same blocking connection.
+ *   1. SIX queries instead of ~1,020. It used to loop the cities and call the
+ *      per-city function, which issued 6 queries each — awaited one at a time,
+ *      on a synchronous driver, on the same connection that renders pages.
+ *      Concurrency would not have helped (nothing to overlap); fetching the
+ *      whole window once and bucketing in memory does.
+ *   2. The cache below, because the answer is identical for every visitor and
+ *      changes only when the pipeline runs.
  *
- * What remains is a slow FIRST request after each invalidation. If that proves
- * too slow in practice, the real fix is to rewrite computeCityGap to fetch all
- * cities in one grouped query rather than to add concurrency here.
+ * The arithmetic is untouched — computeCityGapUncached does the same work on
+ * the same inputs, it just receives them instead of fetching them.
  */
 export const computeAllCityGaps = cachedMarket(computeAllCityGapsUncached, ["all-city-gaps"]);
 

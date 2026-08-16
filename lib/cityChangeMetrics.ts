@@ -1,4 +1,5 @@
 import { prisma } from "./db";
+import { cachedMap, cachedMarket } from "./cache";
 import { loadThinSampleCities } from "./cityTransactionPrices";
 import { refYear } from "./refYear";
 
@@ -31,7 +32,7 @@ export interface CityChangeMetrics {
 /** A second-hand year-cell below this deal count is too thin to price from. */
 const SH_MIN_N = 10;
 
-export async function loadCitiesChangeMetrics(): Promise<Map<string, CityChangeMetrics>> {
+async function loadCitiesChangeMetricsUncached(): Promise<Map<string, CityChangeMetrics>> {
   const out = new Map<string, CityChangeMetrics>();
   const ensure = (city: string): CityChangeMetrics => {
     let m = out.get(city);
@@ -114,7 +115,7 @@ export interface SecondhandChange {
  * they are yellow in tables and excluded from every ranking/KPI consumer).
  * `field` picks avg (default) or median ₪/m². Sorted descending by pct.
  */
-export async function loadSecondhandChanges(
+async function loadSecondhandChangesUncached(
   win: number,
   field: "avg_sqm" | "median_sqm" = "avg_sqm",
   refYearArg: number = refYear()
@@ -179,3 +180,15 @@ export async function loadSecondhandChanges(
   }
   return out.sort((a, b) => b.pct - a.pct);
 }
+
+/* ── caching ──────────────────────────────────────────────────────────────
+ * Both loaders scan nadlan_year_room_stats whole and are called repeatedly per
+ * render — loadSecondhandChanges(3) alone was invoked THREE times on the home
+ * page, each time re-running the scan and re-awaiting loadThinSampleCities.
+ * The market tag is already dropped by the pipeline's revalidate ping, so a
+ * cached value can never outlive the aggregation that produced it.
+ * unstable_cache keys on the arguments, so the (win, field, refYear) variants
+ * stay separate entries.
+ */
+export const loadCitiesChangeMetrics = cachedMap(loadCitiesChangeMetricsUncached, ["cities-change-metrics"]);
+export const loadSecondhandChanges = cachedMarket(loadSecondhandChangesUncached, ["secondhand-changes"]);

@@ -15,6 +15,7 @@
  * Year-cells below MIN_N deals are ignored (never price from noise).
  */
 import { prisma } from "./db";
+import { cachedMap, cachedSet } from "./cache";
 import { getRuleNum, getRuleBool } from "./systemRules";
 
 /**
@@ -89,7 +90,7 @@ export interface CityTransactionPrices {
 interface StatRow { city_name: string; year: number; scope: string; avg_sqm: number | null; median_sqm: number | null; n: number }
 interface CovRow { city_name: string; total: number; sh: number; ymin: number; ymax: number; yrs: number }
 
-export async function loadCityTransactionPrices(): Promise<Map<string, CityTransactionPrices>> {
+async function loadCityTransactionPricesUncached(): Promise<Map<string, CityTransactionPrices>> {
   // Resolved once per call, not once per process — see the note on these helpers.
   const years = fallbackYears();
   const threshold = minN();
@@ -166,7 +167,7 @@ export async function loadCityTransactionPrices(): Promise<Map<string, CityTrans
  * thin-sample rule (yellow rows + ranking exclusion) and the "עסקאות במאגר"
  * column, so the tint and the displayed count always agree.
  */
-export async function loadActiveDealCounts(): Promise<Map<string, number>> {
+async function loadActiveDealCountsUncached(): Promise<Map<string, number>> {
   const rows = await prisma.$queryRawUnsafe<Array<{ city_name: string; n: bigint }>>(
     `SELECT city_name, COUNT(*) n FROM nadlan_transactions
      WHERE COALESCE(excluded,0)=0 AND deal_year >= ${new Date().getFullYear() - 10}
@@ -176,7 +177,7 @@ export async function loadActiveDealCounts(): Promise<Map<string, number>> {
 }
 
 /** Cities under the city_min_total_deals rule (default 150 active deals/10y). */
-export async function loadThinSampleCities(): Promise<Set<string>> {
+async function loadThinSampleCitiesUncached(): Promise<Set<string>> {
   const minTotal = getRuleNum("city_min_total_deals", 150);
   const counts = await loadActiveDealCounts();
   const thin = new Set<string>();
@@ -191,7 +192,7 @@ export async function loadThinSampleCities(): Promise<Set<string>> {
  * never top a national ranking — AND at least city_min_total_deals active
  * deals over the decade (thin-sample cities are yellow in tables + excluded).
  */
-export async function loadRankingEligibleCities(minPerScope = getRuleNum("ranking_min_per_scope")): Promise<Set<string>> {
+async function loadRankingEligibleCitiesUncached(minPerScope = getRuleNum("ranking_min_per_scope")): Promise<Set<string>> {
   const thin = await loadThinSampleCities();
   if (!getRuleBool("ranking_normalization_on", true)) {
     const all = await prisma.$queryRawUnsafe<Array<{ city_name: string }>>(
@@ -222,3 +223,16 @@ export function rankingEligibilityNote(): string {
 
 /** Caption for any consumer (memory rule: source • period • update). */
 export const TX_PRICE_PROVENANCE = `מאגר העסקאות הפנימי (רשות המסים) · ₪/מ"ר · שנה מלאה אחרונה עם 10+ עסקאות`;
+
+/* ── caching ──────────────────────────────────────────────────────────────
+ * Every one of these scans nadlan_year_room_stats or nadlan_transactions and
+ * is called from the home page, /cities, /compare and the rankings — on each
+ * render, per visitor. They read only pipeline output, so the market tag's
+ * invalidation (fired by the aggregation's revalidate ping) is exactly the
+ * right lifetime. loadThinSampleCities is additionally awaited from inside
+ * loadSecondhandChanges, which made it the most-repeated query on the site.
+ */
+export const loadCityTransactionPrices = cachedMap(loadCityTransactionPricesUncached, ["city-transaction-prices"]);
+export const loadActiveDealCounts = cachedMap(loadActiveDealCountsUncached, ["active-deal-counts"]);
+export const loadThinSampleCities = cachedSet(loadThinSampleCitiesUncached, ["thin-sample-cities"]);
+export const loadRankingEligibleCities = cachedSet(loadRankingEligibleCitiesUncached, ["ranking-eligible-cities"]);

@@ -14,25 +14,41 @@ export const metadata = {
 };
 
 export default async function CitiesPage() {
-  const cities = await prisma.city.findMany({
-    where: { city_name: { notIn: ALIAS_NAMES } },
-    orderBy: { population_2026: "desc" },
-    include: {
-      sales: {
-        select: {
-          unsold_inventory_2025: true,
-          years_to_clear_avg: true,
+  // ONE await for seven independent loaders. They were seven sequential
+  // awaits — none of them depends on another, so the page paid the sum of
+  // their latencies instead of the slowest.
+  const [cities, permitsAgg, allPriceChanges, txPrices, changeMetrics, dealCountMap, investorMetrics] = await Promise.all([
+    prisma.city.findMany({
+      where: { city_name: { notIn: ALIAS_NAMES } },
+      orderBy: { population_2026: "desc" },
+      include: {
+        sales: {
+          select: {
+            unsold_inventory_2025: true,
+            years_to_clear_avg: true,
+          },
         },
       },
-    },
-  });
-
-  // Get total permits per city
-  const permitsAgg = await prisma.buildingPermit.groupBy({
-    by: ["city_name"],
-    _sum: { permits: true },
-    _count: { permits: true },
-  });
+    }),
+    // total permits per city
+    prisma.buildingPermit.groupBy({
+      by: ["city_name"],
+      _sum: { permits: true },
+      _count: { permits: true },
+    }),
+    // Centralized 3y/5y price-change calculation (shared with city page + rankings)
+    loadAllCityPriceChanges(),
+    // Price LEVELS from real transactions — the site's price axis
+    loadCityTransactionPrices(),
+    // Per-city yearly value series for the windowed change columns
+    loadCitiesChangeMetrics(),
+    // Per-city total collected transactions — a column AND the basis for the
+    // yellow thin-sample tint. Counted from ACTIVE rows via the same loader the
+    // ranking exclusion uses, so tint, count and rankings always agree.
+    loadActiveDealCounts(),
+    // Investor screener metrics
+    computeAllInvestorMetrics(),
+  ]);
 
   const permitsMap = new Map(
     permitsAgg.map((p) => [
@@ -45,23 +61,10 @@ export default async function CitiesPage() {
     ])
   );
 
-  // Centralized 3y/5y price-change calculation (shared with city page + rankings)
-  const allPriceChanges = await loadAllCityPriceChanges();
-  // Price LEVELS from real transactions — the site's price axis (replaces old-Excel prices)
-  const txPrices = await loadCityTransactionPrices();
-  // Per-city yearly value series for the windowed change columns (median / all / second-hand)
-  const changeMetrics = await loadCitiesChangeMetrics();
-  // Per-city total collected transactions (internal repository) — shown as a
-  // column AND the basis for the yellow thin-sample tint. Counted from ACTIVE
-  // rows (both sources, each deal once) via the same loader the ranking
-  // exclusion uses, so the tint, the count and the rankings always agree.
-  const dealCountMap = await loadActiveDealCounts();
   // user rule: cities under this many active deals are tinted yellow + excluded from rankings
   const minDeals = getRuleNum("city_min_total_deals", 150);
 
-  // Investor screener metrics (server-computed Map → serializable plain Record,
-  // BigInt-safe via Number()) — passed as a prop to the client table.
-  const investorMetrics = await computeAllInvestorMetrics();
+  // Map → serializable plain Record (BigInt-safe via Number()) for the client table.
   const investor: Record<string, InvestorRow> = {};
   investorMetrics.forEach((m, cityName) => {
     investor[cityName] = {

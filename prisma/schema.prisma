@@ -230,6 +230,11 @@ model nadlan_transactions {
   captured_at   DateTime @default(now())
 
   @@index([city_name, deal_year, room_bucket], map: "idx_nadlan_tx_city_year_room")
+  // The home page counts active deals by year and by date, and neither can use
+  // the composite above (it leads with city_name) — so each render was two full
+  // scans of ~1.35M rows. These two cover exactly those predicates.
+  @@index([deal_date], map: "idx_nadlan_tx_deal_date")
+  @@index([excluded, deal_year], map: "idx_nadlan_tx_excluded_year")
 }
 
 // Read-optimized aggregate the price graphs consume: per city × year × room_bucket,
@@ -248,4 +253,7 @@ model nadlan_year_room_stats {
   last_updated  DateTime @default(now())
 
   @@unique([city_name, year, room_bucket, scope], map: "ux_nadlan_year_room_stats")
+  // /cities, /compare and the rankings scan by bucket+scope across all cities;
+  // the unique index leads with city_name and cannot serve them.
+  @@index([room_bucket, scope, year], map: "idx_stats_bucket_scope_year")
 }

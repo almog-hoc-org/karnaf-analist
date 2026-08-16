@@ -14,6 +14,7 @@ import { loadCityTransactionPrices, loadRankingEligibleCities } from "@/lib/city
 import { computeMarketInsights } from "@/lib/marketInsights";
 import MarketInsightsSection from "@/components/MarketInsightsSection";
 import { loadCbsSales } from "@/lib/cbsSales";
+import { loadDealTotals } from "@/lib/dealTotals";
 import CbsSalesChart from "@/components/CbsSalesChart";
 import { loadDiscoveredReports } from "@/lib/data-refresh";
 import { whatsappUrl } from "@/lib/brand";
@@ -124,26 +125,10 @@ export default async function HomePage() {
   const gainPartialYear = gainMaxYear >= currentYear ? currentYear : null;
 
   // ── Live hero KPIs ──────────────────────────────────────────────
-  // nadlan_transactions lives outside the Prisma schema → raw SQL.
-  // COUNT(*) comes back as BigInt from SQLite — must convert via Number().
-  let totalDeals = 0;
-  let deals12m = 0;
-  let dealsMaxDate: string | null = null;
-  try {
-    // Usable deals only: active (non-excluded) and within the last 10 years — the
-    // exact set that feeds the graphs, so the headline can't over-state the DB.
-    const [totals] = await prisma.$queryRawUnsafe<Array<{ n: bigint; maxd: string | null }>>(
-      "SELECT COUNT(*) AS n, MAX(deal_date) AS maxd FROM nadlan_transactions WHERE COALESCE(excluded,0)=0 AND deal_year >= CAST(strftime('%Y','now') AS INTEGER) - 10"
-    );
-    const [recent] = await prisma.$queryRawUnsafe<Array<{ n: bigint }>>(
-      "SELECT COUNT(*) AS n FROM nadlan_transactions WHERE COALESCE(excluded,0)=0 AND deal_date >= date('now','-12 months')"
-    );
-    totalDeals = Number(totals?.n ?? 0);
-    deals12m = Number(recent?.n ?? 0);
-    dealsMaxDate = totals?.maxd ?? null;
-  } catch {
-    // nadlan_transactions missing — tiles fall back to "—"
-  }
+  // Two full scans of 1.35M rows that no index covers, once per render until
+  // now — moved to lib/dealTotals.ts behind the market cache tag, so they are
+  // recomputed when the pipeline says the data changed and not before.
+  const { totalDeals, deals12m, maxDealDate: dealsMaxDate } = await loadDealTotals();
   const dealsUpdatedLabel = dealsMaxDate
     ? new Date(dealsMaxDate).toLocaleDateString("he-IL", { day: "numeric", month: "numeric", year: "2-digit" })
     : undefined;

@@ -56,6 +56,13 @@ const MINUTE = 60_000;
 
 export const PIPELINE: PipelineStage[] = [
   {
+    id: "indexes",
+    script: "scripts/ensure-indexes.ts",
+    label: "אינדקסים לקריאה",
+    why: "Prisma migrations are never applied to the live DB, so read-path indexes have to be created by something that runs against it. Idempotent and first: the cleaning stages that follow scan the same table, and an index that exists helps them too.",
+    timeoutMs: 10 * MINUTE,
+  },
+  {
     id: "merge",
     script: "scripts/merge-cross-channel.ts",
     label: "מיזוג ערוצים",

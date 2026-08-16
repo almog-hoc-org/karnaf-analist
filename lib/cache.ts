@@ -76,3 +76,38 @@ export function cachedMarket<A extends unknown[], R>(fn: (...args: A) => Promise
 export function cachedReference<A extends unknown[], R>(fn: (...args: A) => Promise<R>, keyParts: string[]) {
   return cached(fn, keyParts, TAGS.reference, TTL.reference);
 }
+
+/**
+ * Map/Set-safe caching.
+ *
+ * ⚠️ THE TRAP THIS EXISTS FOR: unstable_cache SERIALIZES what it stores. A
+ * loader that returns a Map gets its value back as a plain object, and the
+ * first `.get(...)` or `.forEach(...)` on it throws
+ * "g.forEach is not a function" — at render time, in production, on a page
+ * that worked in dev. Two loaders in this codebase (classification rates,
+ * urban-renewal projects) were already shipped this way and only survived
+ * because their callers sat inside try/catch.
+ *
+ * So: cache the ENTRIES (a plain array, which serializes cleanly) and rebuild
+ * the Map or Set on the way out. The rebuild is O(n) over a few hundred rows —
+ * nothing next to the query it replaces — and the call site keeps its Map API.
+ */
+export function cachedMap<A extends unknown[], K, V>(
+  fn: (...args: A) => Promise<Map<K, V>>,
+  keyParts: string[],
+  tag: CacheTag = TAGS.market,
+  ttl: number = TTL.market
+): (...args: A) => Promise<Map<K, V>> {
+  const entries = cached(async (...args: A) => Array.from(await fn(...args)), keyParts, tag, ttl);
+  return async (...args: A) => new Map(await entries(...args));
+}
+
+export function cachedSet<A extends unknown[], V>(
+  fn: (...args: A) => Promise<Set<V>>,
+  keyParts: string[],
+  tag: CacheTag = TAGS.market,
+  ttl: number = TTL.market
+): (...args: A) => Promise<Set<V>> {
+  const members = cached(async (...args: A) => Array.from(await fn(...args)), keyParts, tag, ttl);
+  return async (...args: A) => new Set(await members(...args));
+}

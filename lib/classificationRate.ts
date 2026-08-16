@@ -9,7 +9,7 @@
  * null as "unknown", which gradeClassification maps to hidden.
  */
 import { prisma } from "./db";
-import { cachedMarket } from "./cache";
+import { cachedMap } from "./cache";
 
 export interface CityClassificationRate {
   nadlanN: number;
@@ -33,7 +33,7 @@ async function loadClassificationRatesUncached(): Promise<Map<string, CityClassi
   }
 }
 
-export const loadClassificationRates = cachedMarket(loadClassificationRatesUncached, ["city-classification-rates"]);
+export const loadClassificationRates = cachedMap(loadClassificationRatesUncached, ["city-classification-rates"]);
 
 export async function cityClassificationRate(cityName: string): Promise<CityClassificationRate | null> {
   return (await loadClassificationRates()).get(cityName) ?? null;

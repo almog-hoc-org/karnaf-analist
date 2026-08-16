@@ -16,6 +16,7 @@
  * Every consumer must label values with the window (memory rule: no unlabeled windows).
  */
 import { prisma } from "./db";
+import { cachedMap } from "./cache";
 import { computeAllCityGaps } from "./gap-analysis";
 import { refYear } from "./refYear";
 
@@ -84,7 +85,7 @@ function percentileRank(values: number[], v: number): number {
 
 interface StatRow { city_name: string; year: number; scope: string; avg_sqm: number | null; n: number }
 
-export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorMetrics>> {
+async function computeAllInvestorMetricsUncached(): Promise<Map<string, InvestorMetrics>> {
   // Resolved once per call: every window below must be measured against the
   // SAME year, or a 1y and a 3y change could straddle a rule edit mid-run.
   const ry = refYear();
@@ -210,3 +211,8 @@ export async function computeAllInvestorMetrics(): Promise<Map<string, InvestorM
 export function investorProvenance(): string {
   return `מאגר העסקאות הפנימי (רשות המסים + נדל"ן) · שנת ייחוס ${refYear()} · היצע: למ"ס`;
 }
+
+/* Cached: scans the whole stats table and calls computeAllCityGaps (itself
+ * cached) — driven by /cities, /compare, the rankings and every market
+ * insight. Pipeline output only, so the market tag is the right lifetime. */
+export const computeAllInvestorMetrics = cachedMap(computeAllInvestorMetricsUncached, ["investor-metrics"]);

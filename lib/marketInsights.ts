@@ -5,6 +5,7 @@
  * consecutive window of 4 mixes at least two price tiers (cheap/mid/expensive).
  */
 import { prisma } from "./db";
+import { cachedMarket } from "./cache";
 import { computeAllInvestorMetrics } from "./investorMetrics";
 import { refYear } from "./refYear";
 import { loadSecondhandChanges } from "./cityChangeMetrics";
@@ -56,7 +57,7 @@ function interleaveTiers(pool: MarketInsight[]): MarketInsight[] {
   return out;
 }
 
-export async function computeMarketInsights(): Promise<MarketInsight[]> {
+async function computeMarketInsightsUncached(): Promise<MarketInsight[]> {
   // one reference year for every insight produced by this call
   const ry = refYear();
   const [sh3, sh1, prices, inv, activeStreets, volumeRows] = await Promise.all([
@@ -179,3 +180,7 @@ export async function computeMarketInsights(): Promise<MarketInsight[]> {
 
   return interleaveTiers(pool);
 }
+
+/* Cached: composes three already-cached loaders plus its own scans, and runs
+ * on every home-page render. */
+export const computeMarketInsights = cachedMarket(computeMarketInsightsUncached, ["market-insights"]);
