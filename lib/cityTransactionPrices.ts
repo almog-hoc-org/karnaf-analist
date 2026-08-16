@@ -206,7 +206,37 @@ async function loadRankingEligibleCitiesUncached(minPerScope = getRuleNum("ranki
      GROUP BY city_name HAVING COUNT(DISTINCT scope) = 3`,
     priceRefYear(), priceRefYear() - 1, minPerScope
   );
-  return new Set(rows.map((r) => r.city_name).filter((c) => !thin.has(c)));
+  const eligible = new Set(rows.map((r) => r.city_name).filter((c) => !thin.has(c)));
+
+  // A gate that excludes EVERY city is a broken gate, not a strict one.
+  //
+  // Everything downstream treats this set as "the cities allowed in rankings",
+  // so an empty one silently blanks the movers board, the gainers list and the
+  // yield table at once — and the card then tells the reader "no cities with
+  // enough data in the selected range", blaming their year pickers for a
+  // server-side fault. That is the worst possible failure mode: wrong, and
+  // convincingly attributed to the user.
+  //
+  // It can empty legitimately-looking ways: ref_year edited to a year the
+  // stats have not reached, a run where the "new" scope did not materialise,
+  // a thin-sample rule set too high. In every one of them, falling back to
+  // "every city that has stats and is not thin" shows real cities with a
+  // slightly weaker guarantee, which beats showing nothing.
+  if (eligible.size === 0) {
+    const all = await prisma.$queryRawUnsafe<Array<{ city_name: string }>>(
+      "SELECT DISTINCT city_name FROM nadlan_year_room_stats WHERE room_bucket='all'"
+    );
+    const fallback = new Set(all.map((r) => r.city_name).filter((c) => !thin.has(c)));
+    if (fallback.size > 0) {
+      console.warn(
+        `[rankings] eligibility gate returned 0 cities for ref_year=${priceRefYear()} ` +
+        `(min ${minPerScope}/scope) — falling back to ${fallback.size} cities with stats. ` +
+        `Check ref_year against the years the aggregation actually produced.`
+      );
+    }
+    return fallback;
+  }
+  return eligible;
 }
 
 /**

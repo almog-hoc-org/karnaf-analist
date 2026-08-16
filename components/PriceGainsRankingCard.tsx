@@ -76,6 +76,33 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
 
   const anyFlagged = items.some((i) => i.subsidizedYear != null);
 
+  /**
+   * Why the list is empty, when it is.
+   *
+   * One sentence used to cover four causes, and it named the one the reader
+   * controls — "no cities with enough data in the range you picked" — even
+   * when the real cause was that the server shipped an empty series. Being
+   * told your year choice is wrong when it is not is worse than being told
+   * nothing, because it sends you off to change something that was fine.
+   */
+  const emptyReason = useMemo(() => {
+    if (items.length > 0) return null;
+    const cities = Object.keys(series);
+    if (cities.length === 0) return "server";
+    if (!cities.some((c) => series[c][scope])) return "scope";
+    const hasFrom = cities.some((c) => series[c][scope]?.[fromY]);
+    const hasTo = cities.some((c) => series[c][scope]?.[toY]);
+    if (!hasFrom || !hasTo) return "years";
+    return "filtered";
+  }, [items, series, scope, fromY, toY]);
+
+  const EMPTY_TEXT: Record<string, string> = {
+    server: "לא הגיעו נתוני ערים לכרטיס — תקלה בצד השרת, לא בבחירה שלך. שווה לרענן; אם זה נמשך, זה באג.",
+    scope: `אין עדיין סדרת "${SCOPES.find((x) => x.key === scope)?.label}" באף עיר — נסה סוג עסקה אחר.`,
+    years: `אין ערים עם נתונים בשתי השנים ${fromY} ו-${toY}. נסה טווח קרוב יותר להווה.`,
+    filtered: "כל הערים בטווח הזה הראו שינוי חריג מ-120% והוסתרו כחשודות בשגיאת נתונים.",
+  };
+
   return (
     <div className="glass-card relative flex h-full flex-col overflow-hidden p-5">
       {/* On wide screens the card spans a full row — controls sit in a fixed
@@ -129,6 +156,14 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
             </select>
             <span className="text-2xs text-slate-400">10+ עסקאות בכל שנה</span>
           </div>
+          {/* The reader's other copy of these numbers is the chart on the city
+              page, and until this line existed there was no way to know which
+              of its series to compare against. */}
+          <div className="mt-1.5 rounded-lg bg-slate-50 px-2 py-1 text-2xs leading-relaxed text-slate-500">
+            מוצג: <b>{SCOPES.find((x) => x.key === scope)?.label}</b> · <b>{metric === 0 ? "ממוצע" : "חציון"} ₪ למ״ר</b> · כל גדלי הדירות.
+            אותו מספר בדיוק מופיע בגרף של כל עיר תחת אותה בחירה — שים לב שברירת המחדל שם ליד-שנייה
+            היא הסדרה <b>מתוקננת-ההרכב</b>, שהיא חישוב אחר במכוון.
+          </div>
           {toY === partialYear && (
             <p className="mt-1.5 text-2xs font-semibold text-amber-600">
               ⚠ {partialYear} היא שנה חלקית — ההשוואה עד העסקאות שנקלטו עד כה, לא שנה מלאה
@@ -144,7 +179,9 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
 
         <ul className="space-y-1.5 lg:grid lg:grid-cols-2 lg:content-start lg:gap-x-8 lg:gap-y-2 lg:space-y-0">
           {items.length === 0 && (
-            <li className="text-xs text-slate-500 italic py-2 text-center lg:col-span-2">אין ערים עם דאטה מספק בטווח שנבחר</li>
+            <li className="py-2 text-center text-xs italic leading-relaxed text-slate-500 lg:col-span-2">
+              {emptyReason ? EMPTY_TEXT[emptyReason] : "אין ערים להצגה"}
+            </li>
           )}
           {items.map((it, i) => (
             <li key={it.city} className="flex min-w-0 flex-wrap items-start gap-x-2 gap-y-0.5 text-xs">

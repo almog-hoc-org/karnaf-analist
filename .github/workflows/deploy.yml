@@ -341,6 +341,20 @@ jobs:
           check "/deals" ""
           check "/methodology" ""
           check "/sources" ""
+          # The movers board renders from a series the server ships into the
+          # HTML. It went blank in production while the underlying data was
+          # perfectly fine, and nothing anywhere noticed — the card's own empty
+          # state read like a normal answer. Assert the card has cities in it.
+          echo "── movers board (home page) ──"
+          home=$(curl -sL --max-time 30 https://analyst.karnafnadlan.com/)
+          printf '%s' "$home" | grep -q "שינויי מחיר" \
+            && echo "✓ movers card present" || { echo "✗ movers card missing from the home page"; FAIL=1; }
+          if printf '%s' "$home" | grep -q "לא הגיעו נתוני ערים לכרטיס"; then
+            echo "✗ movers card shipped with NO city series — server-side"; FAIL=1
+          else
+            echo "✓ movers card carries a city series"
+          fi
+
           echo "── SEO surfaces (must exist and carry real content) ──"
           sm=$(curl -sL --max-time 30 https://analyst.karnafnadlan.com/sitemap.xml)
           urls=$(printf '%s' "$sm" | grep -c "<loc>" || true)
