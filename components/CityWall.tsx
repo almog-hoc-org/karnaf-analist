@@ -24,6 +24,7 @@ export default function CityWall({
   shareUrl,
   refCode,
   signupBonus,
+  inviteeBonus = 0,
   referralBonus,
   feedbackBonus,
   monthlyGrant,
@@ -40,6 +41,8 @@ export default function CityWall({
   refCode?: string;
   /** live rule values — NEVER hardcode these; the admin can change them without a deploy */
   signupBonus?: number;
+  /** extra credits the INVITEE gets when arriving via refCode (0 = feature off) */
+  inviteeBonus?: number;
   referralBonus?: number;
   feedbackBonus?: number;
   monthlyGrant?: number;
@@ -59,7 +62,7 @@ export default function CityWall({
           <>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
               עמודי הערים — עם כל הגרפים, העסקאות והדירוגים — פתוחים למשתמשים רשומים.
-              ההרשמה חינם ומקנה <b>{signupBonus ?? 10} קרדיטים</b> לפתיחת הערים שמעניינות אותך.
+              ההרשמה חינם ומקנה <b>{(signupBonus ?? 10) + (refCode ? inviteeBonus : 0)} קרדיטים</b> לפתיחת הערים שמעניינות אותך.
             </p>
             {demoCity && (
               <p className="mt-2 text-xs text-slate-500">
@@ -71,7 +74,7 @@ export default function CityWall({
                 href={`/register?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}${refSuffix}`}
                 className="w-full rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white hover:bg-indigo-700 sm:w-auto"
               >
-                הרשמה חינם — {signupBonus ?? 10} קרדיטים
+                הרשמה חינם — {(signupBonus ?? 10) + (refCode ? inviteeBonus : 0)} קרדיטים
               </Link>
               <Link
                 href={`/login?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}`}

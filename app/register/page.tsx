@@ -73,9 +73,17 @@ export default function RegisterPage({ searchParams }: { searchParams?: { err?: 
           <div className="mb-2 text-3xl"><Icon name="rhino" size="1em" /></div>
           <h1 className="text-xl font-black text-slate-900">פתיחת חשבון</h1>
           <p className="mt-1 text-xs text-slate-500">
-            הרשמה חינם · <b className="text-indigo-700">{CREDIT_RULES.signupBonus()} קרדיטים</b> לפתיחת ערים מתנה
+            הרשמה חינם · <b className="text-indigo-700">{CREDIT_RULES.signupBonus() + (ref ? CREDIT_RULES.referralInviteeBonus() : 0)} קרדיטים</b> לפתיחת ערים מתנה
           </p>
         </div>
+        {/* Arriving through a friend's link is worth more, and the page has to
+            say so BEFORE the form — a bonus discovered after signing up cannot
+            persuade anyone to sign up. */}
+        {ref && CREDIT_RULES.referralInviteeBonus() > 0 && (
+          <p className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-center text-xs font-semibold text-amber-800">
+            הגעת דרך הזמנה של חבר — {CREDIT_RULES.referralInviteeBonus()} קרדיטים נוספים מחכים לך
+          </p>
+        )}
         {searchParams?.err && (
           <p className="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-center text-xs font-semibold text-red-600">
             {searchParams.err}

@@ -109,6 +109,10 @@ export const CREDIT_RULES = {
   unlockDays: () => getRuleNum("unlock_days", 7),
   dealSaveCost: () => getRuleNum("deal_save_cost", 0),
   referralBonus: () => getRuleNum("referral_bonus", 10),
+  /** What the INVITEE gets on top of the signup bonus, for arriving via a
+   *  friend's link. An invitation with a reason on only one side is a favour
+   *  being asked; with a reason on both it is something worth sending. */
+  referralInviteeBonus: () => getRuleNum("referral_invitee_bonus", 5),
   /** 0 = unlimited (operator spec 8/2026: "חבר מביא חבר — ללא הגבלה") */
   referralDailyCap: () => getRuleNum("referral_daily_cap", 0),
   feedbackBonus: () => getRuleNum("feedback_bonus", 5),
@@ -337,6 +341,16 @@ export function applyReferral(code: string, newUserId: string | number): void {
 
   // idempotent per referred user — re-submitting the form cannot double-credit
   grant(referrer.id, tenthsOf(CREDIT_RULES.referralBonus()), "referral", `u${newId}`);
+
+  // The other half. The invitee's own grant is keyed on the REFERRER, so it
+  // settles once per referral and not once per call — and it is deliberately
+  // NOT inside the daily-cap branch above: capping the referrer's earnings is
+  // an anti-abuse measure, while withholding the newcomer's welcome would just
+  // punish someone who did nothing but click a link.
+  const inviteeBonus = CREDIT_RULES.referralInviteeBonus();
+  if (inviteeBonus > 0) {
+    grant(newId, tenthsOf(inviteeBonus), "referral_welcome", `u${referrer.id}`);
+  }
 }
 
 /**

@@ -186,7 +186,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               nationalSqm,
             }}
           >
-            <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} signupBonus={CREDIT_RULES.signupBonus()} />
+            <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} signupBonus={CREDIT_RULES.signupBonus()} inviteeBonus={CREDIT_RULES.referralInviteeBonus()} />
           </CityPublicSummary>
         );
       }
