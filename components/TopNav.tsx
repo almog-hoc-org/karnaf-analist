@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { href: "/cities", label: "ערים" },
   { href: "/compare", label: "השוואה" },
   { href: "/national", label: "ארצי" },
+  { href: "/check", label: "בדיקת מחיר" },
   { href: "/calculators", label: "מחשבונים" },
   // "מקורות" moved to the footer (operator spec 8/2026) — a methodology page
   // is reference material, not a daily destination; the top bar earns its

@@ -70,7 +70,8 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
     const [rows, countRow] = await Promise.all([
       prisma.$queryRawUnsafe<Array<Record<string, unknown>>>(
         `SELECT deal_date, deal_year, rooms, room_bucket, area, price, price_sqm, year_built,
-                is_secondhand, source, COALESCE(luxury,0) luxury
+                is_secondhand, source, COALESCE(luxury,0) luxury,
+                street, house_num, neighborhood, floor
          FROM nadlan_transactions WHERE ${clause}
          ORDER BY deal_date DESC LIMIT ${limit} OFFSET ${offset}`, ...args),
       prisma.$queryRawUnsafe<Array<{ n: bigint }>>(
@@ -89,6 +90,10 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
       isSecondHand: !!Number(r.is_secondhand),
       source: String(r.source ?? "nadlan"),
       luxury: !!Number(r.luxury),
+      street: r.street == null ? null : String(r.street),
+      houseNum: r.house_num == null ? null : String(r.house_num),
+      neighborhood: r.neighborhood == null ? null : String(r.neighborhood),
+      floor: r.floor == null ? null : String(r.floor),
     }));
 
     return NextResponse.json({ deals, total: Number(countRow[0]?.n ?? 0), offset, limit });

@@ -12,6 +12,7 @@ export default async function MethodologyPage() {
   // live values from the admin rules — the page can never drift from reality
   const SECONDHAND_MIN_AGE = getRuleNum("secondhand_min_age");
   const MIN_N_PER_YEAR = getRuleNum("min_deals_per_year", 10);
+  const NB_MIN_DEALS = getRuleNum("neighborhood_min_deals", 8);
   const RANKING_MIN_PER_SCOPE = getRuleNum("ranking_min_per_scope", 10);
   const SANITY = {
     MIN_AREA: getRuleNum("min_area", 20), MAX_AREA: getRuleNum("max_area", 500),
@@ -148,6 +149,7 @@ export default async function MethodologyPage() {
         <p>לכל עיר × שנה × גודל-דירה × סוג-עסקה: <B>ממוצע ₪/מ"ר</B> = ממוצע חשבוני של מחיר-למ"ר בכל העסקאות בתא · <B>חציון ₪/מ"ר</B> = הערך האמצעי (עמיד לחריגים). אותו חישוב גם למחיר-עסקה מלא.</p>
         <p><B>סדרת יד-2 מתוקננת-הרכב (הבסיס לשינויי-המחיר):</B> חציון גולמי מוטה כשתמהיל-המדגם משתנה בין שנים (יותר דירות קטנות/שכונות יקרות ⇒ "עלייה" מדומה). לכן שינויי-המחיר מחושבים על <B>סל קבוע</B> של תאי שכונה×חדרים: כל שנה = ממוצע משוקלל של חציוני-התאים באותם משקולות בדיוק. אומת מול מכירות-חוזרות של אותן דירות ומול החציון הרשמי.</p>
         <p>תא-שנה נכנס לגרפים ולטבלאות רק אם יש בו <B>{MIN_N_PER_YEAR}+ עסקאות</B> — שנה דלה לא מקבלת נקודת מחיר (ולכן גרף של עיר עם דאטה חלקי נפתח מהשנה שבה מתחיל רצף אמין).</p>
+        <p><B>שכונות:</B> אותו חישוב בדיוק ברמת שכונה×שנה, עם סף נפרד וגבוה יותר של <B>{NB_MIN_DEALS}+ עסקאות</B> לתא — תא שכונתי קטן, ועסקה חריגה אחת מזיזה אותו. ההשוואה "מול העיר" נמדדת מול ממוצע אותן עסקאות-שכונה בלבד, ולא מול מספר העיר, שכולל גם עסקאות שלא נרשמה להן שכונה.</p>
       </Section>
 
       <Section icon="broom" title="סינון שפיות (בזמן האיסוף)">

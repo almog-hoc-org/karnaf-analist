@@ -70,6 +70,11 @@ async function main() {
 
   type Out = { city: string; year: number; bucket: string; scope: string; s: ReturnType<typeof stat> };
   const out: Out[] = [];
+  type NbOut = Out & { nb: string };
+  const nbOut: NbOut[] = [];
+  /** A neighbourhood median needs more deals behind it than a city one: the
+   *  cell is small enough that a single unusual sale moves it. */
+  const NB_MIN = getRuleNum("neighborhood_min_deals", 8);
   const byYear = (arr: Row[]) => { const m = new Map<number, Row[]>(); for (const r of arr) { let a = m.get(r.deal_year); if (!a) { a = []; m.set(r.deal_year, a); } a.push(r); } return m; };
 
   // ── SOURCE CHOICE PER CITY (verified 2026-07-29) ─────────────────────────
@@ -169,6 +174,44 @@ async function main() {
         }
       }
     }
+
+    // ── NEIGHBOURHOOD cells ───────────────────────────────────────────────
+    // The block above already reads every neighbourhood's deals to build the
+    // fixed basket, computes their medians, and then collapses all of it into
+    // one number per year. The most-asked question about any Israeli city —
+    // which part of it is expensive, and which part is moving — was being
+    // computed and thrown away on every run.
+    //
+    // Same source and same definitions as the city line, deliberately: nadlan
+    // only, "all" gated on class_source, so a neighbourhood figure is
+    // comparable to the city figure printed beside it rather than being a
+    // second, quietly different statistic. The per-cell floor is separate and
+    // higher-by-default than the city one — a neighbourhood median off four
+    // deals is a rumour.
+    {
+      const nbRows = nadlan.filter((r) => r.neighborhood);
+      const cells = new Map<string, { nb: string; year: number; bucket: string; scope: string; rows: Row[] }>();
+      const add = (nb: string, year: number, bucket: string, scope: string, r: Row) => {
+        const k = `${nb} ${year} ${bucket} ${scope}`;
+        let c = cells.get(k);
+        if (!c) { c = { nb, year, bucket, scope, rows: [] }; cells.set(k, c); }
+        c.rows.push(r);
+      };
+      // Room buckets are NOT split here yet, though the table has the column.
+      // A neighbourhood×year×rooms cell clears an 8-deal floor in only the
+      // largest neighbourhoods, so the split would quadruple the row count to
+      // publish mostly-empty cells — and nothing on the page reads it. The
+      // column exists so adding the split later is data, not a migration.
+      for (const r of nbRows) {
+        const nb = r.neighborhood!;
+        if (r.class_source != null) add(nb, r.deal_year, "all", "all", r);
+        if (r.is_secondhand === 1) add(nb, r.deal_year, "all", "secondhand", r);
+      }
+      for (const c of cells.values()) {
+        if (c.rows.length < NB_MIN) continue;
+        nbOut.push({ city, nb: c.nb, year: c.year, bucket: c.bucket, scope: c.scope, s: stat(c.rows) });
+      }
+    }
   }
 
   // ── publish ────────────────────────────────────────────────────────
@@ -254,6 +297,34 @@ async function main() {
         await tx.$executeRawUnsafe(`INSERT INTO nadlan_year_room_stats (${COLS}) VALUES ${vs}`, ...params);
       }
 
+      // Neighbourhood cells — in the SAME transaction as the city stats they
+      // are compared against. Published separately they could disagree for the
+      // length of a run, which is exactly when someone screenshots the page.
+      await tx.$executeRawUnsafe(
+        `CREATE TABLE IF NOT EXISTS neighborhood_year_stats (
+           city_name TEXT NOT NULL,
+           neighborhood TEXT NOT NULL,
+           year INTEGER NOT NULL,
+           room_bucket TEXT NOT NULL,
+           scope TEXT NOT NULL,
+           avg_price REAL, median_price REAL, avg_sqm REAL, median_sqm REAL,
+           n INTEGER NOT NULL,
+           PRIMARY KEY (city_name, neighborhood, year, room_bucket, scope)
+         )`
+      );
+      await tx.$executeRawUnsafe(
+        "CREATE INDEX IF NOT EXISTS idx_nb_stats_city_year ON neighborhood_year_stats(city_name, year, scope, room_bucket)"
+      );
+      await tx.$executeRawUnsafe("DELETE FROM neighborhood_year_stats");
+      const NB_COLS = "city_name,neighborhood,year,room_bucket,scope,avg_price,median_price,avg_sqm,median_sqm,n";
+      for (let i = 0; i < nbOut.length; i += CHUNK) {
+        const slice = nbOut.slice(i, i + CHUNK);
+        const vs = slice.map(() => "(?,?,?,?,?,?,?,?,?,?)").join(",");
+        const params: unknown[] = [];
+        for (const o of slice) params.push(o.city, o.nb, o.year, o.bucket, o.scope, o.s.avg_price, o.s.median_price, o.s.avg_sqm, o.s.median_sqm, o.s.n);
+        await tx.$executeRawUnsafe(`INSERT INTO neighborhood_year_stats (${NB_COLS}) VALUES ${vs}`, ...params);
+      }
+
       await tx.$executeRawUnsafe(
         `CREATE TABLE IF NOT EXISTS city_classification_rate (
            city_name TEXT PRIMARY KEY,
@@ -292,6 +363,11 @@ async function main() {
   // numbers differed by twenty on the first live run and nothing said so.
   const citiesOut = new Set(out.map((o) => o.city));
   console.log(`wrote ${out.length} stat rows across ${citiesOut.size} cities${delta}.`);
+  console.log(
+    `wrote ${nbOut.length} neighbourhood rows across ` +
+    `${new Set(nbOut.map((o) => `${o.city}|${o.nb}`)).size} neighbourhoods in ` +
+    `${new Set(nbOut.map((o) => o.city)).size} cities (floor ${NB_MIN} deals/cell).`
+  );
 
   const empty = [...byCity.keys()].filter((c) => !citiesOut.has(c));
   if (empty.length) {

@@ -5,6 +5,8 @@ import { cityClassificationRate } from "@/lib/classificationRate";
 import { cityUrbanRenewalProjects } from "@/lib/urbanRenewal";
 import { subsidizedWindowNote, citySubsidizedYears } from "@/lib/subsidizedYears";
 import UrbanRenewalSection from "@/components/UrbanRenewalSection";
+import NeighborhoodPrices from "@/components/NeighborhoodPrices";
+import { neighborhoodSummary, neighborhoodMinDeals } from "@/lib/neighborhoods";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
 import { computeCityGap, describeSupplySource } from "@/lib/gap-analysis";
@@ -272,6 +274,10 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   ]);
   const urbanRenewalProjects = await cityUrbanRenewalProjects(cityName);
   const subsidizedYears = await citySubsidizedYears(cityName);
+  // Second-hand is the right lens for an intra-city comparison: new-build
+  // supply is concentrated in whichever neighbourhood happens to be under
+  // construction, so an "all deals" table would rank the building site first.
+  const neighborhoods = await neighborhoodSummary(cityName, { scope: "secondhand", years: 3 });
 
   if (!city) {
     return (
@@ -884,6 +890,16 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           </div>
         </section>
       )}
+
+      {/* Intra-city spread — from neighborhood_year_stats (aggregation stage) */}
+      <NeighborhoodPrices
+        cityName={cityName}
+        rows={neighborhoods.rows}
+        year={neighborhoods.year}
+        citySqm={neighborhoods.citySqm}
+        minDeals={neighborhoodMinDeals()}
+        scopeLabel="יד שנייה"
+      />
 
       {/* Urban Renewal — live district list when the collector has run, static snapshot otherwise */}
       <UrbanRenewalSection

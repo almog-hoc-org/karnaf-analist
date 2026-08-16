@@ -69,7 +69,10 @@ interface RawDeal {
   dealId?: number; dealDate: string; dealAmount: number; assetRoomNum: number | null;
   assetArea: number | null; neighborhood: string | null; settlementNameHeb?: string | null;
   settlementId?: number; dealNatureDescription?: string | null;
-  streetNameHeb?: string | null; houseNum?: string | number | null; floorNo?: number | null;
+  streetNameHeb?: string | null; houseNum?: string | number | null;
+  /** stringified on insert: `floor` is a TEXT column (Hebrew floor names), and an
+   *  integer stored there makes Prisma reject the whole row on read. */
+  floorNo?: string | number | null;
 }
 
 // normalizeCity: shared copy — lib/cityAliases.
@@ -188,7 +191,7 @@ async function collectCity(cityName: string): Promise<{ n: number; years: string
   for (let i = 0; i < rows.length; i += CHUNK) {
     const slice = rows.slice(i, i + CHUNK);
     const params: unknown[] = [];
-    for (const r of slice) params.push(cityName, r.d.settlementId ? String(r.d.settlementId) : null, String(r.d.dealDate).slice(0, 10), r.dy, r.d.assetRoomNum ?? null, roomBucket(r.d.assetRoomNum), r.area, r.price, Math.round(r.sqm), null, 0, r.d.neighborhood ?? null, r.d.streetNameHeb ?? null, r.d.houseNum != null ? String(r.d.houseNum) : null, r.d.floorNo ?? null, "govmap");
+    for (const r of slice) params.push(cityName, r.d.settlementId ? String(r.d.settlementId) : null, String(r.d.dealDate).slice(0, 10), r.dy, r.d.assetRoomNum ?? null, roomBucket(r.d.assetRoomNum), r.area, r.price, Math.round(r.sqm), null, 0, r.d.neighborhood ?? null, r.d.streetNameHeb ?? null, r.d.houseNum != null ? String(r.d.houseNum) : null, r.d.floorNo != null ? String(r.d.floorNo) : null, "govmap");
     await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, slice.length), ...params);
   }
   const yrs = [...new Set(rows.map((r) => r.dy))].sort();

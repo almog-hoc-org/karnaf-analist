@@ -269,7 +269,17 @@ function main() {
         if (kind === "same-unit") {
           const donor = drop.find((r) => r.street) ?? null;
           if (donor && (!keep.street || !keep.neighborhood || keep.floor == null)) {
-            enrich.run(donor.street, donor.house_num, donor.floor, donor.neighborhood ?? keep.neighborhood, keep.id);
+            // floor is a TEXT column carrying Hebrew floor names as often as
+            // digits. Donating it unstringified would copy a legacy integer
+            // onto a clean row, and Prisma refuses to read a row whose text
+            // column holds a number — a 500 on the whole city page.
+            enrich.run(
+              donor.street,
+              donor.house_num,
+              donor.floor == null ? null : String(donor.floor),
+              donor.neighborhood ?? keep.neighborhood,
+              keep.id
+            );
             enriched++;
           }
         }

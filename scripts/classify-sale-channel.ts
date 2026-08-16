@@ -33,7 +33,7 @@
  */
 import Database from "better-sqlite3";
 import path from "path";
-import { getRuleNum, getRuleBool } from "../lib/systemRules";
+import { getRuleBool } from "../lib/systemRules";
 import { historyFromYear } from "../lib/historyWindow";
 
 // Window comes from the shared history floor (lib/historyWindow) — every

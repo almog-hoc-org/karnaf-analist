@@ -26,6 +26,7 @@ const STATIC_PATHS: Array<[string, number, MetadataRoute.Sitemap[number]["change
   ["/", 1.0, "daily"],
   ["/cities", 0.9, "daily"],
   ["/compare", 0.7, "weekly"],
+  ["/check", 0.9, "weekly"],
   ["/calculators", 0.7, "monthly"],
   ["/national", 0.6, "weekly"],
   ["/methodology", 0.6, "monthly"],

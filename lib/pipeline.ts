@@ -63,6 +63,13 @@ export const PIPELINE: PipelineStage[] = [
     timeoutMs: 10 * MINUTE,
   },
   {
+    id: "column-types",
+    script: "scripts/normalize-column-types.ts",
+    label: "התאמת טיפוסי עמודות",
+    why: "SQLite does not enforce a column's declared type, but Prisma 7 validates on read and rejects the entire row — so one integer written into a text column returns a server exception for every visitor to that city, with an opaque digest and nothing in the UI to explain it. This repairs every text column, not just the one that broke, because the affected city changes with each collection run. Early, before anything reads the table.",
+    timeoutMs: 10 * MINUTE,
+  },
+  {
     id: "merge",
     script: "scripts/merge-cross-channel.ts",
     label: "מיזוג ערוצים",

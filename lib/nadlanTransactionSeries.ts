@@ -52,6 +52,19 @@ export interface NadlanDeal {
   source: string; // "govmap" (רשות המסים, broad) | "nadlan" (build-year)
   /** luxury deals stay visible in the drill-down but never set an average */
   luxury?: boolean;
+  /**
+   * Address, as reported to the Tax Authority.
+   *
+   * This is the evidence. Everything else on the page is a statistic — a
+   * number a reader has to trust — while "רחוב הרצל 14, קומה 3, ₪2.1M" is a
+   * fact they can check against a listing they saw last week. It was collected,
+   * stored, and shown only inside the private /deals workspace; the drill-down
+   * that exists to prove the averages are real was withholding the proof.
+   */
+  street?: string | null;
+  houseNum?: string | null;
+  neighborhood?: string | null;
+  floor?: string | null;
 }
 
 function emptyRoomSeries(): RoomSeries {
@@ -124,6 +137,17 @@ async function loadCityDealsUncached(cityName: string, limit = DRAWER_PAGE): Pro
   const rows = await prisma.nadlan_transactions.findMany({
     // admin exclusions never reach the UI (null = legacy rows, treated as included)
     where: { city_name: cityName, OR: [{ excluded: null }, { excluded: 0 }] },
+    // Explicit, not `*`. Prisma validates every returned column against the
+    // schema and throws P2023 for the whole row on a mismatch — so an unused
+    // column with one bad value 500s the page it is not even shown on. Asking
+    // only for what the drawer renders bounds that blast radius, and the
+    // column-types pipeline stage keeps these ones honest.
+    select: {
+      deal_date: true, deal_year: true, rooms: true, room_bucket: true,
+      area: true, price: true, price_sqm: true, year_built: true,
+      is_secondhand: true, source: true, luxury: true,
+      street: true, house_num: true, neighborhood: true, floor: true,
+    },
     orderBy: [{ deal_date: "desc" }],
     take: limit,
   });
@@ -139,6 +163,7 @@ function toDeal(r: {
   area: number | null; price: number | null; price_sqm: number | null;
   year_built: number | null; is_secondhand: number | boolean; source: string | null;
   luxury?: number | boolean | null;
+  street?: string | null; house_num?: string | null; neighborhood?: string | null; floor?: string | null;
 }): NadlanDeal {
   return {
     dealDate: r.deal_date,
@@ -152,6 +177,10 @@ function toDeal(r: {
     isSecondHand: !!r.is_secondhand,
     source: r.source ?? "nadlan",
     luxury: !!r.luxury,
+    street: r.street ?? null,
+    houseNum: r.house_num ?? null,
+    neighborhood: r.neighborhood ?? null,
+    floor: r.floor ?? null,
   };
 }
 
