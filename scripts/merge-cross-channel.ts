@@ -64,6 +64,11 @@ function main() {
   // strings) blew Node's heap inside the 3GB container on the first full run.
   const enrich = db.prepare(
     `UPDATE nadlan_transactions SET street=COALESCE(street,?), house_num=COALESCE(house_num,?), floor=COALESCE(floor,?) WHERE id=?`);
+  // floor is a TEXT column (the feed returns Hebrew floor names as often as
+  // digits). Donating a legacy integer would copy the defect onto a clean row,
+  // and Prisma refuses to read a row whose text column holds a number — which
+  // is a 500 on the whole city page, not a missing floor cell.
+  const floorText = (v: number | string | null) => (v == null ? null : String(v));
   const exclude = db.prepare(`UPDATE nadlan_transactions SET excluded=1, exclusion_reason=? WHERE id=?`);
   const SOFT_REASON = "מוזג (התאמה רכה — כפילות בין-ערוצית)";
   const selectRows = db.prepare(
@@ -105,7 +110,7 @@ function main() {
         mergedGroups++;
         const donor = g.govmap.find((x) => x.street) ?? g.govmap[0]; // best address donor
         for (const n of g.nadlan) {
-          if (!n.street && donor.street) { enrich.run(donor.street, donor.house_num, donor.floor, n.id); enriched++; }
+          if (!n.street && donor.street) { enrich.run(donor.street, donor.house_num, floorText(donor.floor), n.id); enriched++; }
         }
         for (const gm of g.govmap) { exclude.run(REASON, gm.id); excluded++; } // drop the duplicate copies
       }
@@ -131,7 +136,7 @@ function main() {
         const streets = new Set(cands.map((d) => d.street));
         if (streets.size > 1) { ambiguous++; continue; } // conflicting addresses → don't guess
         const donor = cands[0];
-        enrich.run(donor.street, donor.house_num, donor.floor, t.id);
+        enrich.run(donor.street, donor.house_num, floorText(donor.floor), t.id);
         softEnriched++;
         for (const d of cands) if (!d.ex) { exclude.run(SOFT_REASON, d.id); d.ex = 1; softExcluded++; }
       }
