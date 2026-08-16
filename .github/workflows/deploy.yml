@@ -207,7 +207,14 @@ jobs:
           docker compose exec -T app npx tsx lib/collect-urban-renewal.ts </dev/null || true
 
           echo "── full pipeline (same command as the 02:30 nightly) ──"
-          docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=ops-dispatch </dev/null
+          # NOT bare, deliberately. The remote script runs under `set -e`, so a
+          # failing stage used to abort the SSH session on the spot and every
+          # diagnostic below it — the city-page probe, the render census, the
+          # verification block — silently never ran. The one run where a stage
+          # actually failed was therefore the one run that produced no evidence
+          # about anything else. The failure is remembered and re-raised at the
+          # end; the diagnostics get to speak first.
+          docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=ops-dispatch </dev/null || PIPELINE_FAILED=1
 
           echo "── city render census (which cities throw, and why) ──"
           docker compose exec -T app npx tsx scripts/diagnose-city-render.ts --all </dev/null || true
@@ -293,6 +300,13 @@ jobs:
           docker compose exec -T app sh -c 'printf "    NEXT_PUBLIC_CLARITY_ID=[%s]\n" "$NEXT_PUBLIC_CLARITY_ID"' </dev/null
           echo "  inlined value in the shipped JS (60 chars around clarity.ms):"
           docker compose exec -T app sh -c "grep -rho -m1 -- '.\{0,40\}clarity\.ms.\{0,60\}' /app/.next.nosync/static/chunks 2>/dev/null | head -2" </dev/null | sed 's/^/    /' || true
+
+          # Re-raise the pipeline failure now that everything downstream has
+          # reported. The step still fails; it just fails informatively.
+          if [ -n "${PIPELINE_FAILED:-}" ]; then
+            echo "✗ הצינור נכשל — ראה את שלב הכשל למעלה (הבדיקות שאחריו רצו בכל זאת)"
+            exit 1
+          fi
           REMOTE
 
       - name: live page checks from outside

@@ -52,12 +52,69 @@ const TEXT_COLUMNS: Record<string, string[]> = {
   nadlan_year_room_stats: ["city_name", "room_bucket", "scope"],
 };
 
+/**
+ * Give a column TEXT affinity by rebuilding it.
+ *
+ * WHY A CAST IS NOT ENOUGH — this is the whole subtlety of the bug.
+ * SQLite applies the column's AFFINITY on every write. A column declared
+ * INTEGER (or anything numeric) converts "3" straight back to 3 as it stores
+ * it, so `UPDATE t SET c = CAST(c AS TEXT)` reports success, changes nothing,
+ * and the verification finds the identical count it started with. That is
+ * exactly what the first live run did: 66 values converted, 66 still numeric.
+ *
+ * A column that genuinely has TEXT affinity cannot hold an integer at all —
+ * SQLite converts numbers to text on the way in — which is why fixing the
+ * declared type retires the entire failure mode rather than papering over it.
+ *
+ * SQLite cannot change a column's type in place, so: add, copy, drop, rename.
+ * One transaction, so a crash leaves the old column intact.
+ */
+function rebuildAsText(db: Database.Database, table: string, col: string) {
+  const tmp = `${col}__astext`;
+  db.transaction(() => {
+    // A previous interrupted run could have left the scratch column behind.
+    const cols = new Set(
+      (db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>).map((c) => c.name)
+    );
+    if (cols.has(tmp)) db.exec(`ALTER TABLE ${table} DROP COLUMN ${tmp}`);
+
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${tmp} TEXT`);
+    db.exec(`UPDATE ${table} SET ${tmp} = CAST(${col} AS TEXT) WHERE ${col} IS NOT NULL`);
+    db.exec(`ALTER TABLE ${table} DROP COLUMN ${col}`);
+    db.exec(`ALTER TABLE ${table} RENAME COLUMN ${tmp} TO ${col}`);
+  })();
+}
+
 function main() {
   const db = new Database(DB);
   db.pragma("busy_timeout = 60000");
   let totalFixed = 0;
 
   try {
+    // Declared types first: a value repair against a numeric-affinity column
+    // is a no-op that reports success, so the affinity has to be right before
+    // anything is worth casting.
+    for (const [table, columns] of Object.entries(TEXT_COLUMNS)) {
+      const exists = db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?").get(table);
+      if (!exists) continue;
+      const info = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string; type: string }>;
+      for (const c of info) {
+        if (!columns.includes(c.name)) continue;
+        // TEXT / VARCHAR / CLOB / anything containing "CHAR" all carry TEXT
+        // affinity per SQLite's rules; everything else does not.
+        const declared = (c.type || "").toUpperCase();
+        const isTextAffinity = declared.includes("CHAR") || declared.includes("CLOB") || declared.includes("TEXT");
+        if (isTextAffinity) continue;
+        const t0 = Date.now();
+        rebuildAsText(db, table, c.name);
+        console.log(
+          `  ⚑ ${table}.${c.name}: הוגדרה כ-${c.type || "(ללא טיפוס)"} — נבנתה מחדש כ-TEXT ` +
+          `ב-${((Date.now() - t0) / 1000).toFixed(1)}s. עמודה נומרית ממירה מחרוזת ספרות בחזרה למספר, ` +
+          `ולכן המרה בלבד לא הייתה נדבקת.`
+        );
+      }
+    }
+
     for (const [table, columns] of Object.entries(TEXT_COLUMNS)) {
       // A table the deployment does not have yet is not an error.
       const exists = db.prepare(
