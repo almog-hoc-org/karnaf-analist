@@ -225,6 +225,9 @@ jobs:
           echo "── city render census (which cities throw, and why) ──"
           docker compose exec -T app npx tsx scripts/diagnose-city-render.ts --all </dev/null || true
 
+          echo "── gains-card diagnosis (why the movers board is empty) ──"
+          docker compose exec -T app npx tsx scripts/diagnose-gains-card.ts 2022 2025 </dev/null || true
+
           echo "── subsidized-price cells (מחיר למשתכן distortion) ──"
           docker compose exec -T app npx tsx scripts/diagnose-price-anomalies.ts </dev/null || true
 
