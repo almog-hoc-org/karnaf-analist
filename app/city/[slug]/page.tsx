@@ -41,6 +41,8 @@ import { whatsappShareUrl } from "@/lib/share";
 import CityWall from "@/components/CityWall";
 import CityPublicSummary from "@/components/CityPublicSummary";
 import CityShareButton from "@/components/CityShareButton";
+import TrackCityButton from "@/components/TrackCityButton";
+import { isCityTracked, setCityTracked } from "@/lib/appDb";
 
 interface PageProps {
   params: { slug: string };
@@ -448,6 +450,20 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             </span>
           )}
           <CityShareButton href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)} />
+          <TrackCityButton
+            cityName={city.city_name}
+            initiallyTracked={viewer ? isCityTracked(viewer.id, city.city_name) : false}
+            signedIn={!!viewer}
+            action={async (c: string, next: boolean) => {
+              "use server";
+              // Re-read the session inside the action: the closure's `viewer` is
+              // from render time, and an action must never trust a value the
+              // client could have been served before signing out.
+              const u = getCurrentUser();
+              if (!u) return false;
+              return setCityTracked(u.id, c, next);
+            }}
+          />
         </div>
         <div className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
           <SourceBadge kind="internal" />

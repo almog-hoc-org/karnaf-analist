@@ -1,3 +1,5 @@
+import { getCurrentUser } from "@/lib/auth";
+import { listTrackedCities } from "@/lib/appDb";
 import { prisma } from "@/lib/db";
 import { historyFromYear } from "@/lib/historyWindow";
 import { ALIAS_NAMES } from "@/lib/cityAliases";
@@ -27,6 +29,13 @@ function formatNumber(value: number | null): string {
 }
 
 export default async function HomePage() {
+  // The home page did not know who was reading it. A returning user landed on
+  // the same anonymous marketing hero as a first-time visitor and had to search
+  // for their own city again, every time — the site had a follow feature and
+  // then behaved as though nobody had ever used it.
+  const viewer = getCurrentUser();
+  const myCities = viewer ? listTrackedCities(viewer.id) : [];
+
   let cityCount = 0;
 
   try {
@@ -276,6 +285,23 @@ export default async function HomePage() {
           חפש עיר וקבל מחירים, מגמות והשוואות · {cityCount} ערים במאגר
         </p>
       </header>
+
+      {/* Followed cities — one row, only when there are any. A returning
+          reader's first click should be the city they already care about. */}
+      {myCities.length > 0 && (
+        <section className="mb-6 flex flex-wrap items-center justify-center gap-2">
+          <span className="text-2xs font-black uppercase tracking-wide text-slate-400">הערים שלי</span>
+          {myCities.map((c) => (
+            <Link
+              key={c}
+              href={`/city/${encodeURIComponent(c)}`}
+              className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 transition hover:border-amber-400 hover:bg-amber-100"
+            >
+              <span aria-hidden>★</span> {c}
+            </Link>
+          ))}
+        </section>
+      )}
 
       {/* ── HERO KPIs + the flagship price-change explorer ──
           One flex column, reordered by breakpoint: on phones the explorer sits

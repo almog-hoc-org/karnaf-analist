@@ -89,6 +89,21 @@ export function listDeals(userId: string): ClientDeal[] {
   return deals.map((deal) => ({ ...deal, tasks: taskStmt.all(deal.id) }));
 }
 
+export function isCityTracked(userId: string, cityName: string): boolean {
+  return !!appDb().prepare("SELECT 1 FROM tracked_cities WHERE user_id=? AND city_name=?").get(userId, cityName);
+}
+
+/** Follow/unfollow, returning the resulting state so the caller never guesses. */
+export function setCityTracked(userId: string, cityName: string, tracked: boolean): boolean {
+  const db = appDb();
+  if (tracked) {
+    db.prepare("INSERT OR IGNORE INTO tracked_cities (user_id, city_name) VALUES (?, ?)").run(userId, cityName);
+  } else {
+    db.prepare("DELETE FROM tracked_cities WHERE user_id=? AND city_name=?").run(userId, cityName);
+  }
+  return isCityTracked(userId, cityName);
+}
+
 export function listTrackedCities(userId: string): string[] {
   return (appDb().prepare("SELECT city_name FROM tracked_cities WHERE user_id=? ORDER BY id").all(userId) as any[])
     .map((r) => r.city_name);
