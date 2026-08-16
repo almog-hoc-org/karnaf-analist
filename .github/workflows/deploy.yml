@@ -298,6 +298,21 @@ jobs:
           check "/deals" ""
           check "/methodology" ""
           check "/sources" ""
+          echo "── SEO surfaces (must exist and carry real content) ──"
+          sm=$(curl -sL --max-time 30 https://analyst.karnafnadlan.com/sitemap.xml)
+          urls=$(printf '%s' "$sm" | grep -c "<loc>" || true)
+          echo "sitemap.xml URLs: ${urls}"
+          [ "${urls:-0}" -gt 100 ] && echo "✓ sitemap has the city long tail" || { echo "✗ sitemap too small"; FAIL=1; }
+          curl -sL --max-time 20 https://analyst.karnafnadlan.com/robots.txt | head -5
+          # A city page, as an ANONYMOUS visitor: the public summary must be
+          # present (h1 with the query) and the paid depth must NOT be.
+          city=$(curl -sL --max-time 30 "https://analyst.karnafnadlan.com/city/%D7%A0%D7%AA%D7%A0%D7%99%D7%94")
+          printf '%s' "$city" | grep -q "מחירי דירות ב" && echo "✓ public summary rendered for anonymous" || { echo "✗ no public summary"; FAIL=1; }
+          printf '%s' "$city" | grep -q "MultiChartStudio\|סטודיו הגרפים" && { echo "✗ gated depth leaked to anonymous"; FAIL=1; } || echo "✓ paid depth still gated"
+          og=$(curl -sL -o /dev/null -w '%{http_code} %{content_type}' --max-time 45 "https://analyst.karnafnadlan.com/city/%D7%A0%D7%AA%D7%A0%D7%99%D7%94/opengraph-image")
+          echo "OG image: $og"
+          printf '%s' "$og" | grep -q "200 image/png" && echo "✓ OG card renders" || { echo "✗ OG card failed"; FAIL=1; }
+
           echo "── clarity in the shipped bundle (what a visitor's browser gets) ──"
           html=$(curl -sL --max-time 30 https://analyst.karnafnadlan.com/)
           chunk=$(printf '%s' "$html" | grep -o '/_next/static/chunks/app/layout-[^"]*\.js' | head -1)
