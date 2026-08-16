@@ -11,7 +11,7 @@
 import crypto from "crypto";
 import { appDb } from "./appDb";
 import { adminSetUserPassword } from "./auth";
-import { tenthsToCredits, adminAdjustCredits } from "./credits";
+import { tenthsToCredits, adminAdjustCredits, setUnlimited, UNLIMITED_TIER } from "./credits";
 
 export interface AdminUserRow {
   id: number;
@@ -25,20 +25,22 @@ export interface AdminUserRow {
   crm_synced_at: string | null;
   /** whole credits, may be fractional (tenths-backed) */
   credits: number;
+  /** true = no credit limit at all; the balance above is meaningless */
+  unlimited: boolean;
   deals: number;
   last_seen: string | null;
 }
 
 export function listUsers(): AdminUserRow[] {
   const rows = appDb().prepare(`
-    SELECT u.id, u.email, u.name, u.phone, u.mailing_consent, u.google_id, u.created_at,
+    SELECT u.id, u.email, u.name, u.phone, u.mailing_consent, u.google_id, u.created_at, u.tier,
            u.ravmesser_synced_at, u.crm_synced_at,
            COALESCE((SELECT SUM(delta_tenths) FROM credits_ledger c WHERE c.user_id = u.id), 0) AS credit_tenths,
            (SELECT COUNT(*) FROM client_deals d WHERE d.user_id = 'u' || u.id) AS deals,
            (SELECT MAX(created_at) FROM sessions s WHERE s.user_id = u.id) AS last_seen
       FROM users u ORDER BY u.id DESC
-  `).all() as Array<AdminUserRow & { credit_tenths: number }>;
-  return rows.map((r) => ({ ...r, credits: tenthsToCredits(r.credit_tenths) }));
+  `).all() as Array<Omit<AdminUserRow, "unlimited"> & { credit_tenths: number; tier: string | null }>;
+  return rows.map((r) => ({ ...r, credits: tenthsToCredits(r.credit_tenths), unlimited: r.tier === UNLIMITED_TIER }));
 }
 
 /**
@@ -81,6 +83,18 @@ export function deleteUser(userId: number): { ok: true } | { ok: false; error: s
 export function setUserConsent(userId: number, consent: boolean): boolean {
   const r = appDb().prepare("UPDATE users SET mailing_consent=? WHERE id=?").run(consent ? 1 : 0, userId);
   return r.changes > 0;
+}
+
+/**
+ * Grant or revoke unlimited access.
+ *
+ * Returns the RESULTING state rather than a boolean "did the UPDATE run", so
+ * the admin screen reflects what the database holds instead of what the click
+ * intended — the two diverge exactly when it matters, on a user id that no
+ * longer exists.
+ */
+export function setUserUnlimited(userId: number, unlimited: boolean): boolean {
+  return setUnlimited(userId, unlimited);
 }
 
 /** Admin credit adjustment — positive or negative, always ledgered with a reason. */

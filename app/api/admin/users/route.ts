@@ -14,7 +14,7 @@ import { NextResponse } from "next/server";
 import { isAdminApiRequest } from "@/lib/adminAuth";
 import { registerUser } from "@/lib/auth";
 import { grantSignupBonus } from "@/lib/credits";
-import { listUsers, deleteUser, resetUserPassword, adjustUserCredits, setUserConsent } from "@/lib/userAdmin";
+import { listUsers, deleteUser, resetUserPassword, adjustUserCredits, setUserConsent, setUserUnlimited } from "@/lib/userAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +57,13 @@ export async function POST(req: Request) {
       }
       const ok = adjustUserCredits(userId, credits, String(body.note ?? "עדכון מנהל"));
       return NextResponse.json({ ok });
+    }
+    case "set_unlimited": {
+      // Unlimited access is a tier, not a balance — see lib/credits.ts for why
+      // topping someone up with 999,999 is the wrong shape of the same wish.
+      if (!Number.isInteger(userId)) return NextResponse.json({ error: "bad userId" }, { status: 400 });
+      const unlimited = setUserUnlimited(userId, body.unlimited === true);
+      return NextResponse.json({ ok: true, unlimited });
     }
     case "set_consent": {
       if (!Number.isInteger(userId)) return NextResponse.json({ error: "bad userId" }, { status: 400 });

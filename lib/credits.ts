@@ -238,10 +238,53 @@ export function ensureStarterCredits(userId: string | number) {
   grantMonthlyIfDue(userId);
 }
 
+/* ── unlimited accounts ──────────────────────────────────────────────────── */
+
+/**
+ * Accounts with no credit limit: partners, staff, anyone the operator has
+ * decided simply gets the whole site.
+ *
+ * A TIER, NOT A BIG BALANCE. The obvious alternative is to credit the account
+ * with 999,999 and move on, and it is wrong in three ways that all surface
+ * later rather than now: the balance still counts down, so it silently expires
+ * one day; the account still has to spend a credit per city, so an unlock can
+ * still lapse after unlock_days and lock someone out mid-research; and the
+ * ledger fills with fictional debits that make every credits report a lie.
+ *
+ * As a tier, "unlimited" means the credit system does not apply to this
+ * account at all — nothing is spent, nothing expires, nothing to top up.
+ *
+ * The column already existed (`users.tier`, default 'free') and had been
+ * carrying the comment "subscriptions flip this later" since it was created.
+ * This is the first thing to actually use it.
+ */
+export const UNLIMITED_TIER = "unlimited";
+
+export function isUnlimited(userId: string | number): boolean {
+  const row = appDb().prepare("SELECT tier FROM users WHERE id=?").get(uid(userId)) as
+    | { tier: string | null }
+    | undefined;
+  return row?.tier === UNLIMITED_TIER;
+}
+
+/**
+ * Grant or revoke unlimited access. Returns the resulting state so a caller
+ * never has to assume the write landed.
+ */
+export function setUnlimited(userId: string | number, unlimited: boolean): boolean {
+  const id = uid(userId);
+  appDb().prepare("UPDATE users SET tier=? WHERE id=?").run(unlimited ? UNLIMITED_TIER : "free", id);
+  return isUnlimited(id);
+}
+
 /* ── city unlocks ────────────────────────────────────────────────────────── */
 
 export function isCityUnlocked(userId: string | number, cityName: string): boolean {
   ensureCreditTables();
+  // An unlimited account has every city open, permanently. Checked before the
+  // unlocks table rather than after: it must not depend on a row existing, or
+  // an unlock could still expire underneath someone who has no limit.
+  if (isUnlimited(userId)) return true;
   return !!appDb().prepare(
     "SELECT 1 FROM city_unlocks WHERE user_id=? AND city_name=? AND expires_at > datetime('now')"
   ).get(uid(userId), cityName);

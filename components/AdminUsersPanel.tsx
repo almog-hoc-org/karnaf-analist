@@ -44,7 +44,7 @@ interface SyncReport {
 export interface AdminUserListRow {
   id: number; email: string; name: string; phone: string | null;
   mailing_consent: number; google_id: string | null; created_at: string;
-  credits: number; deals: number; last_seen: string | null;
+  credits: number; unlimited: boolean; deals: number; last_seen: string | null;
 }
 
 export interface BroadcastHistoryRow {
@@ -192,7 +192,11 @@ export default function AdminUsersPanel({ stats, feedback, ravConfigured, crmCon
                   <td dir="ltr" className="text-right text-slate-600">{u.phone ?? "—"}</td>
                   <td className="text-center">{u.mailing_consent ? "✅" : "—"}</td>
                   <td className="text-center">{u.google_id ? "🟢" : "—"}</td>
-                  <td className="text-center font-bold tabular-nums">{Number.isInteger(u.credits) ? u.credits : u.credits.toFixed(1)}</td>
+                  <td className="text-center font-bold tabular-nums">
+                    {u.unlimited
+                      ? <span className="rounded-full bg-amber-100 px-2 py-0.5 text-2xs font-black text-amber-800" title="גישה ללא הגבלה — הקרדיטים לא רלוונטיים לחשבון הזה">∞</span>
+                      : Number.isInteger(u.credits) ? u.credits : u.credits.toFixed(1)}
+                  </td>
                   <td className="text-center tabular-nums">{u.deals}</td>
                   <td className="text-right text-2xs text-slate-400" dir="ltr">{u.created_at?.slice(0, 10)}</td>
                   <td className="text-right text-2xs text-slate-400" dir="ltr">{u.last_seen?.slice(0, 10) ?? "—"}</td>
@@ -207,6 +211,17 @@ export default function AdminUsersPanel({ stats, feedback, ravConfigured, crmCon
                         if (v && Number(v)) userAction("adjust_credits", u.id, { credits: Number(v), note: "עדכון ידני מהאדמין" });
                       }} className="rounded-lg border border-slate-200 px-2 py-1 text-2xs font-bold text-slate-600 hover:bg-slate-50">
                         🪙 קרדיטים
+                      </button>
+                      <button disabled={!!busy} onClick={() => {
+                        const next = !u.unlimited;
+                        const msg = next
+                          ? `לתת ל-${u.email} גישה ללא הגבלה? כל הערים ייפתחו לו לצמיתות, בלי לצרוך קרדיטים.`
+                          : `לבטל ל-${u.email} את הגישה ללא ההגבלה? הוא יחזור למודל הקרדיטים הרגיל.`;
+                        if (confirm(msg)) userAction("set_unlimited", u.id, { unlimited: next });
+                      }} className={`rounded-lg border px-2 py-1 text-2xs font-bold ${
+                        u.unlimited ? "border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100" : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                      }`} title={u.unlimited ? "לבטל גישה ללא הגבלה" : "לתת גישה ללא הגבלה"}>
+                        ∞ ללא הגבלה
                       </button>
                       <button disabled={!!busy} onClick={() => userAction("set_consent", u.id, { consent: !u.mailing_consent })}
                         className="rounded-lg border border-slate-200 px-2 py-1 text-2xs font-bold text-slate-600 hover:bg-slate-50" title="הפעלה/כיבוי הסכמת דיוור">

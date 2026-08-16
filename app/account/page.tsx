@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
 import { appDb } from "@/lib/appDb";
-import { balance, ledgerFor, unlockedCities, referralCodeFor, ensureStarterCredits, CREDIT_RULES } from "@/lib/credits";
+import { balance, ledgerFor, unlockedCities, referralCodeFor, ensureStarterCredits, CREDIT_RULES, isUnlimited } from "@/lib/credits";
 import { shareUrlFor, whatsappShareUrl } from "@/lib/share";
 import Icon from "@/components/Icon";
 
@@ -46,6 +46,7 @@ export default function AccountPage() {
     .get(Number(user.id.slice(1))) as { mailing_consent: number } | undefined)?.mailing_consent;
 
   const bal = balance(user.id);
+  const noLimit = isUnlimited(user.id);
   const entries = ledgerFor(user.id, 30);
   const unlocked = unlockedCities(user.id);
   const code = referralCodeFor(user.id);
@@ -69,12 +70,23 @@ export default function AccountPage() {
       <section className="mb-8 grid gap-4 sm:grid-cols-2">
         <div className="glass-card p-6 text-center">
           <p className="text-xs font-bold uppercase tracking-wider text-slate-400">היתרה שלך</p>
-          <p className="mt-2 text-5xl font-black text-indigo-700">{Number.isInteger(bal) ? bal : bal.toFixed(1)}</p>
-          <p className="mt-1 text-sm text-slate-500">קרדיטים · פתיחת עיר = {CREDIT_RULES.cityUnlockCost()} קרדיט ל-{CREDIT_RULES.unlockDays()} ימים</p>
+          <p className="mt-2 text-5xl font-black text-indigo-700">{noLimit ? "∞" : Number.isInteger(bal) ? bal : bal.toFixed(1)}</p>
+          {noLimit ? (
+            <p className="mt-1 text-sm text-slate-500">גישה ללא הגבלה · כל הערים פתוחות, ללא פקיעה</p>
+          ) : (
+            <p className="mt-1 text-sm text-slate-500">קרדיטים · פתיחת עיר = {CREDIT_RULES.cityUnlockCost()} קרדיט ל-{CREDIT_RULES.unlockDays()} ימים</p>
+          )}
         </div>
         <div className="glass-card p-6">
-          <p className="text-sm font-bold text-slate-900">להרוויח עוד קרדיטים</p>
-          <ul className="mt-2 space-y-1.5 text-sm text-slate-600">
+          {/* "how to earn more" is noise for an account that cannot run out —
+              the referral link below still stands on its own. */}
+          <p className="text-sm font-bold text-slate-900">{noLimit ? "החשבון שלך" : "להרוויח עוד קרדיטים"}</p>
+          {noLimit && (
+            <p className="mt-2 text-sm text-slate-600">
+              גישה ללא הגבלה לכל הערים ולכל הכלים. אין מה לצבור ואין מה לחדש.
+            </p>
+          )}
+          <ul className={`mt-2 space-y-1.5 text-sm text-slate-600 ${noLimit ? "hidden" : ""}`}>
             <li>🤝 חבר שנרשם דרך הקישור שלך — <b>+{CREDIT_RULES.referralBonus()}</b></li>
             <li>💬 כל משוב איכותי שאושר — <b>+{CREDIT_RULES.feedbackBonus()}</b>{CREDIT_RULES.feedbackMonthlyCap() > 0 && <> (עד {CREDIT_RULES.feedbackMonthlyCap()} בחודש)</>}</li>
             {CREDIT_RULES.monthlyFreeGrant() > 0 && (

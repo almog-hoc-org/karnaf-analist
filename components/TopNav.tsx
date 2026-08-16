@@ -26,8 +26,10 @@ interface CityHit {
   name: string;
 }
 
-export default function TopNav({ cities, user, credits }: { cities: string[]; user?: { name: string } | null; credits?: number | null }) {
-  const creditsLabel = credits == null ? null : (Number.isInteger(credits) ? String(credits) : credits.toFixed(1));
+export default function TopNav({ cities, user, credits, unlimited = false }: { cities: string[]; user?: { name: string } | null; credits?: number | null;
+  /** account with no credit limit — the balance is meaningless and a number would misinform */
+  unlimited?: boolean }) {
+  const creditsLabel = unlimited ? "∞" : credits == null ? null : (Number.isInteger(credits) ? String(credits) : credits.toFixed(1));
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false); // mobile menu
@@ -236,7 +238,7 @@ export default function TopNav({ cities, user, credits }: { cities: string[]; us
                   <Link href="/account" className="flex items-center gap-2 text-sm font-bold text-indigo-700">
                     שלום, {user.name}
                     {creditsLabel != null && (
-                      <span className="rounded-full bg-indigo-600 px-2.5 py-0.5 text-xs font-black text-white">🪙 {creditsLabel} קרדיטים</span>
+                      <span className="rounded-full bg-indigo-600 px-2.5 py-0.5 text-xs font-black text-white">🪙 {unlimited ? "ללא הגבלה" : `${creditsLabel} קרדיטים`}</span>
                     )}
                   </Link>
                   <form action={withBasePath("/logout")} method="post" className="inline">
