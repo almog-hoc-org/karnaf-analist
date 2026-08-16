@@ -1,0 +1,34 @@
+# Weekly "your cities" digest to users who followed a city and opted into mail.
+#
+# NOT a pipeline stage, deliberately: a mail failure must never block the data
+# publish, and a data failure must never send a digest built from half-written
+# aggregates. So it is its own unit, scheduled well after the nightly pipeline
+# has finished and passed its gates.
+#
+# Sends nothing when RESEND_API_KEY / NOTIFY_FROM_EMAIL are unset — the script
+# falls back to a dry run and prints what it would have sent.
+#
+# Install: bash /opt/karnaf/deploy/install-timers.sh
+# Run now: systemctl start karnaf-digest.service
+# Preview: docker compose exec -T app npx tsx scripts/send-weekly-digest.ts --dry-run
+# Watch:   journalctl -u karnaf-digest -f
+
+[Unit]
+Description=Karnaf Analist — weekly followed-cities digest
+Documentation=file:///opt/karnaf/lib/digest.ts
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/karnaf
+TimeoutStartSec=1800
+
+ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Service}}" | grep -qx app || { echo "app container is not running — skipping"; exit 1; }'
+ExecStart=/usr/bin/docker compose exec -T app npx tsx scripts/send-weekly-digest.ts
+
+Nice=10
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=multi-user.target

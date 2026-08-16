@@ -7,6 +7,7 @@
 #   00:30      karnaf-collect   fetches new data from the government sources
 #   02:30      karnaf-pipeline  cleans, classifies, aggregates and verifies it
 #   Sun 04:30  karnaf-backup    publishes both databases to GitHub Releases
+#   Sun 08:00  karnaf-digest    emails followed-city summaries to opted-in users
 #
 # The order is the whole point. For a while only the second existed, so the site
 # re-derived a frozen snapshot every night — thoroughly, correctly, and without
@@ -24,7 +25,7 @@ ok()  { printf "  \033[32m✓\033[0m %s\n" "$*"; }
 command -v systemctl >/dev/null || { echo "✗ systemd לא זמין"; exit 1; }
 
 say "התקנת יחידות systemd"
-for u in karnaf-collect karnaf-pipeline karnaf-backup; do
+for u in karnaf-collect karnaf-pipeline karnaf-backup karnaf-digest; do
   install -m 0644 "$u.service" /etc/systemd/system/
   install -m 0644 "$u.timer"   /etc/systemd/system/
   ok "/etc/systemd/system/$u.{service,timer}"
@@ -40,6 +41,8 @@ systemctl enable --now karnaf-pipeline.timer
 ok "karnaf-pipeline — 02:30 · ניקוי ואגרגציה"
 systemctl enable --now karnaf-backup.timer
 ok "karnaf-backup   — ראשון 04:30 · גיבוי חוץ-שרתי"
+systemctl enable --now karnaf-digest.timer
+ok "karnaf-digest   — ראשון 08:00 · סיכום שבועי לערים במעקב"
 
 # the backup unit needs a GitHub token; say so NOW, not on Sunday at 04:30
 if [ ! -f /etc/karnaf/backup.env ]; then
@@ -49,7 +52,7 @@ fi
 command -v gh >/dev/null || printf "  \033[33m⚠\033[0m gh CLI לא מותקן — נדרש לגיבוי: apt install gh\n"
 
 say "מצב"
-systemctl list-timers karnaf-collect.timer karnaf-pipeline.timer karnaf-backup.timer --no-pager || true
+systemctl list-timers karnaf-collect.timer karnaf-pipeline.timer karnaf-backup.timer karnaf-digest.timer --no-pager || true
 
 cat <<'EOF'
 
@@ -67,6 +70,7 @@ cat <<'EOF'
     systemctl start karnaf-pipeline.service   ניקוי עכשיו
     journalctl -u karnaf-collect -f           מעקב חי אחרי האיסוף
     journalctl -u karnaf-pipeline -f          מעקב חי אחרי הניקוי
+    docker compose exec -T app npx tsx scripts/send-weekly-digest.ts --dry-run   תצוגה מקדימה של הסיכום השבועי
     systemctl disable --now karnaf-collect.timer   כיבוי תזמון האיסוף
 
   ── קודי יציאה ──────────────────────────────────────────────

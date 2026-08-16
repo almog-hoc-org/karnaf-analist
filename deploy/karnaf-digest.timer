@@ -1,0 +1,17 @@
+# Sunday 08:00 — a weekly digest lands when someone might actually read it, and
+# well after the 02:30 pipeline has finished and passed its verification gates,
+# so the numbers in the email are numbers the site has already vouched for.
+#
+# Persistent=true: a server that was down on Sunday morning still sends once it
+# comes back, rather than skipping the week silently.
+
+[Unit]
+Description=Karnaf Analist — weekly digest schedule
+
+[Timer]
+OnCalendar=Sun *-*-* 08:00:00
+RandomizedDelaySec=900
+Persistent=true
+
+[Install]
+WantedBy=timers.target
