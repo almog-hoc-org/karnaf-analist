@@ -209,6 +209,12 @@ jobs:
           echo "── full pipeline (same command as the 02:30 nightly) ──"
           docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=ops-dispatch </dev/null
 
+          echo "── city render census (which cities throw, and why) ──"
+          docker compose exec -T app npx tsx scripts/diagnose-city-render.ts --all </dev/null || true
+
+          echo "── subsidized-price cells (מחיר למשתכן distortion) ──"
+          docker compose exec -T app npx tsx scripts/diagnose-price-anomalies.ts </dev/null || true
+
           echo "── verification ──"
           docker compose exec -T app node -e '
             const Database = require("better-sqlite3");
