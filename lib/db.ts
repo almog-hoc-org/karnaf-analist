@@ -17,7 +17,25 @@ function createPrismaClient() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const adapter = new PrismaBetterSqlite3({ url: dbPath } as any);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return new PrismaClient({ adapter } as any);
+  const client = new PrismaClient({ adapter } as any);
+
+  // WAIT for the writer instead of failing in front of a visitor.
+  //
+  // busy_timeout is PER CONNECTION, and every pipeline script sets 60s on its
+  // own (merge-cross-channel, import-transactions, classify-sale-channel, …)
+  // — this one, the connection that serves every page, was left at SQLite's
+  // default of 0. So during the 02:30 aggregation's write transaction a page
+  // render did not queue behind it, it got SQLITE_BUSY immediately and threw.
+  // Ten seconds is far longer than any single write here takes and far shorter
+  // than a visitor's patience.
+  //
+  // Fire-and-forget: the pragma is a plain statement on the same connection,
+  // and a failure to set it must not stop the app from booting.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (client as any).$executeRawUnsafe("PRAGMA busy_timeout = 10000")
+    .catch(() => { /* pragma unsupported or DB not reachable yet — not fatal */ });
+
+  return client;
 }
 
 const globalForPrisma = globalThis as unknown as {

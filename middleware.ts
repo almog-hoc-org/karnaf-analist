@@ -26,7 +26,14 @@ export function middleware(req: NextRequest) {
   });
 }
 
-// Apply to everything except Next internals and static assets.
+// Apply to everything except Next internals, static assets, and the two
+// machine endpoints.
+//
+// api/health is excluded because Docker's HEALTHCHECK and the CI post-deploy
+// probe both call it: with SITE_PASSWORD set they would get 401, the container
+// would be marked unhealthy, and Traefik would pull a perfectly healthy site
+// out of rotation. api/status is excluded for the same reason — it is the
+// dead-man switch an external monitor polls, and a monitor cannot log in.
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/health|api/status).*)"],
 };

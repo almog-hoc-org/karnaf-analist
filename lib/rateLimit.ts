@@ -86,8 +86,11 @@ export function rateLimitReset(key: string) {
  * rather than an authorisation boundary. Never use this for access control.
  */
 export function clientIp(headers: Headers): string {
-  const cf = headers.get("cf-connecting-ip");
-  if (cf) return cf.trim();
+  // cf-connecting-ip is deliberately NOT consulted. This deployment sits behind
+  // Traefik, not Cloudflare, so nothing ever sets that header legitimately —
+  // which made it a free reset button: any client could send its own value and
+  // get a fresh bucket on every request. x-forwarded-for and x-real-ip are the
+  // two Traefik actually writes.
   const fwd = headers.get("x-forwarded-for");
   if (fwd) return fwd.split(",")[0].trim();
   return headers.get("x-real-ip")?.trim() || "unknown";

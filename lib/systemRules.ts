@@ -132,23 +132,6 @@ export const RULE_DEFS: RuleDef[] = [
   { key: "comp_min_deals", label: "מינימום עסקאות להשוואה", group: "השוואת עסקאות", kind: "number", default: 1, unit: "עסקאות",
     help: "כמה עסקאות דומות מספיקות כדי להציג השוואה." },
 
-  // ── display / sources ─────────────────────────────────────────────
-  //
-  // ⚠ NOT WIRED UP. A repo-wide search for these four keys finds no reader
-  // outside this file: nothing consults them when rendering a page or building
-  // a series. Toggling "hide Yad2 data" changes nothing, and the operator has
-  // no way to tell.
-  //
-  // They are labelled as inactive rather than deleted, because whether to
-  // implement them or drop them is a product decision. A control that silently
-  // does nothing is worse than one that is absent — so until it is wired, the
-  // dashboard says so.
-  { key: "show_source_cbs", label: "הצגת נתוני למ\"ס", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "⚠ טרם מחובר — המתג אינו משפיע כרגע. אוכלוסייה, היתרי בנייה, התחלות/גמר, דוחות." },
-  { key: "show_source_govnadlan", label: "הצגת החציון הרשמי (גוב-נדלן)", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "⚠ טרם מחובר — המתג אינו משפיע כרגע. סדרת החציון הרשמית בגרפים ובכרטיסי המחיר." },
-  { key: "show_source_yad2", label: "הצגת נתוני יד2", group: "מקורות ותצוגה", kind: "boolean", default: true, toggleOnly: true, help: "⚠ טרם מחובר — המתג אינו משפיע כרגע. מדדי מצב שוק (מודעות, ימים בשוק) בדף העיר." },
-  { key: "default_series", label: "סדרות ברירת-מחדל בגרף העיר", group: "מקורות ותצוגה", kind: "text", default: "sh_avg,sh_med",
-    help: "⚠ טרם מחובר — הערך אינו משפיע כרגע. אילו סדרות מסומנות כשנכנסים לדף עיר. אפשרויות: sh_avg, sh_med, all_avg, all_med, new_avg, official." },
-
   // ── credits & access (the 7.8 model — every number editable, no deploy) ──
   { key: "paywall_on", label: "חומת הרשמה על עמודי ערים", group: "קרדיטים וגישה", kind: "boolean", default: true, toggleOnly: true,
     help: "מתג החירום של כל המודל: כבוי = האתר חוזר להתנהגות הפתוחה המלאה (כל עיר לכל גולש, בלי קרדיטים). עמוד הבית והדירוגים פתוחים תמיד." },

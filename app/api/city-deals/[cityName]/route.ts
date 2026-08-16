@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCityDealsData, CityDealsData } from "@/lib/govNadlanService";
 import { getCachedDeals, setCachedDeals } from "@/lib/dealsCache";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 
 // In-memory cache (server lifetime) for very fast hits
 const memoryCache = new Map<string, { data: CityDealsData; expires: number }>();
@@ -10,9 +11,21 @@ const MEM_TTL_MS = 60 * 60 * 1000; // 1 hour
 const FAIL_TTL_MS = 10 * 60 * 1000;
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: { cityName: string } }
 ) {
+  // Public and unauthenticated, and on a cache miss it attempts a LIVE
+  // upstream fetch — so an unlimited caller can both scrape the neighbourhood
+  // comparison and use this server as an amplifier against govmap. Cheap cap;
+  // the two cache layers below mean a real visitor rarely gets past step 1.
+  const rl = rateLimit(`city-deals:${clientIp(req.headers)}`, 60, 60_000);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "יותר מדי בקשות — נסה שוב בעוד רגע" },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfter) } }
+    );
+  }
+
   const cityName = decodeURIComponent(params.cityName);
 
   // 1) memory cache

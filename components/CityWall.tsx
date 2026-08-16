@@ -117,7 +117,10 @@ export default function CityWall({
                 rel="noopener noreferrer"
                 className="mt-5 inline-block rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white hover:bg-emerald-700"
               >
-                שתף חבר בוואטסאפ — קבל 5 קרדיטים כשיירשם
+                {/* the number MUST come from the same prop as the bullet three
+                    lines above — a hardcoded 5 sat here while the list said 10,
+                    so one screen promised two different rewards */}
+                שתף חבר בוואטסאפ — קבל {referralBonus ?? 10} קרדיטים כשיירשם
               </a>
             )}
           </>

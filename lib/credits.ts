@@ -57,6 +57,32 @@ function ensureCreditTables() {
   try {
     appDb().exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_referral_code ON users(referral_code)");
   } catch { /* users table not created yet */ }
+
+  // Idempotency of keyed GRANTS, enforced by the database — see grant().
+  //
+  // ⚠️ `delta_tenths > 0` is load-bearing, not decoration. SPENDS also carry a
+  // ref_id (city_unlock keys on the city name, deal_save on the city), and a
+  // user is *expected* to unlock the same city again after the window expires.
+  // An index covering every keyed row would make that second unlock throw —
+  // breaking the product to fix a race. Grants are positive, spends negative,
+  // so the sign is exactly the line between "must happen once" and "may repeat".
+  //
+  // Deduplicate first: a double-grant already written by the old
+  // check-then-write path would make CREATE UNIQUE INDEX fail, and a failed
+  // index leaves the race silently open. Keep the earliest row of each
+  // (user, reason, ref) — the one the user was actually told about.
+  try {
+    appDb().exec(`
+      DELETE FROM credits_ledger WHERE id NOT IN (
+        SELECT MIN(id) FROM credits_ledger
+         WHERE ref_id IS NOT NULL AND delta_tenths > 0
+         GROUP BY user_id, reason, ref_id
+      ) AND ref_id IS NOT NULL AND delta_tenths > 0;
+      CREATE UNIQUE INDEX IF NOT EXISTS idx_credits_grant_once
+        ON credits_ledger(user_id, reason, ref_id)
+        WHERE ref_id IS NOT NULL AND delta_tenths > 0;
+    `);
+  } catch { /* index already present, or a legacy shape we must not break */ }
   ensured = true;
 }
 
@@ -119,19 +145,30 @@ export function ledgerFor(userId: string | number, limit = 50): LedgerEntry[] {
   ).all(uid(userId), limit) as LedgerEntry[];
 }
 
-/** Unconditional grant (positive delta). Idempotent per (reason, ref_id) when refId is given. */
+/**
+ * Unconditional grant (positive delta). Idempotent per (reason, ref_id) when
+ * refId is given.
+ *
+ * The idempotency is enforced by the DATABASE, not by a check-then-write.
+ * The previous version did SELECT-then-INSERT outside a transaction, and
+ * ensureStarterCredits is reachable from three places at once (createSession,
+ * the city-page gate, /account) — two tabs opening on first login could both
+ * see "no row yet" and both insert the signup bonus. On a money ledger that is
+ * a real defect, not a style one. The unique index makes the double-grant
+ * impossible even under concurrency; the INSERT simply reports 0 changes.
+ */
 export function grant(userId: string | number, tenths: number, reason: string, refId?: string): boolean {
   ensureCreditTables();
   if (tenths <= 0) return false;
   const id = uid(userId);
   if (refId != null) {
-    const dup = appDb().prepare(
-      "SELECT 1 FROM credits_ledger WHERE user_id=? AND reason=? AND ref_id=?"
-    ).get(id, reason, refId);
-    if (dup) return false;
+    const res = appDb().prepare(
+      `INSERT OR IGNORE INTO credits_ledger (user_id, delta_tenths, reason, ref_id) VALUES (?, ?, ?, ?)`
+    ).run(id, tenths, reason, refId);
+    return res.changes > 0;
   }
   appDb().prepare("INSERT INTO credits_ledger (user_id, delta_tenths, reason, ref_id) VALUES (?, ?, ?, ?)")
-    .run(id, tenths, reason, refId ?? null);
+    .run(id, tenths, reason, null);
   return true;
 }
 

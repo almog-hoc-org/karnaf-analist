@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { getRuleNum } from "@/lib/systemRules";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { DRAWER_PAGE, type NadlanDeal } from "@/lib/nadlanTransactionSeries";
 
 /**
@@ -20,6 +21,19 @@ type DealType = "all" | "sh" | "new";
 type Ba = "all" | "modern" | "old";
 
 export async function GET(req: NextRequest, { params }: { params: { cityName: string } }) {
+  // This endpoint reads the deal repository — the asset the credit wall exists
+  // to protect — and it is public and unauthenticated so the drawer can page
+  // through years without a round trip. Unlimited, it is also a scraper's
+  // fastest path to the whole database, 1,000 rows at a time. The cap is
+  // deliberately generous: a human paging a drawer never approaches it.
+  const rl = rateLimit(`city-tx:${clientIp(req.headers)}`, 90, 60_000);
+  if (!rl.ok) {
+    return NextResponse.json(
+      { deals: [], total: 0, offset: 0, limit: 0, error: "יותר מדי בקשות — נסה שוב בעוד רגע" },
+      { status: 429, headers: { "Retry-After": String(rl.retryAfter) } }
+    );
+  }
+
   const cityName = decodeURIComponent(params.cityName);
   const q = req.nextUrl.searchParams;
 

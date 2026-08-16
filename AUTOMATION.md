@@ -1,13 +1,5 @@
 # Automation — Report Monitor & Email Notifications
 
-> **Scheduling note (2026-08):** the cron instructions further down are
-> OBSOLETE. The monitor now runs automatically every night as part of the
-> `karnaf-collect` systemd service on the server (it is a collector in
-> `lib/collectors.ts` — no crontab needed). The only setup still required is
-> the Resend environment variables below; without them the monitor logs to
-> the journal instead of emailing. For the full nightly schedule see
-> `deploy/install-timers.sh`.
-
 This project includes an automatic monitor that polls CBS and the Ministry of Finance Chief Economist for new housing publications, updates the local registry, and emails you when a new report appears.
 
 ## What's already built
@@ -21,7 +13,7 @@ This project includes an automatic monitor that polls CBS and the Ministry of Fi
 | Source detail pages | `app/sources/[id]/page.tsx` | ✅ Ready — click any source in `/sources` to see its data in our format |
 | Schedule predictor | `nextExpectedPublication()` in `lib/sources.ts` | ✅ Ready — shows "next expected" date on `/sources` |
 
-## What you need to do — 3 steps, ~10 minutes
+## What you need to do — Resend keys only, ~5 minutes
 
 ### 1. Sign up for Resend (free, 3,000 emails/month)
 1. Go to [resend.com](https://resend.com) and create a free account
@@ -38,21 +30,16 @@ NOTIFY_FROM_EMAIL=notifications@yourdomain.com   # must be verified in Resend
 
 If you skip this, the monitor still runs — it just logs to console instead of emailing.
 
-### 3. Schedule the monitor with cron
-First, do a one-time **bootstrap run** so the registry knows which reports already exist (otherwise you'll get a flood of "new" emails on the first real run):
-```bash
-cd "/path/to/project"
-npx tsx lib/check-new-reports.ts
-```
-The first run records everything as the baseline. From then on, only NEW publications trigger notifications.
+### 3. Nothing to schedule — it already runs nightly
 
-Then add a cron entry (`crontab -e`):
-```cron
-# Check for new CBS / MoF reports every hour at minute 7
-7 * * * * cd "/full/path/to/my-realestate-project" && /usr/local/bin/npx tsx lib/check-new-reports.ts >> /tmp/reports-monitor.log 2>&1
-```
+The monitor is a registered collector in `lib/collectors.ts` (`cbs-reports`),
+so the `karnaf-collect` systemd timer runs it every night at 00:30 along with
+every other source. There is **no crontab entry to add**, and adding one would
+duplicate the nightly run. The full schedule lives in `deploy/install-timers.sh`.
 
-Verify with `crontab -l`. Watch `/tmp/reports-monitor.log` for output.
+On a brand-new database the first run records every existing publication as the
+baseline, so it does not email a flood of "new" reports — only genuinely new
+ones after that.
 
 ## How it works — two detection modes
 

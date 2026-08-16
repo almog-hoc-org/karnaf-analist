@@ -29,6 +29,33 @@ const nextConfig = {
       '/**/*': ['./data/realestate.db'],
     },
   },
+
+  // Baseline security headers. Traefik terminates TLS and adds none of these,
+  // so until now the site shipped with none at all.
+  //
+  // No CSP here on purpose: this app inlines the Clarity bootstrap and Next's
+  // own hydration scripts, so a meaningful script-src needs per-request nonces
+  // — worth doing, but as its own change with its own verification, not smuggled
+  // into a header block. The four below are unconditionally safe.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          // 2 years + preload-ready. The site is HTTPS-only behind Traefik and
+          // the legacy hostname already 301s to the canonical one.
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          // Nothing here is meant to be framed; clickjacking a paywalled
+          // dashboard is a real (if unglamorous) risk.
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          // Send the origin to other sites, the full path only to ourselves —
+          // city names are in the path and are not other sites' business.
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
