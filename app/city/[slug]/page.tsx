@@ -654,6 +654,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         modernMinYear={getRuleNum("modern_min_year", 2005)}
         classificationRate={classRate?.rate ?? null}
         subsidizedYears={subsidizedYears}
+        minSample={getRuleNum("min_deals_per_year", 10)}
       />
 
       {/* Room-size price rubric (operator spec 8/2026) — the numbers people

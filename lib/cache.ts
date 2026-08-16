@@ -65,7 +65,28 @@ export function cached<A extends unknown[], R>(
   tag: CacheTag,
   ttl: number
 ): (...args: A) => Promise<R> {
-  return unstable_cache(fn, keyParts, { tags: [tag], revalidate: ttl });
+  const wrapped = unstable_cache(fn, keyParts, { tags: [tag], revalidate: ttl });
+  return async (...args: A) => {
+    try {
+      return await wrapped(...args);
+    } catch (e) {
+      // Outside the Next server runtime there is no incremental cache, and
+      // unstable_cache throws this invariant the moment it is CALLED. That is
+      // fine for a request — it cannot happen there — but it means any script
+      // importing a cached loader dies on contact.
+      //
+      // The cost was not theoretical: scripts/diagnose-city-render.ts, written
+      // to name the loader behind a production 500, reported all 168 cities
+      // failing at getCityInsights with this invariant and never reached a
+      // single real query. A diagnostic that cannot run is worse than none —
+      // it produces a confident wrong answer.
+      //
+      // A script wants live data anyway, so falling through to the uncached
+      // loader is not a degraded mode: it is the correct one.
+      if (e instanceof Error && /incrementalCache missing/i.test(e.message)) return fn(...args);
+      throw e;
+    }
+  };
 }
 
 /** Convenience wrappers for the two groups, so call sites stay short and consistent. */

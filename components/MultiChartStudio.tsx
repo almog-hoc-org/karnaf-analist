@@ -27,7 +27,14 @@ type Metric = "sqm" | "price";
 /** building-age dimension for second-hand (hierarchy: יד-2 → modern/old → rooms) */
 type Ba = "all" | "modern" | "old";
 const shScope = (ba: Ba) => (ba === "all" ? "secondhand" : `secondhand_${ba}`) as "secondhand" | "secondhand_modern" | "secondhand_old";
-const MIN_N = 10;
+/**
+ * Fallback sample floor. The LIVE floor is the `min_deals_per_year` admin rule,
+ * passed in as `minSample` — this constant only covers a caller that has no
+ * rule access. Hardcoding it here was a divergence waiting to happen: the
+ * tables read the rule, the chart read the literal, and the moment an operator
+ * changed the rule the same city would quote two different ₪/m² on one page.
+ */
+const DEFAULT_MIN_N = 10;
 
 interface SeriesDef {
   key: string;
@@ -71,7 +78,7 @@ const OFFICIAL_DEF: SeriesDef = {
 /** Series adapt to the hierarchy choice: avg + median of the chosen deal-type (+ official overlay).
  *  For יד-2, the MIX-ADJUSTED series (fixed neighborhood×rooms basket) is the headline —
  *  the raw median was inflated by sample-composition drift (verified vs repeat-sales). */
-const buildSeries = (dt: DealType): SeriesDef[] => [
+const buildSeries = (dt: DealType, minN: number): SeriesDef[] => [
   ...(dt === "sh" ? [{
     // #0f172a, the heaviest ink on the page, because the comment above says this
     // series IS the headline for second-hand — the colour now says so too. It was
@@ -84,16 +91,16 @@ const buildSeries = (dt: DealType): SeriesDef[] => [
     at: (d, r, m, y) => {
       if (m !== "sqm" || r !== "all") return null; // constant-basket construct: ₪/m², all sizes
       const p = stat(d, "secondhand_fixedmix", "all", y);
-      return p?.medianSqm != null && p.n >= MIN_N ? [p.medianSqm, p.n] : null;
+      return p?.medianSqm != null && p.n >= minN ? [p.medianSqm, p.n] : null;
     },
   } satisfies SeriesDef] : []),
   {
     key: "avg", label: `${DT_LABEL[dt]} — ממוצע`, short: "ממוצע", color: "#0e7490",
-    at: (d, r, m, y, ba) => { const p = stat(d, scopeFor(dt, ba, isGovmapCity(d)), r, y); const v = pick(p, m, "avg"); return p && v != null && p.n >= MIN_N ? [v, p.n] : null; },
+    at: (d, r, m, y, ba) => { const p = stat(d, scopeFor(dt, ba, isGovmapCity(d)), r, y); const v = pick(p, m, "avg"); return p && v != null && p.n >= minN ? [v, p.n] : null; },
   },
   {
     key: "med", label: `${DT_LABEL[dt]} — חציון`, short: "חציון", color: "#3aa6bc",
-    at: (d, r, m, y, ba) => { const p = stat(d, scopeFor(dt, ba, isGovmapCity(d)), r, y); const v = pick(p, m, "med"); return p && v != null && p.n >= MIN_N ? [v, p.n] : null; },
+    at: (d, r, m, y, ba) => { const p = stat(d, scopeFor(dt, ba, isGovmapCity(d)), r, y); const v = pick(p, m, "med"); return p && v != null && p.n >= minN ? [v, p.n] : null; },
   },
   OFFICIAL_DEF,
 ];
@@ -107,7 +114,7 @@ const fmtVal = (v: number, metric: Metric) =>
 const fmtAxis = (v: number, metric: Metric) =>
   metric === "sqm" ? `₪${Math.round(v / 1000)}K` : `₪${(v / 1_000_000).toFixed(1)}M`;
 
-export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, secondhandMinAge = 4, modernMinYear = 2005, classificationRate = null, subsidizedYears = [] }: {
+export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, secondhandMinAge = 4, modernMinYear = 2005, classificationRate = null, subsidizedYears = [], minSample = DEFAULT_MIN_N }: {
   data: CityGraphData; deals: NadlanDeal[]; dealCounts?: DealCountCube;
   /** what the two cleaning rules held back in this city — shown, never hidden */
   cleaning?: { dupes: number; luxury: number };
@@ -116,6 +123,8 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   classificationRate?: number | null;
   /** city-years whose new-build prices are administered (מחיר למשתכן) */
   subsidizedYears?: Array<{ year: number; share: number; medLow: number | null; medSecondhand: number | null }>;
+  /** the live min_deals_per_year rule — the SAME floor the price tables use */
+  minSample?: number;
 }) {
   const allYears = useMemo(() => {
     const s = new Set<number>([...data.median.map((m) => m.year), ...data.nadlanYears]);
@@ -134,7 +143,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   // as the nightly campaign fills earlier years.
   const firstDataYear = useMemo(() => {
     const years = data.nadlan.secondhand.all
-      .filter((p) => p.n >= MIN_N && p.avgSqm != null)
+      .filter((p) => p.n >= minSample && p.avgSqm != null)
       .map((p) => p.year)
       .sort((a, b) => a - b);
     if (years.length === 0) return maxY - 10;
@@ -144,7 +153,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
       else break;
     }
     return runStart;
-  }, [data, maxY]);
+  }, [data, maxY, minSample]);
 
   const mobile = useIsMobile(); // compact chart geometry + short labels below 640px
   const [metric, setMetric] = useState<Metric>("sqm");
@@ -162,7 +171,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const [selected, setSelected] = useState<string[]>(["adj", "med"]); // adj = mix-adjusted headline (יד-2 only; harmlessly absent elsewhere)
   const [view, setView] = useState<"overlay" | "grid">("overlay");
   const govCity = useMemo(() => isGovmapCity(data), [data]);
-  const seriesDefs = useMemo(() => buildSeries(dealType), [dealType]);
+  const seriesDefs = useMemo(() => buildSeries(dealType, minSample), [dealType, minSample]);
 
   const toggleSeries = (key: string) =>
     setSelected((cur) => cur.includes(key) ? cur.filter((k) => k !== key) : cur.length >= 4 ? cur : [...cur, key]);
@@ -523,7 +532,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
             </ResponsiveContainer>
           )}
           <div className="mt-2 text-2xs leading-relaxed text-slate-500">
-            שנה עם פחות מ-{MIN_N} עסקאות לא מוצגת — הקו נשבר שם, לא מגושר · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
+            שנה עם פחות מ-{minSample} עסקאות לא מוצגת — הקו נשבר שם, לא מגושר · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
             {latestYearInRange && partialSet.has(maxY) && latestYearHasVisibleData && <> · {maxY} מוצגת בגרף כשנה חלקית, ואחוזי השינוי מחושבים עד {maxFullY}</>}
             {latestYearInRange && partialSet.has(maxY) && !latestYearHasVisibleData && <> · ב-{maxY} אין מספיק עסקאות לבחירה הנוכחית, ולכן אין נקודה בסדרה</>}
           </div>
