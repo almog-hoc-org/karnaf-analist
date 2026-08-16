@@ -88,6 +88,12 @@ jobs:
       - name: typecheck
         run: npx tsc --noEmit
 
+      # Pure-function tests. Fast enough to be unconditional, and every case in
+      # them is a bug this project actually shipped — so a red one here means a
+      # regression, not a flake.
+      - name: unit tests
+        run: npm test
+
   deploy:
     name: deploy to VPS
     needs: build
