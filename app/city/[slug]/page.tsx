@@ -18,6 +18,7 @@ import ScatteredFactsSection from "@/components/ScatteredFactsSection";
 import { getCityScatteredData } from "@/lib/scatteredFacts";
 import NumberCaption from "@/components/NumberCaption";
 import { loadCityPriceChanges } from "@/lib/price-changes";
+import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import NewVsSecondhandPanel from "@/components/NewVsSecondhandPanel";
 import PopulationBySource from "@/components/PopulationBySource";
 import { loadCityPopulationEstimates } from "@/lib/population-sources";
@@ -35,6 +36,7 @@ import { getRuleBool, getRuleText } from "@/lib/systemRules";
 import { balance, isCityUnlocked, unlockCity, ensureStarterCredits, CREDIT_RULES } from "@/lib/credits";
 import { whatsappShareUrl } from "@/lib/share";
 import CityWall from "@/components/CityWall";
+import CityPublicSummary from "@/components/CityPublicSummary";
 import CityShareButton from "@/components/CityShareButton";
 
 interface PageProps {
@@ -101,19 +103,23 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps) {
   const cityName = decodeURIComponent(params.slug);
-  const title = `${cityName} | קרנף אנליסט`;
-  const description = `נתוני אמת על שוק הנדל״ן ב${cityName}: עסקאות, מחירי ₪/מ״ר, מגמות מחיר, היתרי בנייה ואוכלוסייה — מהמאגר העצמאי של קרנף אנליסט.`;
-  // absolute OG url so shared links unfurl correctly in WhatsApp
-  const base = (process.env.KARNAF_SITE_URL ?? "").replace(/\/$/, "");
+  // The title IS the query people type. "נתניה | קרנף אנליסט" answered nothing;
+  // this one matches the search and the page's own h1.
+  const title = `מחירי דירות ב${cityName} — מחיר למ״ר, עסקאות ומגמות`;
+  const description = `כמה עולה דירה ב${cityName}? מחיר ממוצע למ״ר, שינוי מחירים לאורך זמן, מספר עסקאות, היתרי בנייה ואוכלוסייה — מעסקאות אמת שדווחו לרשות המסים.`;
+  const path = `/city/${encodeURIComponent(cityName)}`;
   return {
     title,
     description,
+    // Canonical: the alias URLs redirect here, and shares carry ?ref= codes —
+    // both would otherwise look like separate pages with the same content.
+    alternates: { canonical: path },
     openGraph: {
       title,
       description,
       type: "article",
       locale: "he_IL",
-      ...(base ? { url: `${base}/city/${encodeURIComponent(cityName)}` } : {}),
+      url: path, // resolved against metadataBase in the root layout
     },
   };
 }
@@ -141,7 +147,43 @@ export default async function CityPage({ params, searchParams }: PageProps) {
     const cityExists = await prisma.city.findUnique({ where: { city_name: cityName }, select: { city_name: true } });
     if (cityExists) {
       if (!viewer) {
-        return <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} signupBonus={CREDIT_RULES.signupBonus()} />;
+        // PUBLIC SUMMARY + wall. The wall used to be the entire response, which
+        // meant Google indexed 167 identical signup screens instead of the
+        // city data this site exists to publish. The free half below carries
+        // real numbers (price, trend, sample, population); everything the wall
+        // protects — the studio, rooms, neighbourhoods, deal drill-down,
+        // comparisons — stays behind it.
+        const [pubPrices, pubChanges, pubCity] = await Promise.all([
+          loadCityTransactionPrices(),
+          loadCityPriceChanges(cityName),
+          prisma.city.findUnique({ where: { city_name: cityName }, select: { population_2026: true, population_2024: true } }),
+        ]);
+        const pp = pubPrices.get(cityName);
+        // National benchmark from the map already in hand — the median of every
+        // city's ₪/m², so "above/below the national average" costs no query.
+        const allSqm = [...pubPrices.values()]
+          .map((v) => v.avgAllSqm ?? v.medianAllSqm)
+          .filter((v): v is number => v != null)
+          .sort((a, b) => a - b);
+        const nationalSqm = allSqm.length ? allSqm[Math.floor(allSqm.length / 2)] : null;
+        const win = pubChanges?.change3y ?? pubChanges?.change5y ?? null;
+        return (
+          <CityPublicSummary
+            data={{
+              cityName,
+              sqm: pp?.avgAllSqm ?? pp?.medianAllSqm ?? null,
+              priceYear: pp?.priceYear ?? null,
+              n: pp?.nPriceYear ?? null,
+              changePct: win?.pct ?? null,
+              changeFromYear: win?.fromY ?? null,
+              changeToYear: win?.toY ?? null,
+              population: pubCity?.population_2026 ?? pubCity?.population_2024 ?? null,
+              nationalSqm,
+            }}
+          >
+            <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} signupBonus={CREDIT_RULES.signupBonus()} />
+          </CityPublicSummary>
+        );
       }
       if (!isCityUnlocked(viewer.id, cityName)) {
         // settle all due grants BEFORE deciding which wall to show — a user
