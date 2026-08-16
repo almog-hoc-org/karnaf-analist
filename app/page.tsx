@@ -10,6 +10,7 @@ import NumberCaption from "@/components/NumberCaption";
 import PriceGainsRankingCard from "@/components/PriceGainsRankingCard";
 import TrendValue from "@/components/TrendValue";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
+import { loadSubsidizedByCity } from "@/lib/subsidizedYears";
 import { loadCityTransactionPrices, loadRankingEligibleCities } from "@/lib/cityTransactionPrices";
 import { computeMarketInsights } from "@/lib/marketInsights";
 import MarketInsightsSection from "@/components/MarketInsightsSection";
@@ -129,6 +130,7 @@ export default async function HomePage() {
   // now — moved to lib/dealTotals.ts behind the market cache tag, so they are
   // recomputed when the pipeline says the data changed and not before.
   const { totalDeals, deals12m, maxDealDate: dealsMaxDate } = await loadDealTotals();
+  const subsidizedByCity = await loadSubsidizedByCity();
   const dealsUpdatedLabel = dealsMaxDate
     ? new Date(dealsMaxDate).toLocaleDateString("he-IL", { day: "numeric", month: "numeric", year: "2-digit" })
     : undefined;
@@ -345,7 +347,7 @@ export default async function HomePage() {
       {/* fully-filterable price-changes ranking (scope × metric × year range) —
           promoted out of the rankings grid to a full-width row of its own */}
       <div className="order-1 mb-6 sm:order-2 sm:mb-0 sm:mt-6">
-        <PriceGainsRankingCard series={gainSeries} minYear={gainMinYear} maxYear={gainMaxYear} partialYear={gainPartialYear} />
+        <PriceGainsRankingCard series={gainSeries} minYear={gainMinYear} maxYear={gainMaxYear} partialYear={gainPartialYear} subsidized={subsidizedByCity} />
       </div>
       </div>
 

@@ -91,6 +91,13 @@ export const PIPELINE: PipelineStage[] = [
     timeoutMs: 15 * MINUTE,
   },
   {
+    id: "subsidized",
+    script: "scripts/flag-subsidized-cells.ts",
+    label: "זיהוי שנות מחיר-למשתכן",
+    why: "Marks city-years whose new-build price level is an administered (מחיר למשתכן) price rather than a market one, measured against the same city-year's second-hand median — the one baseline the programme cannot move. Runs after classify, which is what makes a deal countable as 'new' in the first place. Nothing is excluded; the flag is disclosure.",
+    timeoutMs: 10 * MINUTE,
+  },
+  {
     id: "dupes",
     script: "scripts/flag-duplicate-deals.ts",
     label: "כפילויות דיווח",

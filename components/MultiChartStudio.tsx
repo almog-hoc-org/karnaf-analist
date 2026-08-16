@@ -107,13 +107,15 @@ const fmtVal = (v: number, metric: Metric) =>
 const fmtAxis = (v: number, metric: Metric) =>
   metric === "sqm" ? `₪${Math.round(v / 1000)}K` : `₪${(v / 1_000_000).toFixed(1)}M`;
 
-export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, secondhandMinAge = 4, modernMinYear = 2005, classificationRate = null }: {
+export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, secondhandMinAge = 4, modernMinYear = 2005, classificationRate = null, subsidizedYears = [] }: {
   data: CityGraphData; deals: NadlanDeal[]; dealCounts?: DealCountCube;
   /** what the two cleaning rules held back in this city — shown, never hidden */
   cleaning?: { dupes: number; luxury: number };
   cityName: string; secondhandMinAge?: number; modernMinYear?: number;
   /** share of the city's deals carrying a sale-channel class (lib/classificationRate) — gates the split's confidence */
   classificationRate?: number | null;
+  /** city-years whose new-build prices are administered (מחיר למשתכן) */
+  subsidizedYears?: Array<{ year: number; share: number; medLow: number | null; medSecondhand: number | null }>;
 }) {
   const allYears = useMemo(() => {
     const s = new Set<number>([...data.median.map((m) => m.year), ...data.nadlanYears]);
@@ -187,6 +189,17 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
     return { def: s, pct: (b.v[0] / a.v[0] - 1) * 100, fromY: a.y, toY: b.y, n: pts.reduce((sum, p) => sum + p.v[1], 0) };
   }), [activeDefs, years, data, room, metric, partialSet, buildingAge]);
   const hasPartialInRange = useMemo(() => years.some((y) => partialSet.has(y)), [years, partialSet]);
+
+  // Endpoints of the CURRENTLY SELECTED range, not of some fixed window.
+  const rangeEnd = Math.min(to, maxFullY);
+  const subsidizedEdge = subsidizedYears.find((y) => y.year === from || y.year === rangeEnd) ?? null;
+  // How many years the BEST-covered active series actually has in range. 1-2
+  // points cannot draw a line, which is what produces a lone floating dot.
+  const sparseSeries = useMemo(() => {
+    const counts = activeDefs.map((s) => years.filter((y) => s.at(data, room, metric, y, buildingAge) != null).length);
+    const best = counts.length ? Math.max(...counts) : 0;
+    return best > 0 && best <= 2 ? best : null;
+  }, [activeDefs, years, data, room, metric, buildingAge]);
   const latestYearInRange = years.includes(maxY);
   const latestYearHasVisibleData = useMemo(
     () => latestYearInRange && activeDefs.some((s) => s.at(data, room, metric, maxY, buildingAge) != null),
@@ -419,6 +432,15 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               mobile: its own full-width row so it never squeezes the pill rows */}
           <aside className="w-full rounded-xl border border-indigo-100 bg-white/80 px-3 py-2 sm:w-auto sm:shrink-0">
             <div className="mb-0.5 text-2xs font-bold text-slate-500">שינוי {from}→{Math.min(to, maxFullY)}</div>
+            {/* The basis, spelled out. A reader comparing this to the cities
+                table was comparing "new builds, median ₪/m²" against "all
+                deals, average" and concluding the site contradicts itself. It
+                does not — it was just never said which is which. */}
+            <div className="mb-1 text-2xs text-slate-400">
+              {dealType === "sh" ? "יד שנייה" : dealType === "new" ? "דירות חדשות" : "כל העסקאות"}
+              {" · "}{metric === "sqm" ? "₪ למ״ר" : "מחיר עסקה"}
+              {room !== "all" ? ` · ${room} חד׳` : ""}
+            </div>
             {trends.filter((t) => t.pct != null).map((tr) => (
               <div key={tr.def.key} className="flex items-center gap-1.5 text-2xs font-bold text-slate-600">
                 <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: tr.def.color }} />
@@ -427,7 +449,25 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               </div>
             ))}
             {trends.every((t) => t.pct == null) && <div className="text-sm text-slate-300">—</div>}
+            {/* An isolated dot with no line reads as a glitch. It is the
+                opposite: the years around it failed the sample gate, so the
+                line is deliberately broken. Say that, rather than leaving the
+                chart to be misread. */}
+            {sparseSeries && (
+              <div className="mt-1 text-2xs text-slate-500">
+                בבחירה הזו יש {sparseSeries} שנים בלבד עם מספיק עסקאות — הנקודות מבודדות ואין קו רציף
+              </div>
+            )}
             {hasPartialInRange && <div className="mt-0.5 text-2xs text-amber-600"><Icon name="warning" size="1em" /> {maxY} חלקית — לא בחישוב</div>}
+            {/* The percentage above is measured between two years. If either of
+                THOSE years was dominated by administered (מחיר למשתכן) sales,
+                the percentage is partly a change of programme. Only the
+                endpoints matter — a flagged year in the middle moves nothing. */}
+            {subsidizedEdge && (
+              <div className="mt-1 text-2xs font-semibold text-amber-700">
+                <Icon name="warning" size="1em" /> {subsidizedEdge.year}: {Math.round(subsidizedEdge.share * 100)}% מהעסקאות החדשות במחיר מנהלי (מחיר למשתכן) — משפיע על אחוזי השינוי
+              </div>
+            )}
           </aside>
         </div>
 

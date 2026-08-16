@@ -18,7 +18,7 @@
  * This module is read-only — it queries Prisma directly and never mutates state.
  */
 
-import { cache } from "react";
+import { cache as reactCache } from "react";
 import { prisma } from "./db";
 import { cachedMarket } from "./cache";
 
@@ -130,7 +130,19 @@ function dominantSource(rows: GapWindowYear[]): SupplySource {
  * passing the options object straight through would dedupe nothing. Hence the
  * inner function takes two numbers and the public wrapper unpacks.
  */
-const computeCityGapCached = cache(
+/**
+ * React's cache() exists only inside the Next server runtime. Under tsx/CJS —
+ * which is how every pipeline and audit script runs — importing it yields
+ * undefined, and calling it threw
+ * "(0 , import_react.cache) is not a function" at module load, taking down any
+ * script that touches this file (measured: the city-render census died before
+ * its first city). Request-scoped dedupe is an optimisation, not a contract,
+ * so outside the server it degrades to a plain pass-through.
+ */
+const requestCache: <F>(fn: F) => F =
+  (typeof reactCache === "function" ? reactCache : (fn) => fn) as <F>(fn: F) => F;
+
+const computeCityGapCached = requestCache(
   async (cityName: string, windowStart: number, windowEnd: number): Promise<GapAnalysis | null> =>
     computeCityGapUncached(cityName, windowStart, windowEnd)
 );

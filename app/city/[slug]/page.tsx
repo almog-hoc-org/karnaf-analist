@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { canonicalCityName } from "@/lib/cityAliases";
 import { cityClassificationRate } from "@/lib/classificationRate";
 import { cityUrbanRenewalProjects } from "@/lib/urbanRenewal";
+import { subsidizedWindowNote, citySubsidizedYears } from "@/lib/subsidizedYears";
 import UrbanRenewalSection from "@/components/UrbanRenewalSection";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
@@ -270,6 +271,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
     cityClassificationRate(cityName),
   ]);
   const urbanRenewalProjects = await cityUrbanRenewalProjects(cityName);
+  const subsidizedYears = await citySubsidizedYears(cityName);
 
   if (!city) {
     return (
@@ -364,6 +366,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   // so this strip and the panel under it showed two different "median price
   // change" numbers for the same city on the same page.
   const headlineWindow = cityPriceChanges?.change5y ?? cityPriceChanges?.change3y ?? null;
+  const subsidizedNote = await subsidizedWindowNote(cityName, headlineWindow?.fromY, headlineWindow?.toY);
 
   // ── Supply/demand gap (correct formula with fallback ladder) ────────────
   // demand = pop_growth / persons_per_household
@@ -487,6 +490,14 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             {headlineWindow.thin && (
               <p className="mt-2 text-2xs font-semibold text-amber-600">
                 ⚠ מדגם דל — אחת משנות הקצה נשענת על רבעון בודד או שהחלון הוזז בגלל שנים חסרות; קרא את המספר בזהירות
+              </p>
+            )}
+            {/* A window anchored on a מחיר-למשתכן year measures a change of
+                programme, not a change of market — say so where the number is,
+                not in a footnote nobody reaches. */}
+            {subsidizedNote && (
+              <p className="mt-2 rounded-lg border border-amber-200 bg-amber-50/70 px-3 py-2 text-2xs leading-relaxed text-amber-800">
+                ⚠ {subsidizedNote}
               </p>
             )}
           </>
@@ -642,6 +653,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         secondhandMinAge={getRuleNum("secondhand_min_age", 4)}
         modernMinYear={getRuleNum("modern_min_year", 2005)}
         classificationRate={classRate?.rate ?? null}
+        subsidizedYears={subsidizedYears}
       />
 
       {/* Room-size price rubric (operator spec 8/2026) — the numbers people
