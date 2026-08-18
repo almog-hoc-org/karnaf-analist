@@ -4,6 +4,7 @@ import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
 import { PIPELINE, STAGE_IDS, stagesFrom, mutationStages } from "@/lib/pipeline";
 import { dwellingsFile, dwellingsFor, nationalPersonsPerDwelling } from "@/lib/dwellings";
+import { citySearch } from "@/lib/citySearch";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -70,6 +71,29 @@ describe("city naming", () => {
   it("never matches when either side is missing", () => {
     expect(sameCity(null, "חיפה")).toBe(false);
     expect(sameCity("", "")).toBe(false);
+  });
+});
+
+describe("city search", () => {
+  const cities = [
+    { city_name: "קריית אתא" },
+    { city_name: "קריית ביאליק" },
+    { city_name: "קריית ים" },
+    { city_name: "הרצליה" },
+    { city_name: "באר שבע" },
+  ];
+
+  it("finds Kiryat cities when the yod spelling differs", () => {
+    expect(citySearch(cities, "קרית").map((h) => h.item.city_name)).toContain("קריית אתא");
+    expect(citySearch(cities, "קרית ים")[0].item.city_name).toBe("קריית ים");
+  });
+
+  it("translates accidental English-keyboard Hebrew", () => {
+    expect(citySearch(cities, "ctr", 1)[0].item.city_name).toBe("באר שבע");
+  });
+
+  it("offers a close typo instead of a dead end", () => {
+    expect(citySearch(cities, "הרצלה", 1)[0].item.city_name).toBe("הרצליה");
   });
 });
 

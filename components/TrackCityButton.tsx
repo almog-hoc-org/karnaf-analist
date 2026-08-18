@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Icon from "@/components/Icon";
+import { track } from "@/lib/track";
 
 /**
  * ★ follow a city.
@@ -36,6 +37,7 @@ export default function TrackCityButton({
     return (
       <a
         href={`/login?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}`}
+        onClick={() => track("follow_city_click", { subject: cityName, detail: "login_required" })}
         className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:border-amber-300 hover:text-amber-700"
         title="התחברו כדי לעקוב אחרי העיר ולקבל עדכון כשמשהו זז"
       >
@@ -46,6 +48,7 @@ export default function TrackCityButton({
 
   const toggle = () => {
     const next = !tracked;
+    track("follow_city_click", { subject: cityName, detail: next ? "follow" : "unfollow" });
     setTracked(next); // optimistic
     start(async () => {
       try {

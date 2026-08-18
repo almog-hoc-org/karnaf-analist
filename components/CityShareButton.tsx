@@ -1,15 +1,20 @@
+"use client";
+
+import { track } from "@/lib/track";
+
 /**
  * "Send to a friend" — a plain anchor to wa.me, computed server-side so the
  * sharer's referral code is already baked into the link (lib/share.ts).
  * The friend hits the registration wall; when they sign up with the code,
  * the sharer earns the referral bonus.
  */
-export default function CityShareButton({ href }: { href: string }) {
+export default function CityShareButton({ href, cityName }: { href: string; cityName: string }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => track("share_click", { subject: cityName, detail: "city_header" })}
       className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 transition-colors hover:bg-emerald-100"
       title="שיתוף עמוד העיר בוואטסאפ"
     >

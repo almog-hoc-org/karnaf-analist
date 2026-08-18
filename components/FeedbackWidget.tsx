@@ -78,6 +78,7 @@ export default function FeedbackWidget() {
       });
       const j = await res.json().catch(() => ({ ok: false }));
       if (!j.ok) { setError(j.error ?? "לא הצלחנו לשלוח — נסה שוב"); setSending(false); return; }
+      track("feedback_submit", { subject: kind, detail: rating ? String(rating) : null });
       setDone(true);
       setTimeout(() => {
         setOpen(false); setDone(false); setMessage(""); setEmail(""); setRating(0); setSending(false);
