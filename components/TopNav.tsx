@@ -7,7 +7,8 @@ import Icon from "@/components/Icon";
 import BrandMark from "./BrandMark";
 import { usePathname, useRouter } from "next/navigation";
 import { withBasePath } from "@/lib/basePath";
-import { trackSearch } from "@/lib/track";
+import { track, trackSearch } from "@/lib/track";
+import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
 const NAV_ITEMS = [
   { href: "/", label: "בית" },
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
 
 interface CityHit {
   name: string;
+  reason: CitySearchHit<{ city_name: string }>["reason"];
 }
 
 export default function TopNav({ cities, user, credits, unlimited = false }: { cities: string[]; user?: { name: string } | null; credits?: number | null;
@@ -48,8 +50,8 @@ export default function TopNav({ cities, user, credits, unlimited = false }: { c
     if (!q.trim()) { setHits([]); return; }
     const t = setTimeout(() => {
       const needle = q.trim();
-      const matches = cities.filter((c) => c.includes(needle));
-      setHits(matches.slice(0, 8).map((name) => ({ name })));
+      const matches = citySearch(cities.map((city_name) => ({ city_name })), needle, 8);
+      setHits(matches.map((hit) => ({ name: hit.item.city_name, reason: hit.reason })));
       setFocusIdx(-1);
       // Instrumented here rather than on submit: this box is on EVERY page and
       // had no notion of "no matches" at all — it simply rendered nothing, so a
@@ -70,6 +72,10 @@ export default function TopNav({ cities, user, credits, unlimited = false }: { c
   }, []);
 
   const go = (name: string) => {
+    const selected = hits.find((h) => h.name === name);
+    if (selected && (selected.reason === "typo" || selected.reason === "alias")) {
+      track("no_result_suggestion_click", { subject: q.trim(), detail: name });
+    }
     setQ("");
     setHits([]);
     router.push(`/city/${encodeURIComponent(name)}`);
@@ -126,8 +132,9 @@ export default function TopNav({ cities, user, credits, unlimited = false }: { c
             className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
           />
           {q.trim() && hits.length === 0 && (
-            <div className="absolute top-full z-[100] mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-center text-sm text-slate-500 shadow-xl">
-              לא נמצאו ערים תואמות
+            <div className="absolute top-full z-[100] mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-center shadow-xl">
+              <p className="text-sm font-bold text-slate-700">לא נמצאה עיר</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-500">נסו קרית/קריית, חלק מהשם, או כתיב קרוב.</p>
             </div>
           )}
           {hits.length > 0 && (
@@ -140,7 +147,10 @@ export default function TopNav({ cities, user, credits, unlimited = false }: { c
                     i === focusIdx ? "bg-indigo-50 text-indigo-700" : "text-slate-700 hover:bg-slate-50"
                   }`}
                 >
-                  {h.name}
+                  <span>{h.name}</span>
+                  {(h.reason === "typo" || h.reason === "alias") && (
+                    <span className="float-left text-2xs font-bold text-indigo-500">הצעה</span>
+                  )}
                 </button>
               ))}
             </div>

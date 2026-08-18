@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { trackSearch } from "@/lib/track";
+import { track, trackSearch } from "@/lib/track";
+import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
 interface CityItem {
   id: number;
@@ -28,6 +29,7 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
   const [value, setValue] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [query, setQuery] = useState("");
+  const [hits, setHits] = useState<Array<CitySearchHit<CityItem>>>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -39,22 +41,24 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
   const handleClear = () => {
     setValue("");
     setQuery("");
+    setHits([]);
     if (debounceRef.current) clearTimeout(debounceRef.current);
   };
 
-  const matches = query ? cities.filter((c) => c.city_name.includes(query)) : [];
-  const results = matches.slice(0, 20);
+  const results = hits.slice(0, 20);
 
   // Fires on the debounced query, so it records what the user settled on rather
   // than every keystroke on the way there. Routed through the same helper as the
   // TopNav box so the two can never drift on what counts as "no results".
   useEffect(() => {
-    if (!query.trim()) return;
-    trackSearch(query, matches.length, "home");
-    // matches is derived from query — depending on it too would re-fire on every
-    // render that rebuilds the array.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+    if (!query.trim()) {
+      setHits([]);
+      return;
+    }
+    const next = citySearch(cities, query, 20);
+    setHits(next);
+    trackSearch(query, next.length, "home");
+  }, [query, cities]);
 
   return (
     <div className="relative w-full">
@@ -125,16 +129,26 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
       {query && (
         <div className="absolute z-[100] mt-2 w-full rounded-xl bg-white border border-slate-200 shadow-xl max-h-[400px] overflow-y-auto">
           {results.length === 0 ? (
-            <p className="text-slate-500 px-5 py-4 text-center">לא נמצאו ערים תואמות.</p>
+            <div className="px-5 py-4 text-center">
+              <p className="text-sm font-bold text-slate-700">לא מצאנו עיר בשם הזה</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                נסו כתיב קרוב, למשל קרית/קריית, או הקלידו חלק מהשם.
+              </p>
+            </div>
           ) : (
             <div className="py-1">
               <p className="text-xs text-slate-500 px-5 py-2 border-b border-slate-100">
                 {results.length} תוצאות עבור &ldquo;{query}&rdquo;
               </p>
-              {results.map((city) => (
+              {results.map(({ item: city, reason }) => (
                 <Link
                   key={city.id}
                   href={`/city/${encodeURIComponent(city.city_name)}`}
+                  onClick={() => {
+                    if (reason === "typo" || reason === "alias") {
+                      track("no_result_suggestion_click", { subject: query, detail: city.city_name });
+                    }
+                  }}
                   className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-3 hover:bg-indigo-50 transition-colors group"
                 >
                   <span className="min-w-0 flex-1 basis-28 break-words font-semibold leading-tight text-slate-900 group-hover:text-indigo-700 transition-colors">
@@ -156,6 +170,9 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
                         {formatNumber(city.population_2024 ?? city.population_2022 ?? city.population_2026)}
                       </span>
                     </span>
+                    {reason === "typo" || reason === "alias" ? (
+                      <span className="whitespace-nowrap text-indigo-600">הצעה קרובה</span>
+                    ) : null}
                   </div>
                 </Link>
               ))}
