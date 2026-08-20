@@ -35,8 +35,26 @@ export interface CityGraphData {
   median: OfficialPricePoint[];            // graph 1
   nadlan: Record<Scope, RoomSeries>;       // graphs 2 (all) + 3 (secondhand) + new
   nadlanYears: number[];                   // years present in the collected data (union)
-  partialYears: number[];                  // years with incomplete data (current year, <11 months) — never a trend endpoint
-  lastFullYear: number | null;             // latest year that is NOT partial — the honest trend endpoint
+  partialYears: number[];                  // years still filling up (current year, <11 months) — labelled, not excluded
+  lastFullYear: number | null;             // latest year with a complete 12 months
+  /**
+   * The latest year usable as a comparison endpoint.
+   *
+   * This is NOT the same as the last FULL year, and the difference is the
+   * point. ₪/m² is a RATE, not a total: seven months of deals produce the same
+   * kind of number as twelve, just from a smaller sample. Refusing to compare
+   * against the running year threw away the freshest price level the site has
+   * — in cities with hundreds of 2026 deals — and pinned every headline to a
+   * year that gets staler every day.
+   *
+   * A partial year qualifies when it has enough MONTHS to not be a single
+   * season (partial_year_min_months) and its cells clear the usual n floor.
+   * Volume figures still use full years only: those DO scale with time, and
+   * comparing seven months of deal COUNT against twelve is simply wrong.
+   */
+  lastUsableYear: number | null;
+  /** year → distinct months of data, so the UI can say "7 חודשים" rather than just "partial" */
+  monthsByYear: Record<number, number>;
 }
 
 export interface NadlanDeal {
@@ -65,6 +83,36 @@ export interface NadlanDeal {
   houseNum?: string | null;
   neighborhood?: string | null;
   floor?: string | null;
+}
+
+/**
+ * Which year may serve as the endpoint of a comparison.
+ *
+ * A partial year earns its place on evidence, per city: enough MONTHS not to be
+ * a single season, and enough deals in the headline cell to be a price rather
+ * than an anecdote. Cities whose running year is genuinely thin fall back to
+ * the last full year, exactly as before.
+ *
+ * Pure and exported so it can be tested without a database — the failure mode
+ * here is a plausible-but-wrong year, which no crash would announce. Its twin
+ * lives in scripts/report-partial-year.ts; the two must agree.
+ */
+export function pickLastUsableYear({
+  years, partialYears, lastFullYear, monthsOf, headlineNOf, minMonths, minDeals,
+}: {
+  years: number[];
+  partialYears: number[];
+  lastFullYear: number | null;
+  monthsOf: (year: number) => number;
+  headlineNOf: (year: number) => number;
+  minMonths: number;
+  minDeals: number;
+}): number | null {
+  const partial = new Set(partialYears);
+  const usable = years.filter(
+    (y) => !partial.has(y) || (monthsOf(y) >= minMonths && headlineNOf(y) >= minDeals)
+  );
+  return usable.length ? usable[usable.length - 1] : lastFullYear;
 }
 
 function emptyRoomSeries(): RoomSeries {
@@ -111,11 +159,26 @@ async function loadCityGraphSeriesUncached(cityName: string): Promise<CityGraphD
   const fullYears = nadlanYears.filter((y) => !partialYears.includes(y));
   const lastFullYear = fullYears.length ? fullYears[fullYears.length - 1] : null;
 
+  const lastUsableYear = pickLastUsableYear({
+    years: nadlanYears,
+    partialYears,
+    lastFullYear,
+    monthsOf: (y) => monthsByYear.get(y) ?? 0,
+    headlineNOf: (y) =>
+      nadlan.all.all.find((p) => p.year === y)?.n
+      ?? nadlan.all_govmap.all.find((p) => p.year === y)?.n
+      ?? 0,
+    minMonths: getRuleNum("partial_year_min_months", 4),
+    minDeals: getRuleNum("min_deals_per_year", 10),
+  });
+
   return {
     cityName, median, nadlan,
     nadlanYears,
     partialYears,
     lastFullYear,
+    lastUsableYear,
+    monthsByYear: Object.fromEntries(monthsByYear),
   };
 }
 

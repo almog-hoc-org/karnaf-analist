@@ -1,4 +1,5 @@
 import InfoTip from "@/components/InfoTip";
+import { FromTo, YearRange } from "@/components/FromTo";
 import { MIN_N_HIDE, MIN_N_TRUST } from "@/lib/confidence";
 import type { CityGraphData, StatPoint } from "@/lib/nadlanTransactionSeries";
 
@@ -76,9 +77,17 @@ export default function RoomPriceSummary({ data, classificationRate = null }: {
   data: CityGraphData;
   classificationRate?: number | null;
 }) {
-  const endYear = data.lastFullYear;
+  const endYear = data.lastUsableYear ?? data.lastFullYear;
   if (endYear == null) return null;
   const rangeStart = endYear - 10;
+  // When the endpoint is the running year, say how much of it there is. A price
+  // level from seven months is a fair comparison — it is an average, not a
+  // total — but the reader is entitled to know it is seven and not twelve.
+  const endMonths = data.monthsByYear?.[endYear];
+  const partialNote =
+    data.partialYears?.includes(endYear) && endMonths
+      ? ` · ${endYear} חלקית — ${endMonths} חודשים שנקלטו עד כה`
+      : "";
 
   // classification gate (QA spec): under 20% classified, the sh/new columns
   // would describe a sliver of the market — show "כללי" only.
@@ -104,7 +113,7 @@ export default function RoomPriceSummary({ data, classificationRate = null }: {
             מחירים לפי גודל דירה
             <InfoTip text={`ממוצע ₪/מ"ר ומחיר עסקה ממוצע ב-${endYear} מול תחילת טווח הגרף, לכל גודל דירה. אותם נתונים ואותם ספי מדגם כמו בגרפים (10+ עסקאות לשנה; ⚠ = פחות מ-30).`} />
           </h2>
-          <p>{endYear} מול תחילת הטווח · מאגר העסקאות העצמאי</p>
+          <p>{endYear} מול תחילת הטווח · מאגר העסקאות העצמאי{partialNote}</p>
         </div>
       </div>
 
@@ -124,16 +133,16 @@ export default function RoomPriceSummary({ data, classificationRate = null }: {
                   <div key={scope} className="rounded-lg bg-slate-50/70 px-2.5 py-2">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-2xs font-bold text-slate-600">{SCOPE_LABEL[scope]}{c.thin ? " ⚠" : ""}</span>
-                      <span className="text-2xs text-slate-400 tabular-nums">{c.fromYear}→{c.toYear}</span>
+                      <YearRange from={c.fromYear} to={c.toYear} className="text-2xs text-slate-400" />
                     </div>
                     <div className="mt-1 flex items-baseline justify-between gap-2">
                       <span className="text-2xs text-slate-500">₪/מ״ר</span>
-                      <span className="text-xs tabular-nums text-slate-700">{nis(c.sqmFrom)} ← <b className="text-sm text-slate-900">{nis(c.sqmTo)}</b></span>
+                      <FromTo from={nis(c.sqmFrom)} to={nis(c.sqmTo)} size="sm" />
                       <Delta from={c.sqmFrom} to={c.sqmTo} />
                     </div>
                     <div className="mt-0.5 flex items-baseline justify-between gap-2">
                       <span className="text-2xs text-slate-500">מחיר עסקה</span>
-                      <span className="text-xs tabular-nums text-slate-700">{nisM(c.priceFrom)} ← <b className="text-sm text-slate-900">{nisM(c.priceTo)}</b></span>
+                      <FromTo from={nisM(c.priceFrom)} to={nisM(c.priceTo)} size="sm" />
                       <Delta from={c.priceFrom} to={c.priceTo} />
                     </div>
                   </div>

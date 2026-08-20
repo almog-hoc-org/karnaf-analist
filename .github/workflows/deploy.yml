@@ -231,6 +231,13 @@ jobs:
           echo "── subsidized-price cells (מחיר למשתכן distortion) ──"
           docker compose exec -T app npx tsx scripts/diagnose-price-anomalies.ts </dev/null || true
 
+          # Which cities are ready to use the RUNNING year as a chart endpoint,
+          # and on how much data. This is the audit of the partial-year rule in
+          # lib/nadlanTransactionSeries — it reads the same two admin rules, so
+          # a disagreement between this output and the site is a real bug.
+          echo "── running-year readiness per city ──"
+          docker compose exec -T app npx tsx scripts/report-partial-year.ts --all </dev/null || true
+
           # The census above exercises the LOADERS. A crash in the render itself
           # — a component that throws on a shape only one city produces — is
           # invisible to it, and so is anything past the paywall, since an

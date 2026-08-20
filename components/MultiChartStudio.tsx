@@ -12,6 +12,7 @@ import { withBasePath } from "@/lib/basePath";
 import { setViewState, clearViewState } from "@/lib/viewState";
 import { track } from "@/lib/track";
 import Icon from "@/components/Icon";
+import { YearRange } from "@/components/FromTo";
 
 /**
  * MultiChartStudio — ONE tool for exploring price trends (user spec):
@@ -134,7 +135,13 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   // The current year is usually partial (e.g. Jan–Jun) — never a trend endpoint,
   // or the % change reads a half-year against a full year and overstates it.
   const partialSet = useMemo(() => new Set(data.partialYears ?? []), [data]);
-  const maxFullY = data.lastFullYear ?? maxY;
+  // The endpoint cap is the last USABLE year, not the last full one. A running
+  // year with enough months and enough deals is a legitimate endpoint for a
+  // RATE like ₪/m² — see lib/nadlanTransactionSeries. Cities whose current year
+  // is genuinely thin still fall back to the last full year.
+  const maxFullY = data.lastUsableYear ?? data.lastFullYear ?? maxY;
+  const endIsPartial = partialSet.has(maxFullY);
+  const endMonths = data.monthsByYear?.[maxFullY];
 
   // Adaptive default window (user rule): until collection completes for a city,
   // open on the years that actually HAVE second-hand data — never an empty-left
@@ -190,7 +197,10 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   // Partial years are excluded from the endpoints so the % never reads a half-year.
   const trends = useMemo(() => activeDefs.map((s) => {
     const pts = years
-      .filter((y) => !partialSet.has(y))
+      // A partial year is excluded only when it did NOT qualify as usable.
+      // Excluding it unconditionally is what pinned every percentage to a year
+      // that gets staler every day, in cities holding hundreds of fresh deals.
+      .filter((y) => !partialSet.has(y) || y === maxFullY)
       .map((y) => ({ y, v: s.at(data, room, metric, y, buildingAge) }))
       .filter((p) => p.v != null) as { y: number; v: [number, number] }[];
     if (pts.length < 2) return { def: s, pct: null as number | null, fromY: null as number | null, toY: null as number | null, n: 0 };
@@ -440,7 +450,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           {/* change-in-range — desktop: NEXT TO the filters at the left edge (RTL end);
               mobile: its own full-width row so it never squeezes the pill rows */}
           <aside className="w-full rounded-xl border border-indigo-100 bg-white/80 px-3 py-2 sm:w-auto sm:shrink-0">
-            <div className="mb-0.5 text-2xs font-bold text-slate-500">שינוי {from}→{Math.min(to, maxFullY)}</div>
+            <div className="mb-0.5 text-2xs font-bold text-slate-500">שינוי <YearRange from={from} to={Math.min(to, maxFullY)} /></div>
             {/* The basis, spelled out. A reader comparing this to the cities
                 table was comparing "new builds, median ₪/m²" against "all
                 deals, average" and concluding the site contradicts itself. It
@@ -533,7 +543,11 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           )}
           <div className="mt-2 text-2xs leading-relaxed text-slate-500">
             שנה עם פחות מ-{minSample} עסקאות לא מוצגת — הקו נשבר שם, לא מגושר · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
-            {latestYearInRange && partialSet.has(maxY) && latestYearHasVisibleData && <> · {maxY} מוצגת בגרף כשנה חלקית, ואחוזי השינוי מחושבים עד {maxFullY}</>}
+            {latestYearInRange && partialSet.has(maxY) && latestYearHasVisibleData && (
+              endIsPartial && maxFullY === maxY
+                ? <> · {maxY} היא שנה חלקית ({endMonths} חודשים שנקלטו עד כה) ומשמשת כנקודת הסיום — מחיר למ״ר הוא שיעור ולא סכום, ולכן ההשוואה תקפה</>
+                : <> · {maxY} מוצגת בגרף כשנה חלקית, ואחוזי השינוי מחושבים עד {maxFullY}</>
+            )}
             {latestYearInRange && partialSet.has(maxY) && !latestYearHasVisibleData && <> · ב-{maxY} אין מספיק עסקאות לבחירה הנוכחית, ולכן אין נקודה בסדרה</>}
           </div>
         </div>

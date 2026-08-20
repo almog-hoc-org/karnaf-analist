@@ -4,6 +4,8 @@ import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
 import { PIPELINE, STAGE_IDS, stagesFrom, mutationStages } from "@/lib/pipeline";
 import { dwellingsFile, dwellingsFor, nationalPersonsPerDwelling } from "@/lib/dwellings";
+import { pickLastUsableYear } from "@/lib/nadlanTransactionSeries";
+import { fromToText } from "@/components/FromTo";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -158,5 +160,72 @@ describe("CBS dwelling stock 2025", () => {
     expect(dwellingsFor("הרצליה")?.dwellings).toBe(42199);
     expect(dwellingsFor("תל אביב יפו")?.ratio).toBe(2.11);
     expect(dwellingsFor("עיר שלא קיימת")).toBeNull();
+  });
+});
+
+describe("pickLastUsableYear", () => {
+  // The site used to refuse the running year outright, which pinned every
+  // headline to a year that gets staler daily — in cities already holding
+  // hundreds of fresh deals. The rule below is what replaced that blanket
+  // refusal, and its failure mode is a plausible-but-wrong year: nothing
+  // crashes, the page just quietly compares against the wrong endpoint.
+  const base = {
+    years: [2023, 2024, 2025, 2026],
+    partialYears: [2026],
+    lastFullYear: 2025,
+    minMonths: 4,
+    minDeals: 10,
+  };
+
+  it("uses the running year when it has enough months AND enough deals", () => {
+    expect(pickLastUsableYear({
+      ...base, monthsOf: () => 7, headlineNOf: () => 40,
+    })).toBe(2026);
+  });
+
+  it("refuses a single season, however many deals it holds", () => {
+    // 400 deals in two months is a January–February market, not a year. The
+    // months floor exists precisely because volume cannot substitute for it.
+    expect(pickLastUsableYear({
+      ...base, monthsOf: () => 2, headlineNOf: () => 400,
+    })).toBe(2025);
+  });
+
+  it("refuses a thin sample, however many months it spans", () => {
+    expect(pickLastUsableYear({
+      ...base, monthsOf: () => 9, headlineNOf: () => 4,
+    })).toBe(2025);
+  });
+
+  it("never lets a disqualified partial year hide an earlier full year", () => {
+    expect(pickLastUsableYear({
+      ...base, monthsOf: () => 1, headlineNOf: () => 0,
+    })).toBe(2025);
+  });
+
+  it("falls back to the last full year when a city has no data at all", () => {
+    expect(pickLastUsableYear({
+      years: [], partialYears: [], lastFullYear: null,
+      monthsOf: () => 0, headlineNOf: () => 0, minMonths: 4, minDeals: 10,
+    })).toBeNull();
+  });
+
+  it("honours a raised admin threshold", () => {
+    // The thresholds are admin rules, not constants. A report that reads the
+    // rule and a site that hardcodes it is how the two start disagreeing.
+    expect(pickLastUsableYear({
+      ...base, minMonths: 8, monthsOf: () => 7, headlineNOf: () => 400,
+    })).toBe(2025);
+  });
+});
+
+describe("fromToText", () => {
+  it("puts the current value first, then the arrow, then the old one", () => {
+    // The whole bug: `${from} ← ${to}` renders correctly for "₪12,345" and
+    // BACKWARDS for "₪0.67M", because the Latin M is a strong-LTR character
+    // and bidi rule N1 flips the run. Order is fixed in code, not left to
+    // whatever the formatter happened to append.
+    expect(fromToText("₪0.39M", "₪0.67M")).toBe("₪0.67M ← ₪0.39M");
+    expect(fromToText(2022, 2026)).toBe("2026 ← 2022");
   });
 });
