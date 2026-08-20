@@ -15,8 +15,8 @@ import {
   userUsageDetail, usageSummary, topPages, topSearches, usageByUser,
   eventCounts, topMisses, firstEventAt, visitShape, exitPages, landingPages,
   trafficSources, signupFunnel, registeredNeverUnlocked, rageClicks,
-  errorsShown, ctaClicks, scrollDepth, cityDemand, creditEconomy,
-  retentionCohorts,
+  errorsShown, ctaClicks, cityDemand, creditEconomy, retentionCohorts,
+  visitorShape, pageDepth, sectionViews, webVitals, navigationPaths,
 } from "@/lib/events";
 import { usageTrend, rollupCoverage } from "@/lib/usageRollup";
 import { loadThinSampleCities, loadRankingEligibleCities } from "@/lib/cityTransactionPrices";
@@ -70,12 +70,16 @@ export async function GET(req: Request) {
     since: firstEventAt(),
     summary: usageSummary(days),
     shape: visitShape(days),
+    visitors: visitorShape(days),
     trend: usageTrend(Math.max(days, 30)),
     rollup: rollupCoverage(),
     pages: topPages(days, 25),
     exits: exitPages(days, 25),
     landings: landingPages(days, 20),
-    scroll: scrollDepth(days, 15),
+    depth: pageDepth(days, 20),
+    sections: sectionViews(days),
+    vitals: webVitals(days, 60),
+    paths: navigationPaths(days, 25),
     sources: trafficSources(days, 15),
     funnel: signupFunnel(days),
     neverUnlocked: registeredNeverUnlocked(90),

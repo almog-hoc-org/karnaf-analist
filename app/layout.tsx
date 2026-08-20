@@ -6,6 +6,7 @@ import RefreshDataButton from "@/components/RefreshDataButton";
 import FeedbackWidget from "@/components/FeedbackWidget";
 import Analytics from "@/components/Analytics";
 import PageViewTracker from "@/components/PageViewTracker";
+import WebVitalsReporter from "@/components/WebVitalsReporter";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import TopNav from "@/components/TopNav";
 import { getCurrentUser } from "@/lib/auth";
@@ -146,6 +147,7 @@ export default async function RootLayout({
             Analytics, because the privacy notice promises /deals appears in
             neither the recordings nor the event log. */}
         <PageViewTracker />
+        <WebVitalsReporter />
         {/* end-side, clear of the feedback button at start-side */}
         <AccessibilityWidget />
       </body>

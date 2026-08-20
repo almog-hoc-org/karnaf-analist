@@ -7,6 +7,7 @@ import { dwellingsFile, dwellingsFor, nationalPersonsPerDwelling } from "@/lib/d
 import { pickLastUsableYear } from "@/lib/nadlanTransactionSeries";
 import { fromToText } from "@/components/FromTo";
 import { citySearch } from "@/lib/citySearch";
+import { labelForPath, sectionLabel } from "@/lib/pageLabels";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -251,5 +252,53 @@ describe("fromToText", () => {
     // whatever the formatter happened to append.
     expect(fromToText("₪0.39M", "₪0.67M")).toBe("₪0.67M ← ₪0.39M");
     expect(fromToText(2022, 2026)).toBe("2026 ← 2022");
+  });
+});
+
+describe("labelForPath", () => {
+  // The dashboard was printing raw paths at the one person who cannot read
+  // them. Every case here is a shape that actually appears in the event log.
+  it("names the fixed routes", () => {
+    expect(labelForPath("/").label).toBe("עמוד הבית");
+    expect(labelForPath("/cities").label).toBe("טבלת כל הערים");
+  });
+
+  it("decodes a city name out of the URL", () => {
+    // This is what the log actually stores — a Hebrew name is percent-encoded
+    // by the browser long before it reaches us.
+    expect(labelForPath("/city/%D7%97%D7%99%D7%A4%D7%94").label).toBe("עמוד עיר — חיפה");
+    expect(labelForPath("/city/חיפה").kind).toBe("city");
+  });
+
+  it("reads ranking and stat titles from the same dictionary the pages use", () => {
+    expect(labelForPath("/rankings/highest-gain").label).toContain("עליית מחיר");
+    expect(labelForPath("/stats/total-population").label).toContain("אוכלוסיית הערים");
+  });
+
+  it("falls back to the path rather than inventing a name", () => {
+    // A guessed label is worse than a raw path: the path is visibly a path,
+    // and a wrong-but-plausible name is read as fact.
+    expect(labelForPath("/nope/whatever").label).toBe("/nope/whatever");
+    expect(labelForPath("/rankings/does-not-exist").label).toBe("דירוג — does not exist");
+  });
+
+  it("normalises trailing slashes and query strings to one row", () => {
+    // Otherwise "/cities", "/cities/" and "/cities?x=1" are three rows in the
+    // table for one page, each with a third of the traffic.
+    expect(labelForPath("/cities/").label).toBe(labelForPath("/cities").label);
+    expect(labelForPath("/cities?sort=price").label).toBe(labelForPath("/cities").label);
+  });
+
+  it("survives a malformed escape instead of throwing", () => {
+    // decodeURIComponent throws on "%E0"; an analytics label must never be
+    // able to take down the panel that renders it.
+    expect(() => labelForPath("/city/%E0%A4%A")).not.toThrow();
+  });
+});
+
+describe("sectionLabel", () => {
+  it("names a known section and passes an unknown one through", () => {
+    expect(sectionLabel("dwelling-stock")).toBe("מלאי הדירות בעיר");
+    expect(sectionLabel("brand-new-section")).toBe("brand-new-section");
   });
 });

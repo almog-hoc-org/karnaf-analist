@@ -13,10 +13,12 @@ interface PageProps {
   params: { type: string };
 }
 
+import { RANKING_TITLES, type RankingType } from "@/lib/rankingMeta";
+
 // ── Ranking configurations ─────────────────────────────────────────
-type RankingType =
-  | "most-expensive" | "highest-gain" | "highest-gain-median" | "highest-surplus" | "highest-inventory"
-  | "new-premium";
+// Titles live in lib/rankingMeta so the admin usage dashboard can label a
+// ranking with the same words the page uses. Subtitles stay here because they
+// interpolate refYear(), which must not be frozen at module load.
 
 const RANKING_CONFIG: Record<RankingType, {
   title: string;
@@ -27,7 +29,7 @@ const RANKING_CONFIG: Record<RankingType, {
   source: string;
 }> = {
   "new-premium": {
-    title: "פרמיית חדשות נמוכה",
+    title: RANKING_TITLES["new-premium"],
     subtitle: `ערים שבהן דירה חדשה קרובה במחירה ליד-שנייה (₪/מ"ר, לפי שנת בנייה, עד ${refYear()})`,
     icon: "🆕",
     accent: "indigo",
@@ -35,7 +37,7 @@ const RANKING_CONFIG: Record<RankingType, {
     source: "מאגר העסקאות הפנימי — פילוח שנת בנייה",
   },
   "most-expensive": {
-    title: "היקרות ביותר — יד שנייה",
+    title: RANKING_TITLES["most-expensive"],
     subtitle: `חציון ₪/מ"ר של עסקאות יד-שנייה אמיתיות (שנה מלאה אחרונה עם 10+ עסקאות)`,
     icon: "crown",
     accent: "amber",
@@ -43,7 +45,7 @@ const RANKING_CONFIG: Record<RankingType, {
     source: "מאגר העסקאות הפנימי (רשות המסים)",
   },
   "highest-gain": {
-    title: "עליית מחיר — יד שנייה בלבד",
+    title: RANKING_TITLES["highest-gain"],
     subtitle: `שינוי ממוצע ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2025 ← 2022, 10+ עסקאות בשתי השנים) — ללא הטיית דירות חדשות`,
     icon: "trend-up",
     accent: "rose",
@@ -51,7 +53,7 @@ const RANKING_CONFIG: Record<RankingType, {
     source: "מאגר העסקאות הפנימי (רשות המסים) — לפי שנת בנייה",
   },
   "highest-gain-median": {
-    title: "עליית מחיר — חציון יד שנייה",
+    title: RANKING_TITLES["highest-gain-median"],
     subtitle: `שינוי חציון ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2025 ← 2022, 10+ עסקאות בשתי השנים)`,
     icon: "chart",
     accent: "rose",
@@ -59,7 +61,7 @@ const RANKING_CONFIG: Record<RankingType, {
     source: "מאגר העסקאות הפנימי (רשות המסים) — לפי שנת בנייה",
   },
   "highest-surplus": {
-    title: "עודף היצע הגבוה ביותר",
+    title: RANKING_TITLES["highest-surplus"],
     subtitle: "היצע חדש מול ביקוש (למ\"ס: השלמות/התחלות/היתרים מול גידול משקי-בית) — שלילי = עודף",
     icon: "construction",
     accent: "emerald",
@@ -67,7 +69,7 @@ const RANKING_CONFIG: Record<RankingType, {
     source: 'למ"ס — חישוב פער היצע',
   },
   "highest-inventory": {
-    title: "מלאי דירות לא מכורות",
+    title: RANKING_TITLES["highest-inventory"],
     subtitle: "כל הערים עם נתוני מלאי, מסודרות לפי מלאי דירות 2025",
     icon: "building",
     accent: "cyan",

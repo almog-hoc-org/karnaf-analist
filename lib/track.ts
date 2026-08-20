@@ -39,6 +39,69 @@ function sessionId(): string | null {
   }
 }
 
+/**
+ * A random id for THIS BROWSER, in localStorage, expiring after 180 days.
+ *
+ * WHY IT EXISTS, STATED PLAINLY
+ * The tab id above cannot answer "how many people" or "how many came back" —
+ * the same person tomorrow is a new tab and a new id, so 376 visits might be
+ * 376 people or forty. Without something that survives the tab, every returning
+ * visitor is invisible and every unique-visitor number is a guess. The operator
+ * asked for both (8/2026), and this is the minimum that answers them.
+ *
+ * WHAT IT IS AND IS NOT: a random number. Not derived from the browser, the
+ * screen, the fonts or anything else — so it is not a fingerprint and cannot be
+ * reconstructed if cleared. Not a cookie, so it is never sent to any other
+ * host. Not linked to an identity; for a signed-in account the account id is
+ * recorded separately and server-side. It expires after 180 days rather than
+ * living forever: a "returning visitor" measured over years is not a number
+ * anyone acts on, and an identifier with no horizon is harder to justify than
+ * one with a stated end.
+ */
+const VISITOR_KEY = "karnaf_vid";
+const VISITOR_TTL_DAYS = 180;
+
+function visitorId(): string | null {
+  try {
+    const raw = localStorage.getItem(VISITOR_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as { id?: string; at?: number };
+      const ageDays = parsed.at ? (Date.now() - parsed.at) / 86_400_000 : Infinity;
+      if (parsed.id && ageDays < VISITOR_TTL_DAYS) return parsed.id;
+    }
+    const id = (crypto.randomUUID?.() ?? String(Math.random()).slice(2)).replace(/-/g, "").slice(0, 24);
+    localStorage.setItem(VISITOR_KEY, JSON.stringify({ id, at: Date.now() }));
+    return id;
+  } catch {
+    return null; // storage blocked — the visit is counted, just not attributed
+  }
+}
+
+/**
+ * Paths that produce NO events at all.
+ *
+ * ⚠️ A PUBLISHED COMMITMENT, NOT A PREFERENCE. app/privacy/page.tsx states
+ * that the personal workspace "אינה נכללת בהקלטות מסך או בלוג האירועים" — not
+ * in recordings AND not in the event log. The path alone carries no client
+ * data, but the promise was made about the log as a whole.
+ *
+ * It lives here rather than in components/PageViewTracker because it is no
+ * longer one caller's business: the Web Vitals reporter fires from the root
+ * layout on every route, so a copy of this list in only the page tracker would
+ * have quietly written /deals rows through the other door. One rule, one
+ * place, every emitter.
+ *
+ * components/Analytics.tsx keeps its own copy for the Clarity script, because
+ * that decision is made server-side before any of this code loads. The two
+ * must stay in step.
+ */
+const UNTRACKED_PREFIXES = ["/deals", "/admin", "/login", "/register"];
+
+export function isTrackedPath(path: string | null | undefined): boolean {
+  if (!path) return false;
+  return !UNTRACKED_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`));
+}
+
 export interface TrackOptions {
   subject?: string | null;
   detail?: string | null;
@@ -84,12 +147,19 @@ function deviceBucket(): "mobile" | "tablet" | "desktop" {
 export function track(name: EventName, opts: TrackOptions = {}): void {
   if (typeof window === "undefined") return;
   try {
+    // Enforced HERE, at the single exit, rather than trusted to each caller.
+    // Every event of every kind passes through this function, so this is the
+    // only place the promise can be kept without depending on the next
+    // instrumentation being written carefully.
+    const path = opts.path ?? window.location.pathname;
+    if (!isTrackedPath(path)) return;
     const payload = JSON.stringify({
       name,
-      path: opts.path ?? window.location.pathname,
+      path,
       subject: opts.subject ?? null,
       detail: opts.detail ?? null,
       sessionId: sessionId(),
+      visitorId: visitorId(),
       device: deviceBucket(),
       dwellMs: opts.dwellMs ?? null,
       // NOTE: no account id here on purpose. The API route reads it from the
@@ -249,31 +319,71 @@ export function trackCta(name: CtaName, context?: string | null): void {
 }
 
 /**
- * Depth thresholds, once each per view.
+ * How far down the page the visitor actually got, and how much of it they
+ * could see before scrolling at all.
  *
- * A page whose readers stop at 25% is not a page people dislike — it is often
- * a page whose useful part is below the fold. That is a layout finding, and it
- * cannot be recovered from view counts.
+ * WHY AN EXACT PERCENTAGE AND NOT THE OLD 25/50/75/100 THRESHOLDS
+ * The 25/50/75/100 survival curve is derivable from an exact maximum — count
+ * the views whose max cleared each mark — and the exact maximum additionally
+ * gives a median and an average. The reverse is not true: from four buckets
+ * you cannot recover "the typical reader stops at 34%". So one event on leave
+ * replaces four during the visit, and carries strictly more information.
+ *
+ * `fold_view` is the other half of the same question. "The median reader
+ * reaches 34%" means something very different on a page where the first screen
+ * already shows 30% than on one where it shows 6% — the first is a reader who
+ * barely scrolled, the second is a reader who worked for it. Both numbers are
+ * needed to tell those apart, which is why the fraction visible at rest is
+ * recorded once per view alongside the screen-width bucket.
  */
-export function trackScrollDepth(path: string): () => void {
+export function trackPageDepth(path: string): () => void {
   if (typeof window === "undefined") return () => {};
-  const hit = new Set<number>();
-  const onScroll = () => {
+  let maxPct = 0;
+  let sent = false;
+
+  const measure = () => {
     try {
       const doc = document.documentElement;
-      const scrollable = doc.scrollHeight - window.innerHeight;
-      if (scrollable < 200) return; // a page that does not scroll has no depth to report
-      const pct = ((window.scrollY || 0) / scrollable) * 100;
-      for (const mark of [25, 50, 75, 100]) {
-        if (pct >= mark - 1 && !hit.has(mark)) {
-          hit.add(mark);
-          track("scroll_depth", { path, detail: String(mark) });
-        }
-      }
+      const height = doc.scrollHeight;
+      if (height <= 0) return;
+      // The BOTTOM of the viewport is what was seen, not its top: on a page
+      // barely taller than the screen, scrollY stays near 0 while the reader
+      // has in fact seen almost all of it.
+      const seen = ((window.scrollY || 0) + window.innerHeight) / height;
+      maxPct = Math.max(maxPct, Math.min(100, Math.round(seen * 100)));
     } catch { /* ignore */ }
   };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  return () => window.removeEventListener("scroll", onScroll);
+
+  const flush = () => {
+    if (sent || maxPct <= 0) return;
+    sent = true;
+    track("page_depth", { path, detail: String(maxPct) });
+  };
+
+  // The first measurement IS the fold: how much of the page is visible with no
+  // scrolling at all. Deferred one frame so the layout has settled.
+  const foldTimer = window.setTimeout(() => {
+    try {
+      const height = document.documentElement.scrollHeight;
+      if (height <= 0) return;
+      const fold = Math.min(100, Math.round((window.innerHeight / height) * 100));
+      track("fold_view", { path, subject: deviceBucket(), detail: String(fold) });
+    } catch { /* ignore */ }
+    measure();
+  }, 400);
+
+  window.addEventListener("scroll", measure, { passive: true });
+  window.addEventListener("resize", measure, { passive: true });
+  window.addEventListener("pagehide", flush);
+
+  return () => {
+    window.clearTimeout(foldTimer);
+    measure();
+    flush();
+    window.removeEventListener("scroll", measure);
+    window.removeEventListener("resize", measure);
+    window.removeEventListener("pagehide", flush);
+  };
 }
 
 /**
@@ -320,4 +430,99 @@ export function watchRageClicks(): () => void {
 /** A search that ended in the visitor actually choosing something. */
 export function trackSearchSelect(city: string, term: string): void {
   track("search_select", { subject: city, detail: term.trim().slice(0, 60) || null });
+}
+
+/**
+ * Which parts of a long page people actually stopped on.
+ *
+ * WHY VISIBLE TIME AND NOT "DID IT ENTER THE VIEWPORT"
+ * On a city page every section enters the viewport of anyone who scrolls to
+ * the bottom, so "was seen" is nearly the same as "the page is long". Time
+ * spent with the section actually on screen separates scrolling past from
+ * reading — which is the difference between "they reached the dwelling-stock
+ * card" and "the dwelling-stock card is what they came for".
+ *
+ * The same visibility rule as trackPageTime: only while the TAB is visible.
+ * A section left on screen behind another window is not being read.
+ *
+ * Sections are found by the `data-track-section` attribute, so adding one to
+ * a page is a one-attribute change and nothing here needs to know the layout.
+ */
+export function trackSections(subject: string): () => void {
+  if (typeof window === "undefined" || typeof IntersectionObserver === "undefined") return () => {};
+
+  const els = Array.from(document.querySelectorAll<HTMLElement>("[data-track-section]"));
+  if (!els.length) return () => {};
+
+  // name → { since: when it became visible (0 = not visible), total: ms }
+  const state = new Map<string, { since: number; total: number }>();
+  const nameOf = (el: HTMLElement) => el.dataset.trackSection || "";
+
+  const settle = (name: string, now: number) => {
+    const s = state.get(name);
+    if (s && s.since) { s.total += now - s.since; s.since = 0; }
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const now = Date.now();
+      for (const e of entries) {
+        const name = nameOf(e.target as HTMLElement);
+        if (!name) continue;
+        const s = state.get(name) ?? { since: 0, total: 0 };
+        state.set(name, s);
+        if (e.isIntersecting && document.visibilityState === "visible") {
+          if (!s.since) s.since = now;
+        } else {
+          settle(name, now);
+        }
+      }
+    },
+    // Half the section on screen, or a tall section filling the viewport —
+    // a section taller than the window can never reach 50% of itself, which
+    // is why the second threshold exists.
+    { threshold: [0.5], rootMargin: "0px" }
+  );
+  for (const el of els) observer.observe(el);
+
+  const onVisibility = () => {
+    const now = Date.now();
+    if (document.visibilityState === "visible") return; // re-entry handled by the observer
+    for (const name of state.keys()) settle(name, now);
+  };
+  document.addEventListener("visibilitychange", onVisibility);
+
+  let sent = false;
+  const flush = () => {
+    if (sent) return;
+    sent = true;
+    const now = Date.now();
+    for (const [name] of state) settle(name, now);
+    for (const [name, s] of state) {
+      // Under a second is passing through, not looking at.
+      if (s.total >= 1000) track("section_view", { subject: name, detail: subject, dwellMs: s.total });
+    }
+  };
+  window.addEventListener("pagehide", flush);
+
+  return () => {
+    flush();
+    observer.disconnect();
+    document.removeEventListener("visibilitychange", onVisibility);
+    window.removeEventListener("pagehide", flush);
+  };
+}
+
+/**
+ * One real-user speed measurement.
+ *
+ * Called from components/WebVitalsReporter with Next's own hook, so no library
+ * is added. The value is rounded before it is sent: a millisecond of precision
+ * on a page-load metric is noise, and the dashboard reports p75 anyway.
+ */
+export function trackWebVital(name: string, value: number): void {
+  // CLS is a ratio around 0–1 and would round to zero; it is sent scaled by
+  // 1000 and divided back in the panel, which is also how Google reports it.
+  const scaled = name === "CLS" ? Math.round(value * 1000) : Math.round(value);
+  track("web_vital", { subject: name, detail: String(scaled) });
 }

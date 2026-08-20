@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { track, trackPageTime, trackScrollDepth, trackSessionStart, watchRageClicks } from "@/lib/track";
+import { track, trackPageTime, trackPageDepth, trackSessionStart, watchRageClicks, isTrackedPath } from "@/lib/track";
 
 /**
  * Emits `page_view` on every navigation.
@@ -14,20 +14,15 @@ import { track, trackPageTime, trackScrollDepth, trackSessionStart, watchRageCli
  * event log shipped with the launch precisely because behavioural data cannot be
  * backfilled — and its baseline was the one signal missing.
  *
- * ⚠️ THE EXCLUSION LIST IS A PUBLISHED COMMITMENT, NOT A PREFERENCE.
- * app/privacy/page.tsx states that the personal workspace "אינה נכללת בהקלטות
- * מסך או בלוג האירועים" — not in session recordings AND not in the event log.
- * The path alone carries no client data, but the promise was made about the log
- * as a whole, so /deals produces no row here at all. It mirrors the list in
- * components/Analytics.tsx for the same reason and must stay in step with it.
+ * ⚠️ The exclusion list moved to lib/track.ts (isTrackedPath) and is enforced
+ * inside track() itself, so every emitter inherits it — including the Web
+ * Vitals reporter, which fires from the root layout on routes this component
+ * never sees.
  *
  * App Router note: this fires on pathname changes only. Query-string changes do
  * not produce a new view, which is correct — the site uses no query params to
  * select content on tracked pages.
  */
-
-/** Kept identical to Analytics.tsx. Changing one without the other breaks the notice. */
-const EXCLUDED_PREFIXES = ["/deals", "/admin", "/login", "/register"];
 
 /**
  * The thing the page is about, for grouping. Only ever a value already visible
@@ -55,7 +50,7 @@ export default function PageViewTracker() {
 
   useEffect(() => {
     if (!pathname) return;
-    if (EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
+    if (!isTrackedPath(pathname)) return;
     if (lastSent.current === pathname) return;
     lastSent.current = pathname;
     track("page_view", { subject: subjectFor(pathname) });
@@ -68,13 +63,14 @@ export default function PageViewTracker() {
   // The path is passed EXPLICITLY. By the time this cleanup runs the router has
   // already swapped window.location, so a sender that read the location would
   // file the dwell against the page the visitor went to rather than the one
-  // they read. Scroll depth rides the same effect for the same reason.
+  // they read. Scroll depth and the fold measurement ride the same effect
+  // for the same reason.
   useEffect(() => {
     if (!pathname) return;
-    if (EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
+    if (!isTrackedPath(pathname)) return;
     const stopTime = trackPageTime(pathname, subjectFor(pathname));
-    const stopScroll = trackScrollDepth(pathname);
-    return () => { stopScroll(); stopTime(); };
+    const stopDepth = trackPageDepth(pathname);
+    return () => { stopDepth(); stopTime(); };
   }, [pathname]);
 
   // Visit-level, once per tab: where the visit came from, and the rage-click
@@ -84,7 +80,7 @@ export default function PageViewTracker() {
   // can drift.
   useEffect(() => {
     if (!pathname) return;
-    if (EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
+    if (!isTrackedPath(pathname)) return;
     trackSessionStart();
   }, [pathname]);
 

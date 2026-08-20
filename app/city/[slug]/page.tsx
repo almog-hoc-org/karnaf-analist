@@ -23,6 +23,7 @@ import ScatteredFactsSection from "@/components/ScatteredFactsSection";
 import { getCityScatteredData } from "@/lib/scatteredFacts";
 import NumberCaption from "@/components/NumberCaption";
 import { FromTo } from "@/components/FromTo";
+import SectionVisibility from "@/components/SectionVisibility";
 import { loadCityPriceChanges } from "@/lib/price-changes";
 import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import NewVsSecondhandPanel from "@/components/NewVsSecondhandPanel";
@@ -445,6 +446,10 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
   return (
     <main className="min-h-screen page-wrap py-8">
+      {/* Measures which parts of this page were actually looked at. The
+          sections carry data-track-section attributes; this reads them. */}
+      <SectionVisibility subject={city.city_name} />
+
       {/* ── Header ─────────────────────────────────────────────── */}
       {/* Header, COMPACT (operator spec 8/2026): the old stack — English
           eyebrow, mb-10 header, then a three-sentence trust banner with mb-8 —
@@ -492,7 +497,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1: PRICES
           ═══════════════════════════════════════════════════════════ */}
-      <section className="mb-10">
+      <section data-track-section="market-prices" className="mb-10">
         <div className="section-header">
           <div className="section-header-icon">₪</div>
           <div>
@@ -550,7 +555,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           SECTION 1.5: YAD2 MARKET (moved up for visibility)
           ═══════════════════════════════════════════════════════════ */}
       {yad2Data && (
-        <section className="mb-10">
+        <section data-track-section="market-live" className="mb-10">
           <div className="section-header flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="section-header-icon"><Icon name="building" size="1em" /></div>
@@ -678,31 +683,35 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           named in code, so a locality that fills in loses its notice by itself. */}
       <CoverageNotice
         coverage={assessCoverage(cityGraphData, getRuleNum("min_deals_per_year", 10))}
-        cityName={city.city_name}
+          cityName={city.city_name}
       />
-      <PriceChangeSection
-        priceChanges={cityPriceChanges}
-        graphData={cityGraphData}
-        deals={cityDeals}
-        dealCounts={dealCounts}
-        cleaning={cleaning}
-        initialWindow={activeWindow}
-        cityName={city.city_name}
-        secondhandMinAge={getRuleNum("secondhand_min_age", 4)}
-        modernMinYear={getRuleNum("modern_min_year", 2005)}
-        classificationRate={classRate?.rate ?? null}
-        subsidizedYears={subsidizedYears}
-        minSample={getRuleNum("min_deals_per_year", 10)}
-      />
+      <div data-track-section="chart-studio">
+        <PriceChangeSection
+          priceChanges={cityPriceChanges}
+          graphData={cityGraphData}
+          deals={cityDeals}
+          dealCounts={dealCounts}
+          cleaning={cleaning}
+          initialWindow={activeWindow}
+          cityName={city.city_name}
+          secondhandMinAge={getRuleNum("secondhand_min_age", 4)}
+          modernMinYear={getRuleNum("modern_min_year", 2005)}
+          classificationRate={classRate?.rate ?? null}
+          subsidizedYears={subsidizedYears}
+          minSample={getRuleNum("min_deals_per_year", 10)}
+        />
+      </div>
 
       {/* Room-size price rubric (operator spec 8/2026) — the numbers people
           actually quote, pulled out of the chart into plain text, right under
           the price graphs it summarizes. */}
       {cityGraphData && (
-        <RoomPriceSummary data={cityGraphData} classificationRate={classRate?.rate ?? null} />
+        <div data-track-section="price-summary">
+          <RoomPriceSummary data={cityGraphData} classificationRate={classRate?.rate ?? null} />
+        </div>
       )}
 
-      <section className="mb-10">
+      <section data-track-section="back-to-city" className="mb-10">
         <div className="glass-card border-indigo-100 bg-indigo-50/30 p-4 md:p-5">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="min-w-0">
@@ -761,7 +770,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Population by Year */}
       {populationByYear.length > 2 && (
-        <section className="mb-10">
+        <section data-track-section="population" className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="chart" size="1em" /></div>
@@ -795,7 +804,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Price Trends */}
       {priceTrends.length > 2 && (
-        <section className="mb-10">
+        <section data-track-section="median-prices" className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="money" size="1em" /></div>
@@ -834,7 +843,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Sales Chart */}
       {salesData && (
-        <section className="mb-10">
+        <section data-track-section="new-sales" className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="construction" size="1em" /></div>
@@ -854,7 +863,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Building Permits Chart */}
       {permitsData.length > 0 && (
-        <section className="mb-10">
+        <section data-track-section="permits" className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="clipboard" size="1em" /></div>
@@ -885,7 +894,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Correlation Table */}
       {populationByYear.length > 2 && (
-        <section className="mb-10">
+        <section data-track-section="correlation" className="mb-10">
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="link" size="1em" /></div>
@@ -928,7 +937,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Sales Inventory */}
       {salesData && (
-        <section className="mb-10">
+        <section data-track-section="inventory" className="mb-10">
           <div className="section-header">
             <div className="section-header-icon"><Icon name="package" size="1em" /></div>
             <div>
@@ -961,38 +970,44 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         const dw = dwellingsFor(city.city_name);
         if (!dw) return null;
         return (
-          <DwellingStockCard
-            cityName={city.city_name}
-            row={dw}
-            national={nationalPersonsPerDwelling()}
-            bigCity={bigCityPersonsPerDwelling()}
-            rank={dwellingRank(city.city_name)}
-            provenance={dwellingsProvenance()}
-          />
+          <div data-track-section="dwelling-stock">
+            <DwellingStockCard
+              cityName={city.city_name}
+              row={dw}
+              national={nationalPersonsPerDwelling()}
+              bigCity={bigCityPersonsPerDwelling()}
+              rank={dwellingRank(city.city_name)}
+              provenance={dwellingsProvenance()}
+            />
+          </div>
         );
       })()}
 
       {/* Intra-city spread — from neighborhood_year_stats (aggregation stage) */}
-      <NeighborhoodPrices
-        cityName={cityName}
-        rows={neighborhoods.rows}
-        year={neighborhoods.year}
-        citySqm={neighborhoods.citySqm}
-        minDeals={neighborhoodMinDeals()}
-        scopeLabel="יד שנייה"
-      />
+      <div data-track-section="neighborhoods">
+        <NeighborhoodPrices
+          cityName={cityName}
+          rows={neighborhoods.rows}
+          year={neighborhoods.year}
+          citySqm={neighborhoods.citySqm}
+          minDeals={neighborhoodMinDeals()}
+          scopeLabel="יד שנייה"
+        />
+      </div>
 
       {/* Urban Renewal — live district list when the collector has run, static snapshot otherwise */}
-      <UrbanRenewalSection
-        projects={urbanRenewalProjects}
-        staticStatus={city.urban_renewal_status}
-        staticExisting={city.urban_renewal_existing_units}
-        staticProposed={city.urban_renewal_proposed_units}
-      />
+      <div data-track-section="urban-renewal">
+        <UrbanRenewalSection
+          projects={urbanRenewalProjects}
+          staticStatus={city.urban_renewal_status}
+          staticExisting={city.urban_renewal_existing_units}
+          staticProposed={city.urban_renewal_proposed_units}
+        />
+      </div>
 
       {/* Insights */}
       {insightEntries.length > 0 && (
-        <section className="mb-10">
+        <section data-track-section="insights" className="mb-10">
           <div className="section-header">
             <div className="section-header-icon"><Icon name="idea" size="1em" /></div>
             <div>
@@ -1021,7 +1036,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           SECTION 3: SUPPLY & DEMAND (EXPANDED)
           ═══════════════════════════════════════════════════════════ */}
-      <section className="mb-10">
+      <section data-track-section="supply-demand" className="mb-10">
         <div className="section-header">
           <div className="section-header-icon"><Icon name="scale" size="1em" /></div>
           <div>
@@ -1191,7 +1206,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           SECTION 2: DEMOGRAPHICS
           ═══════════════════════════════════════════════════════════ */}
-      <section className="mb-10">
+      <section data-track-section="demography" className="mb-10">
         <div className="section-header">
           <div className="section-header-icon"><Icon name="users" size="1em" /></div>
           <div>
@@ -1220,7 +1235,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         />
       </section>
 
-      <section className="mb-10">
+      <section data-track-section="all-data" className="mb-10">
         <div className="section-header">
           <div className="section-header-icon"><Icon name="clipboard" size="1em" /></div>
           <div>

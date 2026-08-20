@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
       subject: typeof e.subject === "string" ? e.subject : null,
       detail: typeof e.detail === "string" ? e.detail : null,
       sessionId: typeof e.sessionId === "string" ? e.sessionId : null,
+      visitorId: typeof e.visitorId === "string" ? e.visitorId : null,
       device: typeof e.device === "string" ? e.device : null,
       dwellMs: typeof e.dwellMs === "number" ? e.dwellMs : null,
       userId: Number.isInteger(userId) ? userId : null,

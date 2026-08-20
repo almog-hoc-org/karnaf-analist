@@ -77,6 +77,16 @@ function ensureTables() {
       PRIMARY KEY (day, city)
     );
   `);
+  // Added after the table shipped. Same guarded-ALTER pattern as lib/events.ts:
+  // there is no IF NOT EXISTS for ADD COLUMN, so each is attempted and its
+  // duplicate-column error swallowed — correct on both a fresh and an existing
+  // database, which matters because this table is never rebuilt.
+  for (const ddl of [
+    "ALTER TABLE usage_daily ADD COLUMN visitors INTEGER NOT NULL DEFAULT 0",
+    "ALTER TABLE usage_daily ADD COLUMN returning_visitors INTEGER NOT NULL DEFAULT 0",
+  ]) {
+    try { appDb().exec(ddl); } catch { /* already present */ }
+  }
   ensured = true;
 }
 
@@ -126,7 +136,8 @@ export function rollupDay(day?: string): RollupResult {
 
     db.prepare(
       `INSERT INTO usage_daily (day, sessions, page_views, seconds, bounces, signed_in_sessions,
-                                mobile, tablet, desktop, signups, unlocks, wall_views, errors, rage_clicks)
+                                mobile, tablet, desktop, signups, unlocks, wall_views, errors, rage_clicks,
+                                visitors, returning_visitors)
        SELECT @day,
          (SELECT COUNT(DISTINCT session_id) FROM events
            WHERE session_id IS NOT NULL AND created_at BETWEEN @from AND @to),
@@ -146,7 +157,17 @@ export function rollupDay(day?: string): RollupResult {
          ${unlocksSql},
          (SELECT COUNT(*) FROM events WHERE name='unlock_prompt_seen' AND created_at BETWEEN @from AND @to),
          (SELECT COUNT(*) FROM events WHERE name='error_shown'        AND created_at BETWEEN @from AND @to),
-         (SELECT COUNT(*) FROM events WHERE name='rage_click'         AND created_at BETWEEN @from AND @to)`
+         (SELECT COUNT(*) FROM events WHERE name='rage_click'         AND created_at BETWEEN @from AND @to),
+         (SELECT COUNT(DISTINCT visitor_id) FROM events
+           WHERE visitor_id IS NOT NULL AND created_at BETWEEN @from AND @to),
+         -- A visitor is "returning" on a given day if they were also seen on an
+         -- EARLIER day. Computed against all history rather than the window, so
+         -- the daily figure does not change meaning when the window does.
+         (SELECT COUNT(*) FROM (
+            SELECT DISTINCT e.visitor_id FROM events e
+             WHERE e.visitor_id IS NOT NULL AND e.created_at BETWEEN @from AND @to
+               AND EXISTS (SELECT 1 FROM events p
+                            WHERE p.visitor_id = e.visitor_id AND date(p.created_at) < @day)))`
     ).run({ day: d, from, to });
 
     // Per page: views and dwell are plain sums; exits and landings are the
@@ -214,7 +235,7 @@ export function dayOffset(daysBack: number): string {
 
 export interface DailyRow {
   day: string; sessions: number; pageViews: number; seconds: number; bounces: number;
-  signups: number; unlocks: number; errors: number;
+  signups: number; unlocks: number; errors: number; visitors: number; returningVisitors: number;
 }
 
 /** The daily series for the dashboard's trend line — from the aggregate, not the log. */
@@ -222,7 +243,8 @@ export function usageTrend(days = 30): DailyRow[] {
   try {
     ensureTables();
     return (appDb().prepare(
-      `SELECT day, sessions, page_views pageViews, seconds, bounces, signups, unlocks, errors
+      `SELECT day, sessions, page_views pageViews, seconds, bounces, signups, unlocks, errors,
+              COALESCE(visitors,0) visitors, COALESCE(returning_visitors,0) returningVisitors
          FROM usage_daily WHERE day >= date('now', ?) ORDER BY day ASC`
     ).all(`-${Math.max(1, Math.min(730, days))} days`) as DailyRow[]);
   } catch { return []; }

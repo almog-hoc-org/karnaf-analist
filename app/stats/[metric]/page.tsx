@@ -3,72 +3,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import NationalConstructionChart from "@/components/NationalConstructionChart";
 import { getCbsNationalSeries } from "@/lib/cbsNationalSeries";
+import { METRIC_CONFIG, type Metric } from "@/lib/statMeta";
 
 interface PageProps {
   params: { metric: string };
 }
 
-type Metric =
-  | "national-construction"
-  | "avg-price-per-sqm"
-  | "total-population"
-  | "apartments-needed"
-  | "construction-cost-index"
-  | "national-hpi";
-
-const METRIC_CONFIG: Record<
-  Metric,
-  {
-    title: string;
-    subtitle: string;
-    icon: string;
-    accent: "cyan" | "emerald" | "amber" | "purple";
-    source: string;
-  }
-> = {
-  "national-construction": {
-    title: "בנייה למגורים בישראל — היסטוריה ארצית",
-    subtitle: "היתרי בנייה, התחלות בנייה וגמרי בנייה — לאורך השנים",
-    icon: "construction",
-    accent: "emerald",
-    source: 'הלשכה המרכזית לסטטיסטיקה (למ"ס)',
-  },
-  "avg-price-per-sqm": {
-    title: "מחיר ממוצע למ\"ר — לאורך השנים",
-    subtitle: "מחיר ממוצע למטר רבוע בכל הערים במאגר",
-    icon: "money",
-    accent: "cyan",
-    source: "nadlan.gov.il + מחקר פנימי",
-  },
-  "total-population": {
-    title: "אוכלוסיית הערים — לאורך השנים",
-    subtitle: "סך האוכלוסייה בכל 168 הערים במאגר",
-    icon: "users",
-    accent: "purple",
-    source: 'הלשכה המרכזית לסטטיסטיקה (למ"ס)',
-  },
-  "apartments-needed": {
-    title: "דירות נדרשות — חישוב לפי שנה",
-    subtitle: "מספר הדירות הנדרשות לפי גידול אוכלוסייה מחולק בנפשות לדירה",
-    icon: "building",
-    accent: "amber",
-    source: 'חישוב מקומי על בסיס נתוני למ"ס',
-  },
-  "construction-cost-index": {
-    title: 'מדד מחירי תשומה בבנייה למגורים',
-    subtitle: "עלויות בנייה (חומרי גלם, עבודה, ציוד) — 10 שנים אחורה",
-    icon: "bricks",
-    accent: "amber",
-    source: 'הלשכה המרכזית לסטטיסטיקה (למ"ס)',
-  },
-  "national-hpi": {
-    title: 'מדד מחירי דירות — לאומי',
-    subtitle: 'שינויים שנתיים וחודשיים במחירי דירות — נתוני למ"ס',
-    icon: "trend-up",
-    accent: "cyan",
-    source: 'הלשכה המרכזית לסטטיסטיקה (למ"ס)',
-  },
-};
 
 // Unified brand accent — all metric pages share the same indigo chrome.
 const INDIGO_ACCENT = { icon: "bg-indigo-50 text-indigo-700", bar: "from-indigo-500 to-indigo-600", text: "text-indigo-700" };

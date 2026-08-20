@@ -61,8 +61,21 @@ export type EventName =
   | "cta_click"
   /** 3+ clicks on one element inside 1.5s: "looks clickable and isn't" */
   | "rage_click"
-  /** 25/50/75/100 — once per threshold per view */
+  /**
+   * 25/50/75/100 — once per threshold per view.
+   * SUPERSEDED by `page_depth`, which carries the exact maximum and from which
+   * this curve is derivable. Kept in the union so the rows already collected
+   * stay readable rather than being orphaned by a rename.
+   */
   | "scroll_depth"
+  /** exact % of the page height reached, once on leave — replaces scroll_depth */
+  | "page_depth"
+  /** % of the page visible with no scrolling; subject = device bucket */
+  | "fold_view"
+  /** time a marked section of a page was actually on screen; subject = section */
+  | "section_view"
+  /** one real-user speed measurement; subject = LCP/INP/CLS, detail = value */
+  | "web_vital"
   /** a visitor saw an error screen — subject = path, detail = short digest */
   | "error_shown"
   /** a search that ended in actually choosing a city */
@@ -74,7 +87,8 @@ export const EVENT_NAMES: readonly EventName[] = [
   "feedback_submit", "unlock_prompt_seen", "unlock_done",
   "share_click", "follow_city_click", "no_result_suggestion_click",
   "session_start", "cta_click", "rage_click",
-  "scroll_depth", "error_shown", "search_select",
+  "scroll_depth", "page_depth", "fold_view", "section_view", "web_vital",
+  "error_shown", "search_select",
 ] as const;
 
 export interface EventInput {
@@ -87,6 +101,13 @@ export interface EventInput {
   detail?: string | null;
   /** random per-tab id, groups a visit; NOT an account or a device id */
   sessionId?: string | null;
+  /**
+   * Random per-BROWSER id from localStorage, expiring after 180 days.
+   * The only thing that can tell "one person came back" from "two people came
+   * once". Not a fingerprint, not a cookie, not linked to an identity — see
+   * the note in lib/track.ts.
+   */
+  visitorId?: string | null;
   /** 'mobile' | 'tablet' | 'desktop' — the bucket, never the user-agent */
   device?: string | null;
   /** milliseconds the page was open; only on page_leave */
@@ -134,6 +155,7 @@ function ensureTable() {
     "ALTER TABLE events ADD COLUMN user_id INTEGER",
     "ALTER TABLE events ADD COLUMN device TEXT",
     "ALTER TABLE events ADD COLUMN dwell_ms INTEGER",
+    "ALTER TABLE events ADD COLUMN visitor_id TEXT",
   ]) {
     try { appDb().exec(ddl); } catch { /* already present */ }
   }
@@ -143,6 +165,7 @@ function ensureTable() {
     // session" questions. Without this they are a full scan of the log per
     // panel load, which is what would make the usage tab the slow one.
     appDb().exec("CREATE INDEX IF NOT EXISTS idx_events_session_created ON events(session_id, created_at)");
+    appDb().exec("CREATE INDEX IF NOT EXISTS idx_events_visitor_created ON events(visitor_id, created_at)");
   } catch { /* index is an optimisation, never a requirement */ }
   ensured = true;
 }
@@ -168,13 +191,14 @@ export function recordEvent(e: EventInput): boolean {
       : Math.max(0, Math.min(30 * 60_000, Math.round(e.dwellMs)));
     const device = ["mobile", "tablet", "desktop"].includes(String(e.device)) ? String(e.device) : null;
     appDb().prepare(
-      "INSERT INTO events (name, path, subject, detail, session_id, user_id, device, dwell_ms) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+      "INSERT INTO events (name, path, subject, detail, session_id, visitor_id, user_id, device, dwell_ms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     ).run(
       e.name,
       trim(e.path, 300),
       trim(e.subject, 120),
       trim(e.detail, 200),
       trim(e.sessionId, 64),
+      trim(e.visitorId, 64),
       e.userId != null && Number.isInteger(e.userId) ? e.userId : null,
       device,
       dwell
@@ -835,5 +859,244 @@ export function retentionCohorts(weeks = 8): CohortRow[] {
         WHERE u.created_at >= datetime('now', ?)
         GROUP BY week ORDER BY week DESC`
     ).all(`-${Math.max(1, Math.min(52, weeks)) * 7} days`) as CohortRow[]);
+  } catch { return []; }
+}
+
+/* ── visitors, depth, sections, speed and paths ──────────────────────────────
+ *
+ * WHAT CHANGED WITH visitor_id, AND WHY IT MATTERS TO READ THESE RIGHT
+ * Everything above counts VISITS (browser tabs). The queries below can also
+ * count VISITORS (browsers, for 180 days). The two answer different questions
+ * and neither replaces the other: 376 visits from 40 visitors is a small, loyal
+ * audience; 376 visits from 370 visitors is a large one that never comes back.
+ * Before this column those two were indistinguishable.
+ *
+ * Rows written before the column existed carry NULL and are excluded from
+ * visitor counts rather than lumped together — a few hundred anonymous rows
+ * collapsing into one "visitor" would make the returning rate meaningless.
+ */
+
+export interface VisitorShape {
+  visits: number;
+  visitors: number;
+  returning: number;
+  returningPct: number;
+  /** 1 / 2–3 / 4+ visits per visitor */
+  frequency: Array<{ bucket: string; visitors: number }>;
+  devices: Array<{ device: string; visitors: number }>;
+}
+
+export function visitorShape(days = 30): VisitorShape {
+  const empty: VisitorShape = { visits: 0, visitors: 0, returning: 0, returningPct: 0, frequency: [], devices: [] };
+  try {
+    ensureTable();
+    const db = appDb();
+    const w = win(days);
+    const base = db.prepare(
+      `WITH v AS (
+         SELECT visitor_id,
+                COUNT(DISTINCT session_id) visits,
+                COUNT(DISTINCT date(created_at)) days
+           FROM events
+          WHERE visitor_id IS NOT NULL AND created_at >= datetime('now', @win)
+          GROUP BY visitor_id)
+       SELECT COUNT(*) visitors,
+              COALESCE(SUM(visits),0) visits,
+              -- "Returning" is a visit on a LATER CALENDAR DAY, not a second
+              -- tab. Opening the site in two tabs is one sitting; coming back
+              -- tomorrow is the thing worth counting.
+              SUM(CASE WHEN days > 1 THEN 1 ELSE 0 END) returning
+         FROM v`
+    ).get({ win: w }) as { visitors: number; visits: number; returning: number };
+
+    const frequency = db.prepare(
+      `WITH v AS (SELECT visitor_id, COUNT(DISTINCT session_id) n FROM events
+                   WHERE visitor_id IS NOT NULL AND created_at >= datetime('now', @win)
+                   GROUP BY visitor_id)
+       SELECT CASE WHEN n = 1 THEN 'ביקור אחד'
+                   WHEN n <= 3 THEN '2–3 ביקורים'
+                   ELSE '4+ ביקורים' END bucket,
+              COUNT(*) visitors
+         FROM v GROUP BY bucket ORDER BY MIN(n)`
+    ).all({ win: w }) as Array<{ bucket: string; visitors: number }>;
+
+    const devices = db.prepare(
+      `SELECT device, COUNT(DISTINCT visitor_id) visitors FROM events
+        WHERE device IS NOT NULL AND visitor_id IS NOT NULL
+          AND created_at >= datetime('now', @win)
+        GROUP BY device ORDER BY visitors DESC`
+    ).all({ win: w }) as Array<{ device: string; visitors: number }>;
+
+    const visitors = Number(base.visitors || 0);
+    return {
+      visits: Number(base.visits || 0),
+      visitors,
+      returning: Number(base.returning || 0),
+      returningPct: visitors ? Math.round((Number(base.returning) / visitors) * 100) : 0,
+      frequency, devices,
+    };
+  } catch { return empty; }
+}
+
+export interface DepthRow {
+  path: string;
+  views: number;
+  /** median % of the page reached */
+  medianPct: number;
+  /** % of the page visible without scrolling, median across views */
+  foldPct: number;
+  /** share of views that got past each mark */
+  p25: number; p50: number; p75: number; p100: number;
+}
+
+/**
+ * How far down each page people get, and how much they could see at rest.
+ *
+ * Reads `page_depth` (exact maximum, one row per view). The 25/50/75/100
+ * survival curve is DERIVED here rather than stored, which is why the old
+ * bucketed `scroll_depth` event could be retired: from an exact maximum you
+ * can compute the curve, a median and an average; from four buckets you can
+ * compute only the curve.
+ */
+export function pageDepth(days = 30, limit = 20): DepthRow[] {
+  try {
+    ensureTable();
+    return (appDb().prepare(
+      `WITH d AS (SELECT path, CAST(detail AS INTEGER) pct FROM events
+                   WHERE name='page_depth' AND path IS NOT NULL AND detail IS NOT NULL
+                     AND created_at >= datetime('now', @win)),
+            f AS (SELECT path, AVG(CAST(detail AS INTEGER)) fold FROM events
+                   WHERE name='fold_view' AND path IS NOT NULL AND detail IS NOT NULL
+                     AND created_at >= datetime('now', @win)
+                   GROUP BY path)
+       SELECT d.path,
+              COUNT(*) views,
+              -- SQLite has no percentile function; the median is the middle
+              -- row of the ordered set, taken with a correlated subquery. At
+              -- these row counts that is cheaper than sorting in JS after
+              -- shipping every measurement out of the database.
+              (SELECT x.pct FROM d x WHERE x.path = d.path
+                ORDER BY x.pct LIMIT 1 OFFSET (SELECT COUNT(*)/2 FROM d y WHERE y.path = d.path)) medianPct,
+              COALESCE((SELECT f.fold FROM f WHERE f.path = d.path), 0) foldPct,
+              SUM(CASE WHEN d.pct >= 25  THEN 1 ELSE 0 END) p25,
+              SUM(CASE WHEN d.pct >= 50  THEN 1 ELSE 0 END) p50,
+              SUM(CASE WHEN d.pct >= 75  THEN 1 ELSE 0 END) p75,
+              SUM(CASE WHEN d.pct >= 95  THEN 1 ELSE 0 END) p100
+         FROM d GROUP BY d.path ORDER BY views DESC LIMIT @lim`
+    ).all({ win: win(days), lim: limit }) as Array<DepthRow & { medianPct: number | null; foldPct: number }>)
+      .map((r) => ({ ...r, medianPct: Math.round(Number(r.medianPct ?? 0)), foldPct: Math.round(Number(r.foldPct ?? 0)) }));
+  } catch { return []; }
+}
+
+export interface SectionRow {
+  section: string;
+  views: number;
+  avgSeconds: number;
+  totalSeconds: number;
+  /** share of the page's views in which this section was looked at */
+  reachPct: number;
+}
+
+/**
+ * Which parts of a page people stopped on — the inside of a page view.
+ *
+ * `city` narrows it to one city; omitted, it answers "which parts of a city
+ * page get read" across all of them. `reachPct` is the number that turns this
+ * from trivia into a decision: a section reached by 12% of views is either
+ * buried or not wanted, and the depth table above says which.
+ */
+export function sectionViews(days = 30, city?: string): SectionRow[] {
+  try {
+    ensureTable();
+    const db = appDb();
+    const w = win(days);
+    const denom = (db.prepare(
+      city
+        ? `SELECT COUNT(*) n FROM events WHERE name='page_view' AND subject = @city
+             AND path LIKE '/city/%' AND created_at >= datetime('now', @win)`
+        : `SELECT COUNT(*) n FROM events WHERE name='page_view' AND path LIKE '/city/%'
+             AND created_at >= datetime('now', @win)`
+    ).get(city ? { city, win: w } : { win: w }) as { n: number }).n || 0;
+
+    return (db.prepare(
+      `SELECT subject section, COUNT(*) views,
+              COALESCE(SUM(dwell_ms),0) dwell
+         FROM events
+        WHERE name='section_view' AND subject IS NOT NULL
+          AND created_at >= datetime('now', @win)
+          ${city ? "AND detail = @city" : ""}
+        GROUP BY subject ORDER BY dwell DESC`
+    ).all(city ? { city, win: w } : { win: w }) as Array<{ section: string; views: number; dwell: number }>)
+      .map((r) => ({
+        section: r.section,
+        views: Number(r.views || 0),
+        totalSeconds: Math.round(Number(r.dwell || 0) / 1000),
+        avgSeconds: r.views ? Math.round(Number(r.dwell) / r.views / 1000) : 0,
+        reachPct: denom ? Math.round((Number(r.views) / denom) * 100) : 0,
+      }));
+  } catch { return []; }
+}
+
+export interface VitalRow { path: string; metric: string; device: string; p75: number; n: number }
+
+/**
+ * Real-user speed, at the 75th percentile.
+ *
+ * p75 AND NOT AN AVERAGE, deliberately. An average load time is dragged down
+ * by the fast majority and hides exactly the slow tail that makes people
+ * leave; p75 is the number Google's own thresholds are defined against, and it
+ * describes an experience a real quarter of visitors are having.
+ *
+ * Split by device because that is where the difference lives: the same page is
+ * routinely twice as slow on a phone, and a single blended figure would let
+ * that hide behind desktop traffic.
+ */
+export function webVitals(days = 30, limit = 40): VitalRow[] {
+  try {
+    ensureTable();
+    return (appDb().prepare(
+      `WITH v AS (SELECT path, subject metric, COALESCE(device,'unknown') device,
+                         CAST(detail AS INTEGER) val
+                    FROM events
+                   WHERE name='web_vital' AND path IS NOT NULL AND subject IS NOT NULL
+                     AND detail IS NOT NULL AND created_at >= datetime('now', @win))
+       SELECT path, metric, device, COUNT(*) n,
+              (SELECT x.val FROM v x
+                WHERE x.path = v.path AND x.metric = v.metric AND x.device = v.device
+                ORDER BY x.val
+                LIMIT 1 OFFSET (SELECT CAST(COUNT(*) * 0.75 AS INTEGER)
+                                  FROM v y WHERE y.path = v.path AND y.metric = v.metric AND y.device = v.device)) p75
+         FROM v GROUP BY path, metric, device
+        HAVING n >= 3
+        ORDER BY n DESC LIMIT @lim`
+    ).all({ win: win(days), lim: limit }) as Array<VitalRow & { p75: number | null }>)
+      .map((r) => ({ ...r, p75: Number(r.p75 ?? 0) }));
+  } catch { return []; }
+}
+
+export interface PathStep { from: string; to: string; n: number }
+
+/**
+ * Where people go next — derived, with no new event.
+ *
+ * Consecutive page_views inside one visit, paired with LAG. This answers the
+ * question the exit table cannot: an exit says the visit ended, this says what
+ * the visit did instead. If the most common step after a city page is back to
+ * the home page rather than on to a comparison or a price check, the natural
+ * next action either does not exist or is not visible from there.
+ */
+export function navigationPaths(days = 30, limit = 25): PathStep[] {
+  try {
+    ensureTable();
+    return appDb().prepare(
+      `WITH v AS (SELECT session_id, path, created_at, id,
+                         LAG(path) OVER (PARTITION BY session_id ORDER BY created_at, id) prev
+                    FROM events
+                   WHERE name='page_view' AND path IS NOT NULL AND session_id IS NOT NULL
+                     AND created_at >= datetime('now', @win))
+       SELECT prev "from", path "to", COUNT(*) n
+         FROM v WHERE prev IS NOT NULL AND prev <> path
+        GROUP BY prev, path ORDER BY n DESC LIMIT @lim`
+    ).all({ win: win(days), lim: limit }) as PathStep[];
   } catch { return []; }
 }
