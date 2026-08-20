@@ -44,11 +44,19 @@ export type EventName =
   | "chart_action"
   | "drill_down"
   | "compare_select"
-  | "feedback_open";
+  | "feedback_open"
+  | "feedback_submit"
+  | "unlock_prompt_seen"
+  | "unlock_done"
+  | "share_click"
+  | "follow_city_click"
+  | "no_result_suggestion_click";
 
 export const EVENT_NAMES: readonly EventName[] = [
   "page_view", "page_leave", "search", "search_no_results",
   "chart_action", "drill_down", "compare_select", "feedback_open",
+  "feedback_submit", "unlock_prompt_seen", "unlock_done",
+  "share_click", "follow_city_click", "no_result_suggestion_click",
 ] as const;
 
 export interface EventInput {

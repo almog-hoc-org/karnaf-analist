@@ -11,6 +11,7 @@ import DealsManager from "@/components/DealsManager";
 import { requireWorkspaceId } from "@/lib/auth";
 import { getRuleNum } from "@/lib/systemRules";
 import Icon from "@/components/Icon";
+import { fromToText } from "@/components/FromTo";
 
 export const metadata = { title: 'ניהול והשוואת עסקאות | קרנף אנליסט' };
 export const dynamic = "force-dynamic";
@@ -57,7 +58,7 @@ export default async function DealsPage() {
         avgShSqm: p?.avgShSqm ?? null,
         priceYear: p?.priceYear ?? null,
         chg3y: ch?.pct ?? null,
-        chg3yWindow: ch ? `${ch.fromY}→${ch.toY}` : null,
+        chg3yWindow: ch ? fromToText(ch.fromY, ch.toY) : null,
         deals12m: Number(act?.n ?? 0),
         activeNeighborhoods: Number(act?.nh ?? 0),
         totalDeals: p?.totalDeals ?? 0,

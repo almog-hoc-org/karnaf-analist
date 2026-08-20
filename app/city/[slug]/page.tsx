@@ -22,6 +22,7 @@ import CityConstructionMiniChart from "@/components/CityConstructionMiniChart";
 import ScatteredFactsSection from "@/components/ScatteredFactsSection";
 import { getCityScatteredData } from "@/lib/scatteredFacts";
 import NumberCaption from "@/components/NumberCaption";
+import { FromTo } from "@/components/FromTo";
 import { loadCityPriceChanges } from "@/lib/price-changes";
 import { loadCityTransactionPrices } from "@/lib/cityTransactionPrices";
 import NewVsSecondhandPanel from "@/components/NewVsSecondhandPanel";
@@ -40,10 +41,12 @@ import { getCurrentUser } from "@/lib/auth";
 import { getRuleBool, getRuleText } from "@/lib/systemRules";
 import { balance, isCityUnlocked, unlockCity, ensureStarterCredits, CREDIT_RULES } from "@/lib/credits";
 import { whatsappShareUrl } from "@/lib/share";
+import { recordEvent } from "@/lib/events";
 import CityWall from "@/components/CityWall";
 import CityPublicSummary from "@/components/CityPublicSummary";
 import CityShareButton from "@/components/CityShareButton";
 import TrackCityButton from "@/components/TrackCityButton";
+import FeedbackOpenButton from "@/components/FeedbackOpenButton";
 import { isCityTracked, setCityTracked } from "@/lib/appDb";
 
 interface PageProps {
@@ -220,6 +223,12 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           const u = getCurrentUser();
           if (!u) return;
           unlockCity(u.id, cityName);
+          recordEvent({
+            name: "unlock_done",
+            path: `/city/${encodeURIComponent(cityName)}`,
+            subject: cityName,
+            userId: Number(String(u.id).replace(/^u/, "")),
+          });
           revalidatePath(`/city/${params.slug}`);
         };
         return (
@@ -406,6 +415,16 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   const chosenSourceMeta = gapAnalysis ? describeSupplySource(gapAnalysis.totals.chosenSource) : null;
   const totalGap = gapAnalysis?.totals.gap ?? null;
   const totalGapPct = gapAnalysis?.totals.gapPctOfDemand ?? null;
+  const initiallyTracked = viewer ? isCityTracked(viewer.id, city.city_name) : false;
+  const cityTrackAction = async (c: string, next: boolean) => {
+    "use server";
+    // Re-read the session inside the action: the closure's `viewer` is
+    // from render time, and an action must never trust a value the
+    // client could have been served before signing out.
+    const u = getCurrentUser();
+    if (!u) return false;
+    return setCityTracked(u.id, c, next);
+  };
 
   // Build construction chart data (for the CityConstructionMiniChart)
   const chartYears = Array.from({ length: 10 }, (_, i) => 2016 + i);
@@ -451,20 +470,15 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               {(city.population_growth_pct ?? 0) >= 0 ? '+' : ''}{city.population_growth_pct?.toFixed(1)}% גידול
             </span>
           )}
-          <CityShareButton href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)} />
+          <CityShareButton
+            cityName={city.city_name}
+            href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)}
+          />
           <TrackCityButton
             cityName={city.city_name}
-            initiallyTracked={viewer ? isCityTracked(viewer.id, city.city_name) : false}
+            initiallyTracked={initiallyTracked}
             signedIn={!!viewer}
-            action={async (c: string, next: boolean) => {
-              "use server";
-              // Re-read the session inside the action: the closure's `viewer` is
-              // from render time, and an action must never trust a value the
-              // client could have been served before signing out.
-              const u = getCurrentUser();
-              if (!u) return false;
-              return setCityTracked(u.id, c, next);
-            }}
+            action={cityTrackAction}
           />
         </div>
         <div className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -688,6 +702,39 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         <RoomPriceSummary data={cityGraphData} classificationRate={classRate?.rate ?? null} />
       )}
 
+      <section className="mb-10">
+        <div className="glass-card border-indigo-100 bg-indigo-50/30 p-4 md:p-5">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="min-w-0">
+              <h2 className="text-base font-black text-slate-900">רוצים לחזור ל{city.city_name} אחר כך?</h2>
+              <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                שמרו למעקב, השוו לעיר אחרת או שלחו לחבר שמתלבט על האזור. אם משהו בנתונים לא מסתדר, המשוב מגיע אלינו עם ההקשר של העמוד.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2 md:justify-end">
+              <TrackCityButton
+                cityName={city.city_name}
+                initiallyTracked={initiallyTracked}
+                signedIn={!!viewer}
+                action={cityTrackAction}
+              />
+              <Link
+                href={`/compare?cities=${encodeURIComponent(city.city_name)}`}
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 transition hover:border-indigo-200 hover:text-indigo-700"
+              >
+                <Icon name="scale" size="1em" />
+                השוואה
+              </Link>
+              <CityShareButton
+                cityName={city.city_name}
+                href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)}
+              />
+              <FeedbackOpenButton label="פידבק" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════════════════════════════════════════════════════
           NEW (CONTRACTOR) vs SECOND-HAND — CBS 047/2026 hard numbers
           ═══════════════════════════════════════════════════════════ */}
@@ -738,7 +785,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               return (
                 <p className="text-xs text-slate-500 mt-3 text-center">
                   גידול כולל: <span className={Number(growthPct) >= 0 ? 'text-emerald-700' : 'text-red-600'}>{growthPct}%</span>
-                  {' '}({formatNumber(first)} → {formatNumber(last)})
+                  {' '}(<FromTo from={formatNumber(first)} to={formatNumber(last)} size="xs" />)
                 </p>
               );
             })()}
@@ -771,7 +818,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
                 <span className={headlineWindow.pct >= 0 ? 'text-emerald-700' : 'text-red-600'}>
                   {headlineWindow.pct >= 0 ? '+' : ''}{headlineWindow.pct.toFixed(1)}%
                 </span>
-                {' '}(₪{formatNumber(headlineWindow.fromAvg)} → ₪{formatNumber(headlineWindow.toAvg)})
+                {' '}(<FromTo from={`₪${formatNumber(headlineWindow.fromAvg)}`} to={`₪${formatNumber(headlineWindow.toAvg)}`} size="xs" />)
                 {headlineWindow.thin ? ' · מדגם דל' : ''}
               </p>
             )}
@@ -1168,7 +1215,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         <NumberCaption
           source='למ"ס + מפקד 2022'
           sourceHref="https://www.cbs.gov.il/he/subjects/Pages/Population-Census-2022.aspx"
-          period="2021 → 2026 (תחזית)"
+          period="2021–2026 (תחזית)"
           method="data.gov.il + cbs_registry_2025_update"
         />
       </section>

@@ -24,6 +24,12 @@ const EVENT_LABELS: Record<string, string> = {
   drill_down: "פתיחות פירוט עסקאות",
   compare_select: "בחירות בהשוואה",
   feedback_open: "פתיחות טופס משוב",
+  feedback_submit: "שליחות פידבק",
+  unlock_prompt_seen: "חשיפות למסך פתיחת עיר",
+  unlock_done: "פתיחות עיר בפועל",
+  share_click: "לחיצות שיתוף",
+  follow_city_click: "לחיצות מעקב עיר",
+  no_result_suggestion_click: "לחיצות על הצעת חיפוש",
 };
 
 export default function AdminUsagePanel() {

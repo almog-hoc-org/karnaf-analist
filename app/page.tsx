@@ -10,6 +10,7 @@ import Link from "next/link";
 import RecentReportsSection from "@/components/RecentReportsSection";
 import NumberCaption from "@/components/NumberCaption";
 import PriceGainsRankingCard from "@/components/PriceGainsRankingCard";
+import { fromToText } from "@/components/FromTo";
 import TrendValue from "@/components/TrendValue";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import { loadSubsidizedByCity } from "@/lib/subsidizedYears";
@@ -158,7 +159,7 @@ export default async function HomePage() {
     const froms = top3yGain.map((c) => c.fromY);
     const lo = Math.min(...froms), hi = Math.max(...froms);
     const to = top3yGain[0].toY;
-    return lo === hi ? `${lo}→${to}` : `${lo}–${hi}→${to}`;
+    return lo === hi ? fromToText(lo, to) : fromToText(`${lo}–${hi}`, to);
   })();
 
   // Most-expensive = second-hand median ₪/m² from REAL transactions

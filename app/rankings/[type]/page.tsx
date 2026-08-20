@@ -7,6 +7,7 @@ import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import { loadCityTransactionPrices, loadRankingEligibleCities, rankingEligibilityNote } from "@/lib/cityTransactionPrices";
 import { computeAllCityGaps } from "@/lib/gap-analysis";
 import Icon from "@/components/Icon";
+import { fromToText } from "@/components/FromTo";
 
 interface PageProps {
   params: { type: string };
@@ -43,7 +44,7 @@ const RANKING_CONFIG: Record<RankingType, {
   },
   "highest-gain": {
     title: "עליית מחיר — יד שנייה בלבד",
-    subtitle: `שינוי ממוצע ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2022→2025, 10+ עסקאות בשתי השנים) — ללא הטיית דירות חדשות`,
+    subtitle: `שינוי ממוצע ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2025 ← 2022, 10+ עסקאות בשתי השנים) — ללא הטיית דירות חדשות`,
     icon: "trend-up",
     accent: "rose",
     valueLabel: "שינוי יד-2 3 שנים",
@@ -51,7 +52,7 @@ const RANKING_CONFIG: Record<RankingType, {
   },
   "highest-gain-median": {
     title: "עליית מחיר — חציון יד שנייה",
-    subtitle: `שינוי חציון ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2022→2025, 10+ עסקאות בשתי השנים)`,
+    subtitle: `שינוי חציון ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2025 ← 2022, 10+ עסקאות בשתי השנים)`,
     icon: "chart",
     accent: "rose",
     valueLabel: "שינוי חציון יד-2 3 שנים",
@@ -125,7 +126,7 @@ async function fetchData(type: RankingType): Promise<Array<{ city: string; value
     return rows.map((r) => ({
       city: r.city_name,
       value: r.pct,
-      formatted: `${r.pct >= 0 ? "+" : ""}${r.pct.toFixed(1)}% (${r.fromY}→${r.toY})`,
+      formatted: `${r.pct >= 0 ? "+" : ""}${r.pct.toFixed(1)}% (${fromToText(r.fromY, r.toY)})`,
     }));
   }
   if (type === "highest-surplus") {

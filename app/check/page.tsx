@@ -6,6 +6,7 @@ import { rowAddress } from "@/lib/compTypes";
 import { whatsappShareUrl } from "@/lib/share";
 import { getCurrentUser } from "@/lib/auth";
 import CheckForm from "@/components/CheckForm";
+import TrackableOutboundLink from "@/components/TrackableOutboundLink";
 
 /**
  * "בדיקת מחיר" — is this apartment priced above or below its own street?
@@ -192,18 +193,19 @@ export default async function CheckPage({ searchParams }: Props) {
                 )}
 
                 <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <a
+                  <TrackableOutboundLink
                     href={whatsappShareUrl(
                       selfPath,
                       viewer?.id,
                       verdict ? `בדקתי מחיר דירה ב${city} — ${verdict.text}:` : `רמת המחירים ב${city} לפי עסקאות אמת:`
                     )}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    eventName="share_click"
+                    subject={city}
+                    detail="check_result"
                     className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700"
                   >
                     <Icon name="chat" size="1em" /> שיתוף בוואטסאפ
-                  </a>
+                  </TrackableOutboundLink>
                   <Link
                     href={`/city/${encodeURIComponent(city)}`}
                     className="text-sm font-bold text-indigo-700 hover:underline"

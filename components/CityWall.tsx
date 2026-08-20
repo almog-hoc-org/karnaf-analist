@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import TrackOnMount from "@/components/TrackOnMount";
 
 /**
  * The registration/unlock interstitial a visitor meets instead of a gated city
@@ -54,6 +55,7 @@ export default function CityWall({
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-16 text-center">
+      <TrackOnMount name="unlock_prompt_seen" subject={cityName} detail={state} />
       <div className="glass-card p-8 sm:p-10">
         <div className="mb-3 text-4xl"><Icon name="lock" size="1em" /></div>
         <h1 className="text-2xl font-black text-slate-900">{cityName}</h1>
