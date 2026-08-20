@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import { track } from "@/lib/track";
 
 /**
  * Route-level error boundary.
@@ -22,6 +23,12 @@ import Icon from "@/components/Icon";
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     console.error("[page-error]", error.digest ?? "", error.message, error.stack);
+    // Also recorded as an event, because the container log answers "what broke"
+    // and this answers "how many people hit it, and on which page". When Migdal
+    // HaEmek was throwing, the only reason anyone knew was that the operator
+    // happened to click it — a visitor who met the same screen left no trace.
+    // The digest only: never the message, which can carry internals.
+    track("error_shown", { detail: error.digest ?? "no-digest" });
   }, [error]);
 
   return (

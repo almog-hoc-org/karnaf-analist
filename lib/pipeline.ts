@@ -140,6 +140,13 @@ export const PIPELINE: PipelineStage[] = [
     timeoutMs: 30 * MINUTE,
   },
   {
+    id: "usage-rollup",
+    script: "scripts/rollup-usage.ts",
+    label: "צבירת נתוני שימוש",
+    why: "Condenses yesterday's raw event log into daily counts. Runs BEFORE the retention sweep on purpose: the raw log is kept 90 days and the aggregates forever, so reversing the order would delete a day and then aggregate the hole it just made — a permanently missing week with no error to show for it.",
+    timeoutMs: 10 * MINUTE,
+  },
+  {
     id: "retention",
     script: "scripts/prune-retention.ts",
     label: "אכיפת תקופות שמירה",

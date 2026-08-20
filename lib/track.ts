@@ -44,6 +44,20 @@ export interface TrackOptions {
   detail?: string | null;
   /** milliseconds the page was open — only meaningful on page_leave */
   dwellMs?: number | null;
+  /**
+   * Override the path the event is attributed to.
+   *
+   * WHY THIS IS NOT OPTIONAL SUGAR
+   * `page_leave` fires from an effect cleanup during a client-side navigation,
+   * and by then the App Router has ALREADY replaced window.location.pathname
+   * with the destination. Every dwell measurement was therefore filed against
+   * the page the visitor went TO, not the one they had been reading — so the
+   * time-on-page column described the wrong page, silently and consistently.
+   * Nothing about that is visible in the output; it just looks like people
+   * spend a long time on whatever they navigate to. The page being left is now
+   * captured at mount and passed in explicitly.
+   */
+  path?: string | null;
 }
 
 /**
@@ -72,7 +86,7 @@ export function track(name: EventName, opts: TrackOptions = {}): void {
   try {
     const payload = JSON.stringify({
       name,
-      path: window.location.pathname,
+      path: opts.path ?? window.location.pathname,
       subject: opts.subject ?? null,
       detail: opts.detail ?? null,
       sessionId: sessionId(),
@@ -130,11 +144,11 @@ export function trackSearch(term: string, resultCount: number, where: string): v
  * blocks the back/forward cache. Both handlers flush through sendBeacon, which
  * is the one request kind that survives a page being closed.
  */
-export function trackPageTime(path?: string): () => void {
+export function trackPageTime(path: string, subject?: string | null): () => void {
   if (typeof window === "undefined") return () => {};
   let visibleSince = document.visibilityState === "visible" ? Date.now() : 0;
   let accumulated = 0;
-  let sent = false;
+  let reported = 0;
 
   const settle = () => {
     if (visibleSince) {
@@ -143,13 +157,24 @@ export function trackPageTime(path?: string): () => void {
     }
   };
 
+  /**
+   * Sends only the time not sent yet.
+   *
+   * The first version latched after one flush, so a visit that went hidden and
+   * came back reported the first span and threw the rest away — which on a
+   * phone, where switching apps mid-read is the normal case rather than the
+   * edge case, meant systematically under-reporting exactly the longest reads.
+   * Reporting the DELTA keeps the sum right however many times the visitor
+   * comes and goes.
+   */
   const flush = () => {
     settle();
-    // A sub-second view is a redirect or a mis-click, not a read. Recording it
+    const delta = accumulated - reported;
+    // A sub-second span is a redirect or a mis-click, not a read. Recording it
     // would drag every average down while telling nobody anything.
-    if (sent || accumulated < 1000) return;
-    sent = true;
-    track("page_leave", { subject: path ?? null, dwellMs: accumulated });
+    if (delta < 1000) return;
+    reported = accumulated;
+    track("page_leave", { path, subject: subject ?? null, dwellMs: delta });
   };
 
   const onVisibility = () => {
@@ -170,4 +195,129 @@ export function trackPageTime(path?: string): () => void {
     document.removeEventListener("visibilitychange", onVisibility);
     window.removeEventListener("pagehide", flush);
   };
+}
+
+
+/* ── the rest of the instrumentation the usage dashboard needs ──────────────
+ *
+ * WHAT IS DELIBERATELY NOT MEASURED, and why it is written here rather than
+ * assumed: every click that is not on the closed list below, the contents of
+ * any form field, the IP address, the user-agent, and the full referring URL.
+ * A referrer is reduced to its DOMAIN before it leaves the browser, because a
+ * full search-engine referrer can carry the query the visitor typed, and this
+ * log has no business holding that.
+ */
+
+/** The one visit-level event: where the visit came from, and where it landed. */
+export function trackSessionStart(): void {
+  try {
+    const KEY = "karnaf_session_started";
+    if (sessionStorage.getItem(KEY)) return;
+    sessionStorage.setItem(KEY, "1");
+    let source = "direct";
+    const ref = document.referrer;
+    if (ref) {
+      const host = new URL(ref).hostname.replace(/^www\./, "");
+      // Internal navigation is not a traffic source; it is the same visit.
+      source = host === window.location.hostname.replace(/^www\./, "") ? "internal" : host;
+    }
+    if (source === "internal") return;
+    track("session_start", { subject: source, detail: window.location.pathname });
+  } catch { /* storage blocked — the visit is simply unattributed */ }
+}
+
+/**
+ * The closed list of buttons worth counting.
+ *
+ * A closed list rather than a global click handler: "every click" produces a
+ * table nobody reads and a privacy posture nobody can describe in a sentence.
+ * These are the actions that mean something happened.
+ */
+export type CtaName =
+  | "register" | "login" | "check_price" | "calculator"
+  | "course_banner" | "open_deals" | "all_rankings";
+/*
+ * Sharing, following a city, unlocking, comparing and chart interaction are
+ * DELIBERATELY absent: each already has its own event (share_click,
+ * follow_city_click, unlock_done, compare_select, chart_action). A second name
+ * for the same moment would split one signal across two columns and leave both
+ * understating it.
+ */
+
+export function trackCta(name: CtaName, context?: string | null): void {
+  track("cta_click", { subject: name, detail: context ?? null });
+}
+
+/**
+ * Depth thresholds, once each per view.
+ *
+ * A page whose readers stop at 25% is not a page people dislike — it is often
+ * a page whose useful part is below the fold. That is a layout finding, and it
+ * cannot be recovered from view counts.
+ */
+export function trackScrollDepth(path: string): () => void {
+  if (typeof window === "undefined") return () => {};
+  const hit = new Set<number>();
+  const onScroll = () => {
+    try {
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - window.innerHeight;
+      if (scrollable < 200) return; // a page that does not scroll has no depth to report
+      const pct = ((window.scrollY || 0) / scrollable) * 100;
+      for (const mark of [25, 50, 75, 100]) {
+        if (pct >= mark - 1 && !hit.has(mark)) {
+          hit.add(mark);
+          track("scroll_depth", { path, detail: String(mark) });
+        }
+      }
+    } catch { /* ignore */ }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  return () => window.removeEventListener("scroll", onScroll);
+}
+
+/**
+ * Three or more clicks on the same element within 1.5s, with no navigation.
+ *
+ * This is the "looks clickable and isn't" detector. It is the one signal here
+ * that finds a broken affordance the operator would otherwise only hear about
+ * if a visitor bothered to write in — which almost none do.
+ */
+export function watchRageClicks(): () => void {
+  if (typeof window === "undefined") return () => {};
+  let last: EventTarget | null = null;
+  let count = 0;
+  let firstAt = 0;
+  let reportedFor: EventTarget | null = null;
+
+  const label = (el: Element): string => {
+    const t = el.closest("a,button,[role=button]") ?? el;
+    const text = (t.textContent ?? "").trim().replace(/\s+/g, " ").slice(0, 40);
+    return text || t.tagName.toLowerCase();
+  };
+
+  const onClick = (ev: MouseEvent) => {
+    try {
+      const target = ev.target as Element | null;
+      if (!target) return;
+      const now = Date.now();
+      if (target !== last || now - firstAt > 1500) {
+        last = target; count = 1; firstAt = now; reportedFor = null;
+        return;
+      }
+      count++;
+      if (count >= 3 && reportedFor !== target) {
+        reportedFor = target;
+        track("rage_click", { subject: label(target), detail: String(count) });
+      }
+    } catch { /* ignore */ }
+  };
+
+  document.addEventListener("click", onClick, true);
+  return () => document.removeEventListener("click", onClick, true);
+}
+
+/** A search that ended in the visitor actually choosing something. */
+export function trackSearchSelect(city: string, term: string): void {
+  track("search_select", { subject: city, detail: term.trim().slice(0, 60) || null });
 }

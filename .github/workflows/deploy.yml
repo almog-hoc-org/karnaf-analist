@@ -238,6 +238,17 @@ jobs:
           echo "── running-year readiness per city ──"
           docker compose exec -T app npx tsx scripts/report-partial-year.ts --all </dev/null || true
 
+          # The usage dashboard is SQL behind a try/catch, which means a broken
+          # query renders as an empty panel and reports nothing. This runs every
+          # one of them and fails loudly instead.
+          echo "── usage dashboard queries ──"
+          docker compose exec -T app npx tsx scripts/verify-usage-queries.ts </dev/null || USAGE_FAILED=1
+
+          # First run only in practice: months of raw log exist and no daily
+          # aggregate does. Idempotent, so leaving it here costs seconds.
+          echo "── usage roll-up backfill ──"
+          docker compose exec -T app npx tsx scripts/rollup-usage.ts --backfill=120 </dev/null || true
+
           # The census above exercises the LOADERS. A crash in the render itself
           # — a component that throws on a shape only one city produces — is
           # invisible to it, and so is anything past the paywall, since an
@@ -319,10 +330,14 @@ jobs:
 
           # Re-raise the pipeline failure now that everything downstream has
           # reported. The step still fails; it just fails informatively.
+          if [ -n "${USAGE_FAILED:-}" ]; then
+            echo "✗ שאילתות דשבורד השימוש נכשלו — הפאנל יראה ריק ולא ידווח על כך"
+          fi
           if [ -n "${PIPELINE_FAILED:-}" ]; then
             echo "✗ הצינור נכשל — ראה את שלב הכשל למעלה (הבדיקות שאחריו רצו בכל זאת)"
             exit 1
           fi
+          if [ -n "${USAGE_FAILED:-}" ]; then exit 1; fi
           REMOTE
 
       - name: live page checks from outside

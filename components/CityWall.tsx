@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import TrackOnMount from "@/components/TrackOnMount";
+import CtaLink from "@/components/CtaLink";
 
 /**
  * The registration/unlock interstitial a visitor meets instead of a gated city
@@ -72,18 +73,22 @@ export default function CityWall({
               </p>
             )}
             <div className="mt-6 flex flex-col items-center justify-center gap-2 sm:flex-row">
-              <Link
+              <CtaLink
+                cta="register"
+                context={cityName}
                 href={`/register?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}${refSuffix}`}
                 className="w-full rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white hover:bg-indigo-700 sm:w-auto"
               >
                 הרשמה חינם — {(signupBonus ?? 10) + (refCode ? inviteeBonus : 0)} קרדיטים
-              </Link>
-              <Link
+              </CtaLink>
+              <CtaLink
+                cta="login"
+                context={cityName}
                 href={`/login?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}`}
                 className="w-full rounded-xl border border-slate-200 px-6 py-3 text-sm font-bold text-slate-600 hover:bg-slate-50 sm:w-auto"
               >
                 כבר רשום? התחברות
-              </Link>
+              </CtaLink>
             </div>
           </>
         )}

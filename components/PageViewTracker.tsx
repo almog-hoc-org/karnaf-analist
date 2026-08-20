@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { track, trackPageTime } from "@/lib/track";
+import { track, trackPageTime, trackScrollDepth, trackSessionStart, watchRageClicks } from "@/lib/track";
 
 /**
  * Emits `page_view` on every navigation.
@@ -64,11 +64,31 @@ export default function PageViewTracker() {
   // Time on page, as its own effect keyed on the path: a client-side
   // navigation unmounts nothing, so the cleanup here IS the "left the page"
   // moment for every route change after the first.
+  //
+  // The path is passed EXPLICITLY. By the time this cleanup runs the router has
+  // already swapped window.location, so a sender that read the location would
+  // file the dwell against the page the visitor went to rather than the one
+  // they read. Scroll depth rides the same effect for the same reason.
   useEffect(() => {
     if (!pathname) return;
     if (EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
-    return trackPageTime(subjectFor(pathname) ?? undefined);
+    const stopTime = trackPageTime(pathname, subjectFor(pathname));
+    const stopScroll = trackScrollDepth(pathname);
+    return () => { stopScroll(); stopTime(); };
   }, [pathname]);
+
+  // Visit-level, once per tab: where the visit came from, and the rage-click
+  // watcher. Both are mounted here rather than in the layout so that the whole
+  // instrumentation surface stays in one file — including the exclusion list,
+  // which is a published promise and must not be enforced in two places that
+  // can drift.
+  useEffect(() => {
+    if (!pathname) return;
+    if (EXCLUDED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return;
+    trackSessionStart();
+  }, [pathname]);
+
+  useEffect(() => watchRageClicks(), []);
 
   return null;
 }

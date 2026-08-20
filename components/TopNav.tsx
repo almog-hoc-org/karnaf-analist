@@ -7,7 +7,7 @@ import Icon from "@/components/Icon";
 import BrandMark from "./BrandMark";
 import { usePathname, useRouter } from "next/navigation";
 import { withBasePath } from "@/lib/basePath";
-import { track, trackSearch } from "@/lib/track";
+import { track, trackSearch, trackSearchSelect } from "@/lib/track";
 import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
 const NAV_ITEMS = [
@@ -76,6 +76,7 @@ export default function TopNav({ cities, user, credits, unlimited = false }: { c
     if (selected && (selected.reason === "typo" || selected.reason === "alias")) {
       track("no_result_suggestion_click", { subject: q.trim(), detail: name });
     }
+    trackSearchSelect(name, q);
     setQ("");
     setHits([]);
     router.push(`/city/${encodeURIComponent(name)}`);

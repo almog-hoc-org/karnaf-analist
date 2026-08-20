@@ -31,11 +31,16 @@ export const BUSINESS = {
  */
 export const RETENTION = {
   /**
-   * Behavioural events. Long enough to see a season and compare year-on-year
-   * for a launch; short enough that nothing accumulates indefinitely. These
-   * records carry no IP, no user-agent and no account id to begin with.
+   * Behavioural events, in RAW form.
+   *
+   * Was 180 days, on the reasoning that a trend needs a season. That reasoning
+   * no longer applies to the raw rows: the nightly usage roll-up
+   * (scripts/rollup-usage.ts) keeps the daily aggregates permanently, so the
+   * trend survives while the row-level log — which for a signed-in account is
+   * personal data — does not need to. Keeping identifiable rows longer than
+   * they are used for is the thing a retention policy exists to prevent.
    */
-  eventsDays: 180,
+  eventsDays: 90,
   /**
    * Feedback. Long enough that a bug reported once is still traceable when it
    * finally gets fixed, and that a feature request can be revisited.

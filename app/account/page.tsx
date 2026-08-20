@@ -15,6 +15,10 @@ const REASON_LABELS: Record<string, string> = {
   city_unlock: "פתיחת עיר",
   deal_save: "שמירת עסקה",
   referral: "הזמנת חבר 🎉",
+  // Written by lib/credits.ts when an invitee arrives through a referral link.
+  // It was missing here, so the person who got the bonus saw a row with no
+  // label at all — on the one screen whose whole job is explaining a balance.
+  referral_welcome: "בונוס הצטרפות דרך הזמנה",
   feedback: "משוב שאושר",
   monthly_grant: "מענק חודשי",
   admin: "עדכון מנהל",

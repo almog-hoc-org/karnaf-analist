@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { track, trackSearch } from "@/lib/track";
+import { track, trackSearch, trackSearchSelect } from "@/lib/track";
 import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
 interface CityItem {
@@ -148,6 +148,10 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
                     if (reason === "typo" || reason === "alias") {
                       track("no_result_suggestion_click", { subject: query, detail: city.city_name });
                     }
+                    // Searches were counted; searches that ENDED SOMEWHERE were
+                    // not. Without this, a box that returns plausible-looking
+                    // rows nobody clicks is indistinguishable from one that works.
+                    trackSearchSelect(city.city_name, query);
                   }}
                   className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-3 hover:bg-indigo-50 transition-colors group"
                 >
