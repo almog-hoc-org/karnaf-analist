@@ -115,6 +115,38 @@ export function pickLastUsableYear({
   return usable.length ? usable[usable.length - 1] : lastFullYear;
 }
 
+/**
+ * Can this deal be classified as second-hand or new?
+ *
+ * ONLY a usable build year qualifies (operator rule, 8/2026). The Tax
+ * Authority also publishes a Sale-Law flag and previous-deal history, and
+ * scripts/classify-sale-channel.ts still uses them to fill `is_secondhand` —
+ * but inference no longer decides what the price graph calls second-hand or
+ * new. The site states "classified by build year", and a series partly built
+ * on inference could not honestly be described that way.
+ *
+ * Zero is how "unknown" is published (30% of Tirat Karmel, 46% of Akko) and
+ * must never be read as the year 0 — that would make every such deal a
+ * two-thousand-year-old flat, i.e. second-hand, i.e. exactly wrong.
+ */
+export function isClassifiable(yearBuilt: number | null | undefined): boolean {
+  return (yearBuilt ?? 0) > 1800;
+}
+
+/**
+ * Second-hand, new, or neither — the whole rule, in one place.
+ * Returns null for a deal that cannot be classified; that deal belongs only to
+ * the "all" series.
+ */
+export function classifyDeal(
+  yearBuilt: number | null | undefined,
+  dealYear: number,
+  minAge: number
+): "secondhand" | "new" | null {
+  if (!isClassifiable(yearBuilt)) return null;
+  return dealYear - (yearBuilt as number) >= minAge ? "secondhand" : "new";
+}
+
 function emptyRoomSeries(): RoomSeries {
   return { "3": [], "4": [], "5": [], all: [] };
 }

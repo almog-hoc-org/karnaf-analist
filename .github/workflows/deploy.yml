@@ -238,6 +238,13 @@ jobs:
           echo "── running-year readiness per city ──"
           docker compose exec -T app npx tsx scripts/report-partial-year.ts --all </dev/null || true
 
+          # Which cities can show the second-hand / new split, and which
+          # genuinely cannot. Also re-measures the finding that the old "כללי"
+          # filter was protecting: any city whose headline sits above BOTH
+          # subsets is printed with the gap rather than argued away.
+          echo "── classification coverage per city ──"
+          docker compose exec -T app npx tsx scripts/report-classification.ts --all </dev/null || true
+
           # The usage dashboard is SQL behind a try/catch, which means a broken
           # query renders as an empty panel and reports nothing. This runs every
           # one of them and fails loudly instead.

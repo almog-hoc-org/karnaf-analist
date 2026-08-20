@@ -20,6 +20,7 @@
 import { getRuleNum } from "../lib/systemRules";
 import { historyFromYear } from "../lib/historyWindow";
 import { prisma } from "../lib/db";
+import { isClassifiable } from "../lib/nadlanTransactionSeries";
 
 // Sanity bounds are admin-editable (lib/systemRules) — defaults match the originals.
 const MIN_SQM = getRuleNum("min_sqm_price", 2_000), MAX_SQM = getRuleNum("max_sqm_price", 200_000);
@@ -75,6 +76,9 @@ async function main() {
   /** A neighbourhood median needs more deals behind it than a city one: the
    *  cell is small enough that a single unusual sale moves it. */
   const NB_MIN = getRuleNum("neighborhood_min_deals", 8);
+  /** The one definition of "this deal can be classified" — lib/nadlanTransactionSeries. */
+  const hasBuildYear = (r: Row) => isClassifiable(r.year_built);
+
   const byYear = (arr: Row[]) => { const m = new Map<number, Row[]>(); for (const r of arr) { let a = m.get(r.deal_year); if (!a) { a = []; m.set(r.deal_year, a); } a.push(r); } return m; };
 
   // ── SOURCE CHOICE PER CITY (verified 2026-07-29) ─────────────────────────
@@ -98,21 +102,28 @@ async function main() {
   console.log(`  govmap-only "all" series for ${govmapOnlyCities.size} cities (thin nadlan coverage)`);
 
   for (const [city, { govmap, nadlan }] of byCity) {
-    // "all" = one source for the whole decade — govmap where nadlan is too thin.
+    // "all" = one source for the whole decade — govmap where nadlan is too thin,
+    // and in nadlan cities EVERY clean deal (operator rule, 8/2026).
     //
-    // In nadlan cities "all" takes CLASSIFIED deals only. The gate used to be
-    // year_built>0, for a good reason: the no-build-year group is heavy with presale
-    // marketing prices (TLV 2025: 28% of deals at ₪60.3K/m² — towers sold on paper),
-    // and as an unlabelled lump it pushed "all" ABOVE both of its own subsets.
+    // It used to filter on class_source, which meant an unclassified deal fell
+    // out of the graph entirely rather than merely out of the split. That was a
+    // guard against one specific finding — the no-build-year group is heavy with
+    // presale marketing prices (TLV 2025: 28% of deals at ₪60.3K/m², towers sold
+    // on paper) and as an unlabelled lump it pushed "all" ABOVE both of its own
+    // subsets. But dropping the deals was never the right instrument for that:
+    // they happened, and "כללי" that excludes a quarter of the market is not
+    // general.
     //
-    // The gate is now class_source, which is strictly wider and keeps that finding
-    // intact: those presale deals are no longer unlabelled — the authority's own
-    // Sale-Law flag identifies them as first-hand, so they land in "new" where they
-    // belong instead of being discarded. Requiring a build year was also throwing
-    // away 44% of Tirat Karmel's deals, leaving that city with no split at all and a
-    // "trend" that only tracked which kind of flat happened to sell that year.
-    // (scripts/classify-sale-channel.ts assigns class_source.)
-    const allRows = govmapOnlyCities.has(city) ? govmap : nadlan.filter((r) => r.class_source != null);
+    // What guards it now is the intake query at the top of this file:
+    // excluded=0 (duplicates and statistical outliers already removed),
+    // luxury=0, plus hard sanity bounds on ₪/m² and area. Every row reaching
+    // this line has passed all of them — which is exactly the operator's rule:
+    // a clean deal missing only its build year belongs in "כללי".
+    //
+    // scripts/report-classification.ts re-measures the original finding on every
+    // run: if "all" comes out above both subsets in any city, that is reported
+    // rather than assumed away.
+    const allRows = govmapOnlyCities.has(city) ? govmap : nadlan;
     const allByYear = byYear(allRows);
     const nadByYear = byYear(nadlan);
     const years = new Set<number>([...allByYear.keys(), ...nadByYear.keys()]);
@@ -124,7 +135,20 @@ async function main() {
         // govmap-sourced cities need the higher per-year floor (their line is the only one)
         const minCell = govmapOnlyCities.has(city) ? GOV_MIN_DEALS : 1;
         if (a.length >= minCell) out.push({ city, year, bucket, scope: govmapOnlyCities.has(city) ? "all_govmap" : "all", s: stat(a) });
-        const nb = inBucket(nadY, bucket);
+        // THE SPLIT IS BUILD-YEAR ONLY (operator rule, 8/2026).
+        //
+        // is_secondhand is also written by classify-sale-channel for rows with
+        // no build year, inferred from the authority's Sale-Law flag and from
+        // previous deals on the same property. That inference stays in the
+        // database — /methodology and the /deals comparison read it — but it no
+        // longer decides what the price graph calls second-hand or new. The
+        // rule the site states is "classified by build year", and a series
+        // partly built on inference could not honestly be described that way.
+        //
+        // This also removes an asymmetry that was never intentional: "new"
+        // required class_source and "second-hand" did not, so the two sides of
+        // the same split were drawn from differently-filtered populations.
+        const nb = inBucket(nadY, bucket).filter(hasBuildYear);
         const sh = nb.filter((r) => r.is_secondhand === 1);
         if (sh.length) out.push({ city, year, bucket, scope: "secondhand", s: stat(sh) });
         // second-hand split by building age (user rule): modern (built ≥ MODERN_MIN) vs old
@@ -132,7 +156,7 @@ async function main() {
         if (shModern.length) out.push({ city, year, bucket, scope: "secondhand_modern", s: stat(shModern) });
         const shOld = sh.filter((r) => (r.year_built ?? 0) > 0 && (r.year_built ?? 0) < MODERN_MIN);
         if (shOld.length) out.push({ city, year, bucket, scope: "secondhand_old", s: stat(shOld) });
-        const nw = nb.filter((r) => r.is_secondhand === 0 && r.class_source != null);
+        const nw = nb.filter((r) => r.is_secondhand === 0);
         if (nw.length) out.push({ city, year, bucket, scope: "new", s: stat(nw) });
       }
     }
@@ -144,7 +168,10 @@ async function main() {
     // neighborhood×rooms cells — each year is the weighted mean of its cell medians
     // using the SAME all-period weights, so a shifting sample can't move the series.
     {
-      const sh = nadlan.filter((r) => r.is_secondhand === 1 && r.neighborhood && (r.rooms_effective ?? 0) > 0 && r.price_sqm != null && r.price_sqm > 0);
+      // Same build-year requirement as the raw second-hand series above: a
+      // mix-adjusted series describing a different population than the one it
+      // corrects is worse than no correction at all.
+      const sh = nadlan.filter((r) => hasBuildYear(r) && r.is_secondhand === 1 && r.neighborhood && (r.rooms_effective ?? 0) > 0 && r.price_sqm != null && r.price_sqm > 0);
       const cellOf = (r: Row) => `${r.neighborhood}|${Math.round(r.rooms_effective!)}`;
       const cellTotal = new Map<string, number>();
       for (const r of sh) cellTotal.set(cellOf(r), (cellTotal.get(cellOf(r)) ?? 0) + 1);
@@ -252,6 +279,23 @@ async function main() {
         `✗ REFUSING TO PUBLISH: ${out.length} rows vs ${prevCount} previously ` +
         `(${shrinkPct.toFixed(1)}% smaller, limit ${MAX_SHRINK_PCT}%).`
       );
+      // WHICH scope shrank is the whole diagnosis, and the bare total never
+      // said. A collection failure hits every scope at once; a deliberate
+      // definition change (e.g. requiring a build year for the split) hits one.
+      // Printing the breakdown turns "investigate" into an answer.
+      const byScope = new Map<string, number>();
+      for (const o of out) byScope.set(o.scope, (byScope.get(o.scope) ?? 0) + 1);
+      const prevByScope = new Map(
+        (await prisma.$queryRawUnsafe<Array<{ scope: string; n: bigint }>>(
+          "SELECT scope, COUNT(*) n FROM nadlan_year_room_stats GROUP BY scope"
+        ).catch(() => [])).map((r) => [r.scope, Number(r.n)])
+      );
+      console.error("  rows per scope (now vs before):");
+      for (const scope of new Set([...byScope.keys(), ...prevByScope.keys()])) {
+        const now = byScope.get(scope) ?? 0, was = prevByScope.get(scope) ?? 0;
+        const d = was ? (((now - was) / was) * 100).toFixed(1) : "—";
+        console.error(`    ${scope.padEnd(20)} ${String(now).padStart(7)} vs ${String(was).padStart(7)}  (${d}%)`);
+      }
       console.error("  The live table was NOT touched. Investigate before re-running.");
       console.error("  Override with --force once you know why the count dropped.");
       if (!process.argv.includes("--force")) {
@@ -269,18 +313,25 @@ async function main() {
   }
 
   // ── per-city classification rate ──────────────────────────────────
-  // The share of a city's nadlan deals that carry a sale-channel class. The
+  // The share of a city's nadlan deals that carry a usable BUILD YEAR. The
   // new/second-hand split is only as honest as this number — in בת ים it is
   // ~12%, and a "new vs second-hand" trend built on 12% of the market is not
   // a trend. Computed here (the one place that already read every row) and
   // published in the same transaction, so the split's evidence always matches
   // the stats it gates. Read via lib/classificationRate.ts.
+  //
+  // "Classified" here means WHAT THE GRAPH MEANS BY IT: carrying a build year.
+  // It used to count class_source, which since the build-year-only rule
+  // (8/2026) includes deals the split no longer uses — so the warning on the
+  // city page would have claimed a coverage the series does not have. A
+  // confidence figure that measures something other than the thing it gates is
+  // worse than none, because it is believed.
   const classByCity = new Map<string, { nadlanN: number; classifiedN: number }>();
   for (const [city, c] of byCity) {
     const nadlan = c.nadlan;
     classByCity.set(city, {
       nadlanN: nadlan.length,
-      classifiedN: nadlan.filter((r) => r.class_source != null).length,
+      classifiedN: nadlan.filter(hasBuildYear).length,
     });
   }
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import type { CityGraphData, DealCountCube, NadlanDeal, RoomKey, StatPoint } from "@/lib/nadlanTransactionSeries";
+import type { CityGraphData, DealCountCube, NadlanDeal, RoomKey, Scope, StatPoint } from "@/lib/nadlanTransactionSeries";
 import DealsDrawer from "./DealsDrawer";
 import TrendValue from "./TrendValue";
 import SourceBadge from "./SourceBadge";
@@ -58,6 +58,29 @@ const stat = (d: CityGraphData, scope: "all" | "secondhand" | "new" | "secondhan
 /** Cities whose nadlan coverage is too thin use a govmap-only "all" line for the whole
  *  decade (never spliced — mixing sources inside one city produced 40-90% phantom jumps). */
 const isGovmapCity = (d: CityGraphData) => d.nadlan.all_govmap.all.length > 0;
+
+/**
+ * Is this deal type actually available in this city?
+ *
+ * THE BUG THIS REPLACES
+ * Availability used to be `govCity && k !== "all"` — the split was disabled
+ * wholesale for any city whose HEADLINE series comes from govmap, on the
+ * reasoning that govmap carries no build year. True of govmap, and irrelevant
+ * to the question: the second-hand and new series in those cities are built
+ * from the Tax Authority rows, which do carry build years. Dimona had 102
+ * second-hand and 26 new deals in 2026 and both buttons were greyed out with a
+ * tooltip explaining a limitation of a channel neither series uses.
+ *
+ * The city's label was never the right input. The data is: a deal type is
+ * offered when its own series clears the display floor in at least one year,
+ * and is not offered when it does not — in a govmap city and a nadlan city
+ * alike, by the same test.
+ */
+function dealTypeAvailable(d: CityGraphData, dt: DealType, minN: number): boolean {
+  if (dt === "all") return true; // the headline series always exists
+  const scope: Scope = dt === "new" ? "new" : "secondhand";
+  return d.nadlan[scope].all.some((p) => p.n >= minN && (p.avgSqm != null || p.avgPrice != null));
+}
 
 /** TOP of the selection hierarchy (user spec): deal-type first — יד-2 / חדשות / כללי.
  *  Then (for יד-2 only) building modern/old, then room count. The available SERIES
@@ -165,11 +188,14 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const mobile = useIsMobile(); // compact chart geometry + short labels below 640px
   const [metric, setMetric] = useState<Metric>("sqm");
   // selection hierarchy (top→down): deal-type → building modern/old (יד-2 only) → rooms
-  // Default view: "all" when the city is govmap-sourced OR when fewer than
-  // 20% of its deals are classified — a second-hand series built on a 12%
-  // classification rate (בת ים) is not a safe default lens.
+  // Default view: second-hand where it exists, "all" otherwise — from the SAME
+  // availability test the buttons use, so the tab that opens can never be one
+  // the buttons call unavailable. The old default also fell back to "all" below
+  // a 20% city-wide classification rate; that judgement now lives in the
+  // warning under the chart, where it informs without hiding a series the
+  // reader can see is there.
   const [dealType, setDealType] = useState<DealType>(
-    data.nadlan.all_govmap.all.length > 0 || (classificationRate != null && classificationRate < 0.2) ? "all" : "sh"
+    dealTypeAvailable(data, "sh", minSample) ? "sh" : "all"
   );
   const [buildingAge, setBuildingAge] = useState<Ba>("all");
   const [room, setRoom] = useState<RoomKey>("all");
@@ -359,26 +385,33 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
         <div className="mb-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-2xs leading-relaxed text-amber-900">
           <b>מקור נתונים חלופי:</b> ב{cityName} סדרת "כללי" מבוססת על ערוץ govmap של רשות המסים (עסקאות אמת) לכל העשור —
           כי לערוץ nadlan אין כאן כיסוי מספיק. govmap מודד שטח גדול בכ-9%, ולכן ה-₪/מ״ר בו נמוך בכ-10% מערוץ nadlan;
-          לכן <b>אין להשוות את הרמה לערים אחרות</b> — המגמה לאורך השנים כן תקפה. פילוח יד-2/חדשות אינו זמין כאן (אין שנת בנייה בערוץ זה).
+          לכן <b>אין להשוות את הרמה לערים אחרות</b> — המגמה לאורך השנים כן תקפה.
+          סדרת &quot;כללי&quot; מגיעה מהערוץ הזה; יד-2 וחדשות, אם הן זמינות כאן, מחושבות מעסקאות רשות המסים שיש בהן שנת בנייה.
         </div>
       )}
 
       {/* Classification-confidence gate (QA spec 2026-08-13). The new/second-
-          hand split is only as honest as the share of deals that actually
-          carry a class — in בת ים that is ~12%, and a split built on 12% of
-          the market is a guess wearing a chart. <20% opens on "כללי" and says
-          why; 20-35% shows a softer caveat. */}
-      {!govCity && classificationRate != null && classificationRate < 0.35 && (
+          hand split is only as honest as the share of deals that carry a BUILD
+          YEAR — in בת ים that is ~12%, and a split built on 12% of the market
+          is a guess wearing a chart.
+
+          It now INFORMS rather than hides. The old behaviour also forced the
+          default to "כללי" below 20% and dropped the columns in the room-size
+          table entirely, which meant a city at 15% overall lost cells that had
+          sixty perfectly good classified deals in them. The series are offered
+          whenever they clear the sample floor; this says how much of the market
+          they speak for. */}
+      {classificationRate != null && classificationRate < 0.35 && (
         <div className={`mb-4 rounded-xl border px-4 py-2.5 text-xs leading-relaxed ${
           classificationRate < 0.2
             ? "border-amber-300 bg-amber-50 text-amber-800"
             : "border-slate-200 bg-slate-50 text-slate-600"
         }`}>
           {classificationRate < 0.2 ? (
-            <><b>פילוח בזהירות:</b> רק {Math.round(classificationRate * 100)}% מהעסקאות ב{cityName} מסווגות
-            לחדש/יד-שנייה — סדרות הפילוח מייצגות חלק קטן מהשוק, ולכן ברירת המחדל כאן היא &quot;כללי&quot;.</>
+            <><b>פילוח בזהירות:</b> רק ב-{Math.round(classificationRate * 100)}% מהעסקאות ב{cityName} יש שנת בנייה,
+            ורק הן נכנסות לסדרות יד-2/חדשות. הסדרות האלה מייצגות חלק קטן מהשוק — &quot;כללי&quot; כולל את כל העסקאות.</>
           ) : (
-            <>{Math.round(classificationRate * 100)}% מהעסקאות ב{cityName} מסווגות לחדש/יד-שנייה — פילוח חלקי, קרא את סדרות היד-2/חדשות בזהירות.</>
+            <>ב-{Math.round(classificationRate * 100)}% מהעסקאות ב{cityName} יש שנת בנייה, ורק הן נכנסות לסדרות יד-2/חדשות — פילוח חלקי, קרא אותן בזהירות.</>
           )}
         </div>
       )}
@@ -423,11 +456,12 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="min-w-16 shrink-0 text-2xs font-bold text-slate-500">סוג עסקה:</span>
               {(["sh", "new", "all"] as DealType[]).map((k) => {
-                // govmap-sourced cities have no build year → only the "all" series exists
-                const off = govCity && k !== "all";
+                // Decided by the series, not by the city's source label — see
+                // dealTypeAvailable. The tooltip now states the real reason.
+                const off = !dealTypeAvailable(data, k, minSample);
                 return (
                   <button key={k} disabled={off} onClick={() => !off && setDealType(k)}
-                    title={off ? "לא זמין בעיר זו — ערוץ govmap אינו כולל שנת בנייה" : undefined}
+                    title={off ? `לא זמין ב${cityName} — אין שנה עם ${minSample}+ עסקאות בעלות שנת בנייה בקטגוריה הזו` : undefined}
                     className={`control-pill ${dealType === k ? "control-pill-active" : ""} ${off ? "cursor-not-allowed opacity-40" : ""}`}>{DT_LABEL[k]}</button>
                 );
               })}

@@ -89,10 +89,20 @@ export default function RoomPriceSummary({ data, classificationRate = null }: {
       ? ` · ${endYear} חלקית — ${endMonths} חודשים שנקלטו עד כה`
       : "";
 
-  // classification gate (QA spec): under 20% classified, the sh/new columns
-  // would describe a sliver of the market — show "כללי" only.
-  const lowClass = classificationRate != null && classificationRate < 0.2;
-  const scopes: ScopeKey[] = lowClass ? ["all"] : ["secondhand", "new", "all"];
+  // Which columns to offer, decided PER CELL rather than by a city-wide rate.
+  //
+  // This used to drop the sh/new columns whenever fewer than 20% of the city's
+  // deals carried a class. That threw away real cells: a city can be at 15%
+  // overall and still have 60 classified 4-room second-hand deals in the end
+  // year, which is a perfectly good number that the reader was never shown.
+  // The `change()` helper below already refuses a cell under the sample floor
+  // and marks a thin one — so a column that has nothing to say says so per row,
+  // and one that does is not suppressed by a city-level average.
+  //
+  // The city-wide rate has not been discarded; it moved to where it belongs, as
+  // the caveat under the chart in MultiChartStudio, which informs without
+  // hiding numbers the reader can see exist.
+  const scopes: ScopeKey[] = ["secondhand", "new", "all"];
 
   const rows = BUCKETS.map((b) => ({
     bucket: b,
@@ -153,8 +163,11 @@ export default function RoomPriceSummary({ data, classificationRate = null }: {
         ))}
       </div>
       <p className="mt-2 text-2xs text-slate-400">
-        ממוצעים על עסקאות עם 10+ בשנה · ⚠ = אחד הקצוות עם פחות מ-30 עסקאות — מדגם דל
-        {lowClass ? " · פילוח יד-2/חדשות מוסתר בעיר זו (שיעור סיווג נמוך)" : ""}
+        ממוצעים על עסקאות עם 10+ בשנה · ⚠ = אחד הקצוות עם פחות מ-30 עסקאות — מדגם דל ·
+        יד-2/חדשות מחושבים מעסקאות שיש בהן שנת בנייה בלבד
+        {classificationRate != null && classificationRate < 0.5
+          ? ` (${Math.round(classificationRate * 100)}% מהעסקאות ב${data.cityName})`
+          : ""}
       </p>
     </section>
   );

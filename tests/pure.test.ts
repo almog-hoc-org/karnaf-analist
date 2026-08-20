@@ -4,7 +4,7 @@ import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
 import { PIPELINE, STAGE_IDS, stagesFrom, mutationStages } from "@/lib/pipeline";
 import { dwellingsFile, dwellingsFor, nationalPersonsPerDwelling } from "@/lib/dwellings";
-import { pickLastUsableYear } from "@/lib/nadlanTransactionSeries";
+import { pickLastUsableYear, isClassifiable, classifyDeal } from "@/lib/nadlanTransactionSeries";
 import { fromToText } from "@/components/FromTo";
 import { citySearch } from "@/lib/citySearch";
 import { labelForPath, sectionLabel } from "@/lib/pageLabels";
@@ -300,5 +300,39 @@ describe("sectionLabel", () => {
   it("names a known section and passes an unknown one through", () => {
     expect(sectionLabel("dwelling-stock")).toBe("מלאי הדירות בעיר");
     expect(sectionLabel("brand-new-section")).toBe("brand-new-section");
+  });
+});
+
+describe("classifyDeal", () => {
+  // The rule the operator set (8/2026): only a build year classifies. This
+  // test exists because the failure mode is silent — a deal classified from an
+  // inferred flag produces a plausible series that the site describes as
+  // "by build year", and nothing anywhere would disagree.
+  const MIN_AGE = 4;
+
+  it("splits on age once there is a build year", () => {
+    expect(classifyDeal(2018, 2025, MIN_AGE)).toBe("secondhand");
+    expect(classifyDeal(2024, 2025, MIN_AGE)).toBe("new");
+    // exactly at the threshold counts as second-hand
+    expect(classifyDeal(2021, 2025, MIN_AGE)).toBe("secondhand");
+  });
+
+  it("refuses to classify a deal with no build year", () => {
+    expect(classifyDeal(null, 2025, MIN_AGE)).toBeNull();
+    expect(classifyDeal(undefined, 2025, MIN_AGE)).toBeNull();
+  });
+
+  it("treats a published zero as unknown, not as the year 0", () => {
+    // 0 is how the Tax Authority publishes "unknown" — 30% of Tirat Karmel,
+    // 46% of Akko. Read as a year it makes every one of those a
+    // two-thousand-year-old flat, i.e. second-hand, i.e. exactly wrong.
+    expect(isClassifiable(0)).toBe(false);
+    expect(classifyDeal(0, 2025, MIN_AGE)).toBeNull();
+    expect(classifyDeal(1700, 2025, MIN_AGE)).toBeNull();
+  });
+
+  it("honours a changed secondhand_min_age", () => {
+    expect(classifyDeal(2022, 2025, 2)).toBe("secondhand");
+    expect(classifyDeal(2022, 2025, 5)).toBe("new");
   });
 });
