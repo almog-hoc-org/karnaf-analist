@@ -17,6 +17,7 @@
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { track } from "@/lib/track";
+import { fromToText } from "@/components/FromTo";
 import {
   LineChart,
   Line,
@@ -303,7 +304,7 @@ export default function CompareView({
     },
     {
       key: "chg1y",
-      label: `שינוי שנתי (${refYear - 1}→${refYear})`,
+      label: `שינוי שנתי (${fromToText(refYear - 1, refYear)})`,
       sub: 'ממוצע ₪/מ"ר, כל העסקאות',
       value: (c) => m(c)?.chg1y ?? null,
       render: (c) => <TrendValue pct={m(c)?.chg1y} />,
@@ -311,7 +312,7 @@ export default function CompareView({
     },
     {
       key: "chg3y",
-      label: `שינוי 3 שנים (${refYear - 3}→${refYear})`,
+      label: `שינוי 3 שנים (${fromToText(refYear - 3, refYear)})`,
       sub: 'ממוצע ₪/מ"ר, כל העסקאות',
       value: (c) => m(c)?.chg3y ?? null,
       render: (c) => <TrendValue pct={m(c)?.chg3y} />,

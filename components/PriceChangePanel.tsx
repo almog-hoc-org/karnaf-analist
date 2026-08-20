@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FromTo, YearRange } from "@/components/FromTo";
 import NumberCaption from "./NumberCaption";
 import type { CityPriceChanges } from "@/lib/price-changes";
 import Icon from "@/components/Icon";
@@ -95,10 +96,14 @@ export default function PriceChangePanel({
                 }`}>
                   {activeChange.pct >= 0 ? "▲ +" : "▼ "}{activeChange.pct.toFixed(1)}%
                 </div>
-                <div className="text-xs text-slate-600 mt-2">
-                  {activeChange.fromY} → {activeChange.toY} •{" "}
-                  ₪{Math.round(activeChange.fromAvg).toLocaleString("he-IL")} → ₪
-                  {Math.round(activeChange.toAvg).toLocaleString("he-IL")}
+                <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-xs text-slate-600">
+                  <YearRange from={activeChange.fromY} to={activeChange.toY} />
+                  <span aria-hidden className="text-slate-300">•</span>
+                  <FromTo
+                    from={`₪${Math.round(activeChange.fromAvg).toLocaleString("he-IL")}`}
+                    to={`₪${Math.round(activeChange.toAvg).toLocaleString("he-IL")}`}
+                    size="xs"
+                  />
                 </div>
               </>
             ) : (
@@ -118,7 +123,7 @@ export default function PriceChangePanel({
                 {contextChange.pct >= 0 ? "+" : ""}{contextChange.pct.toFixed(1)}%
               </div>
               <div className="text-2xs text-slate-500">
-                {contextChange.fromY}→{contextChange.toY}
+                <YearRange from={contextChange.fromY} to={contextChange.toY} />
               </div>
             </div>
           )}

@@ -125,7 +125,7 @@ export function digestHtml(r: DigestRecipient): string {
         <td style="padding:10px 8px;border-bottom:1px solid #e2e8f0;text-align:left;white-space:nowrap;color:${
           c.changePct == null ? "#94a3b8" : c.changePct >= 0 ? "#047857" : "#be123c"
         }">
-          <b>${pct(c.changePct)}</b>${c.fromYear && c.toYear ? `<span style="color:#94a3b8;font-size:11px"> ${c.fromYear}→${c.toYear}</span>` : ""}
+          <b>${pct(c.changePct)}</b>${c.fromYear && c.toYear ? `<span style="color:#94a3b8;font-size:11px"> ${c.toYear} \u2190 ${c.fromYear}</span>` : ""}
         </td>
       </tr>`)
     .join("");
@@ -151,6 +151,6 @@ export function digestText(r: DigestRecipient): string {
   const base = siteUrl();
   const lines = r.cities
     .filter((c) => c.sqm != null)
-    .map((c) => `${c.city}: ${nis(c.sqm)} למ״ר (${c.priceYear}) · ${pct(c.changePct)}${c.fromYear ? ` ${c.fromYear}→${c.toYear}` : ""}`);
+    .map((c) => `${c.city}: ${nis(c.sqm)} למ״ר (${c.priceYear}) · ${pct(c.changePct)}${c.fromYear ? ` ${c.toYear} \u2190 ${c.fromYear}` : ""}`);
   return `הערים שלך השבוע\n\n${lines.join("\n")}\n\n${base}/check\n\n—\nניהול המעקב וההסרה מהדיוור: ${base}/account`;
 }

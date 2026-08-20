@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import TrendValue from "@/components/TrendValue";
 import Icon from "@/components/Icon";
+import { YearRange } from "@/components/FromTo";
 
 /**
  * "שינויי מחיר" ranking card with FULL user control (user spec):
@@ -212,7 +213,7 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
         <Link href="/rankings/highest-gain" className="whitespace-nowrap text-2xs text-slate-400 hover:text-indigo-700 transition-colors">
           כל הדירוג →
         </Link>
-        <span className="min-w-0 break-words text-2xs text-slate-400"><Icon name="source-own" size="1em" /> מאגר העסקאות · {fromY}→{toY}{toY === partialYear ? " (חלקית)" : ""}</span>
+        <span className="min-w-0 break-words text-2xs text-slate-400"><Icon name="source-own" size="1em" /> מאגר העסקאות · <YearRange from={fromY} to={toY} />{toY === partialYear ? " (חלקית)" : ""}</span>
       </div>
     </div>
   );

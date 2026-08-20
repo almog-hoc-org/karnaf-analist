@@ -125,14 +125,14 @@ const columns: ColumnDef[] = [
   {
     key: "price_change_3y_pct",
     label: "שינוי 3 שנים",
-    format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_3y_from && row?.price_change_3y_to ? ` (${row.price_change_3y_from}→${row.price_change_3y_to})` : ""}`,
+    format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_3y_from && row?.price_change_3y_to ? ` (${row.price_change_3y_to} \u2190 ${row.price_change_3y_from})` : ""}`,
     width: "min-w-[130px]",
     help: "שינוי המחיר החציוני הרשמי (כל העסקאות, מחיר עסקה מלא) על פני 3 שנים, עד השנה המלאה האחרונה. השנים בסוגריים הן טווח ההשוואה בפועל.",
   },
   {
     key: "price_change_5y_pct",
     label: "שינוי 5 שנים",
-    format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_5y_from && row?.price_change_5y_to ? ` (${row.price_change_5y_from}→${row.price_change_5y_to})` : ""}`,
+    format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_5y_from && row?.price_change_5y_to ? ` (${row.price_change_5y_to} \u2190 ${row.price_change_5y_from})` : ""}`,
     width: "min-w-[130px]",
     help: "שינוי המחיר החציוני הרשמי על פני 5 שנים, עד השנה המלאה האחרונה — מבט ארוך שמחליק תנודות קצרות.",
   },

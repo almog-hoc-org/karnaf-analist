@@ -1,3 +1,5 @@
+import { YearRange } from "@/components/FromTo";
+
 /**
  * Single source of truth for how a price-change % is displayed across the app:
  *   - sign on the LEFT of the value (dir="ltr", per Hebrew request),
@@ -43,7 +45,7 @@ export default function TrendValue({
     >
       {fmtSignedPct(pct)}
       {from != null && to != null && (
-        <span className="font-normal text-2xs text-slate-400">({from}→{to})</span>
+        <span className="font-normal text-2xs text-slate-400">(<YearRange from={from} to={to} />)</span>
       )}
     </span>
   );
