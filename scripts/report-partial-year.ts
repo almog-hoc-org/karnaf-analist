@@ -41,12 +41,26 @@ const val = (f: string) => argv.find((a) => a.startsWith(`--${f}=`))?.split("=")
 
 const YEAR = Number(val("year") ?? new Date().getFullYear());
 
-/** The scopes a reader actually chooses between in the chart, in the order the UI offers them. */
+/**
+ * The scopes a reader actually chooses between in the chart, in the order the
+ * UI offers them.
+ *
+ * "כללי" reads TWO stored scopes. Cities whose nadlan coverage is too thin get
+ * their headline series built from govmap instead, stored as "all_govmap"
+ * (scripts/aggregate-nadlan-transactions), and lib/nadlanTransactionSeries
+ * falls back to it. The first version of this report read only "all" and
+ * therefore declared a dozen govmap-sourced cities — Dimona, Karmiel, Migdal
+ * HaEmek — unready for a year their own city page was already using. A report
+ * that disagrees with the site is worse than no report, so the fallback is
+ * mirrored here and the substitution is marked in the output rather than
+ * hidden.
+ */
 const SCOPES = [
-  { key: "all", label: "כללי" },
-  { key: "secondhand", label: "יד-2" },
-  { key: "new", label: "חדשות" },
+  { key: "all", label: "כללי", fallback: "all_govmap" },
+  { key: "secondhand", label: "יד-2", fallback: null },
+  { key: "new", label: "חדשות", fallback: null },
 ] as const;
+const STORED_SCOPES = ["all", "all_govmap", "secondhand", "new"] as const;
 const BUCKETS = ["all", "3", "4", "5"] as const;
 
 type Verdict = "qualified" | "partial" | "none";
@@ -61,7 +75,17 @@ interface CityReport {
   headlineN: number;
   /** how many of the 12 scope×size cells clear the n floor */
   cellsOverFloor: number;
+  /** true when "כללי" came from the govmap series because no nadlan "all" exists */
+  govmapHeadline: boolean;
   verdict: Verdict;
+}
+
+
+/** n for a scope×bucket cell, through the same govmap fallback the site uses. */
+function nOf(c: CityReport, scope: string, fallback: string | null, bucket: string): number {
+  const direct = c.cells[scope]?.[bucket] ?? 0;
+  if (direct > 0 || !fallback) return direct;
+  return c.cells[fallback]?.[bucket] ?? 0;
 }
 
 function main() {
@@ -97,8 +121,8 @@ function main() {
   for (const city of allCities) {
     byCity.set(city, {
       city, months: 0, deals: 0,
-      cells: Object.fromEntries(SCOPES.map((s) => [s.key, {} as Record<string, number>])),
-      headlineN: 0, cellsOverFloor: 0, verdict: "none",
+      cells: Object.fromEntries(STORED_SCOPES.map((s) => [s, {} as Record<string, number>])),
+      headlineN: 0, cellsOverFloor: 0, verdict: "none", govmapHeadline: false,
     });
   }
   for (const r of monthRows) {
@@ -114,9 +138,11 @@ function main() {
   }
 
   for (const c of byCity.values()) {
-    c.headlineN = c.cells.all?.all ?? 0;
+    c.govmapHeadline = (c.cells.all?.all ?? 0) === 0 && (c.cells.all_govmap?.all ?? 0) > 0;
+    // Exactly the site's expression, in the same order — see lib/nadlanTransactionSeries.
+    c.headlineN = c.cells.all?.all ?? c.cells.all_govmap?.all ?? 0;
     c.cellsOverFloor = SCOPES.reduce(
-      (s, sc) => s + BUCKETS.filter((b) => (c.cells[sc.key]?.[b] ?? 0) >= minDeals).length, 0
+      (s, sc) => s + BUCKETS.filter((b) => nOf(c, sc.key, sc.fallback, b) >= minDeals).length, 0
     );
     // The verdict mirrors lib/nadlanTransactionSeries EXACTLY. If that rule
     // changes, this line changes with it or the report starts lying.
@@ -148,8 +174,8 @@ function main() {
   }
 
   const pad = (s: string, n: number) => s + " ".repeat(Math.max(0, n - [...s].length));
-  const cell = (c: CityReport, scope: string, bucket: string) => {
-    const n = c.cells[scope]?.[bucket] ?? 0;
+  const cell = (c: CityReport, scope: string, fallback: string | null, bucket: string) => {
+    const n = nOf(c, scope, fallback, bucket);
     return n === 0 ? "·" : n >= minDeals ? String(n) : `(${n})`;
   };
 
@@ -167,12 +193,14 @@ function main() {
   };
   const line = (c: CityReport) => {
     console.log(`  ${pad(c.city, 20)}${pad(String(c.months), 6)}${pad(c.deals.toLocaleString("en"), 9)}` +
-      SCOPES.map((s) => pad(BUCKETS.map((b) => pad(cell(c, s.key, b), 5)).join(""), 22)).join(""));
+      SCOPES.map((s) => pad(BUCKETS.map((b) => pad(cell(c, s.key, s.fallback, b), 5)).join(""), 22)).join("") +
+      (c.govmapHeadline ? "  ג" : ""));
   };
 
   const show = has("all") ? qualified : qualified.slice(0, 40);
   console.log(`\n\n✓ ערים שבהן ${YEAR} נכנסת לגרף כנקודת קצה (${qualified.length})`);
   console.log(`  מספר בסוגריים = תא מתחת לסף; הגרף יסתיר אותו ויציג את השאר.`);
+  console.log(`  ג = סדרת "כללי" מגיעה מ-govmap, כי כיסוי רשות המסים בעיר דל מדי.`);
   head();
   for (const c of show) line(c);
   if (show.length < qualified.length) console.log(`  … ועוד ${qualified.length - show.length} (--all לרשימה המלאה)`);
