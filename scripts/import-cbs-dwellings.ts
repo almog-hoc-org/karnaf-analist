@@ -26,7 +26,7 @@
 import Database from "better-sqlite3";
 import path from "path";
 import { dwellingsFile } from "../lib/dwellings";
-import { normalizeCity, canonicalCityName } from "../lib/cityAliases";
+import { normalizeCity, canonicalCityName, ALIAS_NAMES } from "../lib/cityAliases";
 
 const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
 
@@ -55,7 +55,22 @@ function main() {
       .map((r) => r.city_name);
     // Match through the alias/spelling folder — the published table writes
     // "הרצלייה" and "תל אביב -יפו", neither of which is our stored spelling.
-    const lookup = new Map(known.map((c) => [normalizeCity(canonicalCityName(c)), c]));
+    //
+    // ALIAS ROWS LOSE ON PURPOSE. `cities` still carries legacy rows whose
+    // names are aliases ("מכבים רעות"), and canonicalCityName folds those onto
+    // the SAME key as the real row ("מודיעין-מכבים-רעות" → "מודיעין מכבים
+    // רעות"). Map keeps the last writer, so without this filter the import
+    // silently wrote the city's dwelling figures to the alias row and left the
+    // row the site actually reads untouched — a no-op that reports success.
+    const aliasKeys = new Set(ALIAS_NAMES.map((a) => normalizeCity(a)));
+    const canonicalFirst = [...known].sort(
+      (a, b) => Number(aliasKeys.has(normalizeCity(a))) - Number(aliasKeys.has(normalizeCity(b)))
+    );
+    const lookup = new Map<string, string>();
+    for (const c of canonicalFirst) {
+      const key = normalizeCity(canonicalCityName(c));
+      if (!lookup.has(key)) lookup.set(key, c); // first wins → the canonical row
+    }
 
     const upd = db.prepare(
       `UPDATE cities
