@@ -27,8 +27,10 @@ import {
   cityDemand, creditEconomy, retentionCohorts, eventCounts, topMisses,
   uniqueSessions, firstEventAt,
   visitorShape, pageDepth, sectionViews, webVitals, navigationPaths,
+  engagedSessions, stickiness, timeToFirstValue, sessionLengths,
+  adoptionBreadth, conversionByLanding,
 } from "../lib/events";
-import { usageTrend, rollupCoverage } from "../lib/usageRollup";
+import { usageTrend, rollupCoverage, periodComparison } from "../lib/usageRollup";
 
 const DAYS = 30;
 
@@ -67,6 +69,13 @@ const checks: Array<[string, () => unknown]> = [
   ["sectionViews(city)", () => sectionViews(DAYS, "חיפה")],
   ["webVitals", () => webVitals(DAYS)],
   ["navigationPaths", () => navigationPaths(DAYS)],
+  ["engagedSessions", () => engagedSessions(DAYS)],
+  ["stickiness", () => stickiness(DAYS)],
+  ["timeToFirstValue", () => timeToFirstValue(90)],
+  ["sessionLengths", () => sessionLengths(DAYS)],
+  ["adoptionBreadth", () => adoptionBreadth(DAYS)],
+  ["conversionByLanding", () => conversionByLanding(DAYS)],
+  ["periodComparison", () => periodComparison(DAYS)],
   ["usageTrend", () => usageTrend(DAYS)],
   ["rollupCoverage", () => rollupCoverage()],
 ];

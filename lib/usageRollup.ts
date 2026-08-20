@@ -260,3 +260,55 @@ export function rollupCoverage(): { days: number; first: string | null; last: st
     return { days: Number(r.days || 0), first: r.first, last: r.last };
   } catch { return { days: 0, first: null, last: null }; }
 }
+
+export interface PeriodTotals {
+  visitors: number; sessions: number; pageViews: number; seconds: number;
+  bounces: number; signups: number; unlocks: number; errors: number;
+  returningVisitors: number; days: number;
+}
+
+export interface PeriodComparison { current: PeriodTotals; previous: PeriodTotals }
+
+/**
+ * This window against the one immediately before it, same length.
+ *
+ * WHY EVERY NUMBER IN THE DASHBOARD NEEDS THIS
+ * "376 visits" is a fact, not information. The question a dashboard exists to
+ * answer is whether that is better or worse than it was, and without a
+ * comparison every panel requires the reader to remember last month — which
+ * nobody does, which is how a dashboard becomes decoration.
+ *
+ * Read from usage_daily rather than by running every query twice: the nightly
+ * roll-up already holds one row per day, so both windows are a single SUM. It
+ * is also the more correct comparison, because it lines up WHOLE DAYS on both
+ * sides instead of comparing a window ending mid-afternoon against one that
+ * ended at midnight.
+ */
+export function periodComparison(days = 30): PeriodComparison {
+  const zero: PeriodTotals = {
+    visitors: 0, sessions: 0, pageViews: 0, seconds: 0, bounces: 0,
+    signups: 0, unlocks: 0, errors: 0, returningVisitors: 0, days: 0,
+  };
+  try {
+    ensureTables();
+    const n = Math.max(1, Math.min(365, Math.floor(days)));
+    const sums = (fromDays: number, toDays: number) => {
+      const r = appDb().prepare(
+        `SELECT COUNT(*) days,
+                COALESCE(SUM(visitors),0) visitors,
+                COALESCE(SUM(sessions),0) sessions,
+                COALESCE(SUM(page_views),0) pageViews,
+                COALESCE(SUM(seconds),0) seconds,
+                COALESCE(SUM(bounces),0) bounces,
+                COALESCE(SUM(signups),0) signups,
+                COALESCE(SUM(unlocks),0) unlocks,
+                COALESCE(SUM(errors),0) errors,
+                COALESCE(SUM(returning_visitors),0) returningVisitors
+           FROM usage_daily
+          WHERE day > date('now', @from) AND day <= date('now', @to)`
+      ).get({ from: `-${fromDays} days`, to: `-${toDays} days` }) as PeriodTotals;
+      return { ...zero, ...r };
+    };
+    return { current: sums(n, 0), previous: sums(n * 2, n) };
+  } catch { return { current: zero, previous: zero }; }
+}

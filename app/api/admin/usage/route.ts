@@ -17,8 +17,10 @@ import {
   trafficSources, signupFunnel, registeredNeverUnlocked, rageClicks,
   errorsShown, ctaClicks, cityDemand, creditEconomy, retentionCohorts,
   visitorShape, pageDepth, sectionViews, webVitals, navigationPaths,
+  engagedSessions, stickiness, timeToFirstValue, sessionLengths,
+  adoptionBreadth, conversionByLanding,
 } from "@/lib/events";
-import { usageTrend, rollupCoverage } from "@/lib/usageRollup";
+import { usageTrend, rollupCoverage, periodComparison } from "@/lib/usageRollup";
 import { loadThinSampleCities, loadRankingEligibleCities } from "@/lib/cityTransactionPrices";
 
 export const dynamic = "force-dynamic";
@@ -71,6 +73,13 @@ export async function GET(req: Request) {
     summary: usageSummary(days),
     shape: visitShape(days),
     visitors: visitorShape(days),
+    engagement: engagedSessions(days),
+    sticky: stickiness(days),
+    compare: periodComparison(days),
+    ttfv: timeToFirstValue(90),
+    sessionLengths: sessionLengths(days),
+    adoption: adoptionBreadth(days),
+    landingConversion: conversionByLanding(days, 15),
     trend: usageTrend(Math.max(days, 30)),
     rollup: rollupCoverage(),
     pages: topPages(days, 25),

@@ -1100,3 +1100,223 @@ export function navigationPaths(days = 30, limit = 25): PathStep[] {
     ).all({ win: win(days), lim: limit }) as PathStep[];
   } catch { return []; }
 }
+
+/* ── the standard product-analytics measures ─────────────────────────────────
+ *
+ * Everything below is a metric with an accepted definition outside this
+ * codebase — GA4's engaged session, the DAU/WAU stickiness ratio, time to first
+ * value, the session-length distribution, adoption breadth. They are written
+ * here rather than invented because a dashboard whose definitions are private
+ * cannot be compared to anything, and "is 34% good?" is unanswerable without a
+ * shared meaning.
+ *
+ * Where a definition has a well-known threshold it is spelled out in the
+ * comment, so the number on screen can be read against it rather than against
+ * a feeling.
+ */
+
+export interface EngagementRate { sessions: number; engaged: number; engagedPct: number }
+
+/**
+ * Engaged sessions — GA4's definition, and the reason bounce rate was retired.
+ *
+ * A visit counts as engaged if it lasted more than 10 seconds, OR saw two or
+ * more pages, OR produced a conversion. Bounce rate is simply its inverse, and
+ * the reason the industry moved is that "did not bounce" is not "was
+ * interested": a visit that loaded two pages in four seconds and left passes a
+ * bounce test and fails this one.
+ */
+export function engagedSessions(days = 30): EngagementRate {
+  const empty: EngagementRate = { sessions: 0, engaged: 0, engagedPct: 0 };
+  try {
+    ensureTable();
+    const r = appDb().prepare(
+      `WITH s AS (
+         SELECT session_id,
+                SUM(CASE WHEN name='page_view' THEN 1 ELSE 0 END) views,
+                COALESCE(SUM(dwell_ms),0) ms,
+                MAX(CASE WHEN name IN ('unlock_done','feedback_submit','search_select','cta_click')
+                         THEN 1 ELSE 0 END) converted
+           FROM events
+          WHERE session_id IS NOT NULL AND created_at >= datetime('now', @win)
+          GROUP BY session_id)
+       SELECT COUNT(*) sessions,
+              SUM(CASE WHEN ms > 10000 OR views >= 2 OR converted = 1 THEN 1 ELSE 0 END) engaged
+         FROM s`
+    ).get({ win: win(days) }) as { sessions: number; engaged: number };
+    const sessions = Number(r.sessions || 0), engaged = Number(r.engaged || 0);
+    return { sessions, engaged, engagedPct: sessions ? Math.round((engaged / sessions) * 100) : 0 };
+  } catch { return empty; }
+}
+
+export interface Stickiness { dau: number; wau: number; pct: number }
+
+/**
+ * DAU/WAU — how much of the weekly audience shows up on an average day.
+ *
+ * The standard shorthand for "is this a habit or an occasional errand".
+ * Roughly: under 10% is an errand, 20%+ is a product people return to without
+ * being prompted. For a research tool a low number is not automatically bad —
+ * nobody checks apartment prices daily — which is exactly why it is shown next
+ * to the retention cohorts rather than alone.
+ */
+export function stickiness(days = 30): Stickiness {
+  const empty: Stickiness = { dau: 0, wau: 0, pct: 0 };
+  try {
+    ensureTable();
+    const db = appDb();
+    // Average daily actives across the window, not one arbitrary day: a single
+    // day is noise, and a Saturday would understate it for an Israeli audience.
+    const dau = db.prepare(
+      `SELECT AVG(n) a FROM (
+         SELECT date(created_at) d, COUNT(DISTINCT COALESCE(visitor_id, session_id)) n
+           FROM events WHERE created_at >= datetime('now', @win) GROUP BY d)`
+    ).get({ win: win(days) }) as { a: number | null };
+    const wau = db.prepare(
+      `SELECT COUNT(DISTINCT COALESCE(visitor_id, session_id)) n
+         FROM events WHERE created_at >= datetime('now', '-7 days')`
+    ).get() as { n: number };
+    const d = Math.round(Number(dau.a || 0)), w = Number(wau.n || 0);
+    return { dau: d, wau: w, pct: w ? Math.round((d / w) * 100) : 0 };
+  } catch { return empty; }
+}
+
+export interface TimeToValue { medianMinutes: number | null; n: number; within24hPct: number }
+
+/**
+ * How long from registering to opening a first city.
+ *
+ * The activation clock. It is the most predictive single number for whether an
+ * account survives: an account that reaches value in the same sitting behaves
+ * very differently from one that comes back three days later to try.
+ *
+ * Measured from users.created_at to the first city_unlocks row — both are
+ * timestamped facts, so no client instrumentation can lose it.
+ */
+export function timeToFirstValue(days = 90): TimeToValue {
+  const empty: TimeToValue = { medianMinutes: null, n: 0, within24hPct: 0 };
+  try {
+    ensureTable();
+    const rows = appDb().prepare(
+      `SELECT (julianday(MIN(c.created_at)) - julianday(u.created_at)) * 1440 mins
+         FROM users u JOIN city_unlocks c ON c.user_id = u.id
+        WHERE u.created_at >= datetime('now', @win)
+        GROUP BY u.id
+        HAVING mins >= 0
+        ORDER BY mins`
+    ).all({ win: win(days) }) as Array<{ mins: number }>;
+    if (!rows.length) return empty;
+    const median = rows[Math.floor(rows.length / 2)].mins;
+    const fast = rows.filter((r) => r.mins <= 1440).length;
+    return {
+      medianMinutes: Math.round(median),
+      n: rows.length,
+      within24hPct: Math.round((fast / rows.length) * 100),
+    };
+  } catch { return empty; }
+}
+
+export interface Bucketed { bucket: string; n: number }
+
+/**
+ * How long visits actually last, as a distribution rather than an average.
+ *
+ * An average of three minutes can mean "everyone reads for three minutes" or
+ * "most leave in ten seconds and a few read for twenty" — two completely
+ * different products, and only the second one has something worth fixing at
+ * the top of the funnel. The average cannot tell them apart; this can.
+ */
+export function sessionLengths(days = 30): Bucketed[] {
+  try {
+    ensureTable();
+    return appDb().prepare(
+      `WITH s AS (SELECT session_id, COALESCE(SUM(dwell_ms),0)/1000 secs
+                    FROM events WHERE session_id IS NOT NULL
+                      AND created_at >= datetime('now', @win)
+                    GROUP BY session_id)
+       SELECT CASE WHEN secs < 10 THEN 'עד 10 שנ׳'
+                   WHEN secs < 30 THEN '10–30 שנ׳'
+                   WHEN secs < 120 THEN '30 שנ׳–2 דק׳'
+                   WHEN secs < 300 THEN '2–5 דק׳'
+                   WHEN secs < 900 THEN '5–15 דק׳'
+                   ELSE '15 דק׳ ומעלה' END bucket,
+              COUNT(*) n,
+              MIN(secs) ord
+         FROM s GROUP BY bucket ORDER BY ord`
+    ).all({ win: win(days) }) as Bucketed[];
+  } catch { return []; }
+}
+
+/**
+ * In how many distinct features a visitor touched.
+ *
+ * Breadth of use predicts return far better than volume of use: someone who
+ * viewed forty pages of one kind is browsing, someone who used three different
+ * tools has found the product useful. The buckets are what a roadmap decision
+ * actually turns on.
+ */
+export function adoptionBreadth(days = 30): Bucketed[] {
+  try {
+    ensureTable();
+    return appDb().prepare(
+      `WITH f AS (
+         SELECT COALESCE(visitor_id, session_id) who,
+                COUNT(DISTINCT CASE WHEN name IN
+                  ('search','search_select','compare_select','chart_action','drill_down',
+                   'follow_city_click','share_click','unlock_done','feedback_submit','cta_click')
+                  THEN name END) features
+           FROM events
+          WHERE created_at >= datetime('now', @win)
+            AND COALESCE(visitor_id, session_id) IS NOT NULL
+          GROUP BY who)
+       SELECT CASE WHEN features = 0 THEN 'צפייה בלבד'
+                   WHEN features = 1 THEN 'פיצ׳ר אחד'
+                   WHEN features = 2 THEN 'שניים'
+                   ELSE 'שלושה ומעלה' END bucket,
+              COUNT(*) n, MIN(features) ord
+         FROM f GROUP BY bucket ORDER BY ord`
+    ).all({ win: win(days) }) as Bucketed[];
+  } catch { return []; }
+}
+
+export interface LandingConversion {
+  path: string; sessions: number; converted: number; convPct: number;
+}
+
+/**
+ * Which entry pages produce accounts, not just traffic.
+ *
+ * A landing page can bring a great deal of traffic and no users, and the two
+ * are routinely confused because they sit in different tables. A visit counts
+ * as converted when it later carried a signed-in account or completed an
+ * unlock — both visible on the session itself, so no attribution guesswork.
+ */
+export function conversionByLanding(days = 30, limit = 15): LandingConversion[] {
+  try {
+    ensureTable();
+    return (appDb().prepare(
+      `WITH v AS (
+         SELECT session_id, path,
+                ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY created_at ASC, id ASC) rn
+           FROM events
+          WHERE name='page_view' AND path IS NOT NULL AND session_id IS NOT NULL
+            AND created_at >= datetime('now', @win)),
+       firstv AS (SELECT session_id, path FROM v WHERE rn = 1),
+       conv AS (
+         SELECT session_id,
+                MAX(CASE WHEN user_id IS NOT NULL OR name='unlock_done' THEN 1 ELSE 0 END) c
+           FROM events
+          WHERE session_id IS NOT NULL AND created_at >= datetime('now', @win)
+          GROUP BY session_id)
+       SELECT f.path, COUNT(*) sessions, COALESCE(SUM(conv.c),0) converted
+         FROM firstv f LEFT JOIN conv ON conv.session_id = f.session_id
+        GROUP BY f.path ORDER BY sessions DESC LIMIT @lim`
+    ).all({ win: win(days), lim: limit }) as Array<{ path: string; sessions: number; converted: number }>)
+      .map((r) => ({
+        path: r.path,
+        sessions: Number(r.sessions || 0),
+        converted: Number(r.converted || 0),
+        convPct: r.sessions ? Math.round((Number(r.converted) / Number(r.sessions)) * 100) : 0,
+      }));
+  } catch { return []; }
+}

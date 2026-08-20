@@ -8,6 +8,7 @@ import { pickLastUsableYear, isClassifiable, classifyDeal } from "@/lib/nadlanTr
 import { fromToText } from "@/components/FromTo";
 import { citySearch } from "@/lib/citySearch";
 import { labelForPath, sectionLabel } from "@/lib/pageLabels";
+import { pctChange } from "@/lib/usagePayload";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -334,5 +335,28 @@ describe("classifyDeal", () => {
   it("honours a changed secondhand_min_age", () => {
     expect(classifyDeal(2022, 2025, 2)).toBe("secondhand");
     expect(classifyDeal(2022, 2025, 5)).toBe("new");
+  });
+});
+
+describe("pctChange", () => {
+  // The delta chip is on every KPI in the dashboard, so its edge cases are on
+  // screen constantly — and the zero-denominator one renders as a triumph if
+  // it is allowed to produce Infinity.
+  it("computes an ordinary change in both directions", () => {
+    expect(pctChange(150, 100)).toBe(50);
+    expect(pctChange(50, 100)).toBe(-50);
+    expect(pctChange(100, 100)).toBe(0);
+  });
+
+  it("refuses to compare against a period of zero", () => {
+    // 5 visits after 0 is not "+∞%", it is "there is nothing to compare to" —
+    // which the UI must render as no arrow at all rather than as growth.
+    expect(pctChange(5, 0)).toBeNull();
+    expect(pctChange(0, 0)).toBe(0); // nothing then, nothing now: unchanged
+  });
+
+  it("returns null rather than NaN for a non-finite input", () => {
+    expect(pctChange(Number.NaN, 100)).toBeNull();
+    expect(pctChange(100, Number.POSITIVE_INFINITY)).toBeNull();
   });
 });
