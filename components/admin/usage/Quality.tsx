@@ -7,6 +7,10 @@ import PageName from "@/components/admin/PageName";
 import AdminUserUsageTable, { humanSeconds } from "@/components/AdminUserUsageTable";
 import { labelForPath } from "@/lib/pageLabels";
 import { NOT_YET, type UsagePayload } from "@/lib/usagePayload";
+// Google's thresholds live with the insight engine, which also decides when a
+// page is "slow" — two copies would let the colour here and the recommendation
+// there disagree about the same number.
+import { VITAL_LIMITS } from "@/lib/usageInsights";
 import type { ExitRow, VitalRow, DeadEndRow } from "@/lib/events";
 
 /**
@@ -20,15 +24,6 @@ import type { ExitRow, VitalRow, DeadEndRow } from "@/lib/events";
 
 const DEVICE_HE: Record<string, string> = {
   mobile: "📱 מובייל", tablet: "📲 טאבלט", desktop: "💻 מחשב", unknown: "לא ידוע",
-};
-
-/** Google's own thresholds, so a colour means "good/poor" rather than "big/small". */
-const VITAL_LIMITS: Record<string, { good: number; poor: number; unit: string; what: string }> = {
-  LCP: { good: 2500, poor: 4000, unit: "ms", what: "מתי התוכן הראשי הופיע" },
-  INP: { good: 200, poor: 500, unit: "ms", what: "כמה מהר הגיב ללחיצה" },
-  FCP: { good: 1800, poor: 3000, unit: "ms", what: "מתי משהו ראשון הופיע" },
-  TTFB: { good: 800, poor: 1800, unit: "ms", what: "כמה זמן לקח לשרת לענות" },
-  CLS: { good: 100, poor: 250, unit: "", what: "כמה הפריסה קפצה בטעינה" },
 };
 
 const isDeadEnd = (e: ExitRow) =>

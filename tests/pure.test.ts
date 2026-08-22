@@ -8,7 +8,8 @@ import { pickLastUsableYear, isClassifiable, classifyDeal } from "@/lib/nadlanTr
 import { fromToText } from "@/components/FromTo";
 import { citySearch } from "@/lib/citySearch";
 import { labelForPath, sectionLabel } from "@/lib/pageLabels";
-import { pctChange } from "@/lib/usagePayload";
+import { pctChange, type UsagePayload } from "@/lib/usagePayload";
+import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -358,5 +359,110 @@ describe("pctChange", () => {
   it("returns null rather than NaN for a non-finite input", () => {
     expect(pctChange(Number.NaN, 100)).toBeNull();
     expect(pctChange(100, Number.POSITIVE_INFINITY)).toBeNull();
+  });
+});
+
+describe("usage insights", () => {
+  /**
+   * A payload with nothing in it. Every field present, every value empty —
+   * which is exactly the shape a quiet site produces, and the shape that
+   * tempts every rule to divide by zero and announce a crisis.
+   */
+  const empty = (): UsagePayload => ({
+    days: 30, since: null,
+    summary: { sessions: 0, pageViews: 0, totalSeconds: 0, avgSessionSeconds: 0, signedInUsers: 0, devices: [] },
+    shape: { sessions: 0, pagesPerVisit: 0, bounceRatePct: 0, signedInSessions: 0 },
+    visitors: { visits: 0, visitors: 0, returning: 0, returningPct: 0, frequency: [], devices: [] },
+    engagement: { sessions: 0, engaged: 0, engagedPct: 0 },
+    sticky: { dau: 0, wau: 0, pct: 0 },
+    trend: [], compare: {
+      current: { visitors: 0, sessions: 0, pageViews: 0, seconds: 0, bounces: 0, signups: 0, unlocks: 0, errors: 0, returningVisitors: 0, days: 0 },
+      previous: { visitors: 0, sessions: 0, pageViews: 0, seconds: 0, bounces: 0, signups: 0, unlocks: 0, errors: 0, returningVisitors: 0, days: 0 },
+    },
+    rollup: { days: 0, first: null, last: null },
+    sources: [], funnel: [], neverUnlocked: 0,
+    ttfv: { medianMinutes: null, n: 0, within24hPct: 0 },
+    landingConversion: [],
+    credits: { granted: 0, spent: 0, outstanding: 0, unlocks: 0, usersWithBalance: 0 },
+    cohorts: [], sessionLengths: [], adoption: [], depth: [], sections: [], ctas: [],
+    pages: [], cities: [], searches: [], misses: [], paths: [], landings: [],
+    exits: [], rage: [], errors: [], vitals: [], users: [], events: [],
+  });
+
+  it("says nothing at all about a site with no traffic", () => {
+    // The failure this pins down: "0% conversion — urgent!" on an empty log.
+    // A board that cries wolf in week one is never trusted in week ten.
+    expect(buildUsageInsights(empty())).toEqual([]);
+  });
+
+  it("fires on evidence, and stays silent just below the threshold", () => {
+    const quiet = empty();
+    quiet.shape.sessions = 19;          // one short of the minimum sample
+    quiet.engagement = { sessions: 19, engaged: 1, engagedPct: 5 };
+    expect(buildUsageInsights(quiet).some((i) => i.id === "low-engagement")).toBe(false);
+
+    const loud = empty();
+    loud.shape.sessions = 20;
+    loud.engagement = { sessions: 20, engaged: 1, engagedPct: 5 };
+    expect(buildUsageInsights(loud).some((i) => i.id === "low-engagement")).toBe(true);
+  });
+
+  it("does not congratulate a site on a metric that is bad", () => {
+    const bad = empty();
+    bad.shape.sessions = 100;
+    bad.engagement = { sessions: 100, engaged: 30, engagedPct: 30 };
+    const ids = buildUsageInsights(bad).map((i) => i.id);
+    expect(ids).toContain("low-engagement");
+    expect(ids).not.toContain("keep-engagement");
+  });
+
+  it("reports an error screen even when everything else is quiet", () => {
+    // Errors are not a ratio and need no sample: one visitor seeing a broken
+    // page is a fact, not a rate.
+    const e = empty();
+    e.errors = [{ path: "/city/חיפה", detail: "abc123", n: 1 }];
+    const found = buildUsageInsights(e).find((i) => i.id === "errors");
+    expect(found).toBeTruthy();
+    expect(found!.severity).toBe(3);
+    expect(found!.action).toContain("abc123"); // the digest to search for
+  });
+
+  it("every insight carries a number, a meaning AND an action", () => {
+    // A card without a recommendation is a fact, and the whole point of the
+    // board is that it does not produce those.
+    const rich = empty();
+    rich.shape.sessions = 200;
+    rich.neverUnlocked = 4;
+    rich.errors = [{ path: "/", detail: "x", n: 2 }];
+    rich.misses = [{ term: "רהט", n: 5 }];
+    for (const i of buildUsageInsights(rich)) {
+      expect(i.metric.length).toBeGreaterThan(0);
+      expect(i.meaning.length).toBeGreaterThan(20);
+      expect(i.action.length).toBeGreaterThan(20);
+    }
+  });
+
+  it("holds the 85/15 mix when both kinds are plentiful", () => {
+    const mk = (n: number, kind: Insight["kind"]): Insight[] =>
+      Array.from({ length: n }, (_, i) => ({
+        id: `${kind}-${i}`, kind, severity: 2 as const, weight: 100 - i,
+        metric: "1", title: "t", meaning: "m", action: "a",
+      }));
+    const { shown } = rankInsights([...mk(20, "fix"), ...mk(10, "keep")], 8);
+    expect(shown.filter((i) => i.kind === "fix")).toHaveLength(7);
+    expect(shown.filter((i) => i.kind === "keep")).toHaveLength(1);
+  });
+
+  it("does not pad one side when the other is short", () => {
+    // Filling the board with weak items to reach a count is how a good
+    // recommendation ends up next to a meaningless one and loses by association.
+    const two: Insight[] = [
+      { id: "a", kind: "fix", severity: 3, weight: 10, metric: "1", title: "t", meaning: "m", action: "a" },
+      { id: "b", kind: "fix", severity: 1, weight: 1, metric: "1", title: "t", meaning: "m", action: "a" },
+    ];
+    const { shown, rest } = rankInsights(two, 8);
+    expect(shown).toHaveLength(2);
+    expect(rest).toHaveLength(0);
+    expect(shown[0].id).toBe("a"); // severity first
   });
 });

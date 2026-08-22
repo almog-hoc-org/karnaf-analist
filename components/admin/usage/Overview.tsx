@@ -4,9 +4,10 @@ import CollapsibleCard from "@/components/admin/CollapsibleCard";
 import KpiTile from "@/components/admin/KpiTile";
 import UsageTrendChart from "@/components/admin/UsageTrendChart";
 import BarList from "@/components/admin/BarList";
-import PageName from "@/components/admin/PageName";
+import InsightBoard from "@/components/admin/usage/InsightBoard";
 import { humanSeconds } from "@/components/AdminUserUsageTable";
 import { pctChange, share, type UsagePayload } from "@/lib/usagePayload";
+import type { InsightTab } from "@/lib/usageInsights";
 
 /**
  * The tab that answers "how is the site doing" before any question is asked.
@@ -16,32 +17,25 @@ import { pctChange, share, type UsagePayload } from "@/lib/usagePayload";
  * a rise in the first with no movement in the other two is a leaky bucket, and
  * that is the single most common way a dashboard flatters a product.
  *
- * The three findings at the bottom are computed, not chosen: the worst dead
- * end, the most-wanted city with thin coverage, the most frequent failed
- * search. They are the answers to "what should I look at first", surfaced so
- * the operator does not have to open five cards to find them.
+ * The insight board sits ABOVE the numbers, because the KPI row answers "what
+ * are the numbers" and the board answers "what should I do about them" — and
+ * the second question is the one the operator arrived with. It replaced a card
+ * of three hand-picked findings that did half the job.
  */
 
 const DEVICE_HE: Record<string, string> = {
   mobile: "📱 מובייל", tablet: "📲 טאבלט", desktop: "💻 מחשב", unknown: "לא ידוע",
 };
 
-export default function Overview({ data }: { data: UsagePayload }) {
+export default function Overview({ data, onNavigate }: { data: UsagePayload; onNavigate?: (tab: InsightTab) => void }) {
   const { compare, visitors: vis, shape, engagement, sticky, summary } = data;
   const cur = compare.current, prev = compare.previous;
   const series = (pick: (d: (typeof data.trend)[number]) => number) => data.trend.map(pick);
 
-  // The three things worth looking at first, derived rather than curated.
-  const worstDeadEnd = data.exits
-    .filter((e) => e.views >= 5 && e.avgSecondsBeforeExit > 0 && e.avgSecondsBeforeExit < 20)
-    .sort((a, b) => b.exits - a.exits)[0];
-  const starvedCity = data.cities
-    .filter((c) => c.quality === "thin")
-    .sort((a, b) => b.views - a.views)[0];
-  const topMiss = data.misses[0];
-
   return (
     <div className="space-y-3">
+      <InsightBoard data={data} onNavigate={onNavigate} />
+
       <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-6">
         <KpiTile
           label="מבקרים" value={(vis.visitors || shape.sessions).toLocaleString("he-IL")}
@@ -111,50 +105,6 @@ export default function Overview({ data }: { data: UsagePayload }) {
           <BarList rows={data.sources.map((s) => ({ label: <span dir="ltr">{s.source}</span>, value: s.sessions }))} />
         </CollapsibleCard>
       </div>
-
-      <CollapsibleCard
-        id="ov-findings" defaultOpen
-        title="🎯 מה לבדוק קודם"
-        summary="שלושה ממצאים אוטומטיים"
-        hint="נגזרים מהנתונים בכל טעינה, לא נבחרים ידנית — כדי שלא צריך לפתוח חמישה כרטיסים כדי לגלות מה חשוב היום."
-      >
-        <div className="space-y-2 text-xs">
-          {worstDeadEnd ? (
-            <div className="flex items-start gap-2 rounded-lg border border-rose-200 bg-rose-50/60 px-3 py-2">
-              <span aria-hidden>🚪</span>
-              <div className="min-w-0">
-                <PageName path={worstDeadEnd.path} />
-                <p className="mt-0.5 text-slate-600">
-                  {worstDeadEnd.exits} ביקורים הסתיימו כאן אחרי {humanSeconds(worstDeadEnd.avgSecondsBeforeExit)} בלבד —
-                  הגיעו ונטשו. שווה לפתוח את העמוד ולראות מה חסר בו.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p className="rounded-lg bg-slate-50 px-3 py-2 text-slate-500">אין מבוי סתום בולט בתקופה.</p>
-          )}
-
-          {starvedCity && (
-            <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50/60 px-3 py-2">
-              <span aria-hidden>🏙️</span>
-              <p className="min-w-0 text-slate-700">
-                <b>{starvedCity.city}</b> נצפתה {starvedCity.views} פעמים והמדגם בה דל.
-                זו העיר שהכי כדאי להשלים בה איסוף — יש עליה ביקוש ואין מה להראות.
-              </p>
-            </div>
-          )}
-
-          {topMiss && (
-            <div className="flex items-start gap-2 rounded-lg border border-indigo-200 bg-indigo-50/60 px-3 py-2">
-              <span aria-hidden>🔎</span>
-              <p className="min-w-0 text-slate-700">
-                חיפשו <b>&ldquo;{topMiss.term}&rdquo;</b> {topMiss.n} פעמים ולא מצאו כלום.
-                או שהיישוב חסר, או שהוא נכתב אצלנו אחרת.
-              </p>
-            </div>
-          )}
-        </div>
-      </CollapsibleCard>
 
       <CollapsibleCard
         id="ov-shape"

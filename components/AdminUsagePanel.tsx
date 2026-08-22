@@ -136,7 +136,10 @@ export default function AdminUsagePanel() {
             {" · "}השוואה מול {days} הימים שקדמו לתקופה
           </p>
 
-          {tab === "overview" && <Overview data={data} />}
+          {/* An insight names the tab that holds its full data, so the board
+              can hand the reader straight there instead of asking them to find
+              it — the difference between a recommendation and an errand. */}
+          {tab === "overview" && <Overview data={data} onNavigate={(t) => selectTab(t as TabKey)} />}
           {tab === "conversion" && <Conversion data={data} />}
           {tab === "engagement" && <Engagement data={data} />}
           {tab === "content" && <Content data={data} />}
