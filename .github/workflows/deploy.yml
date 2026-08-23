@@ -192,7 +192,7 @@ jobs:
       # data pipeline would in practice never run at all.
       # Cheap (a handful of sqlite statements) and self-cleaning: it writes
       # under a clearly-marked throwaway id and deletes it in a finally block.
-      - name: verify the anonymous free-city gate
+      - name: verify the anonymous gate and the home-page cards
         env:
           HOST: ${{ secrets.VPS_HOST }}
           USER: ${{ secrets.VPS_USER }}
@@ -207,6 +207,12 @@ jobs:
           # forwards stdin to the container — without it the exec swallows the
           # rest of the script and the step "succeeds" having done nothing.
           docker compose exec -T app npx tsx scripts/verify-anon-access.ts </dev/null
+
+          # The three "ערים חמות" cards are the first thing on the site now,
+          # and their figures come from gated series: thin-sample cities are
+          # dropped from the price change, the 4-room price needs n>=10. A card
+          # rendering "—" is not a crash and would be found by a visitor first.
+          docker compose exec -T app npx tsx scripts/report-hot-cities.ts </dev/null
           REMOTE
 
 
