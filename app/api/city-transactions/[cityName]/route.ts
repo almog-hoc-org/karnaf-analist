@@ -14,6 +14,13 @@ import { DRAWER_PAGE, type NadlanDeal } from "@/lib/nadlanTransactionSeries";
  * of data, so the year tabs never went further back.
  *
  * Filters mirror the graph's controls exactly — change one there, change it here.
+ *
+ * `neighborhood` is the one filter with no counterpart on the graph: it serves
+ * the map's neighbourhood panel. It matches EXACTLY, against the same string
+ * neighborhood_year_stats stores, which is byte-identical to the value in this
+ * table — both are the Tax Authority's spelling. Passing anything else (an
+ * OpenStreetMap name, say) returns zero deals silently, which is why the
+ * caller derives it from the price row and never from the map shape.
  */
 export const dynamic = "force-dynamic";
 
@@ -43,6 +50,7 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
   const dealType = (["all", "sh", "new"].includes(q.get("dealType") ?? "") ? q.get("dealType") : "all") as DealType;
   const buildingAge = (["all", "modern", "old"].includes(q.get("buildingAge") ?? "") ? q.get("buildingAge") : "all") as Ba;
   const room = q.get("room") ?? "all";
+  const neighborhood = (q.get("neighborhood") ?? "").trim();
   const offset = Math.max(0, Number(q.get("offset") ?? 0) || 0);
   const limit = Math.min(1000, Math.max(1, Number(q.get("limit") ?? DRAWER_PAGE) || DRAWER_PAGE));
 
@@ -56,6 +64,10 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
     if (to > 0) { where.push("deal_year <= ?"); args.push(to); }
   }
   if (["3", "4", "5"].includes(room)) { where.push("room_bucket = ?"); args.push(room); }
+  // Bound with ?, never interpolated: this one arrives as free text from the
+  // client. `limit`/`offset` are the only values inlined below, and only
+  // because they have been coerced to bounded numbers.
+  if (neighborhood) { where.push("neighborhood = ?"); args.push(neighborhood); }
 
   if (dealType === "sh") {
     where.push("is_secondhand = 1");
@@ -65,6 +77,10 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
     where.push("is_secondhand = 0 AND year_built IS NOT NULL AND year_built > 0");
   }
 
+  // ONE clause for the rows and the COUNT. Any filter added above therefore
+  // narrows the total too — a page of 25 out of a "total" that ignored the
+  // neighbourhood would misreport the neighbourhood's size by two orders of
+  // magnitude in a large city.
   const clause = where.join(" AND ");
   try {
     const [rows, countRow] = await Promise.all([

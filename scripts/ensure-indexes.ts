@@ -18,6 +18,10 @@
  *   idx_nadlan_tx_excluded_year  the home page's "usable deals" count
  *     Both were full scans of the whole table on every render: the only
  *     existing index leads with city_name, which neither predicate mentions.
+ *   idx_nadlan_tx_city_hood_date the map's neighbourhood panel, which asks for
+ *     one neighbourhood's deals newest-first. The existing city_name index
+ *     stops at the city, so without this every click scanned every deal in the
+ *     city and sorted them.
  *   idx_stats_bucket_scope_year  /cities, /compare and the rankings, which scan
  *     the stats table by bucket+scope across ALL cities; the unique index there
  *     also leads with city_name and cannot serve them.
@@ -39,6 +43,11 @@ const INDEXES: Array<{ name: string; sql: string; why: string }> = [
     name: "idx_nadlan_tx_excluded_year",
     sql: "CREATE INDEX IF NOT EXISTS idx_nadlan_tx_excluded_year ON nadlan_transactions(excluded, deal_year)",
     why: 'ספירת עסקאות כשירות (עמוד הבית)',
+  },
+  {
+    name: "idx_nadlan_tx_city_hood_date",
+    sql: "CREATE INDEX IF NOT EXISTS idx_nadlan_tx_city_hood_date ON nadlan_transactions(city_name, neighborhood, deal_date)",
+    why: 'עסקאות של שכונה בודדת (פאנל השכונה במפה)',
   },
   {
     name: "idx_stats_bucket_scope_year",

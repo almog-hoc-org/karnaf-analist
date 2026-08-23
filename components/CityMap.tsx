@@ -2,16 +2,21 @@
 
 import { useMemo } from "react";
 import type { MappedNeighborhood, MapLine } from "@/lib/cityMap";
+import {
+  MAP_FILLS, MAP_NO_DATA, MAP_WATER, MAP_COAST, MAP_ROAD, MAP_ROAD_LABEL, MAP_SELECTED,
+} from "@/lib/chartColors";
 
 /**
  * The city, drawn.
  *
  * Four layers in one <svg>, in this order for a reason:
- *   water → streets → neighbourhoods → labels
- * Streets sit UNDER the fills. Drawn on top they turn the map into a grey mesh
- * and the colour — which is the actual information — reads as a tint behind a
- * grid. Underneath they do the one job they are here for: telling the reader
- * where in the city they are looking.
+ *   water → neighbourhoods → streets → labels
+ * Streets sit OVER the fills, in white. They used to sit under them, which
+ * only worked because the fills were half-transparent — and half-transparent
+ * over a near-white page is a hard ceiling on how dark any colour can get, so
+ * the whole price ramp came out as pastels and the lightest step read as
+ * white. The fills are opaque now; a white mesh on top reads as roads without
+ * tinting the colour underneath, which is the actual information.
  *
  * No map library and no tiles. The geometry was projected and simplified once
  * by scripts/collect-city-map.ts and stored as path strings, so this component
@@ -23,12 +28,8 @@ import type { MappedNeighborhood, MapLine } from "@/lib/cityMap";
  * were clipped to a single digit until the direction was pinned.
  */
 
-/** One hue, five depths — "light blue, semi-transparent", deepening with price. */
-const FILLS = ["#e0f2fe", "#bae6fd", "#7dd3fc", "#38bdf8", "#0ea5e9"];
-const NO_DATA_FILL = "#f1f5f9";
-
 /** Stroke width per road class (view-box units; the box is 1000 wide). */
-const ROAD_WIDTH: Record<number, number> = { 1: 2.2, 2: 1.8, 3: 1.3, 4: 0.9, 5: 0.6 };
+const ROAD_WIDTH: Record<number, number> = { 1: 1.9, 2: 1.5, 3: 1.1, 4: 0.8, 5: 0.55 };
 
 /** At most this many street names. Beyond it the map is a word cloud. */
 const MAX_ROAD_LABELS = 10;
@@ -74,47 +75,82 @@ export default function CityMap({
       className={`h-auto w-full ${className}`}
       onMouseLeave={() => onHover(null)}
     >
+      <defs>
+        {/* No-data gets a TEXTURE, not just a hue. A shape with a boundary and
+            no priced cell must never be mistaken for "cheapest", and a
+            distinction that rests on colour alone can always collide with the
+            lightest step of the ramp — it already did, at ΔE 4.16. */}
+        <pattern id="map-nodata" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="6" height="6" fill={MAP_NO_DATA} />
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#cbd5e1" strokeWidth="1.4" />
+        </pattern>
+      </defs>
+
       <rect x="0" y="0" width="1000" height="1000" fill="#fbfdff" />
 
       {water.map((w, i) => (
-        <path key={`w${i}`} d={w.path} fill="#dbeafe" stroke="none" />
+        <path key={`w${i}`} d={w.path} fill={MAP_WATER} stroke="none" />
       ))}
       {coast.map((c, i) => (
-        <path key={`c${i}`} d={c.path} fill="none" stroke="#bfdbfe" strokeWidth={1.5} />
+        <path key={`c${i}`} d={c.path} fill="none" stroke={MAP_COAST} strokeWidth={1.5} />
       ))}
 
-      <g stroke="#cbd5e1" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      {/* The data layer. Opaque: the declared colour is the rendered colour. */}
+      {neighborhoods.map((n) => (
+        <path
+          key={n.neighborhood}
+          d={n.path}
+          fill={n.bin == null ? "url(#map-nodata)" : MAP_FILLS[n.bin]}
+          stroke="#ffffff"
+          strokeWidth={0.9}
+          className="cursor-pointer"
+          onMouseEnter={() => onHover(n.neighborhood)}
+          onClick={() => onPin(n.neighborhood)}
+        >
+          <title>
+            {n.summary
+              ? `${n.neighborhood} — ₪${Math.round(n.summary.sqm).toLocaleString("he-IL")} למ״ר`
+              : `${n.neighborhood} — אין מספיק עסקאות`}
+          </title>
+        </path>
+      ))}
+
+      {/* Streets ON TOP, as a white knockout. pointerEvents none so the mesh
+          never steals a click meant for the shape underneath it. */}
+      <g
+        stroke={MAP_ROAD} fill="none" strokeOpacity={0.55}
+        strokeLinecap="round" strokeLinejoin="round" pointerEvents="none"
+      >
         {roads.map((r, i) => (
-          <path key={`r${i}`} d={r.path} strokeWidth={ROAD_WIDTH[r.rank] ?? 0.6} />
+          <path key={`r${i}`} d={r.path} strokeWidth={ROAD_WIDTH[r.rank] ?? 0.55} />
         ))}
       </g>
 
-      {neighborhoods.map((n) => {
-        const isActive = active === n.neighborhood;
-        return (
+      {/* The selection outline is drawn AFTER the streets, so the mesh does not
+          cut through it, and after every fill, so a neighbouring shape cannot
+          paint over its own edge. An outline rather than an opacity change:
+          with opaque fills there is no alpha left to signal with. */}
+      {neighborhoods
+        .filter((n) => n.neighborhood === active)
+        .map((n) => (
           <path
-            key={n.neighborhood}
+            key={`s${n.neighborhood}`}
             d={n.path}
-            fill={n.bin == null ? NO_DATA_FILL : FILLS[n.bin]}
-            fillOpacity={n.bin == null ? 0.55 : isActive ? 0.95 : 0.62}
-            stroke={isActive ? "#1d4ed8" : "#ffffff"}
-            strokeWidth={isActive ? 2.2 : 0.9}
-            className="cursor-pointer transition-[fill-opacity]"
-            onMouseEnter={() => onHover(n.neighborhood)}
-            onClick={() => onPin(n.neighborhood)}
-          >
-            <title>
-              {n.summary
-                ? `${n.neighborhood} — ₪${Math.round(n.summary.sqm).toLocaleString("he-IL")} למ״ר`
-                : `${n.neighborhood} — אין מספיק עסקאות`}
-            </title>
-          </path>
-        );
-      })}
+            fill="none"
+            stroke={MAP_SELECTED}
+            strokeWidth={2.4}
+            strokeLinejoin="round"
+            pointerEvents="none"
+          />
+        ))}
 
       {/* Street names under the shapes' labels, so a neighbourhood name is never
-          hidden behind a road name. */}
-      <g fill="#94a3b8" fontSize="11" fontWeight="600" textAnchor="middle" pointerEvents="none">
+          hidden behind a road name. The halo is what keeps them legible over
+          the deep end of the ramp. */}
+      <g
+        fill={MAP_ROAD_LABEL} fontSize="11" fontWeight="700" textAnchor="middle"
+        stroke="#ffffff" strokeWidth={2.6} paintOrder="stroke" pointerEvents="none"
+      >
         {roadLabels.map((r, i) => (
           <text key={`rl${i}`} x={r.x} y={r.y}>{r.name}</text>
         ))}
@@ -131,7 +167,7 @@ export default function CityMap({
               x={n.cx} y={n.cy}
               textAnchor="middle"
               fontSize="15" fontWeight="800"
-              fill="#0f172a"
+              fill={MAP_SELECTED}
               stroke="#ffffff" strokeWidth={3.5} paintOrder="stroke"
             >
               {n.neighborhood}
@@ -141,7 +177,7 @@ export default function CityMap({
                 x={n.cx} y={n.cy + 17}
                 textAnchor="middle"
                 fontSize="13" fontWeight="700"
-                fill="#1d4ed8"
+                fill={MAP_FILLS[4]}
                 stroke="#ffffff" strokeWidth={3.5} paintOrder="stroke"
               >
                 ₪{Math.round(n.summary.sqm).toLocaleString("he-IL")}

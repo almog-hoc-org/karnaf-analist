@@ -39,8 +39,6 @@ export interface NeighborhoodSummary {
   /** % change vs the comparison year, when both ends exist */
   changePct: number | null;
   fromYear: number | null;
-  /** % above/below the city's own level in the same year */
-  vsCityPct: number | null;
 }
 
 async function loadCellsUncached(
@@ -75,14 +73,14 @@ async function loadCellsUncached(
 export const loadNeighborhoodCells = cachedMarket(loadCellsUncached, ["neighborhood-cells"]);
 
 /**
- * One row per neighbourhood: latest level, change over `years`, and distance
- * from the city's own level that year.
+ * One row per neighbourhood: latest level and change over `years`, plus the
+ * city's own level in the reference year.
  *
- * The city baseline is computed from THESE cells rather than from
+ * `citySqm` is computed from THESE cells rather than from
  * nadlan_year_room_stats on purpose. The two tables share a source but not a
  * population — a city figure includes deals with no neighbourhood recorded —
- * and "12% above the city average" has to be measured against a number the
- * same rows produced, or the comparison quietly compares two different things.
+ * so a city number shown beside these rows has to come from the same rows, or
+ * the header quietly describes a different set of deals than the table does.
  */
 export async function neighborhoodSummary(
   cityName: string,
@@ -120,7 +118,6 @@ export async function neighborhoodSummary(
       n: c.n,
       changePct: base ? (c.sqm! / base.sqm! - 1) * 100 : null,
       fromYear: base ? base.year : null,
-      vsCityPct: citySqm ? (c.sqm! / citySqm - 1) * 100 : null,
     });
   }
   rows.sort((a, b) => b.sqm - a.sqm);

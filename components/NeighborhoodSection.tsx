@@ -8,6 +8,8 @@ import CityMap from "@/components/CityMap";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
 import NeighborhoodPrices from "@/components/NeighborhoodPrices";
+import NeighborhoodDetail from "@/components/NeighborhoodDetail";
+import { MAP_FILLS, MAP_NO_DATA } from "@/lib/chartColors";
 import type { CityMapView } from "@/lib/cityMap";
 import type { NeighborhoodSummary } from "@/lib/neighborhoods";
 
@@ -20,8 +22,12 @@ import type { NeighborhoodSummary } from "@/lib/neighborhoods";
  * row, hovering a row lights its shape. Two independent hover states would let
  * the two disagree about what the reader is pointing at.
  *
- * A CLICK PINS. Hover alone is unusable for reading a number — the moment the
- * pointer leaves the shape to reach the row, the highlight is gone.
+ * A CLICK OPENS. Hover alone is unusable for reading a number — the moment the
+ * pointer leaves the shape to reach the row, the highlight is gone — so a
+ * click pins the neighbourhood AND swaps the table out for that one
+ * neighbourhood's own figures and its deals. Hover deliberately does neither:
+ * it only highlights, so that crossing the map with the pointer cannot swap
+ * the panel out from under the reader, and cannot fire a request per shape.
  *
  * THE NUMBERS LIVE IN THE TABLE. The map shows the name and ₪/m² of whatever
  * is active and nothing else. Repeating change, vs-city and deal count on the
@@ -82,6 +88,11 @@ export default function NeighborhoodSection({
   const togglePin = (name: string | null) =>
     setPinned((cur) => (cur === name ? null : name));
 
+  /* The pinned shape, resolved to the mapped row. Resolved from `pinned` and
+     never from `active`: `active` follows the pointer, and a panel that
+     followed the pointer would be unreadable. */
+  const openHood = pinned ? map.neighborhoods.find((n) => n.neighborhood === pinned) ?? null : null;
+
   return (
     <section className="mb-10">
       <div className="mb-4 flex items-start gap-3">
@@ -103,7 +114,7 @@ export default function NeighborhoodSection({
             />
           </h2>
           <p className="mt-1 truncate text-xs text-slate-500">
-            {map.matched} שכונות על המפה · לחצו על שכונה כדי לקבע אותה
+            {map.matched} שכונות על המפה · לחצו על שכונה כדי לפתוח אותה ואת העסקאות שלה
           </p>
         </div>
       </div>
@@ -124,12 +135,24 @@ export default function NeighborhoodSection({
           <Legend edges={map.binEdges} fmt={fmt} />
         </div>
 
-        <div className="lg:max-h-[560px] lg:overflow-y-auto">
-          <NeighborhoodPrices
-            cityName={cityName} rows={rows} year={year}
-            citySqm={citySqm} minDeals={minDeals} scopeLabel={scopeLabel}
-            active={active} onHover={setHovered} onPin={togglePin} compact
-          />
+        {/* No max-height and no overflow here. A scroll box in this column
+            clipped six of Tel Aviv's eighteen rows and fed a second, horizontal
+            scrollbar inside the table; the compact row height is what makes the
+            full list fit instead. */}
+        <div>
+          {openHood ? (
+            <NeighborhoodDetail
+              cityName={cityName}
+              hood={openHood}
+              onBack={() => setPinned(null)}
+            />
+          ) : (
+            <NeighborhoodPrices
+              cityName={cityName} rows={rows} year={year}
+              citySqm={citySqm} minDeals={minDeals} scopeLabel={scopeLabel}
+              active={active} onHover={setHovered} onPin={togglePin} compact
+            />
+          )}
         </div>
       </div>
 
@@ -143,15 +166,19 @@ export default function NeighborhoodSection({
 }
 
 /** What each shade means, in shekels. A colour scale with no legend is a
- *  decoration — and this one is per-city, so the reader cannot infer it. */
+ *  decoration — and this one is per-city, so the reader cannot infer it.
+ *
+ *  The swatches come from lib/chartColors, not from a local copy. There WAS a
+ *  local copy, and it had already drifted from the map's: the legend drew the
+ *  no-data grey at full opacity while the map drew it at 0.55, so the two were
+ *  describing different colours to the same reader. */
 function Legend({ edges, fmt }: { edges: number[]; fmt: (v: number) => string }) {
-  const FILLS = ["#e0f2fe", "#bae6fd", "#7dd3fc", "#38bdf8", "#0ea5e9"];
   return (
     <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-2xs text-slate-500">
       <span className="font-bold">מחיר למ״ר:</span>
       <span className="flex items-center gap-1">
-        {FILLS.map((c, i) => (
-          <span key={i} className="h-3 w-6 rounded-sm border border-white" style={{ backgroundColor: c, opacity: 0.62 }} />
+        {MAP_FILLS.map((c, i) => (
+          <span key={i} className="h-3 w-6 rounded-sm border border-white" style={{ backgroundColor: c }} />
         ))}
       </span>
       {edges.length > 0 && (
@@ -160,7 +187,13 @@ function Legend({ edges, fmt }: { edges: number[]; fmt: (v: number) => string })
         </span>
       )}
       <span className="flex items-center gap-1">
-        <span className="h-3 w-6 rounded-sm border border-white" style={{ backgroundColor: "#f1f5f9" }} />
+        <span
+          className="h-3 w-6 rounded-sm border border-white"
+          style={{
+            backgroundColor: MAP_NO_DATA,
+            backgroundImage: "repeating-linear-gradient(45deg, #cbd5e1 0 1.4px, transparent 1.4px 6px)",
+          }}
+        />
         אין מספיק עסקאות
       </span>
     </div>

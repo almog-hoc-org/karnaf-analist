@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import TrendValue from "@/components/TrendValue";
@@ -13,11 +12,13 @@ import type { NeighborhoodSummary } from "@/lib/neighborhoods";
  * Three deliberate restraints:
  *   · Every row shows its own n. A neighbourhood median off nine deals and one
  *     off nine hundred look identical unless the page says otherwise.
- *   · The comparison is against the city level computed FROM THESE SAME CELLS
- *     (lib/neighborhoods), not against the city stats table, which counts deals
- *     that carry no neighbourhood at all.
  *   · Nothing is ranked "best" or "up and coming". The table sorts by price and
  *     shows the change beside it; the reader draws the conclusion.
+ *   · NOTHING SCROLLS. Beside the map this table is one column of a two-column
+ *     row, and a table that scrolls sideways inside a column nobody scrolls is
+ *     data the reader never finds. The row height and the truncated name are
+ *     what buy that: at py-1/text-xs a row is ~28px, so a full Tel Aviv list
+ *     of 18 fits inside the square map beside it.
  */
 export default function NeighborhoodPrices({
   cityName, rows, year, citySqm, minDeals, scopeLabel,
@@ -38,21 +39,17 @@ export default function NeighborhoodPrices({
   /** inside the map section the heading lives on the section, not here */
   compact?: boolean;
 }) {
-  /* Hooks before the early return — React requires the same hooks on every
-     render, and `rows` can legitimately be empty. */
-  const rowRefs = useRef<Record<string, HTMLTableRowElement | null>>({});
-  useEffect(() => {
-    if (!active) return;
-    // Hovering a shape on the map should bring its row into view: with twenty
-    // neighbourhoods the matching row is usually below the fold, and a
-    // highlight nobody can see is not a highlight. `nearest` so the page does
-    // not jump when the row is already visible.
-    rowRefs.current[active]?.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }, [active]);
-
+  /* No scrollIntoView here on purpose. It existed only because the table sat
+     in a max-height scroll box; without that box its nearest scrollable
+     ancestor is the DOCUMENT, so hovering a shape on the map would scroll the
+     whole page out from under the reader. Every row is visible now anyway. */
   if (!rows.length) return null;
 
   const fmt = (v: number) => `₪${Math.round(v).toLocaleString("he-IL")}`;
+  /* Beside the map the row budget is arithmetic, not taste: 18 rows have to
+     land inside a square map of the same width as its column. */
+  const padY = compact ? "py-1" : "py-2.5";
+  const padX = compact ? "px-2.5" : "px-4";
   const top = rows[0], bottom = rows[rows.length - 1];
   const spread = bottom.sqm > 0 ? top.sqm / bottom.sqm : null;
 
@@ -82,22 +79,30 @@ export default function NeighborhoodPrices({
         </p>
       )}
 
-      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
-        <table className="w-full min-w-[520px] text-sm">
+      {/* No overflow-x-auto and no min-width: a forced 520px inside a 438px
+          column is a horizontal scrollbar guaranteed by the CSS, whatever the
+          content says. Standalone (no map) the section is wide enough that the
+          columns never need it either. */}
+      <div className="rounded-2xl border border-slate-200 bg-white">
+        <table className={`w-full table-fixed ${compact ? "text-xs" : "text-sm"}`}>
+          <colgroup>
+            <col />
+            <col className={compact ? "w-[5.5rem]" : "w-32"} />
+            <col className={compact ? "w-[6.5rem]" : "w-40"} />
+            <col className={compact ? "w-14" : "w-24"} />
+          </colgroup>
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-2xs uppercase tracking-wide text-slate-500">
-              <th scope="col" className="px-4 py-2.5 text-right font-bold">שכונה</th>
-              <th scope="col" className="px-3 py-2.5 text-right font-bold">₪ למ״ר</th>
-              <th scope="col" className="px-3 py-2.5 text-right font-bold">מול העיר</th>
-              <th scope="col" className="px-3 py-2.5 text-right font-bold">שינוי</th>
-              <th scope="col" className="px-3 py-2.5 text-right font-bold">עסקאות</th>
+              <th scope="col" className={`${padX} ${padY} text-right font-bold`}>שכונה</th>
+              <th scope="col" className={`px-2 ${padY} text-right font-bold`}>₪ למ״ר</th>
+              <th scope="col" className={`px-2 ${padY} text-right font-bold`}>שינוי</th>
+              <th scope="col" className={`px-2 ${padY} text-right font-bold`}>עסקאות</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((r) => (
               <tr
                 key={r.neighborhood}
-                ref={(el) => { rowRefs.current[r.neighborhood] = el; }}
                 onMouseEnter={() => onHover?.(r.neighborhood)}
                 onMouseLeave={() => onHover?.(null)}
                 onClick={() => onPin?.(r.neighborhood)}
@@ -105,22 +110,24 @@ export default function NeighborhoodPrices({
                   active === r.neighborhood ? "bg-sky-100" : onHover ? "cursor-pointer hover:bg-sky-50" : ""
                 }`}
               >
-                <th scope="row" className="px-4 py-2.5 text-right font-bold text-slate-900">{r.neighborhood}</th>
-                <td className="px-3 py-2.5 text-right font-bold tabular-nums text-slate-800">{fmt(r.sqm)}</td>
-                <td className="px-3 py-2.5 text-right tabular-nums">
-                  {r.vsCityPct == null ? <span className="text-slate-300">—</span> : <TrendValue pct={r.vsCityPct} />}
-                </td>
-                <td className="px-3 py-2.5 text-right tabular-nums">
+                {/* truncate + title, not wrapping. "הצפון החדש סביבת כיכר
+                    המדינה" is 28 characters: allowed to wrap it doubles its
+                    row and blows the table past the map beside it. */}
+                <th scope="row" className={`${padX} ${padY} truncate text-right font-bold text-slate-900`} title={r.neighborhood}>
+                  {r.neighborhood}
+                </th>
+                <td className={`px-2 ${padY} text-right font-bold tabular-nums text-slate-800`}>{fmt(r.sqm)}</td>
+                <td className={`px-2 ${padY} text-right tabular-nums`}>
                   {r.changePct == null ? (
-                    <span className="text-2xs text-slate-400">אין {r.fromYear ?? "בסיס"} להשוואה</span>
+                    <span className="text-2xs text-slate-400">אין בסיס</span>
                   ) : (
-                    <span className="inline-flex items-center gap-1">
+                    <span className="inline-flex items-center gap-1 whitespace-nowrap">
                       <TrendValue pct={r.changePct} />
                       <span className="text-2xs text-slate-400">מ־{r.fromYear}</span>
                     </span>
                   )}
                 </td>
-                <td className="px-3 py-2.5 text-right tabular-nums text-slate-500">{r.n.toLocaleString("he-IL")}</td>
+                <td className={`px-2 ${padY} text-right tabular-nums text-slate-500`}>{r.n.toLocaleString("he-IL")}</td>
               </tr>
             ))}
           </tbody>
@@ -130,7 +137,7 @@ export default function NeighborhoodPrices({
       {!compact && (
       <p className="mt-2 text-2xs leading-relaxed text-slate-400">
         <Icon name="source-own" size="1em" /> מחושב מהעסקאות שנאספו ונוקו — שם השכונה כפי שדווח לרשות המסים.
-        עסקה ללא שכונה רשומה נכללת במספרי העיר ולא בטבלה הזו, ולכן ״מול העיר״ מושווה לממוצע של אותן עסקאות בלבד.
+        עסקה ללא שכונה רשומה נכללת במספרי העיר ולא בטבלה הזו, ולכן ממוצע העיר שבכותרת מחושב מאותן עסקאות-שכונה בלבד.
         {" "}<Link href="/methodology" className="underline hover:text-indigo-700">מתודולוגיה →</Link>
       </p>
       )}

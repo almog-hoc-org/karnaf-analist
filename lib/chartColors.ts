@@ -56,3 +56,45 @@ export const tooltipStyle = {
 export function tipFmt<R>(fn: (value: number, name: string) => R) {
   return (value: unknown, name: unknown): R => fn(Number(value), String(name ?? ""));
 }
+
+/**
+ * Neighbourhood-map fills — the choropleth ramp, one hue, five depths.
+ *
+ * OPAQUE ON PURPOSE. These shipped at fill-opacity 0.62 over a near-white
+ * background, which is a mathematical ceiling: at that alpha no fill of any
+ * hue can render darker than #5F6061, so the "deepest" step came out a pastel
+ * (1.88:1 against the page) and the lightest was #EAF6FE — white with a hint.
+ * Worse, no-data rendered ΔE 1.71 from the background, i.e. invisible, and
+ * only ΔE 4.16 from the first price step. Declared colour is now rendered
+ * colour, so the ramp below is what the reader actually sees.
+ *
+ * Blue, not the brand petrol: the map's blues are a per-city quantity scale,
+ * not a brand accent, and the deliberate ask was that the lightest step still
+ * read as blue.
+ */
+export const MAP_FILLS: string[] = [
+  "#bae6fd", // sky-200 — unmistakably blue at full opacity
+  "#7dd3fc", // sky-300
+  "#38bdf8", // sky-400
+  "#0284c7", // sky-600
+  "#075985", // sky-800
+];
+
+/** A shape with a boundary but no priced cell. Grey, plus a hatch — the
+ *  distinction must not rest on hue alone, where it can collide with step 1. */
+export const MAP_NO_DATA = "#eef2f6";
+
+/** The sea. OFF the blue ramp: the previous #dbeafe sat ΔE 5.2 from step 2,
+ *  so the water competed with the data it was supposed to sit behind. */
+export const MAP_WATER = "#dde7ef";
+export const MAP_COAST = "#b8c7d4";
+
+/** Streets, drawn OVER the opaque fills as a knockout — a white mesh on top
+ *  reads as roads without tinting the colour underneath. */
+export const MAP_ROAD = "#ffffff";
+export const MAP_ROAD_LABEL = "#475569"; // slate-600 — needs a white halo over the deep end
+
+/** The pinned/hovered shape. An outline, not an opacity change: with opaque
+ *  fills there is no alpha left to signal with, and INK is visible over all
+ *  five steps. */
+export const MAP_SELECTED = INK;

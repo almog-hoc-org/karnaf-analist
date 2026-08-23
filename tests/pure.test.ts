@@ -11,6 +11,8 @@ import { labelForPath, sectionLabel } from "@/lib/pageLabels";
 import { reconcile, defaultOrder, PAGE_KEYS, PAGE_SECTIONS } from "@/lib/pageSections";
 import { priceBins, binOf, buildCityMap, type CityMapGeometry } from "@/lib/cityMap";
 import { normHoodKey } from "@/lib/hoodKey";
+import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
+import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
 import { project, makeProjector, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
@@ -843,5 +845,72 @@ describe("neighbourhood map bins and join", () => {
       [nb("רמת אביב", 50_000), nb("רמת החייל", 60_000), nb("א", 1), nb("ב", 2), nb("ג", 3)]
     );
     expect(view!.neighborhoods.find((n) => n.neighborhood === "רמת")!.summary).toBeNull();
+  });
+});
+
+describe("neighbourhood deals query", () => {
+  const priced = (osmName: string, taxName: string) => ({
+    neighborhood: osmName,
+    summary: {
+      neighborhood: taxName,
+      year: 2025, sqm: 50_000, n: 120, changePct: 12.5, fromYear: 2022,
+    },
+  });
+
+  it("sends the TAX AUTHORITY name, not the name on the map shape", () => {
+    // The two names are usually equal, which is what makes this quiet: send
+    // the OpenStreetMap spelling and every neighbourhood comes back with zero
+    // deals and looks like a neighbourhood nobody buys in.
+    const q = neighborhoodDealsQuery(priced("הצפון הישן", "הצפון הישן - האזור הדרומי"), "sh");
+    expect(q!.get("neighborhood")).toBe("הצפון הישן - האזור הדרומי");
+    expect(q!.get("neighborhood")).not.toBe("הצפון הישן");
+  });
+
+  it("asks for nothing at all when the shape has no priced row", () => {
+    // No Tax Authority counterpart exists, so the request is guaranteed empty
+    // and would only spend the endpoint's 90-per-minute budget.
+    expect(neighborhoodDealsQuery({ neighborhood: "רמת אפעל", summary: null }, "sh")).toBeNull();
+  });
+
+  it("pages by offset without losing the neighbourhood", () => {
+    const q = neighborhoodDealsQuery(priced("פלורנטין", "פלורנטין"), "all", { offset: 25 });
+    expect(q!.get("offset")).toBe("25");
+    expect(q!.get("neighborhood")).toBe("פלורנטין");
+    expect(q!.get("dealType")).toBe("all");
+  });
+
+  it("opens on second-hand, so the panel total matches the table's deal count", () => {
+    // The "עסקאות" column beside the map counts second-hand deals; any other
+    // default would open a panel whose header disagrees with the row clicked.
+    expect(DEAL_SCOPES[0].id).toBe("sh");
+    expect(DEAL_SCOPES.map((s) => s.id).sort()).toEqual(["all", "new", "sh"]);
+  });
+});
+
+describe("map colour ramp", () => {
+  it("has five distinct steps and none of them is the no-data grey", () => {
+    expect(MAP_FILLS).toHaveLength(5);
+    expect(new Set(MAP_FILLS).size).toBe(5);
+    expect(MAP_FILLS).not.toContain(MAP_NO_DATA);
+    expect(MAP_FILLS).not.toContain(MAP_WATER);
+  });
+
+  it("is monotonically darker, so deeper always means more expensive", () => {
+    // Rendered at full opacity now: the declared value IS what the reader
+    // sees, so relative luminance here is the real ordering on screen.
+    const lum = (hex: string) => {
+      const c = [1, 3, 5].map((i) => {
+        const v = parseInt(hex.slice(i, i + 2), 16) / 255;
+        return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    };
+    const ls = MAP_FILLS.map(lum);
+    for (let i = 1; i < ls.length; i++) expect(ls[i]).toBeLessThan(ls[i - 1]);
+    // And the lightest step is still unmistakably blue — the whole point of
+    // this change. Blue channel well clear of red, not a near-white tint.
+    const b = parseInt(MAP_FILLS[0].slice(5, 7), 16);
+    const r = parseInt(MAP_FILLS[0].slice(1, 3), 16);
+    expect(b - r).toBeGreaterThan(40);
   });
 });

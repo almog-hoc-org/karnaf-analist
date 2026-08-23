@@ -28,10 +28,26 @@ function arg(name: string): string | undefined {
   return i >= 0 ? process.argv[i + 1] : undefined;
 }
 
-/** A 3×2 grid of neighbourhoods over a 1000×1000 box, with a margin. */
+/**
+ * Names at REAL Tel Aviv lengths, and at the real count.
+ *
+ * The list matters as much as the rectangles: the table beside the map has to
+ * fit every row inside the map's height without a scrollbar, and that is
+ * arithmetic over the row count and the longest name. Six three-letter names
+ * would fit any layout and prove nothing. "הצפון החדש סביבת כיכר המדינה" is 28
+ * characters — allowed to wrap it doubles its row.
+ */
+const FIXTURE_NAMES = [
+  "הצפון החדש סביבת כיכר המדינה", "הצפון הישן צפון", "הצפון הישן דרום",
+  "לב תל אביב", "כרם התימנים", "נווה צדק", "פלורנטין", "שפירא",
+  "רמת אביב", "רמת אביב ג", "אפקה", "נאות אפקה", "יד אליהו",
+  "רמת החייל", "בבלי", "צהלה", "עג׳מי", "נווה עופר",
+];
+
+/** A grid of neighbourhoods over a 1000×1000 box, with a margin. */
 function grid(city: string) {
-  const names = ["צפון", "מרכז", "דרום", "מזרח", "מערב", "עתיק"];
-  const cols = 3, rows = 2, pad = 60;
+  const names = FIXTURE_NAMES;
+  const cols = 5, rows = Math.ceil(names.length / 5), pad = 40;
   const w = (1000 - pad * 2) / cols;
   const h = (1000 - pad * 2) / rows;
   return names.map((name, i) => {
@@ -115,20 +131,45 @@ function main(): number {
         `INSERT INTO neighborhood_year_stats (city_name, neighborhood, year, room_bucket, scope, avg_sqm, median_sqm, median_price, n)
          VALUES (?,?,?, 'all', 'secondhand', ?,?,?,?)`
       );
-      // Five of six get prices; the sixth stays blank on purpose, so the
-      // "no data" shade has something to render in development.
+      // All but the last two get prices; those stay blank on purpose, so the
+      // "no data" hatch has something to render in development.
       cells.forEach((c, i) => {
-        if (i === cells.length - 1) return;
-        const base = 30_000 + i * 9_000;
+        if (i >= cells.length - 2) return;
+        const base = 30_000 + i * 1_900;
         for (const [year, factor] of [[2022, 0.82], [2025, 1]] as const) {
           insCell.run(c.city, c.name, year, base * factor, base * factor, base * factor * 95, 40 + i * 7);
+        }
+      });
+
+      /* Deals too. The panel that opens on a click reads nadlan_transactions
+         directly, so without rows here a click renders "אין עסקאות" and the
+         whole interaction is unmeasurable outside production. */
+      const insTx = db.prepare(
+        `INSERT INTO nadlan_transactions
+           (city_name, neighborhood, deal_date, deal_year, rooms, room_bucket, area, price,
+            price_sqm, year_built, is_secondhand, source, street, house_num, floor, excluded)
+         VALUES (?,?,?,?,?,?,?,?,?,?,?, 'fixture', ?,?,?,0)`
+      );
+      cells.forEach((c, i) => {
+        if (i >= cells.length - 2) return;
+        const sqm = 30_000 + i * 1_900;
+        for (let d = 0; d < 40; d++) {
+          const area = 70 + (d % 5) * 12;
+          const rooms = 3 + (d % 3);
+          const price = Math.round(sqm * area * (0.9 + (d % 7) / 35));
+          insTx.run(
+            city, c.name, `2025-${String(1 + (d % 12)).padStart(2, "0")}-${String(1 + (d % 27)).padStart(2, "0")}`,
+            2025, rooms, String(Math.min(5, Math.max(3, rooms))), area, price,
+            Math.round(price / area), 1998 + (d % 20), d % 4 === 0 ? 0 : 1,
+            `רחוב הדוגמה ${i + 1}`, String(10 + d), String(1 + (d % 9))
+          );
         }
       });
     }
   });
   write();
 
-  console.log(`✓ פיקסצ׳ר ל${city}: ${cells.length} שכונות, 2 כבישים, מים${priced.c === 0 ? ", ומחירים סינתטיים" : ""}`);
+  console.log(`✓ פיקסצ׳ר ל${city}: ${cells.length} שכונות, 2 כבישים, מים${priced.c === 0 ? ", מחירים ועסקאות סינתטיים" : ""}`);
   console.log("  (שרטוט סינתטי לפיתוח בלבד — לא נתונים)");
   return 0;
 }
