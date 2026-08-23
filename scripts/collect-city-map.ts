@@ -43,7 +43,15 @@ const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db"
 const ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+  "https://overpass.osm.jp/api/interpreter",
 ];
+
+/** Overpass slots are shared and genuinely intermittent: a busy server answers
+ *  429 or 504 in a second or two, which is not a reason to give up on the run.
+ *  Three passes over the endpoint list, backing off between them. */
+const ROUNDS = 3;
+const BACKOFF_MS = [0, 15_000, 45_000];
 
 /** Simplification tolerance, in view-box units (the box is 1000 wide).
  *  0.35 keeps a shape visually identical at 800px and removes most points. */
@@ -93,25 +101,48 @@ out geom;`;
 }
 
 async function fetchOverpass(query: string): Promise<OsmElement[]> {
-  let lastError = "";
+  // EVERY failure is printed, not just the last one. The first attempt at this
+  // reported only the final endpoint's error — "502" — which said nothing about
+  // whether the others had refused, timed out, or answered with something
+  // unparseable, and left the actual cause a guess.
+  const failures: string[] = [];
   for (const url of ENDPOINTS) {
+    const host = new URL(url).host;
+    const started = Date.now();
     try {
       const res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          // Overpass asks callers to identify themselves; an anonymous
+          // client is the first thing a busy server sheds.
+          "User-Agent": "karnaf-analist/1.0 (neighbourhood map collector)",
+        },
         body: new URLSearchParams({ data: query }),
         signal: AbortSignal.timeout(200_000),
       });
-      if (!res.ok) { lastError = `${url} → ${res.status}`; continue; }
+      const ms = Date.now() - started;
+      if (!res.ok) {
+        const body = (await res.text().catch(() => "")).slice(0, 200).replace(/\s+/g, " ");
+        failures.push(`${host} → ${res.status} אחרי ${ms}ms${body ? ` · ${body}` : ""}`);
+        continue;
+      }
       const json = await res.json();
-      if (Array.isArray(json?.elements)) return json.elements as OsmElement[];
-      lastError = `${url} → תשובה ללא elements`;
+      if (Array.isArray(json?.elements)) {
+        console.log(`  ${host} ענה אחרי ${ms}ms`);
+        return json.elements as OsmElement[];
+      }
+      failures.push(`${host} → 200 ללא elements אחרי ${ms}ms`);
     } catch (e) {
-      lastError = `${url} → ${e instanceof Error ? e.message : String(e)}`;
+      failures.push(`${host} → ${e instanceof Error ? e.message : String(e)} אחרי ${Date.now() - started}ms`);
     }
   }
-  throw new Error(`כל נקודות הקצה של Overpass נכשלו. אחרונה: ${lastError}`);
+  throw new Error(`כל נקודות הקצה נכשלו:\n    ${failures.join("\n    ")}`);
 }
+
+/** Wait between rounds. Overpass slots are shared; hammering is how a caller
+ *  earns a longer ban, not a faster answer. */
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** Every ring an element carries: a way has one, a relation has one per outer member. */
 function ringsOf(el: OsmElement): LonLat[][] {
@@ -174,13 +205,43 @@ async function main(): Promise<number> {
   console.log(`מושך את ${city} מ-OpenStreetMap…`);
   let elements: OsmElement[] = [];
   let matched: { tag: string; name: string } | null = null;
-  for (const a of attempts) {
-    const got = await fetchOverpass(buildQuery(a.name, a.tag));
-    if (got.length > 0) { elements = got; matched = a; break; }
-    console.log(`  ${a.tag}="${a.name}" → 0`);
+  let lastTransportError = "";
+
+  // Rounds wrap the WHOLE ladder, not each query in it. Retrying per variant
+  // would have meant up to 72 requests against a free, shared service for one
+  // city — which is how a caller earns a ban rather than an answer.
+  //
+  // The two failure modes are kept apart on purpose: a name that does not
+  // exist answers 200 with zero elements and is NOT retried (retrying cannot
+  // make it exist), while a refused or failed request is.
+  for (let round = 0; round < ROUNDS && !matched; round++) {
+    if (round > 0) {
+      console.log(`  אף נקודת קצה לא ענתה. ממתין ${BACKOFF_MS[round] / 1000}s וסבב ${round + 1}/${ROUNDS}…`);
+      await sleep(BACKOFF_MS[round]);
+    }
+    let anyAnswered = false;
+    for (const a of attempts) {
+      try {
+        const got = await fetchOverpass(buildQuery(a.name, a.tag));
+        anyAnswered = true;
+        if (got.length > 0) { elements = got; matched = a; break; }
+        console.log(`  ${a.tag}="${a.name}" → 0 אלמנטים`);
+      } catch (e) {
+        lastTransportError = e instanceof Error ? e.message : String(e);
+      }
+    }
+    // Every variant answered and every one was empty: the city is not there
+    // under any spelling we tried, and another round changes nothing.
+    if (anyAnswered && !matched) break;
   }
+
   if (!matched) {
-    console.error(`✗ Overpass לא החזיר כלום לאף וריאציה של ״${city}״ — בדקו את שם הגבול המנהלי ב-openstreetmap.org`);
+    if (lastTransportError) {
+      console.error(`✗ Overpass לא זמין כרגע. ${lastTransportError}`);
+      console.error("  לא נכתב כלום — הרצה הבאה תנסה שוב.");
+    } else {
+      console.error(`✗ Overpass לא מכיר אף וריאציה של ״${city}״ — בדקו את שם הגבול המנהלי ב-openstreetmap.org`);
+    }
     return 1;
   }
   console.log(`התקבלו ${elements.length} אלמנטים (${matched.tag}="${matched.name}")`);
