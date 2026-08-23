@@ -5,6 +5,13 @@ import Link from "next/link";
 import TrendValue from "@/components/TrendValue";
 import Icon from "@/components/Icon";
 import { YearRange } from "@/components/FromTo";
+// The selection lives in lib/ so that the deploy-time probe and the unit tests
+// exercise the SAME code this renders from. A check that re-implements the
+// component's logic verifies the check, not the component.
+import {
+  selectMovers, explainEmpty, defaultMoversQuery, EMPTY_TEXT,
+  type GainSeries as MoversSeries,
+} from "@/lib/moversBoard";
 
 /**
  * "שינויי מחיר" ranking card with FULL user control (user spec):
@@ -21,7 +28,7 @@ import { YearRange } from "@/components/FromTo";
  */
 
 /** city → scope → year → [avgSqm, medianSqm] (n≥10 cells only) */
-export type GainSeries = Record<string, Record<string, Record<number, [number, number]>>>;
+export type GainSeries = MoversSeries;
 
 const SCOPES = [
   { key: "secondhand", label: "יד שנייה" },
@@ -43,13 +50,13 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
    */
   subsidized?: Record<string, number[]>;
 }) {
-  const [scope, setScope] = useState<string>("secondhand");
-  const [metric, setMetric] = useState<0 | 1>(0); // 0=avg, 1=median
-  const [dir, setDir] = useState<"up" | "down">("up");
-  // Default window ends at the last FULL year; the partial year is opt-in.
-  const defaultTo = partialYear && maxYear === partialYear ? maxYear - 1 : maxYear;
-  const [fromY, setFromY] = useState(Math.max(minYear, defaultTo - 3));
-  const [toY, setToY] = useState(defaultTo);
+  // One definition of "what a visitor sees on arrival", shared with the probe.
+  const initial = defaultMoversQuery(maxYear, partialYear);
+  const [scope, setScope] = useState<string>(initial.scope);
+  const [metric, setMetric] = useState<0 | 1>(initial.metric);
+  const [dir, setDir] = useState<"up" | "down">(initial.dir);
+  const [fromY, setFromY] = useState(Math.max(minYear, initial.fromY));
+  const [toY, setToY] = useState(initial.toY);
 
   const years = useMemo(() => {
     const out: number[] = [];
@@ -59,50 +66,21 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
 
   const yearLabel = (y: number) => (y === partialYear ? `${y} (חלקית)` : String(y));
 
-  const items = useMemo(() => {
-    const out: { city: string; pct: number; subsidizedYear: number | null }[] = [];
-    for (const [city, scopes] of Object.entries(series)) {
-      const from = scopes[scope]?.[fromY]?.[metric];
-      const to = scopes[scope]?.[toY]?.[metric];
-      if (!from || !to || from <= 0) continue;
-      const pct = (to / from - 1) * 100;
-      if (!Number.isFinite(pct) || Math.abs(pct) > 120) continue;
-      // Only the WINDOW EDGES can distort the percentage.
-      const flagged = subsidized[city] ?? [];
-      out.push({ city, pct, subsidizedYear: flagged.find((y) => y === fromY || y === toY) ?? null });
-    }
-    out.sort((a, b) => (dir === "up" ? b.pct - a.pct : a.pct - b.pct));
-    return out.slice(0, 6);
-  }, [series, scope, metric, fromY, toY, dir, subsidized]);
+  const items = useMemo(
+    () => selectMovers(series, { scope, metric, fromY, toY, dir, subsidized }),
+    [series, scope, metric, fromY, toY, dir, subsidized]
+  );
 
   const anyFlagged = items.some((i) => i.subsidizedYear != null);
 
-  /**
-   * Why the list is empty, when it is.
-   *
-   * One sentence used to cover four causes, and it named the one the reader
-   * controls — "no cities with enough data in the range you picked" — even
-   * when the real cause was that the server shipped an empty series. Being
-   * told your year choice is wrong when it is not is worse than being told
-   * nothing, because it sends you off to change something that was fine.
-   */
-  const emptyReason = useMemo(() => {
-    if (items.length > 0) return null;
-    const cities = Object.keys(series);
-    if (cities.length === 0) return "server";
-    if (!cities.some((c) => series[c][scope])) return "scope";
-    const hasFrom = cities.some((c) => series[c][scope]?.[fromY]);
-    const hasTo = cities.some((c) => series[c][scope]?.[toY]);
-    if (!hasFrom || !hasTo) return "years";
-    return "filtered";
-  }, [items, series, scope, fromY, toY]);
-
-  const EMPTY_TEXT: Record<string, string> = {
-    server: "לא הגיעו נתוני ערים לכרטיס — תקלה בצד השרת, לא בבחירה שלך. שווה לרענן; אם זה נמשך, זה באג.",
-    scope: `אין עדיין סדרת "${SCOPES.find((x) => x.key === scope)?.label}" באף עיר — נסה סוג עסקה אחר.`,
-    years: `אין ערים עם נתונים בשתי השנים ${fromY} ו-${toY}. נסה טווח קרוב יותר להווה.`,
-    filtered: "כל הערים בטווח הזה הראו שינוי חריג מ-120% והוסתרו כחשודות בשגיאת נתונים.",
-  };
+  const emptyReason = useMemo(
+    () => explainEmpty(series, { scope, fromY, toY }, items.length),
+    [items, series, scope, fromY, toY]
+  );
+  const emptyText = EMPTY_TEXT(
+    { scope, fromY, toY },
+    SCOPES.find((x) => x.key === scope)?.label ?? scope
+  );
 
   return (
     <div className="glass-card relative flex h-full flex-col overflow-hidden p-5">
@@ -181,7 +159,7 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
         <ul className="space-y-1.5 lg:grid lg:grid-cols-2 lg:content-start lg:gap-x-8 lg:gap-y-2 lg:space-y-0">
           {items.length === 0 && (
             <li className="py-2 text-center text-xs italic leading-relaxed text-slate-500 lg:col-span-2">
-              {emptyReason ? EMPTY_TEXT[emptyReason] : "אין ערים להצגה"}
+              {emptyReason ? emptyText[emptyReason] : "אין ערים להצגה"}
             </li>
           )}
           {items.map((it, i) => (

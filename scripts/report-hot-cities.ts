@@ -31,15 +31,19 @@ async function main() {
   for (const c of cities) {
     const trend = c.trend.length ? c.trend.map((p) => `${p.year}:${Math.round(p.value)}`).join(" ") : "—";
     console.log(`${c.cityName}`);
-    console.log(`  שינוי 3 שנים : ${c.changePct == null ? "— (חסר!)" : `${c.changePct.toFixed(1)}% (${c.changeFromYear}→${c.changeToYear})`}`);
+    console.log(`  מגמת מחיר    : ${c.changePct == null ? "— (חסר!)" : `${c.changePct.toFixed(1)}% (${c.changeFromYear}→${c.changeToYear})${c.partial ? " חלקית" : ""}`}`);
     console.log(`  גרף מוקטן    : ${c.trend.length} נקודות  ${trend}`);
-    console.log(`  קונים יד-2   : ${c.secondhandBuyers ?? "— (חסר!)"}`);
-    console.log(`  נתון שלישי   : ${c.extra ? `${c.extra.label} ${c.extra.value}` : "— (חסר!)"}`);
+    console.log(`  קונים יד-2   : ${
+      c.buyers
+        ? `${c.buyers.pct == null ? "— (מדגם קטן מדי)" : `${c.buyers.pct.toFixed(1)}%`} · ${c.buyers.windowLabel} מול אשתקד (${c.buyers.current} מול ${c.buyers.previous})`
+        : "— (חסר!)"
+    }`);
+    console.log(`  נתון שלישי   : ${c.extra ? `${c.extra.label} ${c.extra.value} (${c.extra.year})` : "— (חסר!)"}`);
 
     const missing = [
-      c.changePct == null && "שינוי 3 שנים",
+      c.changePct == null && "מגמת מחיר",
       c.trend.length < 2 && "גרף",
-      c.secondhandBuyers == null && "קונים יד-2",
+      c.buyers?.pct == null && "מגמת קונים",
       !c.extra && "נתון שלישי",
     ].filter(Boolean);
     if (missing.length) {

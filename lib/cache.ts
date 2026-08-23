@@ -48,6 +48,27 @@ export const TTL = {
 } as const;
 
 /**
+ * Thrown by a guarded loader when its result is degenerate.
+ *
+ * THE POINT IS THE THROW ITSELF: unstable_cache does not store a rejected
+ * promise, so raising this from INSIDE the memoized function is what keeps the
+ * bad value out of the cache. The wrapper catches it and returns a live,
+ * uncached computation, so the caller never sees the error.
+ */
+class DegenerateResult extends Error {
+  constructor(readonly keyParts: string[]) {
+    super(`degenerate cache result for ${keyParts.join(":")}`);
+  }
+}
+
+/** True for an empty array / Map / Set — the shapes these loaders return. */
+function isEmptyCollection(v: unknown): boolean {
+  if (Array.isArray(v)) return v.length === 0;
+  if (v instanceof Map || v instanceof Set) return v.size === 0;
+  return false;
+}
+
+/**
  * Wrap an async loader in the shared cache.
  *
  * The returned function's ARGUMENTS participate in the cache key, so one
@@ -58,18 +79,58 @@ export const TTL = {
  *                  the old entries rather than serving them under new logic
  * @param tag       which invalidation group this belongs to
  * @param ttl       seconds before the entry is considered stale regardless of tags
+ * @param guardEmpty  refuse to CACHE an empty result — see below
  */
 export function cached<A extends unknown[], R>(
   fn: (...args: A) => Promise<R>,
   keyParts: string[],
   tag: CacheTag,
-  ttl: number
+  ttl: number,
+  guardEmpty = false
 ): (...args: A) => Promise<R> {
-  const wrapped = unstable_cache(fn, keyParts, { tags: [tag], revalidate: ttl });
+  /**
+   * WHY AN EMPTY RESULT MUST NOT BE CACHED (operator-reported bug, 8/2026)
+   *
+   * "שינויי מחיר — לבחירתך" showed its server-fault message while the database
+   * was demonstrably full: the pipeline's own diagnostic counted 63 cities with
+   * both endpoints on the very same box. The home page builds that board from a
+   * LIVE query filtered through loadRankingEligibleCities() — which is cached
+   * here for six hours. One computation that came back empty pinned an empty
+   * board for every visitor for the rest of that window.
+   *
+   * The loader already had a fallback for "the gate excluded everyone", but a
+   * fallback only guards the MOMENT OF COMPUTATION. Once an empty value is
+   * stored, nothing re-examines it; it simply serves.
+   *
+   * And it hid well: scripts/diagnose-gains-card.ts runs outside the Next
+   * runtime, where the catch below deliberately bypasses the cache — so the
+   * diagnostic measured the database, reported perfect health, and could not
+   * see the layer that was actually broken.
+   *
+   * For these loaders empty is never a legitimate answer — it means the tables
+   * were unreadable at that instant. Better to pay the query again than to
+   * serve nothing for six hours.
+   */
+  const guarded = guardEmpty
+    ? async (...args: A): Promise<R> => {
+        const r = await fn(...args);
+        if (isEmptyCollection(r)) throw new DegenerateResult(keyParts);
+        return r;
+      }
+    : fn;
+
+  const wrapped = unstable_cache(guarded, keyParts, { tags: [tag], revalidate: ttl });
   return async (...args: A) => {
     try {
       return await wrapped(...args);
     } catch (e) {
+      // The guard fired: nothing was cached, and the caller still needs an
+      // answer. Recompute live and hand back whatever the database says —
+      // including the empty result, if that is genuinely the state.
+      if (e instanceof DegenerateResult) {
+        console.warn(`[cache] ${e.message} — not cached, recomputing live`);
+        return fn(...args);
+      }
       // Outside the Next server runtime there is no incremental cache, and
       // unstable_cache throws this invariant the moment it is CALLED. That is
       // fine for a request — it cannot happen there — but it means any script
@@ -117,9 +178,10 @@ export function cachedMap<A extends unknown[], K, V>(
   fn: (...args: A) => Promise<Map<K, V>>,
   keyParts: string[],
   tag: CacheTag = TAGS.market,
-  ttl: number = TTL.market
+  ttl: number = TTL.market,
+  guardEmpty = false
 ): (...args: A) => Promise<Map<K, V>> {
-  const entries = cached(async (...args: A) => Array.from(await fn(...args)), keyParts, tag, ttl);
+  const entries = cached(async (...args: A) => Array.from(await fn(...args)), keyParts, tag, ttl, guardEmpty);
   return async (...args: A) => new Map(await entries(...args));
 }
 
@@ -127,8 +189,19 @@ export function cachedSet<A extends unknown[], V>(
   fn: (...args: A) => Promise<Set<V>>,
   keyParts: string[],
   tag: CacheTag = TAGS.market,
-  ttl: number = TTL.market
+  ttl: number = TTL.market,
+  guardEmpty = false
 ): (...args: A) => Promise<Set<V>> {
-  const members = cached(async (...args: A) => Array.from(await fn(...args)), keyParts, tag, ttl);
+  const members = cached(async (...args: A) => Array.from(await fn(...args)), keyParts, tag, ttl, guardEmpty);
   return async (...args: A) => new Set(await members(...args));
 }
+
+/**
+ * Testable core of the guard, exported for tests/pure.test.ts.
+ *
+ * A wrong answer here is expensive in both directions: guarding a loader whose
+ * empty result is legitimate turns a cheap cached "nothing" into a repeated
+ * query on every render, and failing to guard one that must never be empty is
+ * the six-hour blank board this whole mechanism exists to prevent.
+ */
+export const __isEmptyCollection = isEmptyCollection;

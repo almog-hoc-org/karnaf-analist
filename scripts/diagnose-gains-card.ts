@@ -27,6 +27,17 @@ async function main() {
   const toY = Number(process.argv[3] ?? 2025);
 
   console.log(`אבחון כרטיס "שינויי מחיר" · ${fromY}→${toY}\n`);
+  // Said out loud because a clean report from this script was read, more than
+  // once, as proof that the live card was fine — and it is not evidence of
+  // that. Running outside the Next runtime, lib/cache.ts deliberately bypasses
+  // unstable_cache here (see the "incrementalCache missing" branch), so every
+  // number below comes straight from the database. The card on the site reads
+  // the SAME data through a six-hour cache, and a poisoned cache produces an
+  // empty board while everything printed here looks perfect.
+  console.log(
+    "⚠ הסקריפט הזה עוקף את הקאש (הוא רץ מחוץ ל-Next) ולכן מודד את המאגר בלבד.\n" +
+    "  ״תקין״ כאן אינו ״תקין באתר״ — לבדיקה דרך הקאש: scripts/probe-home-board.ts\n"
+  );
   console.log(`כללים: ranking_min_per_scope=${getRuleNum("ranking_min_per_scope")} · ` +
     `city_min_total_deals=${getRuleNum("city_min_total_deals", 150)} · ` +
     `ranking_normalization_on=${getRuleBool("ranking_normalization_on", true)} · ` +

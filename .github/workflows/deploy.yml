@@ -192,7 +192,7 @@ jobs:
       # data pipeline would in practice never run at all.
       # Cheap (a handful of sqlite statements) and self-cleaning: it writes
       # under a clearly-marked throwaway id and deletes it in a finally block.
-      - name: verify the anonymous gate and the home-page cards
+      - name: verify the home page, the anonymous gate and the cards
         env:
           HOST: ${{ secrets.VPS_HOST }}
           USER: ${{ secrets.VPS_USER }}
@@ -213,6 +213,15 @@ jobs:
           # dropped from the price change, the 4-room price needs n>=10. A card
           # rendering "—" is not a crash and would be found by a visitor first.
           docker compose exec -T app npx tsx scripts/report-hot-cities.ts </dev/null
+
+          # THE ONLY CHECK HERE THAT GOES THROUGH THE SERVER. Every other script
+          # in this file runs outside the Next runtime, where lib/cache.ts falls
+          # through to the uncached loader — so all of them measure the database
+          # and none of them can see the cache. That blind spot is exactly how
+          # the movers board stayed blank across several rounds of "fixes" while
+          # the diagnostic kept reporting perfect health.
+          # This one fetches the real page over loopback, as a visitor does.
+          docker compose exec -T app npx tsx scripts/probe-home-board.ts </dev/null
           REMOTE
 
 

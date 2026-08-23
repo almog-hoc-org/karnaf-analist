@@ -15,7 +15,7 @@
  * Year-cells below MIN_N deals are ignored (never price from noise).
  */
 import { prisma } from "./db";
-import { cachedMap, cachedSet } from "./cache";
+import { cachedMap, cachedSet, TAGS, TTL } from "./cache";
 import { getRuleNum, getRuleBool } from "./systemRules";
 
 /**
@@ -262,7 +262,23 @@ export const TX_PRICE_PROVENANCE = `מאגר העסקאות הפנימי (רשו
  * right lifetime. loadThinSampleCities is additionally awaited from inside
  * loadSecondhandChanges, which made it the most-repeated query on the site.
  */
-export const loadCityTransactionPrices = cachedMap(loadCityTransactionPricesUncached, ["city-transaction-prices"]);
-export const loadActiveDealCounts = cachedMap(loadActiveDealCountsUncached, ["active-deal-counts"]);
+/**
+ * The `guardEmpty` flag on three of these four is not decoration — it is the
+ * fix for a reported bug where the movers board went blank for hours while the
+ * database was full (see the long note in lib/cache.ts).
+ *
+ * For these three, an empty result cannot be true of a working system: there
+ * are always cities with price rows, always cities with deals, and the
+ * eligibility gate has its own fallback specifically so that it cannot
+ * legitimately return nothing. Empty therefore means "the tables were
+ * unreadable at that instant", and caching that for six hours turns a blip
+ * into an outage.
+ *
+ * loadThinSampleCities is deliberately NOT guarded: "no city is thin" is a
+ * real, healthy answer, and guarding it would re-run the count query on every
+ * render of every page for no benefit.
+ */
+export const loadCityTransactionPrices = cachedMap(loadCityTransactionPricesUncached, ["city-transaction-prices"], TAGS.market, TTL.market, true);
+export const loadActiveDealCounts = cachedMap(loadActiveDealCountsUncached, ["active-deal-counts"], TAGS.market, TTL.market, true);
 export const loadThinSampleCities = cachedSet(loadThinSampleCitiesUncached, ["thin-sample-cities"]);
-export const loadRankingEligibleCities = cachedSet(loadRankingEligibleCitiesUncached, ["ranking-eligible-cities"]);
+export const loadRankingEligibleCities = cachedSet(loadRankingEligibleCitiesUncached, ["ranking-eligible-cities"], TAGS.market, TTL.market, true);

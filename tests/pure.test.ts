@@ -10,6 +10,8 @@ import { citySearch } from "@/lib/citySearch";
 import { labelForPath, sectionLabel } from "@/lib/pageLabels";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
+import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
+import { __isEmptyCollection } from "@/lib/cache";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -490,5 +492,96 @@ describe("usage insights", () => {
     expect(shown).toHaveLength(2);
     expect(rest).toHaveLength(0);
     expect(shown[0].id).toBe("a"); // severity first
+  });
+});
+
+/**
+ * The movers board — the card that reported a server fault while the database
+ * held 63 qualifying cities.
+ *
+ * These pin the two halves that failed together: the selection itself, and the
+ * DIAGNOSIS of an empty result. The second matters as much as the first,
+ * because for months the board answered "no cities in the range you picked"
+ * whenever the real cause was that the server sent nothing — sending the
+ * reader to adjust a filter that was never the problem, and hiding a
+ * server-side fault behind what looked like user error.
+ */
+describe("movers board", () => {
+  const series: GainSeries = {
+    "חיפה":      { secondhand: { 2022: [18000, 17500], 2025: [21000, 20000] } },
+    "באר שבע":   { secondhand: { 2022: [12000, 11800], 2025: [13000, 12900] } },
+    "קריית אתא": { secondhand: { 2022: [12000, 11900], 2025: [16000, 15800] } },
+    "עיר חריגה": { secondhand: { 2022: [1000, 1000], 2025: [9000, 9000] } }, // +800%
+  };
+  const q = { scope: "secondhand", metric: 0 as const, fromY: 2022, toY: 2025, dir: "up" as const };
+
+  it("ranks risers by change, biggest first", () => {
+    const rows = selectMovers(series, q);
+    expect(rows[0].city).toBe("קריית אתא"); // +33.3%
+    expect(rows[1].city).toBe("חיפה");      // +16.7%
+  });
+
+  it("ranks fallers in the opposite order from the same data", () => {
+    const rows = selectMovers(series, { ...q, dir: "down" });
+    expect(rows[0].city).toBe("באר שבע"); // +8.3%, the smallest rise
+  });
+
+  /** A city cannot triple in three years; that is a broken row, not a market. */
+  it("drops changes past the sanity ceiling", () => {
+    expect(selectMovers(series, q).map((r) => r.city)).not.toContain("עיר חריגה");
+  });
+
+  it("flags an administered-price year only when it sits on a window EDGE", () => {
+    const onEdge = selectMovers(series, { ...q, subsidized: { "חיפה": [2022] } });
+    expect(onEdge.find((r) => r.city === "חיפה")?.subsidizedYear).toBe(2022);
+    const inside = selectMovers(series, { ...q, subsidized: { "חיפה": [2023] } });
+    expect(inside.find((r) => r.city === "חיפה")?.subsidizedYear).toBeNull();
+  });
+
+  it("blames the server when the server sent nothing", () => {
+    expect(explainEmpty({}, q, 0)).toBe("server");
+  });
+
+  it("blames the deal type, the years, or the filter — each on its own", () => {
+    expect(explainEmpty(series, { ...q, scope: "new" }, 0)).toBe("scope");
+    expect(explainEmpty(series, { ...q, fromY: 1999 }, 0)).toBe("years");
+    // every city present in both years, but all of them filtered out
+    expect(explainEmpty({ "עיר חריגה": series["עיר חריגה"] }, q, 0)).toBe("filtered");
+  });
+
+  it("says nothing at all when there are rows", () => {
+    expect(explainEmpty(series, q, 3)).toBeNull();
+  });
+
+  /** The visitor's opening view: last FULL year, three years back, risers. */
+  it("opens on the last full year, never on the partial one", () => {
+    expect(defaultMoversQuery(2026, 2026)).toMatchObject({ fromY: 2022, toY: 2025, scope: "secondhand", dir: "up" });
+    expect(defaultMoversQuery(2025, null)).toMatchObject({ fromY: 2022, toY: 2025 });
+  });
+});
+
+/**
+ * The cache guard, which is the actual fix for the blank board: an empty
+ * collection from these loaders means the tables were unreadable for an
+ * instant, and caching that for six hours turns a blip into an outage.
+ */
+describe("cache empty-guard", () => {
+  it("recognises the empty shapes these loaders return", () => {
+    expect(__isEmptyCollection([])).toBe(true);
+    expect(__isEmptyCollection(new Map())).toBe(true);
+    expect(__isEmptyCollection(new Set())).toBe(true);
+  });
+
+  it("leaves a populated result alone", () => {
+    expect(__isEmptyCollection([1])).toBe(false);
+    expect(__isEmptyCollection(new Map([["a", 1]]))).toBe(false);
+    expect(__isEmptyCollection(new Set(["a"]))).toBe(false);
+  });
+
+  /** A number or an object is not a collection — guarding those would be wrong. */
+  it("does not treat a non-collection as empty", () => {
+    expect(__isEmptyCollection(0)).toBe(false);
+    expect(__isEmptyCollection({})).toBe(false);
+    expect(__isEmptyCollection(null)).toBe(false);
   });
 });
