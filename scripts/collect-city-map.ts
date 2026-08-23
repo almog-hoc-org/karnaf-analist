@@ -85,10 +85,10 @@ function arg(name: string): string | undefined {
  * were ours. `out geom` returns coordinates inline, which avoids a second
  * round trip to resolve node ids.
  */
-function buildQuery(cityName: string, nameTag = "name"): string {
+function buildQuery(areaId: number): string {
   const roads = Object.keys(ROAD_RANKS).join("|");
   return `[out:json][timeout:180];
-area["${nameTag}"="${cityName}"]["boundary"="administrative"]->.city;
+area(${areaId})->.city;
 (
   way(area.city)["place"~"^(neighbourhood|suburb|quarter)$"]["name"];
   relation(area.city)["place"~"^(neighbourhood|suburb|quarter)$"]["name"];
@@ -144,6 +144,63 @@ async function fetchOverpass(query: string): Promise<OsmElement[]> {
  *  earns a longer ban, not a faster answer. */
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+/**
+ * Find the city's administrative boundary and return its Overpass AREA id.
+ *
+ * WHY A LOOKUP AND NOT A NAME IN THE QUERY
+ * The first version guessed: it tried `area["name"="תל אביב-יפו"]` and five
+ * other spellings. Overpass answered every one of them, promptly, with zero
+ * elements — so the run reported a network problem for what was really a name
+ * that does not exist in OSM under any form we invented. Guessing cannot be
+ * made reliable, because the answer is whatever a mapper typed.
+ *
+ * So: ask OSM what it calls the place, pick the best match, and use its id.
+ * The candidates are printed either way, which turns "no map for this city"
+ * from a dead end into a line you can act on.
+ *
+ * 3600000000 is the standard offset from an OSM relation id to its area id.
+ */
+const AREA_OFFSET = 3_600_000_000;
+
+async function resolveArea(cityName: string): Promise<{ id: number; name: string } | null> {
+  // The search key is the part before a hyphen: OSM writes "תל אביב-יפו",
+  // "תל אביב יפו" and occasionally just "תל אביב", and a regex on the stable
+  // head matches all three without enumerating them.
+  const core = cityName.split(/[-–—]/)[0].trim();
+  const query = `[out:json][timeout:90];
+relation["boundary"="administrative"]["name"~"${core}"];
+out tags;`;
+  const found = await fetchOverpass(query);
+  if (found.length === 0) return null;
+
+  const wanted = normHoodKey(cityName);
+  const scored = found
+    .map((el) => {
+      const tags = el.tags ?? {};
+      const name = tags.name ?? tags["name:he"] ?? "";
+      const level = Number(tags.admin_level ?? 99);
+      const key = normHoodKey(name);
+      // Exact name beats a partial one; among equals, the more local boundary
+      // (higher admin_level) is the city rather than the district containing it.
+      const exact = key === wanted ? 0 : key.includes(wanted) || wanted.includes(key) ? 1 : 2;
+      return { id: el.id, name, level, exact, tags };
+    })
+    .filter((c) => c.name && c.exact < 2)
+    .sort((a, b) => a.exact - b.exact || b.level - a.level);
+
+  console.log(`  מועמדים לגבול (${found.length} נמצאו, ${scored.length} מתאימים):`);
+  for (const c of scored.slice(0, 6)) {
+    console.log(`    ${c.name}  (relation ${c.id}, admin_level ${c.level === 99 ? "?" : c.level})`);
+  }
+  if (scored.length === 0) {
+    console.log("    אף אחד מהם אינו תואם את שם העיר אצלנו:");
+    for (const el of found.slice(0, 8)) console.log(`    · ${(el.tags ?? {}).name ?? "(ללא שם)"}`);
+    return null;
+  }
+  const best = scored[0];
+  return { id: AREA_OFFSET + best.id, name: best.name };
+}
+
 /** Every ring an element carries: a way has one, a relation has one per outer member. */
 function ringsOf(el: OsmElement): LonLat[][] {
   const out: LonLat[][] = [];
@@ -188,63 +245,51 @@ async function main(): Promise<number> {
     }
   }
 
-  // A ladder of name spellings, not one exact match. OSM's `name` on an
-  // administrative boundary is whatever a mapper typed: "תל אביב-יפו" with a
-  // hyphen, without one, or only under `name:he`. Guessing wrong returns zero
-  // elements — indistinguishable from "this city has no neighbourhoods" — and
-  // costs a whole deploy cycle to discover. Cheaper to try the obvious variants
-  // and say which one answered.
-  const attempts: Array<{ tag: string; name: string }> = [];
-  const seenNames = new Set<string>();
-  for (const name of [city, city.replace(/-/g, " "), city.replace(/\s+/g, "-")]) {
-    if (seenNames.has(name)) continue;
-    seenNames.add(name);
-    attempts.push({ tag: "name", name }, { tag: "name:he", name });
-  }
-
-  console.log(`מושך את ${city} מ-OpenStreetMap…`);
+  console.log(`מחפש את הגבול המנהלי של ${city} ב-OpenStreetMap…`);
   let elements: OsmElement[] = [];
-  let matched: { tag: string; name: string } | null = null;
+  let area: { id: number; name: string } | null = null;
   let lastTransportError = "";
 
-  // Rounds wrap the WHOLE ladder, not each query in it. Retrying per variant
-  // would have meant up to 72 requests against a free, shared service for one
-  // city — which is how a caller earns a ban rather than an answer.
-  //
-  // The two failure modes are kept apart on purpose: a name that does not
-  // exist answers 200 with zero elements and is NOT retried (retrying cannot
-  // make it exist), while a refused or failed request is.
-  for (let round = 0; round < ROUNDS && !matched; round++) {
+  // Rounds cover a busy Overpass, not a wrong name: a lookup that ANSWERS with
+  // no matching boundary is final, and retrying it three times would only be
+  // three times as rude to a free service.
+  for (let round = 0; round < ROUNDS; round++) {
     if (round > 0) {
       console.log(`  אף נקודת קצה לא ענתה. ממתין ${BACKOFF_MS[round] / 1000}s וסבב ${round + 1}/${ROUNDS}…`);
       await sleep(BACKOFF_MS[round]);
     }
-    let anyAnswered = false;
-    for (const a of attempts) {
-      try {
-        const got = await fetchOverpass(buildQuery(a.name, a.tag));
-        anyAnswered = true;
-        if (got.length > 0) { elements = got; matched = a; break; }
-        console.log(`  ${a.tag}="${a.name}" → 0 אלמנטים`);
-      } catch (e) {
-        lastTransportError = e instanceof Error ? e.message : String(e);
-      }
+    try {
+      area = await resolveArea(city);
+      lastTransportError = "";
+      break; // it answered — whatever it said is the answer
+    } catch (e) {
+      lastTransportError = e instanceof Error ? e.message : String(e);
     }
-    // Every variant answered and every one was empty: the city is not there
-    // under any spelling we tried, and another round changes nothing.
-    if (anyAnswered && !matched) break;
   }
 
-  if (!matched) {
-    if (lastTransportError) {
-      console.error(`✗ Overpass לא זמין כרגע. ${lastTransportError}`);
-      console.error("  לא נכתב כלום — הרצה הבאה תנסה שוב.");
-    } else {
-      console.error(`✗ Overpass לא מכיר אף וריאציה של ״${city}״ — בדקו את שם הגבול המנהלי ב-openstreetmap.org`);
-    }
+  if (lastTransportError) {
+    console.error(`✗ Overpass לא זמין כרגע. ${lastTransportError}`);
+    console.error("  לא נכתב כלום — הרצה הבאה תנסה שוב.");
     return 1;
   }
-  console.log(`התקבלו ${elements.length} אלמנטים (${matched.tag}="${matched.name}")`);
+  if (!area) {
+    console.error(`✗ ל-OpenStreetMap אין גבול מנהלי בשם שתואם ל״${city}״.`);
+    console.error("  הרשימה למעלה היא מה שכן נמצא — בחרו ממנה והוסיפו כינוי, או בדקו ב-openstreetmap.org");
+    return 1;
+  }
+
+  console.log(`מושך את ${area.name} (area ${area.id})…`);
+  try {
+    elements = await fetchOverpass(buildQuery(area.id));
+  } catch (e) {
+    console.error(`✗ משיכת השכבות נכשלה. ${e instanceof Error ? e.message : String(e)}`);
+    return 1;
+  }
+  console.log(`התקבלו ${elements.length} אלמנטים`);
+  if (elements.length === 0) {
+    console.error(`✗ הגבול נמצא אבל אין בתוכו שכונות/כבישים מתויגים`);
+    return 1;
+  }
 
   // ── pass 1: the bounding box, from EVERY layer ──
   // It has to cover all of them: a projector fitted to the neighbourhoods alone
