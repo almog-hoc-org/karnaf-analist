@@ -239,36 +239,24 @@ const BOX_LON = 0.12;
 /**
  * Which of the neighbourhoods in the box actually belong to this city.
  *
- * The price list is the authority. A shape whose name joins to a
- * neighbourhood the Tax Authority attributed to this city is ours; the rest of
- * the box — Ramat Gan, Givatayim, Bat Yam — is not. Then, so that a
- * neighbourhood with too few deals still gets drawn instead of leaving a hole,
- * anything whose centre falls inside the footprint of the joined ones is kept
- * as well.
+ * ONLY THE ONES ITS PRICE LIST NAMES. The first version also kept anything
+ * whose centre fell inside the footprint of those, so that a neighbourhood with
+ * too few deals would still be drawn instead of leaving a hole. Measured on Tel
+ * Aviv, that kept 96 of the box's 110 — and the 81 without prices were רמת
+ * אפעל, כפר אז"ר, קרית קריניצי, רמת עמידר: Ramat Gan and Givatayim. They are
+ * inside Tel Aviv's bounding box because they are wrapped by it, and no
+ * rectangle can separate them.
+ *
+ * Drawing a neighbouring city on this city's map is a worse error than an
+ * occasional gap, and it also cost the payload: the frame stretched to cover
+ * three municipalities, and with it 5,219 roads and 231KB.
  */
-function keepOurs<T extends { name: string; lonLatCentre: [number, number] }>(
+function keepOurs<T extends { name: string }>(
   shapes: T[],
   ourNames: Set<string>
 ): { kept: T[]; joined: number } {
-  const joined = shapes.filter((s) => ourNames.has(normHoodKey(s.name)));
-  if (joined.length === 0) return { kept: [], joined: 0 };
-
-  let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
-  for (const s of joined) {
-    const [lon, lat] = s.lonLatCentre;
-    minLon = Math.min(minLon, lon); maxLon = Math.max(maxLon, lon);
-    minLat = Math.min(minLat, lat); maxLat = Math.max(maxLat, lat);
-  }
-  // A small margin, so a neighbourhood on the edge of the city is not cut for
-  // sitting a few hundred metres beyond the outermost priced one.
-  const padLon = (maxLon - minLon) * 0.15 + 0.005;
-  const padLat = (maxLat - minLat) * 0.15 + 0.005;
-
-  const inFootprint = shapes.filter((s) => {
-    const [lon, lat] = s.lonLatCentre;
-    return lon >= minLon - padLon && lon <= maxLon + padLon && lat >= minLat - padLat && lat <= maxLat + padLat;
-  });
-  return { kept: inFootprint, joined: joined.length };
+  const kept = shapes.filter((s) => ourNames.has(normHoodKey(s.name)));
+  return { kept, joined: kept.length };
 }
 
 /** The neighbourhood names this city's own price data knows about. */
@@ -389,15 +377,8 @@ async function main(): Promise<number> {
   // ── which of the box's neighbourhoods are this city's ──
   const boxShapes = elements
     .filter((el) => el.tags?.place && el.tags?.name)
-    .map((el) => {
-      const rings = ringsOf(el);
-      if (!rings.length) return null;
-      const ring = rings[0];
-      let lon = 0, lat = 0;
-      for (const p of ring) { lon += p[0]; lat += p[1]; }
-      return { el, name: el.tags!.name!, lonLatCentre: [lon / ring.length, lat / ring.length] as [number, number] };
-    })
-    .filter((x): x is { el: OsmElement; name: string; lonLatCentre: [number, number] } => x !== null);
+    .map((el) => (ringsOf(el).length ? { el, name: el.tags!.name! } : null))
+    .filter((x): x is { el: OsmElement; name: string } => x !== null);
 
   const { kept, joined } = keepOurs(boxShapes, ourNames);
   console.log(`  שכונות בתיבה: ${boxShapes.length} · הותאמו לרשימה שלנו: ${joined} · נשמרות: ${kept.length}`);
