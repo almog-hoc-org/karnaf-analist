@@ -35,7 +35,7 @@ async function main() {
     console.log(`  גרף מוקטן    : ${c.trend.length} נקודות  ${trend}`);
     console.log(`  קונים יד-2   : ${
       c.buyers
-        ? `${c.buyers.pct == null ? "— (מדגם קטן מדי)" : `${c.buyers.pct.toFixed(1)}%`} · ${c.buyers.windowLabel} מול אשתקד (${c.buyers.current} מול ${c.buyers.previous})`
+        ? `${c.buyers.pct == null ? "— (מדגם קטן מדי)" : `${c.buyers.pct.toFixed(1)}%`} · ${c.buyers.windowLabel} מול 12 שקדמו (${c.buyers.current} מול ${c.buyers.previous})`
         : "— (חסר!)"
     }`);
     console.log(`  נתון שלישי   : ${c.extra ? `${c.extra.label} ${c.extra.value} (${c.extra.year})` : "— (חסר!)"}`);

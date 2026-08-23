@@ -32,9 +32,11 @@ async function main() {
   if (!maxRow?.d) return 1;
 
   const maxDate = new Date(`${maxRow.d}T00:00:00Z`);
-  const cutoff = new Date(Date.UTC(maxDate.getUTCFullYear(), maxDate.getUTCMonth() - 1, 1));
-  const year = cutoff.getUTCFullYear();
-  console.log(`חתך ההשוואה בפועל: ${year} מול ${year - 1}, עד סוף ${HE_MONTHS[cutoff.getUTCMonth()]}\n`);
+  const year = maxDate.getUTCFullYear();
+  console.log(
+    "החלון בפועל נקבע בקוד לפי החודש האחרון שדווח במלואו (יחס ארצי שנה-מול-שנה ≥ 0.70),\n" +
+    "וההשוואה היא 12 חודשים מול 12 שקדמו להם. הטבלאות למטה מראות למה זה נחוץ.\n"
+  );
 
   const cities = process.argv.slice(2).length
     ? process.argv.slice(2)

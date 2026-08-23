@@ -137,20 +137,50 @@ async function loadExtra(metric: string, cities: string[]): Promise<Map<string, 
 const HE_MONTHS = ["ינו׳", "פבר׳", "מרץ", "אפר׳", "מאי", "יוני", "יולי", "אוג׳", "ספט׳", "אוק׳", "נוב׳", "דצמ׳"];
 
 /**
- * Second-hand buyers this year against the same stretch of last year.
+ * A month counts as fully reported when the country as a whole recorded at
+ * least this share of what it recorded in the same month a year earlier.
  *
- * THE WINDOW IS NOT "UP TO TODAY", AND THAT IS THE WHOLE POINT.
- * Deals reach the tax authority weeks after they close, so the most recent
- * month or two in this database is always partially reported. Comparing
- * January-to-today against January-to-today-last-year would therefore show a
- * decline in every city, every day of the year — a number that is always
- * wrong in the same direction is worse than no number, because it reads as a
- * finding.
+ * WHY YEAR-OVER-YEAR AND NOT "SHARE OF A TYPICAL MONTH": monthly volume swings
+ * enormously with the calendar — October 2025 came in at 1,938 deals against a
+ * July of 4,006, because of the holidays, not because the feed broke. Comparing
+ * a month to the SAME month a year earlier cancels that out; comparing it to an
+ * annual average would have condemned every holiday month as incomplete.
  *
- * So the cutoff comes from the data: the latest deal_date on record, backed off
- * one whole month to clear the partially-reported tail, and applied IDENTICALLY
- * to both years. The label names the window, because a trend without its window
- * is not interpretable.
+ * WHY NATIONALLY: the national market does not halve in a month. A national
+ * year-over-year ratio this low is a reporting fact, not an economic one. The
+ * decision is therefore made once, on the whole country, and applied to every
+ * city — which is also what keeps it from being circular, since the per-city
+ * number this feeds is itself a year-over-year comparison.
+ *
+ * 0.70 errs toward trimming: dropping a month that was merely weak costs some
+ * recency, while keeping a month that was merely late produces a confident
+ * −50% on the front page. The first is a smaller mistake.
+ */
+const MONTH_COMPLETE_RATIO = 0.7;
+
+/** Minimum deals in the BASE window before a percentage may be shown. */
+const MIN_BASE_DEALS = 30;
+
+/**
+ * Second-hand buyers over the last twelve fully-reported months, against the
+ * twelve months before those.
+ *
+ * WHAT THIS REPLACED, AND WHY. The first version compared January-to-a-cutoff
+ * against the same stretch a year earlier, with the cutoff set one month behind
+ * the newest deal on record. One month was not nearly enough. Measured on the
+ * live database, the national year-over-year ratio ran 0.86 · 0.92 · 0.78 for
+ * January to March and then 0.54 · 0.45 · 0.08 for April to June — deals reach
+ * the tax authority over roughly a quarter, not a month. Including those three
+ * months printed −49.5% for Haifa on the home page, which was not a market
+ * move at all.
+ *
+ * TWELVE MONTHS RATHER THAN A YEAR-TO-DATE STRETCH, for a second reason found
+ * in the same measurement: Be'er Sheva recorded 69 · 52 · 59 deals in early
+ * 2025 and 140 · 151 · 127 in early 2026. A three-month window compares against
+ * whatever that quarter happened to hold, and produces +132% from a thin base.
+ * A full year of deals on each side absorbs that, and "the last twelve months
+ * against the twelve before" is still exactly the comparison to last year that
+ * was asked for.
  */
 async function loadBuyerTrend(
   cities: string[]
@@ -158,46 +188,53 @@ async function loadBuyerTrend(
   const out = new Map<string, { pct: number | null; current: number; previous: number; windowLabel: string }>();
   if (!cities.length) return out;
 
-  const [maxRow] = await prisma.$queryRawUnsafe<Array<{ d: string | null }>>(
-    "SELECT MAX(deal_date) d FROM nadlan_transactions WHERE COALESCE(excluded,0)=0"
+  // National monthly volume for the last three years — the completeness test.
+  const monthly = await prisma.$queryRawUnsafe<Array<{ ym: string; n: bigint }>>(
+    `SELECT substr(deal_date, 1, 7) ym, COUNT(*) n
+       FROM nadlan_transactions
+      WHERE COALESCE(excluded,0)=0 AND deal_date >= date('now', '-40 months')
+      GROUP BY ym ORDER BY ym`
   );
-  if (!maxRow?.d) return out;
+  if (!monthly.length) return out;
 
-  const maxDate = new Date(`${maxRow.d}T00:00:00Z`);
-  if (Number.isNaN(maxDate.getTime())) return out;
-  // one whole month of safety margin against the reporting lag
-  const cutoff = new Date(Date.UTC(maxDate.getUTCFullYear(), maxDate.getUTCMonth() - 1, 1));
-  const endMonth = cutoff.getUTCMonth(); // 0-based; the window ends with this month
-  const year = cutoff.getUTCFullYear();
-  const lastDay = new Date(Date.UTC(year, endMonth + 1, 0)).getUTCDate();
-  const mm = String(endMonth + 1).padStart(2, "0");
-  const dd = String(lastDay).padStart(2, "0");
-  const windowLabel = `ינו׳–${HE_MONTHS[endMonth]}`;
+  const counts = new Map(monthly.map((r) => [r.ym, Number(r.n)]));
+  const months = monthly.map((r) => r.ym);
+  const prevYear = (ym: string) => `${Number(ym.slice(0, 4)) - 1}${ym.slice(4)}`;
 
-  const rows = await prisma.$queryRawUnsafe<Array<{ city_name: string; y: number; n: bigint }>>(
-    `SELECT city_name, deal_year y, COUNT(*) n
+  // Walk back from the newest month to the last one that is fully reported.
+  let lastComplete: string | null = null;
+  for (let i = months.length - 1; i >= 0; i--) {
+    const ym = months[i];
+    const base = counts.get(prevYear(ym));
+    if (!base) continue; // no comparison month — cannot judge, keep walking
+    if ((counts.get(ym) ?? 0) / base >= MONTH_COMPLETE_RATIO) { lastComplete = ym; break; }
+  }
+  if (!lastComplete) return out;
+
+  const [y, m] = lastComplete.split("-").map(Number);
+  const endExclusive = `${y}-${String(m).padStart(2, "0")}-32`; // string compare: covers the whole month
+  const startCur = new Date(Date.UTC(y, m - 12, 1));
+  const startPrev = new Date(Date.UTC(y, m - 24, 1));
+  const iso = (d: Date) => d.toISOString().slice(0, 10);
+  const windowLabel = `12 חודשים עד ${HE_MONTHS[m - 1]} ${y}`;
+
+  const rows = await prisma.$queryRawUnsafe<Array<{ city_name: string; cur: bigint; prev: bigint }>>(
+    `SELECT city_name,
+            SUM(CASE WHEN deal_date >= ? THEN 1 ELSE 0 END) cur,
+            SUM(CASE WHEN deal_date <  ? THEN 1 ELSE 0 END) prev
        FROM nadlan_transactions
       WHERE COALESCE(excluded,0)=0 AND is_secondhand = 1
-        AND deal_year IN (?, ?)
-        AND substr(deal_date, 6) <= ?
-      GROUP BY city_name, deal_year`,
-    year, year - 1, `${mm}-${dd}`
+        AND deal_date >= ? AND deal_date < ?
+      GROUP BY city_name`,
+    iso(startCur), iso(startCur), iso(startPrev), endExclusive
   );
 
-  const byCity = new Map<string, { cur: number; prev: number }>();
   for (const r of rows) {
-    const e = byCity.get(r.city_name) ?? { cur: 0, prev: 0 };
-    if (Number(r.y) === year) e.cur = Number(r.n);
-    else e.prev = Number(r.n);
-    byCity.set(r.city_name, e);
-  }
-
-  for (const city of cities) {
-    const e = byCity.get(city);
-    if (!e) continue;
-    // A percentage off a handful of deals swings on one family moving house.
-    const pct = e.prev >= 10 ? (e.cur / e.prev - 1) * 100 : null;
-    out.set(city, { pct, current: e.cur, previous: e.prev, windowLabel });
+    if (!cities.includes(r.city_name)) continue;
+    const cur = Number(r.cur);
+    const prev = Number(r.prev);
+    const pct = prev >= MIN_BASE_DEALS ? (cur / prev - 1) * 100 : null;
+    out.set(r.city_name, { pct, current: cur, previous: prev, windowLabel });
   }
   return out;
 }

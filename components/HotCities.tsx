@@ -123,7 +123,7 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
             truncated captions explain less than one full sentence here. */}
         <p className="mt-0.5 text-[10px] leading-snug text-slate-500">
           מגמת מחיר יד-2 ב-{TREND_SPAN} השנים האחרונות · כמות קונים יד-2
-          {buyersWindow ? ` בחודשים ${buyersWindow} מול אותה תקופה אשתקד` : " מול אשתקד"} ·
+          {buyersWindow ? ` (${buyersWindow}) מול 12 החודשים שלפניהם` : " מול אשתקד"} ·
           מחיר ממוצע לדירת 4 חדרים
         </p>
       </div>
@@ -162,8 +162,8 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
                     label="קונים"
                     title={
                       c.buyers
-                        ? `כמות רוכשי יד-2 ב-${c.buyers.windowLabel} השנה (${c.buyers.current}) מול אותה תקופה אשתקד (${c.buyers.previous})`
-                        : "כמות רוכשי יד-2 מול אותה תקופה אשתקד"
+                        ? `כמות רוכשי יד-2 ב-${c.buyers.windowLabel} (${c.buyers.current}) מול 12 החודשים שקדמו להם (${c.buyers.previous}). החלון נעצר בחודש האחרון שדווח במלואו — הדיווח לרשות המסים מפגר כרבעון.`
+                        : "כמות רוכשי יד-2 ב-12 החודשים האחרונים מול 12 שקדמו להם"
                     }
                   >
                     {c.buyers?.pct == null
