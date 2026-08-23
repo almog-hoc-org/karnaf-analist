@@ -2,6 +2,7 @@ import { prisma } from "./db";
 import { cachedMarket } from "./cache";
 import { getRuleText } from "./systemRules";
 import { loadCitiesChangeMetrics } from "./cityChangeMetrics";
+import { loadFourRoomPrices } from "./cityTransactionPrices";
 import { canonicalCityName, sameCity } from "./cityAliases";
 import { topSearchedCities } from "./events";
 
@@ -102,6 +103,19 @@ async function loadExtra(metric: string, cities: string[]): Promise<Map<string, 
           year: r.population_2026 != null ? 2026 : 2024,
         });
       }
+    }
+    return out;
+  }
+
+  if (metric === "rooms4") {
+    // Shared with the /cities table column (lib/cityTransactionPrices.ts).
+    // Two implementations of "latest year with 10+ four-room second-hand deals"
+    // is two chances to print a different number for the same city on two
+    // pages a reader can have open at once.
+    const prices = await loadFourRoomPrices();
+    for (const city of cities) {
+      const p = prices.get(city);
+      if (p) out.set(city, { label: "מחיר ממוצע 4 חד׳", value: formatShekel(p.price), year: p.year });
     }
     return out;
   }

@@ -240,6 +240,93 @@ async function loadRankingEligibleCitiesUncached(minPerScope = getRuleNum("ranki
 }
 
 /**
+ * Average price of a 4-room SECOND-HAND apartment, per city.
+ *
+ * WHY IT LIVES HERE AND NOT WHERE IT WAS FIRST WRITTEN
+ * The same figure is on the home page's hot-city cards (lib/hotCities.ts) and,
+ * from 8/2026, a default column in the /cities table. Two copies of "latest
+ * year with at least ten 4-room second-hand deals" is two chances to answer the
+ * same question differently for the same city, on two pages a reader can have
+ * open side by side. One loader, one answer.
+ *
+ * SECOND-HAND rather than all deals (operator choice, 8/2026): a city with one
+ * large new project has its overall average dragged up by it, which is exactly
+ * the distortion a cross-city comparison table must not carry.
+ *
+ * No year filter in the query — the newest qualifying year WINS PER CITY, so a
+ * city whose collection lags shows its own last good year rather than a dash.
+ * The year travels with the number so the column can label it.
+ */
+async function loadFourRoomPricesUncached(): Promise<Map<string, { price: number; year: number }>> {
+  const rows = await prisma.nadlan_year_room_stats.findMany({
+    where: { room_bucket: "4", scope: "secondhand", n: { gte: 10 } },
+    select: { city_name: true, year: true, avg_price: true },
+    orderBy: { year: "desc" },
+  });
+  const out = new Map<string, { price: number; year: number }>();
+  for (const r of rows) {
+    if (r.avg_price == null || out.has(r.city_name)) continue; // newest-first ⇒ first hit wins
+    out.set(r.city_name, { price: r.avg_price, year: r.year });
+  }
+  return out;
+}
+
+/**
+ * Ten-year population growth, in percent, per city.
+ *
+ * The table carried population SNAPSHOTS (2022 / 2024 / 2026) and no growth at
+ * all, so comparing two cities meant doing arithmetic in your head across two
+ * columns. This is the number that was actually wanted.
+ *
+ * A city needs BOTH endpoints. Missing one returns nothing rather than a
+ * fabricated 0 — a city we have no history for is not a city that did not grow.
+ * The window slides to the newest year that has a partner ten years back, so a
+ * source that lags by a year degrades to a slightly older window instead of
+ * emptying the column.
+ */
+async function loadPopulationGrowth10yUncached(): Promise<Map<string, number>> {
+  const rows = await prisma.population_by_year.findMany({
+    where: { population: { gt: 0 } },
+    select: { city_name: true, year: true, population: true },
+  });
+
+  const byCity = new Map<string, Map<number, number>>();
+  for (const r of rows) {
+    if (r.population == null) continue;
+    let m = byCity.get(r.city_name);
+    if (!m) { m = new Map(); byCity.set(r.city_name, m); }
+    m.set(r.year, r.population);
+  }
+
+  const out = new Map<string, number>();
+  for (const [city, series] of byCity) {
+    const pct = growthOverSpan(series, 10);
+    if (pct !== null) out.set(city, pct);
+  }
+  return out;
+}
+
+/**
+ * Percentage growth across `span` years, from the newest year that HAS a
+ * partner `span` years earlier.
+ *
+ * Pulled out as a pure function so it can be tested without a database. The
+ * two rules worth pinning: a city missing either endpoint returns null rather
+ * than 0 — no history is not no growth — and the window slides backwards to
+ * the newest usable pair, so a source that lags by a year degrades to a
+ * slightly older window instead of emptying the column.
+ */
+export function growthOverSpan(series: Map<number, number>, span: number): number | null {
+  const years = [...series.keys()].sort((a, b) => b - a);
+  for (const to of years) {
+    const from = series.get(to - span);
+    const toVal = series.get(to);
+    if (from && from > 0 && toVal && toVal > 0) return (toVal / from - 1) * 100;
+  }
+  return null;
+}
+
+/**
  * A function, for the same reason as the helpers at the top of this file: as a
  * module-level `const` the template string was interpolated once at import
  * time, so this user-facing sentence quoted whatever the thresholds were when
@@ -282,3 +369,7 @@ export const loadCityTransactionPrices = cachedMap(loadCityTransactionPricesUnca
 export const loadActiveDealCounts = cachedMap(loadActiveDealCountsUncached, ["active-deal-counts"], TAGS.market, TTL.market, true);
 export const loadThinSampleCities = cachedSet(loadThinSampleCitiesUncached, ["thin-sample-cities"]);
 export const loadRankingEligibleCities = cachedSet(loadRankingEligibleCitiesUncached, ["ranking-eligible-cities"], TAGS.market, TTL.market, true);
+export const loadFourRoomPrices = cachedMap(loadFourRoomPricesUncached, ["four-room-prices"], TAGS.market, TTL.market, true);
+// Reference data, not market data: population moves on the CBS's schedule, not
+// the nightly aggregation's, so it belongs to the slower invalidation group.
+export const loadPopulationGrowth10y = cachedMap(loadPopulationGrowth10yUncached, ["population-growth-10y"], TAGS.reference, TTL.reference, true);

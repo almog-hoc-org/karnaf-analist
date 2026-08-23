@@ -6,7 +6,7 @@ import { loadAllCityPriceChanges } from "@/lib/price-changes";
 import { loadCitiesChangeMetrics } from "@/lib/cityChangeMetrics";
 import { computeAllInvestorMetrics } from "@/lib/investorMetrics";
 import { refYear } from "@/lib/refYear";
-import { loadCityTransactionPrices, loadActiveDealCounts } from "@/lib/cityTransactionPrices";
+import { loadCityTransactionPrices, loadActiveDealCounts, loadFourRoomPrices, loadPopulationGrowth10y } from "@/lib/cityTransactionPrices";
 import { getRuleNum } from "@/lib/systemRules";
 
 export const metadata = {
@@ -17,7 +17,7 @@ export default async function CitiesPage() {
   // ONE await for seven independent loaders. They were seven sequential
   // awaits — none of them depends on another, so the page paid the sum of
   // their latencies instead of the slowest.
-  const [cities, permitsAgg, allPriceChanges, txPrices, changeMetrics, dealCountMap, investorMetrics] = await Promise.all([
+  const [cities, permitsAgg, allPriceChanges, txPrices, changeMetrics, dealCountMap, investorMetrics, fourRoom, popGrowth] = await Promise.all([
     prisma.city.findMany({
       where: { city_name: { notIn: ALIAS_NAMES } },
       orderBy: { population_2026: "desc" },
@@ -48,6 +48,11 @@ export default async function CitiesPage() {
     loadActiveDealCounts(),
     // Investor screener metrics
     computeAllInvestorMetrics(),
+    // Two default columns added 8/2026. Both join the existing Promise.all
+    // rather than being awaited after it — none of these depend on each other,
+    // and the page should pay the slowest, not the sum.
+    loadFourRoomPrices(),
+    loadPopulationGrowth10y(),
   ]);
 
   const permitsMap = new Map(
@@ -112,6 +117,9 @@ export default async function CitiesPage() {
       urban_renewal_status: c.urban_renewal_status,
       changeMetrics: changeMetrics.get(c.city_name),
       dealCount: dealCountMap.get(c.city_name) ?? null,
+      tx_avg_4room: fourRoom.get(c.city_name)?.price ?? null,
+      tx_avg_4room_year: fourRoom.get(c.city_name)?.year ?? null,
+      pop_growth_10y_pct: popGrowth.get(c.city_name) ?? null,
       tx_price_year: txPrices.get(c.city_name)?.priceYear ?? null,
       tx_avg_all: txPrices.get(c.city_name)?.avgAllSqm ?? null,
       tx_median_all: txPrices.get(c.city_name)?.medianAllSqm ?? null,

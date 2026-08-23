@@ -108,7 +108,9 @@ export default async function HomePage() {
   const marketInsights = await computeMarketInsights().catch(() => []);
   const cbsSales = loadCbsSales();
   // reports the refresh engine discovered (fix #3: this file was written but never read)
-  const discoveredReports = loadDiscoveredReports(10);
+  // Four, matching what the section renders — there is no point serialising
+  // six more into the RSC payload for rows that are sliced off on arrival.
+  const discoveredReports = loadDiscoveredReports(4);
   const top3yGain = (await loadSecondhandChanges(3)).slice(0, 5);
 
   // Compact per-city yearly series for the fully-filterable movers card:
@@ -425,7 +427,7 @@ export default async function HomePage() {
         </div>
 
         {/* 3 cards after the price-gains card moved to its own row above */}
-        <div className="card-grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="card-grid card-grid-auto grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {rankings.map((ranking) => (
             <RankingCard
               key={ranking.title}

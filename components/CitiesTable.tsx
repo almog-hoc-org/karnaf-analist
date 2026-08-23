@@ -37,6 +37,11 @@ interface CityRow {
   changeMetrics?: CityChangeMetrics;
   dealCount: number | null;
   /* ── price levels from REAL transactions (lib/cityTransactionPrices) ── */
+  /** avg price of a 4-room SECOND-HAND flat, newest year with 10+ deals */
+  tx_avg_4room: number | null;
+  tx_avg_4room_year: number | null;
+  /** % population growth over ten years (null when we lack an endpoint) */
+  pop_growth_10y_pct: number | null;
   tx_price_year: number | null;
   tx_avg_all: number | null;
   tx_median_all: number | null;
@@ -106,52 +111,57 @@ function fmtSigned(v: number, digits = 1): string {
 }
 
 const columns: ColumnDef[] = [
-  { key: "city_name", label: "עיר", format: (v) => v ?? "—", width: "min-w-[120px]" },
-  { key: "dealCount", label: "עסקאות במאגר", format: (v) => (v ? Math.round(v).toLocaleString("he-IL") : "—"), width: "min-w-[95px]",
+  { key: "city_name", label: "עיר", format: (v) => v ?? "—", width: "min-w-[74px] md:min-w-[120px]" },
+  { key: "dealCount", label: "עסקאות במאגר", format: (v) => (v ? Math.round(v).toLocaleString("he-IL") : "—"), width: "min-w-[66px] md:min-w-[95px]",
     help: "כמה עסקאות אמת מרשות המסים יש לנו על העיר, אחרי ניקוי כפילויות ואנומליות. ככל שיש יותר — המדדים אמינים יותר. עיר עם מעט עסקאות מסומנת בצהוב ולא נכנסת לדירוגים." },
-  { key: "population_2024", label: "אוכלוסייה 2024", format: (v, row) => { const val = v ?? row?.population_2022; return val ? Math.round(val).toLocaleString("he-IL") : "—"; }, width: "min-w-[90px]" },
-  { key: "population_2022", label: "אוכלוסייה 2022", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
-  { key: "population_2026", label: "אוכלוסייה 2026", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
-  { key: "households_2022", label: "משקי בית 2022", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[90px]" },
+  { key: "population_2024", label: "אוכלוסייה 2024", format: (v, row) => { const val = v ?? row?.population_2022; return val ? Math.round(val).toLocaleString("he-IL") : "—"; }, width: "min-w-[66px] md:min-w-[90px]" },
+  { key: "population_2022", label: "אוכלוסייה 2022", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]" },
+  { key: "population_2026", label: "אוכלוסייה 2026", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]" },
+  { key: "households_2022", label: "משקי בית 2022", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]" },
   // Price levels — from REAL collected transactions (₪/m², latest full year with 10+ deals).
   // Four separate metrics; the user picks which to show (עמודות ▾).
-  { key: "tx_median_sh", label: "חציון יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]",
+  { key: "tx_median_sh", label: "חציון יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
     help: "המחיר למ״ר של דירת יד-2 האמצעית בעיר — חצי מהעסקאות מעליה וחצי מתחתיה. חסין לעסקאות קיצון, ולכן המדד הטוב ביותר להשוואת רמות מחירים בין ערים." },
-  { key: "tx_avg_sh", label: "ממוצע יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[110px]",
+  { key: "tx_avg_sh", label: "ממוצע יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
     help: "ממוצע ₪/מ״ר של עסקאות יד-2 בשנה האחרונה עם נתונים מלאים. רגיש יותר לעסקאות חריגות מהחציון — כשהם רחוקים זה מזה, כנראה שיש בעיר תת-שווקים שונים מאוד." },
-  { key: "tx_avg_all", label: "ממוצע כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}${row?.tx_govmap ? " ‡" : ""}` : "—", width: "min-w-[110px]",
+  { key: "tx_avg_all", label: "ממוצע כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}${row?.tx_govmap ? " ‡" : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
     help: "ממוצע ₪/מ״ר של כל העסקאות — כולל דירות חדשות מקבלן. בעיר עם שכונה חדשה גדולה המספר מוטה כלפי מעלה; להשוואת שוק קיים עדיף מדדי יד-2." },
-  { key: "tx_median_all", label: "חציון כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}${row?.tx_govmap ? " ‡" : ""}` : "—", width: "min-w-[110px]",
+  { key: "tx_median_all", label: "חציון כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}${row?.tx_govmap ? " ‡" : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
     help: "חציון ₪/מ״ר על כל העסקאות, כולל חדשות. שילוב של יציבות החציון עם תמונת השוק המלאה." },
   {
     key: "price_change_3y_pct",
     label: "שינוי 3 שנים",
     format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_3y_from && row?.price_change_3y_to ? ` (${row.price_change_3y_to} \u2190 ${row.price_change_3y_from})` : ""}`,
-    width: "min-w-[130px]",
+    width: "min-w-[81px] md:min-w-[130px]",
     help: "שינוי המחיר החציוני הרשמי (כל העסקאות, מחיר עסקה מלא) על פני 3 שנים, עד השנה המלאה האחרונה. השנים בסוגריים הן טווח ההשוואה בפועל.",
   },
   {
     key: "price_change_5y_pct",
     label: "שינוי 5 שנים",
     format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_5y_from && row?.price_change_5y_to ? ` (${row.price_change_5y_to} \u2190 ${row.price_change_5y_from})` : ""}`,
-    width: "min-w-[130px]",
+    width: "min-w-[81px] md:min-w-[130px]",
     help: "שינוי המחיר החציוני הרשמי על פני 5 שנים, עד השנה המלאה האחרונה — מבט ארוך שמחליק תנודות קצרות.",
   },
   // Removed "% הזהב" column — was based on stale population projections
   // and produced misleading negative percentages for cities like Tel Aviv.
-  { key: "people_per_apartment", label: "נפשות/דירה", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[80px]",
+  { key: "people_per_apartment", label: "נפשות/דירה", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[66px] md:min-w-[80px]",
     help: "אוכלוסייה חלקי מלאי דירות. מספר גבוה מהממוצע הארצי מרמז על צפיפות וביקוש כבוש; ירידה לאורך זמן מרמזת שההיצע מדביק את הביקוש." },
-  { key: "total_permits", label: "סה״כ היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+  { key: "total_permits", label: "סה״כ היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]",
     help: "סך היתרי הבנייה שאושרו בעיר בשנים האחרונות. היתר הוא הצעד לפני התחלת בנייה — אינדיקטור מוקדם להיצע עתידי." },
-  { key: "avg_permits", label: "ממוצע היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+  { key: "avg_permits", label: "ממוצע היתרים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]",
     help: "ממוצע היתרים שנתי — מנרמל שנים חריגות ומאפשר השוואה הוגנת בין ערים." },
-  { key: "unsold_inventory", label: "מלאי לא מכור", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+  { key: "unsold_inventory", label: "מלאי לא מכור", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]",
     help: "דירות חדשות שנבנו וטרם נמכרו. מלאי גדול = לחץ על הקבלנים ומרחב מיקוח; מלאי קטן = ביקוש שאוכל את ההיצע." },
-  { key: "years_to_clear", label: "שנות פינוי", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[80px]",
+  { key: "years_to_clear", label: "שנות פינוי", format: (v) => v !== null ? v.toFixed(1) : "—", width: "min-w-[66px] md:min-w-[80px]",
     help: "בקצב המכירה הנוכחי — כמה שנים ייקח למכור את המלאי הלא-מכור. מעל ~1.5 שנים נחשב שוק איטי; מתחת לשנה — שוק חם." },
-  { key: "construction_4y_gross", label: "בנייה 4 שנים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[90px]",
+  { key: "construction_4y_gross", label: "בנייה 4 שנים", format: (v) => v ? v.toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]",
     help: "סך הדירות שנבנו ב-4 השנים האחרונות — ההיצע החדש שנכנס בפועל לעיר, מול הגידול באוכלוסייה." },
-  { key: "urban_renewal_status", label: "התחדשות עירונית", format: (v) => v ?? "—", width: "min-w-[110px]" },
+  { key: "urban_renewal_status", label: "התחדשות עירונית", format: (v) => v ?? "—", width: "min-w-[68px] md:min-w-[110px]" },
+  // ── added 8/2026 as default columns, per the operator's column list ──
+  { key: "tx_avg_4room", label: "מחיר ממוצע 4 חד׳", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_avg_4room_year ? ` (${row.tx_avg_4room_year})` : ""}` : "—", width: "min-w-[74px] md:min-w-[120px]",
+    help: "מחיר העסקה הממוצע של דירת 4 חדרים יד-שנייה, בשנה האחרונה עם 10+ עסקאות כאלה בעיר. יד-שנייה ולא כלל העסקאות: פרויקט חדש גדול אחד מושך את הממוצע הכללי כלפי מעלה ומעוות בדיוק את ההשוואה בין ערים. השנה בסוגריים היא השנה שנמדדה." },
+  { key: "pop_growth_10y_pct", label: "גידול אוכלוסייה 10 שנים", format: (v) => v === null ? "—" : `${fmtSigned(v)}%`, width: "min-w-[74px] md:min-w-[120px]",
+    help: "שיעור גידול האוכלוסייה על פני עשר שנים, עד השנה האחרונה שיש לה בת-זוג עשור אחורה. עיר שחסרה לה אחת משתי נקודות הקצה מקבלת ״—״ ולא 0 — היעדר היסטוריה אינו היעדר גידול." },
 ];
 
 /* ── Investor-metric columns ──────────────────────────────────────────────
@@ -222,27 +232,27 @@ const INV_COLS: InvColDef[] = [
   },
 ];
 
-/* ── One-click screener presets ─────────────────────────────────────────── */
-type PresetDef = {
-  id: string;
-  label: string;
-  title: string;
-  sortId: string;
-  dir: "asc" | "desc";
-  test: (m: InvestorRow | undefined) => boolean;
-};
-
-const PRESETS: PresetDef[] = [
-  {
-    id: "supply", label: "לחץ היצע", title: "פער היצע של 100%+ מהביקוש (מחסור חריף)",
-    sortId: "inv_gap", dir: "desc",
-    test: (m) => !!m && m.gapPctOfDemand != null && m.gapPctOfDemand >= 100,
-  },
-  {
-    id: "premium", label: "🆕 פרמיה נמוכה", title: "פרמיית חדשות מתחת ל-8% — חדש כמעט במחיר יד שנייה",
-    sortId: "inv_premium", dir: "asc",
-    test: (m) => !!m && m.newPremiumPct != null && m.newPremiumPct < 8,
-  },
+/**
+ * The eight columns a reader gets on arrival, in this order (operator, 8/2026).
+ *
+ * The order is not only what the table shows — it is also what a PHONE shows.
+ * At 375px roughly four columns fit, so positions 2–4 are the three figures a
+ * mobile visitor sees without scrolling. Reordering this list changes both.
+ *
+ * The three change columns are deliberately different measurements, not three
+ * views of one: `price_change_3y_pct` is the CBS's official median transaction
+ * price, while `chg_all` and `chg_sh` are ₪/m² from our own collected deals and
+ * carry a year-window selector.
+ */
+const DEFAULT_VISIBLE = [
+  "city_name",
+  "price_change_3y_pct",  // שינוי 3 שנים — חציון רשמי
+  "chg_all",              // Δ כללי ממוצע ₪/מ״ר
+  "chg_sh",               // Δ יד-2 ממוצע ₪/מ״ר
+  "tx_avg_all",           // ממוצע כללי ₪/מ״ר
+  "tx_avg_4room",         // מחיר ממוצע דירת 4 חדרים (יד-2)
+  "pop_growth_10y_pct",   // גידול אוכלוסייה 10 שנים
+  "dealCount",            // עסקאות במאגר
 ];
 
 /* ── Advanced numeric range filters ─────────────────────────────────────── */
@@ -280,19 +290,40 @@ export default function CitiesTable({
   const [filterHasPermits, setFilterHasPermits] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("all");
   const [win, setWin] = useState<Record<ChangeMetric, Win>>({ all: 3, secondhand: 3, secondhand_median: 3, new: 3, median: 3 });
-  // official median + secondary investor columns are optional, off by default
-  const [hidden, setHidden] = useState<Set<string>>(new Set(["chg_median", "inv_premium", "inv_gap", "inv_conf", "tx_median_all", "population_2022"]));
+  /**
+   * EIGHT COLUMNS BY DEFAULT — the operator's list, in the operator's order.
+   *
+   * It used to be the opposite: this set hid six of roughly twenty-six columns,
+   * so twenty were open on arrival, ordered by FAMILY (every Δ column, then
+   * every price level, then the rest) rather than by importance. Nobody had
+   * ever chosen what matters — the default was "almost everything" — which is
+   * why the header button read "עמודות (21)" and why the table was a
+   * horizontal scroll marathon.
+   *
+   * Nothing is deleted. Everything not in DEFAULT_VISIBLE stays one click away
+   * under "עמודות ▾", and the user's own choice still persists to localStorage
+   * and wins over this.
+   */
+  const [hidden, setHidden] = useState<Set<string>>(() => {
+    const all = [
+      ...columns.map((c) => c.key as string),
+      ...CHANGE_COLS.map((c) => c.id),
+      ...INV_COLS.map((c) => c.id),
+    ];
+    return new Set(all.filter((k) => !DEFAULT_VISIBLE.includes(k)));
+  });
 
   // Column order (drag & drop) — city stays pinned first. Persisted with the
   // hidden set so a user's table layout survives refreshes.
   // user rule: price-CHANGE columns come FIRST ("זה מה שמעניין"), then current
   // price levels, then the rest (demography/supply), investor metrics last.
   const DEFAULT_ORDER = useMemo(() => {
-    const priceLevels = ["tx_median_sh", "tx_avg_sh", "tx_avg_all", "tx_median_all"];
-    const rest = columns
-      .filter((c) => c.key !== "city_name" && !priceLevels.includes(c.key as string))
-      .map((c) => c.key as string);
-    return ["city_name", ...CHANGE_COLS.map((c) => c.id), ...priceLevels, ...rest, ...INV_COLS.map((c) => c.id)];
+    const rest = [
+      ...columns.map((c) => c.key as string),
+      ...CHANGE_COLS.map((c) => c.id),
+      ...INV_COLS.map((c) => c.id),
+    ].filter((k) => !DEFAULT_VISIBLE.includes(k));
+    return [...DEFAULT_VISIBLE, ...rest];
   }, []);
   const [order, setOrder] = useState<string[]>(DEFAULT_ORDER);
   const dragRef = useRef<string | null>(null);
@@ -371,7 +402,6 @@ export default function CitiesTable({
     </span>
   );
   const [showColMenu, setShowColMenu] = useState(false);
-  const [preset, setPreset] = useState<string | null>(null);
   const [ranges, setRanges] = useState<Record<RangeKey, Range>>(makeEmptyRanges);
   const [showAdv, setShowAdv] = useState(false);
 
@@ -402,24 +432,6 @@ export default function CitiesTable({
       setSortKey("population_2026");
       setSortDir("desc");
     }
-  }
-
-  /** Preset = filter + sort by its column (and reveal that column if hidden).
-   * Clicking the active preset again — or "הכל" — clears the filter. */
-  function togglePreset(p: PresetDef) {
-    if (preset === p.id) {
-      setPreset(null);
-      return;
-    }
-    setPreset(p.id);
-    setSortKey(p.sortId);
-    setSortDir(p.dir);
-    setHidden((s) => {
-      if (!s.has(p.sortId)) return s;
-      const n = new Set(s);
-      n.delete(p.sortId);
-      return n;
-    });
   }
 
   const setRange = (key: RangeKey, field: keyof Range, val: string) =>
@@ -453,10 +465,6 @@ export default function CitiesTable({
     } else if (viewMode === "top5y" || viewMode === "down5y") {
       result = result.filter((c) => c.price_change_5y_pct !== null);
     }
-    if (preset) {
-      const p = PRESETS.find((x) => x.id === preset);
-      if (p) result = result.filter((c) => p.test(investor[c.city_name]));
-    }
     for (const def of RANGE_DEFS) {
       const r = ranges[def.key];
       const min = r.min.trim() === "" ? null : Number(r.min);
@@ -471,7 +479,7 @@ export default function CitiesTable({
       });
     }
     return result;
-  }, [data, search, filterHasPrice, filterHasPermits, viewMode, preset, ranges, investor]);
+  }, [data, search, filterHasPrice, filterHasPermits, viewMode, ranges, investor]);
 
   const sorted = useMemo(() => {
     const chgCol = changeColById(sortKey);
@@ -565,11 +573,16 @@ export default function CitiesTable({
       ? `sticky start-0 z-[1] ${thinCity ? "bg-amber-50" : "bg-white"} shadow-[inset_-6px_0_8px_-8px_rgba(15,23,42,0.25)]`
       : "";
     return (
-      <td key={col.key} className={`px-3 py-2.5 ${isFeaturedCol(col.key) ? "bg-indigo-50/40" : ""} ${cityPin}`}>
+      <td key={col.key} className={`px-2 py-2.5 md:px-3 ${isFeaturedCol(col.key) ? "bg-indigo-50/40" : ""} ${cityPin}`}>
         {col.key === "city_name" ? (
+          /* Capped and breakable on a phone. The longest names in the database
+             are hyphenated compounds — מודיעין-מכבים-רעות, בנימינה-גבעת עדה —
+             and an uncapped pinned column sized to them would eat the room the
+             three data columns beside it need. break-words guarantees a break
+             even where the hyphen does not offer one. */
           <Link
             href={`/city/${encodeURIComponent(row.city_name)}`}
-            className="text-indigo-700 hover:text-indigo-800 font-medium transition-colors"
+            className="block max-w-[76px] break-words font-medium text-indigo-700 transition-colors hover:text-indigo-800 md:max-w-none"
           >
             {row.city_name}
           </Link>
@@ -636,32 +649,6 @@ export default function CitiesTable({
         </span>
       </div>
 
-      {/* One-click investor presets */}
-      <div className="flex flex-wrap items-center gap-2 mb-4">
-        <span className="text-xs text-slate-500 font-semibold">פילטרים מהירים:</span>
-        <button
-          type="button"
-          onClick={() => setPreset(null)}
-          className={`control-pill ${preset === null ? "control-pill-active" : ""}`}
-          aria-pressed={preset === null}
-          title="ניקוי פילטר מהיר"
-        >
-          הכל
-        </button>
-        {PRESETS.map((p) => (
-          <button
-            key={p.id}
-            type="button"
-            onClick={() => togglePreset(p)}
-            className={`control-pill ${preset === p.id ? "control-pill-active" : ""}`}
-            aria-pressed={preset === p.id}
-            title={p.title}
-          >
-            {p.label}
-          </button>
-        ))}
-      </div>
-
       {/* Controls */}
       <div className="flex flex-wrap gap-3 mb-4">
         <input
@@ -700,7 +687,7 @@ export default function CitiesTable({
         >
           סינון מתקדם {showAdv ? "▴" : "▾"}
           {activeRangeCount > 0 && (
-            <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] rounded-full bg-indigo-600 px-1 text-2xs font-bold text-white">
+            <span className="inline-flex items-center justify-center min-w-[66px] md:min-w-[18px] h-[18px] rounded-full bg-indigo-600 px-1 text-2xs font-bold text-white">
               {activeRangeCount}
             </span>
           )}
@@ -815,7 +802,7 @@ export default function CitiesTable({
           that's what makes the sticky header row actually stick (the old
           viewport-sticky top-14 was dead inside overflow-x-auto). */}
       <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-auto max-h-[70vh] md:max-h-none">
-        <table className="w-full text-sm whitespace-nowrap">
+        <table className="w-full text-sm md:whitespace-nowrap">
           <thead>
             <tr className="border-b border-slate-300">
               {visibleOrder.map((id) => {
@@ -843,10 +830,10 @@ export default function CitiesTable({
                     : "";
                   return (
                     <th key={id} {...dragProps} onClick={() => handleSort(col.key)}
-                      className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-3 py-3 text-right font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${dropRing} ${cityPin} ${
+                      className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-2 py-3 md:px-3 text-right font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${dropRing} ${cityPin} ${
                         isFeaturedCol(col.key) ? "bg-indigo-50 text-indigo-700" : "bg-white text-slate-500"
                       }`}>
-                      {draggable && <span className="ml-1 cursor-grab text-slate-300">⠿</span>}
+                      {draggable && <span className="ml-1 hidden cursor-grab text-slate-300 md:inline">⠿</span>}
                       {col.label}
                       {col.help && <span className="mr-1 inline-block"><InfoTip text={col.help} label={`הסבר: ${col.label}`} /></span>}
                       {sortKey === col.key && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
@@ -857,8 +844,8 @@ export default function CitiesTable({
                   const c = entry.def;
                   return (
                     <th key={id} {...dragProps} onClick={() => handleSort(c.id)} title={c.title(refYear)}
-                      className={`sticky top-0 md:top-14 z-10 bg-white border-b border-slate-300 px-3 py-3 text-right text-slate-500 font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none min-w-[110px] ${dropRing}`}>
-                      <span className="ml-1 cursor-grab text-slate-300">⠿</span>
+                      className={`sticky top-0 md:top-14 z-10 bg-white border-b border-slate-300 px-2 py-3 md:px-3 text-right text-slate-500 font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none min-w-[68px] md:min-w-[110px] ${dropRing}`}>
+                      <span className="ml-1 hidden cursor-grab text-slate-300 md:inline">⠿</span>
                       {c.label}
                       <span className="mr-1 inline-block"><InfoTip text={c.title(refYear)} label={`הסבר: ${c.label}`} /></span>
                       {sortKey === c.id && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
@@ -869,24 +856,40 @@ export default function CitiesTable({
                 const cc = entry.def as { id: string; label: string; metric: ChangeMetric; unit: string };
                 return (
                   <th key={id} {...dragProps}
-                    className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-3 py-3 text-right text-slate-500 font-medium min-w-[155px] bg-indigo-50 border-r border-indigo-100 ${dropRing}`}>
-                    <div className="flex items-center gap-1.5">
-                      <span className="cursor-grab text-slate-300">⠿</span>
-                      <span onClick={() => handleSort(cc.id)} className="cursor-pointer hover:text-indigo-700 select-none">
-                        {cc.label}
-                        {sortKey === cc.id && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
+                    className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-2 py-3 md:px-3 text-right text-slate-500 font-medium min-w-[80px] md:min-w-[155px] bg-indigo-50 border-r border-indigo-100 ${dropRing}`}>
+                    {/* STACKED ON A PHONE, INLINE FROM md UP. The year picker
+                        is a native <select> and will not render narrower than
+                        its widest option; beside the label on one no-wrap line
+                        it made this column 148px on a 375px screen, which is
+                        why only the city and one column fit. Stacked, the
+                        column is as wide as the wider of the two. */}
+                    <div className="flex flex-col items-start gap-0.5 md:flex-row md:items-center md:gap-1.5">
+                      <span className="flex items-center">
+                        <span className="hidden md:inline cursor-grab text-slate-300">⠿</span>
+                        <span onClick={() => handleSort(cc.id)} className="cursor-pointer hover:text-indigo-700 select-none">
+                          {cc.label}
+                          {sortKey === cc.id && <span className="mr-1 text-indigo-600">{sortDir === "asc" ? "▲" : "▼"}</span>}
+                        </span>
                       </span>
                       <select value={win[cc.metric]}
                         onChange={(e) => setWin((w) => ({ ...w, [cc.metric]: Number(e.target.value) as Win }))}
                         onClick={(e) => e.stopPropagation()} title="בחר פרק זמן"
-                        className="text-2xs border border-slate-200 rounded px-0.5 py-0.5 bg-white text-slate-600 cursor-pointer">
+                        /* appearance-none on the phone: the native dropdown
+                           arrow is ~18px of chrome per column, and with two
+                           change columns that alone was the difference between
+                           four columns fitting in 375px and not. The border
+                           keeps it reading as a control. Native styling returns
+                           from md up, where the width is free. */
+                        className="w-[52px] cursor-pointer appearance-none rounded border border-slate-200 bg-white px-0.5 py-0.5 text-center text-[10px] text-slate-600 md:w-auto md:appearance-auto md:px-1 md:text-start md:text-2xs">
                         <option value={1}>שנה</option>
                         <option value={3}>3 שנים</option>
                         <option value={5}>5 שנים</option>
                         <option value={10}>10 שנים</option>
                       </select>
                     </div>
-                    <div className="text-2xs text-slate-400 font-normal mt-0.5">{cc.unit}</div>
+                    {/* the metric's fine print: useful on a wide screen, pure
+                        width on a narrow one, and the InfoTip already carries it */}
+                    <div className="mt-0.5 hidden text-2xs font-normal text-slate-400 md:block">{cc.unit}</div>
                   </th>
                 );
               })}
@@ -912,12 +915,19 @@ export default function CitiesTable({
                     const entry = colById.get(id);
                     if (!entry) return null;
                     if (entry.kind === "base") return renderTd(row, entry.def);
-                    if (entry.kind === "inv") return <td key={id} className="px-3 py-2.5">{entry.def.render(inv)}</td>;
+                    if (entry.kind === "inv") return <td key={id} className="px-2 py-2.5 md:px-3">{entry.def.render(inv)}</td>;
                     const cc = entry.def as { id: string; metric: ChangeMetric };
                     const r = changePct(row.changeMetrics?.[cc.metric], win[cc.metric]);
                     return (
-                      <td key={id} className="px-3 py-2.5 bg-indigo-50/20 border-r border-indigo-100/60">
-                        <TrendValue pct={r.pct} from={r.pct !== null ? r.from : null} to={r.pct !== null ? r.to : null} />
+                      <td key={id} className="px-2 py-2.5 md:px-3 bg-indigo-50/20 border-r border-indigo-100/60">
+                        {/* The cap lives on a DIV, not the td: with
+                            table-layout:auto a max-width on a cell is ignored,
+                            while a bounded block inside it does constrain the
+                            column's max-content width. This is what lets the
+                            phone show the city plus three columns. */}
+                        <div className="max-w-[80px] md:max-w-none">
+                          <TrendValue pct={r.pct} from={r.pct !== null ? r.from : null} to={r.pct !== null ? r.to : null} />
+                        </div>
                       </td>
                     );
                   })}

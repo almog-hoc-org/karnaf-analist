@@ -2,9 +2,33 @@ import Link from "next/link";
 import Icon from "@/components/Icon";
 
 /**
- * Premium ranking card: tiny uppercase category label, #1 displayed BIG
- * (city + value dominate), places 2–5 as compact rows with a relative
- * mini-bar. Navy brand only; no decorative colors.
+ * A ranking, as a table.
+ *
+ * WHAT THIS REPLACED, AND WHY (operator, 8/2026)
+ * The card used to render #1 as a separate hero block — its own border, its own
+ * padding, a 32px numbered square, the name at text-lg and the value on a line
+ * of its own — and places 2–5 as thin flex rows beneath it. Two consequences,
+ * both marked on the screenshot:
+ *
+ *   - The card opened with a heavy slab and ended with four hairlines, so the
+ *     lower half read as empty even before any stretching.
+ *   - Nothing lined up. Each row was `flex` with the value pushed to `ms-auto`,
+ *     so a long city name shoved its number left and a short one left a gap.
+ *     Five values that cannot be read down a column are five values that cannot
+ *     be compared, which is the only reason to put them in a list.
+ *
+ * A table fixes both by construction: cells align, and #1 is emphasised INSIDE
+ * the same grid instead of being a different component.
+ *
+ * HEIGHT COMES FROM CONTENT. `h-full` is gone from the root, and the rankings
+ * grid on the home page carries `card-grid-auto` (app/globals.css) so a card
+ * with five short rows is no longer padded out to match a taller neighbour.
+ * The `.card-grid` equal-height rule still applies everywhere else, where
+ * uniform tiles genuinely want it.
+ *
+ * WIDTH COMES FROM CONTENT TOO: `table-auto`, no per-column min-widths, and the
+ * secondary badge moved UNDER the value rather than beside it — as a sibling it
+ * set the value column's width for every other row.
  */
 interface RankingItem {
   rank: number;
@@ -31,63 +55,80 @@ export default function RankingCard({
   detailHref?: string;
 }) {
   if (items.length === 0) return null;
-  const [first, ...rest] = items;
   const nums = items.map((i) => i.numeric).filter((v): v is number => v != null && Number.isFinite(v));
   const maxNum = nums.length === items.length ? Math.max(...nums.map(Math.abs)) : null;
 
   return (
-    <div className="glass-card group/card relative flex h-full flex-col overflow-hidden p-5 transition-all hover:-translate-y-0.5">
-      {/* category label — no hidden hover-link stealing width; modest tracking for Hebrew */}
-      <div className="mb-4 min-w-0">
+    <div className="glass-card group/card relative flex flex-col overflow-hidden p-4 transition-all hover:-translate-y-0.5 sm:p-5">
+      <div className="mb-3 min-w-0">
         <span className="block break-words text-2xs font-black uppercase leading-snug tracking-wide text-slate-400">
           <Icon name={icon} size="1em" /> {title}
         </span>
       </div>
 
-      {/* #1 — the hero. Name gets a FULL row (never competes with the value for width);
-          the value sits on its own line below — nothing can clip at any card width. */}
-      <Link href={first.href} className="mb-4 block rounded-xl border border-indigo-100 bg-gradient-to-l from-indigo-50/80 to-white p-3.5 transition-colors hover:border-indigo-300">
-        <div className="flex items-start gap-2.5">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-sm font-black text-white shadow-sm shadow-indigo-600/30">1</span>
-          <span className="min-w-0 flex-1 break-words text-lg font-black leading-tight text-slate-900">{first.city}</span>
-        </div>
-        <div dir="ltr" className="mt-2 text-right text-xl font-black tabular-nums leading-none text-indigo-700">{first.value}</div>
-        {first.badge && (
-          <div className="mt-1.5 text-right">
-            <span className="inline-block rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-2xs font-bold text-amber-700">{first.badge}</span>
-          </div>
-        )}
-      </Link>
-
-      {/* 2–5 — rows WRAP when tight: the value drops under the name instead of clipping */}
-      <ul className="space-y-2">
-        {rest.map((it) => (
-          <li key={it.rank}>
-            <Link href={it.href} className="group/row flex flex-wrap items-start gap-x-2.5 gap-y-0.5">
-              <span className="mt-0.5 w-4 shrink-0 text-center text-2xs font-black text-slate-400">{it.rank}</span>
-              <span className="min-w-0 flex-1 basis-24">
-                <span className="block break-words text-xs font-bold leading-tight text-slate-800 group-hover/row:text-indigo-700">{it.city}</span>
-                {maxNum != null && maxNum > 0 && (
-                  <span className="spark-bar mt-1 block">
+      <div className="overflow-hidden rounded-xl border border-slate-200">
+        <table className="w-full table-auto text-center text-xs">
+          <tbody className="divide-y divide-slate-100">
+            {items.map((it, i) => {
+              const first = i === 0;
+              return (
+                <tr key={it.rank} className={first ? "bg-indigo-50/70" : "hover:bg-slate-50"}>
+                  {/* rank */}
+                  <td className="px-1.5 py-2 align-middle sm:px-2">
                     <span
-                      className="spark-fill block bg-indigo-300"
-                      style={{ width: `${Math.max(6, (Math.abs(it.numeric!) / maxNum) * 100)}%` }}
-                    />
-                  </span>
-                )}
-              </span>
-              <span className="ms-auto flex flex-col items-end gap-0.5">
-                <span dir="ltr" className="whitespace-nowrap text-xs font-bold tabular-nums text-slate-700">{it.value}</span>
-                {it.badge && (
-                  <span className="rounded-full border border-amber-200 bg-amber-50 px-1.5 py-px text-[10px] font-bold text-amber-700">{it.badge}</span>
-                )}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+                      className={`inline-flex items-center justify-center rounded-full text-2xs font-black ${
+                        first ? "h-6 w-6 bg-indigo-600 text-white shadow-sm shadow-indigo-600/30" : "h-5 w-5 bg-slate-100 text-slate-600"
+                      }`}
+                    >
+                      {it.rank}
+                    </span>
+                  </td>
+
+                  {/* city + relative bar */}
+                  <td className="px-1.5 py-2 align-middle sm:px-2">
+                    <Link
+                      href={it.href}
+                      className={`break-words font-bold leading-tight text-slate-900 hover:text-indigo-700 hover:underline ${
+                        first ? "text-sm" : ""
+                      }`}
+                    >
+                      {it.city}
+                    </Link>
+                    {maxNum != null && maxNum > 0 && (
+                      <span className="spark-bar mx-auto mt-1 block max-w-[80px]">
+                        <span
+                          className="spark-fill block bg-indigo-300"
+                          style={{ width: `${Math.max(6, (Math.abs(it.numeric!) / maxNum) * 100)}%` }}
+                        />
+                      </span>
+                    )}
+                  </td>
+
+                  {/* value (+ badge on its own line, so it never widens the column) */}
+                  <td className="px-1.5 py-2 align-middle sm:px-2">
+                    <span
+                      dir="ltr"
+                      className={`block whitespace-nowrap tabular-nums ${
+                        first ? "text-base font-black text-indigo-700" : "text-xs font-bold text-slate-700"
+                      }`}
+                    >
+                      {it.value}
+                    </span>
+                    {it.badge && (
+                      <span className="mt-0.5 inline-block rounded-full border border-amber-200 bg-amber-50 px-1.5 py-px text-[10px] font-bold text-amber-700">
+                        {it.badge}
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
       {detailHref && (
-        <Link href={detailHref} className="mt-3 block text-2xs font-bold text-indigo-600 hover:underline">
+        <Link href={detailHref} className="mt-2.5 block text-2xs font-bold text-indigo-600 hover:underline">
           הדירוג המלא ←
         </Link>
       )}

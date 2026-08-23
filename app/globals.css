@@ -279,6 +279,15 @@
   .stack          { @apply mb-12 md:mb-16; }
   .card-grid      { @apply grid gap-4 md:gap-5 items-stretch; }
   .card-grid > *  { height: 100%; }
+  /* Opt-out for grids whose cards should be as tall as their own content.
+     The equal-height rule above is right for a row of uniform tiles — the
+     three hero KPIs, the market-insight cards — and wrong for a row of
+     rankings, where one card holding five short rows was being stretched to
+     the height of a neighbour holding longer ones, leaving the empty band the
+     operator marked (8/2026). Kept as a variant rather than a change to the
+     base rule, because two of the three .card-grid users want the stretch. */
+  .card-grid-auto            { @apply items-start; }
+  .card-grid-auto > *        { height: auto; }
 
   /* section header: icon + title + one description line, everywhere */
   .section-head { @apply mb-5 flex flex-wrap items-center gap-3; }

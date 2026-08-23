@@ -28,6 +28,15 @@ export interface ReportKpi {
   hint?: string;
   tone?: Tone;
   yoy?: number;
+  /**
+   * Not a measurement — a fact ABOUT the measurement, such as which period the
+   * report compares. Flagged rather than deleted: the reader needs to know the
+   * comparison window, but it was occupying a tile in the metric grid at the
+   * same visual weight as a real figure, on a card whose whole point is that
+   * the figures are what matter (operator, 8/2026). Rendered as a meta line
+   * beneath the grid instead.
+   */
+  meta?: boolean;
 }
 
 export interface DistrictKpi {
@@ -186,7 +195,7 @@ const REPORT_150_2026: FocusedReport = {
     { label: "דירות חדשות (MoM)", value: "+0.4%", tone: "emerald" },
     { label: "חדשות ללא תמיכה ממשלתית", value: "-0.3%", tone: "red", hint: "ניטרל סבסוד" },
     { label: "% עסקאות בסבסוד ממשלתי", value: "28.6%", tone: "purple", hint: "עלה מ-27.3%" },
-    { label: "תקופת השוואה", value: "פבר-מרץ 26", tone: "slate", hint: "ה-ארעי הכי טרי" },
+    { label: "תקופת השוואה", value: "פבר-מרץ 26", tone: "slate", hint: "ה-ארעי הכי טרי", meta: true },
   ],
   districtKpis: [
     // Source: PDF p.2-3 of 150/2026.

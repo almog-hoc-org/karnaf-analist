@@ -41,7 +41,11 @@ export default function TrendValue({
   return (
     <span
       dir="ltr"
-      className={`inline-flex items-center gap-1 font-semibold tabular-nums ${color} ${chip ? `${chipBg} rounded px-1.5 py-0.5` : ""} ${className}`}
+      /* flex-wrap so the year range can drop to a second line inside a narrow
+         column. An inline-flex never wraps by default, which made
+         "+9.3% (2025 ← 2022)" one unbreakable ~130px line and set the width of
+         every change column in the cities table on a phone. */
+      className={`inline-flex flex-wrap items-center gap-x-1 font-semibold tabular-nums ${color} ${chip ? `${chipBg} rounded px-1.5 py-0.5` : ""} ${className}`}
     >
       {fmtSignedPct(pct)}
       {from != null && to != null && (

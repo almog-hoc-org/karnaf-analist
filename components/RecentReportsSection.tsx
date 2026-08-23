@@ -13,6 +13,7 @@ import {
 } from "@/lib/recent-reports";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
+import InfoTip from "@/components/InfoTip";
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Design system — TWO tones only: primary (indigo) + neutral (slate).
@@ -85,15 +86,37 @@ function YoyChip({ value }: { value?: number }) {
   );
 }
 
+/**
+ * One metric — the NUMBER is the headline (operator, 8/2026).
+ *
+ * It used to be the other way round: the label came first at the full width of
+ * the tile, wrapped to two lines on anything like "חדשות ללא תמיכה ממשלתית",
+ * and the value sat under it at text-base. The label carried more ink than the
+ * figure it described, on a page whose entire product is figures.
+ *
+ * It also made the tiles ragged. The label's line count and the optional
+ * `hint` both varied, and in a stretching grid every tile in a row inherited
+ * the height of the tallest — which is the wasted space marked on the shot.
+ * Now each tile is the same three fixed slots, so the row is even by
+ * construction rather than by luck.
+ *
+ * `hint` moves into the label's disclosure rather than being deleted: it holds
+ * things like "37.5% מהסה״כ", which is context for the number, not decoration.
+ */
 function KpiPill({ kpi }: { kpi: ReportKpi }) {
   return (
-    <div className="rounded-xl px-3 py-2.5 bg-white border border-slate-200 shadow-[0_1px_0_rgba(0,0,0,0.02)]">
-      <div className="mb-1 flex items-start justify-between gap-1">
-        <span className="min-w-0 break-words text-2xs font-semibold leading-tight tracking-tight text-slate-500">{kpi.label}</span>
-        {kpi.yoy !== undefined && <YoyChip value={kpi.yoy} />}
+    <div className="flex flex-col items-center justify-center rounded-xl border border-slate-200 bg-white px-2 py-3 text-center shadow-[0_1px_0_rgba(0,0,0,0.02)]">
+      {/* label above, small — but slate-500, not slate-400: the request was
+          "smaller AND readable", and contrast is what makes small type read. */}
+      <span className="flex items-center justify-center gap-0.5 text-[10px] font-semibold leading-tight text-slate-500">
+        <span className="break-words">{kpi.label}</span>
+        {kpi.hint && <InfoTip label={kpi.label} text={kpi.hint} />}
+      </span>
+      {/* the number: its own line, centred on the tile, not on its neighbours */}
+      <div className={`mt-1 text-2xl font-black tabular-nums leading-none ${valueTrendClass(kpi.value)}`}>
+        {kpi.value}
       </div>
-      <div className={`text-base font-bold tabular-nums leading-none ${valueTrendClass(kpi.value)}`}>{kpi.value}</div>
-      {kpi.hint && <div className="mt-1 break-words text-2xs leading-snug text-slate-500">{kpi.hint}</div>}
+      {kpi.yoy !== undefined && <div className="mt-1"><YoyChip value={kpi.yoy} /></div>}
     </div>
   );
 }
@@ -221,22 +244,21 @@ function ReportDetail({ report }: { report: FocusedReport }) {
       {/* ── Left column: Hero stat + headline ── */}
       <div className="space-y-4">
         {/* Big hero stat */}
-        <div className={`rounded-2xl p-5 bg-gradient-to-br ${t.bg} border ${t.border}`}>
-          <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
-            <div className={`font-black tracking-tight ${t.text} tabular-nums leading-none`} style={{ fontSize: "clamp(30px, 8vw, 44px)" }}>
-              {report.bigStat.value}
-            </div>
-            <div className="min-w-0 flex-1 basis-40 pb-1.5">
-              <div className="break-words text-sm font-bold leading-tight text-slate-900">{report.bigStat.label}</div>
-              {report.bigStat.subhint && (
-                <div className="mt-1 break-words text-2xs leading-snug text-slate-600">{report.bigStat.subhint}</div>
-              )}
-            </div>
+        {/* Centred on the panel, not beside its own caption — the figure was
+            one flex child of a row and drifted with the caption's width. */}
+        <div className={`rounded-2xl p-5 text-center bg-gradient-to-br ${t.bg} border ${t.border}`}>
+          <div className={`font-black tracking-tight ${t.text} tabular-nums leading-none`} style={{ fontSize: "clamp(34px, 9vw, 52px)" }}>
+            {report.bigStat.value}
+          </div>
+          <div className="mt-2 flex items-center justify-center gap-1 text-xs font-bold leading-tight text-slate-800">
+            <span className="break-words">{report.bigStat.label}</span>
+            {report.bigStat.subhint && <InfoTip label={report.bigStat.label} text={report.bigStat.subhint} />}
           </div>
         </div>
 
-        {/* Headline narrative */}
-        <p className="text-xs text-slate-700 leading-relaxed">{report.headline}</p>
+        {/* Headline narrative — the one paragraph worth keeping, clamped so it
+            cannot grow back into the wall of text this section started as. */}
+        <p className="line-clamp-3 text-xs leading-relaxed text-slate-700">{report.headline}</p>
 
         {/* Footer with source links */}
         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-100 text-2xs">
@@ -277,9 +299,19 @@ function ReportDetail({ report }: { report: FocusedReport }) {
         {/* Tab content */}
         <div className="p-4">
           {activeView === "summary" && (
-            <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 gap-2">
-              {report.kpis.map((k, i) => <KpiPill key={i} kpi={k} />)}
-            </div>
+            <>
+              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                {report.kpis.filter((k) => !k.meta).map((k, i) => <KpiPill key={i} kpi={k} />)}
+              </div>
+              {/* Facts about the measurement, not measurements. Same information,
+                  a tenth of the visual weight, and one fewer tile competing with
+                  the numbers. */}
+              {report.kpis.some((k) => k.meta) && (
+                <p className="mt-2 text-center text-[10px] text-slate-500">
+                  {report.kpis.filter((k) => k.meta).map((k) => `${k.label}: ${k.value}`).join(" · ")}
+                </p>
+              )}
+            </>
           )}
 
           {activeView === "districts" && report.districtKpis && (
@@ -351,16 +383,27 @@ function TabHeadline({ report, active, onClick }: { report: FocusedReport; activ
           <span className="text-2xs text-slate-500 font-semibold mr-auto tabular-nums">{report.publishedDate}</span>
         </div>
 
-        {/* Title */}
-        <h3 className={`text-xs font-bold leading-tight transition-colors ${active ? "text-slate-900" : "text-slate-700 group-hover:text-slate-900"}`}>
+        {/* THE NUMBER IS THE CARD (operator, 8/2026).
+            It used to be the last thing here, and an inline one at that: a
+            `flex items-baseline` row where the figure and its caption shared a
+            line, under a title, a cover-window line and a divider. The card was
+            mostly prose with a number in the corner. Now the figure is centred
+            and large, the caption sits under it in small type, and the title is
+            reduced to one line above.
+
+            That also settles the "wasted space" on this row. Three cards in a
+            stretching grid took the height of whichever title wrapped to two
+            lines; with the cover-window gone and the title clamped, their
+            natural heights match. */}
+        <h3 className={`line-clamp-1 text-center text-2xs font-bold leading-tight transition-colors ${active ? "text-slate-900" : "text-slate-700 group-hover:text-slate-900"}`}>
           {report.title}
         </h3>
-        <p className="mt-0.5 break-words text-2xs leading-snug text-slate-500">{report.coverWindow}</p>
 
-        {/* Big stat inline */}
-        <div className={`mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 border-t border-slate-100 pt-3`}>
-          <span className={`text-2xl font-black tabular-nums ${t.text} leading-none`}>{report.bigStat.value}</span>
-          <span className="min-w-0 break-words text-2xs font-semibold leading-snug text-slate-600">{report.bigStat.label}</span>
+        <div className="mt-2 text-center">
+          <div className={`text-3xl font-black tabular-nums leading-none ${t.text}`}>{report.bigStat.value}</div>
+          <div className="mt-1.5 text-[10px] font-semibold leading-snug text-slate-500">
+            {report.bigStat.label}
+          </div>
         </div>
       </div>
     </button>
@@ -442,8 +485,16 @@ export default function RecentReportsSection({
               </span>
             )}
           </div>
+          {/* FOUR, AND TITLE ONLY (operator, 8/2026).
+              The summary line under each title was rendered CONDITIONALLY
+              (`r.highlights?.[0] &&`) inside a two-column grid, and grid items
+              stretch by default — so a report that happened to have no summary
+              was padded out to the height of the one beside it that did. That
+              is the pair of tall empty boxes on the screenshot; it was never a
+              spacing problem. With every card the same shape, the stretch has
+              nothing left to expose. */}
           <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-            {discovered.map((r) => (
+            {discovered.slice(0, 4).map((r) => (
               <a
                 key={r.id}
                 href={r.primaryPdfPath ?? r.pdfUrl}
@@ -463,9 +514,6 @@ export default function RecentReportsSection({
                 <p className="break-words text-xs font-bold leading-snug text-slate-900 transition-colors group-hover:text-indigo-700">
                   {r.title}
                 </p>
-                {r.highlights?.[0] && (
-                  <p className="mt-0.5 break-words text-2xs leading-snug text-slate-600">{r.highlights[0]}</p>
-                )}
               </a>
             ))}
           </div>

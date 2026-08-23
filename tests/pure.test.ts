@@ -12,6 +12,7 @@ import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
 import { __isEmptyCollection } from "@/lib/cache";
+import { growthOverSpan } from "@/lib/cityTransactionPrices";
 
 /**
  * Every case here is a bug this codebase actually shipped or nearly shipped.
@@ -583,5 +584,35 @@ describe("cache empty-guard", () => {
     expect(__isEmptyCollection(0)).toBe(false);
     expect(__isEmptyCollection({})).toBe(false);
     expect(__isEmptyCollection(null)).toBe(false);
+  });
+});
+
+/**
+ * The ten-year population growth behind the new /cities column. The failure
+ * that matters is the quiet one: a city we have no history for must read "—",
+ * never 0, because 0 is a claim that it did not grow.
+ */
+describe("population growth over a span", () => {
+  it("measures from the newest year that has a partner a span back", () => {
+    const s = new Map([[2014, 100], [2016, 110], [2024, 150], [2026, 200]]);
+    expect(growthOverSpan(s, 10)).toBeCloseTo(81.8, 1); // 2026 vs 2016
+  });
+
+  it("slides back to an older usable pair when the newest year has none", () => {
+    const s = new Map([[2014, 100], [2024, 150], [2026, 200]]);
+    expect(growthOverSpan(s, 10)).toBeCloseTo(50, 1); // 2024 vs 2014, not 2026
+  });
+
+  it("returns null — not zero — when an endpoint is missing", () => {
+    expect(growthOverSpan(new Map([[2026, 200]]), 10)).toBeNull();
+    expect(growthOverSpan(new Map(), 10)).toBeNull();
+  });
+
+  it("refuses a zero base instead of dividing by it", () => {
+    expect(growthOverSpan(new Map([[2016, 0], [2026, 200]]), 10)).toBeNull();
+  });
+
+  it("reports a decline as a negative, not as an absence", () => {
+    expect(growthOverSpan(new Map([[2016, 200], [2026, 150]]), 10)).toBeCloseTo(-25, 1);
   });
 });
