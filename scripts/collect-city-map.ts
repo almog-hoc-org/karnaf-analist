@@ -167,38 +167,75 @@ async function resolveArea(cityName: string): Promise<{ id: number; name: string
   // "תל אביב יפו" and occasionally just "תל אביב", and a regex on the stable
   // head matches all three without enumerating them.
   const core = cityName.split(/[-–—]/)[0].trim();
-  const query = `[out:json][timeout:90];
-relation["boundary"="administrative"]["name"~"${core}"];
-out tags;`;
-  const found = await fetchOverpass(query);
-  if (found.length === 0) return null;
+
+  /* FOUR TAGGINGS, WIDENING, IN ONE RUN.
+   *
+   * The first version asked only for boundary=administrative with a matching
+   * `name`, and for Tel Aviv that found the DISTRICT and the SUB-district and
+   * no city — because a municipality in OSM Israel is not reliably tagged the
+   * way a European one is: the Hebrew name may live on `name:he` with an
+   * English `name`, and the municipal edge is sometimes `boundary=local_
+   * authority` rather than `administrative`.
+   *
+   * Discovering that cost a deploy cycle each time. So the lookup now widens
+   * through the plausible taggings within a single run and prints what each
+   * one found — one run, whole picture, instead of one guess per round trip. */
+  const probes: Array<{ what: string; q: string }> = [
+    { what: 'boundary=administrative · name', q: `relation["boundary"="administrative"]["name"~"${core}"];` },
+    { what: "any boundary · name", q: `relation["boundary"]["name"~"${core}"];` },
+    { what: "any boundary · name:he", q: `relation["boundary"]["name:he"~"${core}"];` },
+    { what: "place=city|town|municipality", q: `relation["place"~"^(city|town|municipality)$"]["name"~"${core}"];` },
+  ];
 
   const wanted = normHoodKey(cityName);
-  const scored = found
-    .map((el) => {
-      const tags = el.tags ?? {};
-      const name = tags.name ?? tags["name:he"] ?? "";
-      const level = Number(tags.admin_level ?? 99);
-      const key = normHoodKey(name);
-      // Exact name beats a partial one; among equals, the more local boundary
-      // (higher admin_level) is the city rather than the district containing it.
-      const exact = key === wanted ? 0 : key.includes(wanted) || wanted.includes(key) ? 1 : 2;
-      return { id: el.id, name, level, exact, tags };
-    })
-    .filter((c) => c.name && c.exact < 2)
-    .sort((a, b) => a.exact - b.exact || b.level - a.level);
+  const wantedCore = normHoodKey(core);
 
-  console.log(`  מועמדים לגבול (${found.length} נמצאו, ${scored.length} מתאימים):`);
-  for (const c of scored.slice(0, 6)) {
-    console.log(`    ${c.name}  (relation ${c.id}, admin_level ${c.level === 99 ? "?" : c.level})`);
+  for (const probe of probes) {
+    const found = await fetchOverpass(`[out:json][timeout:90];\n${probe.q}\nout tags;`);
+    if (found.length === 0) {
+      console.log(`  ${probe.what} → 0`);
+      continue;
+    }
+
+    const scored = found
+      .map((el) => {
+        const tags = el.tags ?? {};
+        // Either name tag can carry the Hebrew; the other is often English.
+        const names = [tags.name, tags["name:he"]].filter(Boolean) as string[];
+        const level = Number(tags.admin_level ?? 99);
+        const best = names
+          .map((n) => {
+            const key = normHoodKey(n);
+            if (key === wanted) return { n, rank: 0 };
+            if (key === wantedCore) return { n, rank: 1 };
+            if (key.includes(wanted) || wanted.includes(key)) return { n, rank: 2 };
+            if (key.includes(wantedCore)) return { n, rank: 3 };
+            return { n, rank: 9 };
+          })
+          .sort((a, b) => a.rank - b.rank)[0];
+        return { id: el.id, name: best?.n ?? "", rank: best?.rank ?? 9, level, tags };
+      })
+      // A DISTRICT is not the city. admin_level 8 is the municipality in
+      // Israel; 4 and 5 are the district and sub-district, and drawing "מחוז
+      // תל אביב" would put half the metropolitan area on a city page.
+      .filter((c) => c.name && c.rank < 9 && c.level >= 8)
+      .sort((a, b) => a.rank - b.rank || b.level - a.level);
+
+    console.log(`  ${probe.what} → ${found.length} נמצאו, ${scored.length} מתאימים`);
+    for (const c of scored.slice(0, 5)) {
+      console.log(`      ${c.name}  (relation ${c.id}, admin_level ${c.level === 99 ? "?" : c.level})`);
+    }
+    if (scored.length === 0) {
+      for (const el of found.slice(0, 6)) {
+        const t = el.tags ?? {};
+        console.log(`      · ${t.name ?? "(ללא name)"} / ${t["name:he"] ?? "—"} · ${t.boundary ?? t.place ?? "?"} · level ${t.admin_level ?? "?"}`);
+      }
+      continue;
+    }
+    const best = scored[0];
+    return { id: AREA_OFFSET + best.id, name: best.name };
   }
-  if (scored.length === 0) {
-    console.log("    אף אחד מהם אינו תואם את שם העיר אצלנו:");
-    for (const el of found.slice(0, 8)) console.log(`    · ${(el.tags ?? {}).name ?? "(ללא שם)"}`);
-    return null;
-  }
-  const best = scored[0];
-  return { id: AREA_OFFSET + best.id, name: best.name };
+  return null;
 }
 
 /** Every ring an element carries: a way has one, a relation has one per outer member. */
