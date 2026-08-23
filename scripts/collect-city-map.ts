@@ -58,6 +58,12 @@ const BACKOFF_MS = [0, 15_000, 45_000];
 const TOLERANCE_SHAPE = 0.35;
 const TOLERANCE_LINE = 0.4;
 
+/** Road fragments shorter than this (view-box units; the box is 1000 across,
+ *  so ~4 is roughly 50m in a city the size of Tel Aviv) are dropped. They are
+ *  slip roads, roundabout arms and junction stubs: invisible at 800px, and
+ *  numerous enough to be most of the road layer's weight. */
+const MIN_ROAD_LENGTH = 4;
+
 /** Road classes worth drawing. Anything below tertiary is street furniture at
  *  city scale: it doubles the payload and reads as grey noise. */
 const ROAD_RANKS: Record<string, number> = {
@@ -465,12 +471,15 @@ async function main(): Promise<number> {
     const simplified = simplify(projected, TOLERANCE_LINE);
     if (simplified.length < 2) continue;
     keptPoints += simplified.length;
+    const length = lineLength(simplified);
+    // A named road is kept whatever its length — it may be a label anchor.
+    if (!isCoast && !tags.name && length < MIN_ROAD_LENGTH) continue;
     lines.push({
       kind: isCoast ? "coast" : "road",
       rank: isCoast ? 8 : roadRank!,
       name: tags.name ?? null,
       path: lineToPath(simplified),
-      length: lineLength(simplified),
+      length,
     });
   }
 
