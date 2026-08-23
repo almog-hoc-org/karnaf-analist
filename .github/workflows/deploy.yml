@@ -183,6 +183,32 @@ jobs:
           echo "::error::site did not return 200 after the deploy"
           exit 1
 
+      # Runs on EVERY deploy, not only on an ops dispatch. The free anonymous
+      # allowance is an access gate whose two failure modes are both silent:
+      # opening too far hands the site away, closing too early shows a
+      # registration wall to a first-time visitor on their FIRST city — the
+      # exact thing it exists to remove. Neither throws and neither is visible
+      # from outside, so a check that only ran behind the optional 20-minute
+      # data pipeline would in practice never run at all.
+      # Cheap (a handful of sqlite statements) and self-cleaning: it writes
+      # under a clearly-marked throwaway id and deletes it in a finally block.
+      - name: verify the anonymous free-city gate
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          USER: ${{ secrets.VPS_USER }}
+        run: |
+          # key + known_hosts were written by the deploy step on this runner
+          HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
+          USER=$(printf '%s' "$USER" | tr -d '[:space:]')
+          ssh -o BatchMode=yes "$USER@$HOST" 'bash -s' <<'REMOTE'
+          set -e
+          cd /opt/karnaf
+          # </dev/null: this script arrives on bash's stdin and `exec -T`
+          # forwards stdin to the container — without it the exec swallows the
+          # rest of the script and the step "succeeds" having done nothing.
+          docker compose exec -T app npx tsx scripts/verify-anon-access.ts </dev/null
+          REMOTE
+
 
       # Optional third act, workflow_dispatch + run_pipeline only: run the exact
       # command the 02:30 nightly runs, on the container the deploy above just
@@ -250,14 +276,6 @@ jobs:
           # one of them and fails loudly instead.
           echo "── usage dashboard queries ──"
           docker compose exec -T app npx tsx scripts/verify-usage-queries.ts </dev/null || USAGE_FAILED=1
-
-          # The free anonymous allowance is a gate, and both of its failure
-          # modes are silent: opening too far gives the site away, closing too
-          # early shows a registration wall on a first-time visitor's FIRST
-          # city — the exact thing it exists to remove. Writes and cleans up
-          # after itself under a throwaway id.
-          echo "── anonymous free-city allowance ──"
-          docker compose exec -T app npx tsx scripts/verify-anon-access.ts </dev/null || USAGE_FAILED=1
 
           # First run only in practice: months of raw log exist and no daily
           # aggregate does. Idempotent, so leaving it here costs seconds.
