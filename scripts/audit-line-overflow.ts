@@ -148,3 +148,7 @@ async function main(): Promise<number> {
 main()
   .then((c) => process.exit(c))
   .catch((e) => { console.error(e); process.exit(1); });
+
+// module scope, not global: these scripts each define main(), and a file with
+// no top-level import/export is a GLOBAL script to tsc, so two of them collide.
+export {};

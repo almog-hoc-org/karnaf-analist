@@ -239,6 +239,13 @@ jobs:
           # instead. Reports only — never fails the deploy.
           echo "── שינוי 3 שנים: כיסוי המקורות ──"
           docker compose exec -T app npx tsx scripts/diagnose-price-change-3y.ts </dev/null || true
+
+          # And the same column as the SERVER renders it. The line above reads
+          # the database, which reports perfect coverage; this reads the page,
+          # which is the only place the six-hour cache in front of the loader
+          # is visible. When the two disagree, the cache is the answer.
+          echo "── שינוי 3 שנים: מה העמוד באמת מציג ──"
+          docker compose exec -T app npx tsx scripts/probe-cities-table.ts </dev/null || true
           REMOTE
 
 
