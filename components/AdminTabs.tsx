@@ -10,14 +10,15 @@ const TABS = [
   { key: "reliability", label: "🛡️ בקרת אמינות" },
   { key: "logic", label: "🧮 לוגיקה ומתודולוגיה" },
   { key: "rules", label: "⚙️ חוקי המערכת" },
+  { key: "layout", label: "🧩 סדר אלמנטים" },
   { key: "tables", label: "🗄️ טבלאות המאגר" },
 ] as const;
 
-export default function AdminTabs({ overview, reliability, logic, rules, deals, tables, users, usage }: {
-  overview: ReactNode; reliability: ReactNode; logic: ReactNode; rules: ReactNode; deals: ReactNode; tables: ReactNode; users: ReactNode; usage: ReactNode;
+export default function AdminTabs({ overview, reliability, logic, rules, layout, deals, tables, users, usage }: {
+  overview: ReactNode; reliability: ReactNode; logic: ReactNode; rules: ReactNode; layout: ReactNode; deals: ReactNode; tables: ReactNode; users: ReactNode; usage: ReactNode;
 }) {
   const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("overview");
-  const panes: Record<string, ReactNode> = { overview, reliability, logic, rules, deals, tables, users, usage };
+  const panes: Record<string, ReactNode> = { overview, reliability, logic, rules, layout, deals, tables, users, usage };
 
   return (
     <>

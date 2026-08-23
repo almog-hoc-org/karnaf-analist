@@ -571,9 +571,11 @@ export default function CompareView({
                 return (
                   <tr key={row.key} className="group">
                     <td className="sticky start-0 z-[1] bg-white py-2.5 pe-2 text-right align-top border-b border-slate-100">
-                      <div className="text-xs font-bold text-slate-700 leading-tight">{row.label}</div>
+                      {/* one line, guaranteed: the full text stays in the
+                          title, so shrinking the row never costs information */}
+                      <div className="truncate text-xs font-bold text-slate-700 leading-tight" title={row.label}>{row.label}</div>
                       {row.sub && (
-                        <div className="text-2xs text-slate-400 mt-0.5 leading-tight">{row.sub}</div>
+                        <div className="mt-0.5 truncate text-2xs text-slate-400 leading-tight" title={row.sub}>{row.sub}</div>
                       )}
                     </td>
                     {selected.map((city, i) => (

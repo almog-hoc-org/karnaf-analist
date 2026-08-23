@@ -6,6 +6,7 @@ import AdminDealsBrowser from "@/components/AdminDealsBrowser";
 import AdminRulesPanel from "@/components/AdminRulesPanel";
 import AdminTablesBrowser from "@/components/AdminTablesBrowser";
 import AdminTabs from "@/components/AdminTabs";
+import AdminSectionOrderPanel from "@/components/AdminSectionOrderPanel";
 import AdminReliabilityPanel, { type ReliabilityReport, type AnomalyVerification, type CleaningVerification } from "@/components/AdminReliabilityPanel";
 import AdminLogicPanel from "@/components/AdminLogicPanel";
 import AdminUsersPanel, { type AdminUserStats, type AdminFeedbackRow } from "@/components/AdminUsersPanel";
@@ -184,6 +185,7 @@ export default async function AdminPage() {
         reliability={<AdminReliabilityPanel report={loadReliabilityReport()} anomaly={loadAnomalyVerification()} cleaning={loadCleaningVerification()} />}
         logic={<AdminLogicPanel />}
         rules={<AdminRulesPanel />}
+        layout={<AdminSectionOrderPanel />}
         deals={<AdminDealsBrowser cities={cities.map((c) => c.city_name)} />}
         tables={<AdminTablesBrowser />}
         users={<AdminUsersPanel

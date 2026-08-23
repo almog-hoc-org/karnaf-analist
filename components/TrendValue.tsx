@@ -45,11 +45,26 @@ export default function TrendValue({
          column. An inline-flex never wraps by default, which made
          "+9.3% (2025 ← 2022)" one unbreakable ~130px line and set the width of
          every change column in the cities table on a phone. */
-      className={`inline-flex flex-wrap items-center gap-x-1 font-semibold tabular-nums ${color} ${chip ? `${chipBg} rounded px-1.5 py-0.5` : ""} ${className}`}
+      className={`inline-flex flex-wrap items-center justify-center gap-x-1 font-semibold tabular-nums ${color} ${chip ? `${chipBg} rounded px-1.5 py-0.5` : ""} ${className}`}
     >
       {fmtSignedPct(pct)}
       {from != null && to != null && (
-        <span className="font-normal text-2xs text-slate-400">(<YearRange from={from} to={to} />)</span>
+        /* whitespace-nowrap, because YearRange is an inline-flex — an atomic
+           box — and inside a capped column the browser is free to break
+           between "(" and that box, and again before ")". That is exactly the
+           stray "(" and ")" on lines of their own in the cities table. The
+           parenthetical still drops to a second line when it must; it just
+           drops as one piece. */
+        <span className="whitespace-nowrap font-normal text-[9px] text-slate-400 sm:text-2xs">
+          {/* No parentheses below sm:. "(2026 ← 2023)" at text-2xs measures
+              ~83px, and the change column is capped at 80px on a phone — so the
+              atomic parenthetical overflowed its own cell. Dropping two glyphs
+              and one type step brings it to ~62px, inside the cap, with the
+              same information. */}
+          <span className="hidden sm:inline">(</span>
+          <YearRange from={from} to={to} />
+          <span className="hidden sm:inline">)</span>
+        </span>
       )}
     </span>
   );

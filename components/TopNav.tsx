@@ -28,13 +28,17 @@ interface CityHit {
   reason: CitySearchHit<{ city_name: string }>["reason"];
 }
 
-export default function TopNav({ cities, user, credits, unlimited = false }: { cities: string[]; user?: { name: string } | null; credits?: number | null;
+export default function TopNav({ cities, user, credits, unlimited = false, tracked = [] }: { cities: string[]; user?: { name: string } | null; credits?: number | null; tracked?: string[];
   /** account with no credit limit — the balance is meaningless and a number would misinform */
   unlimited?: boolean }) {
   const creditsLabel = unlimited ? "∞" : credits == null ? null : (Number.isInteger(credits) ? String(credits) : credits.toFixed(1));
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false); // mobile menu
+  // "הערים שלי" used to be a row on the home page. It is a per-reader
+  // shortcut, not a market figure, so it belongs with the account chip —
+  // beside the credits balance — and the home page keeps its first screen.
+  const [starOpen, setStarOpen] = useState(false);
   const [q, setQ] = useState("");
   const [hits, setHits] = useState<CityHit[]>([]);
   const [focusIdx, setFocusIdx] = useState(-1);
@@ -162,6 +166,30 @@ export default function TopNav({ cities, user, credits, unlimited = false }: { c
         <div className="hidden shrink-0 items-center gap-1.5 md:flex">
           {user ? (
             <>
+              {tracked.length > 0 && (
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setStarOpen((v) => !v)}
+                    onBlur={() => setTimeout(() => setStarOpen(false), 120)}
+                    aria-expanded={starOpen}
+                    title="הערים שלי"
+                    className="flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-black text-amber-800 transition-colors hover:bg-amber-100"
+                  >
+                    ★ {tracked.length}
+                  </button>
+                  {starOpen && (
+                    <div className="absolute end-0 z-50 mt-1 w-44 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
+                      <div className="px-2 pb-1 text-2xs font-black uppercase tracking-wide text-slate-400">הערים שלי</div>
+                      {tracked.map((c) => (
+                        <Link key={c} href={`/city/${encodeURIComponent(c)}`} className="block truncate rounded-lg px-2 py-1.5 text-xs font-bold text-slate-700 hover:bg-amber-50 hover:text-amber-800">
+                          ★ {c}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
               {creditsLabel != null && (
                 <Link
                   href="/account"
@@ -255,6 +283,20 @@ export default function TopNav({ cities, user, credits, unlimited = false }: { c
                   <form action={withBasePath("/logout")} method="post" className="inline">
                     <button type="submit" className="rounded-lg px-2 py-1 text-sm font-semibold text-slate-500">יציאה</button>
                   </form>
+                  {tracked.length > 0 && (
+                    <div className="flex w-full flex-wrap gap-1.5">
+                      {tracked.map((c) => (
+                        <Link
+                          key={c}
+                          href={`/city/${encodeURIComponent(c)}`}
+                          onClick={() => setOpen(false)}
+                          className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-800"
+                        >
+                          ★ {c}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <Link href="/login" className="block rounded-lg px-3 py-3 text-sm font-semibold text-slate-700">

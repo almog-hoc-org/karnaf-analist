@@ -8,6 +8,7 @@ import { pickLastUsableYear, isClassifiable, classifyDeal } from "@/lib/nadlanTr
 import { fromToText } from "@/components/FromTo";
 import { citySearch } from "@/lib/citySearch";
 import { labelForPath, sectionLabel } from "@/lib/pageLabels";
+import { reconcile, defaultOrder, PAGE_KEYS, PAGE_SECTIONS } from "@/lib/pageSections";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
@@ -614,5 +615,46 @@ describe("population growth over a span", () => {
 
   it("reports a decline as a negative, not as an absence", () => {
     expect(growthOverSpan(new Map([[2016, 200], [2026, 150]]), 10)).toBeCloseTo(-25, 1);
+  });
+});
+
+
+/**
+ * The section-order editor writes a list of keys into app.db and the pages
+ * render from it. The dangerous failures are both silent: a section ADDED to
+ * the code after an order was saved disappearing from the live site, and a
+ * section DELETED from the code lingering as a phantom row in the dashboard.
+ * reconcile() is the single place that prevents both.
+ */
+describe("page section order", () => {
+  it("keeps a saved order exactly as saved", () => {
+    const d = defaultOrder("home");
+    const shuffled = [...d].reverse();
+    expect(reconcile("home", shuffled)).toEqual(shuffled);
+  });
+
+  it("appends a section that was added after the order was saved", () => {
+    const d = defaultOrder("city");
+    const saved = d.slice(0, 3); // an order stored when the page had 3 sections
+    const out = reconcile("city", saved);
+    expect(out.slice(0, 3)).toEqual(saved);
+    expect(out).toHaveLength(d.length);
+    for (const k of d) expect(out).toContain(k);
+  });
+
+  it("drops a key that no longer exists in the catalogue", () => {
+    const out = reconcile("home", ["a-section-that-was-deleted", ...defaultOrder("home")]);
+    expect(out).toEqual(defaultOrder("home"));
+  });
+
+  it("falls back to the catalogue order when nothing was saved", () => {
+    expect(reconcile("home", [])).toEqual(defaultOrder("home"));
+  });
+
+  it("has no duplicate keys in any page catalogue", () => {
+    for (const p of PAGE_KEYS) {
+      const keys = PAGE_SECTIONS[p].map((s) => s.key);
+      expect(new Set(keys).size).toBe(keys.length);
+    }
   });
 });

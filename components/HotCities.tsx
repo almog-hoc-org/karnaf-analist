@@ -122,7 +122,7 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
             card there is room for a two-word label and no more, and three
             truncated captions explain less than one full sentence here. */}
         <p className="mt-0.5 text-[10px] leading-snug text-slate-500">
-          מגמת מחיר יד-2 ב-{TREND_SPAN} השנים האחרונות · כמות קונים יד-2
+          מגמת מחיר וקונים יד-2, {TREND_SPAN} שנים
           {buyersWindow ? ` (${buyersWindow}) מול 12 החודשים שלפניהם` : " מול אשתקד"} ·
           מחיר ממוצע לדירת 4 חדרים
         </p>
@@ -172,13 +172,14 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
                   </Figure>
                   <Figure
                     label="ממוצע 4 חד׳"
-                    title={c.extra ? `${c.extra.label}${c.extra.year ? ` — ${c.extra.year}` : ""}` : "מחיר ממוצע לדירת 4 חדרים"}
+                    title={c.extra ? `${c.extra.label}${c.extra.year ? ` — ${c.extra.year}` : ""} · ${c.extra.value}` : "מחיר ממוצע לדירת 4 חדרים"}
                   >
+                    {/* Short form at EVERY width. The full "₪2,200,770" was shown
+                        from sm: up, and at tablet width the three-card grid gives
+                        this cell ~58px — the number rendered 81px wide and spilled
+                        out of the card. The exact figure is in the tooltip. */}
                     {c.extra ? (
-                      <>
-                        <span className="sm:hidden">{shortShekel(c.extra.value)}</span>
-                        <span className="hidden sm:inline">{c.extra.value}</span>
-                      </>
+                      <span className="whitespace-nowrap">{shortShekel(c.extra.value)}</span>
                     ) : (
                       <span className="text-slate-300">—</span>
                     )}

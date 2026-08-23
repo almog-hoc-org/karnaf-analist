@@ -319,6 +319,16 @@
   .spark-fill { @apply h-full rounded-full transition-all duration-500; }
 
   /* ── Controls — unified pill/select/chip language ─────────────── */
+  /* ONE definition of a header/action chip's box. The city-page header used to
+     stack four controls of four different heights (an h1, a text-base span, a
+     text-xs pill and two px-3 py-1.5 buttons) in one wrapping flex row, which
+     is what "גדלים שונים של רובריקות" was pointing at. Height and type size
+     live here now, so a control cannot drift out of line by being edited
+     somewhere else. Colours stay with the caller. */
+  .chip-action {
+    @apply inline-flex h-7 shrink-0 items-center gap-1 rounded-full border px-2.5 text-2xs font-bold leading-none transition;
+  }
+
   .control-pill {
     @apply px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer select-none;
     @apply bg-white border-slate-200 text-slate-600 hover:border-indigo-300 hover:text-indigo-700;

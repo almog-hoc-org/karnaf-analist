@@ -434,6 +434,17 @@ export default function CitiesTable({
     }
   }
 
+  /* The five view modes read back as a direction and a window, so the two
+     selectors above can be driven from the one piece of state that the
+     filtering and sorting below already use. */
+  const viewDir: "all" | "up" | "down" =
+    viewMode === "all" ? "all" : viewMode.startsWith("top") ? "up" : "down";
+  const viewWin: 3 | 5 = viewMode.endsWith("5y") ? 5 : 3;
+  const composeMode = (dir: "all" | "up" | "down", win: 3 | 5): ViewMode =>
+    dir === "all" ? "all" : (`${dir === "up" ? "top" : "down"}${win}y` as ViewMode);
+  const applyDirection = (dir: "all" | "up" | "down") => applyViewMode(composeMode(dir, viewWin));
+  const applyWindow = (win: 3 | 5) => applyViewMode(composeMode(viewDir, win));
+
   const setRange = (key: RangeKey, field: keyof Range, val: string) =>
     setRanges((rs) => ({ ...rs, [key]: { ...rs[key], [field]: val } }));
 
@@ -573,7 +584,7 @@ export default function CitiesTable({
       ? `sticky start-0 z-[1] ${thinCity ? "bg-amber-50" : "bg-white"} shadow-[inset_-6px_0_8px_-8px_rgba(15,23,42,0.25)]`
       : "";
     return (
-      <td key={col.key} className={`px-2 py-2.5 md:px-3 ${isFeaturedCol(col.key) ? "bg-indigo-50/40" : ""} ${cityPin}`}>
+      <td key={col.key} className={`px-2 py-1.5 text-center md:px-3 md:py-2.5 ${isFeaturedCol(col.key) ? "bg-indigo-50/40" : ""} ${cityPin}`}>
         {col.key === "city_name" ? (
           /* Capped and breakable on a phone. The longest names in the database
              are hyphenated compounds — מודיעין-מכבים-רעות, בנימינה-גבעת עדה —
@@ -582,7 +593,7 @@ export default function CitiesTable({
              even where the hyphen does not offer one. */
           <Link
             href={`/city/${encodeURIComponent(row.city_name)}`}
-            className="block max-w-[76px] break-words font-medium text-indigo-700 transition-colors hover:text-indigo-800 md:max-w-none"
+            className="mx-auto block max-w-[76px] break-words font-medium text-indigo-700 transition-colors hover:text-indigo-800 md:max-w-none"
           >
             {row.city_name}
           </Link>
@@ -595,58 +606,43 @@ export default function CitiesTable({
 
   return (
     <div>
-      {/* View-mode pill toggle */}
-      <div className="flex flex-wrap items-center gap-2 mb-3">
-        <span className="text-xs text-slate-500 font-semibold">תצוגה:</span>
-        <button
-          type="button"
-          onClick={() => applyViewMode("all")}
-          className={`control-pill ${viewMode === "all" ? "control-pill-active" : ""}`}
-          aria-pressed={viewMode === "all"}
-        >
-          כל הערים
-        </button>
-        <button
-          type="button"
-          onClick={() => applyViewMode("top3y")}
-          className={`control-pill ${viewMode === "top3y" ? "control-pill-active" : ""}`}
-          aria-pressed={viewMode === "top3y"}
-          title="ערים שעלו הכי הרבה ב-3 שנים אחרונות (מ-2022)"
-        >
-          <Icon name="trend-up" size="1em" /> הכי עלו ב-3 שנים
-        </button>
-        <button
-          type="button"
-          onClick={() => applyViewMode("top5y")}
-          className={`control-pill ${viewMode === "top5y" ? "control-pill-active" : ""}`}
-          aria-pressed={viewMode === "top5y"}
-          title="ערים שעלו הכי הרבה ב-5 שנים אחרונות (מ-2020 — אותו חלון שמוצג בעמוד עיר)"
-        >
-          <Icon name="sparkle" size="1em" /> הכי עלו ב-5 שנים
-        </button>
-        {/* the mirror filters (operator spec 8/2026) — where prices FELL is
-            information the portals don't surface, and the data is identical */}
-        <button
-          type="button"
-          onClick={() => applyViewMode("down3y")}
-          className={`control-pill ${viewMode === "down3y" ? "control-pill-active" : ""}`}
-          aria-pressed={viewMode === "down3y"}
-          title="ערים שירדו הכי הרבה ב-3 שנים אחרונות"
-        >
-          ▼ הכי ירדו ב-3 שנים
-        </button>
-        <button
-          type="button"
-          onClick={() => applyViewMode("down5y")}
-          className={`control-pill ${viewMode === "down5y" ? "control-pill-active" : ""}`}
-          aria-pressed={viewMode === "down5y"}
-          title="ערים שירדו הכי הרבה ב-5 שנים אחרונות"
-        >
-          ▼ הכי ירדו ב-5 שנים
-        </button>
-        <span className="text-2xs text-slate-400 mr-1">
-          (מחירים מ-nadlan.gov.il — ממוצע רבעוני שנתי, השוואה מהשנה המוקדמת לאחרונה)
-        </span>
+      {/* View mode, as TWO selectors instead of five chips.
+          Five chips with labels like "הכי ירדו ב-5 שנים" need ~640px of row;
+          a phone offers ~343px, so flex-wrap gave them five lines — one per
+          chip, which is what the screenshot shows. Splitting the same five
+          states into direction × window costs ~300px and holds ONE line, and
+          not one state is lost: all / top3y / top5y / down3y / down5y are all
+          still reachable. The sentence that used to trail the row is now the
+          InfoTip on the label — same words, no line. */}
+      <div className="mb-3 flex flex-nowrap items-center gap-1 md:gap-2">
+        <span className="shrink-0 text-2xs font-semibold text-slate-500 md:text-xs">תצוגה:</span>
+        <InfoTip text="הדירוגים כאן מבוססים על מחירי nadlan.gov.il — ממוצע רבעוני שנתי, מהשנה המוקדמת בחלון עד האחרונה." label="הסבר: תצוגה" />
+        {([["all", "הכל"], ["up", "▲ עולות"], ["down", "▼ יורדות"]] as const).map(([d, label]) => (
+          <button
+            key={d}
+            type="button"
+            onClick={() => applyDirection(d)}
+            className={`control-pill shrink-0 px-2 py-1 text-2xs md:px-3 md:py-1.5 md:text-xs ${viewDir === d ? "control-pill-active" : ""}`}
+            aria-pressed={viewDir === d}
+            title={d === "all" ? "כל הערים, לפי גודל אוכלוסייה" : d === "up" ? `הערים שעלו הכי הרבה ב-${viewWin} שנים` : `הערים שירדו הכי הרבה ב-${viewWin} שנים`}
+          >
+            {label}
+          </button>
+        ))}
+        <span className="mx-0.5 h-4 w-px shrink-0 bg-slate-200" aria-hidden />
+        {([3, 5] as const).map((w) => (
+          <button
+            key={w}
+            type="button"
+            onClick={() => applyWindow(w)}
+            disabled={viewDir === "all"}
+            className={`control-pill shrink-0 px-2 py-1 text-2xs md:px-3 md:py-1.5 md:text-xs ${viewWin === w && viewDir !== "all" ? "control-pill-active" : ""} ${viewDir === "all" ? "cursor-not-allowed opacity-40" : ""}`}
+            aria-pressed={viewWin === w && viewDir !== "all"}
+            title={viewDir === "all" ? "בחרו ▲ עולות או ▼ יורדות כדי לבחור חלון" : `חלון של ${w} שנים`}
+          >
+            {w} שנים
+          </button>
+        ))}
       </div>
 
       {/* Controls */}
@@ -830,7 +826,7 @@ export default function CitiesTable({
                     : "";
                   return (
                     <th key={id} {...dragProps} onClick={() => handleSort(col.key)}
-                      className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-2 py-3 md:px-3 text-right font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${dropRing} ${cityPin} ${
+                      className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-2 py-2 md:px-3 md:py-3 text-center font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none ${col.width} ${dropRing} ${cityPin} ${
                         isFeaturedCol(col.key) ? "bg-indigo-50 text-indigo-700" : "bg-white text-slate-500"
                       }`}>
                       {draggable && <span className="ml-1 hidden cursor-grab text-slate-300 md:inline">⠿</span>}
@@ -844,7 +840,7 @@ export default function CitiesTable({
                   const c = entry.def;
                   return (
                     <th key={id} {...dragProps} onClick={() => handleSort(c.id)} title={c.title(refYear)}
-                      className={`sticky top-0 md:top-14 z-10 bg-white border-b border-slate-300 px-2 py-3 md:px-3 text-right text-slate-500 font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none min-w-[68px] md:min-w-[110px] ${dropRing}`}>
+                      className={`sticky top-0 md:top-14 z-10 bg-white border-b border-slate-300 px-2 py-2 md:px-3 md:py-3 text-center text-slate-500 font-medium cursor-pointer hover:text-indigo-700 transition-colors select-none min-w-[68px] md:min-w-[110px] ${dropRing}`}>
                       <span className="ml-1 hidden cursor-grab text-slate-300 md:inline">⠿</span>
                       {c.label}
                       <span className="mr-1 inline-block"><InfoTip text={c.title(refYear)} label={`הסבר: ${c.label}`} /></span>
@@ -856,14 +852,14 @@ export default function CitiesTable({
                 const cc = entry.def as { id: string; label: string; metric: ChangeMetric; unit: string };
                 return (
                   <th key={id} {...dragProps}
-                    className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-2 py-3 md:px-3 text-right text-slate-500 font-medium min-w-[80px] md:min-w-[155px] bg-indigo-50 border-r border-indigo-100 ${dropRing}`}>
+                    className={`sticky top-0 md:top-14 z-10 border-b border-slate-300 px-2 py-2 md:px-3 md:py-3 text-center text-slate-500 font-medium min-w-[80px] md:min-w-[155px] bg-indigo-50 border-r border-indigo-100 ${dropRing}`}>
                     {/* STACKED ON A PHONE, INLINE FROM md UP. The year picker
                         is a native <select> and will not render narrower than
                         its widest option; beside the label on one no-wrap line
                         it made this column 148px on a 375px screen, which is
                         why only the city and one column fit. Stacked, the
                         column is as wide as the wider of the two. */}
-                    <div className="flex flex-col items-start gap-0.5 md:flex-row md:items-center md:gap-1.5">
+                    <div className="flex flex-col items-center gap-0.5 md:flex-row md:gap-1.5">
                       <span className="flex items-center">
                         <span className="hidden md:inline cursor-grab text-slate-300">⠿</span>
                         <span onClick={() => handleSort(cc.id)} className="cursor-pointer hover:text-indigo-700 select-none">
@@ -915,17 +911,17 @@ export default function CitiesTable({
                     const entry = colById.get(id);
                     if (!entry) return null;
                     if (entry.kind === "base") return renderTd(row, entry.def);
-                    if (entry.kind === "inv") return <td key={id} className="px-2 py-2.5 md:px-3">{entry.def.render(inv)}</td>;
+                    if (entry.kind === "inv") return <td key={id} className="px-2 py-1.5 text-center md:px-3 md:py-2.5">{entry.def.render(inv)}</td>;
                     const cc = entry.def as { id: string; metric: ChangeMetric };
                     const r = changePct(row.changeMetrics?.[cc.metric], win[cc.metric]);
                     return (
-                      <td key={id} className="px-2 py-2.5 md:px-3 bg-indigo-50/20 border-r border-indigo-100/60">
+                      <td key={id} className="px-2 py-1.5 text-center md:px-3 md:py-2.5 bg-indigo-50/20 border-r border-indigo-100/60">
                         {/* The cap lives on a DIV, not the td: with
                             table-layout:auto a max-width on a cell is ignored,
                             while a bounded block inside it does constrain the
                             column's max-content width. This is what lets the
                             phone show the city plus three columns. */}
-                        <div className="max-w-[80px] md:max-w-none">
+                        <div className="mx-auto max-w-[80px] md:max-w-none">
                           <TrendValue pct={r.pct} from={r.pct !== null ? r.from : null} to={r.pct !== null ? r.to : null} />
                         </div>
                       </td>

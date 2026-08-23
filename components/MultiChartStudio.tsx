@@ -12,6 +12,7 @@ import { withBasePath } from "@/lib/basePath";
 import { setViewState, clearViewState } from "@/lib/viewState";
 import { track } from "@/lib/track";
 import Icon from "@/components/Icon";
+import InfoTip from "@/components/InfoTip";
 import { YearRange } from "@/components/FromTo";
 
 /**
@@ -130,7 +131,7 @@ const buildSeries = (dt: DealType, minN: number): SeriesDef[] => [
 ];
 
 const ROOM_CHIPS: { key: RoomKey; label: string }[] = [
-  { key: "all", label: "כל הגדלים" }, { key: "3", label: "3 חד׳" }, { key: "4", label: "4 חד׳" }, { key: "5", label: "5+ חד׳" },
+  { key: "all", label: "הכל" }, { key: "3", label: "3 חד׳" }, { key: "4", label: "4 חד׳" }, { key: "5", label: "5+ חד׳" },
 ];
 
 const fmtVal = (v: number, metric: Metric) =>
@@ -138,11 +139,11 @@ const fmtVal = (v: number, metric: Metric) =>
 const fmtAxis = (v: number, metric: Metric) =>
   metric === "sqm" ? `₪${Math.round(v / 1000)}K` : `₪${(v / 1_000_000).toFixed(1)}M`;
 
-export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, secondhandMinAge = 4, modernMinYear = 2005, classificationRate = null, subsidizedYears = [], minSample = DEFAULT_MIN_N }: {
+export default function MultiChartStudio({ data, deals, dealCounts, cleaning, cityName, modernMinYear = 2005, classificationRate = null, subsidizedYears = [], minSample = DEFAULT_MIN_N }: {
   data: CityGraphData; deals: NadlanDeal[]; dealCounts?: DealCountCube;
   /** what the two cleaning rules held back in this city — shown, never hidden */
   cleaning?: { dupes: number; luxury: number };
-  cityName: string; secondhandMinAge?: number; modernMinYear?: number;
+  cityName: string; modernMinYear?: number;
   /** share of the city's deals carrying a sale-channel class (lib/classificationRate) — gates the split's confidence */
   classificationRate?: number | null;
   /** city-years whose new-build prices are administered (מחיר למשתכן) */
@@ -233,6 +234,12 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
     const a = pts[0], b = pts[pts.length - 1];
     return { def: s, pct: (b.v[0] / a.v[0] - 1) * 100, fromY: a.y, toY: b.y, n: pts.reduce((sum, p) => sum + p.v[1], 0) };
   }), [activeDefs, years, data, room, metric, partialSet, buildingAge]);
+  /* What the summary box shows: every series with a percentage EXCEPT the
+     mix-adjusted one. */
+  const trendRows = useMemo(
+    () => trends.filter((t) => t.pct != null && t.def.key !== "adj"),
+    [trends]
+  );
   const hasPartialInRange = useMemo(() => years.some((y) => partialSet.has(y)), [years, partialSet]);
 
   // Endpoints of the CURRENTLY SELECTED range, not of some fixed window.
@@ -250,6 +257,25 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
     () => latestYearInRange && activeDefs.some((s) => s.at(data, room, metric, maxY, buildingAge) != null),
     [latestYearInRange, activeDefs, data, room, metric, maxY, buildingAge]
   );
+
+  /* Everything that qualifies the percentage above, in one list. */
+  const caveats = useMemo(() => {
+    const out: { short: string; full: string }[] = [];
+    if (sparseSeries) out.push({
+      short: `${sparseSeries} שנים בלבד`,
+      full: `בבחירה הזו יש ${sparseSeries} שנים בלבד עם מספיק עסקאות — הנקודות מבודדות ואין קו רציף`,
+    });
+    if (hasPartialInRange) out.push({
+      short: `${maxY} חלקית`,
+      full: `${maxY} היא שנה חלקית ואינה נכנסת לחישוב אחוזי השינוי`,
+    });
+    if (subsidizedEdge) out.push({
+      short: `${subsidizedEdge.year} מחיר מנהלי`,
+      full: `${subsidizedEdge.year}: ${Math.round(subsidizedEdge.share * 100)}% מהעסקאות החדשות במחיר מנהלי (מחיר למשתכן) — משפיע על אחוזי השינוי`,
+    });
+    return out;
+  }, [sparseSeries, hasPartialInRange, maxY, subsidizedEdge]);
+
 
   // ── drill-down deals ────────────────────────────────────────────────────
   // Counts come from a server-built cube (year × type × age × rooms) so every
@@ -367,17 +393,19 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
 
   return (
     <div>
-      {/* headline */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-gradient-to-l from-indigo-700 to-indigo-500 p-4 text-white shadow-sm sm:p-5">
-        <div>
-          <div className="text-2xl font-black tabular-nums leading-none sm:text-3xl">{totalAllDeals.toLocaleString("he-IL")}</div>
-          <div className="mt-1 text-2xs text-indigo-100">
-            עסקאות אמת שנאספו ב{cityName} · מתוכן {totalShDeals.toLocaleString("he-IL")} יד-שנייה מסווגות
-            {/* the gap between "collected" and "priced" must be explainable, never silent */}
-            {cleanedNote && <> · {cleanedNote}</>}
-          </div>
-        </div>
-        <div className="text-2xs text-indigo-100"><Icon name="source-own" size="1em" /> המאגר העצמאי · יד-2 = {secondhandMinAge}+ שנים משנת בנייה</div>
+      {/* Half the height it was. Three things went: the 16-20px padding, the
+          long sentence under the figure, and the separate "המאגר העצמאי · יד-2
+          = N+ שנים" block — which on a phone never fitted beside the figure and
+          so took a whole line of its own. The second-hand rule is not lost: it
+          is in the section's InfoTip, one heading above this box. The cleaning
+          note stays reachable too — the gap between "collected" and "priced"
+          must be explainable, never silent. */}
+      <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 rounded-xl bg-gradient-to-l from-indigo-700 to-indigo-500 px-3 py-2 text-white shadow-sm sm:px-4 sm:py-2.5">
+        <span className="text-xl font-black tabular-nums leading-none sm:text-2xl">{totalAllDeals.toLocaleString("he-IL")}</span>
+        <span className="truncate text-2xs text-indigo-100">
+          עסקאות · {totalShDeals.toLocaleString("he-IL")} יד-שנייה מסווגות
+        </span>
+        {cleanedNote && <InfoTip text={cleanedNote} label="מה לא נכלל בממוצעים" />}
       </div>
 
       {/* govmap-sourced city: one source for the whole decade, labeled (never spliced) */}
@@ -451,10 +479,15 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
 
         {/* hierarchy (right) + change-in-range summary (LEFT, per user spec);
             mobile: stacked labeled rows, the trend box drops to a full row at the end */}
-        <div className="mt-2.5 flex flex-col gap-2 border-t border-indigo-100 pt-2.5 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-x-6 sm:gap-y-2">
-          <div className="min-w-0 space-y-1.5">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="min-w-16 shrink-0 text-2xs font-bold text-slate-500">סוג עסקה:</span>
+        <div className="mt-1.5 flex flex-col gap-1.5 border-t border-indigo-100 pt-1.5 sm:mt-2.5 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-x-6 sm:gap-y-2 sm:pt-2.5">
+          <div className="min-w-0 space-y-1">
+            {/* flex-nowrap + compact pills: these three rows are the ones the
+                screenshot marks. At 375px the phone offers ~343px of row, and
+                a "min-w-16" label plus px-3 py-1.5 pills needed ~390-400px —
+                so every one of them wrapped. Shorter labels and tighter chips
+                bring each row to ~250-290px: one line, in every view. */}
+            <div className="flex flex-nowrap items-center gap-1">
+              <span className="shrink-0 text-2xs font-bold text-slate-500">סוג עסקה:</span>
               {(["sh", "new", "all"] as DealType[]).map((k) => {
                 // Decided by the series, not by the city's source label — see
                 // dealTypeAvailable. The tooltip now states the real reason.
@@ -462,63 +495,68 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                 return (
                   <button key={k} disabled={off} onClick={() => !off && setDealType(k)}
                     title={off ? `לא זמין ב${cityName} — אין שנה עם ${minSample}+ עסקאות בעלות שנת בנייה בקטגוריה הזו` : undefined}
-                    className={`control-pill ${dealType === k ? "control-pill-active" : ""} ${off ? "cursor-not-allowed opacity-40" : ""}`}>{DT_LABEL[k]}</button>
+                    className={`control-pill shrink-0 whitespace-nowrap px-2 py-1 text-2xs sm:px-3 sm:py-1.5 sm:text-xs ${dealType === k ? "control-pill-active" : ""} ${off ? "cursor-not-allowed opacity-40" : ""}`}>{DT_LABEL[k]}</button>
                 );
               })}
             </div>
             {dealType === "sh" && (
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="min-w-16 shrink-0 text-2xs font-bold text-slate-500">בניין:</span>
-                {([["all", "הכל"], ["modern", `מודרני (${modernMinYear}+)`], ["old", `ישן (לפני ${modernMinYear})`]] as [Ba, string][]).map(([k, l]) => (
-                  <button key={k} onClick={() => setBuildingAge(k)} className={`control-pill ${buildingAge === k ? "control-pill-active" : ""}`}>{l}</button>
+              <div className="flex flex-nowrap items-center gap-1">
+                <span className="shrink-0 text-2xs font-bold text-slate-500">בניין:</span>
+                {/* The build years moved into the tooltip. "מודרני (2005+)" and
+                    "ישן (לפני 2005)" are ~110px of chip each, and with the label
+                    this row alone needed ~400px. */}
+                {([["all", "הכל", "כל שנות הבנייה"], ["modern", "מודרני", `נבנה ב-${modernMinYear} ואילך`], ["old", "ישן", `נבנה לפני ${modernMinYear}`]] as [Ba, string, string][]).map(([k, l, t]) => (
+                  <button key={k} title={t} onClick={() => setBuildingAge(k)} className={`control-pill shrink-0 whitespace-nowrap px-2 py-1 text-2xs sm:px-3 sm:py-1.5 sm:text-xs ${buildingAge === k ? "control-pill-active" : ""}`}>{l}</button>
                 ))}
               </div>
             )}
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="min-w-16 shrink-0 text-2xs font-bold text-slate-500">חדרים:</span>
+            <div className="flex flex-nowrap items-center gap-1">
+              <span className="shrink-0 text-2xs font-bold text-slate-500">חדרים:</span>
               {ROOM_CHIPS.map((c) => (
-                <button key={c.key} onClick={() => setRoom(c.key)} className={`control-pill ${room === c.key ? "control-pill-active" : ""}`}>{c.label}</button>
+                <button key={c.key} onClick={() => setRoom(c.key)} className={`control-pill shrink-0 whitespace-nowrap px-2 py-1 text-2xs sm:px-3 sm:py-1.5 sm:text-xs ${room === c.key ? "control-pill-active" : ""}`}>{c.label}</button>
               ))}
             </div>
           </div>
           {/* change-in-range — desktop: NEXT TO the filters at the left edge (RTL end);
               mobile: its own full-width row so it never squeezes the pill rows */}
-          <aside className="w-full rounded-xl border border-indigo-100 bg-white/80 px-3 py-2 sm:w-auto sm:shrink-0">
-            <div className="mb-0.5 text-2xs font-bold text-slate-500">שינוי <YearRange from={from} to={Math.min(to, maxFullY)} /></div>
-            {/* The basis, spelled out. A reader comparing this to the cities
-                table was comparing "new builds, median ₪/m²" against "all
-                deals, average" and concluding the site contradicts itself. It
-                does not — it was just never said which is which. */}
-            <div className="mb-1 text-2xs text-slate-400">
-              {dealType === "sh" ? "יד שנייה" : dealType === "new" ? "דירות חדשות" : "כל העסקאות"}
-              {" · "}{metric === "sqm" ? "₪ למ״ר" : "מחיר עסקה"}
-              {room !== "all" ? ` · ${room} חד׳` : ""}
-            </div>
-            {trends.filter((t) => t.pct != null).map((tr) => (
-              <div key={tr.def.key} className="flex items-center gap-1.5 text-2xs font-bold text-slate-600">
-                <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: tr.def.color }} />
-                <span className="w-14">{tr.def.short}</span>
-                <TrendValue pct={tr.pct!} className="!text-sm font-black" />
+          <aside className="w-full rounded-xl border border-indigo-100 bg-white/80 px-3 py-1.5 text-center sm:w-auto sm:shrink-0">
+            {/* ONE line per series, and no separate title row. The box used to
+                open with "שינוי <years>" and a second line naming the basis
+                ("יד שנייה · ₪ למ״ר") before any number appeared, then listed
+                the mix-adjusted series above the plain one — five lines before
+                the caveats. Now the years ride beside the value, the basis is
+                the ⓘ, and "מתוקנן" — a constant-basket construct that belongs
+                in the chart, read against the raw series — is not in the
+                one-number summary at all. */}
+            {trendRows.map((tr) => (
+              <div key={tr.def.key} className="flex flex-wrap items-center justify-center gap-x-1.5 leading-tight">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: tr.def.color }} />
+                <span className="text-2xs font-bold text-slate-500">{tr.def.short}</span>
+                <TrendValue pct={tr.pct!} className="!text-base !font-black" />
+                <span className="text-2xs text-slate-400"><YearRange from={from} to={Math.min(to, maxFullY)} /></span>
+                <InfoTip
+                  label="על מה מחושב השינוי"
+                  text={`${dealType === "sh" ? "יד שנייה" : dealType === "new" ? "דירות חדשות" : "כל העסקאות"} · ${metric === "sqm" ? "₪ למ״ר" : "מחיר עסקה"}${room !== "all" ? ` · ${room} חד׳` : ""} · החלון נגמר בשנה המלאה האחרונה`}
+                />
               </div>
             ))}
-            {trends.every((t) => t.pct == null) && <div className="text-sm text-slate-300">—</div>}
-            {/* An isolated dot with no line reads as a glitch. It is the
-                opposite: the years around it failed the sample gate, so the
-                line is deliberately broken. Say that, rather than leaving the
-                chart to be misread. */}
-            {sparseSeries && (
-              <div className="mt-1 text-2xs text-slate-500">
-                בבחירה הזו יש {sparseSeries} שנים בלבד עם מספיק עסקאות — הנקודות מבודדות ואין קו רציף
+            {trendRows.length === 0 && (
+              <div className="flex items-center justify-center gap-1 text-2xs font-bold text-slate-500">
+                שינוי <YearRange from={from} to={Math.min(to, maxFullY)} /> <span className="text-sm text-slate-300">—</span>
               </div>
             )}
-            {hasPartialInRange && <div className="mt-0.5 text-2xs text-amber-600"><Icon name="warning" size="1em" /> {maxY} חלקית — לא בחישוב</div>}
-            {/* The percentage above is measured between two years. If either of
-                THOSE years was dominated by administered (מחיר למשתכן) sales,
-                the percentage is partly a change of programme. Only the
-                endpoints matter — a flagged year in the middle moves nothing. */}
-            {subsidizedEdge && (
-              <div className="mt-1 text-2xs font-semibold text-amber-700">
-                <Icon name="warning" size="1em" /> {subsidizedEdge.year}: {Math.round(subsidizedEdge.share * 100)}% מהעסקאות החדשות במחיר מנהלי (מחיר למשתכן) — משפיע על אחוזי השינוי
+            {/* THE CAVEATS, COLLAPSED. Each of these used to be its own line of
+                small print, and on a phone the three of them were most of this
+                box — the box the operator asked to halve. They are conditional
+                and none is dropped: they become one ⚠ that opens the full text.
+                An isolated dot with no line, a partial end year and an
+                administered-price endpoint all change how the percentage above
+                should be read, so hiding them was never an option. */}
+            {caveats.length > 0 && (
+              <div className="mt-0.5 flex items-center justify-center gap-1 text-2xs font-semibold text-amber-700">
+                <Icon name="warning" size="1em" />
+                <span className="truncate">{caveats.length === 1 ? caveats[0].short : `${caveats.length} הערות`}</span>
+                <InfoTip label="הערות על החישוב" text={caveats.map((c) => c.full).join(" · ")} />
               </div>
             )}
           </aside>

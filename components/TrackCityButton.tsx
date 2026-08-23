@@ -38,10 +38,12 @@ export default function TrackCityButton({
       <a
         href={`/login?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}`}
         onClick={() => track("follow_city_click", { subject: cityName, detail: "login_required" })}
-        className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-600 transition hover:border-amber-300 hover:text-amber-700"
+        className="chip-action border-slate-200 bg-white text-slate-600 hover:border-amber-300 hover:text-amber-700"
         title="התחברו כדי לעקוב אחרי העיר ולקבל עדכון כשמשהו זז"
       >
-        <span aria-hidden>☆</span> עקבו אחרי {cityName}
+        {/* The city name is redundant on a phone — it is the h1 two centimetres
+            away — and it is what pushed this button onto a line of its own. */}
+        <span aria-hidden>☆</span> עקבו<span className="hidden sm:inline"> אחרי {cityName}</span>
       </a>
     );
   }
@@ -65,7 +67,7 @@ export default function TrackCityButton({
       onClick={toggle}
       disabled={pending}
       aria-pressed={tracked}
-      className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold transition disabled:opacity-60 ${
+      className={`chip-action disabled:opacity-60 ${
         tracked
           ? "border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100"
           : "border-slate-200 bg-white text-slate-600 hover:border-amber-300 hover:text-amber-700"
@@ -73,7 +75,7 @@ export default function TrackCityButton({
       title={tracked ? `הפסיקו לעקוב אחרי ${cityName}` : `עקבו אחרי ${cityName} וקבלו סיכום שבועי`}
     >
       <span aria-hidden>{tracked ? "★" : "☆"}</span>
-      {tracked ? "במעקב" : `עקבו אחרי ${cityName}`}
+      {tracked ? "במעקב" : <>עקבו<span className="hidden sm:inline"> אחרי {cityName}</span></>}
       {tracked && <Icon name="check" size="0.9em" />}
     </button>
   );

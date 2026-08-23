@@ -230,6 +230,15 @@ jobs:
           # explanations. Reports only — never fails the deploy.
           echo "── buyer-trend reporting lag ──"
           docker compose exec -T app npx tsx scripts/diagnose-buyer-trend.ts </dev/null || true
+
+          # The /cities column "שינוי 3 שנים" is empty in every row. The
+          # official quarterly series it reads is sparse, and a sparse series
+          # can form a five-year window while failing a three-year one — which
+          # is exactly the pattern on the site. This counts it per city, and
+          # counts whether the dense repository series could form the window
+          # instead. Reports only — never fails the deploy.
+          echo "── שינוי 3 שנים: כיסוי המקורות ──"
+          docker compose exec -T app npx tsx scripts/diagnose-price-change-3y.ts </dev/null || true
           REMOTE
 
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
+import InfoTip from "@/components/InfoTip";
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -107,7 +108,7 @@ function ChangeTag({ value }: { value: number | null }) {
   const bg = isPositive ? "bg-emerald-50" : "bg-red-50";
   return (
     <span
-      className={`inline-flex items-center gap-0.5 text-2xs font-bold px-2 py-0.5 rounded-full ${bg} ${color}`}
+      className={`inline-flex items-center gap-0.5 whitespace-nowrap rounded-full px-1 py-0.5 text-2xs font-bold sm:px-2 ${bg} ${color}`}
     >
       {isPositive ? "▲" : "▼"} {isPositive ? "+" : ""}
       {value.toFixed(1)}%
@@ -128,20 +129,23 @@ function SampleBadge({ sample }: { sample: DealSample | null }) {
     };
     return (
       <span
-        className={`inline-block text-2xs font-medium px-1.5 py-0.5 rounded border ${colorMap[sample.threshold]}`}
+        className={`inline-block text-2xs font-medium px-1 py-0.5 rounded border sm:px-1.5 ${colorMap[sample.threshold]}`}
         title={`ממוצע של ${sample.count} עסקאות`}
       >
-        ממוצע {sample.count}
+        {/* "ממוצע 15" is ~62px, three columns of it is ~186px, and that alone
+            was most of the reason this table could not fit a 375px screen. The
+            word is the same for every cell — the count is the information. */}
+        <span className="hidden sm:inline">ממוצע </span>×{sample.count}
       </span>
     );
   }
   // single sample
   return (
     <span
-      className="inline-block text-2xs font-medium px-1.5 py-0.5 rounded border bg-slate-100 text-slate-700 border-slate-200"
+      className="inline-block text-2xs font-medium px-1 py-0.5 rounded border bg-slate-100 text-slate-700 border-slate-200 sm:px-1.5"
       title={`עסקה בודדת — ${sample.area} מ"ר, ${sample.blocksAway === 0 ? "אותה כתובת" : `מרחק ${sample.blocksAway} בלוקים`}`}
     >
-      עסקה בודדת
+      <span className="hidden sm:inline">עסקה </span>בודדת
     </span>
   );
 }
@@ -155,7 +159,7 @@ function SampleCell({
 }) {
   if (!sample) {
     return (
-      <td className="px-2 py-2.5 text-center">
+      <td className="px-1 py-2 text-center sm:px-2 sm:py-2.5">
         <span className="text-2xs text-slate-400">—</span>
       </td>
     );
@@ -163,7 +167,7 @@ function SampleCell({
   const ppsm = getSamplePricePerSqm(sample);
   const total = getSampleTotalPrice(sample);
   return (
-    <td className="px-2 py-2.5 text-center">
+    <td className="px-1 py-2 text-center sm:px-2 sm:py-2.5">
       <div className={`text-2xs font-bold ${isLatest ? "text-indigo-700" : "text-slate-900"}`}>
         {formatPricePerSqm(ppsm)}
       </div>
@@ -190,7 +194,11 @@ function StreetTable({
       <table className="table-pin-first w-full text-sm" dir="rtl">
         <thead>
           <tr className="border-b border-slate-200">
-            <th className="px-3 py-2.5 text-right text-2xs text-slate-500 font-medium w-24 whitespace-nowrap">
+            {/* w-24 + whitespace-nowrap on a phone: 96px for a column whose
+                widest value is "80 מ״ר". Together with three ~80px sample
+                columns and a ~70px change column it made the table ~406px wide
+                on a 375px screen — hence the sideways scroll. */}
+            <th className="w-14 px-1 py-2 text-center text-2xs text-slate-500 font-medium sm:w-24 sm:px-3 sm:py-2.5 sm:text-right">
               גודל
             </th>
             {orderedPeriods.map((p) => {
@@ -199,7 +207,7 @@ function StreetTable({
               return (
                 <th
                   key={p}
-                  className={`px-2 py-2.5 text-center text-2xs font-medium whitespace-nowrap ${
+                  className={`px-1 py-2 text-center text-2xs font-medium sm:whitespace-nowrap sm:px-2 sm:py-2.5 ${
                     isLatest ? "text-indigo-700" : "text-slate-500"
                   }`}
                 >
@@ -210,7 +218,7 @@ function StreetTable({
                 </th>
               );
             })}
-            <th className="px-2 py-2.5 text-center text-2xs text-slate-500 font-medium whitespace-nowrap">
+            <th className="px-1 py-2 text-center text-2xs text-slate-500 font-medium sm:whitespace-nowrap sm:px-2 sm:py-2.5">
               שינוי
             </th>
           </tr>
@@ -232,7 +240,7 @@ function StreetTable({
                 key={bucket.targetArea}
                 className="border-b border-slate-100 hover:bg-slate-50 transition-colors"
               >
-                <td className="px-3 py-2.5 text-2xs text-slate-700 font-medium whitespace-nowrap">
+                <td className="px-1 py-2 text-center text-2xs text-slate-700 font-medium sm:whitespace-nowrap sm:px-3 sm:py-2.5 sm:text-right">
                   {bucket.label}
                 </td>
                 {orderedPeriods.map((p, idx) => {
@@ -245,7 +253,7 @@ function StreetTable({
                     />
                   );
                 })}
-                <td className="px-2 py-2.5 text-center">
+                <td className="px-1 py-2 text-center sm:px-2 sm:py-2.5">
                   <ChangeTag value={change} />
                 </td>
               </tr>
@@ -380,12 +388,15 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
       <div className="section-header mb-4">
         <div className="section-header-icon"><Icon name="building" size="1em" /></div>
         <div className="flex-1">
-          <h2 className="text-base font-bold text-slate-900">
-            עסקאות אמיתיות — השוואת מחירים ברחוב
+          <h2 className="flex items-center gap-1.5 text-base font-bold text-slate-900">
+            השוואת מחירים ברחוב
+            <InfoTip
+              label="הסבר: השוואת מחירים ברחוב"
+              text={`השוואת מחיר למ"ר היום מול לפני 3 ו-5 שנים, באותה שכונה ובאותו רחוב. מקור: govmap.gov.il — רשות המסים. תג "×N" בתא = ממוצע של N עסקאות; "בודדת" = עסקה אחת בגודל דומה (±15%). תא ריק = אין נתון אמין.`}
+            />
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            השוואת מחיר/מ&quot;ר היום מול לפני 3 ו-5 שנים, באותה שכונה ובאותו רחוב
-            <span className="text-slate-400"> | מקור: govmap.gov.il — רשות המסים</span>
+          <p className="mt-0.5 truncate text-xs text-slate-500">
+            מחיר למ&quot;ר היום מול לפני 3 ו-5 שנים
           </p>
         </div>
       </div>
@@ -416,7 +427,7 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
         <>
           {data.neighborhoods.length > 0 ? (
             <>
-              <div className="mb-3 flex flex-wrap items-center gap-2 text-2xs">
+              <div className="mb-3 hidden flex-wrap items-center gap-2 text-2xs sm:flex">
                 <span className="text-slate-500">מקרא:</span>
                 <span className="px-1.5 py-0.5 rounded border bg-indigo-100 text-indigo-800 border-indigo-300">
                   ממוצע 15+ עסקאות
@@ -476,7 +487,9 @@ export default function CityDealsComparison({ cityName }: { cityName: string }) 
             </div>
           )}
 
-          <p className="text-2xs text-slate-400 mt-2">
+          {/* desktop only: on a phone this is three lines of small print, and
+              every word of it is in the ⓘ beside the heading. */}
+          <p className="mt-2 hidden text-2xs text-slate-400 sm:block">
             * נתונים מבוססים על עסקאות שדווחו לרשות המסים (nadlan.gov.il). מחיר
             למ&quot;ר אחרי סינון חריגים (±2 ס.ת.). תאי טבלה ריקים = אין נתון אמין —
             לא מוצג מספר מומצא.

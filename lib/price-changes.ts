@@ -25,7 +25,7 @@
  *   - /rankings/highest-gain — toggleable between windows
  */
 import { prisma } from "./db";
-import { cachedMap } from "./cache";
+import { cachedMap, TAGS, TTL } from "./cache";
 import { refYear } from "./refYear";
 
 export interface PriceChangeWindow {
@@ -184,4 +184,8 @@ export function topMoversByWindow(
 /* Cached: the all-cities variant re-reads nadlan_price_trends whole. The
  * per-city loadCityPriceChanges stays uncached on purpose — it is one narrow
  * indexed query and caching 168 separate entries would cost more than it saves. */
-export const loadAllCityPriceChanges = cachedMap(loadAllCityPriceChangesUncached, ["all-city-price-changes"]);
+/* guardEmpty: an empty map here means the price-change columns render "—" for
+ * every city, and without the guard that degenerate result is what the cache
+ * keeps for the next six hours. Its three siblings in lib/cityTransactionPrices
+ * already carry the flag; this loader was the one that did not. */
+export const loadAllCityPriceChanges = cachedMap(loadAllCityPriceChangesUncached, ["all-city-price-changes"], TAGS.market, TTL.market, true);

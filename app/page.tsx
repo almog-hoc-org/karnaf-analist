@@ -1,5 +1,3 @@
-import { getCurrentUser } from "@/lib/auth";
-import { listTrackedCities } from "@/lib/appDb";
 import { prisma } from "@/lib/db";
 import { historyFromYear } from "@/lib/historyWindow";
 import { ALIAS_NAMES } from "@/lib/cityAliases";
@@ -8,12 +6,10 @@ import HomeSearch from "@/components/HomeSearch";
 import HotCities from "@/components/HotCities";
 import { loadHotCities } from "@/lib/hotCities";
 import CourseBanner from "@/components/CourseBanner";
-import Link from "next/link";
 import RecentReportsSection from "@/components/RecentReportsSection";
-import NumberCaption from "@/components/NumberCaption";
+import { HeroKpiStrip, HeroKpiCards } from "@/components/HeroKpis";
 import PriceGainsRankingCard from "@/components/PriceGainsRankingCard";
 import { fromToText } from "@/components/FromTo";
-import TrendValue from "@/components/TrendValue";
 import { loadSecondhandChanges } from "@/lib/cityChangeMetrics";
 import { loadSubsidizedByCity } from "@/lib/subsidizedYears";
 import { loadCityTransactionPrices, loadRankingEligibleCities } from "@/lib/cityTransactionPrices";
@@ -25,6 +21,8 @@ import CbsSalesChart from "@/components/CbsSalesChart";
 import { loadDiscoveredReports } from "@/lib/data-refresh";
 import { whatsappUrl } from "@/lib/brand";
 import Icon from "@/components/Icon";
+import OrderedSections from "@/components/OrderedSections";
+import { getSectionOrder } from "@/lib/sectionOrder";
 
 function formatNumber(value: number | null): string {
   if (value === null) return "—";
@@ -36,8 +34,7 @@ export default async function HomePage() {
   // the same anonymous marketing hero as a first-time visitor and had to search
   // for their own city again, every time — the site had a follow feature and
   // then behaved as though nobody had ever used it.
-  const viewer = getCurrentUser();
-  const myCities = viewer ? listTrackedCities(viewer.id) : [];
+  const sectionOrder = getSectionOrder("home");
 
   let cityCount = 0;
 
@@ -215,6 +212,27 @@ export default async function HomePage() {
     return years >= 10 ? "10+" : years.toFixed(1);
   };
 
+  // Promoted out of the rankings grid: the operator wants it read right after
+  // the price-change table, not four cards further down the page.
+  const unsoldRanking =
+    {
+      title: "מלאי דירות לא מכורות",
+      icon: "building",
+      detailHref: "/rankings/highest-inventory",
+      items: highestInventory.map((c, i) => {
+        const yts = yearsToSell(c.unsold_inventory_2025, c.avg_sales_3y);
+        return {
+          rank: i + 1,
+          city: c.city_name,
+          value: formatNumber(c.unsold_inventory_2025),
+          // separate visual channel for the pace metric (operator spec 8/2026:
+          // the two numbers blended into one unreadable string)
+          badge: yts ? `${yts} שנים למכירה` : undefined,
+          href: `/city/${encodeURIComponent(c.city_name)}`,
+        };
+      }),
+    };
+
   const rankings = [
     {
       title: "היקרות ביותר — חציון יד-2 ₪/מ״ר",
@@ -241,23 +259,6 @@ export default async function HomePage() {
           : "—",
         href: `/city/${encodeURIComponent(c.city_name)}`,
       })),
-    },
-    {
-      title: "מלאי דירות לא מכורות",
-      icon: "building",
-      detailHref: "/rankings/highest-inventory",
-      items: highestInventory.map((c, i) => {
-        const yts = yearsToSell(c.unsold_inventory_2025, c.avg_sales_3y);
-        return {
-          rank: i + 1,
-          city: c.city_name,
-          value: formatNumber(c.unsold_inventory_2025),
-          // separate visual channel for the pace metric (operator spec 8/2026:
-          // the two numbers blended into one unreadable string)
-          badge: yts ? `${yts} שנים למכירה` : undefined,
-          href: `/city/${encodeURIComponent(c.city_name)}`,
-        };
-      }),
     },
   ];
 
@@ -323,145 +324,100 @@ export default async function HomePage() {
           <span className="hidden md:inline">חפש עיר וקבל מחירים, מגמות והשוואות · </span>
           {cityCount} ערים במאגר
         </p>
+
+        {/* PHONE ONLY: the three headline figures as one strip, directly under
+            the search box (operator spec 8/2026). As three hero cards they were
+            ~480px of vertical scrolling on a phone before anything the reader
+            came for. Same numbers, same links, ~40px. The cards themselves are
+            unchanged from sm: up — see <HeroKpiCards> below. */}
+        <HeroKpiStrip
+          className="mt-2"
+          totalDeals={totalDeals}
+          deals12m={deals12m}
+          median3y={median3y}
+          medianCities={sh3all.length}
+          window3yLabel={window3yLabel}
+          dealsUpdatedLabel={dealsUpdatedLabel}
+        />
       </header>
 
-      {/* Followed cities — one row, only when there are any. A returning
-          reader's first click should be the city they already care about. */}
-      {myCities.length > 0 && (
-        <section className="mb-6 flex flex-wrap items-center justify-center gap-2">
-          <span className="text-2xs font-black uppercase tracking-wide text-slate-400">הערים שלי</span>
-          {myCities.map((c) => (
-            <Link
-              key={c}
-              href={`/city/${encodeURIComponent(c)}`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 transition hover:border-amber-400 hover:bg-amber-100"
-            >
-              <span aria-hidden>★</span> {c}
-            </Link>
-          ))}
-        </section>
-      )}
-
-      {/* ── HERO KPIs + the flagship price-change explorer ──
-          One flex column, reordered by breakpoint: on phones the explorer sits
-          directly under the search box (it is the #1 thing users come for —
-          operator decision 8/2026); on desktop it spans a full row beneath the
-          three KPI cubes. One instance, two positions, no duplication. */}
-      <div className="mt-8 flex flex-col">
-      <section className="card-grid order-2 grid-cols-1 sm:order-1 sm:grid-cols-3">
-        {/* Total deals in the transactions DB */}
-        <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
-          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-xl"><Icon name="database" size="1em" /></span>
-            <div className="stat-label min-w-0 break-words">סה&quot;כ עסקאות במאגר</div>
-          </div>
-          <div className="stat-mega">{totalDeals ? totalDeals.toLocaleString("he-IL") : "—"}</div>
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="trend-pill trend-flat">1998–2026</span>
-            <span className="text-xs text-slate-500">כל העסקאות</span>
-          </div>
-          <NumberCaption
-            source='רשות המסים + נדל"ן'
-            period="1998–2026"
-            updated={dealsUpdatedLabel}
-            insideLink
-          />
-        </Link>
-
-        {/* Deals in the trailing 12 months */}
-        <Link href="/sources" className="hero-kpi hero-indigo group cursor-pointer block">
-          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-xl"><Icon name="handshake" size="1em" /></span>
-            <div className="stat-label min-w-0 break-words">עסקאות ב-12 החודשים האחרונים</div>
-          </div>
-          <div className="stat-mega">{deals12m ? deals12m.toLocaleString("he-IL") : "—"}</div>
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="trend-pill trend-flat">12 החודשים האחרונים</span>
-          </div>
-          <NumberCaption
-            source='רשות המסים + נדל"ן'
-            period="12 החודשים האחרונים"
-            updated={dealsUpdatedLabel}
-            insideLink
-          />
-        </Link>
-
-        {/* National 3y price change — SECOND-HAND only (real transactions) */}
-        <Link href="/cities" className="hero-kpi hero-indigo group cursor-pointer block">
-          <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="text-xl"><Icon name="trend-up" size="1em" /></span>
-            <div className="stat-label min-w-0 break-words">שינוי מחיר יד-2 ארצי — 3 שנים</div>
-          </div>
-          <div className="leading-none" style={{ fontSize: "clamp(28px, 7.5vw, 44px)" }}>
-            <TrendValue pct={median3y} className="font-extrabold tracking-tight" />
-          </div>
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-            <span className="trend-pill trend-flat">יד שנייה בלבד</span>
-            <span className="text-xs text-slate-500">חציון {sh3all.length} ערים</span>
-          </div>
-          <NumberCaption
-            source="עסקאות יד-שנייה אמיתיות · רשות המסים"
-            period={`חציון שינוי 3 שנים בין הערים · ${window3yLabel ?? "—"}`}
-            insideLink
-          />
-        </Link>
-
-
-      </section>
-
-      {/* fully-filterable price-changes ranking (scope × metric × year range) —
-          promoted out of the rankings grid to a full-width row of its own */}
-      <div className="order-1 mb-6 sm:order-2 sm:mb-0 sm:mt-6">
-        <PriceGainsRankingCard series={gainSeries} minYear={gainMinYear} maxYear={gainMaxYear} partialYear={gainPartialYear} subsidized={subsidizedByCity} />
-      </div>
-      </div>
-
-      {/* ── Rankings ─────────────────────────────────────────────── */}
-      <section className="stack mt-14">
-        <div className="section-header mb-6">
-          <div className="section-header-icon"><Icon name="trophy" size="1em" /></div>
-          <div>
-            <h2 className="text-2xl font-black text-slate-900">דירוגים מובילים</h2>
-            <p className="text-xs text-slate-500 mt-0.5">חמש הערים המובילות בכל קטגוריה</p>
-          </div>
-        </div>
-
-        {/* 3 cards after the price-gains card moved to its own row above */}
-        <div className="card-grid card-grid-auto grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
-          {rankings.map((ranking) => (
-            <RankingCard
-              key={ranking.title}
-              title={ranking.title}
-              items={ranking.items}
-              icon={ranking.icon}
-              detailHref={ranking.detailHref}
+      {/* Everything below the header is ordered from the dashboard
+          (🧩 סדר אלמנטים). The default is the order written here in
+          lib/pageSections; a section added later is appended rather than
+          dropped, so a stale saved order can never hide it. */}
+      <OrderedSections
+        page="home"
+        order={sectionOrder}
+        nodes={{
+          "hero-kpis": (
+            <HeroKpiCards
+              className="mt-8"
+              totalDeals={totalDeals}
+              deals12m={deals12m}
+              median3y={median3y}
+              medianCities={sh3all.length}
+              window3yLabel={window3yLabel}
+              dealsUpdatedLabel={dealsUpdatedLabel}
             />
-          ))}
-        </div>
-      </section>
-
-      {/* ── Auto-computed investor insights ────────────────────── */}
-      <MarketInsightsSection insights={marketInsights} />
-
-      {/* ── CBS national sales: new vs second-hand ─────────────── */}
-      {cbsSales && (
-        <section className="mt-14">
-          <CbsSalesChart data={cbsSales} />
-        </section>
-      )}
-
-      {/* ── Recent CBS / MoF Reports (curated + auto-discovered by the refresh engine) ── */}
-      <RecentReportsSection
-        discovered={discoveredReports.reports.map((r) => ({
-          id: r.id,
-          title: r.title,
-          publisher: r.publisher,
-          publishedDate: r.publishedDate,
-          pdfUrl: r.pdfUrl,
-          primaryPdfPath: r.primaryPdfPath,
-          highlights: r.highlights,
-        }))}
-        lastRefreshedAt={discoveredReports.lastRefreshedAt}
+          ),
+          "price-gains": (
+            <div className="mt-6">
+              <PriceGainsRankingCard series={gainSeries} minYear={gainMinYear} maxYear={gainMaxYear} partialYear={gainPartialYear} subsidized={subsidizedByCity} />
+            </div>
+          ),
+          "unsold-inventory": (
+            <div className="mt-4">
+              <RankingCard
+                title={unsoldRanking.title}
+                items={unsoldRanking.items}
+                icon={unsoldRanking.icon}
+                detailHref={unsoldRanking.detailHref}
+              />
+            </div>
+          ),
+          rankings: (
+            <section className="stack mt-14">
+              <div className="section-header mb-6">
+                <div className="section-header-icon"><Icon name="trophy" size="1em" /></div>
+                <div>
+                  <h2 className="text-2xl font-black text-slate-900">דירוגים מובילים</h2>
+                  <p className="text-xs text-slate-500 mt-0.5">חמש הערים המובילות בכל קטגוריה</p>
+                </div>
+              </div>
+              <div className="card-grid card-grid-auto grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+                {rankings.map((ranking) => (
+                  <RankingCard
+                    key={ranking.title}
+                    title={ranking.title}
+                    items={ranking.items}
+                    icon={ranking.icon}
+                    detailHref={ranking.detailHref}
+                  />
+                ))}
+              </div>
+            </section>
+          ),
+          "market-insights": <MarketInsightsSection insights={marketInsights} />,
+          "cbs-sales": cbsSales ? (
+            <section className="mt-14">
+              <CbsSalesChart data={cbsSales} />
+            </section>
+          ) : null,
+          "recent-reports": (
+            <RecentReportsSection
+              discovered={discoveredReports.reports.map((r) => ({
+                id: r.id,
+                title: r.title,
+                publisher: r.publisher,
+                publishedDate: r.publishedDate,
+                pdfUrl: r.pdfUrl,
+                primaryPdfPath: r.primaryPdfPath,
+                highlights: r.highlights,
+              }))}
+              lastRefreshedAt={discoveredReports.lastRefreshedAt}
+            />
+          ),
+        }}
       />
 
       {/* The one commercial block on the site, and it comes LAST on purpose —

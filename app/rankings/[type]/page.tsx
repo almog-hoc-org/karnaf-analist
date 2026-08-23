@@ -186,7 +186,11 @@ export default async function RankingPage({ params }: PageProps) {
           <div
             className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${a.icon}`}
           >
-            {cfg.icon}
+            {/* was {cfg.icon} — the config holds glyph NAMES ("crown",
+                "building"), so the box rendered the literal English word.
+                Found by scripts/audit-line-overflow.ts, which flagged the
+                text overflowing its 56px box. */}
+            <Icon name={cfg.icon} size="1em" />
           </div>
           <div className="flex-1">
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
@@ -296,7 +300,7 @@ export default async function RankingPage({ params }: PageProps) {
                   className="glass-card p-3 flex items-center gap-2 hover:border-indigo-300 transition-all group"
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${oa.icon}`}>
-                    {o.icon}
+                    <Icon name={o.icon} size="1em" />
                   </div>
                   <span className="text-xs font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors leading-tight">
                     {o.title}

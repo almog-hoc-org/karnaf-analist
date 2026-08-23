@@ -56,8 +56,8 @@ export default function PriceChangePanel({
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex-1 min-w-0">
           <h3 className="text-base font-bold text-slate-900">שינוי מחיר חציוני בעיר</h3>
-          <p className="text-2xs text-slate-500 mt-0.5">
-            מקור: nadlan.gov.il • חציון רבעוני, ממוצע שנתי
+          <p className="mt-0.5 truncate text-2xs text-slate-500" title="מקור: nadlan.gov.il · חציון רבעוני, ממוצע שנתי">
+            מקור: nadlan.gov.il
           </p>
         </div>
         <div className="inline-flex items-center gap-1.5" role="tablist">

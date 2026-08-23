@@ -48,18 +48,23 @@ export default function PriceChangeSection({
           <Icon name="trend-up" size="1em" />
         </div>
         <div className="flex-1 min-w-0">
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">
-            מחירי עסקאות — 3 גרפים
+          <h2 className="flex items-center gap-1.5 text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">
+            מגמות מחירים
+            {/* The series list, the source and the second-hand rule used to be
+                a 110-character subtitle — three lines on a phone. House rule
+                says every metric block states its source; it does not say the
+                source has to cost three lines. */}
+            <InfoTip text={`שלוש סדרות: חציון רשמי · ממוצע כל העסקאות · ממוצע יד-שנייה. מקור: nadlan.gov.il (רשות המסים). יד-שנייה = ${secondhandMinAge}+ שנים משנת הבנייה.`} label="הסבר: מגמות מחירים" />
           </h2>
-          <p className="text-xs text-slate-500 mt-1">
-            חציון רשמי · ממוצע כל העסקאות · ממוצע יד-שנייה — מבוסס על העסקאות שנאספו, סוננו ונותחו • מקור: nadlan.gov.il (רשות המסים)
+          <p className="mt-1 truncate text-xs text-slate-500">
+            מבוסס על העסקאות שנאספו, סוננו ונותחו
           </p>
         </div>
       </div>
 
       {/* 1. The three price graphs + shared controls + period compare + drill-down */}
       {graphData ? (
-        <MultiChartStudio data={graphData} deals={deals} dealCounts={dealCounts} cleaning={cleaning} cityName={cityName} secondhandMinAge={secondhandMinAge} modernMinYear={modernMinYear} classificationRate={classificationRate}
+        <MultiChartStudio data={graphData} deals={deals} dealCounts={dealCounts} cleaning={cleaning} cityName={cityName} modernMinYear={modernMinYear} classificationRate={classificationRate}
           subsidizedYears={subsidizedYears} minSample={minSample} />
       ) : (
         <div className="rounded-2xl bg-white border border-slate-200 p-4 text-sm text-slate-500 mb-4">

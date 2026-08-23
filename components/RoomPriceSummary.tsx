@@ -162,12 +162,17 @@ export default function RoomPriceSummary({ data, classificationRate = null }: {
           </div>
         ))}
       </div>
-      <p className="mt-2 text-2xs text-slate-400">
-        ממוצעים על עסקאות עם 10+ בשנה · ⚠ = אחד הקצוות עם פחות מ-30 עסקאות — מדגם דל ·
-        יד-2/חדשות מחושבים מעסקאות שיש בהן שנת בנייה בלבד
-        {classificationRate != null && classificationRate < 0.5
-          ? ` (${Math.round(classificationRate * 100)}% מהעסקאות ב${data.cityName})`
-          : ""}
+      {/* one line on screen, the whole caveat behind the ⓘ */}
+      <p className="mt-2 flex items-center gap-1 text-2xs text-slate-400">
+        <span className="truncate">ממוצעים על עסקאות עם 10+ בשנה</span>
+        <InfoTip
+          label="על מה מבוססים המספרים"
+          text={`ממוצעים על עסקאות עם 10+ בשנה. ⚠ = אחד הקצוות עם פחות מ-30 עסקאות, מדגם דל. יד-2/חדשות מחושבים מעסקאות שיש בהן שנת בנייה בלבד${
+            classificationRate != null && classificationRate < 0.5
+              ? ` (${Math.round(classificationRate * 100)}% מהעסקאות ב${data.cityName})`
+              : ""
+          }.`}
+        />
       </p>
     </section>
   );

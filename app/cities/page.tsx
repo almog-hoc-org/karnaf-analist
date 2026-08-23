@@ -133,25 +133,24 @@ export default async function CitiesPage() {
   });
 
   return (
-    <main className="min-h-screen page-wrap-wide py-8">
-      <div className="flex items-center justify-between mb-8">
-        <Link
-          href="/"
-          className="text-sm text-slate-500 hover:text-indigo-700 transition-colors"
-        >
-          ← חזרה לדף הבית
-        </Link>
-      </div>
-
-      <header className="mb-8">
-        <p className="text-xs font-medium tracking-widest text-indigo-500 uppercase mb-2">
-          All Cities Data
-        </p>
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
-          טבלת ערים מלאה
-        </h1>
-        <p className="text-slate-500">
-          {tableData.length} ערים | ניתן לסנן, למיין וללחוץ על עיר לדף מפורט
+    <main className="min-h-screen page-wrap-wide pb-8 pt-3 md:py-8">
+      {/* Back-link, title and subtitle in one block instead of three stacked
+          ones. What came out: an English eyebrow ("All Cities Data") on a
+          Hebrew site, and two mb-8 gaps — together about 200px of a phone
+          screen spent before the first number. */}
+      <header className="mb-3 md:mb-5">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h1 className="text-2xl md:text-4xl font-bold text-slate-900">
+            טבלת ערים מלאה
+          </h1>
+          <Link href="/" className="text-xs text-slate-500 transition-colors hover:text-indigo-700">
+            ← חזרה לדף הבית
+          </Link>
+        </div>
+        {/* one line, always: truncate is the guarantee, the short wording is
+            what makes the guarantee cost nothing */}
+        <p className="mt-1 truncate text-xs text-slate-500">
+          {tableData.length} ערים · לחצו על עיר לפירוט
         </p>
       </header>
 

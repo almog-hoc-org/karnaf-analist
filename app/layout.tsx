@@ -9,6 +9,7 @@ import PageViewTracker from "@/components/PageViewTracker";
 import WebVitalsReporter from "@/components/WebVitalsReporter";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
 import TopNav from "@/components/TopNav";
+import { listTrackedCities } from "@/lib/appDb";
 import { getCurrentUser } from "@/lib/auth";
 import { balance, isUnlimited } from "@/lib/credits";
 import { isAdminRequest } from "@/lib/adminAuth";
@@ -130,7 +131,7 @@ export default async function RootLayout({
             backgroundSize: "48px 48px",
           }}
         />
-        <TopNav cities={cityNames} user={currentUser} credits={currentUser ? balance(currentUser.id) : null} unlimited={currentUser ? isUnlimited(currentUser.id) : false} />
+        <TopNav cities={cityNames} user={currentUser} credits={currentUser ? balance(currentUser.id) : null} unlimited={currentUser ? isUnlimited(currentUser.id) : false} tracked={currentUser ? listTrackedCities(currentUser.id) : []} />
         {/* The landmark the skip link targets. tabIndex={-1} lets it receive
             focus programmatically without entering the tab order itself. */}
         <div id="main-content" tabIndex={-1} className="relative">{children}</div>
