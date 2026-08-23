@@ -85,17 +85,18 @@ function arg(name: string): string | undefined {
  * were ours. `out geom` returns coordinates inline, which avoids a second
  * round trip to resolve node ids.
  */
-function buildQuery(areaId: number): string {
+function buildQuery(box: BBox): string {
   const roads = Object.keys(ROAD_RANKS).join("|");
+  // Overpass bbox order is (south,west,north,east).
+  const bb = `${box.minLat},${box.minLon},${box.maxLat},${box.maxLon}`;
   return `[out:json][timeout:180];
-area(${areaId})->.city;
 (
-  way(area.city)["place"~"^(neighbourhood|suburb|quarter)$"]["name"];
-  relation(area.city)["place"~"^(neighbourhood|suburb|quarter)$"]["name"];
-  way(area.city)["highway"~"^(${roads})$"];
-  way(area.city)["natural"="water"];
-  relation(area.city)["natural"="water"];
-  way(area.city)["natural"="coastline"];
+  way(${bb})["place"~"^(neighbourhood|suburb|quarter)$"]["name"];
+  relation(${bb})["place"~"^(neighbourhood|suburb|quarter)$"]["name"];
+  way(${bb})["highway"~"^(${roads})$"];
+  way(${bb})["natural"="water"];
+  relation(${bb})["natural"="water"];
+  way(${bb})["natural"="coastline"];
 );
 out geom;`;
 }
@@ -162,80 +163,124 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
  */
 const AREA_OFFSET = 3_600_000_000;
 
-async function resolveArea(cityName: string): Promise<{ id: number; name: string } | null> {
-  // The search key is the part before a hyphen: OSM writes "תל אביב-יפו",
-  // "תל אביב יפו" and occasionally just "תל אביב", and a regex on the stable
-  // head matches all three without enumerating them.
+/**
+ * The city's centre point.
+ *
+ * WHY NOT ITS BOUNDARY — MEASURED, NOT ASSUMED
+ * The obvious scope for "everything in this city" is its administrative area.
+ * Four probes across three rounds established that OpenStreetMap does not have
+ * one for Tel Aviv: searching boundaries named "תל אביב" returns מחוז תל אביב
+ * (admin_level 4) and נפת תל אביב (admin_level 5) — the district and the
+ * sub-district — and no municipality. Israeli municipal boundaries are largely
+ * absent from OSM, so no amount of retrying or re-spelling was going to find
+ * one, for this city or for the next.
+ *
+ * A place node, on the other hand, is reliably mapped. So the query is scoped
+ * by a generous box around the centre, and the CITY'S OWN PRICE LIST decides
+ * which of the neighbourhoods in that box belong to it — see keepOurs(). That
+ * authority is better than a boundary anyway: it is the Tax Authority's own
+ * attribution of a deal to a city, which is the same attribution every other
+ * number on the page already rests on.
+ */
+async function resolveCentre(cityName: string): Promise<{ lon: number; lat: number; name: string } | null> {
   const core = cityName.split(/[-–—]/)[0].trim();
-
-  /* FOUR TAGGINGS, WIDENING, IN ONE RUN.
-   *
-   * The first version asked only for boundary=administrative with a matching
-   * `name`, and for Tel Aviv that found the DISTRICT and the SUB-district and
-   * no city — because a municipality in OSM Israel is not reliably tagged the
-   * way a European one is: the Hebrew name may live on `name:he` with an
-   * English `name`, and the municipal edge is sometimes `boundary=local_
-   * authority` rather than `administrative`.
-   *
-   * Discovering that cost a deploy cycle each time. So the lookup now widens
-   * through the plausible taggings within a single run and prints what each
-   * one found — one run, whole picture, instead of one guess per round trip. */
-  const probes: Array<{ what: string; q: string }> = [
-    { what: 'boundary=administrative · name', q: `relation["boundary"="administrative"]["name"~"${core}"];` },
-    { what: "any boundary · name", q: `relation["boundary"]["name"~"${core}"];` },
-    { what: "any boundary · name:he", q: `relation["boundary"]["name:he"~"${core}"];` },
-    { what: "place=city|town|municipality", q: `relation["place"~"^(city|town|municipality)$"]["name"~"${core}"];` },
-  ];
+  const query = `[out:json][timeout:90];
+(
+  node["place"~"^(city|town|village)$"]["name"~"${core}"];
+  node["place"~"^(city|town|village)$"]["name:he"~"${core}"];
+);
+out;`;
+  const found = await fetchOverpass(query);
+  if (found.length === 0) return null;
 
   const wanted = normHoodKey(cityName);
   const wantedCore = normHoodKey(core);
+  const RANK: Record<string, number> = { city: 0, town: 1, village: 2 };
 
-  for (const probe of probes) {
-    const found = await fetchOverpass(`[out:json][timeout:90];\n${probe.q}\nout tags;`);
-    if (found.length === 0) {
-      console.log(`  ${probe.what} → 0`);
-      continue;
-    }
+  const scored = found
+    .map((el) => {
+      const tags = el.tags ?? {};
+      const names = [tags.name, tags["name:he"]].filter(Boolean) as string[];
+      const best = names
+        .map((n) => {
+          const key = normHoodKey(n);
+          if (key === wanted) return { n, rank: 0 };
+          if (key === wantedCore) return { n, rank: 1 };
+          if (key.includes(wanted) || wanted.includes(key)) return { n, rank: 2 };
+          return { n, rank: 9 };
+        })
+        .sort((a, b) => a.rank - b.rank)[0];
+      return {
+        name: best?.n ?? "", rank: best?.rank ?? 9,
+        place: RANK[tags.place ?? ""] ?? 3,
+        lon: (el as unknown as { lon?: number }).lon,
+        lat: (el as unknown as { lat?: number }).lat,
+      };
+    })
+    .filter((c) => c.name && c.rank < 9 && typeof c.lon === "number" && typeof c.lat === "number")
+    .sort((a, b) => a.rank - b.rank || a.place - b.place);
 
-    const scored = found
-      .map((el) => {
-        const tags = el.tags ?? {};
-        // Either name tag can carry the Hebrew; the other is often English.
-        const names = [tags.name, tags["name:he"]].filter(Boolean) as string[];
-        const level = Number(tags.admin_level ?? 99);
-        const best = names
-          .map((n) => {
-            const key = normHoodKey(n);
-            if (key === wanted) return { n, rank: 0 };
-            if (key === wantedCore) return { n, rank: 1 };
-            if (key.includes(wanted) || wanted.includes(key)) return { n, rank: 2 };
-            if (key.includes(wantedCore)) return { n, rank: 3 };
-            return { n, rank: 9 };
-          })
-          .sort((a, b) => a.rank - b.rank)[0];
-        return { id: el.id, name: best?.n ?? "", rank: best?.rank ?? 9, level, tags };
-      })
-      // A DISTRICT is not the city. admin_level 8 is the municipality in
-      // Israel; 4 and 5 are the district and sub-district, and drawing "מחוז
-      // תל אביב" would put half the metropolitan area on a city page.
-      .filter((c) => c.name && c.rank < 9 && c.level >= 8)
-      .sort((a, b) => a.rank - b.rank || b.level - a.level);
-
-    console.log(`  ${probe.what} → ${found.length} נמצאו, ${scored.length} מתאימים`);
-    for (const c of scored.slice(0, 5)) {
-      console.log(`      ${c.name}  (relation ${c.id}, admin_level ${c.level === 99 ? "?" : c.level})`);
-    }
-    if (scored.length === 0) {
-      for (const el of found.slice(0, 6)) {
-        const t = el.tags ?? {};
-        console.log(`      · ${t.name ?? "(ללא name)"} / ${t["name:he"] ?? "—"} · ${t.boundary ?? t.place ?? "?"} · level ${t.admin_level ?? "?"}`);
-      }
-      continue;
-    }
-    const best = scored[0];
-    return { id: AREA_OFFSET + best.id, name: best.name };
+  console.log(`  נקודות מקום: ${found.length} נמצאו, ${scored.length} מתאימות`);
+  for (const c of scored.slice(0, 4)) console.log(`      ${c.name} (${c.lat!.toFixed(4)}, ${c.lon!.toFixed(4)})`);
+  if (scored.length === 0) {
+    for (const el of found.slice(0, 6)) console.log(`      · ${(el.tags ?? {}).name ?? "(ללא name)"}`);
+    return null;
   }
-  return null;
+  const best = scored[0];
+  return { lon: best.lon!, lat: best.lat!, name: best.name };
+}
+
+/** Half-size of the search box, in degrees. ~12km north-south and ~11km
+ *  east-west at Israel's latitude — larger than any Israeli municipality,
+ *  because the box only has to CONTAIN the city; keepOurs() does the cutting. */
+const BOX_LAT = 0.11;
+const BOX_LON = 0.12;
+
+/**
+ * Which of the neighbourhoods in the box actually belong to this city.
+ *
+ * The price list is the authority. A shape whose name joins to a
+ * neighbourhood the Tax Authority attributed to this city is ours; the rest of
+ * the box — Ramat Gan, Givatayim, Bat Yam — is not. Then, so that a
+ * neighbourhood with too few deals still gets drawn instead of leaving a hole,
+ * anything whose centre falls inside the footprint of the joined ones is kept
+ * as well.
+ */
+function keepOurs<T extends { name: string; lonLatCentre: [number, number] }>(
+  shapes: T[],
+  ourNames: Set<string>
+): { kept: T[]; joined: number } {
+  const joined = shapes.filter((s) => ourNames.has(normHoodKey(s.name)));
+  if (joined.length === 0) return { kept: [], joined: 0 };
+
+  let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
+  for (const s of joined) {
+    const [lon, lat] = s.lonLatCentre;
+    minLon = Math.min(minLon, lon); maxLon = Math.max(maxLon, lon);
+    minLat = Math.min(minLat, lat); maxLat = Math.max(maxLat, lat);
+  }
+  // A small margin, so a neighbourhood on the edge of the city is not cut for
+  // sitting a few hundred metres beyond the outermost priced one.
+  const padLon = (maxLon - minLon) * 0.15 + 0.005;
+  const padLat = (maxLat - minLat) * 0.15 + 0.005;
+
+  const inFootprint = shapes.filter((s) => {
+    const [lon, lat] = s.lonLatCentre;
+    return lon >= minLon - padLon && lon <= maxLon + padLon && lat >= minLat - padLat && lat <= maxLat + padLat;
+  });
+  return { kept: inFootprint, joined: joined.length };
+}
+
+/** The neighbourhood names this city's own price data knows about. */
+function ourNeighbourhoodKeys(db: Database.Database, city: string): Set<string> {
+  try {
+    const rows = db.prepare(
+      "SELECT DISTINCT neighborhood FROM neighborhood_year_stats WHERE city_name = ?"
+    ).all(city) as Array<{ neighborhood: string }>;
+    return new Set(rows.map((r) => normHoodKey(r.neighborhood)));
+  } catch {
+    return new Set();
+  }
 }
 
 /** Every ring an element carries: a way has one, a relation has one per outer member. */
@@ -282,23 +327,32 @@ async function main(): Promise<number> {
     }
   }
 
-  console.log(`מחפש את הגבול המנהלי של ${city} ב-OpenStreetMap…`);
+  // The city's own price data decides what belongs to it — see keepOurs().
+  // Without it there is nothing to cut the search box down to, so stop here
+  // rather than storing a box full of three cities' neighbourhoods.
+  const ourNames = ourNeighbourhoodKeys(db, city);
+  if (ourNames.size === 0) {
+    console.error(`✗ אין ל${city} נתוני שכונות (neighborhood_year_stats) — אין לפי מה לקבוע מה שייך לעיר`);
+    return 1;
+  }
+  console.log(`  ${ourNames.size} שמות שכונות ידועים לנו ב${city}`);
+
+  console.log(`מחפש את ${city} ב-OpenStreetMap…`);
   let elements: OsmElement[] = [];
-  let area: { id: number; name: string } | null = null;
+  let centre: { lon: number; lat: number; name: string } | null = null;
   let lastTransportError = "";
 
   // Rounds cover a busy Overpass, not a wrong name: a lookup that ANSWERS with
-  // no matching boundary is final, and retrying it three times would only be
-  // three times as rude to a free service.
+  // no match is final, and retrying it would only be ruder to a free service.
   for (let round = 0; round < ROUNDS; round++) {
     if (round > 0) {
       console.log(`  אף נקודת קצה לא ענתה. ממתין ${BACKOFF_MS[round] / 1000}s וסבב ${round + 1}/${ROUNDS}…`);
       await sleep(BACKOFF_MS[round]);
     }
     try {
-      area = await resolveArea(city);
+      centre = await resolveCentre(city);
       lastTransportError = "";
-      break; // it answered — whatever it said is the answer
+      break;
     } catch (e) {
       lastTransportError = e instanceof Error ? e.message : String(e);
     }
@@ -309,38 +363,76 @@ async function main(): Promise<number> {
     console.error("  לא נכתב כלום — הרצה הבאה תנסה שוב.");
     return 1;
   }
-  if (!area) {
-    console.error(`✗ ל-OpenStreetMap אין גבול מנהלי בשם שתואם ל״${city}״.`);
-    console.error("  הרשימה למעלה היא מה שכן נמצא — בחרו ממנה והוסיפו כינוי, או בדקו ב-openstreetmap.org");
+  if (!centre) {
+    console.error(`✗ ל-OpenStreetMap אין נקודת מקום בשם שתואם ל״${city}״.`);
+    console.error("  הרשימה למעלה היא מה שכן נמצא — בדקו ב-openstreetmap.org");
     return 1;
   }
 
-  console.log(`מושך את ${area.name} (area ${area.id})…`);
+  const searchBox: BBox = {
+    minLon: centre.lon - BOX_LON, maxLon: centre.lon + BOX_LON,
+    minLat: centre.lat - BOX_LAT, maxLat: centre.lat + BOX_LAT,
+  };
+  console.log(`מושך תיבה סביב ${centre.name} (${centre.lat.toFixed(4)}, ${centre.lon.toFixed(4)})…`);
   try {
-    elements = await fetchOverpass(buildQuery(area.id));
+    elements = await fetchOverpass(buildQuery(searchBox));
   } catch (e) {
     console.error(`✗ משיכת השכבות נכשלה. ${e instanceof Error ? e.message : String(e)}`);
     return 1;
   }
   console.log(`התקבלו ${elements.length} אלמנטים`);
   if (elements.length === 0) {
-    console.error(`✗ הגבול נמצא אבל אין בתוכו שכונות/כבישים מתויגים`);
+    console.error("✗ אין בתיבה שכונות/כבישים מתויגים");
     return 1;
   }
 
-  // ── pass 1: the bounding box, from EVERY layer ──
-  // It has to cover all of them: a projector fitted to the neighbourhoods alone
-  // would clip the roads that run past them, and two layers each fitted to their
-  // own extent would slide against each other.
-  let bbox: BBox = emptyBBox();
-  const touch = (pts: LonLat[]) => { for (const p of pts) bbox = extendBBox(bbox, p); };
-  for (const el of elements) {
-    for (const r of ringsOf(el)) touch(r);
-    const l = lineOf(el);
-    if (l) touch(l);
+  // ── which of the box's neighbourhoods are this city's ──
+  const boxShapes = elements
+    .filter((el) => el.tags?.place && el.tags?.name)
+    .map((el) => {
+      const rings = ringsOf(el);
+      if (!rings.length) return null;
+      const ring = rings[0];
+      let lon = 0, lat = 0;
+      for (const p of ring) { lon += p[0]; lat += p[1]; }
+      return { el, name: el.tags!.name!, lonLatCentre: [lon / ring.length, lat / ring.length] as [number, number] };
+    })
+    .filter((x): x is { el: OsmElement; name: string; lonLatCentre: [number, number] } => x !== null);
+
+  const { kept, joined } = keepOurs(boxShapes, ourNames);
+  console.log(`  שכונות בתיבה: ${boxShapes.length} · הותאמו לרשימה שלנו: ${joined} · נשמרות: ${kept.length}`);
+  if (joined < 3) {
+    console.error(`✗ רק ${joined} שכונות בתיבה מתאימות לשמות של ${city} — לא מספיק כדי לקבוע מה שייך לעיר`);
+    console.error(`  שמות שנמצאו בתיבה: ${boxShapes.slice(0, 12).map((s) => s.name).join(" · ")}`);
+    return 1;
   }
+  const keptEls = new Set(kept.map((k) => k.el));
+  // Everything that is not a neighbourhood (roads, water) stays; the
+  // neighbourhoods are cut down to the city's own.
+  elements = elements.filter((el) => !(el.tags?.place && el.tags?.name) || keptEls.has(el));
+
+  // ── pass 1: the frame ──
+  // The extent of the CITY'S OWN neighbourhoods, not of everything fetched. The
+  // search box is ~22km across so that it certainly contains the city; framing
+  // the map on it would draw the city as a small blob in the middle of three
+  // other municipalities' road networks.
+  let bbox: BBox = emptyBBox();
+  for (const k of kept) for (const r of ringsOf(k.el)) for (const p of r) bbox = extendBBox(bbox, p);
   if (bboxIsEmpty(bbox)) { console.error("✗ לא נמצאה גיאומטריה"); return 1; }
+  // A little air, so a neighbourhood does not touch the edge of the picture.
+  const padLon = (bbox.maxLon - bbox.minLon) * 0.06;
+  const padLat = (bbox.maxLat - bbox.minLat) * 0.06;
+  bbox = {
+    minLon: bbox.minLon - padLon, maxLon: bbox.maxLon + padLon,
+    minLat: bbox.minLat - padLat, maxLat: bbox.maxLat + padLat,
+  };
   const projectPoint = makeProjector(bbox);
+
+  /* Anything entirely outside the frame is dropped rather than projected off
+     the canvas: the SVG would clip it anyway, and shipping coordinates for a
+     road in the next city is pure payload. */
+  const insideFrame = (pts: LonLat[]) =>
+    pts.some((p) => p[0] >= bbox.minLon && p[0] <= bbox.maxLon && p[1] >= bbox.minLat && p[1] <= bbox.maxLat);
 
   // ── pass 2: build the three layers ──
   const shapes: Array<{ name: string; path: string; cx: number; cy: number; osmId: number; points: number }> = [];
@@ -373,6 +465,7 @@ async function main(): Promise<number> {
 
     if (isWater) {
       for (const raw of ringsOf(el)) {
+        if (!insideFrame(raw)) continue;
         rawPoints += raw.length;
         const simplified = simplifyRing(raw.map(projectPoint), TOLERANCE_LINE);
         if (!simplified) continue;
@@ -385,6 +478,7 @@ async function main(): Promise<number> {
     const raw = lineOf(el);
     if (!raw) continue;
     if (roadRank === undefined && !isCoast) continue;
+    if (!insideFrame(raw)) continue;
     rawPoints += raw.length;
     const projected = raw.map(projectPoint);
     const simplified = simplify(projected, TOLERANCE_LINE);
