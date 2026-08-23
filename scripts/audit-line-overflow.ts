@@ -17,11 +17,26 @@
  *   npm i --no-save playwright-core
  *   npx tsx scripts/audit-line-overflow.ts [baseUrl] [width]
  */
-import { chromium } from "playwright-core";
 
 const BASE = process.argv[2] ?? "http://127.0.0.1:3000";
 const WIDTH = Number(process.argv[3] ?? 375);
 const EXECUTABLE = process.env.PW_CHROMIUM ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
+
+/**
+ * Loaded at RUN time, through a computed specifier, and deliberately so.
+ * playwright-core is not a dependency of this project — it is installed
+ * ad-hoc (`npm i --no-save playwright-core`) on a machine that also has a
+ * browser. A static `import` of it makes `next build` fail type-checking in
+ * CI, where neither exists, which is exactly what happened the first time.
+ * The computed specifier is what keeps the compiler out of it.
+ */
+async function loadChromium(): Promise<any> {
+  const spec = "playwright" + "-core";
+  const mod = await import(/* webpackIgnore: true */ spec);
+  const c = (mod as any).chromium ?? (mod as any).default?.chromium;
+  if (!c) throw new Error("playwright-core לא מותקן — הרץ: npm i --no-save playwright-core");
+  return c;
+}
 
 const ROUTES = ["/", "/cities", "/city/חיפה", "/compare", "/deals", "/rankings/most-expensive", "/calculators"];
 
@@ -90,6 +105,7 @@ const BROWSER_SRC = `(function () {
 })()`;
 
 async function main(): Promise<number> {
+  const chromium = await loadChromium();
   const browser = await chromium.launch({ executablePath: EXECUTABLE });
   const page = await browser.newPage({
     viewport: { width: WIDTH, height: 800 },
