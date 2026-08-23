@@ -260,6 +260,16 @@ jobs:
           # are the same run.
           echo "── מפת שכונות: כיסוי ──"
           docker compose exec -T app npx tsx scripts/report-neighborhood-map.ts </dev/null || true
+
+          # Clicking a neighbourhood opens its deals. That query has to send the
+          # TAX AUTHORITY name, not the OpenStreetMap name of the shape — and
+          # the two are usually identical, so the wrong one answers 200 with
+          # zero deals and looks like a quiet neighbourhood. This is the only
+          # check that can tell the difference, because it goes through the
+          # server the way the panel does. NOT `|| true`: an empty panel on
+          # every neighbourhood is a user-facing break, not a report.
+          echo "── מפת שכונות: העסקאות של שכונה ──"
+          docker compose exec -T app npx tsx scripts/probe-neighborhood-deals.ts </dev/null
           REMOTE
 
 
