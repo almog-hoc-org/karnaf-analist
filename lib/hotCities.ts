@@ -162,6 +162,25 @@ const MONTH_COMPLETE_RATIO = 0.7;
 const MIN_BASE_DEALS = 30;
 
 /**
+ * Beyond this, a change in transaction COUNT is a coverage change, not demand.
+ *
+ * Measured, not guessed: with the reporting lag handled, Be'er Sheva still came
+ * out at +249% — 1,691 second-hand deals against 484. The monthly profile says
+ * why. The city recorded 69 · 52 · 59 · 44 deals in January to April 2025 and
+ * then 145 · 140 · 186 · 186 from May onward: a step change mid-year, which is
+ * a source starting to report the city properly, not a market that tripled in
+ * a month. The base window sits mostly in the under-covered era, so the
+ * comparison inherits it.
+ *
+ * The Israeli market has not moved ±60% in transaction volume in a year even
+ * in the sharpest turns of the last decade, so a reading past that is telling
+ * us about our own data. It is suppressed to "—", which says "no trustworthy
+ * comparison for this city" — the only honest thing to print, and better than
+ * a tripling on the front page.
+ */
+const MAX_ABS_BUYER_CHANGE_PCT = 60;
+
+/**
  * Second-hand buyers over the last twelve fully-reported months, against the
  * twelve months before those.
  *
@@ -233,7 +252,8 @@ async function loadBuyerTrend(
     if (!cities.includes(r.city_name)) continue;
     const cur = Number(r.cur);
     const prev = Number(r.prev);
-    const pct = prev >= MIN_BASE_DEALS ? (cur / prev - 1) * 100 : null;
+    const raw = prev >= MIN_BASE_DEALS ? (cur / prev - 1) * 100 : null;
+    const pct = raw != null && Math.abs(raw) <= MAX_ABS_BUYER_CHANGE_PCT ? raw : null;
     out.set(r.city_name, { pct, current: cur, previous: prev, windowLabel });
   }
   return out;

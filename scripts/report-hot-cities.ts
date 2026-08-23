@@ -40,12 +40,20 @@ async function main() {
     }`);
     console.log(`  נתון שלישי   : ${c.extra ? `${c.extra.label} ${c.extra.value} (${c.extra.year})` : "— (חסר!)"}`);
 
+    // A suppressed buyer trend is the sanity guard doing its job, not a gap in
+    // the data — the deploy must not fail on it. It is still printed loudly,
+    // because a hot city that cannot show one of its three figures is worth
+    // knowing about, and may be worth swapping out of the rule.
+    const suppressed = c.buyers != null && c.buyers.pct == null;
     const missing = [
       c.changePct == null && "מגמת מחיר",
       c.trend.length < 2 && "גרף",
-      c.buyers?.pct == null && "מגמת קונים",
+      c.buyers == null && "מגמת קונים",
       !c.extra && "נתון שלישי",
     ].filter(Boolean);
+    if (suppressed) {
+      console.log("  ⚠ מגמת הקונים הוסתרה: השינוי חורג ממה שתנועת שוק מסבירה — כנראה שינוי כיסוי בעיר הזו");
+    }
     if (missing.length) {
       bad += 1;
       console.log(`  ⚠ חסר: ${missing.join(", ")}`);
