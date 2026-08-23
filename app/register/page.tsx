@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { registerUser, verifyLogin, createSession, MIN_PASSWORD_LENGTH } from "@/lib/auth";
 import { grantSignupBonus, applyReferral, CREDIT_RULES } from "@/lib/credits";
+import { claimAnonUnlocks } from "@/lib/anonAccess";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
@@ -53,6 +54,10 @@ async function doRegister(formData: FormData) {
   // sent them (capped + validated inside applyReferral — the form is not trusted)
   grantSignupBonus(res.userId);
   if (ref) applyReferral(ref, res.userId);
+  // Cities this browser already opened for free move INTO the account, at no
+  // credit cost. Without it, registering closes the pages you were reading —
+  // which turns "sign up, it's free" into a downgrade the moment it is taken.
+  claimAnonUnlocks(res.userId, CREDIT_RULES.unlockDays());
 
   const user = verifyLogin(email, password);
   if (user) createSession(user);

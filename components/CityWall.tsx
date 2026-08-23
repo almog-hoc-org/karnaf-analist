@@ -27,6 +27,8 @@ export default function CityWall({
   refCode,
   signupBonus,
   inviteeBonus = 0,
+  anonFreeUsed = 0,
+  unlockDaysHint,
   referralBonus,
   feedbackBonus,
   monthlyGrant,
@@ -45,6 +47,10 @@ export default function CityWall({
   signupBonus?: number;
   /** extra credits the INVITEE gets when arriving via refCode (0 = feature off) */
   inviteeBonus?: number;
+  /** how many free cities this browser already used up — 0 when the free tier is off */
+  anonFreeUsed?: number;
+  /** unlock_days, so the anonymous pitch can say what a credit actually buys */
+  unlockDaysHint?: number;
   referralBonus?: number;
   feedbackBonus?: number;
   monthlyGrant?: number;
@@ -63,10 +69,37 @@ export default function CityWall({
 
         {state === "anonymous" && (
           <>
-            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
-              עמודי הערים — עם כל הגרפים, העסקאות והדירוגים — פתוחים למשתמשים רשומים.
-              ההרשמה חינם ומקנה <b>{(signupBonus ?? 10) + (refCode ? inviteeBonus : 0)} קרדיטים</b> לפתיחת הערים שמעניינות אותך.
+            {/* A visitor who spent the free allowance is in a different
+                conversation from one who never had it: they have already seen
+                what the pages contain, so the pitch is "you used the two, here
+                is how to keep going" — not a first introduction. Same screen,
+                two openings, because the wrong one reads as amnesia. */}
+            {anonFreeUsed > 0 ? (
+              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
+                פתחת כבר <b>{anonFreeUsed} ערים</b> ללא הרשמה — הן נשארות פתוחות לך.
+                לעיר נוספת צריך חשבון, וההרשמה <b>חינם, ללא עלות ובלי כרטיס אשראי</b>.
+              </p>
+            ) : (
+              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
+                עמודי הערים — עם כל הגרפים, העסקאות והדירוגים — פתוחים למשתמשים רשומים.
+                ההרשמה <b>חינם, ללא עלות ובלי כרטיס אשראי</b>.
+              </p>
+            )}
+
+            {/* What a credit IS. "10 credits" means nothing to someone who has
+                not yet learned the unit; the sentence that follows is the
+                whole model, and it is the difference between a number and an
+                offer. */}
+            <p className="mx-auto mt-2 max-w-md text-xs leading-relaxed text-slate-500">
+              בהרשמה מקבלים <b className="text-slate-700">{(signupBonus ?? 10) + (refCode ? inviteeBonus : 0)} קרדיטים</b>.
+              קרדיט אחד פותח עיר שלמה{unlockDaysHint ? <> ל-<b className="text-slate-700">{unlockDaysHint} ימים</b></> : null} —
+              כל הגרפים, העסקאות וההשוואות שבה. הערים שכבר פתחת יעברו לחשבון החדש.
             </p>
+            {anonFreeUsed > 0 && (
+              <p className="mx-auto mt-1.5 max-w-md text-2xs text-slate-400">
+                לא שולחים ספאם, ואפשר להסיר את עצמך מהדיוור בכל רגע.
+              </p>
+            )}
             {demoCity && (
               <p className="mt-2 text-xs text-slate-500">
                 רוצה לראות איך עמוד עיר נראה מבפנים? <Link href={`/city/${encodeURIComponent(demoCity)}`} className="font-bold text-indigo-700 hover:underline">עמוד {demoCity} פתוח לכולם</Link>.

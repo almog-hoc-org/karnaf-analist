@@ -41,6 +41,9 @@ import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/lib/auth";
 import { getRuleBool, getRuleText } from "@/lib/systemRules";
 import { balance, isCityUnlocked, unlockCity, ensureStarterCredits, CREDIT_RULES } from "@/lib/credits";
+import { anonId, anonFreeCities, anonUnlockedCities, isAnonCityUnlocked, tryAnonUnlock, mayConsumeAnonSlot } from "@/lib/anonAccess";
+import AnonFreeNotice from "@/components/AnonFreeNotice";
+import { headers } from "next/headers";
 import { whatsappShareUrl } from "@/lib/share";
 import { recordEvent } from "@/lib/events";
 import CityWall from "@/components/CityWall";
@@ -154,10 +157,43 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   const paywallOn = getRuleBool("paywall_on", true);
   const demoCity = getRuleText("demo_city", "חיפה");
   const viewer = getCurrentUser();
+  /** set when this page is being shown to a signed-out visitor on a free slot */
+  let anonUsed: { used: number; limit: number } | null = null;
   if (paywallOn && cityName !== demoCity) {
     const cityExists = await prisma.city.findUnique({ where: { city_name: cityName }, select: { city_name: true } });
     if (cityExists) {
       if (!viewer) {
+        // ── the free anonymous allowance (operator, 8/2026) ────────────────
+        // Two full cities with no account and NO screen in between. The whole
+        // rationale — why a cookie and not an IP, and what it deliberately
+        // does not prevent — is in lib/anonAccess.ts.
+        const aid = anonId();
+        const limit = anonFreeCities();
+        if (aid && limit > 0) {
+          if (isAnonCityUnlocked(aid, cityName)) {
+            // already opened by this browser: free forever, costs nothing
+            anonUsed = { used: anonUnlockedCities(aid).length, limit };
+          } else {
+            const h = headers();
+            const spendable = mayConsumeAnonSlot({
+              prefetch: h.get("next-router-prefetch"),
+              purpose: h.get("purpose") ?? h.get("x-purpose"),
+              userAgent: h.get("user-agent"),
+            });
+            if (spendable) {
+              const grant = tryAnonUnlock(aid, cityName);
+              if (grant.ok) {
+                anonUsed = { used: grant.used, limit: grant.limit };
+                recordEvent({ name: "unlock_done", path: `/city/${encodeURIComponent(cityName)}`, subject: cityName, detail: "anon" });
+              }
+            }
+          }
+        }
+      }
+      // Only for the wall's wording: how many free cities this browser already
+      // spent. Zero when the cookie is missing or the free tier is switched off.
+      const anonSpent = !viewer && anonFreeCities() > 0 ? (anonId() ? anonUnlockedCities(anonId()!).length : 0) : 0;
+      if (!viewer && !anonUsed) {
         // PUBLIC SUMMARY + wall. The wall used to be the entire response, which
         // meant Google indexed 167 identical signup screens instead of the
         // city data this site exists to publish. The free half below carries
@@ -192,11 +228,23 @@ export default async function CityPage({ params, searchParams }: PageProps) {
               nationalSqm,
             }}
           >
-            <CityWall cityName={cityName} state="anonymous" demoCity={demoCity} refCode={refCode} signupBonus={CREDIT_RULES.signupBonus()} inviteeBonus={CREDIT_RULES.referralInviteeBonus()} />
+            <CityWall
+              cityName={cityName}
+              state="anonymous"
+              demoCity={demoCity}
+              refCode={refCode}
+              signupBonus={CREDIT_RULES.signupBonus()}
+              inviteeBonus={CREDIT_RULES.referralInviteeBonus()}
+              anonFreeUsed={anonSpent}
+              unlockDaysHint={CREDIT_RULES.unlockDays()}
+            />
           </CityPublicSummary>
         );
       }
-      if (!isCityUnlocked(viewer.id, cityName)) {
+      // `viewer &&` because the branch above no longer guarantees one: a
+      // signed-out visitor on a free anonymous slot reaches here too, and for
+      // them there is nothing to charge and nothing to unlock.
+      if (viewer && !isCityUnlocked(viewer.id, cityName)) {
         // settle all due grants BEFORE deciding which wall to show — a user
         // owed the signup bonus (pre-credits account) or the monthly grant
         // must not be told "insufficient" by the gate that owes them credits
@@ -449,6 +497,15 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Measures which parts of this page were actually looked at. The
           sections carry data-track-section attributes; this reads them. */}
       <SectionVisibility subject={city.city_name} />
+
+      {anonUsed && (
+        <AnonFreeNotice
+          used={anonUsed.used}
+          limit={anonUsed.limit}
+          cityName={city.city_name}
+          signupBonus={CREDIT_RULES.signupBonus()}
+        />
+      )}
 
       {/* ── Header ─────────────────────────────────────────────── */}
       {/* Header, COMPACT (operator spec 8/2026): the old stack — English

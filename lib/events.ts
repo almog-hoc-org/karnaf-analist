@@ -380,6 +380,35 @@ export function topSearches(days = 30, limit = 25): Array<{ term: string; n: num
   } catch { return []; }
 }
 
+/**
+ * Which CITIES visitors searched for — the ranking behind "ערים חמות" when the
+ * home-page rule is set to `auto`.
+ *
+ * Built on `search_select` rather than on `search`, and the difference matters:
+ * a `search` row carries whatever was typed ("קרית א", "תא", a keyboard slip),
+ * so ranking on it means guessing which city each fragment meant. A
+ * `search_select` row's subject is the city the visitor actually chose from the
+ * dropdown — already a canonical name, already disambiguated by the person who
+ * knew what they were looking for.
+ *
+ * The cost is that abandoned searches do not count. That is the right trade for
+ * a list the home page presents as "what people look for": a query typed and
+ * then abandoned is evidence of interest that went nowhere, and it is precisely
+ * the kind of row that would put a misspelling at the top of the page.
+ */
+export function topSearchedCities(days = 30, limit = 10): Array<{ city: string; n: number }> {
+  try {
+    ensureTable();
+    return appDb().prepare(
+      `SELECT subject city, COUNT(*) n
+         FROM events
+        WHERE name='search_select' AND subject IS NOT NULL AND subject <> ''
+          AND created_at >= datetime('now', @win)
+        GROUP BY subject ORDER BY n DESC LIMIT @lim`
+    ).all({ win: win(days), lim: limit }) as Array<{ city: string; n: number }>;
+  } catch { return []; }
+}
+
 export interface UserUsageRow {
   userId: number;
   email: string;

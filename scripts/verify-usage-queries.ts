@@ -21,7 +21,7 @@
  *   npx tsx scripts/verify-usage-queries.ts
  */
 import {
-  usageSummary, topPages, topSearches, usageByUser, userUsageDetail,
+  usageSummary, topPages, topSearches, topSearchedCities, usageByUser, userUsageDetail,
   visitShape, exitPages, landingPages, trafficSources, signupFunnel,
   registeredNeverUnlocked, rageClicks, errorsShown, ctaClicks, scrollDepth,
   cityDemand, creditEconomy, retentionCohorts, eventCounts, topMisses,
@@ -48,6 +48,9 @@ const checks: Array<[string, () => unknown]> = [
   ["usageSummary", () => usageSummary(DAYS)],
   ["topPages", () => topPages(DAYS)],
   ["topSearches", () => topSearches(DAYS)],
+  // feeds the home page's "ערים חמות" when the rule is set to auto — a throw
+  // here would blank the first section a visitor sees, not an admin panel.
+  ["topSearchedCities", () => topSearchedCities(DAYS)],
   ["usageByUser", () => usageByUser(DAYS)],
   ["userUsageDetail", () => userUsageDetail(1, DAYS)],
   ["visitShape", () => visitShape(DAYS)],

@@ -12,7 +12,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { findOrCreateGoogleUser, createSession, OAUTH_COOKIE } from "@/lib/auth";
-import { grantSignupBonus, applyReferral } from "@/lib/credits";
+import { grantSignupBonus, applyReferral, CREDIT_RULES } from "@/lib/credits";
+import { claimAnonUnlocks } from "@/lib/anonAccess";
 import { withBasePath } from "@/lib/basePath";
 
 export const dynamic = "force-dynamic";
@@ -80,6 +81,9 @@ export async function GET(req: Request) {
     // Google-verified account — exactly the "verified friend" the referral
     // bonus was scoped to. Caps enforced inside.
     if (saved.ref) applyReferral(saved.ref, result.user.id);
+    // same as the email path: the free cities follow the visitor into the
+    // account rather than closing behind them.
+    claimAnonUnlocks(result.user.id, CREDIT_RULES.unlockDays());
   }
   createSession(result.user);
 

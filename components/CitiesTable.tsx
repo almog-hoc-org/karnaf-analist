@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
 import type { CityChangeMetrics, ChangeMetric, YearValue } from "@/lib/cityChangeMetrics";
+import { citySearch } from "@/lib/citySearch";
 import TrendValue from "./TrendValue";
 import Icon from "@/components/Icon";
 import InfoTip from "@/components/InfoTip";
@@ -431,7 +432,15 @@ export default function CitiesTable({
   const filtered = useMemo(() => {
     let result = data;
     if (search) {
-      result = result.filter((c) => c.city_name.includes(search));
+      // Through the shared search engine, not a raw `includes`. A bare
+      // substring test made this box the odd one out on the site: "קרית"
+      // returned NOTHING for קריית אתא, because the two spellings are
+      // different strings. citySearch folds spelling variants (קרית/קריית,
+      // הרצליה/הרצלייה), a one-character typo, and an English-keyboard
+      // slip — exactly what the two search boxes already do.
+      // Order is irrelevant here: `sorted` below re-sorts the whole set.
+      const hits = new Set(citySearch(result, search, result.length).map((h) => h.item.city_name));
+      result = result.filter((c) => hits.has(c.city_name));
     }
     if (filterHasPrice) {
       result = result.filter((c) => c.price_change_pct !== null);

@@ -251,6 +251,14 @@ jobs:
           echo "── usage dashboard queries ──"
           docker compose exec -T app npx tsx scripts/verify-usage-queries.ts </dev/null || USAGE_FAILED=1
 
+          # The free anonymous allowance is a gate, and both of its failure
+          # modes are silent: opening too far gives the site away, closing too
+          # early shows a registration wall on a first-time visitor's FIRST
+          # city — the exact thing it exists to remove. Writes and cleans up
+          # after itself under a throwaway id.
+          echo "── anonymous free-city allowance ──"
+          docker compose exec -T app npx tsx scripts/verify-anon-access.ts </dev/null || USAGE_FAILED=1
+
           # First run only in practice: months of raw log exist and no daily
           # aggregate does. Idempotent, so leaving it here costs seconds.
           echo "── usage roll-up backfill ──"

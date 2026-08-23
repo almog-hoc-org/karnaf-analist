@@ -93,6 +93,32 @@ describe("city search", () => {
     expect(citySearch(cities, "קרית ים")[0].item.city_name).toBe("קריית ים");
   });
 
+  /**
+   * The operator's rule (8/2026): typing either spelling must offer EVERY
+   * Kiryat, whichever spelling the name happens to be stored under. The city
+   * names themselves are deliberately not renamed, so this equivalence is the
+   * only thing standing between "קרית" and an empty dropdown — which is
+   * exactly what /cities and /compare showed until they were routed through
+   * this engine. Pinned in both directions and on a mixed-spelling list so a
+   * future tweak to normalizeCitySearch cannot quietly undo it.
+   */
+  it("returns the same Kiryat set for both spellings, whichever way they are stored", () => {
+    const mixed = [
+      { city_name: "קריית אתא" },   // stored with the double yod
+      { city_name: "קרית אונו" },   // stored without it
+      { city_name: "קריית ים" },
+      { city_name: "הרצליה" },
+    ];
+    const names = (q: string) => citySearch(mixed, q, 10).map((h) => h.item.city_name).sort();
+
+    expect(names("קרית")).toEqual(["קריית אתא", "קריית ים", "קרית אונו"].sort());
+    expect(names("קריית")).toEqual(names("קרית"));
+    expect(names("קרית א")).toEqual(names("קריית א"));
+    // and a full name typed the "wrong" way still lands on the exact city
+    expect(citySearch(mixed, "קריית אונו")[0].item.city_name).toBe("קרית אונו");
+    expect(citySearch(mixed, "קרית אתא")[0].item.city_name).toBe("קריית אתא");
+  });
+
   it("translates accidental English-keyboard Hebrew", () => {
     expect(citySearch(cities, "ctr", 1)[0].item.city_name).toBe("באר שבע");
   });

@@ -28,7 +28,12 @@ import { getRuleNum } from "./systemRules";
 /* ── schema ──────────────────────────────────────────────────────────────── */
 
 let ensured = false;
-function ensureCreditTables() {
+/**
+ * Exported because lib/anonAccess.ts writes into `city_unlocks` when a visitor
+ * registers, and a module that writes to a table must not assume some other
+ * module happened to create it first.
+ */
+export function ensureCreditTables() {
   if (ensured) return;
   appDb().exec(`
     CREATE TABLE IF NOT EXISTS credits_ledger (

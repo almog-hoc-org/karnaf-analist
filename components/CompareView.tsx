@@ -17,6 +17,7 @@
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { track } from "@/lib/track";
+import { citySearch } from "@/lib/citySearch";
 import { fromToText } from "@/components/FromTo";
 import {
   LineChart,
@@ -118,9 +119,13 @@ function CitySlot({
 
   // filter: while the text still equals the chosen city, show the top list
   const q = text.trim() === value.trim() ? "" : text.trim();
-  const options = cityList
-    .filter((c) => !taken.has(c.city_name) && (q === "" || c.city_name.includes(q)))
-    .slice(0, 8);
+  // Through the shared search engine rather than a raw `includes`. The plain
+  // substring test made this picker the odd one out: "קרית" matched nothing
+  // for קריית אתא, since the two spellings are simply different strings.
+  // Relevance order matters here (only 8 rows are shown), so the hits are used
+  // as returned instead of being re-filtered against the original order.
+  const available = cityList.filter((c) => !taken.has(c.city_name));
+  const options = q === "" ? available.slice(0, 8) : citySearch(available, q, 8).map((h) => h.item);
 
   const commit = (name: string) => {
     if (blurTimer.current) clearTimeout(blurTimer.current);

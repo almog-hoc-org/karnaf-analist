@@ -5,6 +5,8 @@ import { historyFromYear } from "@/lib/historyWindow";
 import { ALIAS_NAMES } from "@/lib/cityAliases";
 import RankingCard from "@/components/RankingCard";
 import HomeSearch from "@/components/HomeSearch";
+import HotCities from "@/components/HotCities";
+import { loadHotCities } from "@/lib/hotCities";
 import CourseBanner from "@/components/CourseBanner";
 import Link from "next/link";
 import RecentReportsSection from "@/components/RecentReportsSection";
@@ -162,6 +164,11 @@ export default async function HomePage() {
     return lo === hi ? fromToText(lo, to) : fromToText(`${lo}–${hi}`, to);
   })();
 
+  // The three cards that now open the page. Loaded here rather than inside the
+  // component so the section is server-rendered into the first paint — it is
+  // the LCP element, and a client fetch would draw it after the fold is judged.
+  const hotCities = await loadHotCities(3);
+
   // Most-expensive = second-hand median ₪/m² from REAL transactions
   const txPricesForRank = await loadCityTransactionPrices();
   const mostExpensiveTx = [...txPricesForRank.values()]
@@ -253,15 +260,31 @@ export default async function HomePage() {
   ];
 
   return (
-    <main className="min-h-screen page-wrap-wide py-8">
-      {/* ── HERO — Compact, screenshot-optimized ───────────────── */}
-      {/* ── HERO — search-first, exactly one focal point (yad2 lesson) ── */}
-      {/* relative z-30: animate-fade-up leaves a forwards-fill transform on
+    <main className="min-h-screen page-wrap-wide pb-8 pt-2 md:py-8">
+      {/* ── HERO ────────────────────────────────────────────────────────────
+          THREE HOT CITIES, THEN THE SEARCH BOX — both on the first screen with
+          no scrolling (operator requirement, 8/2026). That inverts the old
+          search-first hero, and the reason is that a search box only helps a
+          visitor who already knows which city they want; whoever does still
+          finds it immediately below, on the same screen.
+
+          EVERYTHING ABOVE THEM WAS CUT TO THE BONE, because the requirement is
+          a pixel budget and the old header spent it on nothing. On a phone it
+          opened with 56px of pure air (main's py-8 plus the header's pt-6)
+          under a sticky 56px nav, then a status pill, then a heading that
+          repeats the wordmark already visible in that nav, then a tagline that
+          wrapped to two lines — roughly 280px before the search box began.
+          The pill and the full tagline are desktop-only now, the heading is
+          smaller, and the tagline is short enough to hold one line.
+
+          relative z-30: animate-fade-up leaves a forwards-fill transform on
           this header, creating a stacking context — without an explicit z the
           search dropdown (z-[100] INSIDE that context) painted UNDER the
           hero-kpi cards that follow in DOM order. */}
-      <header className="animate-fade-up relative z-30 pb-2 pt-6 text-center md:pt-10">
-        <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
+      <header className="animate-fade-up relative z-30 pb-1 pt-1 md:pb-2 md:pt-8">
+        {/* Hidden on phones: it costs ~48px and says what the tagline below
+            already says. On a wide screen the pixels are free. */}
+        <div className="mb-5 hidden flex-wrap items-center justify-center gap-2 md:flex">
           <span className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-500 opacity-75" />
@@ -271,19 +294,32 @@ export default async function HomePage() {
           </span>
         </div>
 
-        <h1 className="t-display text-balance">
-          <span className="text-gradient-hero">קרנף אנליסט</span>
-        </h1>
-        <p className="mx-auto mt-3 max-w-lg text-slate-500" style={{ fontSize: 16, lineHeight: 1.55 }}>
-          מחקר וניתוח שוק הנדל״ן בישראל — מבוסס עסקאות אמת
-        </p>
+        <div className="text-center">
+          {/* t-display keeps the weight, leading and tracking; the two size
+              utilities override its font-size (utilities layer beats
+              components), so this is one heading with two sizes and not two. */}
+          <h1 className="t-display text-xl md:text-[2.75rem]">
+            <span className="text-gradient-hero">קרנף אנליסט</span>
+          </h1>
+          {/* One line on a phone — the long version wrapped to two and added a
+              line of leading between them for no information gained. */}
+          <p className="mx-auto mt-0.5 max-w-lg text-slate-500 md:mt-3" style={{ lineHeight: 1.4 }}>
+            <span className="text-xs md:hidden">ניתוח שוק הנדל״ן בישראל</span>
+            <span className="hidden md:inline" style={{ fontSize: 16, lineHeight: 1.55 }}>
+              מחקר וניתוח שוק הנדל״ן בישראל — מבוסס עסקאות אמת
+            </span>
+          </p>
+        </div>
 
-        {/* the one dominant control on the page */}
-        <div className="mx-auto mt-6 max-w-2xl">
+        <HotCities data={hotCities} />
+
+        {/* Directly under the cards, still above the fold. */}
+        <div className="mx-auto mt-3 max-w-2xl md:mt-5">
           <HomeSearch cities={allCities} />
         </div>
-        <p className="mt-3 text-slate-400" style={{ fontSize: 13 }}>
-          חפש עיר וקבל מחירים, מגמות והשוואות · {cityCount} ערים במאגר
+        <p className="mt-1.5 text-center text-slate-400" style={{ fontSize: 12 }}>
+          <span className="hidden md:inline">חפש עיר וקבל מחירים, מגמות והשוואות · </span>
+          {cityCount} ערים במאגר
         </p>
       </header>
 

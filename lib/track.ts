@@ -305,7 +305,11 @@ export function trackSessionStart(): void {
  */
 export type CtaName =
   | "register" | "login" | "check_price" | "calculator"
-  | "course_banner" | "open_deals" | "all_rankings";
+  | "course_banner" | "open_deals" | "all_rankings"
+  // the home page's "ערים חמות" cards. The whole point of that section is to
+  // give a first-time visitor a first move instead of an empty search box, and
+  // the only way to know whether it worked is to count the moves it produced.
+  | "hot_city";
 /*
  * Sharing, following a city, unlocking, comparing and chart interaction are
  * DELIBERATELY absent: each already has its own event (share_click,
