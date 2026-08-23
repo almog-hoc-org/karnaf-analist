@@ -222,6 +222,14 @@ jobs:
           # the diagnostic kept reporting perfect health.
           # This one fetches the real page over loopback, as a visitor does.
           docker compose exec -T app npx tsx scripts/probe-home-board.ts </dev/null
+
+          # "Buyers vs last year" is the one card figure that a late data feed
+          # can turn into a confident lie: the newest months are always
+          # under-reported, so a naive comparison shows a fall everywhere, all
+          # the time. This prints the monthly profile, which separates the two
+          # explanations. Reports only — never fails the deploy.
+          echo "── buyer-trend reporting lag ──"
+          docker compose exec -T app npx tsx scripts/diagnose-buyer-trend.ts </dev/null || true
           REMOTE
 
 
