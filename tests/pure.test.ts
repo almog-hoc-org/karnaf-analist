@@ -9,6 +9,9 @@ import { fromToText } from "@/components/FromTo";
 import { citySearch } from "@/lib/citySearch";
 import { labelForPath, sectionLabel } from "@/lib/pageLabels";
 import { reconcile, defaultOrder, PAGE_KEYS, PAGE_SECTIONS } from "@/lib/pageSections";
+import { priceBins, binOf, buildCityMap, type CityMapGeometry } from "@/lib/cityMap";
+import { normHoodKey } from "@/lib/hoodKey";
+import { project, makeProjector, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
@@ -656,5 +659,189 @@ describe("page section order", () => {
       const keys = PAGE_SECTIONS[p].map((s) => s.key);
       expect(new Set(keys).size).toBe(keys.length);
     }
+  });
+});
+
+
+/**
+ * The neighbourhood map's geometry. Every one of these is a failure that would
+ * be invisible in code review and obvious on screen: a city drawn 20% too tall,
+ * streets that do not sit on their neighbourhoods, a coastline that blows the
+ * stack, or a sliver polygon with no area.
+ */
+describe("map geometry", () => {
+  it("projects latitude through Mercator, not raw degrees", () => {
+    // A degree of latitude and a degree of longitude must NOT come out equal:
+    // that is exactly the bug that stretches Israel north-south by ~20%.
+    const [x0, y0] = project([34, 32]);
+    const [x1, y1] = project([35, 32]);
+    const [, y2] = project([34, 33]);
+    expect(x1 - x0).toBeCloseTo(Math.PI / 180, 10);
+    expect(y2 - y0).toBeGreaterThan(x1 - x0); // Mercator stretches with latitude
+    expect(y0).toBeCloseTo(Math.log(Math.tan(Math.PI / 4 + (32 * Math.PI) / 360)), 10);
+  });
+
+  it("puts both layers of one city in the same box", () => {
+    // The whole point of a shared projector: a street and an outline that share
+    // a coordinate must land on the same pixel.
+    const bbox = { minLon: 34.7, minLat: 32.0, maxLon: 34.85, maxLat: 32.15 };
+    const p = makeProjector(bbox);
+    const shared: LonLat = [34.78, 32.08];
+    expect(p(shared)).toEqual(p(shared));
+    const [x, y] = p(shared);
+    expect(x).toBeGreaterThan(0);
+    expect(x).toBeLessThan(VIEW_SIZE);
+    expect(y).toBeGreaterThan(0);
+    expect(y).toBeLessThan(VIEW_SIZE);
+  });
+
+  it("flips y, because SVG counts downward and latitude counts up", () => {
+    const p = makeProjector({ minLon: 34, minLat: 32, maxLon: 35, maxLat: 33 });
+    const north = p([34.5, 32.9]);
+    const south = p([34.5, 32.1]);
+    expect(north[1]).toBeLessThan(south[1]);
+  });
+
+  it("does not emit NaN for a degenerate extent", () => {
+    const p = makeProjector({ minLon: 34.7, minLat: 32.1, maxLon: 34.7, maxLat: 32.1 });
+    const [x, y] = p([34.7, 32.1]);
+    expect(Number.isFinite(x)).toBe(true);
+    expect(Number.isFinite(y)).toBe(true);
+  });
+
+  it("collapses a straight line to its endpoints", () => {
+    const line: Point[] = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]];
+    expect(simplify(line, 0.5)).toEqual([[0, 0], [4, 0]]);
+  });
+
+  it("keeps a corner that carries the shape", () => {
+    const line: Point[] = [[0, 0], [5, 10], [10, 0]];
+    expect(simplify(line, 1)).toEqual(line);
+  });
+
+  it("bounds the worst case instead of recursing into it", () => {
+    // A line that alternates either side of its own chord is RDP's O(n²) case
+    // and keeps every point. Unbounded, 60,000 of them took 67 SECONDS. The
+    // decimation cap is what turns that into a predictable cost.
+    const adversarial: Point[] = Array.from({ length: 60_000 }, (_, i) => [i, i % 2] as Point);
+    const started = Date.now();
+    const out = simplify(adversarial, 0.1);
+    expect(Date.now() - started).toBeLessThan(10_000);
+    expect(out.length).toBeLessThanOrEqual(MAX_SIMPLIFY_POINTS);
+    expect(() => simplify(adversarial, 0.1)).not.toThrow();
+  });
+
+  it("decimates evenly and keeps both ends", () => {
+    const line: Point[] = Array.from({ length: 100 }, (_, i) => [i, 0] as Point);
+    const out = decimate(line, 10);
+    expect(out).toHaveLength(10);
+    expect(out[0]).toEqual([0, 0]);
+    expect(out[out.length - 1]).toEqual([99, 0]);
+    expect(decimate(line, 500)).toHaveLength(100); // never pads
+  });
+
+  it("keeps a simplified ring closed", () => {
+    const square: Point[] = [[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]];
+    const out = simplifyRing(square, 0.5)!;
+    expect(out.length).toBeGreaterThanOrEqual(4);
+    expect(out[0]).toEqual(out[out.length - 1]);
+  });
+
+  it("drops a ring that simplifies away instead of drawing a sliver", () => {
+    const sliver: Point[] = [[0, 0], [10, 0], [20, 0], [0, 0]];
+    expect(simplifyRing(sliver, 1)).toBeNull();
+    expect(simplifyRing([[0, 0], [1, 1]] as Point[], 1)).toBeNull();
+  });
+
+  it("measures length and finds a centre inside the shape", () => {
+    expect(lineLength([[0, 0], [3, 4]])).toBeCloseTo(5, 6);
+    expect(ringCentroid([[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]])).toEqual([5, 5]);
+  });
+
+  it("reports an untouched bbox as empty rather than as a point at infinity", () => {
+    expect(bboxIsEmpty(emptyBBox())).toBe(true);
+    expect(bboxIsEmpty(extendBBox(emptyBBox(), [34.7, 32.1]))).toBe(false);
+  });
+});
+
+
+/** A price row shaped like lib/neighborhoods produces. */
+const nb = (neighborhood: string, sqm: number) => ({
+  neighborhood, year: 2025, sqm, n: 40, changePct: 5, fromYear: 2022, vsCityPct: 0,
+});
+const geo = (names: string[]): CityMapGeometry => ({
+  shapes: names.map((n, i) => ({ neighborhood: n, normName: normHoodKey(n), path: "M0,0L1,1Z", cx: i, cy: i })),
+  lines: [],
+});
+
+describe("neighbourhood map bins and join", () => {
+  it("uses the city's own range, not absolute shekel thresholds", () => {
+    // The same five bins must appear whether the city is Beer Sheva or Tel Aviv
+    // — an absolute scale paints one of them a single shade.
+    const cheap = priceBins([10_000, 12_000, 14_000, 16_000, 18_000]);
+    const dear = priceBins([50_000, 60_000, 70_000, 80_000, 90_000]);
+    expect(cheap).toHaveLength(4);
+    expect(dear).toHaveLength(4);
+    expect(binOf(10_000, cheap)).toBe(0);
+    expect(binOf(18_000, cheap)).toBe(4);
+    expect(binOf(50_000, dear)).toBe(0);
+    expect(binOf(90_000, dear)).toBe(4);
+  });
+
+  it("does not divide by zero on one neighbourhood or on equal prices", () => {
+    expect(() => priceBins([20_000])).not.toThrow();
+    expect(priceBins([]).length).toBe(0);
+    const flat = priceBins([20_000, 20_000, 20_000]);
+    expect(flat.every((e) => Number.isFinite(e))).toBe(true);
+    expect(Number.isFinite(binOf(20_000, flat))).toBe(true);
+  });
+
+  it("ignores nonsense values instead of binning them", () => {
+    expect(priceBins([NaN, 0, -5, 10_000, 20_000, 30_000, 40_000, 50_000])).toHaveLength(4);
+  });
+
+  it("joins across a hyphen and a doubled yod", () => {
+    const view = buildCityMap(
+      geo(["הצפון הישן-החלק הצפוני", "נוה צדק", "פלורנטין"]),
+      [nb("הצפון הישן החלק הצפוני", 60_000), nb("נווה צדק", 70_000), nb("פלורנטין", 50_000)]
+    );
+    expect(view).not.toBeNull();
+    expect(view!.matched).toBe(3);
+    expect(view!.unmatchedPriced).toEqual([]);
+  });
+
+  it("draws a shape with no price rather than hiding it", () => {
+    const view = buildCityMap(
+      geo(["א", "ב", "ג", "ד"]),
+      [nb("א", 10_000), nb("ב", 20_000), nb("ג", 30_000)]
+    );
+    expect(view!.neighborhoods).toHaveLength(4);
+    expect(view!.neighborhoods.find((n) => n.neighborhood === "ד")!.summary).toBeNull();
+    expect(view!.neighborhoods.find((n) => n.neighborhood === "ד")!.bin).toBeNull();
+  });
+
+  it("reports a priced neighbourhood that has no shape instead of dropping it", () => {
+    const view = buildCityMap(geo(["א", "ב", "ג"]), [nb("א", 1), nb("ב", 2), nb("ג", 3), nb("ד", 4)]);
+    expect(view!.unmatchedPriced).toEqual(["ד"]);
+  });
+
+  it("refuses a map that would cover less than half the city", () => {
+    // Four priced neighbourhoods, one shape: the reader would see three
+    // blanks and conclude there are no deals there.
+    expect(buildCityMap(geo(["א"]), [nb("א", 1), nb("ב", 2), nb("ג", 3), nb("ד", 4)])).toBeNull();
+  });
+
+  it("refuses when the collector has not run for this city", () => {
+    expect(buildCityMap({ shapes: [], lines: [] }, [nb("א", 1)])).toBeNull();
+  });
+
+  it("does not attach a price when the containment is ambiguous", () => {
+    // Two priced rows both contain the shape's name — guessing would put a
+    // real number on the wrong polygon.
+    const view = buildCityMap(
+      geo(["רמת", "א", "ב", "ג"]),
+      [nb("רמת אביב", 50_000), nb("רמת החייל", 60_000), nb("א", 1), nb("ב", 2), nb("ג", 3)]
+    );
+    expect(view!.neighborhoods.find((n) => n.neighborhood === "רמת")!.summary).toBeNull();
   });
 });

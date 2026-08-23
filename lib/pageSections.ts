@@ -68,7 +68,7 @@ export const PAGE_SECTIONS: Record<PageKey, SectionDef[]> = {
     { key: "correlation", label: "מתאמים" },
     { key: "inventory", label: "מלאי לא מכור" },
     { key: "dwelling-stock", label: "מלאי הדירות בעיר", hint: "יישובים מעל 50 אלף" },
-    { key: "neighborhoods", label: "מחירים לפי שכונה" },
+    { key: "neighborhoods", label: "שכונות — מפה וטבלה", hint: "מפת השכונות לצד טבלת המחירים" },
     { key: "urban-renewal", label: "התחדשות עירונית" },
     { key: "insights", label: "תובנות" },
     { key: "supply-demand", label: "היצע מול ביקוש" },

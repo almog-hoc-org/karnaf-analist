@@ -246,6 +246,20 @@ jobs:
           # is visible. When the two disagree, the cache is the answer.
           echo "── שינוי 3 שנים: מה העמוד באמת מציג ──"
           docker compose exec -T app npx tsx scripts/probe-cities-table.ts </dev/null || true
+
+          # The neighbourhood map's geometry. The collector SKIPS a city that
+          # already has shapes, so this is one Overpass query in the pilot city's
+          # lifetime, not one per deploy — which is both what OpenStreetMap's
+          # usage policy expects and what makes it safe to leave here.
+          echo "── מפת שכונות: איסוף לעיר הפיילוט ──"
+          docker compose exec -T app npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו" </dev/null || true
+
+          # And the number that decides whether the map is honest: how many of
+          # the city's priced neighbourhoods actually got a shape. A collector
+          # that "succeeded" and a map covering four of twenty neighbourhoods
+          # are the same run.
+          echo "── מפת שכונות: כיסוי ──"
+          docker compose exec -T app npx tsx scripts/report-neighborhood-map.ts </dev/null || true
           REMOTE
 
 

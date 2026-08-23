@@ -15,6 +15,8 @@
  * Cities NOT in this map fall through to a "whole city" single row.
  */
 
+import { normHoodKey } from "./hoodKey";
+
 export interface Subarea {
   /** Slug used in URLs + cache keys. ASCII-only. */
   slug: string;
@@ -154,30 +156,19 @@ export function listMappedCities(): string[] {
  *   - null if the city itself isn't in the map (caller should treat it as
  *     a single whole-city area)
  */
-/**
- * Normalise a neighborhood/pattern for matching. govmap is inconsistent:
- * `"הצפון הישן-החלק הצפוני"` (hyphen) vs a pattern written with a space would
- * never match under exact `includes()`, dumping ~10K TLV deals into "אחר".
- * We collapse hyphens↔space, strip quotes/geresh, and unify doubled יי/וו.
- */
-function normHood(s: string): string {
-  return s
-    .replace(/["'`׳״]/g, "")
-    .replace(/[-–—]/g, " ")
-    .replace(/יי/g, "י")
-    .replace(/וו/g, "ו")
-    .replace(/\s+/g, " ")
-    .trim();
-}
+/* The matcher lives in lib/hoodKey.ts now: the neighbourhood MAP has to join
+   OpenStreetMap names to the Tax Authority's spelling of the same place, which
+   is the identical problem this function was written for. One definition, two
+   callers — two would drift. */
 
 export function classifySubarea(cityName: string, neighborhood: string | null | undefined): string | null {
   const areas = CITY_SUBAREAS[cityName];
   if (!areas) return null;
   if (!neighborhood) return OTHER_SUBAREA.slug;
-  const clean = normHood(neighborhood);
+  const clean = normHoodKey(neighborhood);
   for (const area of areas) {
     for (const pattern of area.patterns) {
-      if (clean.includes(normHood(pattern))) return area.slug;
+      if (clean.includes(normHoodKey(pattern))) return area.slug;
     }
   }
   return OTHER_SUBAREA.slug;

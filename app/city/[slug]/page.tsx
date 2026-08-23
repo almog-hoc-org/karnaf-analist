@@ -5,10 +5,11 @@ import { cityClassificationRate } from "@/lib/classificationRate";
 import { cityUrbanRenewalProjects } from "@/lib/urbanRenewal";
 import { subsidizedWindowNote, citySubsidizedYears } from "@/lib/subsidizedYears";
 import UrbanRenewalSection from "@/components/UrbanRenewalSection";
-import NeighborhoodPrices from "@/components/NeighborhoodPrices";
+import NeighborhoodSection from "@/components/NeighborhoodSection";
 import DwellingStockCard from "@/components/DwellingStockCard";
 import { dwellingsFor, dwellingRank, nationalPersonsPerDwelling, bigCityPersonsPerDwelling, dwellingsProvenance } from "@/lib/dwellings";
 import { neighborhoodSummary, neighborhoodMinDeals } from "@/lib/neighborhoods";
+import { loadCityMapGeometry, buildCityMap } from "@/lib/cityMap";
 import { getRuleNum } from "@/lib/systemRules";
 import { getCityInsights } from "@/lib/insights";
 import { computeCityGap, describeSupplySource } from "@/lib/gap-analysis";
@@ -342,6 +343,11 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   // supply is concentrated in whichever neighbourhood happens to be under
   // construction, so an "all deals" table would rank the building site first.
   const neighborhoods = await neighborhoodSummary(cityName, { scope: "secondhand", years: 3 });
+  // Does this city HAVE a drawable map? Only the answer travels with the page —
+  // the geometry itself is fetched by the browser, and only on a screen wide
+  // enough to draw it. False for every city the collector has not run on, which
+  // is all of them outside the pilot, and is a normal state and not a failure.
+  const hasCityMap = buildCityMap(await loadCityMapGeometry(cityName), neighborhoods.rows) !== null;
 
   if (!city) {
     return (
@@ -1059,15 +1065,21 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         );
       })()}
 
-      {/* Intra-city spread — from neighborhood_year_stats (aggregation stage) */}
+      {/* Intra-city spread — prices from neighborhood_year_stats (aggregation
+          stage), shapes from scripts/collect-city-map.ts. `cityMap` is null for
+          every city the collector has not run on, and then this is exactly the
+          standalone table that shipped before. Same data-track-section slug, so
+          the dashboard's section-order editor and the visibility analytics keep
+          working across the change. */}
       <div data-track-section="neighborhoods" style={{ order: ord("neighborhoods") }}>
-        <NeighborhoodPrices
+        <NeighborhoodSection
           cityName={cityName}
           rows={neighborhoods.rows}
           year={neighborhoods.year}
           citySqm={neighborhoods.citySqm}
           minDeals={neighborhoodMinDeals()}
           scopeLabel="יד שנייה"
+          hasMap={hasCityMap}
         />
       </div>
 

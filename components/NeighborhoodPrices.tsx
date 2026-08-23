@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import TrendValue from "@/components/TrendValue";
@@ -18,6 +21,7 @@ import type { NeighborhoodSummary } from "@/lib/neighborhoods";
  */
 export default function NeighborhoodPrices({
   cityName, rows, year, citySqm, minDeals, scopeLabel,
+  active = null, onHover, onPin, compact = false,
 }: {
   cityName: string;
   rows: NeighborhoodSummary[];
@@ -25,7 +29,27 @@ export default function NeighborhoodPrices({
   citySqm: number | null;
   minDeals: number;
   scopeLabel: string;
+  /* Sync with the map beside it. All optional: without them this is exactly
+     the standalone table it has always been, which is what a city with no
+     collected geometry still renders. */
+  active?: string | null;
+  onHover?: (name: string | null) => void;
+  onPin?: (name: string | null) => void;
+  /** inside the map section the heading lives on the section, not here */
+  compact?: boolean;
 }) {
+  /* Hooks before the early return — React requires the same hooks on every
+     render, and `rows` can legitimately be empty. */
+  const rowRefs = useRef<Record<string, HTMLTableRowElement | null>>({});
+  useEffect(() => {
+    if (!active) return;
+    // Hovering a shape on the map should bring its row into view: with twenty
+    // neighbourhoods the matching row is usually below the fold, and a
+    // highlight nobody can see is not a highlight. `nearest` so the page does
+    // not jump when the row is already visible.
+    rowRefs.current[active]?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [active]);
+
   if (!rows.length) return null;
 
   const fmt = (v: number) => `₪${Math.round(v).toLocaleString("he-IL")}`;
@@ -33,7 +57,8 @@ export default function NeighborhoodPrices({
   const spread = bottom.sqm > 0 ? top.sqm / bottom.sqm : null;
 
   return (
-    <section className="mb-10">
+    <section className={compact ? "" : "mb-10"}>
+      {!compact && (
       <div className="mb-4 flex items-start gap-3">
         <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-xl text-white shadow">
           <Icon name="building" size="1em" />
@@ -48,8 +73,9 @@ export default function NeighborhoodPrices({
           </p>
         </div>
       </div>
+      )}
 
-      {spread && spread >= 1.15 && (
+      {!compact && spread && spread >= 1.15 && (
         <p className="mb-3 rounded-2xl border border-indigo-200 bg-indigo-50/60 px-4 py-2.5 text-sm text-slate-700">
           הפער בתוך העיר: <b>{top.neighborhood}</b> יקרה פי {spread.toFixed(1)} מ־<b>{bottom.neighborhood}</b>
           {" "}({fmt(top.sqm)} מול {fmt(bottom.sqm)} למ״ר).
@@ -69,7 +95,16 @@ export default function NeighborhoodPrices({
           </thead>
           <tbody>
             {rows.map((r) => (
-              <tr key={r.neighborhood} className="border-b border-slate-100 last:border-0">
+              <tr
+                key={r.neighborhood}
+                ref={(el) => { rowRefs.current[r.neighborhood] = el; }}
+                onMouseEnter={() => onHover?.(r.neighborhood)}
+                onMouseLeave={() => onHover?.(null)}
+                onClick={() => onPin?.(r.neighborhood)}
+                className={`border-b border-slate-100 last:border-0 transition-colors ${
+                  active === r.neighborhood ? "bg-sky-100" : onHover ? "cursor-pointer hover:bg-sky-50" : ""
+                }`}
+              >
                 <th scope="row" className="px-4 py-2.5 text-right font-bold text-slate-900">{r.neighborhood}</th>
                 <td className="px-3 py-2.5 text-right font-bold tabular-nums text-slate-800">{fmt(r.sqm)}</td>
                 <td className="px-3 py-2.5 text-right tabular-nums">
@@ -92,11 +127,13 @@ export default function NeighborhoodPrices({
         </table>
       </div>
 
+      {!compact && (
       <p className="mt-2 text-2xs leading-relaxed text-slate-400">
         <Icon name="source-own" size="1em" /> מחושב מהעסקאות שנאספו ונוקו — שם השכונה כפי שדווח לרשות המסים.
         עסקה ללא שכונה רשומה נכללת במספרי העיר ולא בטבלה הזו, ולכן ״מול העיר״ מושווה לממוצע של אותן עסקאות בלבד.
         {" "}<Link href="/methodology" className="underline hover:text-indigo-700">מתודולוגיה →</Link>
       </p>
+      )}
     </section>
   );
 }
