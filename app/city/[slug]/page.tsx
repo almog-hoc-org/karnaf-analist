@@ -234,12 +234,8 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             <CityWall
               cityName={cityName}
               state="anonymous"
-              demoCity={demoCity}
               refCode={refCode}
-              signupBonus={CREDIT_RULES.signupBonus()}
-              inviteeBonus={CREDIT_RULES.referralInviteeBonus()}
               anonFreeUsed={anonSpent}
-              unlockDaysHint={CREDIT_RULES.unlockDays()}
             />
           </CityPublicSummary>
         );
@@ -519,7 +515,6 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           used={anonUsed.used}
           limit={anonUsed.limit}
           cityName={city.city_name}
-          signupBonus={CREDIT_RULES.signupBonus()}
         />
       )}
 

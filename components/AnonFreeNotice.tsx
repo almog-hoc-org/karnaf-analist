@@ -14,17 +14,22 @@ import CtaLink from "@/components/CtaLink";
  * So: state the count, state that registering is free, and get out of the way.
  * One line, no dismiss button, no modal — anything larger would BE the extra
  * screen this whole feature exists to remove.
+ *
+ * NO CREDIT ARITHMETIC HERE. This bar used to add "and grants N credits for
+ * opening more cities. The cities you already opened will be kept in the
+ * account" — the same detail the wall itself was cut down to remove. Left in,
+ * it would hand this visitor the full pitch one screen BEFORE the screen we
+ * took it out of. What happens after an account exists can be read after it
+ * exists.
  */
 export default function AnonFreeNotice({
   used,
   limit,
   cityName,
-  signupBonus,
 }: {
   used: number;
   limit: number;
   cityName: string;
-  signupBonus: number;
 }) {
   const last = used >= limit;
 
@@ -46,9 +51,7 @@ export default function AnonFreeNotice({
           </>
         )}{" "}
         <span className="text-slate-500">
-          ההרשמה <b className="text-slate-700">חינם</b>, ללא עלות ובלי כרטיס אשראי — ומוסיפה{" "}
-          <b className="text-slate-700">{signupBonus} קרדיטים</b> לפתיחת ערים נוספות.
-          הערים שכבר פתחת יישמרו בחשבון.
+          ההרשמה <b className="text-slate-700">חינם ומהירה</b> — עם גוגל או מייל.
         </span>
       </p>
       <CtaLink

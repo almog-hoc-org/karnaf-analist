@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Icon from "@/components/Icon";
 import TrackOnMount from "@/components/TrackOnMount";
 import CtaLink from "@/components/CtaLink";
@@ -22,13 +21,9 @@ export default function CityWall({
   balanceCredits,
   costCredits,
   unlockDays,
-  demoCity,
   shareUrl,
   refCode,
-  signupBonus,
-  inviteeBonus = 0,
   anonFreeUsed = 0,
-  unlockDaysHint,
   referralBonus,
   feedbackBonus,
   monthlyGrant,
@@ -39,18 +34,14 @@ export default function CityWall({
   balanceCredits?: number;
   costCredits?: number;
   unlockDays?: number;
-  demoCity?: string;
   shareUrl?: string;
   /** the sharer's referral code from ?ref= — must survive the trip into /register */
   refCode?: string;
-  /** live rule values — NEVER hardcode these; the admin can change them without a deploy */
-  signupBonus?: number;
-  /** extra credits the INVITEE gets when arriving via refCode (0 = feature off) */
-  inviteeBonus?: number;
-  /** how many free cities this browser already used up — 0 when the free tier is off */
+  /** how many free cities this browser already used up — 0 when the free tier is
+   *  off. Not a number on screen any more, only the difference between
+   *  "more cities" and "cities". */
   anonFreeUsed?: number;
-  /** unlock_days, so the anonymous pitch can say what a credit actually buys */
-  unlockDaysHint?: number;
+  /** live rule values — NEVER hardcode these; the admin can change them without a deploy */
   referralBonus?: number;
   feedbackBonus?: number;
   monthlyGrant?: number;
@@ -69,50 +60,35 @@ export default function CityWall({
 
         {state === "anonymous" && (
           <>
-            {/* A visitor who spent the free allowance is in a different
-                conversation from one who never had it: they have already seen
-                what the pages contain, so the pitch is "you used the two, here
-                is how to keep going" — not a first introduction. Same screen,
-                two openings, because the wrong one reads as amnesia. */}
-            {anonFreeUsed > 0 ? (
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
-                פתחת כבר <b>{anonFreeUsed} ערים</b> ללא הרשמה — הן נשארות פתוחות לך.
-                לעיר נוספת צריך חשבון, וההרשמה <b>חינם, ללא עלות ובלי כרטיס אשראי</b>.
-              </p>
-            ) : (
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
-                עמודי הערים — עם כל הגרפים, העסקאות והדירוגים — פתוחים למשתמשים רשומים.
-                ההרשמה <b>חינם, ללא עלות ובלי כרטיס אשראי</b>.
-              </p>
-            )}
+            {/* ONE SENTENCE. This screen used to say six things — how many free
+                cities were spent, that signing up is free, how many credits it
+                grants, what one credit buys and for how long, that we do not
+                spam, and that there is a demo city — and five of them answer
+                questions the visitor has not asked yet. What stops them here is
+                a single fact: reading more cities needs an account. Everything
+                that happens AFTER the account exists can be learned after it
+                exists.
 
-            {/* What a credit IS. "10 credits" means nothing to someone who has
-                not yet learned the unit; the sentence that follows is the
-                whole model, and it is the difference between a number and an
-                offer. */}
-            <p className="mx-auto mt-2 max-w-md text-xs leading-relaxed text-slate-500">
-              בהרשמה מקבלים <b className="text-slate-700">{(signupBonus ?? 10) + (refCode ? inviteeBonus : 0)} קרדיטים</b>.
-              קרדיט אחד פותח עיר שלמה{unlockDaysHint ? <> ל-<b className="text-slate-700">{unlockDaysHint} ימים</b></> : null} —
-              כל הגרפים, העסקאות וההשוואות שבה. הערים שכבר פתחת יעברו לחשבון החדש.
+                "עוד" is conditional and not fixed: a visitor normally arrives
+                here having spent the free allowance, but with the free tier
+                switched off (anon_free_cities = 0) they arrive having seen
+                none, and "more cities" would then be a lie about their own
+                history. */}
+            <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
+              לצפייה ב{anonFreeUsed > 0 ? "עוד " : ""}<b>ערים</b> צריך חשבון.
+              ההרשמה <b>חינם ומהירה</b> — עם גוגל או מייל.
             </p>
-            {anonFreeUsed > 0 && (
-              <p className="mx-auto mt-1.5 max-w-md text-2xs text-slate-400">
-                לא שולחים ספאם, ואפשר להסיר את עצמך מהדיוור בכל רגע.
-              </p>
-            )}
-            {demoCity && (
-              <p className="mt-2 text-xs text-slate-500">
-                רוצה לראות איך עמוד עיר נראה מבפנים? <Link href={`/city/${encodeURIComponent(demoCity)}`} className="font-bold text-indigo-700 hover:underline">עמוד {demoCity} פתוח לכולם</Link>.
-              </p>
-            )}
             <div className="mt-6 flex flex-col items-center justify-center gap-2 sm:flex-row">
               <CtaLink
                 cta="register"
                 context={cityName}
+                /* refSuffix stays even though the invitee bonus is no longer
+                   shown: the sharer's referral code still has to survive the
+                   trip into /register, or the credit lands nowhere. */
                 href={`/register?next=${encodeURIComponent(`/city/${encodeURIComponent(cityName)}`)}${refSuffix}`}
                 className="w-full rounded-xl bg-indigo-600 px-6 py-3 text-sm font-bold text-white hover:bg-indigo-700 sm:w-auto"
               >
-                הרשמה חינם — {(signupBonus ?? 10) + (refCode ? inviteeBonus : 0)} קרדיטים
+                הרשמה מהירה — חינם
               </CtaLink>
               <CtaLink
                 cta="login"
