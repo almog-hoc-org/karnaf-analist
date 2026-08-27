@@ -2,8 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import Icon from "@/components/Icon";
 import InfoTip from "@/components/InfoTip";
-import TrendValue from "@/components/TrendValue";
-import NeighborhoodTrendChart from "@/components/NeighborhoodTrendChart";
+import HoodTrendStudio from "@/components/HoodTrendStudio";
 import HoodDealsTable from "@/components/HoodDealsTable";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
@@ -11,7 +10,7 @@ import { getRuleBool, getRuleText } from "@/lib/systemRules";
 import { isCityUnlocked } from "@/lib/credits";
 import { canonicalCityName } from "@/lib/cityAliases";
 import { neighborhoodMinDeals, neighborhoodSummary } from "@/lib/neighborhoods";
-import { loadHoodPage, loadHoodDeals } from "@/lib/neighborhoodPage";
+import { loadHoodPage, loadHoodDeals, loadHoodSeries } from "@/lib/neighborhoodPage";
 
 /**
  * A city page, one level down: one neighbourhood's price history and deals.
@@ -114,12 +113,10 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     );
   }
 
-  const firstDeals = await loadHoodDeals(cityName, data.neighborhood, scope);
-  const fmt = (v: number | null) => (v == null ? "—" : `₪${Math.round(v).toLocaleString("he-IL")}`);
-  const vsCity =
-    data.sqm != null && data.citySqm != null && data.citySqm > 0
-      ? (data.sqm / data.citySqm - 1) * 100
-      : null;
+  const [firstDeals, series] = await Promise.all([
+    loadHoodDeals(cityName, data.neighborhood, scope),
+    loadHoodSeries(cityName, data.neighborhood),
+  ]);
   const cityHref = `/city/${encodeURIComponent(cityName)}`;
 
   return (
@@ -146,34 +143,9 @@ export default async function NeighborhoodPage({ params }: PageProps) {
         </p>
       </header>
 
-      {/* ── the four headline numbers ── */}
-      <section className="mb-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label={`₪ למ״ר${data.refYear ? ` · ${data.refYear}` : ""}`} value={fmt(data.sqm)} />
-        <Stat
-          label={data.fromYear ? `שינוי מ־${data.fromYear}` : "שינוי"}
-          value={data.changePct == null ? "—" : <TrendValue pct={data.changePct} />}
-        />
-        <Stat label={`עסקאות ב${data.refYear ?? "שנה"}`} value={data.n == null ? "—" : data.n.toLocaleString("he-IL")} />
-        <Stat
-          label="מול ממוצע העיר"
-          value={vsCity == null ? "—" : <TrendValue pct={vsCity} />}
-          sub={data.rank ? `השכונה ה-${data.rank} מתוך ${data.rankOf} במחיר למ״ר` : undefined}
-        />
-      </section>
-
-      {/* ── the decade ── */}
-      <section className="mb-8">
-        <div className="section-header">
-          <div className="section-header-icon"><Icon name="chart" size="1em" /></div>
-          <div>
-            <h2>מגמת המחיר לאורך שנים</h2>
-            <p>ממוצע וחציון ₪/מ״ר לשנה, עם כמות העסקאות מאחורי כל נקודה · חור בקו = שנה בלי מספיק עסקאות</p>
-          </div>
-        </div>
-        <div className="glass-card p-4 md:p-6">
-          <NeighborhoodTrendChart trend={data.trend} />
-        </div>
-      </section>
+      {/* headline numbers + filters + chart — one client component, all the
+          scope×rooms series shipped from here so filtering is local */}
+      <HoodTrendStudio data={data} series={series} />
 
       {/* ── the receipts ── */}
       <section className="mb-8">
@@ -219,12 +191,3 @@ export default async function NeighborhoodPage({ params }: PageProps) {
   );
 }
 
-function Stat({ label, value, sub }: { label: string; value: React.ReactNode; sub?: string }) {
-  return (
-    <div className="glass-card p-4">
-      <p className="text-2xs font-bold uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 text-xl font-black tabular-nums text-slate-900">{value}</p>
-      {sub && <p className="mt-0.5 text-2xs text-slate-400">{sub}</p>}
-    </div>
-  );
-}

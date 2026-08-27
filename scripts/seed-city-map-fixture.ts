@@ -150,6 +150,10 @@ function main(): number {
         `INSERT INTO neighborhood_year_stats (city_name, neighborhood, year, room_bucket, scope, avg_sqm, median_sqm, median_price, avg_price, n)
          VALUES (?,?,?, 'all', 'secondhand', ?,?,?,?,?)`
       );
+      const insCellBucket = db.prepare(
+        `INSERT INTO neighborhood_year_stats (city_name, neighborhood, year, room_bucket, scope, avg_sqm, median_sqm, median_price, avg_price, n)
+         VALUES (?,?,?,?, 'secondhand', ?,?,?,?,?)`
+      );
       // All but the last two get prices; those stay blank on purpose, so the
       // "no data" hatch has something to render in development.
       cells.forEach((c, i) => {
@@ -157,6 +161,11 @@ function main(): number {
         const base = 30_000 + i * 1_900;
         for (const [year, factor] of [[2022, 0.82], [2025, 1]] as const) {
           insCell.run(c.city, c.name, year, base * factor, base * factor, base * factor * 95, base * factor * 98, 40 + i * 7);
+          // Room buckets 3 and 4, and deliberately NOT 5 — the rooms filter
+          // needs both a bucket with data and one without, so the empty-state
+          // message can be seen in development.
+          insCellBucket.run(c.city, c.name, year, "3", base * factor * 1.06, base * factor * 1.06, base * factor * 80, base * factor * 82, 15 + i * 2);
+          insCellBucket.run(c.city, c.name, year, "4", base * factor * 0.97, base * factor * 0.97, base * factor * 105, base * factor * 108, 18 + i * 3);
         }
       });
 
@@ -183,7 +192,11 @@ function main(): number {
             city, c.name, `2025-${String(1 + (d % 12)).padStart(2, "0")}-${String(1 + (d % 27)).padStart(2, "0")}`,
             2025, rooms, String(Math.min(5, Math.max(3, rooms))), area, price,
             Math.round(price / area), 1998 + (d % 20), d % 4 === 0 ? 0 : 1,
-            `רחוב הדוגמה ${i + 1}`, String(10 + d), String(1 + (d % 9))
+            // A distinct, digit-free street per hood. The old "רחוב הדוגמה N"
+            // all collapsed into ONE street once the search indexer stripped
+            // the trailing number — correctly rejected as hood-split, and
+            // therefore untestable. Real streets do not end in digits.
+            `שדרות ${c.name}`, String(10 + d), String(1 + (d % 9))
           );
         }
       });

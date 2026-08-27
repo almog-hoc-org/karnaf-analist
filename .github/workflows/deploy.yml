@@ -281,6 +281,12 @@ jobs:
           # A neighbourhood page must answer. NOT || true: these pages are
           # public and sitemap-listed, so a broken one is a user-facing (and
           # crawler-facing) break, not a report.
+          # The neighbourhoods section's move below the price-trends chart:
+          # the catalogue default moved in code, but a saved drag-and-drop
+          # order overrides defaults, so the saved row (if any) is nudged too.
+          # One key moves, everything else stays where the operator put it.
+          docker compose exec -T app npx tsx scripts/move-neighborhoods-section.ts </dev/null || true
+
           echo "── עמוד שכונה: תשובה חיה ──"
           # URL pre-encoded (Hebrew city + hood); nested heredocs inside the
           # REMOTE heredoc would not survive bash's delimiter rules.

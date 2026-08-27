@@ -13,14 +13,19 @@ import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 const NAV_ITEMS = [
   { href: "/", label: "בית" },
   { href: "/cities", label: "ערים" },
-  { href: "/compare", label: "השוואה" },
   { href: "/national", label: "ארצי" },
-  { href: "/check", label: "בדיקת מחיר" },
-  { href: "/calculators", label: "מחשבונים" },
-  // "מקורות" moved to the footer (operator spec 8/2026) — a methodology page
-  // is reference material, not a daily destination; the top bar earns its
-  // slots by frequency of use.
+  // השוואה + בדיקת מחיר live under the מחשבונים popup (operator spec 8/2026)
+  // — three tool pages, one slot. See CALC_ITEMS + the popup button below.
+  // "מקורות" moved to the footer earlier for the same reason: the top bar
+  // earns its slots by frequency of use.
   { href: "/deals", label: "העסקאות שלי", highlight: true },
+];
+
+/** The tools group behind the "מחשבונים" popup. */
+const CALC_ITEMS = [
+  { href: "/calculators", label: "מחשבונים" },
+  { href: "/compare", label: "השוואה" },
+  { href: "/check", label: "בדיקת מחיר" },
 ];
 
 interface CityHit {
@@ -39,8 +44,13 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
   // shortcut, not a market figure, so it belongs with the account chip —
   // beside the credits balance — and the home page keeps its first screen.
   const [starOpen, setStarOpen] = useState(false);
+  const [calcOpen, setCalcOpen] = useState(false);
+  const calcRef = useRef<HTMLDivElement>(null);
   const [q, setQ] = useState("");
   const [hits, setHits] = useState<CityHit[]>([]);
+  /** hood/street suggestions from /api/suggest — appended UNDER the cities in
+   *  the same keyboard-navigable list */
+  const [hoodHits, setHoodHits] = useState<Array<{ kind: "hood" | "street"; city: string; name: string; hood: string; url: string }>>([]);
   const [focusIdx, setFocusIdx] = useState(-1);
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -48,6 +58,8 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
     setOpen(false);
     setQ("");
     setHits([]);
+    setHoodHits([]);
+    setCalcOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -63,19 +75,30 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
       // used of the site's two search inputs, so measuring only the homepage one
       // would have missed most searches.
       trackSearch(needle, matches.length, "topnav");
+      if (needle.length >= 2) {
+        fetch(withBasePath(`/api/suggest?q=${encodeURIComponent(needle)}`))
+          .then((r) => (r.ok ? r.json() : { suggestions: [] }))
+          .then((j: { suggestions?: Array<{ kind: "hood" | "street"; city: string; name: string; hood: string; url: string }> }) =>
+            setHoodHits(j.suggestions ?? []))
+          .catch(() => setHoodHits([]));
+      } else setHoodHits([]);
     }, 120);
     return () => clearTimeout(t);
   }, [q, cities]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (boxRef.current && !boxRef.current.contains(e.target as Node)) setHits([]);
+      if (boxRef.current && !boxRef.current.contains(e.target as Node)) { setHits([]); setHoodHits([]); }
+      if (calcRef.current && !calcRef.current.contains(e.target as Node)) setCalcOpen(false);
     };
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  const go = (name: string) => {
+  /** Navigate to a picked result. `url` overrides the default city route —
+   *  hood/street rows land on a neighbourhood page, which a bare city name
+   *  cannot express. */
+  const go = (name: string, url?: string) => {
     const selected = hits.find((h) => h.name === name);
     if (selected && (selected.reason === "typo" || selected.reason === "alias")) {
       track("no_result_suggestion_click", { subject: q.trim(), detail: name });
@@ -83,8 +106,20 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
     trackSearchSelect(name, q);
     setQ("");
     setHits([]);
-    router.push(`/city/${encodeURIComponent(name)}`);
+    setHoodHits([]);
+    router.push(url ?? `/city/${encodeURIComponent(name)}`);
   };
+
+  /** cities first, hoods/streets after — ONE list for the arrow keys */
+  const allRows: Array<{ label: string; sub?: string; name: string; url?: string; reason?: string }> = [
+    ...hits.map((h) => ({ label: h.name, name: h.name, reason: h.reason as string })),
+    ...hoodHits.map((h) => ({
+      label: h.name,
+      sub: h.kind === "street" ? `רחוב בשכונת ${h.hood} · ${h.city}` : `שכונה ב${h.city}`,
+      name: `${h.city}/${h.hood}`,
+      url: h.url,
+    })),
+  ];
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -102,18 +137,70 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
           </span>
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop nav. whitespace-nowrap on every item is load-bearing: the
+            nav is the only flex child in this h-14 row willing to shrink, so
+            without it the two-word labels broke onto second lines at
+            in-between widths. */}
         <nav className="hidden items-center gap-1 md:flex" aria-label="ניווט ראשי">
-          {NAV_ITEMS.map((item) => (
+          {NAV_ITEMS.slice(0, 3).map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
+              className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
                 isActive(item.href)
                   ? "bg-indigo-50 text-indigo-700"
-                  : (item as { highlight?: boolean }).highlight
-                    ? "border border-indigo-200 bg-indigo-600/5 text-indigo-700 hover:bg-indigo-50"
-                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          {/* the tools popup. boxRef/mousedown dismissal (the search box's
+              pattern), NOT onBlur — onBlur closes on any focus move and
+              fights keyboard users. */}
+          <div ref={calcRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setCalcOpen((v) => !v)}
+              onKeyDown={(e) => { if (e.key === "Escape") setCalcOpen(false); }}
+              aria-expanded={calcOpen}
+              aria-haspopup="menu"
+              className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
+                CALC_ITEMS.some((c) => isActive(c.href))
+                  ? "bg-indigo-50 text-indigo-700"
+                  : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              }`}
+            >
+              מחשבונים ▾
+            </button>
+            {calcOpen && (
+              <div role="menu" className="absolute end-0 z-50 mt-1 w-40 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
+                {CALC_ITEMS.map((c) => (
+                  <Link
+                    key={c.href}
+                    role="menuitem"
+                    href={c.href}
+                    onClick={() => setCalcOpen(false)}
+                    className={`block whitespace-nowrap rounded-lg px-2.5 py-1.5 text-sm font-semibold ${
+                      isActive(c.href) ? "bg-indigo-50 text-indigo-700" : "text-slate-700 hover:bg-slate-50"
+                    }`}
+                  >
+                    {c.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {NAV_ITEMS.slice(3).map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
+                isActive(item.href)
+                  ? "bg-indigo-50 text-indigo-700"
+                  : "border border-indigo-200 bg-indigo-600/5 text-indigo-700 hover:bg-indigo-50"
               }`}
             >
               {item.label}
@@ -127,33 +214,37 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
             value={q}
             onChange={(e) => setQ(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "ArrowDown") { e.preventDefault(); setFocusIdx((i) => Math.min(i + 1, hits.length - 1)); }
+              if (e.key === "ArrowDown") { e.preventDefault(); setFocusIdx((i) => Math.min(i + 1, allRows.length - 1)); }
               else if (e.key === "ArrowUp") { e.preventDefault(); setFocusIdx((i) => Math.max(i - 1, 0)); }
-              else if (e.key === "Enter" && (focusIdx >= 0 ? hits[focusIdx] : hits[0])) go((focusIdx >= 0 ? hits[focusIdx] : hits[0]).name);
-              else if (e.key === "Escape") setHits([]);
+              else if (e.key === "Enter") {
+                const row = focusIdx >= 0 ? allRows[focusIdx] : allRows[0];
+                if (row) go(row.name, row.url);
+              }
+              else if (e.key === "Escape") { setHits([]); setHoodHits([]); }
             }}
-            placeholder="חיפוש עיר…"
-            aria-label="חיפוש עיר"
+            placeholder="חיפוש עיר או שכונה…"
+            aria-label="חיפוש עיר או שכונה"
             className="w-full rounded-xl border border-slate-200 bg-slate-50/80 px-3.5 py-1.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
           />
-          {q.trim() && hits.length === 0 && (
+          {q.trim() && allRows.length === 0 && (
             <div className="absolute top-full z-[100] mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-center shadow-xl">
-              <p className="text-sm font-bold text-slate-700">לא נמצאה עיר</p>
+              <p className="text-sm font-bold text-slate-700">לא נמצאה עיר, שכונה או רחוב</p>
               <p className="mt-1 text-xs leading-relaxed text-slate-500">נסו קרית/קריית, חלק מהשם, או כתיב קרוב.</p>
             </div>
           )}
-          {hits.length > 0 && (
+          {allRows.length > 0 && (
             <div className="absolute top-full z-[100] mt-1.5 w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
-              {hits.map((h, i) => (
+              {allRows.map((row, i) => (
                 <button
-                  key={h.name}
-                  onMouseDown={(e) => { e.preventDefault(); go(h.name); }}
+                  key={`${row.name}|${row.url ?? ""}`}
+                  onMouseDown={(e) => { e.preventDefault(); go(row.name, row.url); }}
                   className={`block w-full px-3.5 py-2 text-right text-sm font-medium ${
                     i === focusIdx ? "bg-indigo-50 text-indigo-700" : "text-slate-700 hover:bg-slate-50"
                   }`}
                 >
-                  <span>{h.name}</span>
-                  {(h.reason === "typo" || h.reason === "alias") && (
+                  <span>{row.label}</span>
+                  {row.sub && <span className="mr-1.5 text-2xs text-slate-400">{row.sub}</span>}
+                  {(row.reason === "typo" || row.reason === "alias") && (
                     <span className="float-left text-2xs font-bold text-indigo-500">הצעה</span>
                   )}
                 </button>
@@ -259,7 +350,33 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
             className="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-slate-100 bg-white px-4 py-2 shadow-lg md:hidden"
             aria-label="ניווט נייד"
           >
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEMS.slice(0, 3).map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`block rounded-lg px-3 py-3 text-sm font-semibold ${
+                  isActive(item.href) ? "bg-indigo-50 text-indigo-700" : "text-slate-700"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {/* the tools group, FLAT on mobile — a popup-inside-a-drawer is
+                two dismissal gestures for one tap. A small heading and an
+                indent say "these belong together" at zero interaction cost. */}
+            <p className="px-3 pt-2 text-2xs font-black uppercase tracking-wide text-slate-400">מחשבונים וכלים</p>
+            {CALC_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`block rounded-lg py-3 pe-3 ps-6 text-sm font-semibold ${
+                  isActive(item.href) ? "bg-indigo-50 text-indigo-700" : "text-slate-700"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {NAV_ITEMS.slice(3).map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

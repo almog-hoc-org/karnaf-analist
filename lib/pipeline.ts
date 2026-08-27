@@ -140,6 +140,13 @@ export const PIPELINE: PipelineStage[] = [
     timeoutMs: 30 * MINUTE,
   },
   {
+    id: "search-index",
+    script: "scripts/build-search-index.ts",
+    label: "אינדקס חיפוש שכונות ורחובות",
+    why: "Reads the aggregation's neighbourhood cells and the enriched street columns, so it must run after aggregate — it derives, never mutates, the market data.",
+    timeoutMs: 10 * MINUTE,
+  },
+  {
     id: "usage-rollup",
     script: "scripts/rollup-usage.ts",
     label: "צבירת נתוני שימוש",

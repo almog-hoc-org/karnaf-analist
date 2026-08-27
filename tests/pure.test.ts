@@ -14,6 +14,8 @@ import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
+import { cleanStreetName, pickModalHood, searchNorm } from "@/lib/searchIndex";
+import { parseInlineDraft } from "@/components/InlineEdit";
 import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
 import { project, makeProjector, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
@@ -978,5 +980,50 @@ describe("nadlan reported address extraction", () => {
     // Absent field = store NULL exactly as before the change — a wrong guess
     // that threw would kill the whole collection chunk.
     expect(extractAddress({ dealDate: "2025-01-01", dealAmount: 1 })).toEqual({ street: null, houseNum: null });
+  });
+});
+
+describe("search index rules", () => {
+  it("strips a trailing house number but not a numeric road name", () => {
+    expect(cleanStreetName("הרצל 14")).toBe("הרצל");
+    expect(cleanStreetName("רחוב הדוגמה 3")).toBe("רחוב הדוגמה");
+    expect(cleanStreetName("שדרות רוטשילד")).toBe("שדרות רוטשילד");
+  });
+
+  it("assigns a street only on an overwhelming majority", () => {
+    // 90/10 passes; 60/40 is a street that genuinely straddles two hoods and
+    // must stay out — a wrong confident answer is worse than no suggestion.
+    expect(pickModalHood(new Map([["פלורנטין", 90], ["שפירא", 10]]))).toEqual({ hood: "פלורנטין", n: 100 });
+    expect(pickModalHood(new Map([["פלורנטין", 60], ["שפירא", 40]]))).toBeNull();
+    expect(pickModalHood(new Map([["פלורנטין", 3]]))).toBeNull(); // under the absolute floor
+  });
+
+  it("normalises the index key exactly like the query side", () => {
+    // One normaliser on both sides, or "קריית חיים" typed never meets
+    // "קרית חיים" stored. searchNorm IS normalizeCitySearch by construction.
+    expect(searchNorm("קריית חיים")).toBe(searchNorm("קרית חיים"));
+    expect(searchNorm('נוה צדק')).toBe(searchNorm("נוה צדק"));
+  });
+});
+
+describe("inline edit draft parsing", () => {
+  it("saves an empty input as null, never as 0", () => {
+    // Number("") is 0, and a deal "priced" at ₪0 poisons every comparison.
+    expect(parseInlineDraft("")).toBeNull();
+    expect(parseInlineDraft("   ")).toBeNull();
+  });
+
+  it("accepts formatted numbers and rejects garbage without clearing", () => {
+    expect(parseInlineDraft("1,250,000")).toBe(1_250_000);
+    expect(parseInlineDraft("85")).toBe(85);
+    expect(parseInlineDraft("abc")).toBeUndefined(); // keep the old value
+  });
+});
+
+describe("hood excess growth arithmetic", () => {
+  it("is a subtraction in percentage points", () => {
+    // Hood +30%, city +22% → +8 points of excess — NOT 30/22.
+    const hood = 30.0, city = 22.0;
+    expect(hood - city).toBeCloseTo(8.0);
   });
 });

@@ -670,25 +670,39 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             />
           </div>
 
-          <div className="mt-3 glass-card p-4 flex items-center gap-3">
-            <span className="text-xl">
-              <Icon name={yad2Data.market_type === 'sellers' ? "flame" : yad2Data.market_type === 'buyers' ? "snow" : "scale"} size="1em" />
-            </span>
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-slate-800">
-                {yad2Data.market_type === 'sellers' ? 'שוק של מוכרים' : yad2Data.market_type === 'buyers' ? 'שוק של קונים' : 'שוק מאוזן'}
-              </p>
-              <p className="text-2xs text-slate-500">על בסיס יחס קונים-מוכרים וזמן חשיפה</p>
-            </div>
-            <Link
-              href="/stats/yad2-market-data"
-              className="md:hidden text-xs text-indigo-700 hover:text-indigo-900 font-semibold"
-            >
-              כל הערים ←
-            </Link>
-          </div>
+          {/* ONE market-status line (operator, 8/2026). This used to be TWO cards
+        reading the same market_type column — and they could contradict each
+        other: the first had no null guard, so a city with no measured market
+        type showed "שוק מאוזן" here and "—" one card below. Merged, and
+        null now says "—" — an unmeasured market is not a balanced one. */}
+    <div className="mt-3 glass-card p-4 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+      <span className="text-xl">
+        <Icon name={yad2Data.market_type === 'sellers' ? "flame" : yad2Data.market_type === 'buyers' ? "snow" : "scale"} size="1em" />
+      </span>
+      <p className="text-sm font-semibold text-slate-800">
+        {yad2Data.market_type === 'sellers' ? 'שוק של מוכרים'
+          : yad2Data.market_type === 'buyers' ? 'שוק של קונים'
+          : yad2Data.market_type ? 'שוק מאוזן' : '—'}
+      </p>
+      {yad2Data.compromise_index != null && (
+        <p className="text-sm tabular-nums text-slate-600">
+          · מדד התפשרות <b>{yad2Data.compromise_index >= 0 ? "+" : ""}{formatNumber(yad2Data.compromise_index, 1)}%</b>
+        </p>
+      )}
+      {yad2Data.avg_days_on_market != null && (
+        <p className="text-sm tabular-nums text-slate-600">
+          · <b>{formatNumber(yad2Data.avg_days_on_market, 0)}</b> ימים ממוצע בשוק
+        </p>
+      )}
+      <p className="basis-full text-2xs text-slate-500">
+        על בסיס יחס קונים-מוכרים וזמן חשיפה · חיובי/שוק-מוכרים = פחות התפשרות
+      </p>
+      <Link href="/stats/yad2-market-data" className="md:hidden text-xs text-indigo-700 hover:text-indigo-900 font-semibold">
+        כל הערים ←
+      </Link>
+    </div>
 
-          {/* Household data from yadata (more current than CBS 2022) */}
+    {/* Household data from yadata (more current than CBS 2022) */}
           {(yad2Data.households || yad2Data.avg_household_size) && (
             <div className="grid grid-cols-2 gap-3 mt-3">
               {yad2Data.households && (
@@ -708,33 +722,6 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             </div>
           )}
 
-          {/* מדד התפשרות — מוצמד לנתוני מצב-שוק יד-2 (Yad2), מוצג לכל עיר.
-              (כרטיס "מד השוק" הוסר לבקשת המשתמש.) */}
-          {yad2Data && (yad2Data.compromise_index != null || yad2Data.market_type || yad2Data.avg_days_on_market != null) ? (
-            <div className="mt-3">
-              <div className="rounded-2xl bg-indigo-50/40 border border-indigo-100 p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xs font-bold text-indigo-700 uppercase tracking-wide">
-                      מדד התפשרות — מצב שוק יד-2
-                    </p>
-                    <p className="text-2xl font-black tabular-nums text-slate-900 mt-1">
-                      {yad2Data.compromise_index != null
-                        ? `${yad2Data.compromise_index >= 0 ? "+" : ""}${formatNumber(yad2Data.compromise_index, 1)}%`
-                        : yad2Data.market_type === "sellers" ? "שוק מוכרים"
-                        : yad2Data.market_type === "buyers" ? "שוק קונים"
-                        : yad2Data.market_type ? "שוק מאוזן" : "—"}
-                    </p>
-                  </div>
-                  <span className="text-2xl"><Icon name="trend-down" size="1em" /></span>
-                </div>
-                <p className="text-2xs text-slate-500 mt-1">
-                  {yad2Data.avg_days_on_market != null ? `${formatNumber(yad2Data.avg_days_on_market, 0)} ימים ממוצע בשוק · ` : ""}
-                  מבוסס על נתוני מצב-שוק יד-2 (Yad2) — חיובי/שוק-מוכרים = פחות התפשרות
-                </p>
-              </div>
-            </div>
-          ) : null}
         </section>
       )}
 

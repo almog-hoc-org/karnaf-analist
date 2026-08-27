@@ -29,6 +29,7 @@ export interface HoodTrendPoint {
   sqm: number | null;
   medianSqm: number | null;
   medianPrice: number | null;
+  avgPrice: number | null;
   n: number;
 }
 
@@ -48,6 +49,11 @@ export interface HoodPageData {
   fromYear: number | null;
   /** the city's own level in refYear, from the same cells */
   citySqm: number | null;
+  /** the CITY's ₪/m² change over the same window — the baseline the hood's
+   *  changePct is judged against. From the same neighbourhood cells (weighted
+   *  by n), never from the city stats table, which counts deals with no
+   *  neighbourhood at all. */
+  cityChangePct: number | null;
   /** 1-based position by ₪/m² among the city's priced neighbourhoods, and the total */
   rank: number | null;
   rankOf: number;
@@ -113,6 +119,20 @@ export async function loadHoodPage(
   const changePct =
     at?.sqm && base?.sqm && base.sqm > 0 ? (at.sqm / base.sqm - 1) * 100 : null;
 
+  // The city's change over the SAME window, from the SAME cells: the weighted
+  // city level at refYear and at refYear-span. The excess-growth figure the
+  // page shows is hood-change minus this — two numbers from one population.
+  const cityLevel = (year: number | null): number | null => {
+    if (year == null) return null;
+    const ys = cells.filter((c) => c.year === year && c.sqm != null && c.sqm > 0);
+    const totalN = ys.reduce((t, c) => t + c.n, 0);
+    return totalN > 0 ? ys.reduce((t, c) => t + c.sqm! * c.n, 0) / totalN : null;
+  };
+  const cityAt = cityLevel(refYear);
+  const cityBase = cityLevel(refYear == null ? null : refYear - span);
+  const cityChangePct =
+    cityAt && cityBase && cityBase > 0 ? (cityAt / cityBase - 1) * 100 : null;
+
   const rankedRows = summary.rows.map((r) => ({ neighborhood: r.neighborhood, sqm: r.sqm }));
 
   return {
@@ -122,7 +142,7 @@ export async function loadHoodPage(
       cityName,
       scope,
       trend: mine.map((c) => ({
-        year: c.year, sqm: c.sqm, medianSqm: c.medianSqm, medianPrice: c.medianPrice, n: c.n,
+        year: c.year, sqm: c.sqm, medianSqm: c.medianSqm, medianPrice: c.medianPrice, avgPrice: c.avgPrice, n: c.n,
       })),
       refYear,
       sqm: at?.sqm ?? null,
@@ -131,11 +151,40 @@ export async function loadHoodPage(
       changePct,
       fromYear: base ? base.year : null,
       citySqm: summary.citySqm,
+      cityChangePct,
       rank: hoodRank(canonical, rankedRows),
       rankOf: rankedRows.length,
       siblings: summary.rows.map((r) => r.neighborhood).filter((n) => n !== canonical),
     },
   };
+}
+
+export type HoodBucket = "all" | "3" | "4" | "5";
+export type HoodScope = "secondhand" | "all";
+
+/** scope → bucket → year-ascending points. ~80 points worst case — shipped
+ *  whole so every filter flip on the page is client-side, zero requests. */
+export type HoodSeries = Record<HoodScope, Record<HoodBucket, HoodTrendPoint[]>>;
+
+export async function loadHoodSeries(cityName: string, hood: string): Promise<HoodSeries> {
+  const scopes: HoodScope[] = ["secondhand", "all"];
+  const buckets: HoodBucket[] = ["all", "3", "4", "5"];
+  const out = { secondhand: {}, all: {} } as HoodSeries;
+  await Promise.all(
+    scopes.flatMap((sc) =>
+      buckets.map(async (b) => {
+        const cells = await loadNeighborhoodCells(cityName, sc, b);
+        out[sc][b] = cells
+          .filter((c) => c.neighborhood === hood)
+          .sort((a, b2) => a.year - b2.year)
+          .map((c) => ({
+            year: c.year, sqm: c.sqm, medianSqm: c.medianSqm,
+            medianPrice: c.medianPrice, avgPrice: c.avgPrice, n: c.n,
+          }));
+      })
+    )
+  );
+  return out;
 }
 
 /** How many deals the server renders before "הצג עוד" takes over. */

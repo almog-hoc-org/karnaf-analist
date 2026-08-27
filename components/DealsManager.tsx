@@ -8,18 +8,31 @@ import { addressGranularity, rowAddress } from "@/lib/compTypes";
 import type { TrackedCitySummary } from "@/app/deals/page";
 import TrendValue, { fmtSignedPct } from "@/components/TrendValue";
 import { addTrackedCity, removeTrackedCity, addDeal, updateDeal, deleteDeal, addTask, toggleTask, deleteTask } from "@/app/deals/actions";
+import InlineEdit from "@/components/InlineEdit";
 import Icon from "@/components/Icon";
 
 /** Personal deal tracker — the client-facing "apartment hunt" workspace. */
 
+// Text only, no emoji (operator, 8/2026) — the icons rode inside the label
+// strings, so removing them here cleans the filter and both selects at once.
 const STATUSES = [
-  { key: "seen", label: "👀 ראיתי" },
-  { key: "contacted", label: "📞 יצרתי קשר" },
-  { key: "negotiating", label: "🤝 במו״מ" },
-  { key: "offer", label: "📄 הגשתי הצעה" },
-  { key: "closed", label: "✅ נסגר" },
-  { key: "dropped", label: "❌ ירד מהפרק" },
+  { key: "seen", label: "ראיתי" },
+  { key: "contacted", label: "יצרתי קשר" },
+  { key: "negotiating", label: "במו״מ" },
+  { key: "offer", label: "הגשתי הצעה" },
+  { key: "closed", label: "נסגר" },
+  { key: "dropped", label: "ירד מהפרק" },
 ] as const;
+
+/**
+ * One blue per city (operator, 8/2026): the group header and every row's side
+ * bar carry it, so two cities' deals never read as one comparable list. The
+ * hues are the site's petrol/sky family, ordered so neighbours differ; a
+ * seventh city wraps around — by then the bars separate groups, not identify
+ * them.
+ */
+const CITY_HUES = ["#0e7490", "#1d4ed8", "#0891b2", "#3730a3", "#0369a1", "#155e75"];
+const cityHue = (i: number) => CITY_HUES[i % CITY_HUES.length];
 type SortKey = "updated" | "city" | "price" | "sqm" | "delta";
 
 /** Client-side label for what the comparison matched (mirrors lib/streetComps). */
@@ -260,11 +273,12 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
               )}
             </div>
           )}
-          {dealGroups.map((g) => (
+          {dealGroups.map((g, gi) => (
             <div key={g.city ?? "__all__"} className="space-y-3">
               {g.city && (
                 <div className="flex items-center gap-2 pt-1">
-                  <span className="text-sm font-black text-slate-900">{g.city}</span>
+                  <span className="h-3.5 w-1.5 rounded-full" style={{ backgroundColor: cityHue(gi) }} />
+                  <span className="text-sm font-black" style={{ color: cityHue(gi) }}>{g.city}</span>
                   <span className="text-2xs text-slate-400">({g.deals.length}) · הפער נמדד מול השוק של {g.city}</span>
                 </div>
               )}
@@ -275,7 +289,14 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
             const open = openRow === d.id;
             const openTasks = d.tasks.filter((t) => !t.done).length;
             return (
-              <div key={d.id} className={`glass-card p-4 ${open ? "ring-1 ring-indigo-200" : ""}`}>
+              /* the whole card toggles the detail — every interactive child
+                 inside stops propagation (operator, 8/2026) */
+              <div
+                key={d.id}
+                onClick={() => setOpenRow(open ? null : d.id)}
+                className={`glass-card cursor-pointer p-4 ${open ? "ring-1 ring-indigo-200" : ""}`}
+                style={g.city ? { borderInlineStart: `3px solid ${cityHue(gi)}` } : undefined}
+              >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <div className="font-black text-slate-900">{d.city}</div>
@@ -283,7 +304,7 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                       {[d.street && `${d.street} ${d.house_num ?? ""}`.trim(), d.neighborhood].filter(Boolean).join(" · ") || "—"}
                     </div>
                   </div>
-                  <button onClick={() => { if (confirm(`למחוק את העסקה ב${d.city}?`)) startTransition(() => deleteDeal(d.id)); }}
+                  <button onClick={(e) => { e.stopPropagation(); if (confirm(`למחוק את העסקה ב${d.city}?`)) startTransition(() => deleteDeal(d.id)); }}
                     className="flex-shrink-0 text-slate-300 hover:text-red-500"><Icon name="trash" size="1em" /></button>
                 </div>
 
@@ -306,7 +327,7 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                 </div>
 
                 {comp?.medianSqm ? (
-                  <button onClick={() => setOpenRow(open ? null : d.id)} className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-right">
+                  <button onClick={(e) => { e.stopPropagation(); setOpenRow(open ? null : d.id); }} className="mt-2 block w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-right">
                     <span dir="ltr" className={`font-black tabular-nums ${dl == null ? "text-slate-400" : dl > 3 ? "text-red-600" : dl < -3 ? "text-emerald-700" : "text-slate-700"}`}>
                       {dl != null ? fmtSignedPct(dl) : "—"}
                     </span>
@@ -319,21 +340,23 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                 )}
 
                 <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <select value={d.status} onChange={(e) => startTransition(() => updateDeal(d.id, { status: e.target.value }))}
+                  <select value={d.status} onClick={(e) => e.stopPropagation()} onChange={(e) => startTransition(() => updateDeal(d.id, { status: e.target.value }))}
                     className="rounded-lg border border-slate-200 bg-white px-1.5 py-1 text-2xs font-bold">
                     {STATUSES.map((st) => <option key={st.key} value={st.key}>{st.label}</option>)}
                   </select>
-                  <button onClick={() => setOpenRow(open ? null : d.id)}
+                  <button onClick={(e) => { e.stopPropagation(); setOpenRow(open ? null : d.id); }}
                     className={`rounded-full px-2.5 py-1 text-2xs font-bold ${openTasks > 0 ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-500"}`}>
                     {openTasks > 0 ? `${openTasks} משימות פתוחות` : "משימות"} {open ? "▴" : "▾"}
                   </button>
                   {d.listing_url && (
-                    <a href={d.listing_url} target="_blank" rel="noopener noreferrer" className="mr-auto text-indigo-600 hover:text-indigo-800"><Icon name="link" size="1em" /></a>
+                    <a href={d.listing_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="mr-auto text-indigo-600 hover:text-indigo-800"><Icon name="link" size="1em" /></a>
                   )}
                 </div>
 
                 {open && (
-                  <div className="mt-3 border-t border-slate-100 pt-3">
+                  /* clicks inside the detail (notes, tasks, inputs) must not
+                     bubble to the card's own toggle and slam it shut */
+                  <div className="mt-3 border-t border-slate-100 pt-3" onClick={(e) => e.stopPropagation()}>
                     <DealDetail deal={d} comp={comp} askSqm={s} modernMinYear={modernMinYear} />
                   </div>
                 )}
@@ -374,12 +397,12 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                   )}
                 </td></tr>
               )}
-              {dealGroups.map((g) => (
+              {dealGroups.map((g, gi) => (
                 <FragmentRow key={g.city ?? "__all__"}>
                   {g.city && (
                     <tr className="bg-slate-50/80">
-                      <td colSpan={12} className="px-3 py-1.5 text-right">
-                        <span className="text-xs font-black text-slate-900">{g.city}</span>
+                      <td colSpan={12} className="px-3 py-1.5 text-right" style={{ borderInlineStart: `3px solid ${cityHue(gi)}` }}>
+                        <span className="text-xs font-black" style={{ color: cityHue(gi) }}>{g.city}</span>
                         <span className="mr-2 text-2xs text-slate-400">({g.deals.length}) · הפער נמדד מול השוק של {g.city}</span>
                       </td>
                     </tr>
@@ -392,16 +415,31 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                 const openTasks = d.tasks.filter((t) => !t.done).length;
                 return (
                   <FragmentRow key={d.id}>
-                    <tr className={`border-b border-slate-100 transition-colors hover:bg-indigo-50/40 ${open ? "bg-indigo-50/60" : ""}`}>
-                      <td className="px-3 py-2.5">
+                    {/* the whole row toggles the detail (operator, 8/2026) —
+                        rows with no comparison data had no way in at all.
+                        Every interactive cell stops propagation. */}
+                    <tr
+                      onClick={() => setOpenRow(open ? null : d.id)}
+                      className={`cursor-pointer border-b border-slate-100 transition-colors hover:bg-indigo-50/40 ${open ? "bg-indigo-50/60" : ""}`}
+                    >
+                      <td className="px-3 py-2.5" style={g.city ? { borderInlineStart: `3px solid ${cityHue(gi)}` } : undefined}>
                         <div className="font-bold text-slate-900">{d.city}</div>
                         <div className="text-2xs text-slate-500">
                           {[d.street && `${d.street} ${d.house_num ?? ""}`.trim(), d.neighborhood].filter(Boolean).join(" · ") || "—"}
                         </div>
                       </td>
-                      <td className="px-3 py-2.5 text-center tabular-nums">{d.size ? `${d.size} מ״ר` : "—"}</td>
-                      <td className="px-3 py-2.5 text-center tabular-nums">{d.rooms ?? "—"}</td>
-                      <td className="px-3 py-2.5 text-center tabular-nums">{d.floor ?? "—"}</td>
+                      <td className="px-3 py-2.5 text-center tabular-nums">
+                        <InlineEdit value={d.size} fmt={(v) => `${v} מ״ר`} suffix="מ״ר"
+                          onSave={(v) => startTransition(() => updateDeal(d.id, { size: v }))} />
+                      </td>
+                      <td className="px-3 py-2.5 text-center tabular-nums">
+                        <InlineEdit value={d.rooms} fmt={(v) => String(v)} suffix="חד׳"
+                          onSave={(v) => startTransition(() => updateDeal(d.id, { rooms: v }))} />
+                      </td>
+                      <td className="px-3 py-2.5 text-center tabular-nums">
+                        <InlineEdit value={d.floor} fmt={(v) => String(v)} suffix="קומה"
+                          onSave={(v) => startTransition(() => updateDeal(d.id, { floor: v }))} />
+                      </td>
                       <td className="px-3 py-2.5 text-center text-2xs tabular-nums text-slate-600" title="מרפסת · חניות · מחסן">
                         {[
                           d.balcony_sqm ? `🌤️${d.balcony_sqm}` : null,
@@ -410,14 +448,15 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                         ].filter(Boolean).join(" ") || <span className="text-slate-300">—</span>}
                       </td>
                       <td className="px-3 py-2.5 text-center font-bold tabular-nums text-slate-900">
-                        {d.price ? `₪${d.price.toLocaleString("he-IL")}` : "—"}
+                        <InlineEdit value={d.price} fmt={(v) => `₪${v.toLocaleString("he-IL")}`} suffix="₪"
+                          onSave={(v) => startTransition(() => updateDeal(d.id, { price: v }))} />
                       </td>
                       <td className="px-3 py-2.5 text-center font-bold tabular-nums text-indigo-700">
                         {s ? `₪${Math.round(s).toLocaleString("he-IL")}` : "—"}
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         {comp?.medianSqm ? (
-                          <button onClick={() => setOpenRow(open ? null : d.id)} className="group text-right" title="לחץ להשוואה מפורטת">
+                          <button onClick={(e) => { e.stopPropagation(); setOpenRow(open ? null : d.id); }} className="group text-right" title="לחץ להשוואה מפורטת">
                             <span dir="ltr" className={`font-black tabular-nums ${dl == null ? "text-slate-400" : dl > 3 ? "text-red-600" : dl < -3 ? "text-emerald-700" : "text-slate-700"}`}>
                               {dl != null ? fmtSignedPct(dl) : "—"}
                             </span>
@@ -428,24 +467,24 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                         ) : <span className="text-slate-300">אין דאטה</span>}
                       </td>
                       <td className="px-3 py-2.5 text-center">
-                        <select value={d.status} onChange={(e) => startTransition(() => updateDeal(d.id, { status: e.target.value }))}
+                        <select value={d.status} onClick={(e) => e.stopPropagation()} onChange={(e) => startTransition(() => updateDeal(d.id, { status: e.target.value }))}
                           className="rounded-lg border border-slate-200 bg-white px-1.5 py-1 text-2xs font-bold">
                           {STATUSES.map((st) => <option key={st.key} value={st.key}>{st.label}</option>)}
                         </select>
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         {d.listing_url ? (
-                          <a href={d.listing_url} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800" title={d.listing_url}><Icon name="link" size="1em" /></a>
+                          <a href={d.listing_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-indigo-600 hover:text-indigo-800" title={d.listing_url}><Icon name="link" size="1em" /></a>
                         ) : <span className="text-slate-200">—</span>}
                       </td>
                       <td className="px-3 py-2.5 text-center">
-                        <button onClick={() => setOpenRow(open ? null : d.id)}
+                        <button onClick={(e) => { e.stopPropagation(); setOpenRow(open ? null : d.id); }}
                           className={`rounded-full px-2 py-0.5 text-2xs font-bold ${openTasks > 0 ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-500"}`}>
                           {openTasks > 0 ? `${openTasks} פתוחות` : "משימות"} ▾
                         </button>
                       </td>
                       <td className="px-3 py-2.5 text-center">
-                        <button onClick={() => { if (confirm(`למחוק את העסקה ב${d.city}?`)) startTransition(() => deleteDeal(d.id)); }}
+                        <button onClick={(e) => { e.stopPropagation(); if (confirm(`למחוק את העסקה ב${d.city}?`)) startTransition(() => deleteDeal(d.id)); }}
                           className="text-slate-300 hover:text-red-500"><Icon name="trash" size="1em" /></button>
                       </td>
                     </tr>

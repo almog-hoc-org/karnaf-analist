@@ -210,7 +210,17 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const toggleSeries = (key: string) =>
     setSelected((cur) => cur.includes(key) ? cur.filter((k) => k !== key) : cur.length >= 4 ? cur : [...cur, key]);
 
-  const activeDefs = seriesDefs.filter((s) => selected.includes(s.key) && !(s.key === "official" && metric === "sqm"));
+  /* MOBILE: median and average only (operator, 8/2026). Four lines on a
+     340px chart is a tangle; the mix-adjusted and official series stay
+     laptop-only. The chip list AND the drawn lines shrink together, and if
+     the user's laptop selection holds neither of the two, median steps in —
+     an empty chart is never the answer. */
+  const MOBILE_KEYS = ["med", "avg"];
+  const chipDefs = mobile ? seriesDefs.filter((s) => MOBILE_KEYS.includes(s.key)) : seriesDefs;
+  const effectiveSelected = mobile
+    ? (selected.filter((k) => MOBILE_KEYS.includes(k)).length ? selected.filter((k) => MOBILE_KEYS.includes(k)) : ["med"])
+    : selected;
+  const activeDefs = seriesDefs.filter((s) => effectiveSelected.includes(s.key) && !(s.key === "official" && metric === "sqm"));
   const years = useMemo(() => allYears.filter((y) => y >= from && y <= to), [allYears, from, to]);
 
   // overlay rows: { year, [key]: value }
@@ -444,10 +454,10 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
         </div>
       )}
 
-      {/* control bar — sticky on desktop only: at phone width the full bar is
-          taller than the viewport and STICKING it buried the chart it controls
-          (user: "חפיפה ודריסה"). On mobile it lays out as tidy stacked rows. */}
-      <div className="z-20 mb-4 rounded-2xl border border-indigo-100 bg-indigo-50/90 p-3 shadow-sm backdrop-blur-sm md:sticky md:top-16">
+      {/* control bar — NOT sticky, at any width (operator, 8/2026). It was
+          desktop-sticky once, and the full bar's height meant a third of the
+          viewport rode along over the chart it controls. It scrolls. */}
+      <div className="mb-4 rounded-2xl border border-indigo-100 bg-indigo-50/90 p-3 shadow-sm">
         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:gap-y-2">
           {/* row 1 (mobile): metric — two equal buttons */}
           <div className="grid grid-cols-2 rounded-lg border border-slate-200 bg-white p-0.5 text-xs font-bold sm:inline-flex">
@@ -479,8 +489,12 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
 
         {/* hierarchy (right) + change-in-range summary (LEFT, per user spec);
             mobile: stacked labeled rows, the trend box drops to a full row at the end */}
-        <div className="mt-1.5 flex flex-col gap-1.5 border-t border-indigo-100 pt-1.5 sm:mt-2.5 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-x-6 sm:gap-y-2 sm:pt-2.5">
-          <div className="min-w-0 space-y-1">
+        <div className="mt-1.5 flex flex-col gap-1.5 border-t border-indigo-100 pt-1.5 sm:mt-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6 sm:gap-y-2 sm:pt-2.5">
+          {/* ONE ROW on laptop (operator, 8/2026): the three filter groups —
+              deal type, building, rooms — sit inline with divider bars instead
+              of stacking three label rows. Mobile keeps the stacked rows: at
+              343px the inline form is a horizontal scroll, not a saving. */}
+          <div className="min-w-0 space-y-1 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 sm:space-y-0">
             {/* flex-nowrap + compact pills: these three rows are the ones the
                 screenshot marks. At 375px the phone offers ~343px of row, and
                 a "min-w-16" label plus px-3 py-1.5 pills needed ~390-400px —
@@ -500,7 +514,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               })}
             </div>
             {dealType === "sh" && (
-              <div className="flex flex-nowrap items-center gap-1">
+              <div className="flex flex-nowrap items-center gap-1 sm:border-s sm:border-indigo-100 sm:ps-3">
                 <span className="shrink-0 text-2xs font-bold text-slate-500">בניין:</span>
                 {/* The build years moved into the tooltip. "מודרני (2005+)" and
                     "ישן (לפני 2005)" are ~110px of chip each, and with the label
@@ -510,7 +524,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                 ))}
               </div>
             )}
-            <div className="flex flex-nowrap items-center gap-1">
+            <div className="flex flex-nowrap items-center gap-1 sm:border-s sm:border-indigo-100 sm:ps-3">
               <span className="shrink-0 text-2xs font-bold text-slate-500">חדרים:</span>
               {ROOM_CHIPS.map((c) => (
                 <button key={c.key} onClick={() => setRoom(c.key)} className={`control-pill shrink-0 whitespace-nowrap px-2 py-1 text-2xs sm:px-3 sm:py-1.5 sm:text-xs ${room === c.key ? "control-pill-active" : ""}`}>{c.label}</button>
@@ -519,7 +533,11 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           </div>
           {/* change-in-range — desktop: NEXT TO the filters at the left edge (RTL end);
               mobile: its own full-width row so it never squeezes the pill rows */}
-          <aside className="w-full rounded-xl border border-indigo-100 bg-white/80 px-3 py-1.5 text-center sm:w-auto sm:shrink-0">
+          {/* LAPTOP: three times the height, the % is the hero (operator,
+              8/2026) — a min-height of 8.5rem vs the old ~2.75rem line, the
+              content vertically centered, and the TrendValue jumps to
+              !text-3xl. Mobile keeps the compact one-line form. */}
+          <aside className="flex w-full flex-col justify-center rounded-xl border border-indigo-100 bg-white/80 px-3 py-1.5 text-center sm:min-h-[8.5rem] sm:w-auto sm:min-w-[13rem] sm:shrink-0 sm:px-5 sm:py-3">
             {/* ONE line per series, and no separate title row. The box used to
                 open with "שינוי <years>" and a second line naming the basis
                 ("יד שנייה · ₪ למ״ר") before any number appeared, then listed
@@ -529,15 +547,17 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                 in the chart, read against the raw series — is not in the
                 one-number summary at all. */}
             {trendRows.map((tr) => (
-              <div key={tr.def.key} className="flex flex-wrap items-center justify-center gap-x-1.5 leading-tight">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: tr.def.color }} />
-                <span className="text-2xs font-bold text-slate-500">{tr.def.short}</span>
-                <TrendValue pct={tr.pct!} className="!text-base !font-black" />
+              <div key={tr.def.key} className="flex flex-wrap items-center justify-center gap-x-1.5 leading-tight sm:flex-col sm:gap-y-0.5">
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: tr.def.color }} />
+                  <span className="text-2xs font-bold text-slate-500">{tr.def.short}</span>
+                  <InfoTip
+                    label="על מה מחושב השינוי"
+                    text={`${dealType === "sh" ? "יד שנייה" : dealType === "new" ? "דירות חדשות" : "כל העסקאות"} · ${metric === "sqm" ? "₪ למ״ר" : "מחיר עסקה"}${room !== "all" ? ` · ${room} חד׳` : ""} · החלון נגמר בשנה המלאה האחרונה`}
+                  />
+                </span>
+                <TrendValue pct={tr.pct!} className="!text-base !font-black sm:!text-3xl" />
                 <span className="text-2xs text-slate-400"><YearRange from={from} to={Math.min(to, maxFullY)} /></span>
-                <InfoTip
-                  label="על מה מחושב השינוי"
-                  text={`${dealType === "sh" ? "יד שנייה" : dealType === "new" ? "דירות חדשות" : "כל העסקאות"} · ${metric === "sqm" ? "₪ למ״ר" : "מחיר עסקה"}${room !== "all" ? ` · ${room} חד׳` : ""} · החלון נגמר בשנה המלאה האחרונה`}
-                />
               </div>
             ))}
             {trendRows.length === 0 && (
@@ -565,8 +585,8 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
         {/* series — derived from the hierarchy choice above */}
         <div className="mt-2.5 flex flex-wrap items-center gap-1.5 border-t border-indigo-100 pt-2.5">
           <span className="text-2xs font-bold text-slate-500">סדרות:</span>
-          {seriesDefs.map((s) => {
-            const on = selected.includes(s.key);
+          {chipDefs.map((s) => {
+            const on = effectiveSelected.includes(s.key);
             const disabled = s.key === "official" && metric === "sqm";
             return (
               <button key={s.key} onClick={() => !disabled && toggleSeries(s.key)}
@@ -613,15 +633,23 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               </ComposedChart>
             </ResponsiveContainer>
           )}
-          <div className="mt-2 text-2xs leading-relaxed text-slate-500">
-            שנה עם פחות מ-{minSample} עסקאות לא מוצגת — הקו נשבר שם, לא מגושר · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה) · {room !== "all" ? "פילוח גודל חל על סדרות המאגר בלבד · " : ""}גרירת הטווח בסרגל למעלה
-            {latestYearInRange && partialSet.has(maxY) && latestYearHasVisibleData && (
-              endIsPartial && maxFullY === maxY
-                ? <> · {maxY} היא שנה חלקית ({endMonths} חודשים שנקלטו עד כה) ומשמשת כנקודת הסיום — מחיר למ״ר הוא שיעור ולא סכום, ולכן ההשוואה תקפה</>
-                : <> · {maxY} מוצגת בגרף כשנה חלקית, ואחוזי השינוי מחושבים עד {maxFullY}</>
-            )}
-            {latestYearInRange && partialSet.has(maxY) && !latestYearHasVisibleData && <> · ב-{maxY} אין מספיק עסקאות לבחירה הנוכחית, ולכן אין נקודה בסדרה</>}
+          {/* Routine legend — LAPTOP ONLY (operator, 8/2026): under the chart
+              on a phone this was a paragraph of small print. The partial-year
+              warning below stays on both — it changes how the numbers read.
+              (The old "גרירת הטווח בסרגל למעלה" line is gone everywhere: there
+              is no drag bar, only the year selects — stale copy.) */}
+          <div className="mt-2 hidden text-2xs leading-relaxed text-slate-500 sm:block">
+            שנה עם פחות מ-{minSample} עסקאות לא מוצגת — הקו נשבר שם, לא מגושר · <Icon name="source-own" size="1em" /> סדרות המאגר העצמאי · <Icon name="source-official" size="1em" /> חציון רשמי (קו מקווקו, ₪ עסקה){room !== "all" ? " · פילוח גודל חל על סדרות המאגר בלבד" : ""}
           </div>
+          {latestYearInRange && partialSet.has(maxY) && (
+            <p className="mt-2 text-2xs leading-relaxed text-amber-700">
+              {latestYearHasVisibleData
+                ? (endIsPartial && maxFullY === maxY
+                    ? `${maxY} היא שנה חלקית (${endMonths} חודשים שנקלטו עד כה) ומשמשת כנקודת הסיום`
+                    : `${maxY} מוצגת כשנה חלקית — אחוזי השינוי מחושבים עד ${maxFullY}`)
+                : `ב-${maxY} אין מספיק עסקאות לבחירה הנוכחית, ולכן אין נקודה בסדרה`}
+            </p>
+          )}
         </div>
       ) : (
         <div className="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -682,7 +710,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
             <DealsDrawer deals={drawerDeals} accent="indigo" total={shownTotal} onLoadMore={loadMore} loadingMore={loadingMore} />
           </div>
         )}
-        <div className="mt-2 text-2xs text-slate-500">
+        <div className="mt-2 hidden text-2xs text-slate-500 sm:block">
           <Icon name="source-own" size="1em" /> העסקאות מאחורי הגרף · מסונן לפי {DT_LABEL[dealType]}{dealType === "sh" && buildingAge !== "all" ? ` · בניין ${buildingAge === "modern" ? "מודרני" : "ישן"}` : ""} · {room === "all" ? "כל הגדלים" : `${room} חד׳`} · {activeDealsYear === 0 ? `${from}–${to}` : `שנת ${activeDealsYear}`}
         </div>
       </div>

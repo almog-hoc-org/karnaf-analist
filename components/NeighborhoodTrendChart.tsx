@@ -20,7 +20,11 @@ import type { HoodTrendPoint } from "@/lib/neighborhoodPage";
  * map quotes, the median is what one penthouse cannot move. When the two
  * diverge, that gap IS the finding, and hiding either would hide it.
  */
-export default function NeighborhoodTrendChart({ trend }: { trend: HoodTrendPoint[] }) {
+export default function NeighborhoodTrendChart({ trend, metric = "sqm" }: {
+  trend: HoodTrendPoint[];
+  /** which axis: ₪/m² (avg+median per m²) or the whole-deal price */
+  metric?: "sqm" | "price";
+}) {
   const mobile = useIsMobile();
   if (!trend.length) return null;
 
@@ -30,10 +34,13 @@ export default function NeighborhoodTrendChart({ trend }: { trend: HoodTrendPoin
   const data = Array.from({ length: max - min + 1 }, (_, i) => {
     const y = min + i;
     const t = byYear.get(y);
-    return { year: y, sqm: t?.sqm ?? null, medianSqm: t?.medianSqm ?? null, n: t?.n ?? null };
+    return metric === "sqm"
+      ? { year: y, avgLine: t?.sqm ?? null, medLine: t?.medianSqm ?? null, n: t?.n ?? null }
+      : { year: y, avgLine: t?.avgPrice ?? null, medLine: t?.medianPrice ?? null, n: t?.n ?? null };
   });
 
   const fmt = (v: number) => `₪${Math.round(v).toLocaleString("he-IL")}`;
+  const unit = metric === "sqm" ? '₪/מ"ר' : "₪ עסקה";
 
   return (
     <div className="w-full" dir="ltr">
@@ -43,7 +50,7 @@ export default function NeighborhoodTrendChart({ trend }: { trend: HoodTrendPoin
           <YAxis
             yAxisId="price"
             tick={{ fill: AXIS, fontSize: 11 }} axisLine={false} tickLine={false} width={48}
-            tickFormatter={(v: number) => `${Math.round(v / 1000)}K`}
+            tickFormatter={(v: number) => (metric === "sqm" ? `${Math.round(v / 1000)}K` : `${(v / 1_000_000).toFixed(1)}M`)}
             domain={["auto", "auto"]}
           />
           <YAxis yAxisId="n" orientation="right" hide domain={[0, (m: number) => m * 3]} />
@@ -53,18 +60,18 @@ export default function NeighborhoodTrendChart({ trend }: { trend: HoodTrendPoin
             formatter={tipFmt((value, name) =>
               name === "n"
                 ? [`${Math.round(value).toLocaleString("he-IL")}`, "עסקאות"]
-                : [fmt(value), name === "sqm" ? 'ממוצע ₪/מ"ר' : 'חציון ₪/מ"ר']
+                : [fmt(value), name === "avgLine" ? `ממוצע ${unit}` : `חציון ${unit}`]
             )}
           />
           <Legend
             formatter={(v: string) =>
-              v === "sqm" ? 'ממוצע ₪/מ"ר' : v === "medianSqm" ? 'חציון ₪/מ"ר' : "עסקאות"
+              v === "avgLine" ? `ממוצע ${unit}` : v === "medLine" ? `חציון ${unit}` : "עסקאות"
             }
             wrapperStyle={{ fontSize: 12 }}
           />
           <Bar yAxisId="n" dataKey="n" fill={GRID} radius={[3, 3, 0, 0]} maxBarSize={26} />
-          <Line yAxisId="price" dataKey="sqm" stroke={BRAND} strokeWidth={2.5} dot={{ r: 3 }} connectNulls={false} />
-          <Line yAxisId="price" dataKey="medianSqm" stroke={INK} strokeWidth={1.5} strokeDasharray="5 4" dot={false} connectNulls={false} />
+          <Line yAxisId="price" dataKey="avgLine" stroke={BRAND} strokeWidth={2.5} dot={{ r: 3 }} connectNulls={false} />
+          <Line yAxisId="price" dataKey="medLine" stroke={INK} strokeWidth={1.5} strokeDasharray="5 4" dot={false} connectNulls={false} />
         </ComposedChart>
       </ResponsiveContainer>
     </div>

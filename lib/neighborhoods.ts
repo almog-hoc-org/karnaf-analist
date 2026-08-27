@@ -27,6 +27,7 @@ export interface NeighborhoodCell {
   sqm: number | null;
   medianSqm: number | null;
   medianPrice: number | null;
+  avgPrice: number | null;
   n: number;
 }
 
@@ -43,19 +44,23 @@ export interface NeighborhoodSummary {
 
 async function loadCellsUncached(
   cityName: string,
-  scope: "all" | "secondhand"
+  scope: "all" | "secondhand",
+  roomBucket: "all" | "3" | "4" | "5" = "all"
 ): Promise<NeighborhoodCell[]> {
   try {
     const rows = await prisma.$queryRawUnsafe<Array<{
       neighborhood: string; year: number; avg_sqm: number | null;
-      median_sqm: number | null; median_price: number | null; n: number;
+      median_sqm: number | null; median_price: number | null; avg_price: number | null; n: number;
     }>>(
-      `SELECT neighborhood, year, avg_sqm, median_sqm, median_price, n
+      // avg_price is selected since 8/2026: the neighbourhood page's price-mode
+      // toggle reads it. It was always written by the aggregation and never read.
+      `SELECT neighborhood, year, avg_sqm, median_sqm, median_price, avg_price, n
          FROM neighborhood_year_stats
-        WHERE city_name = ? AND scope = ? AND room_bucket = 'all'
+        WHERE city_name = ? AND scope = ? AND room_bucket = ?
         ORDER BY neighborhood, year`,
       cityName,
-      scope
+      scope,
+      roomBucket
     );
     return rows.map((r) => ({
       neighborhood: r.neighborhood,
@@ -63,6 +68,7 @@ async function loadCellsUncached(
       sqm: r.avg_sqm === null ? null : Number(r.avg_sqm),
       medianSqm: r.median_sqm === null ? null : Number(r.median_sqm),
       medianPrice: r.median_price === null ? null : Number(r.median_price),
+      avgPrice: r.avg_price === null ? null : Number(r.avg_price),
       n: Number(r.n),
     }));
   } catch {

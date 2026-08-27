@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { track, trackSearch, trackSearchSelect } from "@/lib/track";
+import { withBasePath } from "@/lib/basePath";
 import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
 interface CityItem {
@@ -30,6 +31,7 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<Array<CitySearchHit<CityItem>>>([]);
+  const [hoodHits, setHoodHits] = useState<Array<{ kind: "hood" | "street"; city: string; name: string; hood: string; url: string }>>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -53,11 +55,23 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
   useEffect(() => {
     if (!query.trim()) {
       setHits([]);
+      setHoodHits([]);
       return;
     }
     const next = citySearch(cities, query, 20);
     setHits(next);
     trackSearch(query, next.length, "home");
+
+    // Hoods and streets live server-side (thousands of rows, pre-normalised
+    // index) — one debounced fetch per settled query, results appended UNDER
+    // the city matches. A failed fetch degrades to cities-only, silently.
+    if (query.trim().length < 2) { setHoodHits([]); return; }
+    let cancelled = false;
+    fetch(withBasePath(`/api/suggest?q=${encodeURIComponent(query.trim())}`))
+      .then((r) => (r.ok ? r.json() : { suggestions: [] }))
+      .then((j: { suggestions?: typeof hoodHits }) => { if (!cancelled) setHoodHits(j.suggestions ?? []); })
+      .catch(() => { if (!cancelled) setHoodHits([]); });
+    return () => { cancelled = true; };
   }, [query, cities]);
 
   return (
@@ -128,9 +142,9 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
       {/* Search results dropdown */}
       {query && (
         <div className="absolute z-[100] mt-2 w-full rounded-xl bg-white border border-slate-200 shadow-xl max-h-[400px] overflow-y-auto">
-          {results.length === 0 ? (
+          {results.length === 0 && hoodHits.length === 0 ? (
             <div className="px-5 py-4 text-center">
-              <p className="text-sm font-bold text-slate-700">לא מצאנו עיר בשם הזה</p>
+              <p className="text-sm font-bold text-slate-700">לא מצאנו עיר, שכונה או רחוב בשם הזה</p>
               <p className="mt-1 text-xs leading-relaxed text-slate-500">
                 נסו כתיב קרוב, למשל קרית/קריית, או הקלידו חלק מהשם.
               </p>
@@ -180,6 +194,27 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
                   </div>
                 </Link>
               ))}
+              {hoodHits.length > 0 && (
+                <>
+                  <p className="border-t border-slate-100 px-5 py-2 text-xs text-slate-500">שכונות ורחובות</p>
+                  {hoodHits.map((h) => (
+                    <Link
+                      key={`${h.kind}|${h.city}|${h.name}`}
+                      href={h.url}
+                      onClick={() => trackSearchSelect(`${h.city}/${h.hood}`, query)}
+                      className="group flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-5 py-2.5 transition-colors hover:bg-indigo-50"
+                    >
+                      <span className="min-w-0 flex-1 basis-28 break-words font-semibold leading-tight text-slate-900 transition-colors group-hover:text-indigo-700">
+                        {h.name}
+                      </span>
+                      <span className="text-xs text-slate-500">
+                        {h.kind === "street" ? `רחוב בשכונת ${h.hood} · ` : "שכונה ב"}
+                        {h.city}
+                      </span>
+                    </Link>
+                  ))}
+                </>
+              )}
             </div>
           )}
         </div>

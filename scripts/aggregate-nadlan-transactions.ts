@@ -231,17 +231,22 @@ async function main() {
         if (!c) { c = { nb, year, bucket, scope, rows: [] }; cells.set(k, c); }
         c.rows.push(r);
       };
-      // Room buckets are NOT split here yet, though the table has the column.
-      // A neighbourhood×year×rooms cell clears an 8-deal floor in only the
-      // largest neighbourhoods, so the split would quadruple the row count to
-      // publish mostly-empty cells — and nothing on the page reads it. The
-      // column exists so adding the split later is data, not a migration.
+      // Room buckets, the city's own four (all/3/4/5) — the split the earlier
+      // comment here promised would be "data, not a migration" once something
+      // read it. The neighbourhood page's rooms filter reads it now. The
+      // NB_MIN floor below is what keeps this honest: a hood×year×rooms cell
+      // that clears 8 deals exists, one that does not was never written — so
+      // small hoods simply publish fewer buckets rather than noisier ones.
+      const NB_BUCKETS = ["all", "3", "4", "5"];
       for (const r of allRows) {
-        if (r.neighborhood) add(r.neighborhood, r.deal_year, "all", "all", r);
+        if (!r.neighborhood) continue;
+        for (const b of NB_BUCKETS)
+          if (b === "all" || r.room_bucket === b) add(r.neighborhood, r.deal_year, b, "all", r);
       }
       for (const r of nadlan) {
-        if (r.neighborhood && hasBuildYear(r) && r.is_secondhand === 1)
-          add(r.neighborhood, r.deal_year, "all", "secondhand", r);
+        if (!(r.neighborhood && hasBuildYear(r) && r.is_secondhand === 1)) continue;
+        for (const b of NB_BUCKETS)
+          if (b === "all" || r.room_bucket === b) add(r.neighborhood, r.deal_year, b, "secondhand", r);
       }
       for (const c of cells.values()) {
         if (c.rows.length < NB_MIN) continue;
