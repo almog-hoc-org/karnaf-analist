@@ -487,14 +487,17 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           </div>
         </div>
 
-        {/* hierarchy (right) + change-in-range summary (LEFT, per user spec);
-            mobile: stacked labeled rows, the trend box drops to a full row at the end */}
-        <div className="mt-1.5 flex flex-col gap-1.5 border-t border-indigo-100 pt-1.5 sm:mt-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6 sm:gap-y-2 sm:pt-2.5">
+        {/* hierarchy + series (right column) with the change-in-range box at
+            the LEFT beside BOTH rows (operator, 8/2026): the box used to be an
+            8.5rem-tall hero that added its own rows of height; now the column
+            of filter row + series row sets the height and the box stretches to
+            match it exactly — no extra rows. Mobile: stacked, box last. */}
+        <div className="mt-1.5 flex flex-col gap-1.5 border-t border-indigo-100 pt-1.5 sm:mt-2.5 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:grid-rows-[auto_auto] sm:items-stretch sm:gap-x-3 sm:gap-y-0 sm:pt-2.5">
           {/* ONE ROW on laptop (operator, 8/2026): the three filter groups —
               deal type, building, rooms — sit inline with divider bars instead
               of stacking three label rows. Mobile keeps the stacked rows: at
               343px the inline form is a horizontal scroll, not a saving. */}
-          <div className="min-w-0 space-y-1 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 sm:space-y-0">
+          <div className="min-w-0 space-y-1 sm:col-start-1 sm:row-start-1 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 sm:space-y-0 sm:self-center">
             {/* flex-nowrap + compact pills: these three rows are the ones the
                 screenshot marks. At 375px the phone offers ~343px of row, and
                 a "min-w-16" label plus px-3 py-1.5 pills needed ~390-400px —
@@ -531,13 +534,12 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               ))}
             </div>
           </div>
-          {/* change-in-range — desktop: NEXT TO the filters at the left edge (RTL end);
-              mobile: its own full-width row so it never squeezes the pill rows */}
-          {/* LAPTOP: three times the height, the % is the hero (operator,
-              8/2026) — a min-height of 8.5rem vs the old ~2.75rem line, the
-              content vertically centered, and the TrendValue jumps to
-              !text-3xl. Mobile keeps the compact one-line form. */}
-          <aside className="flex w-full flex-col justify-center rounded-xl border border-indigo-100 bg-white/80 px-3 py-1.5 text-center sm:min-h-[8.5rem] sm:w-auto sm:min-w-[13rem] sm:shrink-0 sm:px-5 sm:py-3">
+          {/* change-in-range — desktop: at the LEFT (RTL end), spanning the
+              filter row AND the series row, stretched to exactly their
+              combined height (operator, 8/2026 — "לא יתפוס עוד שורות וגובה").
+              The old 8.5rem hero height is gone: the neighbouring rows set the
+              height now. Mobile keeps the compact full-width form. */}
+          <aside className="flex w-full flex-col justify-center rounded-xl border border-indigo-100 bg-white/80 px-3 py-1.5 text-center sm:col-start-2 sm:row-span-2 sm:row-start-1 sm:w-auto sm:min-w-[12rem] sm:px-4 sm:py-2">
             {/* ONE line per series, and no separate title row. The box used to
                 open with "שינוי <years>" and a second line naming the basis
                 ("יד שנייה · ₪ למ״ר") before any number appeared, then listed
@@ -556,7 +558,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
                     text={`${dealType === "sh" ? "יד שנייה" : dealType === "new" ? "דירות חדשות" : "כל העסקאות"} · ${metric === "sqm" ? "₪ למ״ר" : "מחיר עסקה"}${room !== "all" ? ` · ${room} חד׳` : ""} · החלון נגמר בשנה המלאה האחרונה`}
                   />
                 </span>
-                <TrendValue pct={tr.pct!} className="!text-base !font-black sm:!text-3xl" />
+                <TrendValue pct={tr.pct!} className="!text-base !font-black sm:!text-2xl" />
                 <span className="text-2xs text-slate-400"><YearRange from={from} to={Math.min(to, maxFullY)} /></span>
               </div>
             ))}
@@ -580,10 +582,11 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               </div>
             )}
           </aside>
-        </div>
 
-        {/* series — derived from the hierarchy choice above */}
-        <div className="mt-2.5 flex flex-wrap items-center gap-1.5 border-t border-indigo-100 pt-2.5">
+        {/* series — derived from the hierarchy choice above; on laptop it is
+            the second row of the same grid, under the filters and beside the
+            change box */}
+        <div className="mt-1 flex flex-wrap items-center gap-1.5 border-t border-indigo-100 pt-1.5 sm:col-start-1 sm:row-start-2 sm:mt-2 sm:self-center sm:pt-2">
           <span className="text-2xs font-bold text-slate-500">סדרות:</span>
           {chipDefs.map((s) => {
             const on = effectiveSelected.includes(s.key);
@@ -603,6 +606,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               </button>
             );
           })}
+        </div>
         </div>
       </div>
 

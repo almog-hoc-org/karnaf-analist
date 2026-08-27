@@ -14,7 +14,8 @@ import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
-import { cleanStreetName, pickModalHood, searchNorm } from "@/lib/searchIndex";
+import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
+import { compMatchNote, compWhere, compHow, type StreetComp } from "@/lib/compTypes";
 import { parseInlineDraft } from "@/components/InlineEdit";
 import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
 import { project, makeProjector, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
@@ -1025,5 +1026,44 @@ describe("hood excess growth arithmetic", () => {
     // Hood +30%, city +22% → +8 points of excess — NOT 30/22.
     const hood = 30.0, city = 22.0;
     expect(hood - city).toBeCloseTo(8.0);
+  });
+});
+
+describe("street comp query normalisation", () => {
+  it("strips the street-word prefix and a glued house number", () => {
+    expect(normalizeStreetQuery("רחוב הרצל 14")).toBe("הרצל");
+    expect(normalizeStreetQuery("שד׳ רוטשילד")).toBe("רוטשילד");
+    expect(normalizeStreetQuery("  אחוזה   90 ")).toBe("אחוזה");
+  });
+
+  it('keeps "דרך" — it is part of the name, not a prefix', () => {
+    expect(normalizeStreetQuery("דרך השלום")).toBe("דרך השלום");
+  });
+});
+
+describe("comp match note (honest labeling)", () => {
+  const base: StreetComp = {
+    level: "street", geoLevel: "street", matchLevel: "tight", label: "",
+    medianSqm: 30000, n: 12, areaRange: [80, 92], rooms: 4, years: 5,
+    recent: [], matchedStreet: "הרצל", matchedHood: null, hoodInferred: false,
+  };
+
+  it("says WHAT the comparison is against, never 'התאמה מדויקת'", () => {
+    expect(compMatchNote(base)).toBe("ברחוב · דירות דומות");
+    expect(compMatchNote(base)).not.toContain("התאמה מדויקת");
+    expect(compMatchNote({ ...base, geoLevel: "neighborhood", matchedStreet: null, matchedHood: "הצפון הישן" }))
+      .toBe("בשכונת הצפון הישן · דירות דומות");
+    expect(compMatchNote({ ...base, geoLevel: "city", matchLevel: "rooms", matchedStreet: null }))
+      .toBe("בכל העיר · לפי מס׳ חדרים");
+  });
+
+  it("names the similarity grade honestly per match level", () => {
+    expect(compHow({ ...base, matchLevel: "wide" })).toBe("דירות דומות");
+    expect(compHow({ ...base, matchLevel: "any" })).toBe("כל הדירות");
+    expect(compWhere({ ...base, geoLevel: "neighborhood", matchedHood: null })).toBe("בשכונה");
+  });
+
+  it("an empty comparison stays an empty answer", () => {
+    expect(compMatchNote({ ...base, n: 0 })).toBe("אין עסקאות דומות");
   });
 });

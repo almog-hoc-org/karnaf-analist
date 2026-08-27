@@ -46,4 +46,36 @@ export interface StreetComp {
   rooms: number | null;
   years: number;
   recent: CompDeal[];
+  /** the street the rung actually matched on, when geoLevel === "street" */
+  matchedStreet: string | null;
+  /** the neighbourhood the rung matched on, when geoLevel === "neighborhood" */
+  matchedHood: string | null;
+  /** the hood was not typed by the user — it was looked up from the street's
+   *  modal-majority assignment in search_index */
+  hoodInferred: boolean;
+}
+
+/**
+ * WHAT the comparison is against — the geography, named. The old note led with
+ * the similarity grade ("התאמה מדויקת") and buried the geography behind a dot,
+ * so a city-wide fallback read like a precise answer. The user's spec: say
+ * what the number was compared TO, always.
+ */
+export function compWhere(c: StreetComp): string {
+  if (c.geoLevel === "street") return "ברחוב";
+  if (c.geoLevel === "neighborhood") return c.matchedHood ? `בשכונת ${c.matchedHood}` : "בשכונה";
+  return "בכל העיר";
+}
+
+/** HOW similar the compared deals are — the second half of the note. */
+export function compHow(c: StreetComp): string {
+  if (c.matchLevel === "tight" || c.matchLevel === "wide") return "דירות דומות";
+  if (c.matchLevel === "rooms") return "לפי מס׳ חדרים";
+  return "כל הדירות";
+}
+
+/** Short human explanation of what the comparison matched (for the UI chip). */
+export function compMatchNote(c: StreetComp): string {
+  if (!c || c.n === 0) return "אין עסקאות דומות";
+  return `${compWhere(c)} · ${compHow(c)}`;
 }

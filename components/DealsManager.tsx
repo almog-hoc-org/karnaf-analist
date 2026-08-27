@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import type { ClientDeal } from "@/lib/appDb";
 import type { StreetComp } from "@/lib/compTypes";
-import { addressGranularity, rowAddress } from "@/lib/compTypes";
+import { addressGranularity, rowAddress, compWhere, compHow } from "@/lib/compTypes";
 import type { TrackedCitySummary } from "@/app/deals/page";
 import TrendValue, { fmtSignedPct } from "@/components/TrendValue";
 import { addTrackedCity, removeTrackedCity, addDeal, updateDeal, deleteDeal, addTask, toggleTask, deleteTask } from "@/app/deals/actions";
@@ -35,16 +35,6 @@ const CITY_HUES = ["#0e7490", "#1d4ed8", "#0891b2", "#3730a3", "#0369a1", "#155e
 const cityHue = (i: number) => CITY_HUES[i % CITY_HUES.length];
 type SortKey = "updated" | "city" | "price" | "sqm" | "delta";
 
-/** Client-side label for what the comparison matched (mirrors lib/streetComps). */
-const GEO_HE: Record<string, string> = { street: "רחוב", neighborhood: "שכונה", city: "יישוב" };
-function compMatchNote(c: StreetComp): string {
-  if (!c || c.n === 0) return "אין עסקאות דומות";
-  const geo = GEO_HE[c.geoLevel] ?? "";
-  if (c.matchLevel === "tight") return `התאמה מדויקת · ${geo}`;
-  if (c.matchLevel === "wide") return `שטח מורחב · ${geo}`;
-  if (c.matchLevel === "rooms") return `אותו מס׳ חדרים · ${geo}`;
-  return `כל הדירות · ${geo}`;
-}
 
 export default function DealsManager({ allCities, tracked, deals, comps, modernMinYear = 2005 }: {
   allCities: string[];
@@ -332,7 +322,7 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                       {dl != null ? fmtSignedPct(dl) : "—"}
                     </span>
                     <span className="mr-2 text-2xs text-slate-500">
-                      מול ₪{comp.medianSqm.toLocaleString("he-IL")} · {compMatchNote(comp)} ({comp.n}) {open ? "▴" : "▾"}
+                      מול ₪{comp.medianSqm.toLocaleString("he-IL")} {compWhere(comp)} · {compHow(comp)} ({comp.n}) {open ? "▴" : "▾"}
                     </span>
                   </button>
                 ) : (
@@ -461,7 +451,7 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
                               {dl != null ? fmtSignedPct(dl) : "—"}
                             </span>
                             <span className="block text-2xs text-slate-400 group-hover:text-indigo-600">
-                              מול ₪{comp.medianSqm.toLocaleString("he-IL")} · {compMatchNote(comp)} ({comp.n}) ▾
+                              מול ₪{comp.medianSqm.toLocaleString("he-IL")} {compWhere(comp)} · {compHow(comp)} ({comp.n}) ▾
                             </span>
                           </button>
                         ) : <span className="text-slate-300">אין דאטה</span>}

@@ -12,14 +12,14 @@
  */
 import { prisma } from "./db";
 import { getRuleNum, getRuleBool } from "./systemRules";
+import { normalizeStreetQuery, searchNorm } from "./searchIndex";
 import type { GeoLevel, MatchLevel, CompDeal, StreetComp } from "./compTypes";
 
 export type { GeoLevel, MatchLevel, CompDeal, StreetComp } from "./compTypes";
+export { compMatchNote, compWhere, compHow } from "./compTypes";
 
 const norm = (s: string) => s.replace(/["'`]/g, "").replace(/\s+/g, " ").trim();
 const ROOM_TOLERANCE = 0.25; // matches 3.5 to 3.5 but never to 4
-
-const GEO_HE: Record<GeoLevel, string> = { street: "רחוב", neighborhood: "שכונה", city: "יישוב" };
 
 function median(values: number[]): number {
   const s = [...values].sort((a, b) => a - b);
@@ -44,8 +44,30 @@ export async function computeStreetComp(
 
   const hasRooms = rooms != null && rooms > 0;
   const hasSize = size != null && size > 0;
-  const st = street && norm(street).length >= 2 ? norm(street) : null;
-  const nb = neighborhood && norm(neighborhood).length >= 2 ? norm(neighborhood) : null;
+  const st = street && normalizeStreetQuery(street).length >= 2 ? normalizeStreetQuery(street) : null;
+  let nb = neighborhood && norm(neighborhood).length >= 2 ? norm(neighborhood) : null;
+
+  // The smart part (user spec 8/2026): when the user left the neighbourhood
+  // blank but gave a street, the engine looks the street up in search_index —
+  // the modal-majority street→hood map the pipeline builds under the
+  // never-guess rule (≥70% of the street's classified deals, ≥5 deals). A
+  // street that genuinely straddles hoods is not in the index, and then the
+  // ladder simply skips the neighbourhood rungs, as before.
+  let hoodInferred = false;
+  if (!nb && st) {
+    // Exact normalised match first; containment as fallback, because people
+    // type "אפקה" for a street the index stores as "שדרות אפקה". Among
+    // containment hits the busiest street wins — the same ranking the
+    // suggest API uses.
+    const key = searchNorm(st);
+    const hit = await prisma.$queryRawUnsafe<Array<{ hood: string }>>(
+      `SELECT hood FROM search_index WHERE kind='street' AND city_name = ?
+         AND (norm = ? OR norm LIKE ?)
+       ORDER BY (norm = ?) DESC, n DESC LIMIT 1`,
+      city, key, `%${key}%`, key
+    ).catch(() => []);
+    if (hit.length && hit[0].hood) { nb = norm(hit[0].hood); hoodInferred = true; }
+  }
 
   /** One query: geography × similarity. Returns [] when the rung is impossible. */
   async function fetchRung(geo: GeoLevel, match: MatchLevel): Promise<CompDeal[]> {
@@ -88,12 +110,18 @@ export async function computeStreetComp(
     ).catch(() => []);
   }
 
-  // Priority: same-type comps first, widening the map before giving up on type.
+  // GEOGRAPHY FIRST (user spec 8/2026): always the street, then the
+  // neighbourhood, then the city — the old order widened the map before
+  // giving up on the tightest similarity, so a flat with no size-twin on its
+  // own street was compared against the WHOLE CITY while thirty same-room
+  // deals sat one block away. Within each geography the similarity still
+  // narrows tight → wide → same-rooms; the "any apartment type" rungs stay
+  // last across all geographies, because comparing a 4-room flat to the
+  // street's studios is worse than to similar flats in the neighbourhood.
   const ladder: Array<[GeoLevel, MatchLevel]> = [
-    ["street", "tight"], ["street", "wide"],
-    ["neighborhood", "tight"], ["neighborhood", "wide"],
-    ["city", "tight"], ["city", "wide"],
-    ["street", "rooms"], ["neighborhood", "rooms"], ["city", "rooms"],
+    ["street", "tight"], ["street", "wide"], ["street", "rooms"],
+    ["neighborhood", "tight"], ["neighborhood", "wide"], ["neighborhood", "rooms"],
+    ["city", "tight"], ["city", "wide"], ["city", "rooms"],
     ["street", "any"], ["neighborhood", "any"], ["city", "any"],
   ];
 
@@ -105,7 +133,10 @@ export async function computeStreetComp(
     const areaRange: [number, number] | null =
       pct != null && hasSize ? [Math.round(size! * (1 - pct / 100)), Math.round(size! * (1 + pct / 100))] : null;
 
-    const where = geo === "street" ? `רחוב ${st}` : geo === "neighborhood" ? `שכונת ${nb}` : city;
+    const where =
+      geo === "street" ? `רחוב ${st}`
+      : geo === "neighborhood" ? `שכונת ${nb}${hoodInferred ? " (שויכה לפי הרחוב)" : ""}`
+      : city;
     const what =
       match === "tight" || match === "wide"
         ? `${rooms} חד׳ · ${areaRange![0]}–${areaRange![1]} מ״ר`
@@ -122,6 +153,9 @@ export async function computeStreetComp(
       rooms: hasRooms ? rooms! : null,
       years,
       recent: rows.slice(0, 10),
+      matchedStreet: geo === "street" ? st : null,
+      matchedHood: geo === "neighborhood" ? nb : null,
+      hoodInferred: geo === "neighborhood" && hoodInferred,
     };
   }
 
@@ -129,15 +163,6 @@ export async function computeStreetComp(
     level: "city", geoLevel: "city", matchLevel: "any",
     label: `לא נמצאו עסקאות ${shOnly ? "יד-שנייה " : ""}להשוואה ב${city} ב-${years} השנים האחרונות`,
     medianSqm: null, n: 0, areaRange: null, rooms: hasRooms ? rooms! : null, years, recent: [],
+    matchedStreet: null, matchedHood: null, hoodInferred: false,
   };
-}
-
-/** Short human explanation of what the comparison matched (for the UI chip). */
-export function compMatchNote(c: StreetComp): string {
-  if (c.n === 0) return "אין עסקאות דומות";
-  const geo = GEO_HE[c.geoLevel];
-  if (c.matchLevel === "tight") return `התאמה מדויקת · ${geo}`;
-  if (c.matchLevel === "wide") return `שטח מורחב · ${geo}`;
-  if (c.matchLevel === "rooms") return `אותו מס׳ חדרים · ${geo}`;
-  return `כל הדירות · ${geo}`;
 }

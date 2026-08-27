@@ -534,18 +534,19 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none">
             {city.city_name}
           </h1>
+          {/* ONE residents chip (operator, 8/2026): the growth % lives INSIDE
+              the residents chip instead of a chip of its own — one fact about
+              the population, one box. */}
           {city.population_2026 && (
             <span className="chip-action border-slate-200 bg-white text-slate-600">
               {formatNumber(city.population_2026)} תושבים
-            </span>
-          )}
-          {city.population_growth_pct !== null && (
-            <span className={`chip-action ${
-              (city.population_growth_pct ?? 0) >= 0
-                ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                : "border-red-200 bg-red-50 text-red-600"
-            }`}>
-              {(city.population_growth_pct ?? 0) >= 0 ? '+' : ''}{city.population_growth_pct?.toFixed(1)}% גידול
+              {city.population_growth_pct !== null && (
+                <span className={`font-bold ${
+                  (city.population_growth_pct ?? 0) >= 0 ? "text-emerald-700" : "text-red-600"
+                }`}>
+                  {" "}· {(city.population_growth_pct ?? 0) >= 0 ? '+' : ''}{city.population_growth_pct?.toFixed(1)}% גידול
+                </span>
+              )}
             </span>
           )}
           <CityShareButton
@@ -558,7 +559,8 @@ export default async function CityPage({ params, searchParams }: PageProps) {
             signedIn={!!viewer}
             action={cityTrackAction}
           />
-          <SourceBadge kind="internal" className="h-7" compact />
+          {/* the "מאגר העסקאות העצמאי" badge is gone from the header (operator,
+              8/2026) — the provenance sentence stays, as the ⓘ alone */}
           <InfoTip text={`עסקאות אמת שנאספו בלתי-תלוי מרשות המסים · יד-שנייה = ${getRuleNum("secondhand_min_age", 4)}+ שנים משנת הבנייה · מקורות חיצוניים מסומנים בסמל מוסד רשמי.`} />
         </div>
       </header>
@@ -599,11 +601,8 @@ export default async function CityPage({ params, searchParams }: PageProps) {
                 accent="purple"
               />
             </div>
-            {headlineWindow.thin && (
-              <p className="mt-2 text-2xs font-semibold text-amber-600">
-                ⚠ מדגם דל — אחת משנות הקצה נשענת על רבעון בודד או שהחלון הוזז בגלל שנים חסרות; קרא את המספר בזהירות
-              </p>
-            )}
+            {/* the thin-sample paragraph is gone (operator, 8/2026); the flag
+                still travels with the data and is disclosed at the panel below */}
             {/* A window anchored on a מחיר-למשתכן year measures a change of
                 programme, not a change of market — say so where the number is,
                 not in a footnote nobody reaches. */}
@@ -675,52 +674,55 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         other: the first had no null guard, so a city with no measured market
         type showed "שוק מאוזן" here and "—" one card below. Merged, and
         null now says "—" — an unmeasured market is not a balanced one. */}
-    <div className="mt-3 glass-card p-4 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-      <span className="text-xl">
-        <Icon name={yad2Data.market_type === 'sellers' ? "flame" : yad2Data.market_type === 'buyers' ? "snow" : "scale"} size="1em" />
-      </span>
-      <p className="text-sm font-semibold text-slate-800">
-        {yad2Data.market_type === 'sellers' ? 'שוק של מוכרים'
-          : yad2Data.market_type === 'buyers' ? 'שוק של קונים'
-          : yad2Data.market_type ? 'שוק מאוזן' : '—'}
-      </p>
-      {yad2Data.compromise_index != null && (
-        <p className="text-sm tabular-nums text-slate-600">
-          · מדד התפשרות <b>{yad2Data.compromise_index >= 0 ? "+" : ""}{formatNumber(yad2Data.compromise_index, 1)}%</b>
+    {/* market status + households, ONE row (operator, 8/2026): the two
+        household figures used to be full KpiTiles on a row of their own —
+        two big boxes for two small facts. They shrink to compact side tiles
+        and share the line with the market-status card; the section header's
+        מדדי-לוחות badge already names their source. */}
+    <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-stretch">
+      <div className="glass-card min-w-0 flex-1 p-4 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <span className="text-xl">
+          <Icon name={yad2Data.market_type === 'sellers' ? "flame" : yad2Data.market_type === 'buyers' ? "snow" : "scale"} size="1em" />
+        </span>
+        <p className="text-sm font-semibold text-slate-800">
+          {yad2Data.market_type === 'sellers' ? 'שוק של מוכרים'
+            : yad2Data.market_type === 'buyers' ? 'שוק של קונים'
+            : yad2Data.market_type ? 'שוק מאוזן' : '—'}
         </p>
-      )}
-      {yad2Data.avg_days_on_market != null && (
-        <p className="text-sm tabular-nums text-slate-600">
-          · <b>{formatNumber(yad2Data.avg_days_on_market, 0)}</b> ימים ממוצע בשוק
+        {yad2Data.compromise_index != null && (
+          <p className="text-sm tabular-nums text-slate-600">
+            · מדד התפשרות <b>{yad2Data.compromise_index >= 0 ? "+" : ""}{formatNumber(yad2Data.compromise_index, 1)}%</b>
+          </p>
+        )}
+        {yad2Data.avg_days_on_market != null && (
+          <p className="text-sm tabular-nums text-slate-600">
+            · <b>{formatNumber(yad2Data.avg_days_on_market, 0)}</b> ימים ממוצע בשוק
+          </p>
+        )}
+        <p className="basis-full text-2xs text-slate-500">
+          על בסיס יחס קונים-מוכרים וזמן חשיפה · חיובי/שוק-מוכרים = פחות התפשרות
         </p>
-      )}
-      <p className="basis-full text-2xs text-slate-500">
-        על בסיס יחס קונים-מוכרים וזמן חשיפה · חיובי/שוק-מוכרים = פחות התפשרות
-      </p>
-      <Link href="/stats/yad2-market-data" className="md:hidden text-xs text-indigo-700 hover:text-indigo-900 font-semibold">
-        כל הערים ←
-      </Link>
-    </div>
-
-    {/* Household data from yadata (more current than CBS 2022) */}
-          {(yad2Data.households || yad2Data.avg_household_size) && (
-            <div className="grid grid-cols-2 gap-3 mt-3">
-              {yad2Data.households && (
-                <KpiTile
-                  label="משקי בית (מדדי לוחות)"
-                  value={formatNumber(yad2Data.households)}
-                  accent="purple"
-                />
-              )}
-              {yad2Data.avg_household_size && (
-                <KpiTile
-                  label="נפשות למשק בית (מדדי לוחות)"
-                  value={formatNumber(yad2Data.avg_household_size, 1)}
-                  accent="amber"
-                />
-              )}
+        <Link href="/stats/yad2-market-data" className="md:hidden text-xs text-indigo-700 hover:text-indigo-900 font-semibold">
+          כל הערים ←
+        </Link>
+      </div>
+      {(yad2Data.households || yad2Data.avg_household_size) && (
+        <div className="grid grid-cols-2 gap-3 lg:flex lg:shrink-0">
+          {yad2Data.households && (
+            <div className="flex flex-col items-center justify-center rounded-xl border border-purple-200 bg-purple-50/60 px-3 py-2 lg:w-36">
+              <span className="text-2xs font-bold text-purple-700">משקי בית</span>
+              <span className="text-base font-black tabular-nums text-slate-900">{formatNumber(yad2Data.households)}</span>
             </div>
           )}
+          {yad2Data.avg_household_size && (
+            <div className="flex flex-col items-center justify-center rounded-xl border border-amber-200 bg-amber-50/60 px-3 py-2 lg:w-36">
+              <span className="text-2xs font-bold text-amber-700">נפשות למשק בית</span>
+              <span className="text-base font-black tabular-nums text-slate-900">{formatNumber(yad2Data.avg_household_size, 1)}</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
 
         </section>
       )}

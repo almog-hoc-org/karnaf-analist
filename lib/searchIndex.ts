@@ -75,3 +75,17 @@ export function pickModalHood(
 export function searchNorm(s: string): string {
   return normalizeCitySearch(s);
 }
+
+/**
+ * What a user typed as a street → what the transactions DB can match. Two
+ * habits break a naive LIKE: a leading "רחוב"/"שד׳" the source data never
+ * stores, and a house number glued to the street name ("הרצל 14"). Both are
+ * stripped from the QUERY side only — the DB value is matched by containment,
+ * so a stored "שדרות רוטשילד" is still found by the stripped "רוטשילד".
+ * "דרך" is NOT stripped: it is integral to names like "דרך השלום".
+ */
+export function normalizeStreetQuery(raw: string): string {
+  const cleaned = raw.replace(/["'`]/g, "").replace(/\s+/g, " ").trim()
+    .replace(/^(?:רחוב|רח'|רח׳|שדרות|שד'|שד׳)\s+/, "");
+  return cleanStreetName(cleaned);
+}
