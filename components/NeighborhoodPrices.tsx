@@ -112,9 +112,19 @@ export default function NeighborhoodPrices({
               >
                 {/* truncate + title, not wrapping. "הצפון החדש סביבת כיכר
                     המדינה" is 28 characters: allowed to wrap it doubles its
-                    row and blows the table past the map beside it. */}
+                    row and blows the table past the map beside it.
+                    The name links to the neighbourhood's own page — it is the
+                    Tax Authority spelling, which is exactly what that page's
+                    URL is keyed on. stopPropagation so following the link does
+                    not also fire the row's map-pin click. */}
                 <th scope="row" className={`${padX} ${padY} truncate text-right font-bold text-slate-900`} title={r.neighborhood}>
-                  {r.neighborhood}
+                  <Link
+                    href={`/city/${encodeURIComponent(cityName)}/neighborhood/${encodeURIComponent(r.neighborhood)}`}
+                    className="hover:text-indigo-700 hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {r.neighborhood}
+                  </Link>
                 </th>
                 <td className={`px-2 ${padY} text-right font-bold tabular-nums text-slate-800`}>{fmt(r.sqm)}</td>
                 <td className={`px-2 ${padY} text-right tabular-nums`}>

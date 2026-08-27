@@ -52,6 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   let cityNames: string[] = [];
+  let hoodPairs: Array<{ city_name: string; neighborhood: string }> = [];
   try {
     const rows = await prisma.city.findMany({
       where: { city_name: { notIn: ALIAS_NAMES } },
@@ -61,6 +62,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     cityNames = rows.map((r) => r.city_name);
   } catch {
     // DB unreachable at build time — ship the static half rather than nothing
+  }
+  try {
+    // Every (city, neighbourhood) that ever cleared the sample floor has a
+    // page. The floor itself is the volume cap: a cell under
+    // neighborhood_min_deals was never written, so this cannot balloon into
+    // thousands of thin pages.
+    hoodPairs = await prisma.$queryRawUnsafe<Array<{ city_name: string; neighborhood: string }>>(
+      `SELECT DISTINCT city_name, neighborhood FROM neighborhood_year_stats
+        WHERE scope = 'secondhand' ORDER BY city_name, neighborhood`
+    );
+  } catch {
+    // table not created yet — the aggregation has not run with this stage
   }
 
   return [
@@ -75,6 +88,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.8,
+    })),
+    // Below the cities on purpose: the city is the product, the neighbourhood
+    // is its long tail — and these pages are fully public (operator, 8/2026).
+    ...hoodPairs.map((h) => ({
+      url: `${SITE_ORIGIN}/city/${encodeURIComponent(h.city_name)}/neighborhood/${encodeURIComponent(h.neighborhood)}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
     })),
     ...RANKING_TYPES.map((t) => ({
       url: `${SITE_ORIGIN}/rankings/${t}`,

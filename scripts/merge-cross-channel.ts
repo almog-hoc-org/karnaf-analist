@@ -35,6 +35,7 @@ const REASON = "מוזג (כפילות בין-ערוצית)";
 interface Row {
   id: number; city_name: string; deal_date: string; price: number; area: number; rooms: number;
   source: string; street: string | null; house_num: string | null; floor: number | string | null;
+  neighborhood: string | null;
 }
 
 function main() {
@@ -62,8 +63,14 @@ function main() {
   // chunking changes nothing semantically — but it bounds memory to one city's
   // rows. Loading the whole 1998+ scope at once (1.4M rows with address
   // strings) blew Node's heap inside the 3GB container on the first full run.
+  // neighborhood rides along with the address, under the same COALESCE rule.
+  // This is a fact-copy, not inference: the donor is the SAME deal reported
+  // through the govmap channel, which carries the neighbourhood the nadlan
+  // channel long dropped. The same donation already existed inside duplicate
+  // clusters (flag-duplicate-deals) — this extends it to the cross-channel
+  // twins, which is most of the repository.
   const enrich = db.prepare(
-    `UPDATE nadlan_transactions SET street=COALESCE(street,?), house_num=COALESCE(house_num,?), floor=COALESCE(floor,?) WHERE id=?`);
+    `UPDATE nadlan_transactions SET street=COALESCE(street,?), house_num=COALESCE(house_num,?), floor=COALESCE(floor,?), neighborhood=COALESCE(neighborhood,?) WHERE id=?`);
   // floor is a TEXT column (the feed returns Hebrew floor names as often as
   // digits). Donating a legacy integer would copy the defect onto a clean row,
   // and Prisma refuses to read a row whose text column holds a number — which
@@ -72,21 +79,23 @@ function main() {
   const exclude = db.prepare(`UPDATE nadlan_transactions SET excluded=1, exclusion_reason=? WHERE id=?`);
   const SOFT_REASON = "מוזג (התאמה רכה — כפילות בין-ערוצית)";
   const selectRows = db.prepare(
-    `SELECT id, city_name, deal_date, price, area, rooms, source, street, house_num, floor
+    `SELECT id, city_name, deal_date, price, area, rooms, source, street, house_num, floor, neighborhood
      FROM nadlan_transactions
      WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND city_name = ? AND price>0 AND area>0`);
   const selectTargets = db.prepare(
-    `SELECT id, city_name, deal_date, price, area FROM nadlan_transactions
-     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND city_name = ? AND source='nadlan' AND street IS NULL AND price>0 AND area>0`);
+    `SELECT id, city_name, deal_date, price, area, street, neighborhood FROM nadlan_transactions
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ? AND city_name = ? AND source='nadlan'
+       AND (street IS NULL OR neighborhood IS NULL) AND price>0 AND area>0`);
   const selectDonors = db.prepare(
-    `SELECT id, city_name, deal_date, price, area, street, house_num, floor, COALESCE(excluded,0) ex
-     FROM nadlan_transactions WHERE deal_year >= ? AND city_name = ? AND source='govmap' AND street IS NOT NULL AND price>0 AND area>0`);
+    `SELECT id, city_name, deal_date, price, area, street, house_num, floor, neighborhood, COALESCE(excluded,0) ex
+     FROM nadlan_transactions WHERE deal_year >= ? AND city_name = ? AND source='govmap'
+       AND (street IS NOT NULL OR neighborhood IS NOT NULL) AND price>0 AND area>0`);
 
   const cities = (db.prepare(
     `SELECT DISTINCT city_name FROM nadlan_transactions WHERE deal_year >= ?`
   ).all(minYear) as Array<{ city_name: string }>).map((c) => c.city_name);
 
-  let enriched = 0, excluded = 0, mergedGroups = 0;
+  let enriched = 0, excluded = 0, mergedGroups = 0, hoodEnriched = 0;
   let softEnriched = 0, softExcluded = 0, ambiguous = 0;
 
   for (const city of cities) {
@@ -109,8 +118,15 @@ function main() {
         if (!g.nadlan.length || !g.govmap.length) continue;
         mergedGroups++;
         const donor = g.govmap.find((x) => x.street) ?? g.govmap[0]; // best address donor
+        const hoodDonor = g.govmap.find((x) => x.neighborhood) ?? null;
         for (const n of g.nadlan) {
-          if (!n.street && donor.street) { enrich.run(donor.street, donor.house_num, floorText(donor.floor), n.id); enriched++; }
+          const wantStreet = !n.street && donor.street;
+          const wantHood = !n.neighborhood && hoodDonor;
+          if (wantStreet || wantHood) {
+            enrich.run(donor.street, donor.house_num, floorText(donor.floor), hoodDonor?.neighborhood ?? null, n.id);
+            if (wantStreet) enriched++;
+            if (wantHood) hoodEnriched++;
+          }
         }
         for (const gm of g.govmap) { exclude.run(REASON, gm.id); excluded++; } // drop the duplicate copies
       }
@@ -133,11 +149,17 @@ function main() {
         const cands = (byLoose.get(`${t.deal_date}|${Math.round(t.price)}`) ?? [])
           .filter((d) => Math.abs(d.area - t.area) <= 2);
         if (!cands.length) continue;
-        const streets = new Set(cands.map((d) => d.street));
+        const streets = new Set(cands.map((d) => d.street).filter(Boolean));
         if (streets.size > 1) { ambiguous++; continue; } // conflicting addresses → don't guess
-        const donor = cands[0];
-        enrich.run(donor.street, donor.house_num, floorText(donor.floor), t.id);
-        softEnriched++;
+        // The never-guess rule applies to the neighbourhood too: donors that
+        // agree on the street but disagree on the hood donate no hood.
+        const hoods = new Set(cands.map((d) => d.neighborhood).filter(Boolean));
+        const donor = cands.find((d) => d.street) ?? cands[0];
+        const hood = hoods.size === 1 ? [...hoods][0] : null;
+        if (!(!t.street && donor.street) && !(!t.neighborhood && hood)) continue; // nothing to give this row
+        enrich.run(donor.street, donor.house_num, floorText(donor.floor), hood, t.id);
+        if (!t.street && donor.street) softEnriched++;
+        if (!t.neighborhood && hood) hoodEnriched++;
         for (const d of cands) if (!d.ex) { exclude.run(SOFT_REASON, d.id); d.ex = 1; softExcluded++; }
       }
     })();
@@ -153,6 +175,7 @@ function main() {
 
   console.log(`merge-cross-channel (since ${minYear}): reset ${reset.changes} prior · ` +
     `${mergedGroups.toLocaleString("en")} groups merged · ${enriched.toLocaleString("en")} nadlan rows enriched with address · ` +
+    `${hoodEnriched.toLocaleString("en")} received a neighbourhood · ` +
     `${excluded.toLocaleString("en")} govmap duplicates excluded`);
   console.log(`  soft pass: +${softEnriched.toLocaleString("en")} addresses (area ≤2m² tolerance) · ` +
     `${softExcluded.toLocaleString("en")} more govmap copies merged · ${ambiguous.toLocaleString("en")} skipped (conflicting addresses)`);

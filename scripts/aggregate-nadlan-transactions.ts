@@ -209,14 +209,21 @@ async function main() {
     // which part of it is expensive, and which part is moving — was being
     // computed and thrown away on every run.
     //
-    // Same source and same definitions as the city line, deliberately: nadlan
-    // only, "all" gated on class_source, so a neighbourhood figure is
-    // comparable to the city figure printed beside it rather than being a
-    // second, quietly different statistic. The per-cell floor is separate and
-    // higher-by-default than the city one — a neighbourhood median off four
-    // deals is a rumour.
+    // SAME DEFINITIONS AS THE CITY LINE — by construction, not by claim. This
+    // block used to SAY it matched the city series while gating "all" on
+    // class_source (the city line dropped that gate in 8/2026) and taking
+    // "secondhand" without the build-year requirement (the city line has it).
+    // A neighbourhood page rendered beside the city page would have quietly
+    // disagreed with it about what both words mean. Now:
+    //   all        = every clean deal, from the same source the city "all"
+    //                uses — govmap in govmap-only cities, nadlan elsewhere.
+    //                (That also un-blanks govmap-only cities, whose rows are
+    //                exactly the ones that carry a neighbourhood.)
+    //   secondhand = nadlan, build year known, is_secondhand — the city rule.
+    // The per-cell floor is separate and higher-by-default than the city one —
+    // a neighbourhood median off four deals is a rumour.
     {
-      const nbRows = nadlan.filter((r) => r.neighborhood);
+
       const cells = new Map<string, { nb: string; year: number; bucket: string; scope: string; rows: Row[] }>();
       const add = (nb: string, year: number, bucket: string, scope: string, r: Row) => {
         const k = `${nb} ${year} ${bucket} ${scope}`;
@@ -229,10 +236,12 @@ async function main() {
       // largest neighbourhoods, so the split would quadruple the row count to
       // publish mostly-empty cells — and nothing on the page reads it. The
       // column exists so adding the split later is data, not a migration.
-      for (const r of nbRows) {
-        const nb = r.neighborhood!;
-        if (r.class_source != null) add(nb, r.deal_year, "all", "all", r);
-        if (r.is_secondhand === 1) add(nb, r.deal_year, "all", "secondhand", r);
+      for (const r of allRows) {
+        if (r.neighborhood) add(r.neighborhood, r.deal_year, "all", "all", r);
+      }
+      for (const r of nadlan) {
+        if (r.neighborhood && hasBuildYear(r) && r.is_secondhand === 1)
+          add(r.neighborhood, r.deal_year, "all", "secondhand", r);
       }
       for (const c of cells.values()) {
         if (c.rows.length < NB_MIN) continue;

@@ -84,6 +84,19 @@ function main(): number {
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP);
   `);
 
+  // Columns production has that an old dev DB may not — the schema drift the
+  // Prisma model documents ("added by hand, never here"). Idempotent ALTERs so
+  // the aggregation can run against a fixture DB at all.
+  for (const ddl of [
+    "ALTER TABLE nadlan_transactions ADD COLUMN class_source TEXT",
+    "ALTER TABLE nadlan_transactions ADD COLUMN hok_hamecher INTEGER",
+    "ALTER TABLE nadlan_transactions ADD COLUMN prev_deals INTEGER",
+    "ALTER TABLE nadlan_transactions ADD COLUMN rooms_effective REAL",
+    "ALTER TABLE nadlan_transactions ADD COLUMN room_reclassified INTEGER DEFAULT 0",
+  ]) {
+    try { db.exec(ddl); } catch { /* already present */ }
+  }
+
   // Refuse to overwrite anything the real collector produced.
   const real = db.prepare(
     "SELECT COUNT(*) c FROM neighborhood_shapes WHERE city_name=? AND source='osm'"
@@ -98,10 +111,16 @@ function main(): number {
   // there would be no map to look at. Only seeded when the city has no
   // neighbourhood cells at all, which is true of a development database and
   // never of the live one.
+  // THE AGGREGATION'S OWN SHAPE, verbatim. This fixture used to declare the
+  // same table with a different one (id PK, no avg_price) — and since both
+  // sides say CREATE TABLE IF NOT EXISTS, whichever ran first silently won,
+  // and the aggregation's insert then failed on a dev DB the fixture had
+  // touched. One name, one shape.
   db.exec(`CREATE TABLE IF NOT EXISTS neighborhood_year_stats (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, city_name TEXT NOT NULL, neighborhood TEXT NOT NULL,
-    year INTEGER NOT NULL, room_bucket TEXT NOT NULL, scope TEXT NOT NULL,
-    avg_sqm REAL, median_sqm REAL, median_price REAL, n INTEGER DEFAULT 0)`);
+    city_name TEXT NOT NULL, neighborhood TEXT NOT NULL, year INTEGER NOT NULL,
+    room_bucket TEXT NOT NULL, scope TEXT NOT NULL,
+    avg_price REAL, median_price REAL, avg_sqm REAL, median_sqm REAL, n INTEGER NOT NULL,
+    PRIMARY KEY (city_name, neighborhood, year, room_bucket, scope))`);
   const priced = db.prepare("SELECT COUNT(*) c FROM neighborhood_year_stats WHERE city_name=?").get(city) as { c: number };
 
   const cells = grid(city);
@@ -128,8 +147,8 @@ function main(): number {
 
     if (priced.c === 0) {
       const insCell = db.prepare(
-        `INSERT INTO neighborhood_year_stats (city_name, neighborhood, year, room_bucket, scope, avg_sqm, median_sqm, median_price, n)
-         VALUES (?,?,?, 'all', 'secondhand', ?,?,?,?)`
+        `INSERT INTO neighborhood_year_stats (city_name, neighborhood, year, room_bucket, scope, avg_sqm, median_sqm, median_price, avg_price, n)
+         VALUES (?,?,?, 'all', 'secondhand', ?,?,?,?,?)`
       );
       // All but the last two get prices; those stay blank on purpose, so the
       // "no data" hatch has something to render in development.
@@ -137,13 +156,16 @@ function main(): number {
         if (i >= cells.length - 2) return;
         const base = 30_000 + i * 1_900;
         for (const [year, factor] of [[2022, 0.82], [2025, 1]] as const) {
-          insCell.run(c.city, c.name, year, base * factor, base * factor, base * factor * 95, 40 + i * 7);
+          insCell.run(c.city, c.name, year, base * factor, base * factor, base * factor * 95, base * factor * 98, 40 + i * 7);
         }
       });
 
       /* Deals too. The panel that opens on a click reads nadlan_transactions
          directly, so without rows here a click renders "אין עסקאות" and the
-         whole interaction is unmeasurable outside production. */
+         whole interaction is unmeasurable outside production. Idempotent:
+         re-seeding starts by clearing the previous fixture deals, or every
+         run would stack another 640 rows onto the last one's. */
+      db.prepare("DELETE FROM nadlan_transactions WHERE city_name=? AND source='fixture'").run(city);
       const insTx = db.prepare(
         `INSERT INTO nadlan_transactions
            (city_name, neighborhood, deal_date, deal_year, rooms, room_bucket, area, price,

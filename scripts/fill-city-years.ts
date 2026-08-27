@@ -22,6 +22,7 @@ import zlib from "zlib";
 import puppeteerCore from "puppeteer-core";
 import type { Browser, Page } from "puppeteer-core";
 import { prisma } from "../lib/db";
+import { extractAddress } from "../lib/nadlanAddress";
 
 const SECRET = "90c3e620192348f1bd46fcd9138c3c68";
 const SECONDHAND_MIN_AGE = 4;
@@ -42,7 +43,7 @@ function decode(txt: string): unknown {
   const t = txt.trim(); if (t.startsWith("{")) return JSON.parse(t);
   try { return JSON.parse(zlib.gunzipSync(Buffer.from(t, "base64")).toString("utf8")); } catch { return null; }
 }
-interface RawItem { dealDate?: string; dealAmount?: number; roomNum?: number; assetArea?: number; priceSM?: number; yearBuilt?: number; neighborhoodName?: string }
+interface RawItem { dealDate?: string; dealAmount?: number; roomNum?: number; assetArea?: number; priceSM?: number; yearBuilt?: number; neighborhoodName?: string; [k: string]: unknown }
 
 async function main() {
   const argv = process.argv.slice(2);
@@ -174,7 +175,10 @@ async function main() {
     const yb = Number(d.yearBuilt) || null;
     return { deal_date: String(d.dealDate).slice(0, 10), deal_year: dy, rooms: d.roomNum ?? null, area: d.assetArea ?? null,
       price: d.dealAmount ?? null, price_sqm: d.priceSM ?? null, year_built: yb,
-      is_secondhand: yb && dy - yb >= SECONDHAND_MIN_AGE ? 1 : 0, neighborhood: d.neighborhoodName ?? null };
+      is_secondhand: yb && dy - yb >= SECONDHAND_MIN_AGE ? 1 : 0, neighborhood: d.neighborhoodName ?? null,
+      // Defensive, same as the nightly collector: the address field's real
+      // name is confirmed by the raw-keys log, absent fields store NULL.
+      ...extractAddress(d as Record<string, unknown>, city) };
   }).filter((r) => r.deal_year > 1990 && r.price && r.area);
 
   const existing = await prisma.$queryRawUnsafe<{ k: string }[]>(
@@ -184,13 +188,13 @@ async function main() {
   const CH = 60;
   for (let i = 0; i < fresh.length; i += CH) {
     const slice = fresh.slice(i, i + CH);
-    const vs = slice.map(() => "(?,?,?,?,?,?,?,?,?,?,?,?,?)").join(",");
+    const vs = slice.map(() => "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").join(",");
     const params: unknown[] = [];
     for (const r of slice) params.push(city, code, r.deal_date, r.deal_year, r.rooms,
       r.rooms == null ? "other" : r.rooms >= 5 ? "5" : r.rooms >= 3.5 ? "4" : r.rooms >= 2.5 ? "3" : "other",
-      r.area, r.price, r.price_sqm, r.year_built, r.is_secondhand, r.neighborhood, "nadlan");
+      r.area, r.price, r.price_sqm, r.year_built, r.is_secondhand, r.neighborhood, r.street, r.houseNum, "nadlan");
     await prisma.$executeRawUnsafe(
-      `INSERT INTO nadlan_transactions (city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,source) VALUES ${vs}`, ...params);
+      `INSERT INTO nadlan_transactions (city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,street,house_num,source) VALUES ${vs}`, ...params);
   }
   const per = new Map<number, number>();
   for (const r of fresh) per.set(r.deal_year, (per.get(r.deal_year) ?? 0) + 1);

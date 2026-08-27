@@ -30,6 +30,7 @@ import zlib from "zlib";
 import puppeteerCore from "puppeteer-core";
 import { prisma } from "../lib/db";
 import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
+import { extractAddress, describeRawItem } from "../lib/nadlanAddress";
 
 const SECRET = "90c3e620192348f1bd46fcd9138c3c68"; // HS256 key from the nadlan JS bundle (mixin_generateTokenForPayload)
 const SECONDHAND_MIN_AGE = 4;
@@ -59,6 +60,9 @@ function decode(txt: string): unknown {
 interface RawItem {
   dealDate?: string; dealAmount?: number; roomNum?: number; assetArea?: number;
   yearBuilt?: number; priceSM?: number; neighborhoodName?: string; hok_hamecher?: unknown; dealNature?: string;
+  /** the API returns more than the typed fields — the address lives among
+   *  them under a name this code reads defensively (lib/nadlanAddress) */
+  [k: string]: unknown;
 }
 function roomBucket(rn: number | undefined): string {
   if (rn == null) return "other";
@@ -139,6 +143,12 @@ async function collectCity(browser: import("puppeteer-core").Browser, city: stri
   }
   if (merged.length === 0) return { n: 0, years: "" };
 
+  // The schema, once per city, from the horse's mouth. The typed RawItem above
+  // is what this collector CHOSE to read, not what the API sends — and the
+  // difference is exactly how the neighbourhood got dropped for months. This
+  // line is what turns the defensive address parsing into a measured fact.
+  console.log(`    שדות גולמיים: ${describeRawItem(merged[0] as Record<string, unknown>)}`);
+
   // ACCUMULATE. This used to delete the city's nadlan rows first, which made
   // repeated sweeps pointless: an anonymous session returns ~2,400 deals, so ten
   // years of build-year data for a large city can only be reached by successive
@@ -158,12 +168,19 @@ async function collectCity(browser: import("puppeteer-core").Browser, city: stri
   // spliced into the placeholder string with a regex, which meant the tuple
   // shape and the parameter count were maintained in two places — the failure
   // mode the sibling collector documents as "exactly how the v9 run failed".
-  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,source";
+  // neighborhood was PARSED here from day one and never inserted — the column
+  // list simply omitted it, so months of collection stored NULLs while the
+  // value sat in memory. street/house_num are read defensively: the field
+  // name is unverified until the raw-keys log above confirms it, and an
+  // absent field stores NULL exactly as before.
+  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,street,house_num,source";
   const NCOLS = COLS.split(",").length;
   const params: unknown[] = [];
   for (const { dy, yb, isSH, d } of rows) {
+    const addr = extractAddress(d as Record<string, unknown>, city);
     params.push(city, code, String(d.dealDate).slice(0, 10), dy, d.roomNum ?? null, roomBucket(d.roomNum),
-      d.assetArea ?? null, d.dealAmount ?? null, d.priceSM ?? null, yb, isSH, "nadlan");
+      d.assetArea ?? null, d.dealAmount ?? null, d.priceSM ?? null, yb, isSH,
+      d.neighborhoodName?.trim() || null, addr.street, addr.houseNum, "nadlan");
   }
   const CHUNK = 80;
   for (let i = 0; i < rows.length; i += CHUNK) {

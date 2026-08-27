@@ -12,6 +12,8 @@ import { reconcile, defaultOrder, PAGE_KEYS, PAGE_SECTIONS } from "@/lib/pageSec
 import { priceBins, binOf, buildCityMap, type CityMapGeometry } from "@/lib/cityMap";
 import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
+import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
+import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
 import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
 import { project, makeProjector, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
@@ -912,5 +914,69 @@ describe("map colour ramp", () => {
     const b = parseInt(MAP_FILLS[0].slice(5, 7), 16);
     const r = parseInt(MAP_FILLS[0].slice(1, 3), 16);
     expect(b - r).toBeGreaterThan(40);
+  });
+});
+
+describe("neighbourhood page: spelling resolution and rank", () => {
+  const KNOWN = ["נווה צדק", "הצפון הישן - החלק הצפוני", "פלורנטין"];
+
+  it("maps a reader's spelling to the Tax Authority's", () => {
+    // The URL arrives in whatever spelling the reader (or an old link) used;
+    // the DB knows exactly one. נוה↔נווה is the classic single-vav variant.
+    expect(resolveHoodName("נוה צדק", KNOWN)).toBe("נווה צדק");
+    expect(resolveHoodName("הצפון הישן החלק הצפוני", KNOWN)).toBe("הצפון הישן - החלק הצפוני");
+  });
+
+  it("prefers the exact name over a normalised collision", () => {
+    // Two real neighbourhoods CAN normalise identically; each must keep its
+    // own page rather than the first one swallowing both URLs.
+    const both = ["נוה עוז", "נווה עוז"];
+    expect(resolveHoodName("נוה עוז", both)).toBe("נוה עוז");
+    expect(resolveHoodName("נווה עוז", both)).toBe("נווה עוז");
+  });
+
+  it("returns null for a neighbourhood the city does not have", () => {
+    expect(resolveHoodName("רחביה", KNOWN)).toBeNull();
+  });
+
+  it("ranks by price with ties sharing the better rank", () => {
+    const rows = [
+      { neighborhood: "א", sqm: 60_000 },
+      { neighborhood: "ב", sqm: 50_000 },
+      { neighborhood: "ג", sqm: 50_000 },
+      { neighborhood: "ד", sqm: 40_000 },
+    ];
+    expect(hoodRank("א", rows)).toBe(1);
+    expect(hoodRank("ב", rows)).toBe(2);
+    expect(hoodRank("ג", rows)).toBe(2); // tie — not 3
+    expect(hoodRank("ד", rows)).toBe(4);
+    expect(hoodRank("ה", rows)).toBeNull();
+  });
+});
+
+describe("nadlan reported address extraction", () => {
+  it("splits 'street number, city' and drops the city tail", () => {
+    expect(splitAddress("הרצל 14, תל אביב-יפו", "תל אביב-יפו")).toEqual({ street: "הרצל", houseNum: "14" });
+  });
+
+  it("keeps a numeric road name intact when no house number trails it", () => {
+    // "דרך 90" is the road's NAME — stripping its number would invent a
+    // street called "דרך". Only a TRAILING number after a name is a house.
+    expect(splitAddress("דרך נמיר 88")).toEqual({ street: "דרך נמיר", houseNum: "88" });
+    expect(splitAddress("שדרות רוטשילד")).toEqual({ street: "שדרות רוטשילד", houseNum: null });
+  });
+
+  it("reads whichever field name the API used, in priority order", () => {
+    // The exact field name is unmeasured until the raw-keys log runs in
+    // production — this is why the extractor tries every plausible spelling.
+    expect(extractAddress({ streetName: "אבן גבירול", houseNum: 30 })).toEqual({ street: "אבן גבירול", houseNum: "30" });
+    expect(extractAddress({ fullAdress: "בן יהודה 5, תל אביב-יפו" }, "תל אביב-יפו")).toEqual({ street: "בן יהודה", houseNum: "5" });
+    expect(extractAddress({ FULLADRESS: "העצמאות 12" })).toEqual({ street: "העצמאות", houseNum: "12" });
+  });
+
+  it("returns nulls, never throws, when no address field exists", () => {
+    // Absent field = store NULL exactly as before the change — a wrong guess
+    // that threw would kill the whole collection chunk.
+    expect(extractAddress({ dealDate: "2025-01-01", dealAmount: 1 })).toEqual({ street: null, houseNum: null });
   });
 });

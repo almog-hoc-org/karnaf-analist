@@ -270,6 +270,21 @@ jobs:
           # every neighbourhood is a user-facing break, not a report.
           echo "── מפת שכונות: העסקאות של שכונה ──"
           docker compose exec -T app npx tsx scripts/probe-neighborhood-deals.ts </dev/null
+
+          # How much of the repository actually carries a neighbourhood and a
+          # street, per city per source. Three writers disagree about what a
+          # row carries, so this is measured, not reasoned — and it is the
+          # before/after meter for the fact-copy enrichment. Report only.
+          echo "── כיסוי שכונה ורחוב ──"
+          docker compose exec -T app npx tsx scripts/report-neighborhood-coverage.ts </dev/null || true
+
+          # A neighbourhood page must answer. NOT || true: these pages are
+          # public and sitemap-listed, so a broken one is a user-facing (and
+          # crawler-facing) break, not a report.
+          echo "── עמוד שכונה: תשובה חיה ──"
+          # URL pre-encoded (Hebrew city + hood); nested heredocs inside the
+          # REMOTE heredoc would not survive bash's delimiter rules.
+          docker compose exec -T app sh -c "curl -fsSL 'http://localhost:3000/city/%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91-%D7%99%D7%A4%D7%95/neighborhood/%D7%94%D7%A6%D7%A4%D7%95%D7%9F%20%D7%94%D7%99%D7%A9%D7%9F%20-%20%D7%94%D7%97%D7%9C%D7%A7%20%D7%94%D7%A6%D7%A4%D7%95%D7%A0%D7%99' | grep -q 'מחירי דירות ב' && echo '✓ עמוד השכונה עונה עם כותרת'" </dev/null
           REMOTE
 
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import TrendValue from "@/components/TrendValue";
 import { withBasePath } from "@/lib/basePath";
 import {
@@ -86,9 +87,21 @@ export default function NeighborhoodDetail({
           <h3 className="min-w-0 flex-1 truncate text-base font-extrabold text-slate-900" title={hood.neighborhood}>
             {hood.neighborhood}
           </h3>
-          <button type="button" onClick={onBack} className="chip-action border-slate-300 text-slate-600 hover:bg-slate-50">
-→ כל השכונות
-          </button>
+          <span className="flex shrink-0 items-center gap-1.5">
+            {s && (
+              /* Tax Authority spelling (s.neighborhood), never the OSM shape
+                 name — the page URL is keyed on it, same rule as the query. */
+              <Link
+                href={`/city/${encodeURIComponent(cityName)}/neighborhood/${encodeURIComponent(s.neighborhood)}`}
+                className="chip-action border-indigo-300 font-bold text-indigo-700 hover:bg-indigo-50"
+              >
+                עמוד השכונה ←
+              </Link>
+            )}
+            <button type="button" onClick={onBack} className="chip-action border-slate-300 text-slate-600 hover:bg-slate-50">
+              → כל השכונות
+            </button>
+          </span>
         </div>
 
         {s ? (
