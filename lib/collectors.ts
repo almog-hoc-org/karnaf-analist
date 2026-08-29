@@ -92,6 +92,23 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 90 * MINUTE,
   },
   {
+    id: "govmap-backfill",
+    cmd: "npx",
+    args: ["tsx", "scripts/backfill-govmap-addresses.ts"],
+    label: "השלמת כתובות מ-govmap לעסקאות קיימות",
+    why: "The address campaign: the bulk history was collected by a writer that dropped street/house/floor, so ~60% of deals have no address even though the govmap feed carries one for every deal. This re-walks the feed and UPDATEs the existing rows (COALESCE only, merge's never-guess rules; never inserts — street is part of the deal identity key and an insert would duplicate). Per-city checkpoints in govmap_address_backfill_status make each run resume where the last stopped; once every city is marked ok the run is a fast no-op. Budgeted via KARNAF_BACKFILL_BUDGET_MIN (default 60 min/night).",
+    host: "https://www.govmap.gov.il/api",
+    // Same probe object as the govmap source — probeTargets dedupes by URL, so
+    // this costs zero extra probes and is gated by the same reachability answer.
+    probe: {
+      url: "https://www.govmap.gov.il/api/search-service/autocomplete",
+      method: "POST",
+      body: { searchText: "חיפה", language: "he", isAccurate: false, maxResults: 10 },
+      expectJson: true,
+    },
+    timeoutMs: 90 * MINUTE,
+  },
+  {
     id: "nadlan",
     cmd: "npx",
     args: ["tsx", "scripts/collect-nadlan-transactions.ts"],

@@ -103,6 +103,17 @@ export default function HoodDealsTable({
           </button>
         </div>
       )}
+      {/* Honesty line (operator, 8/2026): a column of address dashes with no
+          word of explanation reads like a bug. It is the source's gap — the
+          Tax Authority report carries the neighbourhood even when it carries
+          no street — and the reader deserves the one sentence that says so.
+          Measured from the rows on screen (no extra query); hidden when
+          addresses are essentially complete. */}
+      {deals.filter((d) => !d.street).length / deals.length >= 0.2 && (
+        <p className="border-t border-slate-100 px-3 py-2 text-2xs leading-relaxed text-slate-400">
+          חלק מהעסקאות מדווחות ברשות המסים ללא כתובת רחוב; השיוך לשכונה נעשה לפי השכונה שדווחה בעסקה עצמה.
+        </p>
+      )}
     </div>
   );
 }

@@ -29,6 +29,7 @@ import puppeteerCore from "puppeteer-core";
 import type { Browser } from "puppeteer-core";
 import { prisma } from "../lib/db";
 import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
+import { ensureSourceDealIdColumn } from "../lib/addressBackfillDb";
 
 const NADLAN_METHOD = "v9-saleflags"; // bumped: now stores hokHamecher + prevDeals, the
 // authority's OWN developer-vs-resale signals. They are present on every row, while
@@ -54,7 +55,11 @@ function decode(txt: string): unknown { const t = txt.trim(); if (t.startsWith("
 function roomBucket(rn: number | null | undefined): string { if (rn == null || isNaN(rn)) return "other"; if (rn >= 2.5 && rn < 3.5) return "3"; if (rn >= 3.5 && rn < 4.5) return "4"; if (rn >= 4.5) return "5"; return "other"; }
 function isResidential(n: string | null | undefined): boolean { if (!n) return false; if (/קבוצת רכישה|קרקע|מסחרי|משרד|חנות|חניה|מחסן|תעשיה|ללא תיכנון|מלון|דיור מוגן/.test(n)) return false; return ["דירה", "דירת גן", "דירת גג", "פנטהאוז", "קוטג'", "בית בודד", "דו משפחתי", "מיני פנטהאוז"].some((p) => n.includes(p)); }
 
-interface DealRow { deal_date: string; deal_year: number; rooms: number | null; area: number | null; price: number | null; price_sqm: number | null; year_built: number | null; is_secondhand: number; neighborhood: string | null; cbs_code: string | null; hok_hamecher: number | null; prev_deals: number | null; }
+// street/house_num/floor/source_deal_id are optional: the govmap branch fills
+// them (that feed carries a full address per deal — it was being DROPPED here
+// for years, which is why 1.4M historical rows have no street); the nadlan
+// branch leaves them undefined and saveRows writes NULL.
+interface DealRow { deal_date: string; deal_year: number; rooms: number | null; area: number | null; price: number | null; price_sqm: number | null; year_built: number | null; is_secondhand: number; neighborhood: string | null; cbs_code: string | null; hok_hamecher: number | null; prev_deals: number | null; street?: string | null; house_num?: string | null; floor?: string | null; source_deal_id?: string | null; }
 
 // ── manifest ─────────────────────────────────────────────────────
 
@@ -151,12 +156,19 @@ async function needsCollection(city: string, source: string, method: string, for
  */
 async function saveRows(city: string, source: string, rows: DealRow[]) {
   await prisma.$executeRawUnsafe(DEAL_KEY_INDEX_SQL);
-  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,source,hok_hamecher,prev_deals";
+  await ensureSourceDealIdColumn(prisma);
+  // street/house_num/floor joined COLS in 8/2026 — this writer was the one
+  // dropping govmap's addresses on the floor. Note the key implication:
+  // street IS in DEAL_KEY_COLS, so govmap inserts now compare it too. Rows the
+  // backfill already healed carry the same govmap values and match; unhealed
+  // legacy street-less rows gain a street-ful twin that flag-duplicate-deals
+  // collapses, keeping the addressed copy. Run the backfill first.
+  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,street,house_num,floor,source,hok_hamecher,prev_deals,source_deal_id";
   const CHUNK = 60;
   for (let i = 0; i < rows.length; i += CHUNK) {
     const slice = rows.slice(i, i + CHUNK);
     const params: unknown[] = [];
-    for (const r of slice) params.push(city, r.cbs_code, r.deal_date, r.deal_year, r.rooms, roomBucket(r.rooms), r.area, r.price, r.price_sqm, r.year_built, r.is_secondhand, r.neighborhood, source, r.hok_hamecher, r.prev_deals);
+    for (const r of slice) params.push(city, r.cbs_code, r.deal_date, r.deal_year, r.rooms, roomBucket(r.rooms), r.area, r.price, r.price_sqm, r.year_built, r.is_secondhand, r.neighborhood, r.street ?? null, r.house_num ?? null, r.floor ?? null, source, r.hok_hamecher, r.prev_deals, r.source_deal_id ?? null);
     // placeholders are derived from COLS — hand-counted tuples silently desync
     // the moment a column is added (that is exactly how the v9 run failed)
     await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, slice.length), ...params);
@@ -188,7 +200,7 @@ async function govmapCity(cityName: string): Promise<DealRow[]> {
   const seen = new Set<string>(); const out: DealRow[] = [];
   for (const pid of picked) for (const [s0, e0] of [["2015-01", "2020-06"], ["2020-06", "2026-12"]] as const) {
     try { const d: { data?: Record<string, unknown>[] } = await (await gf(`${GOVMAP_BASE}/real-estate/neighborhood-deals/${pid}?limit=2000&startDate=${s0}&endDate=${e0}`)).json();
-      for (const deal of d.data ?? []) { if (normalizeCity(deal.settlementNameHeb as string) !== cityKey || !isResidential(deal.dealNatureDescription as string)) continue; const key = String(deal.dealId ?? `${deal.dealDate}-${deal.dealAmount}`); if (seen.has(key)) continue; seen.add(key); const area = (deal.assetArea as number) ?? 0, price = (deal.dealAmount as number) ?? 0, sqm = area > 0 ? price / area : 0, dy = Number(String(deal.dealDate).slice(0, 4)); if (dy > 1990 && area >= MIN_AREA && area <= MAX_AREA && sqm >= MIN_SQM && sqm <= MAX_SQM) out.push({ deal_date: String(deal.dealDate).slice(0, 10), deal_year: dy, rooms: (deal.assetRoomNum as number) ?? null, area, price, price_sqm: Math.round(sqm), year_built: null, is_secondhand: 0, neighborhood: (deal.neighborhood as string) ?? null, cbs_code: deal.settlementId ? String(deal.settlementId) : null, hok_hamecher: null, prev_deals: null }); }
+      for (const deal of d.data ?? []) { if (normalizeCity(deal.settlementNameHeb as string) !== cityKey || !isResidential(deal.dealNatureDescription as string)) continue; const key = String(deal.dealId ?? `${deal.dealDate}-${deal.dealAmount}`); if (seen.has(key)) continue; seen.add(key); const area = (deal.assetArea as number) ?? 0, price = (deal.dealAmount as number) ?? 0, sqm = area > 0 ? price / area : 0, dy = Number(String(deal.dealDate).slice(0, 4)); if (dy > 1990 && area >= MIN_AREA && area <= MAX_AREA && sqm >= MIN_SQM && sqm <= MAX_SQM) out.push({ deal_date: String(deal.dealDate).slice(0, 10), deal_year: dy, rooms: (deal.assetRoomNum as number) ?? null, area, price, price_sqm: Math.round(sqm), year_built: null, is_secondhand: 0, neighborhood: (deal.neighborhood as string) ?? null, cbs_code: deal.settlementId ? String(deal.settlementId) : null, hok_hamecher: null, prev_deals: null, street: (deal.streetNameHeb as string)?.trim() || null, house_num: deal.houseNum != null ? String(deal.houseNum) : null, floor: deal.floorNo != null ? String(deal.floorNo) : null, source_deal_id: deal.dealId != null ? String(deal.dealId) : null }); }
     } catch { /* */ } await sleep(govDelay);
   }
   return out;

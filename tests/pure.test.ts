@@ -16,6 +16,10 @@ import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
 import { compMatchNote, compWhere, compHow, type StreetComp } from "@/lib/compTypes";
+import { strictKey, looseKey, chooseDonation, orderCitiesByGap, floorText, SOFT_AREA_TOLERANCE_SQM } from "@/lib/addressBackfill";
+import { govmapWindows } from "@/lib/govmapDeals";
+import { SOURCES, probeKeyFor } from "@/lib/collectors";
+import { insertIfAbsentSql } from "@/lib/dealKey";
 import { parseInlineDraft } from "@/components/InlineEdit";
 import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
 import { project, makeProjector, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
@@ -1065,5 +1069,84 @@ describe("comp match note (honest labeling)", () => {
 
   it("an empty comparison stays an empty answer", () => {
     expect(compMatchNote({ ...base, n: 0 })).toBe("אין עסקאות דומות");
+  });
+});
+
+describe("govmap address backfill — keys and never-guess donation", () => {
+  it("builds the merge's exact strict and loose keys, null rooms rounding to 0", () => {
+    const r = { deal_date: "2024-03-01", price: 2_500_400.6, area: 84.4, rooms: 3.5 };
+    expect(strictKey(r)).toBe("2024-03-01|2500401|84|4");
+    expect(strictKey({ ...r, rooms: null })).toBe("2024-03-01|2500401|84|0");
+    expect(looseKey(r)).toBe("2024-03-01|2500401");
+    expect(SOFT_AREA_TOLERANCE_SQM).toBe(2); // the merge's ±2 m² soft-pass tolerance
+  });
+
+  it("donors conflicting on street donate nothing", () => {
+    expect(chooseDonation([
+      { street: "הרצל", house_num: "3", floor: 2, neighborhood: "מרכז" },
+      { street: "ביאליק", house_num: "7", floor: null, neighborhood: "מרכז" },
+    ])).toBeNull();
+  });
+
+  it("agreeing street + conflicting hoods donates the street only", () => {
+    const d = chooseDonation([
+      { street: "הרצל", house_num: "3", floor: "קומת קרקע", neighborhood: "מרכז" },
+      { street: "הרצל", house_num: "3", floor: null, neighborhood: "הצפון הישן" },
+    ]);
+    expect(d).toEqual({ street: "הרצל", house_num: "3", floor: "קומת קרקע", neighborhood: null });
+  });
+
+  it("a single donor gives everything, floor stringified", () => {
+    const d = chooseDonation([{ street: "העצמאות", house_num: "12", floor: 5, neighborhood: "נווה שאנן" }]);
+    expect(d).toEqual({ street: "העצמאות", house_num: "12", floor: "5", neighborhood: "נווה שאנן" });
+    expect(floorText(0)).toBe("0");
+    expect(floorText(null)).toBeNull();
+  });
+
+  it("orders cities by missing-address gap, largest first", () => {
+    const out = orderCitiesByGap([{ missing: 5 }, { missing: 900 }, { missing: 40 }]);
+    expect(out.map((r) => r.missing)).toEqual([900, 40, 5]);
+  });
+});
+
+describe("govmap window slicing", () => {
+  it("a full decade gets its three slices, in order, never backwards", () => {
+    const w = govmapWindows("2016-01", "2026-12");
+    expect(w).toEqual([["2016-01", "2020-01"], ["2020-01", "2023-06"], ["2023-06", "2026-12"]]);
+    for (const [s, e] of w) expect(s < e).toBe(true);
+  });
+
+  it("a narrow top-up window collapses to one slice", () => {
+    // the exact bug the derivation exists to prevent: a fixed first slice
+    // ending 2020-01 against a 2024 start would ask for a backwards range
+    expect(govmapWindows("2024-06", "2026-12")).toEqual([["2024-06", "2026-12"]]);
+  });
+});
+
+describe("collection sources — the backfill is a collector, not a pipeline stage", () => {
+  it("govmap-backfill is registered and shares govmap's probe", () => {
+    const backfill = SOURCES.find((s) => s.id === "govmap-backfill");
+    const govmap = SOURCES.find((s) => s.id === "govmap");
+    expect(backfill).toBeTruthy();
+    expect(govmap).toBeTruthy();
+    // one probe gates both — probeTargets dedupes by url+method
+    expect(probeKeyFor(backfill!)).toBe(probeKeyFor(govmap!));
+  });
+
+  it("the backfill script is NOT in the DB-only pipeline", () => {
+    expect(PIPELINE.some((s) => s.script.includes("backfill-govmap-addresses"))).toBe(false);
+  });
+});
+
+describe("dealKey with widened collector columns", () => {
+  it("insertIfAbsentSql compares only key columns present in the insert", () => {
+    // the nadlan branch of collect-transactions now includes street in COLS
+    // but passes NULL — both sides COALESCE to '' and still match legacy rows
+    const withAddr = insertIfAbsentSql("city_name,deal_date,street,house_num,area,price,rooms,source", 1);
+    expect(withAddr).toContain('COALESCE(t."street", \'\')');
+    const withoutAddr = insertIfAbsentSql("city_name,deal_date,area,price,rooms,source", 1);
+    expect(withoutAddr).not.toContain("street");
+    // source_deal_id must never be part of identity
+    expect(withAddr).not.toContain("source_deal_id");
   });
 });

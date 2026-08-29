@@ -227,6 +227,12 @@ model nadlan_transactions {
   hok_hamecher  Int?
   prev_deals    Int?
   class_source  String?
+  // govmap's own per-deal id (dealId) — the only exact join a future address
+  // backfill can use. Stored by the govmap writers since 8/2026 (it used to be
+  // received and discarded); NULL on nadlan rows and on all legacy rows.
+  // Live DB gets it via the guarded ALTER in lib/addressBackfillDb.ts — this
+  // line only shapes fresh/build databases. NOT part of the deal identity key.
+  source_deal_id String?
   captured_at   DateTime @default(now())
 
   @@index([city_name, deal_year, room_bucket], map: "idx_nadlan_tx_city_year_room")

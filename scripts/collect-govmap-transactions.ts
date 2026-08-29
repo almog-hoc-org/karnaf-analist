@@ -7,18 +7,20 @@
  * none), so these rows power the "all" + room graphs; the second-hand/new split stays on the
  * nadlan build-year rows (source='nadlan').
  *
+ * The endpoint plumbing (autocomplete → polygon sweep → per-polygon deals, rate
+ * limit, retries, geo-block detection) lives in lib/govmapDeals.ts — shared with
+ * the address-backfill campaign so the two walk govmap identically.
+ *
  * Usage:
  *   npx tsx scripts/collect-govmap-transactions.ts                 # all DB cities, skip fresh
  *   npx tsx scripts/collect-govmap-transactions.ts "לוד" "ירושלים"
  *   npx tsx scripts/collect-govmap-transactions.ts --force ...
  */
 import { prisma } from "../lib/db";
-import { normalizeCity } from "../lib/cityAliases";
-import { ilFetch, ilProxyUrl } from "../lib/ilFetch";
 import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
+import { fetchCityDeals, govmapWindows } from "../lib/govmapDeals";
+import { ensureSourceDealIdColumn } from "../lib/addressBackfillDb";
 
-const GOVMAP_BASE = "https://www.govmap.gov.il/api";
-const REQUEST_DELAY_MS = 300;
 // 10-year scope only (user rule: never touch/collect beyond 10 years back)
 /**
  * Collection window.
@@ -28,27 +30,9 @@ const REQUEST_DELAY_MS = 300;
  * returns deals the database has held for years. Format "YYYY-MM".
  */
 const START_DATE = process.env.KARNAF_COLLECT_FROM || "2016-01";
-const END_DATE = "2026-12";
 // three windows (was two): denser slicing so a busy polygon's 2000-per-call cap
 // truncates far less history — more deals ⇒ more addresses to merge onto nadlan rows.
-// Slicing exists only to stay under the endpoint's 2000-deals-per-call cap, so
-// the slice boundaries have to sit INSIDE the window. Hard-coding them breaks
-// the moment the window narrows: a start of 2021-01 against a fixed first slice
-// ending 2020-01 asks for a range that runs backwards.
-//
-// Derived from the window instead. Ten years gets its three slices exactly as
-// before; a quarterly top-up gets one, because a few months never approach the
-// cap and re-slicing them would fetch the same deals repeatedly.
-const SLICE_MARKS = ["2020-01", "2023-06"];
-const WINDOWS: readonly (readonly [string, string])[] = (() => {
-  const marks = [START_DATE, ...SLICE_MARKS.filter((m) => m > START_DATE && m < END_DATE), END_DATE];
-  return marks.slice(0, -1).map((s, i) => [s, marks[i + 1]] as const);
-})();
-const SWEEP_RADIUS = 2500;
-const RING_OFFSETS_M = [0, 2000, 4000, 6000];
-// 45 polygons dropped whole neighbourhoods in big cities (TLV kept only 36% of deals) —
-// 120 covers the full polygon list almost everywhere; smaller cities are unaffected.
-const MAX_POLYGONS = 120;
+const WINDOWS = govmapWindows(START_DATE);
 /**
  * Skip a city collected more recently than this.
  *
@@ -63,24 +47,6 @@ const MAX_POLYGONS = 120;
 const FRESH_DAYS = Number(process.env.KARNAF_GOVMAP_FRESH_DAYS ?? 20);
 const MIN_SQM = 2_000, MAX_SQM = 200_000, MIN_AREA = 20, MAX_AREA = 500;
 
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-interface RawDeal {
-  dealId?: number; dealDate: string; dealAmount: number; assetRoomNum: number | null;
-  assetArea: number | null; neighborhood: string | null; settlementNameHeb?: string | null;
-  settlementId?: number; dealNatureDescription?: string | null;
-  streetNameHeb?: string | null; houseNum?: string | number | null;
-  /** stringified on insert: `floor` is a TEXT column (Hebrew floor names), and an
-   *  integer stored there makes Prisma reject the whole row on read. */
-  floorNo?: string | number | null;
-}
-
-// normalizeCity: shared copy — lib/cityAliases.
-function isResidentialApartment(nature: string | null | undefined): boolean {
-  if (!nature) return false;
-  if (/קבוצת רכישה|קרקע|מסחרי|משרד|חנות|חניה|מחסן|תעשיה|ללא תיכנון|מלון|דיור מוגן/.test(nature)) return false;
-  return ["דירה", "דירת גן", "דירת גג", "פנטהאוז", "קוטג'", "בית בודד", "דו משפחתי", "מיני פנטהאוז"].some((p) => nature.includes(p));
-}
 function roomBucket(rn: number | null): string {
   if (rn == null || isNaN(rn)) return "other";
   if (rn >= 2.5 && rn < 3.5) return "3";
@@ -89,87 +55,9 @@ function roomBucket(rn: number | null): string {
   return "other";
 }
 
-async function gf(url: string, options?: RequestInit): Promise<Response> {
-  // retry on throttle/transient errors (govmap returns HTML/5xx under load)
-  let lastErr: unknown;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      // ilFetch, not fetch: govmap is geo-restricted to Israel and answers
-      // everyone else with an HTML shell. Without KARNAF_IL_PROXY set this IS
-      // plain fetch, so nothing changes for a run from inside Israel.
-      const res = await ilFetch(url, { ...options, headers: { "Content-Type": "application/json", Accept: "application/json", "User-Agent": "RealEstateDashboard/1.0", ...(options?.headers || {}) } });
-      if (!res.ok) throw new Error(`Govmap ${res.status}`);
-      // A 200 carrying HTML is the geo-block, not a deal list. Saying so once
-      // beats 168 cities each reporting "Unexpected token '<'" and leaving the
-      // reader to work out that they all mean the same thing.
-      const ct = res.headers.get("content-type") ?? "";
-      if (!ct.includes("json")) {
-        throw new Error(
-          `Govmap החזיר ${ct || "תוכן לא ידוע"} במקום JSON — ${ilProxyUrl() ? "גם דרך הפרוקסי" : "חסימה גיאוגרפית; הגדר KARNAF_IL_PROXY"}`
-        );
-      }
-      return res;
-    } catch (e) { lastErr = e; await sleep(800 * (attempt + 1)); }
-  }
-  throw lastErr;
-}
-/** ALL settlement candidate centre points (there can be several "יבנה"s; the right one is
- *  whichever yields matching polygons — so we sweep from all of them). */
-async function searchCityPoints(cityName: string): Promise<{ x: number; y: number }[]> {
-  const res = await gf(`${GOVMAP_BASE}/search-service/autocomplete`, { method: "POST", body: JSON.stringify({ searchText: cityName, language: "he", isAccurate: false, maxResults: 10 }) });
-  const data = await res.json();
-  const pts: { x: number; y: number }[] = [];
-  const cands = (data.results ?? []).filter((r: { type: string }) => r.type === "settlement");
-  for (const r of (cands.length ? cands : (data.results ?? []).slice(0, 2))) {
-    const m = r?.shape?.match(/POINT\(([^ ]+) ([^ ]+)\)/);
-    if (m) pts.push({ x: Math.round(parseFloat(m[1])), y: Math.round(parseFloat(m[2])) });
-  }
-  return pts;
-}
-
 async function collectCity(cityName: string): Promise<{ n: number; years: string }> {
-  const cityKey = normalizeCity(cityName);
-  const centers = await searchCityPoints(cityName);
-  if (centers.length === 0) return { n: 0, years: "" };
-  await sleep(REQUEST_DELAY_MS);
-
-  // sweep grid → city polygons. Sweep from EVERY candidate centre (handles duplicate/wrong
-  // autocomplete hits) with wider rings (handles centres that land just outside the city).
-  const sweep: { x: number; y: number }[] = [];
-  for (const c of centers) {
-    sweep.push({ x: c.x, y: c.y });
-    for (const r of RING_OFFSETS_M) { if (r === 0) continue; for (let a = 0; a < 360; a += 45) { const rad = (a * Math.PI) / 180; sweep.push({ x: Math.round(c.x + r * Math.cos(rad)), y: Math.round(c.y + r * Math.sin(rad)) }); } }
-  }
-  const polys = new Map<string, number>();
-  for (const pt of sweep) {
-    try {
-      const arr: { polygon_id: string; dealscount: string; settlementNameHeb: string }[] = await (await gf(`${GOVMAP_BASE}/real-estate/deals/${pt.x},${pt.y}/${SWEEP_RADIUS}`)).json();
-      for (const p of arr ?? []) { if (parseInt(p.dealscount) > 0 && normalizeCity(p.settlementNameHeb) === cityKey && !polys.has(p.polygon_id)) polys.set(p.polygon_id, parseInt(p.dealscount)); }
-    } catch { /* transient */ }
-    await sleep(REQUEST_DELAY_MS);
-  }
-  const picked = [...polys.entries()].sort((a, b) => b[1] - a[1]).slice(0, MAX_POLYGONS).map((e) => e[0]);
-  if (picked.length === 0) return { n: 0, years: "" };
-
-  // fetch deals per polygon (two windows for the 2000-per-call limit)
-  const seen = new Set<string>();
-  const deals: RawDeal[] = [];
-  for (const pid of picked) {
-    for (const [s, e] of WINDOWS) {
-      try {
-        const d: { data?: RawDeal[] } = await (await gf(`${GOVMAP_BASE}/real-estate/neighborhood-deals/${pid}?limit=2000&startDate=${s}&endDate=${e}`)).json();
-        for (const deal of d.data ?? []) {
-          if (normalizeCity(deal.settlementNameHeb) !== cityKey) continue;
-          if (!isResidentialApartment(deal.dealNatureDescription)) continue;
-          const key = String(deal.dealId ?? `${deal.dealDate}-${deal.dealAmount}-${deal.assetArea}`);
-          if (seen.has(key)) continue;
-          seen.add(key);
-          deals.push(deal);
-        }
-      } catch { /* skip */ }
-      await sleep(REQUEST_DELAY_MS);
-    }
-  }
+  const deals = await fetchCityDeals(cityName, WINDOWS);
+  if (deals.length === 0) return { n: 0, years: "" };
 
   // build rows (sane-bounded)
   const rows = deals.map((d) => {
@@ -186,12 +74,16 @@ async function collectCity(cityName: string): Promise<{ n: number; years: string
   // years OUTSIDE the window that this run never re-fetches — turning a
   // three-month top-up into the loss of a decade.
   await prisma.$executeRawUnsafe(DEAL_KEY_INDEX_SQL);
-  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,street,house_num,floor,source";
+  // source_deal_id: govmap's own per-deal id, kept from now on (it used to be
+  // received and thrown away) so a future address backfill can join exactly
+  // instead of by the fuzzy natural key. NOT part of DEAL_KEY_COLS — identity
+  // must keep matching the legacy rows that never stored it.
+  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,street,house_num,floor,source,source_deal_id";
   const CHUNK = 60;
   for (let i = 0; i < rows.length; i += CHUNK) {
     const slice = rows.slice(i, i + CHUNK);
     const params: unknown[] = [];
-    for (const r of slice) params.push(cityName, r.d.settlementId ? String(r.d.settlementId) : null, String(r.d.dealDate).slice(0, 10), r.dy, r.d.assetRoomNum ?? null, roomBucket(r.d.assetRoomNum), r.area, r.price, Math.round(r.sqm), null, 0, r.d.neighborhood ?? null, r.d.streetNameHeb ?? null, r.d.houseNum != null ? String(r.d.houseNum) : null, r.d.floorNo != null ? String(r.d.floorNo) : null, "govmap");
+    for (const r of slice) params.push(cityName, r.d.settlementId ? String(r.d.settlementId) : null, String(r.d.dealDate).slice(0, 10), r.dy, r.d.assetRoomNum ?? null, roomBucket(r.d.assetRoomNum), r.area, r.price, Math.round(r.sqm), null, 0, r.d.neighborhood ?? null, r.d.streetNameHeb ?? null, r.d.houseNum != null ? String(r.d.houseNum) : null, r.d.floorNo != null ? String(r.d.floorNo) : null, "govmap", r.d.dealId != null ? String(r.d.dealId) : null);
     await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, slice.length), ...params);
   }
   const yrs = [...new Set(rows.map((r) => r.dy))].sort();
@@ -212,6 +104,7 @@ async function main() {
   const names = argv.filter((a) => !a.startsWith("--"));
   const cities = names.length ? names : (await prisma.city.findMany({ select: { city_name: true }, orderBy: { population_2026: "desc" } })).map((c) => c.city_name);
 
+  await ensureSourceDealIdColumn(prisma);
   console.log(`\n=== collect-govmap-transactions — ${cities.length} cities ===`);
   let ok = 0, skip = 0, empty = 0, err = 0;
   for (let i = 0; i < cities.length; i++) {

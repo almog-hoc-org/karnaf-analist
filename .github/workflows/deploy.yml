@@ -41,6 +41,10 @@ on:
         description: "אחרי הפריסה: להריץ את ה-pipeline המלא על ה-DB החי ולהדפיס אימות"
         type: boolean
         default: false
+      run_backfill:
+        description: "אחרי הפריסה: קמפיין השלמת כתובות מ-govmap (מעדכן רחוב/שכונה על עסקאות קיימות)"
+        type: boolean
+        default: false
 
 # One deploy at a time. Two overlapping runs would race on the same working
 # copy and the same container, and the loser leaves the server in a state
@@ -455,6 +459,39 @@ jobs:
             exit 1
           fi
           if [ -n "${USAGE_FAILED:-}" ]; then exit 1; fi
+          REMOTE
+
+      # Optional: the govmap address-backfill campaign (workflow_dispatch +
+      # run_backfill). Re-walks the govmap deal feed and UPDATEs street/hood
+      # onto existing rows — see scripts/backfill-govmap-addresses.ts. SAME JOB
+      # as the deploy for the same keyscan reason as the pipeline step. The
+      # coverage report brackets the run so the log itself answers "how many
+      # addresses did we gain". If govmap is geo-blocked from the VPS the
+      # campaign exits with its explicit Hebrew message and this step fails —
+      # which is the observation the dispatch exists to produce; the campaign
+      # then proceeds via the nightly collect fan wherever govmap answers.
+      - name: run govmap address backfill on VPS
+        if: github.event_name == 'workflow_dispatch' && inputs.run_backfill
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          USER: ${{ secrets.VPS_USER }}
+        run: |
+          # key + known_hosts were written by the deploy step on this runner
+          HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
+          USER=$(printf '%s' "$USER" | tr -d '[:space:]')
+          ssh -o BatchMode=yes -o ServerAliveInterval=60 "$USER@$HOST" 'bash -s' <<'REMOTE'
+          set -e
+          cd /opt/karnaf
+          echo "── כיסוי כתובות לפני ──"
+          docker compose exec -T app npx tsx scripts/report-neighborhood-coverage.ts </dev/null || true
+          echo "── קמפיין השלמת הכתובות (תקציב 240 דק׳, גדולות-קודם, ניתן לחידוש) ──"
+          docker compose exec -T -e KARNAF_BACKFILL_BUDGET_MIN=240 app npx tsx scripts/backfill-govmap-addresses.ts </dev/null || BACKFILL_FAILED=1
+          echo "── כיסוי כתובות אחרי ──"
+          docker compose exec -T app npx tsx scripts/report-neighborhood-coverage.ts </dev/null || true
+          if [ -n "${BACKFILL_FAILED:-}" ]; then
+            echo "✗ הקמפיין נעצר בשגיאה — אם ההודעה למעלה היא חסימה גיאוגרפית, govmap אינו נגיש מהשרת והקמפיין ירוץ מסביבת איסוף שבה הוא עונה"
+            exit 1
+          fi
           REMOTE
 
       - name: live page checks from outside
