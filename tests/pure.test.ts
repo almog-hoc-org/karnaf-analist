@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { gradeTrend } from "@/lib/confidence";
+import { gradeTrend, pickWindow } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
 import { PIPELINE, STAGE_IDS, stagesFrom, mutationStages } from "@/lib/pipeline";
@@ -1148,5 +1148,36 @@ describe("dealKey with widened collector columns", () => {
     expect(withoutAddr).not.toContain("street");
     // source_deal_id must never be part of identity
     expect(withAddr).not.toContain("source_deal_id");
+  });
+});
+
+describe("room-price table windows (pickWindow policy)", () => {
+  const cells = [
+    { year: 2016, n: 40 }, { year: 2018, n: 40 }, { year: 2021, n: 5 },
+    { year: 2022, n: 40 }, { year: 2023, n: 40 }, { year: 2026, n: 40 },
+  ];
+
+  it("prefers the exact start year and never slides the end", () => {
+    const { from, to } = pickWindow(cells, 3, 2026);
+    expect(to?.year).toBe(2026);
+    expect(from?.year).toBe(2023);
+  });
+
+  it("slides a missing/thin start FORWARD at most 2 years", () => {
+    // 5y window ⇒ start 2021, which is thin (n=5) → slides to 2022
+    const w5 = pickWindow(cells, 5, 2026);
+    expect(w5.from?.year).toBe(2022);
+    // 10y window ⇒ start 2016 exists and is usable
+    const w10 = pickWindow(cells, 10, 2026);
+    expect(w10.from?.year).toBe(2016);
+    // 9y window ⇒ start 2017 missing, slack reaches 2018 → slides there
+    expect(pickWindow(cells, 9, 2026).from?.year).toBe(2018);
+    // 7y window ⇒ start 2019, slack reaches 2021 — missing, missing, thin →
+    // no window, NOT a silent slide to 2022
+    expect(pickWindow(cells, 7, 2026).from).toBeNull();
+  });
+
+  it("a missing end year yields nothing — never a substitute year", () => {
+    expect(pickWindow(cells, 3, 2025).to).toBeNull();
   });
 });

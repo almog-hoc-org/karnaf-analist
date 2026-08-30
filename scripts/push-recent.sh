@@ -95,6 +95,17 @@ say "איסוף עסקאות מ-$FROM ואילך"
 warn "צפוי כ-20-40 דקות ל-168 ערים."
 # --force because the scratch file is empty: every city is "new" here, and the
 # freshness manifest belongs to the server's database, not this one.
+#
+# ADDRESSES RIDE ALONG (8/2026). Since the address-leak fix, the govmap rows
+# collected here carry street/house_num/floor/source_deal_id, and the import
+# carries them to the server, where the nightly merge donates them onto the
+# nadlan twins and flag-duplicate-deals collapses street-less legacy copies
+# keeping the addressed one. So every run of THIS script from Israel advances
+# the address coverage by itself. The dedicated fast path —
+# scripts/backfill-govmap-addresses.ts, UPDATE-only over the live DB — needs
+# to run where BOTH govmap answers AND the live DB is local, i.e. on the VPS
+# through an Israeli proxy (KARNAF_IL_PROXY); govmap answers 403 to the VPS's
+# own address (measured 8/2026).
 KARNAF_DATA_DIR="$SCRATCH_DIR" KARNAF_COLLECT_FROM="$FROM" \
   npx tsx scripts/collect-govmap-transactions.ts --force \
   || warn "האיסוף נכשל חלקית — ממשיך עם מה שנאסף"

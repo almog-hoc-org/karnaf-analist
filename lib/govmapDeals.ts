@@ -87,11 +87,14 @@ export async function govmapFetch(url: string, options?: RequestInit): Promise<R
   throw lastErr;
 }
 
-/** True when the error is the geo-block message — every later city would fail
+/** True when the error is the geo-block — every later city would fail
  *  identically, so callers should stop the whole run instead of burning the
- *  remaining cities on the same answer. */
+ *  remaining cities on the same answer. Two shapes, both measured: an HTML
+ *  shell served with HTTP 200 ("במקום JSON"), and a plain HTTP 403 — the
+ *  form the VPS actually got on the first dispatch run (165 cities × 5s of
+ *  identical 403s before anyone knew). */
 export function isGeoBlockError(e: unknown): boolean {
-  return e instanceof Error && /במקום JSON/.test(e.message);
+  return e instanceof Error && (/במקום JSON/.test(e.message) || /Govmap 403/.test(e.message));
 }
 
 /** ALL settlement candidate centre points (there can be several "יבנה"s; the right one is

@@ -49,14 +49,19 @@ export default function NeighborhoodPrices({
   /* Beside the map the row budget is arithmetic, not taste: 18 rows have to
      land inside a square map of the same width as its column. */
   const padY = compact ? "py-1" : "py-2.5";
-  const padX = compact ? "px-2.5" : "px-4";
+  const padX = compact ? "px-2.5" : "px-2.5 md:px-4";
+  /* Standalone, the table used to stretch across the full 1120px page with a
+     giant name column — centered at a readable width instead (operator,
+     8/2026: "יפה וממורכזת גם בדסקטופ"). Compact (beside the map) the column
+     is already the width budget. */
+  const box = compact ? "" : "mx-auto w-full max-w-3xl";
   const top = rows[0], bottom = rows[rows.length - 1];
   const spread = bottom.sqm > 0 ? top.sqm / bottom.sqm : null;
 
   return (
     <section className={compact ? "" : "mb-10"}>
       {!compact && (
-      <div className="mb-4 flex items-start gap-3">
+      <div className={`${box} mb-4 flex items-start gap-3`}>
         <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-600 text-xl text-white shadow">
           <Icon name="building" size="1em" />
         </div>
@@ -73,7 +78,7 @@ export default function NeighborhoodPrices({
       )}
 
       {!compact && spread && spread >= 1.15 && (
-        <p className="mb-3 rounded-2xl border border-indigo-200 bg-indigo-50/60 px-4 py-2.5 text-sm text-slate-700">
+        <p className={`${box} mb-3 rounded-2xl border border-indigo-200 bg-indigo-50/60 px-4 py-2.5 text-sm text-slate-700`}>
           הפער בתוך העיר: <b>{top.neighborhood}</b> יקרה פי {spread.toFixed(1)} מ־<b>{bottom.neighborhood}</b>
           {" "}({fmt(top.sqm)} מול {fmt(bottom.sqm)} למ״ר).
         </p>
@@ -81,22 +86,29 @@ export default function NeighborhoodPrices({
 
       {/* No overflow-x-auto and no min-width: a forced 520px inside a 438px
           column is a horizontal scrollbar guaranteed by the CSS, whatever the
-          content says. Standalone (no map) the section is wide enough that the
-          columns never need it either. */}
-      <div className="rounded-2xl border border-slate-200 bg-white">
+          content says.
+
+          THE MOBILE WIDTHS ARE THE BUG FIX (operator, 8/2026: "בכלל לא רואים
+          את השמות"). The desktop column widths summed to 384px of FIXED
+          columns; a 375px phone offers the section 343px, so under table-fixed
+          the auto-width NAME column got the leftover — negative, i.e. zero
+          pixels — and truncate erased the names entirely, without even an
+          ellipsis. Mobile now fixes only ~212px of numbers and the name keeps
+          ~130px of real width. */}
+      <div className={`${box} rounded-2xl border border-slate-200 bg-white`}>
         <table className={`w-full table-fixed ${compact ? "text-xs" : "text-sm"}`}>
           <colgroup>
             <col />
-            <col className={compact ? "w-[5.5rem]" : "w-32"} />
-            <col className={compact ? "w-[6.5rem]" : "w-40"} />
-            <col className={compact ? "w-14" : "w-24"} />
+            <col className={compact ? "w-[5.5rem]" : "w-24 md:w-32"} />
+            <col className={compact ? "w-[6.5rem]" : "w-[4.5rem] md:w-40"} />
+            <col className={compact ? "w-14" : "w-11 md:w-24"} />
           </colgroup>
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-2xs uppercase tracking-wide text-slate-500">
               <th scope="col" className={`${padX} ${padY} text-right font-bold`}>שכונה</th>
-              <th scope="col" className={`px-2 ${padY} text-right font-bold`}>₪ למ״ר</th>
-              <th scope="col" className={`px-2 ${padY} text-right font-bold`}>שינוי</th>
-              <th scope="col" className={`px-2 ${padY} text-right font-bold`}>עסקאות</th>
+              <th scope="col" className={`px-1 md:px-2 ${padY} text-center font-bold`}>₪ למ״ר</th>
+              <th scope="col" className={`px-1 md:px-2 ${padY} text-center font-bold`}>שינוי</th>
+              <th scope="col" className={`px-1 md:px-2 ${padY} text-center font-bold`}>עסקאות</th>
             </tr>
           </thead>
           <tbody>
@@ -110,14 +122,16 @@ export default function NeighborhoodPrices({
                   active === r.neighborhood ? "bg-sky-100" : onHover ? "cursor-pointer hover:bg-sky-50" : ""
                 }`}
               >
-                {/* truncate + title, not wrapping. "הצפון החדש סביבת כיכר
-                    המדינה" is 28 characters: allowed to wrap it doubles its
-                    row and blows the table past the map beside it.
+                {/* Beside the map: truncate + title — a wrapped name doubles
+                    its row and blows the table past the map. STANDALONE (the
+                    only mode a phone ever sees): the name WRAPS — the names
+                    are the whole point of the table, and a long one on two
+                    lines beats an invisible one.
                     The name links to the neighbourhood's own page — it is the
                     Tax Authority spelling, which is exactly what that page's
                     URL is keyed on. stopPropagation so following the link does
                     not also fire the row's map-pin click. */}
-                <th scope="row" className={`${padX} ${padY} truncate text-right font-bold text-slate-900`} title={r.neighborhood}>
+                <th scope="row" className={`${padX} ${padY} ${compact ? "truncate" : "break-words"} text-right font-bold leading-snug text-slate-900`} title={r.neighborhood}>
                   <Link
                     href={`/city/${encodeURIComponent(cityName)}/neighborhood/${encodeURIComponent(r.neighborhood)}`}
                     className="hover:text-indigo-700 hover:underline"
@@ -126,18 +140,20 @@ export default function NeighborhoodPrices({
                     {r.neighborhood}
                   </Link>
                 </th>
-                <td className={`px-2 ${padY} text-right font-bold tabular-nums text-slate-800`}>{fmt(r.sqm)}</td>
-                <td className={`px-2 ${padY} text-right tabular-nums`}>
+                <td className={`px-1 md:px-2 ${padY} text-center font-bold tabular-nums text-slate-800`}>{fmt(r.sqm)}</td>
+                <td className={`px-1 md:px-2 ${padY} text-center tabular-nums`}>
                   {r.changePct == null ? (
                     <span className="text-2xs text-slate-400">אין בסיס</span>
                   ) : (
                     <span className="inline-flex items-center gap-1 whitespace-nowrap">
                       <TrendValue pct={r.changePct} />
-                      <span className="text-2xs text-slate-400">מ־{r.fromYear}</span>
+                      {/* the base year is context, not the number — on a phone
+                          it is exactly the 40px the name column needs back */}
+                      <span className="hidden text-2xs text-slate-400 md:inline">מ־{r.fromYear}</span>
                     </span>
                   )}
                 </td>
-                <td className={`px-2 ${padY} text-right tabular-nums text-slate-500`}>{r.n.toLocaleString("he-IL")}</td>
+                <td className={`px-1 md:px-2 ${padY} text-center tabular-nums text-slate-500`}>{r.n.toLocaleString("he-IL")}</td>
               </tr>
             ))}
           </tbody>
@@ -145,7 +161,7 @@ export default function NeighborhoodPrices({
       </div>
 
       {!compact && (
-      <p className="mt-2 text-2xs leading-relaxed text-slate-400">
+      <p className={`${box} mt-2 text-2xs leading-relaxed text-slate-400`}>
         <Icon name="source-own" size="1em" /> מחושב מהעסקאות שנאספו ונוקו — שם השכונה כפי שדווח לרשות המסים.
         עסקה ללא שכונה רשומה נכללת במספרי העיר ולא בטבלה הזו, ולכן ממוצע העיר שבכותרת מחושב מאותן עסקאות-שכונה בלבד.
         {" "}<Link href="/methodology" className="underline hover:text-indigo-700">מתודולוגיה →</Link>
