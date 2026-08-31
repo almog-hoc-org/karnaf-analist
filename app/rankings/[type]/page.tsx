@@ -105,7 +105,7 @@ async function fetchNewPremiumRanking() {
     .map((m) => ({ city: m.cityName, value: m.newPremiumPct!, formatted: signed(m.newPremiumPct!, "%") }));
 }
 
-async function fetchData(type: RankingType): Promise<Array<{ city: string; value: number; formatted: string }>> {
+async function fetchData(type: RankingType): Promise<Array<{ city: string; value: number; formatted: string; sub?: string | null }>> {
   if (type === "new-premium") {
     return fetchNewPremiumRanking();
   }
@@ -118,7 +118,8 @@ async function fetchData(type: RankingType): Promise<Array<{ city: string; value
       .map((p) => ({
         city: p.cityName,
         value: p.medianShSqm!,
-        formatted: `₪${p.medianShSqm!.toLocaleString("he-IL")}/מ"ר (${p.priceYear})`,
+        formatted: `₪${p.medianShSqm!.toLocaleString("he-IL")}/מ"ר`,
+        sub: p.priceYear ? String(p.priceYear) : null,
       }));
   }
   if (type === "highest-gain" || type === "highest-gain-median") {
@@ -128,7 +129,8 @@ async function fetchData(type: RankingType): Promise<Array<{ city: string; value
     return rows.map((r) => ({
       city: r.city_name,
       value: r.pct,
-      formatted: `${r.pct >= 0 ? "+" : ""}${r.pct.toFixed(1)}% (${fromToText(r.fromY, r.toY)})`,
+      formatted: `${r.pct >= 0 ? "+" : ""}${r.pct.toFixed(1)}%`,
+      sub: fromToText(r.fromY, r.toY),
     }));
   }
   if (type === "highest-surplus") {
@@ -263,10 +265,14 @@ export default async function RankingPage({ params }: PageProps) {
                         {row.city}
                       </Link>
                     </td>
-                    <td className={`py-3 px-4 text-left font-bold ${
+                    <td className={`py-3 px-4 text-center font-bold ${
                       isTrendRanking ? (row.value >= 0 ? "text-emerald-700" : "text-red-600") : a.value
                     } ${rank === 1 ? "text-lg" : ""}`}>
-                      {row.formatted}
+                      {/* the year/range stacks UNDER the value — site-wide rule */}
+                      <span className="block leading-tight">{row.formatted}</span>
+                      {row.sub && (
+                        <span dir="ltr" className="block whitespace-nowrap text-[9px] font-normal leading-none text-slate-400 tabular-nums">{row.sub}</span>
+                      )}
                     </td>
                     <td className="py-3 px-4">
                       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">

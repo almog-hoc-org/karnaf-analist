@@ -69,7 +69,7 @@ function buildKpis(i: HeroKpiInput): Kpi[] {
           <span className="text-xs text-slate-500">כל העסקאות</span>
         </>
       ),
-      caption: <NumberCaption source='רשות המסים + נדל"ן' period="1998–2026" updated={i.dealsUpdatedLabel} insideLink />,
+      caption: <NumberCaption source='רשות המסים + נדל"ן' period="1998–2026" updated={i.dealsUpdatedLabel} insideLink align="center" />,
     },
     {
       key: "m12",
@@ -80,7 +80,7 @@ function buildKpis(i: HeroKpiInput): Kpi[] {
       compact: fmt(i.deals12m),
       big: <div className="stat-mega">{fmt(i.deals12m)}</div>,
       pills: <span className="trend-pill trend-flat">12 החודשים האחרונים</span>,
-      caption: <NumberCaption source='רשות המסים + נדל"ן' period="12 החודשים האחרונים" updated={i.dealsUpdatedLabel} insideLink />,
+      caption: <NumberCaption source='רשות המסים + נדל"ן' period="12 החודשים האחרונים" updated={i.dealsUpdatedLabel} insideLink align="center" />,
     },
     {
       key: "nat3y",
@@ -105,6 +105,7 @@ function buildKpis(i: HeroKpiInput): Kpi[] {
           source="עסקאות יד-שנייה אמיתיות · רשות המסים"
           period={`חציון שינוי 3 שנים בין הערים · ${i.window3yLabel ?? "—"}`}
           insideLink
+          align="center"
         />
       ),
     },
@@ -137,7 +138,7 @@ export function HeroKpiCards(props: HeroKpiInput & { className?: string }) {
   return (
     <section className={`card-grid hidden grid-cols-1 sm:grid sm:grid-cols-3 ${props.className ?? ""}`}>
       {kpis.map((k) => (
-        <Link key={k.key} href={k.href} className="hero-kpi hero-indigo group block cursor-pointer">
+        <Link key={k.key} href={k.href} className="hero-kpi hero-indigo group block cursor-pointer text-center">
           <div className="mb-3 flex flex-wrap items-center justify-center gap-2">
             <span className="text-xl"><Icon name={k.icon} size="1em" /></span>
             <div className="stat-label min-w-0 break-words">{k.label}</div>

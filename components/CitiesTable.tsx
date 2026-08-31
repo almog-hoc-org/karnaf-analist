@@ -73,7 +73,10 @@ type SortKey = keyof CityRow;
 type ViewMode = "all" | "top3y" | "top5y" | "down3y" | "down5y";
 type Win = 1 | 3 | 5 | 10;
 
-type ColumnDef = { key: SortKey; label: string; format: (v: any, row?: CityRow) => string; width: string; help?: string };
+/** `sub` — the tiny second line UNDER the value (a year, a year range). The
+ *  site-wide rule (operator, 8/2026): a year never sits BESIDE its value
+ *  eating column width; it stacks beneath at 9px. */
+type ColumnDef = { key: SortKey; label: string; format: (v: any, row?: CityRow) => string; sub?: (row?: CityRow) => string | null; width: string; help?: string };
 
 /** The windowed price-change columns (each has its own year-window selector).
  * SECOND-HAND FIRST: the two second-hand columns lead and are the site's basis for
@@ -120,26 +123,28 @@ const columns: ColumnDef[] = [
   { key: "households_2022", label: "משקי בית 2022", format: (v) => v ? Math.round(v).toLocaleString("he-IL") : "—", width: "min-w-[66px] md:min-w-[90px]" },
   // Price levels — from REAL collected transactions (₪/m², latest full year with 10+ deals).
   // Four separate metrics; the user picks which to show (עמודות ▾).
-  { key: "tx_median_sh", label: "חציון יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
+  { key: "tx_median_sh", label: "חציון יד-2 ₪/מ״ר", format: (v) => v ? `₪${Math.round(v).toLocaleString("he-IL")}` : "—", sub: (row) => row?.tx_price_year ? String(row.tx_price_year) : null, width: "min-w-[68px] md:min-w-[88px]",
     help: "המחיר למ״ר של דירת יד-2 האמצעית בעיר — חצי מהעסקאות מעליה וחצי מתחתיה. חסין לעסקאות קיצון, ולכן המדד הטוב ביותר להשוואת רמות מחירים בין ערים." },
-  { key: "tx_avg_sh", label: "ממוצע יד-2 ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
+  { key: "tx_avg_sh", label: "ממוצע יד-2 ₪/מ״ר", format: (v) => v ? `₪${Math.round(v).toLocaleString("he-IL")}` : "—", sub: (row) => row?.tx_price_year ? String(row.tx_price_year) : null, width: "min-w-[68px] md:min-w-[88px]",
     help: "ממוצע ₪/מ״ר של עסקאות יד-2 בשנה האחרונה עם נתונים מלאים. רגיש יותר לעסקאות חריגות מהחציון — כשהם רחוקים זה מזה, כנראה שיש בעיר תת-שווקים שונים מאוד." },
-  { key: "tx_avg_all", label: "ממוצע כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}${row?.tx_govmap ? " ‡" : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
+  { key: "tx_avg_all", label: "ממוצע כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_govmap ? " ‡" : ""}` : "—", sub: (row) => row?.tx_price_year ? String(row.tx_price_year) : null, width: "min-w-[68px] md:min-w-[88px]",
     help: "ממוצע ₪/מ״ר של כל העסקאות — כולל דירות חדשות מקבלן. בעיר עם שכונה חדשה גדולה המספר מוטה כלפי מעלה; להשוואת שוק קיים עדיף מדדי יד-2." },
-  { key: "tx_median_all", label: "חציון כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_price_year ? ` (${row.tx_price_year})` : ""}${row?.tx_govmap ? " ‡" : ""}` : "—", width: "min-w-[68px] md:min-w-[110px]",
+  { key: "tx_median_all", label: "חציון כללי ₪/מ״ר", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_govmap ? " ‡" : ""}` : "—", sub: (row) => row?.tx_price_year ? String(row.tx_price_year) : null, width: "min-w-[68px] md:min-w-[88px]",
     help: "חציון ₪/מ״ר על כל העסקאות, כולל חדשות. שילוב של יציבות החציון עם תמונת השוק המלאה." },
   {
     key: "price_change_3y_pct",
     label: "שינוי 3 שנים",
-    format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_3y_from && row?.price_change_3y_to ? ` (${row.price_change_3y_to} \u2190 ${row.price_change_3y_from})` : ""}`,
-    width: "min-w-[81px] md:min-w-[130px]",
+    format: (v) => v === null ? "—" : fmtPct(v),
+    sub: (row) => row?.price_change_3y_from && row?.price_change_3y_to ? `${row.price_change_3y_to} \u2190 ${row.price_change_3y_from}` : null,
+    width: "min-w-[66px] md:min-w-[84px]",
     help: "שינוי המחיר החציוני הרשמי (כל העסקאות, מחיר עסקה מלא) על פני 3 שנים, עד השנה המלאה האחרונה. השנים בסוגריים הן טווח ההשוואה בפועל.",
   },
   {
     key: "price_change_5y_pct",
     label: "שינוי 5 שנים",
-    format: (v, row) => v === null ? "—" : `${fmtPct(v)}${row?.price_change_5y_from && row?.price_change_5y_to ? ` (${row.price_change_5y_to} \u2190 ${row.price_change_5y_from})` : ""}`,
-    width: "min-w-[81px] md:min-w-[130px]",
+    format: (v) => v === null ? "—" : fmtPct(v),
+    sub: (row) => row?.price_change_5y_from && row?.price_change_5y_to ? `${row.price_change_5y_to} \u2190 ${row.price_change_5y_from}` : null,
+    width: "min-w-[66px] md:min-w-[84px]",
     help: "שינוי המחיר החציוני הרשמי על פני 5 שנים, עד השנה המלאה האחרונה — מבט ארוך שמחליק תנודות קצרות.",
   },
   // Removed "% הזהב" column — was based on stale population projections
@@ -158,7 +163,7 @@ const columns: ColumnDef[] = [
     help: "סך הדירות שנבנו ב-4 השנים האחרונות — ההיצע החדש שנכנס בפועל לעיר, מול הגידול באוכלוסייה." },
   { key: "urban_renewal_status", label: "התחדשות עירונית", format: (v) => v ?? "—", width: "min-w-[68px] md:min-w-[110px]" },
   // ── added 8/2026 as default columns, per the operator's column list ──
-  { key: "tx_avg_4room", label: "מחיר ממוצע 4 חד׳", format: (v, row) => v ? `₪${Math.round(v).toLocaleString("he-IL")}${row?.tx_avg_4room_year ? ` (${row.tx_avg_4room_year})` : ""}` : "—", width: "min-w-[74px] md:min-w-[120px]",
+  { key: "tx_avg_4room", label: "מחיר ממוצע 4 חד׳", format: (v) => v ? `₪${Math.round(v).toLocaleString("he-IL")}` : "—", sub: (row) => row?.tx_avg_4room_year ? String(row.tx_avg_4room_year) : null, width: "min-w-[74px] md:min-w-[96px]",
     help: "מחיר העסקה הממוצע של דירת 4 חדרים יד-שנייה, בשנה האחרונה עם 10+ עסקאות כאלה בעיר. יד-שנייה ולא כלל העסקאות: פרויקט חדש גדול אחד מושך את הממוצע הכללי כלפי מעלה ומעוות בדיוק את ההשוואה בין ערים. השנה בסוגריים היא השנה שנמדדה." },
   { key: "pop_growth_10y_pct", label: "גידול אוכלוסייה 10 שנים", format: (v) => v === null ? "—" : `${fmtSigned(v)}%`, width: "min-w-[74px] md:min-w-[120px]",
     help: "שיעור גידול האוכלוסייה על פני עשר שנים, עד השנה האחרונה שיש לה בת-זוג עשור אחורה. עיר שחסרה לה אחת משתי נקודות הקצה מקבלת ״—״ ולא 0 — היעדר היסטוריה אינו היעדר גידול." },
@@ -598,7 +603,13 @@ export default function CitiesTable({
             {row.city_name}
           </Link>
         ) : (
-          <span dir={isPctCol ? "ltr" : undefined} className={`${cellClass} ${isPctCol ? "inline-block tabular-nums" : ""}`}>{col.format(row[col.key], row)}</span>
+          <span dir={isPctCol ? "ltr" : undefined} className={`${cellClass} ${isPctCol ? "inline-block tabular-nums" : ""}`}>
+            <span className="block leading-tight">{col.format(row[col.key], row)}</span>
+            {/* the year/range stacks UNDER the value — the site-wide rule */}
+            {col.sub?.(row) && (
+              <span dir="ltr" className="block whitespace-nowrap text-[9px] font-normal leading-none text-slate-400 tabular-nums">{col.sub(row)}</span>
+            )}
+          </span>
         )}
       </td>
     );

@@ -156,6 +156,22 @@ export default async function NeighborhoodPage({ params }: PageProps) {
             <p>{firstDeals.total.toLocaleString("he-IL")} עסקאות יד שנייה בשכונה, מהחדשה לישנה</p>
           </div>
         </div>
+        {/* How active is this hood, in one sentence (operator, 8/2026): the
+            last year's count against the average of the years before it —
+            both from the same published cells, so the floor rule applies. */}
+        {(() => {
+          if (data.refYear == null || data.n == null) return null;
+          const prev = data.trend.filter((p) => p.year < data.refYear!);
+          const prevAvg = prev.length ? Math.round(prev.reduce((t, p) => t + p.n, 0) / prev.length) : null;
+          return (
+            <p className="mb-3 rounded-xl border border-slate-200 bg-slate-50/70 px-4 py-2 text-center text-sm text-slate-700">
+              בשנת <b>{data.refYear}</b> בוצעו בשכונה <b>{data.n.toLocaleString("he-IL")}</b> עסקאות
+              {prevAvg != null && (
+                <> · ממוצע השנים הקודמות: <b>{prevAvg.toLocaleString("he-IL")}</b> עסקאות בשנה</>
+              )}
+            </p>
+          );
+        })()}
         <HoodDealsTable
           cityName={cityName}
           neighborhood={data.neighborhood}

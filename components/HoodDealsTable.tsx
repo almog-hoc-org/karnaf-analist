@@ -53,8 +53,12 @@ export default function HoodDealsTable({
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white">
-      <table className="w-full table-fixed text-xs">
+    /* Ruled and centered (operator, 8/2026): real column separators
+       ([&_td/th]:border-s under RTL) and every cell centered — the address
+       included, since it is the row's identity and the whole table now reads
+       from its middle. overflow-hidden keeps the ruling inside the radius. */
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      <table className="w-full table-fixed text-xs [&_td]:border-s [&_td]:border-slate-100 [&_td:first-child]:border-s-0 [&_th]:border-s [&_th]:border-slate-100 [&_th:first-child]:border-s-0">
         <colgroup>
           <col className="w-24" />
           <col />
@@ -63,14 +67,16 @@ export default function HoodDealsTable({
         </colgroup>
         <thead>
           <tr className="border-b border-slate-200 bg-slate-50 text-2xs uppercase tracking-wide text-slate-500">
-            <th scope="col" className="px-3 py-2 text-right font-bold">תאריך</th>
-            <th scope="col" className="px-3 py-2 text-right font-bold">כתובת</th>
-            <th scope="col" className="px-2 py-2 text-right font-bold">מ״ר</th>
-            <th scope="col" className="px-3 py-2 text-right font-bold">מחיר</th>
+            <th scope="col" className="px-3 py-2 text-center font-bold">תאריך</th>
+            <th scope="col" className="px-3 py-2 text-center font-bold">כתובת</th>
+            <th scope="col" className="px-2 py-2 text-center font-bold">מ״ר</th>
+            <th scope="col" className="px-3 py-2 text-center font-bold">מחיר</th>
           </tr>
         </thead>
         <tbody>
           {deals.map((d, i) => {
+            // No street at the source → the neighbourhood name, never a bare
+            // dash (operator, 8/2026). Muted, so a real address still stands out.
             const addr = [d.street, d.houseNum].filter(Boolean).join(" ").trim();
             const sub = [
               d.rooms == null ? null : `${d.rooms} חד׳`,
@@ -79,13 +85,17 @@ export default function HoodDealsTable({
             ].filter(Boolean).join(" · ");
             return (
               <tr key={`${d.dealDate}-${i}`} className="border-b border-slate-100 last:border-0">
-                <td className="whitespace-nowrap px-3 py-1.5 text-right tabular-nums text-slate-500">{d.dealDate}</td>
-                <td className="px-3 py-1.5 text-right leading-tight">
-                  <span className="block truncate font-bold text-slate-800" title={addr || undefined}>{addr || "—"}</span>
+                <td className="whitespace-nowrap px-3 py-1.5 text-center tabular-nums text-slate-500">{d.dealDate}</td>
+                <td className="px-3 py-1.5 text-center leading-tight">
+                  {addr ? (
+                    <span className="block truncate font-bold text-slate-800" title={addr}>{addr}</span>
+                  ) : (
+                    <span className="block truncate text-slate-400" title={neighborhood}>{d.neighborhood ?? neighborhood}</span>
+                  )}
                   {sub && <span className="block truncate text-2xs text-slate-400">{sub}</span>}
                 </td>
-                <td className="px-2 py-1.5 text-right tabular-nums text-slate-500">{d.area == null ? "—" : Math.round(d.area)}</td>
-                <td className="whitespace-nowrap px-3 py-1.5 text-right font-bold tabular-nums text-slate-800">{fmt(d.price)}</td>
+                <td className="px-2 py-1.5 text-center tabular-nums text-slate-500">{d.area == null ? "—" : Math.round(d.area)}</td>
+                <td className="whitespace-nowrap px-3 py-1.5 text-center font-bold tabular-nums text-slate-800">{fmt(d.price)}</td>
               </tr>
             );
           })}

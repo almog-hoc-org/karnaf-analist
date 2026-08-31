@@ -5,7 +5,7 @@ import InfoTip from "@/components/InfoTip";
 import TrendValue from "@/components/TrendValue";
 import Icon from "@/components/Icon";
 import NeighborhoodTrendChart from "@/components/NeighborhoodTrendChart";
-import type { HoodPageData, HoodSeries, HoodBucket, HoodScope } from "@/lib/neighborhoodPage";
+import type { HoodPageData, HoodSeriesBundle, HoodBucket, HoodScope } from "@/lib/neighborhoodPage";
 
 /**
  * The neighbourhood page's interactive half: the headline numbers, the
@@ -30,16 +30,23 @@ const BUCKETS: Array<{ id: HoodBucket; label: string }> = [
 ];
 const SCOPES: Array<{ id: HoodScope; label: string }> = [
   { id: "secondhand", label: "יד שנייה" },
+  { id: "new", label: "חדשות" },
   { id: "all", label: "כללי" },
 ];
 const WINDOWS = [3, 5, 10] as const;
 
-export default function HoodTrendStudio({ data, series }: { data: HoodPageData; series: HoodSeries }) {
+export default function HoodTrendStudio({ data, series }: { data: HoodPageData; series: HoodSeriesBundle }) {
   const [scope, setScope] = useState<HoodScope>("secondhand");
   const [bucket, setBucket] = useState<HoodBucket>("all");
   const [metric, setMetric] = useState<"sqm" | "price">("sqm");
+  // which lines the chart draws — reader's choice (operator, 8/2026). The city
+  // overlay ships with the page, so toggling is instant and costs no request.
+  const [showAvg, setShowAvg] = useState(true);
+  const [showMed, setShowMed] = useState(true);
+  const [showCity, setShowCity] = useState(false);
 
-  const full = series[scope][bucket] ?? [];
+  const full = series.hood[scope][bucket] ?? [];
+  const citySeries = series.city[scope][bucket] ?? [];
   const years = full.map((p) => p.year);
   const minY = years.length ? Math.min(...years) : 0;
   const maxY = years.length ? Math.max(...years) : 0;
@@ -69,15 +76,17 @@ export default function HoodTrendStudio({ data, series }: { data: HoodPageData; 
       active ? "border-indigo-600 bg-indigo-600 text-white" : "border-slate-300 bg-white text-slate-600 hover:bg-slate-50"
     }`;
 
-  // The level card follows the metric; the two change cards do not (see header).
-  const level = metric === "sqm" ? data.sqm : data.medianPrice;
-  const levelLabel = metric === "sqm" ? "₪ למ״ר" : "חציון מחיר עסקה";
-
   return (
     <>
-      {/* ── headline numbers ── */}
-      <section className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <Stat label={`${levelLabel}${data.refYear ? ` · ${data.refYear}` : ""}`} value={fmt(level)} />
+      {/* ── headline numbers — ₪/m² AND the average apartment price side by
+          side (operator, 8/2026), all centered ── */}
+      <section className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
+        <Stat label={`₪ למ״ר ממוצע${data.refYear ? ` · ${data.refYear}` : ""}`} value={fmt(data.sqm)} />
+        <Stat
+          label={`מחיר דירה ממוצע${data.refYear ? ` · ${data.refYear}` : ""}`}
+          value={fmt(data.avgPrice)}
+          sub={data.medianPrice != null ? `חציון: ${fmt(data.medianPrice)}` : undefined}
+        />
         <Stat
           label={data.fromYear ? `שינוי מ־${data.fromYear} (₪/מ״ר)` : "שינוי (₪/מ״ר)"}
           value={data.changePct == null ? "—" : <TrendValue pct={data.changePct} />}
@@ -159,10 +168,24 @@ export default function HoodTrendStudio({ data, series }: { data: HoodPageData; 
               ))}
               <button type="button" onClick={() => quickWin("all")} className={chip(from == null && to == null)}>הכל</button>
             </div>
+            <span className="hidden h-5 w-px bg-slate-200 sm:block" />
+            {/* which lines to draw — in the SAME band, deliberately: the
+                operator's rule is that this choice must not cost a row */}
+            <div className="flex flex-wrap items-center gap-1">
+              <span className="shrink-0 text-2xs font-bold text-slate-500">סדרות:</span>
+              <button type="button" onClick={() => setShowAvg((v) => !v)} className={chip(showAvg)}>ממוצע</button>
+              <button type="button" onClick={() => setShowMed((v) => !v)} className={chip(showMed)}>חציון</button>
+              <button type="button" onClick={() => setShowCity((v) => !v)} className={chip(showCity)} title="קו המחיר של העיר כולה, אותו פילוח בדיוק">מחירי העיר</button>
+            </div>
           </div>
 
           {trend.length ? (
-            <NeighborhoodTrendChart trend={trend} metric={metric} />
+            <NeighborhoodTrendChart
+              trend={trend}
+              metric={metric}
+              city={citySeries}
+              show={{ avg: showAvg, med: showMed, city: showCity }}
+            />
           ) : (
             /* An empty COMBINATION, not an empty hood: the floor of 8 deals
                per cell means small hoods publish fewer room buckets. Saying
@@ -181,7 +204,8 @@ export default function HoodTrendStudio({ data, series }: { data: HoodPageData; 
 
 function Stat({ label, value, sub }: { label: React.ReactNode; value: React.ReactNode; sub?: string }) {
   return (
-    <div className="glass-card p-4">
+    /* centered — every rubric on the page reads from its middle (operator, 8/2026) */
+    <div className="glass-card p-4 text-center">
       <p className="text-2xs font-bold uppercase tracking-wide text-slate-500">{label}</p>
       <p className="mt-1 text-xl font-black tabular-nums text-slate-900">{value}</p>
       {sub && <p className="mt-0.5 text-2xs text-slate-400">{sub}</p>}

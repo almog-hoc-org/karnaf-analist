@@ -20,23 +20,30 @@ import type { HoodTrendPoint } from "@/lib/neighborhoodPage";
  * map quotes, the median is what one penthouse cannot move. When the two
  * diverge, that gap IS the finding, and hiding either would hide it.
  */
-export default function NeighborhoodTrendChart({ trend, metric = "sqm" }: {
+export default function NeighborhoodTrendChart({ trend, metric = "sqm", city = [], show }: {
   trend: HoodTrendPoint[];
   /** which axis: ₪/m² (avg+median per m²) or the whole-deal price */
   metric?: "sqm" | "price";
+  /** the CITY's series for the same scope×bucket — an optional overlay line */
+  city?: HoodTrendPoint[];
+  /** which lines to draw — the studio's chips; default: hood lines only */
+  show?: { avg: boolean; med: boolean; city: boolean };
 }) {
   const mobile = useIsMobile();
+  const vis = show ?? { avg: true, med: true, city: false };
   if (!trend.length) return null;
 
   const years = trend.map((t) => t.year);
   const min = Math.min(...years), max = Math.max(...years);
   const byYear = new Map(trend.map((t) => [t.year, t]));
+  const cityByYear = new Map(city.map((t) => [t.year, t]));
   const data = Array.from({ length: max - min + 1 }, (_, i) => {
     const y = min + i;
     const t = byYear.get(y);
+    const c = cityByYear.get(y);
     return metric === "sqm"
-      ? { year: y, avgLine: t?.sqm ?? null, medLine: t?.medianSqm ?? null, n: t?.n ?? null }
-      : { year: y, avgLine: t?.avgPrice ?? null, medLine: t?.medianPrice ?? null, n: t?.n ?? null };
+      ? { year: y, avgLine: t?.sqm ?? null, medLine: t?.medianSqm ?? null, cityLine: c?.sqm ?? null, n: t?.n ?? null }
+      : { year: y, avgLine: t?.avgPrice ?? null, medLine: t?.medianPrice ?? null, cityLine: c?.avgPrice ?? null, n: t?.n ?? null };
   });
 
   const fmt = (v: number) => `₪${Math.round(v).toLocaleString("he-IL")}`;
@@ -60,18 +67,21 @@ export default function NeighborhoodTrendChart({ trend, metric = "sqm" }: {
             formatter={tipFmt((value, name) =>
               name === "n"
                 ? [`${Math.round(value).toLocaleString("he-IL")}`, "עסקאות"]
-                : [fmt(value), name === "avgLine" ? `ממוצע ${unit}` : `חציון ${unit}`]
+                : [fmt(value), name === "avgLine" ? `ממוצע ${unit}` : name === "cityLine" ? `העיר · ממוצע ${unit}` : `חציון ${unit}`]
             )}
           />
           <Legend
             formatter={(v: string) =>
-              v === "avgLine" ? `ממוצע ${unit}` : v === "medLine" ? `חציון ${unit}` : "עסקאות"
+              v === "avgLine" ? `ממוצע ${unit}` : v === "medLine" ? `חציון ${unit}` : v === "cityLine" ? `מחירי העיר` : "עסקאות"
             }
             wrapperStyle={{ fontSize: 12 }}
           />
           <Bar yAxisId="n" dataKey="n" fill={GRID} radius={[3, 3, 0, 0]} maxBarSize={26} />
-          <Line yAxisId="price" dataKey="avgLine" stroke={BRAND} strokeWidth={2.5} dot={{ r: 3 }} connectNulls={false} />
-          <Line yAxisId="price" dataKey="medLine" stroke={INK} strokeWidth={1.5} strokeDasharray="5 4" dot={false} connectNulls={false} />
+          {vis.avg && <Line yAxisId="price" dataKey="avgLine" stroke={BRAND} strokeWidth={2.5} dot={{ r: 3 }} connectNulls={false} />}
+          {vis.med && <Line yAxisId="price" dataKey="medLine" stroke={INK} strokeWidth={1.5} strokeDasharray="5 4" dot={false} connectNulls={false} />}
+          {/* the city overlay — amber, the palette's "external reference" hue,
+              so it never reads as another hood series */}
+          {vis.city && <Line yAxisId="price" dataKey="cityLine" stroke="#b45309" strokeWidth={2} strokeDasharray="2 3" dot={false} connectNulls={false} />}
         </ComposedChart>
       </ResponsiveContainer>
     </div>

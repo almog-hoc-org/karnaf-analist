@@ -248,6 +248,14 @@ async function main() {
         for (const b of NB_BUCKETS)
           if (b === "all" || r.room_bucket === b) add(r.neighborhood, r.deal_year, b, "secondhand", r);
       }
+      // new = nadlan, build year known, NOT second-hand — the city line's own
+      // rule, verbatim (operator, 8/2026: the hood chart gets a "חדשות" filter
+      // "לפי הלוגיקה של דירות חדשות"). Same NB_MIN floor as every other cell.
+      for (const r of nadlan) {
+        if (!(r.neighborhood && hasBuildYear(r) && r.is_secondhand === 0)) continue;
+        for (const b of NB_BUCKETS)
+          if (b === "all" || r.room_bucket === b) add(r.neighborhood, r.deal_year, b, "new", r);
+      }
       for (const c of cells.values()) {
         if (c.rows.length < NB_MIN) continue;
         nbOut.push({ city, nb: c.nb, year: c.year, bucket: c.bucket, scope: c.scope, s: stat(c.rows) });

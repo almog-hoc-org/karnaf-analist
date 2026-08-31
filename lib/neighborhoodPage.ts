@@ -44,6 +44,8 @@ export interface HoodPageData {
   refYear: number | null;
   sqm: number | null;
   medianPrice: number | null;
+  /** average whole-deal price at refYear — shown beside the ₪/m² figure */
+  avgPrice: number | null;
   n: number | null;
   changePct: number | null;
   fromYear: number | null;
@@ -147,6 +149,7 @@ export async function loadHoodPage(
       refYear,
       sqm: at?.sqm ?? null,
       medianPrice: at?.medianPrice ?? null,
+      avgPrice: at?.avgPrice ?? null,
       n: at?.n ?? null,
       changePct,
       fromYear: base ? base.year : null,
@@ -160,28 +163,85 @@ export async function loadHoodPage(
 }
 
 export type HoodBucket = "all" | "3" | "4" | "5";
-export type HoodScope = "secondhand" | "all";
+export type HoodScope = "secondhand" | "all" | "new";
 
-/** scope → bucket → year-ascending points. ~80 points worst case — shipped
- *  whole so every filter flip on the page is client-side, zero requests. */
+/** scope → bucket → year-ascending points. Shipped whole so every filter flip
+ *  on the page is client-side, zero requests. */
 export type HoodSeries = Record<HoodScope, Record<HoodBucket, HoodTrendPoint[]>>;
 
-export async function loadHoodSeries(cityName: string, hood: string): Promise<HoodSeries> {
-  const scopes: HoodScope[] = ["secondhand", "all"];
-  const buckets: HoodBucket[] = ["all", "3", "4", "5"];
-  const out = { secondhand: {}, all: {} } as HoodSeries;
+/** The hood's own series AND the city's, same scopes × buckets — the city
+ *  line is a chart overlay the reader can toggle (operator, 8/2026). */
+export interface HoodSeriesBundle {
+  hood: HoodSeries;
+  city: HoodSeries;
+}
+
+const HOOD_SCOPES: HoodScope[] = ["secondhand", "all", "new"];
+const HOOD_BUCKETS: HoodBucket[] = ["all", "3", "4", "5"];
+const emptySeries = (): HoodSeries =>
+  ({ secondhand: {}, all: {}, new: {} } as HoodSeries);
+
+/**
+ * The CITY's own year series for one scope×bucket, from the same stats table
+ * the city charts read. Hood scope "all" maps to the city's "all" — or
+ * "all_govmap" where that is the city's only headline series (govmap-only
+ * cities); when both exist for a year, "all" wins.
+ */
+async function loadCityYearSeriesUncached(
+  cityName: string,
+  scope: HoodScope,
+  bucket: HoodBucket
+): Promise<HoodTrendPoint[]> {
+  const cityScopes = scope === "all" ? ["all", "all_govmap"] : [scope];
+  try {
+    const rows = await prisma.$queryRawUnsafe<Array<Record<string, unknown>>>(
+      `SELECT year, scope, avg_sqm, median_sqm, median_price, avg_price, n
+         FROM nadlan_year_room_stats
+        WHERE city_name = ? AND room_bucket = ? AND scope IN (${cityScopes.map(() => "?").join(",")})
+        ORDER BY year`,
+      cityName, bucket, ...cityScopes
+    );
+    const byYear = new Map<number, Record<string, unknown>>();
+    for (const r of rows) {
+      const y = Number(r.year);
+      // "all" beats "all_govmap" for the same year; otherwise first wins
+      if (!byYear.has(y) || String(r.scope) === "all") byYear.set(y, r);
+    }
+    return [...byYear.values()]
+      .map((r) => ({
+        year: Number(r.year),
+        sqm: r.avg_sqm == null ? null : Number(r.avg_sqm),
+        medianSqm: r.median_sqm == null ? null : Number(r.median_sqm),
+        medianPrice: r.median_price == null ? null : Number(r.median_price),
+        avgPrice: r.avg_price == null ? null : Number(r.avg_price),
+        n: Number(r.n ?? 0),
+      }))
+      .sort((a, b) => a.year - b.year);
+  } catch {
+    return []; // stats table missing — the fixtureless dev DB
+  }
+}
+const loadCityYearSeries = cachedMarket(loadCityYearSeriesUncached, ["city-year-series"]);
+
+export async function loadHoodSeries(cityName: string, hood: string): Promise<HoodSeriesBundle> {
+  const out: HoodSeriesBundle = { hood: emptySeries(), city: emptySeries() };
   await Promise.all(
-    scopes.flatMap((sc) =>
-      buckets.map(async (b) => {
-        const cells = await loadNeighborhoodCells(cityName, sc, b);
-        out[sc][b] = cells
-          .filter((c) => c.neighborhood === hood)
-          .sort((a, b2) => a.year - b2.year)
-          .map((c) => ({
-            year: c.year, sqm: c.sqm, medianSqm: c.medianSqm,
-            medianPrice: c.medianPrice, avgPrice: c.avgPrice, n: c.n,
-          }));
-      })
+    HOOD_SCOPES.flatMap((sc) =>
+      HOOD_BUCKETS.flatMap((b) => [
+        (async () => {
+          const cells = await loadNeighborhoodCells(cityName, sc, b);
+          out.hood[sc][b] = cells
+            .filter((c) => c.neighborhood === hood)
+            .sort((a, b2) => a.year - b2.year)
+            .map((c) => ({
+              year: c.year, sqm: c.sqm, medianSqm: c.medianSqm,
+              medianPrice: c.medianPrice, avgPrice: c.avgPrice, n: c.n,
+            }));
+        })(),
+        (async () => {
+          out.city[sc][b] = await loadCityYearSeries(cityName, sc, b);
+        })(),
+      ])
     )
   );
   return out;

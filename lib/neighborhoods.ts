@@ -44,7 +44,7 @@ export interface NeighborhoodSummary {
 
 async function loadCellsUncached(
   cityName: string,
-  scope: "all" | "secondhand",
+  scope: "all" | "secondhand" | "new",
   roomBucket: "all" | "3" | "4" | "5" = "all"
 ): Promise<NeighborhoodCell[]> {
   try {

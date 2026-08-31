@@ -40,7 +40,9 @@ import type { HotCitiesResult, HotCity } from "@/lib/hotCities";
  */
 function Figure({ label, title, children }: { label: string; title: string; children: React.ReactNode }) {
   return (
-    <div className="min-w-0" title={title}>
+    /* a small boxed rubric, centered (operator, 8/2026) — each figure sits in
+       its own framed cell instead of floating as bare text */
+    <div className="min-w-0 rounded-lg border border-slate-100 bg-slate-50/70 px-1 py-1 text-center" title={title}>
       <p className="truncate text-[9px] leading-tight text-slate-400">{label}</p>
       <p className="truncate text-2xs font-bold leading-tight text-slate-800 sm:text-xs">{children}</p>
     </div>
@@ -110,7 +112,8 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
       <div className="mb-1.5 px-0.5">
         <div className="flex items-baseline justify-between gap-2">
           <h2 id="hot-cities-title" className="text-sm font-black text-slate-900 md:text-base">
-            <span aria-hidden className="me-1">🔥</span>ערים חמות
+            {/* the flame AFTER the words (operator, 8/2026) */}
+            ערים חמות<span aria-hidden className="ms-1">🔥</span>
           </h2>
           <p className="text-2xs text-slate-500 md:text-xs">
             {source === "searched"
@@ -189,7 +192,8 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
 
               {/* Two sizes rather than one stretched one: an SVG scaled by CSS
                   would stretch the stroke with it. Only the wide one has room
-                  for axis labels; both carry the axes themselves. */}
+                  for axis labels; both carry the axes themselves. The wide one
+                  is CENTERED in the card (operator, 8/2026). */}
               <Sparkline points={values} rising={rising} className="shrink-0 sm:hidden" />
               <Sparkline
                 points={values}
@@ -198,7 +202,7 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
                 width={240}
                 height={58}
                 showValues
-                className="hidden sm:block"
+                className="mx-auto hidden sm:block"
               />
 
               <span
@@ -207,8 +211,11 @@ export default function HotCities({ data }: { data: HotCitiesResult }) {
               >
                 ‹
               </span>
-              <span className="hidden text-xs font-bold text-indigo-700 group-hover:underline sm:block">
-                לנתוני העיר ‹
+              {/* bottom-LEFT of the card, arrow at the text's left pointing
+                  left — the Hebrew reading order for "go there" (operator,
+                  8/2026). self-end under RTL flex-col = the left edge. */}
+              <span className="hidden self-end text-xs font-bold text-indigo-700 group-hover:underline sm:block">
+                לנתוני העיר <span aria-hidden>←</span>
               </span>
             </CtaLink>
           );
