@@ -18,6 +18,15 @@
  * know at all is kept — absence of evidence is not evidence of leakage.
  * "כל היישוב" (the whole-town fallback) is always kept.
  *
+ * A FILE LEFT WITH NO NEIGHBOURHOODS IS DELETED, not kept as an empty husk.
+ * The route serves the disk cache before it ever tries a live fetch, so an
+ * empty file would freeze the panel on "אין מספיק עסקאות להשוואה" forever —
+ * a sentence that is not even true, since the real state is "we have nothing
+ * yet". With no file the panel says exactly that ("אינם זמינים כרגע … תופיע
+ * כשהמקור יתעדכן") and the next capture from Israel refills it. This is the
+ * same rule the writer already follows: setCachedDeals never stores an empty
+ * result either.
+ *
  * Usage:
  *   npx tsx scripts/verify-city-hoods.ts          # audit only, full report
  *   npx tsx scripts/verify-city-hoods.ts --fix    # rewrite poisoned files
@@ -56,7 +65,7 @@ function main() {
   }
   console.log(`רישום השכונות: ${owners.size} שמות שכונה ייחודיים\n`);
 
-  let filesTouched = 0, hoodsDropped = 0, hoodsKept = 0, hoodsUnknown = 0;
+  let filesTouched = 0, filesRemoved = 0, hoodsDropped = 0, hoodsKept = 0, hoodsUnknown = 0;
   const findings: string[] = [];
 
   for (const file of fs.readdirSync(CACHE_DIR).filter((f) => f.endsWith(".json")).sort()) {
@@ -65,6 +74,14 @@ function main() {
     try { data = JSON.parse(fs.readFileSync(full, "utf8")); } catch { continue; }
     const city = normalizeCity(data.cityName ?? file.replace(/\.json$/, ""));
     if (!Array.isArray(data.neighborhoods)) continue;
+
+    // An empty file from an earlier cleanse (or from any other source): it can
+    // only ever answer "nothing", and it blocks the refresh that would fix it.
+    if (data.neighborhoods.length === 0) {
+      findings.push(`✗ ${data.cityName ?? file}: קובץ ריק — נמחק כדי שהמטמון ימולא מחדש`);
+      if (FIX) { fs.unlinkSync(full); filesRemoved++; }
+      continue;
+    }
 
     const kept: typeof data.neighborhoods = [];
     const dropped: Array<{ name: string; owner: string; deals: number }> = [];
@@ -81,16 +98,21 @@ function main() {
     if (dropped.length) {
       findings.push(
         `✗ ${data.cityName ?? file}: ${dropped.map((d) => `"${d.name}" שייכת ל${d.owner} (${d.deals} עסקאות)`).join(" · ")}` +
-        (kept.length ? ` — נשארו ${kept.length} שכונות` : " — לא נשארו שכונות, הפאנל יציג את מצב הריק")
+        (kept.length ? ` — נשארו ${kept.length} שכונות` : " — לא נשארה שכונה, הקובץ נמחק וימולא מחדש באיסוף הבא")
       );
       if (FIX) {
-        const droppedDeals = dropped.reduce((t, d) => t + d.deals, 0);
-        data.neighborhoods = kept;
-        if (typeof data.totalDealsAnalyzed === "number") {
-          data.totalDealsAnalyzed = Math.max(0, data.totalDealsAnalyzed - droppedDeals);
+        if (!kept.length) {
+          fs.unlinkSync(full);
+          filesRemoved++;
+        } else {
+          const droppedDeals = dropped.reduce((t, d) => t + d.deals, 0);
+          data.neighborhoods = kept;
+          if (typeof data.totalDealsAnalyzed === "number") {
+            data.totalDealsAnalyzed = Math.max(0, data.totalDealsAnalyzed - droppedDeals);
+          }
+          fs.writeFileSync(full, JSON.stringify(data));
+          filesTouched++;
         }
-        fs.writeFileSync(full, JSON.stringify(data));
-        filesTouched++;
       }
     }
   }
@@ -103,7 +125,7 @@ function main() {
   }
   console.log(
     `\nסה״כ: ${hoodsKept} שכונות תקינות · ${hoodsUnknown} לא ברישום (נשמרו) · ${hoodsDropped} זרות` +
-    (FIX ? ` · ${filesTouched} קבצים תוקנו` : findings.length ? " · הרץ עם --fix לתיקון" : "")
+    (FIX ? ` · ${filesTouched} קבצים תוקנו · ${filesRemoved} נמחקו` : findings.length ? " · הרץ עם --fix לתיקון" : "")
   );
   // exit 0 either way: in report mode the findings ARE the product, and in
   // fix mode the problem no longer exists once we printed it.
