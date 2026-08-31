@@ -97,10 +97,12 @@ export default function NeighborhoodPrices({
           ~130px of real width. */}
       <div className={`${box} rounded-2xl border border-slate-200 bg-white`}>
         <table className={`w-full table-fixed ${compact ? "text-xs" : "text-sm"}`}>
+          {/* change column shrank from w-40 to w-24: the year range now stacks
+              under the value inside TrendValue instead of stretching beside it */}
           <colgroup>
             <col />
             <col className={compact ? "w-[5.5rem]" : "w-24 md:w-32"} />
-            <col className={compact ? "w-[6.5rem]" : "w-[4.5rem] md:w-40"} />
+            <col className={compact ? "w-16" : "w-[4.5rem] md:w-24"} />
             <col className={compact ? "w-14" : "w-11 md:w-24"} />
           </colgroup>
           <thead>
@@ -145,12 +147,10 @@ export default function NeighborhoodPrices({
                   {r.changePct == null ? (
                     <span className="text-2xs text-slate-400">אין בסיס</span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 whitespace-nowrap">
-                      <TrendValue pct={r.changePct} />
-                      {/* the base year is context, not the number — on a phone
-                          it is exactly the 40px the name column needs back */}
-                      <span className="hidden text-2xs text-slate-400 md:inline">מ־{r.fromYear}</span>
-                    </span>
+                    /* years stacked under the value by TrendValue itself —
+                       the site-wide pattern; the column narrows to the width
+                       of the percentage */
+                    <TrendValue pct={r.changePct} from={r.fromYear} to={year ?? undefined} />
                   )}
                 </td>
                 <td className={`px-1 md:px-2 ${padY} text-center tabular-nums text-slate-500`}>{r.n.toLocaleString("he-IL")}</td>

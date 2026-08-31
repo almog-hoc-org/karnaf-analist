@@ -41,29 +41,21 @@ export default function TrendValue({
   return (
     <span
       dir="ltr"
-      /* flex-wrap so the year range can drop to a second line inside a narrow
-         column. An inline-flex never wraps by default, which made
-         "+9.3% (2025 ← 2022)" one unbreakable ~130px line and set the width of
-         every change column in the cities table on a phone. */
-      className={`inline-flex flex-wrap items-center justify-center gap-x-1 font-semibold tabular-nums ${color} ${chip ? `${chipBg} rounded px-1.5 py-0.5` : ""} ${className}`}
+      /* STACKED, not inline (operator, 8/2026): "+25.7% (2026 ← 2023)" as one
+         line was ~130px and set the width of every change column in every
+         table. The year range now sits UNDER the value as a tiny second line —
+         the value centers over it, the column shrinks to the width of the
+         percentage, and the two tight line-heights add ~10px of height, not a
+         row. This is the one component every change cell renders through, so
+         the fix lands in all tables at once. */
+      className={`inline-flex flex-col items-center leading-tight font-semibold tabular-nums ${color} ${chip ? `${chipBg} rounded px-1.5 py-0.5` : ""} ${className}`}
     >
-      {fmtSignedPct(pct)}
+      <span>{fmtSignedPct(pct)}</span>
       {from != null && to != null && (
-        /* whitespace-nowrap, because YearRange is an inline-flex — an atomic
-           box — and inside a capped column the browser is free to break
-           between "(" and that box, and again before ")". That is exactly the
-           stray "(" and ")" on lines of their own in the cities table. The
-           parenthetical still drops to a second line when it must; it just
-           drops as one piece. */
-        <span className="whitespace-nowrap font-normal text-[9px] text-slate-400 sm:text-2xs">
-          {/* No parentheses below sm:. "(2026 ← 2023)" at text-2xs measures
-              ~83px, and the change column is capped at 80px on a phone — so the
-              atomic parenthetical overflowed its own cell. Dropping two glyphs
-              and one type step brings it to ~62px, inside the cap, with the
-              same information. */}
-          <span className="hidden sm:inline">(</span>
+        /* no parentheses — pure noise at this size; leading-none so the sub
+           line costs the minimum height */
+        <span className="whitespace-nowrap font-normal leading-none text-[9px] text-slate-400">
           <YearRange from={from} to={to} />
-          <span className="hidden sm:inline">)</span>
         </span>
       )}
     </span>
