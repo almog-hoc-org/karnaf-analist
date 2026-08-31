@@ -12,6 +12,7 @@
  */
 import { cleanDeals } from "./luxuryFilter";
 import { ilFetch } from "./ilFetch";
+import { normalizeCity } from "./cityAliases";
 
 const GOVMAP_BASE = "https://www.govmap.gov.il/api";
 const VALID_ASSET_TYPES = ["דירה", "דירת גן", "דירת גג", "פנטהאוז", "דופלקס"];
@@ -653,8 +654,18 @@ export async function getCityDealsData(
   if (!polygons || polygons.length === 0) return emptyResult;
   await sleep(REQUEST_DELAY_MS);
 
+  // THE EXACT-CITY GATE (operator bug report, 8/2026). A 7km radius around a
+  // small city's centre swallows its big neighbour whole: טירת כרמל's sweep
+  // returned Haifa's אחוזה, נווה שאנן and תל עמל as its own busiest
+  // "neighbourhoods", and the panel presented them under the wrong city for
+  // weeks. The polygon list carries settlementNameHeb — keep only this city's
+  // polygons (missing settlement stays, same lenient rule as
+  // subarea-deals-service, which learned this lesson first). Deals are gated
+  // again below, belt and braces.
+  const cityKey = normalizeCity(cityName);
   const sortedPolygons = [...polygons]
     .filter((p) => parseInt(p.dealscount) > 0)
+    .filter((p) => !p.settlementNameHeb || normalizeCity(p.settlementNameHeb) === cityKey)
     .sort((a, b) => parseInt(b.dealscount) - parseInt(a.dealscount));
 
   if (sortedPolygons.length === 0) return emptyResult;
@@ -692,11 +703,18 @@ export async function getCityDealsData(
       );
       if (!recentResult.data || recentResult.data.length === 0) continue;
 
-      const nhName = recentResult.data[0]?.neighborhood;
+      // second half of the exact-city gate — a polygon on the boundary can
+      // still hold a handful of the neighbour's deals
+      const recentOwn = recentResult.data.filter(
+        (d) => !d.settlementNameHeb || normalizeCity(d.settlementNameHeb) === cityKey
+      );
+      if (recentOwn.length === 0) continue;
+
+      const nhName = recentOwn[0]?.neighborhood;
       if (nhName && fetchedNeighborhoods.has(nhName)) continue;
       if (nhName) fetchedNeighborhoods.add(nhName);
 
-      for (const deal of recentResult.data) {
+      for (const deal of recentOwn) {
         const dealKey = `${deal.dealId || ""}-${deal.dealDate}-${deal.dealAmount}-${deal.assetArea}`;
         if (!seenDealKeys.has(dealKey)) {
           seenDealKeys.add(dealKey);
@@ -714,6 +732,7 @@ export async function getCityDealsData(
       );
       if (olderResult.data) {
         for (const deal of olderResult.data) {
+          if (deal.settlementNameHeb && normalizeCity(deal.settlementNameHeb) !== cityKey) continue;
           const dealKey = `${deal.dealId || ""}-${deal.dealDate}-${deal.dealAmount}-${deal.assetArea}`;
           if (!seenDealKeys.has(dealKey)) {
             seenDealKeys.add(dealKey);

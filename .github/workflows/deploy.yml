@@ -291,6 +291,15 @@ jobs:
           # One key moves, everything else stays where the operator put it.
           docker compose exec -T app npx tsx scripts/move-neighborhoods-section.ts </dev/null || true
 
+          # The street-comparison cache was once filled by a 7km sweep with no
+          # settlement gate, so a small city's file could hold its big
+          # neighbour's hoods (טירת כרמל serving Haifa's אחוזה). The fetch is
+          # gated now; this audits the PERMANENT cache files on the volume —
+          # the copies production actually serves — and drops any hood our own
+          # registry assigns to a different city. Idempotent, no network.
+          echo "── ביקורת שיוך שכונות-לעיר במטמון ההשוואות ──"
+          docker compose exec -T app npx tsx scripts/verify-city-hoods.ts --fix </dev/null || true
+
           echo "── עמוד שכונה: תשובה חיה ──"
           # URL pre-encoded (Hebrew city + hood); nested heredocs inside the
           # REMOTE heredoc would not survive bash's delimiter rules.
