@@ -297,6 +297,16 @@ jobs:
           # gated now; this audits the PERMANENT cache files on the volume —
           # the copies production actually serves — and drops any hood our own
           # registry assigns to a different city. Idempotent, no network.
+          # The free allowance, measured the way a visitor experiences it: a
+          # cookie jar, the configured number of city pages, and the question
+          # "did the page come back whole, or as the wall". Every failure the
+          # operator has reported here lived between the ledger being right and
+          # the browser getting the page — a rule left at another number on
+          # this machine, a cookie that never reached the render. Report only:
+          # the allowance is a business setting, not a broken build.
+          echo "── מבקר ללא חשבון: ערים חינם לפני החומה ──"
+          docker compose exec -T app npx tsx scripts/verify-anon-flow.ts </dev/null || true
+
           echo "── ביקורת שיוך שכונות-לעיר במטמון ההשוואות ──"
           docker compose exec -T app npx tsx scripts/verify-city-hoods.ts --fix </dev/null || true
 

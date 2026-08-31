@@ -8,6 +8,7 @@ import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { getRuleBool, getRuleText } from "@/lib/systemRules";
 import { isCityUnlocked } from "@/lib/credits";
+import { anonId, isAnonCityUnlocked } from "@/lib/anonAccess";
 import { canonicalCityName } from "@/lib/cityAliases";
 import { neighborhoodMinDeals, neighborhoodSummary } from "@/lib/neighborhoods";
 import { loadHoodPage, loadHoodDeals, loadHoodSeries } from "@/lib/neighborhoodPage";
@@ -56,9 +57,15 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     const demoCity = getRuleText("demo_city", "חיפה");
     if (paywallOn && cityName !== demoCity) {
       const viewer = getCurrentUser();
-      // Anonymous → the city page, which owns the public summary and the wall.
-      // A redirect, not a wall copy: one gate, maintained once.
-      if (!viewer || !isCityUnlocked(viewer.id, cityName)) {
+      // A signed-out visitor who already spent a free slot on this city HAS
+      // this city — the allowance buys the city, not one page of it. Without
+      // this check the neighbourhood link on their own open city page bounced
+      // them back to the city page, which reads as a wall arriving early.
+      const aid = viewer ? null : anonId();
+      const anonHasCity = !!aid && isAnonCityUnlocked(aid, cityName);
+      // Still walled → the city page, which owns the public summary and the
+      // wall. A redirect, not a wall copy: one gate, maintained once.
+      if (!anonHasCity && (!viewer || !isCityUnlocked(viewer.id, cityName))) {
         redirect(`/city/${encodeURIComponent(cityName)}`);
       }
     }
