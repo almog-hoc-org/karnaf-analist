@@ -505,8 +505,10 @@ jobs:
           docker compose exec -T app npx tsx scripts/report-neighborhood-coverage.ts </dev/null || true
           echo "── קמפיין השלמת הכתובות (תקציב 240 דק׳, גדולות-קודם, ניתן לחידוש) ──"
           docker compose exec -T -e KARNAF_BACKFILL_BUDGET_MIN=240 app npx tsx scripts/backfill-govmap-addresses.ts </dev/null || BACKFILL_FAILED=1
+          echo "── קובץ הכתובות הלאומי (מפ״י) → מיקומי בניינים (מדלג כשטרי) ──"
+          docker compose exec -T app npx tsx scripts/import-mapi-addresses.ts </dev/null || true
           echo "── כיסוי כתובות אחרי ──"
-          docker compose exec -T app npx tsx scripts/report-neighborhood-coverage.ts </dev/null || true
+          docker compose exec -T app npx tsx scripts/report-neighborhood-coverage.ts --json </dev/null || true
           if [ -n "${BACKFILL_FAILED:-}" ]; then
             echo "✗ הקמפיין נעצר בשגיאה — אם ההודעה למעלה היא חסימה גיאוגרפית, govmap אינו נגיש מהשרת והקמפיין ירוץ מסביבת איסוף שבה הוא עונה"
             exit 1

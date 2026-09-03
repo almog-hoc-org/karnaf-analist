@@ -17,7 +17,10 @@
  *
  *   npx tsx scripts/report-neighborhood-coverage.ts [--city "תל אביב-יפו"]
  */
+import fs from "fs";
+import path from "path";
 import { prisma } from "../lib/db";
+import { addressKey, addressKeyString } from "../lib/addressKey";
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -92,6 +95,57 @@ async function main(): Promise<number> {
   if (!cells.length) console.log("  אין — האגרגציה טרם כתבה תאי שכונה.");
   for (const c of cells.slice(0, 25)) console.log(`  ${c.city_name}: ${c.hoods}`);
   if (cells.length > 25) console.log(`  … ועוד ${cells.length - 25} ערים`);
+
+  // ── geocode coverage: how many deals could be drawn as pins ──
+  // Joined in JS over the distinct (street, house) pairs — a few seconds,
+  // and the same normalisation the pin layer uses, so this number IS the
+  // number the caption under the map will show.
+  console.log(`\n── גיאוקוד: כמה מהעסקאות ניתנות למיקום על המפה ──`);
+  const geoSummary: Array<{ city: string; deals: number; withStreet: number; addresses: number; houseLevel: number; streetLevel: number; placeable: number }> = [];
+  try {
+    const mapi = await prisma.$queryRawUnsafe<Array<{ imported_at: string | null; rows_kept: number | null; package_title: string | null }>>(
+      `SELECT imported_at, rows_kept, package_title FROM mapi_import_status WHERE id = 1`).catch(() => []);
+    console.log(mapi[0]?.imported_at
+      ? `  קובץ מפ״י: ${mapi[0].rows_kept?.toLocaleString("he-IL")} כתובות, יובא ${new Date(mapi[0].imported_at).toISOString().slice(0, 10)} (${mapi[0].package_title})`
+      : "  קובץ מפ״י: טרם יובא (scripts/import-mapi-addresses.ts)");
+    const pairs = await prisma.$queryRawUnsafe<Array<{ city_name: string; street: string; house_num: string | null; n: number }>>(
+      `SELECT city_name, street, house_num, COUNT(*) n FROM nadlan_transactions
+        WHERE street IS NOT NULL AND street != '' AND COALESCE(excluded,0) = 0 ${onlyCity ? "AND city_name = ?" : ""}
+        GROUP BY city_name, street, house_num`, ...args);
+    const geos = await prisma.$queryRawUnsafe<Array<{ city_name: string; street_norm: string; house_norm: string; level: string }>>(
+      `SELECT city_name, street_norm, house_norm, level FROM address_geocodes WHERE level IN ('house','street') ${onlyCity ? "AND city_name = ?" : ""}`, ...args);
+    const have = new Set(geos.map((g) => `${g.city_name}|${g.street_norm}|${g.house_norm}`));
+    const perCity = new Map<string, { deals: number; withStreet: number; addresses: Set<string>; houseLevel: number; streetLevel: number }>();
+    for (const [city, c] of byCity) perCity.set(city, { deals: c.n, withStreet: c.with_street, addresses: new Set(), houseLevel: 0, streetLevel: 0 });
+    for (const p of pairs) {
+      const k = addressKey(p.city_name, p.street, p.house_num);
+      const c = perCity.get(p.city_name);
+      if (!k || !c) continue;
+      c.addresses.add(addressKeyString(k));
+      if (k.houseNorm && have.has(`${p.city_name}|${k.streetNorm}|${k.houseNorm}`)) c.houseLevel += Number(p.n);
+      else if (have.has(`${p.city_name}|${k.streetNorm}|`)) c.streetLevel += Number(p.n);
+    }
+    for (const [city, c] of perCity) {
+      geoSummary.push({ city, deals: c.deals, withStreet: c.withStreet, addresses: c.addresses.size, houseLevel: c.houseLevel, streetLevel: c.streetLevel, placeable: c.houseLevel + c.streetLevel });
+    }
+    geoSummary.sort((a, b) => b.deals - a.deals);
+    for (const g of geoSummary.slice(0, 30)) {
+      console.log(`  ${g.city.padEnd(18)} עסקאות ${String(g.deals).padStart(7)} · כתובות ייחודיות ${String(g.addresses).padStart(6)} · ברמת בית ${pct(g.houseLevel, g.deals).padStart(4)} · ברמת רחוב ${pct(g.streetLevel, g.deals).padStart(4)} · ניתנות למיקום ${pct(g.placeable, g.deals).padStart(4)}`);
+    }
+    if (geoSummary.length > 30) console.log(`  … ועוד ${geoSummary.length - 30} ערים`);
+    const gs = geoSummary.reduce((s, g) => ({ deals: s.deals + g.deals, placeable: s.placeable + g.placeable, house: s.house + g.houseLevel }), { deals: 0, placeable: 0, house: 0 });
+    console.log(`  סה״כ: ברמת בית ${pct(gs.house, gs.deals)} · ניתנות למיקום ${pct(gs.placeable, gs.deals)} מכלל העסקאות`);
+    const geoStatus = await prisma.$queryRawUnsafe<Array<{ status: string; c: number; house: number }>>(
+      `SELECT status, COUNT(*) c, SUM(house_level) house FROM govmap_geocode_status GROUP BY status`).catch(() => []);
+    if (geoStatus.length) console.log(`  שארית govmap: ${geoStatus.map((r) => `${r.status} ${r.c} ערים (${Number(r.house).toLocaleString("he-IL")} בתים)`).join(" · ")}`);
+  } catch (e) {
+    console.log(`  (אין טבלת גיאוקוד עדיין — ${e instanceof Error ? e.message.split("\n")[0] : e})`);
+  }
+  if (process.argv.includes("--json")) {
+    const out = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "geocode-coverage.json");
+    fs.writeFileSync(out, JSON.stringify({ generatedAt: new Date().toISOString(), cities: geoSummary }, null, 1));
+    console.log(`  → ${out}`);
+  }
 
   const totalN = [...byCity.values()].reduce((s, c) => s + c.n, 0);
   const totalNb = [...byCity.values()].reduce((s, c) => s + c.with_nb, 0);

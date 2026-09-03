@@ -69,3 +69,9 @@ data/tunnel_url.txt
 
 # Coverage snapshots are per-machine state, not shipped content.
 data/coverage-snapshot.json
+
+# geocode campaign working files (scripts/push-geocodes.sh, import-mapi-addresses.ts)
+data/geocode_todo/
+data/geocode_done/
+data/geocode-coverage.json
+data/mapi_addresses.download

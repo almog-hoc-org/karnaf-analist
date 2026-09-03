@@ -160,6 +160,20 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 15 * MINUTE,
   },
   {
+    id: "mapi-addresses",
+    cmd: "npx",
+    args: ["tsx", "scripts/import-mapi-addresses.ts"],
+    label: "מאגר הכתובות הלאומי (מפ״י, data.gov.il) → מיקומי בניינים",
+    why: "The bulk, free, surveyed source of building coordinates — the Survey of Israel's national address register on the open-data portal, ~half a million numbered addresses. One import geocodes most of the country at once into address_geocodes (keyed by normalised address, so every deal at an address is located by one row), which is what puts deals on the neighbourhood map as pins. Resource discovered at run time and every candidate printed; columns and CRS recognised from the file and refused when they disagree. Self-skips when the last import is younger than KARNAF_MAPI_FRESH_DAYS. The govmap residue pass (scripts/push-geocodes.sh, from a Mac) covers only what this file does not.",
+    host: "https://data.gov.il",
+    probe: {
+      url: "https://data.gov.il/api/3/action/package_search?q=%D7%9B%D7%AA%D7%95%D7%91%D7%95%D7%AA&rows=1",
+      method: "GET",
+      expectJson: true,
+    },
+    timeoutMs: 40 * MINUTE,
+  },
+  {
     id: "import-updates",
     cmd: "npx",
     args: ["tsx", "lib/import-updates.ts"],

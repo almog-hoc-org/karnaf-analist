@@ -32,6 +32,7 @@ import { RULE_DEFS } from "@/lib/systemRules";
 import { PIN_RAMP } from "@/lib/chartColors";
 import { addressSlug, parseAddressSlug, sameBuilding, yearStats, bucketBuildings, apartmentThreads, detectProject, addMonths, pctVs, medianOf, type AddressDeal } from "@/lib/buildingRules";
 import { suggestionUrl } from "@/lib/searchIndex";
+import { parseCsvLine, sniffSeparator, detectColumns, detectCrs, recordToGeocode, streetCentroid } from "@/lib/mapiAddresses";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
@@ -1534,5 +1535,56 @@ describe("street and address pages — the pure rules", () => {
     expect(suggestionUrl({ kind: "street", city: "חיפה", name: "הרצל", hood: "הדר" })).toBe("/city/%D7%97%D7%99%D7%A4%D7%94/street/%D7%94%D7%A8%D7%A6%D7%9C");
     expect(suggestionUrl({ kind: "building", city: "חיפה", name: "הרצל 12", hood: "הדר" })).toContain("/address/");
     expect(suggestionUrl({ kind: "hood", city: "חיפה", name: "הדר", hood: "הדר" })).toContain("/neighborhood/");
+  });
+});
+
+describe("national address file — columns, CRS and rows", () => {
+  it("reads a CSV line with quoted commas and doubled quotes", () => {
+    expect(parseCsvLine('א,"ב, ג","ד ""ה""",1')).toEqual(["א", "ב, ג", 'ד "ה"', "1"]);
+    expect(sniffSeparator("a\tb\tc")).toBe("\t");
+    expect(sniffSeparator("a;b;c")).toBe(";");
+    expect(sniffSeparator("a,b")).toBe(",");
+  });
+
+  it("recognises Hebrew and Latin headers, and names the CRS from them", () => {
+    const he = detectColumns(["סמל_ישוב", "שם_ישוב", "סמל_רחוב", "שם_רחוב", "מספר_בית", "X", "Y"]);
+    expect(he).toMatchObject({ city: "שם_ישוב", street: "שם_רחוב", house: "מספר_בית", x: "X", y: "Y", crs: "itm" });
+    const en = detectColumns(["SETL_NAME", "STR_NAME", "HOUSE_NUM", "lon", "lat"]);
+    expect(en).toMatchObject({ city: "SETL_NAME", street: "STR_NAME", house: "HOUSE_NUM", crs: "wgs84" });
+    expect("error" in detectColumns(["שם_ישוב", "שם_רחוב", "X", "Y"])).toBe(true); // no house column
+    expect("error" in detectColumns(["שם_ישוב", "שם_רחוב", "מספר_בית"])).toBe(true); // no coordinates
+  });
+
+  it("confirms the CRS from the values and refuses a mixed file", () => {
+    expect(detectCrs([[179_700, 665_800], [220_400, 630_700]])).toBe("itm");
+    expect(detectCrs([[34.78, 32.08], [35.21, 31.77]])).toBe("wgs84");
+    expect(typeof detectCrs([[179_700, 665_800], [34.78, 32.08]])).toBe("object");
+    expect(typeof detectCrs([])).toBe("object");
+  });
+
+  it("turns a record into a geocode only when it is a numbered address in one of our cities", () => {
+    const cols = { city: "c", street: "s", house: "h", x: "X", y: "Y", crs: "itm" as const };
+    const fold = (raw: string) => (raw === "תל אביב -יפו" ? "תל אביב-יפו" : null);
+    const g = recordToGeocode({ c: "תל אביב -יפו", s: "שד' רוטשילד", h: "16", X: "179650", Y: "665812" }, cols, fold)!;
+    expect(g.key).toEqual({ cityName: "תל אביב-יפו", streetNorm: "שדרות רוטשילד", houseNorm: "16" });
+    expect(g.lon).toBeGreaterThan(34.7); expect(g.lon).toBeLessThan(34.85);
+    expect(g.lat).toBeGreaterThan(32.0); expect(g.lat).toBeLessThan(32.15);
+    expect(recordToGeocode({ c: "חיפה", s: "הרצל", h: "1", X: "199400", Y: "744400" }, cols, fold)).toBeNull(); // city not ours
+    expect(recordToGeocode({ c: "תל אביב -יפו", s: "הרצל", h: "", X: "179650", Y: "665812" }, cols, fold)).toBeNull(); // no number
+    expect(recordToGeocode({ c: "תל אביב -יפו", s: "הרצל", h: "3", X: "34.78", Y: "32.08" }, cols, fold)).toBeNull(); // wrong CRS for this file
+  });
+
+  it("puts a street's centre at the median of its numbers, not the mean", () => {
+    const c = streetCentroid([{ lon: 34.70, lat: 32.00 }, { lon: 34.71, lat: 32.01 }, { lon: 35.90, lat: 33.00 }])!;
+    expect(c.lon).toBe(34.71);
+    expect(streetCentroid([])).toBeNull();
+  });
+
+  it("registers the import as a collector with a real probe, and keeps it out of the pipeline", () => {
+    const src = SOURCES.find((s) => s.id === "mapi-addresses");
+    expect(src).toBeTruthy();
+    expect(src!.probe?.expectJson).toBe(true);
+    expect(src!.host).toContain("data.gov.il");
+    expect(PIPELINE.some((st) => /mapi|geocode/.test(st.script))).toBe(false);
   });
 });
