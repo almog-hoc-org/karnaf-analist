@@ -8,7 +8,7 @@
 /** How exact a stored coordinate is. */
 export type GeocodeLevel = "house" | "street" | "none";
 /** Who said so. */
-export type GeocodeSource = "mapi" | "govmap" | "fixture";
+export type GeocodeSource = "mapi" | "muni" | "govmap" | "osm" | "fixture";
 
 export interface Geocode {
   lon: number | null;
@@ -21,11 +21,13 @@ export interface Geocode {
 }
 
 /**
- * Sources in order of trust. The national address file is the surveyed
- * register itself; govmap's search is a lookup over (mostly) the same data
- * with occasional street-centre answers; the fixture is synthetic.
+ * Sources in order of trust. A surveyed register (the national file, or a
+ * municipality's own address layer) is the ground truth; govmap's search is
+ * a lookup over government data with occasional street-centre answers;
+ * OpenStreetMap house numbers are community-mapped — usually right, never
+ * audited; the fixture is synthetic.
  */
-export const SOURCE_RANK: Record<GeocodeSource, number> = { mapi: 3, govmap: 2, fixture: 1 };
+export const SOURCE_RANK: Record<GeocodeSource, number> = { mapi: 3, muni: 3, govmap: 2, osm: 1.5, fixture: 1 };
 export const LEVEL_RANK: Record<GeocodeLevel, number> = { house: 3, street: 2, none: 1 };
 
 /**

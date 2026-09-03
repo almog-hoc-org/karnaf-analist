@@ -39,7 +39,8 @@ export function sniffSeparator(header: string): string {
 }
 
 export interface ColumnMap {
-  city: string;
+  /** null when the file is one city's own (the caller names it) */
+  city: string | null;
   street: string;
   house: string;
   x: string;
@@ -61,7 +62,7 @@ function findKey(keys: string[], patterns: RegExp[], exclude?: RegExp): string |
  * `detectCrs` then CONFIRMS it from the values, because a file named one way
  * and filled the other has happened.
  */
-export function detectColumns(keys: string[]): ColumnMap | { error: string } {
+export function detectColumns(keys: string[], opts: { fixedCity?: boolean } = {}): ColumnMap | { error: string } {
   const city = findKey(keys, [/^(שם_?)?(ה)?(י|יי)שוב$/, /(שם\s*)?(י|יי)שוב/, /^SETL_?NAME/i, /settlement|city|yishuv/i], /סמל|code|id$/i);
   const street = findKey(keys, [/^(שם_?)?רחוב$/, /שם\s*רחוב|רחוב/, /^STR(EET)?_?NAME/i, /street|rechov/i], /סמל|code|id$/i);
   const house = findKey(keys, [/^מספר_?בית$/, /מס(פר)?\.?\s*בית|בית/, /^HOUSE_?(NUM|NO)/i, /house|bayit/i], /סמל|code|id$/i);
@@ -69,10 +70,12 @@ export function detectColumns(keys: string[]): ColumnMap | { error: string } {
   const itmY = findKey(keys, [/^(ITM_?)?Y$/i, /^N(ORTH(ING)?)?$/i, /^צפון$/, /y_?itm|itm_?y|north/i]);
   const lon = findKey(keys, [/^lon(g|gitude)?$/i, /קו.?אורך|אורך/, /lon/i]);
   const lat = findKey(keys, [/^lat(itude)?$/i, /קו.?רוחב|רוחב/, /lat/i]);
-  if (!city || !street) return { error: `לא זוהו עמודות יישוב/רחוב. עמודות: ${keys.join(" | ")}` };
+  if (!street) return { error: `לא זוהתה עמודת רחוב. עמודות: ${keys.join(" | ")}` };
+  if (!city && !opts.fixedCity) return { error: `לא זוהתה עמודת יישוב (או תן --city לקובץ של עיר אחת). עמודות: ${keys.join(" | ")}` };
   if (!house) return { error: `לא זוהתה עמודת מספר בית. עמודות: ${keys.join(" | ")}` };
-  if (itmX && itmY) return { city, street, house, x: itmX, y: itmY, crs: "itm" };
-  if (lon && lat) return { city, street, house, x: lon, y: lat, crs: "wgs84" };
+  const cityCol = opts.fixedCity ? null : city;
+  if (itmX && itmY) return { city: cityCol, street, house, x: itmX, y: itmY, crs: "itm" };
+  if (lon && lat) return { city: cityCol, street, house, x: lon, y: lat, crs: "wgs84" };
   return { error: `לא זוהו עמודות קואורדינטות (X/Y או lon/lat). עמודות: ${keys.join(" | ")}` };
 }
 
@@ -112,11 +115,15 @@ export interface MapiGeocode {
 export function recordToGeocode(
   r: Rec,
   cols: ColumnMap,
-  cityFold: (raw: string) => string | null
+  cityFold: (raw: string) => string | null,
+  fixedCity: string | null = null
 ): MapiGeocode | null {
-  const rawCity = String(r[cols.city] ?? "").trim();
-  if (!rawCity) return null;
-  const city = cityFold(rawCity);
+  let city: string | null = fixedCity;
+  if (cols.city) {
+    const rawCity = String(r[cols.city] ?? "").trim();
+    if (!rawCity && !fixedCity) return null;
+    if (rawCity) city = cityFold(rawCity) ?? (fixedCity ? null : null);
+  }
   if (!city) return null;
   const a = Number(String(r[cols.x] ?? "").replace(/,/g, ""));
   const b = Number(String(r[cols.y] ?? "").replace(/,/g, ""));

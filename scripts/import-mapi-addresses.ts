@@ -27,6 +27,13 @@
  * than KARNAF_MAPI_FRESH_DAYS (30), unless --force.
  *
  *   npx tsx scripts/import-mapi-addresses.ts [--dry-run] [--force] [--file=path.csv]
+ *   KARNAF_MAPI_RESOURCE_ID=<id> npx tsx scripts/import-mapi-addresses.ts --city="באר שבע"
+ *
+ * --city names the city for a MUNICIPAL file that has no settlement column
+ * (data.gov.il carries such layers for a few municipalities — Beer Sheva's
+ * addresses-br7 was the first found). Rows are credited to source 'muni',
+ * which ranks with the national register. --min-rows lowers the sanity
+ * floor for such a file (default 2,000 with --city, 100,000 without).
  *
  * --file reads a CSV already on disk instead of the portal — for a manual
  * download when discovery misfires, and for the offline test against the
@@ -46,7 +53,13 @@ import {
 
 const CKAN = "https://data.gov.il/api/3/action";
 const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
-const MIN_SANE_ROWS = Number(process.env.KARNAF_MAPI_MIN_ROWS ?? 100_000);
+const argv0 = process.argv.slice(2);
+const argOf = (name: string) => argv0.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3) ?? null;
+/** A file of ONE city (a municipality's own layer): every row is that city's. */
+const FIXED_CITY = argOf("city");
+/** Who the rows are credited to: the national register, or a municipality. */
+const SOURCE: "mapi" | "muni" = argOf("source") === "muni" || FIXED_CITY ? "muni" : "mapi";
+const MIN_SANE_ROWS = Number(argOf("min-rows") ?? process.env.KARNAF_MAPI_MIN_ROWS ?? (FIXED_CITY ? 2_000 : 100_000));
 const FRESH_DAYS = Number(process.env.KARNAF_MAPI_FRESH_DAYS ?? 30);
 const PAGE = 5000;
 const MAX_ROWS = 1_500_000;
@@ -162,7 +175,8 @@ async function main(): Promise<number> {
 
   const last = db.prepare("SELECT imported_at, rows_kept, resource_id FROM mapi_import_status WHERE id=1").get() as
     { imported_at: string | null; rows_kept: number | null; resource_id: string | null } | undefined;
-  if (last?.imported_at && !FORCE && !DRY) {
+  // the freshness skip is for the nightly national run; a named municipal file is always explicit
+  if (last?.imported_at && !FORCE && !DRY && !FIXED_CITY) {
     const ageDays = (Date.now() - new Date(last.imported_at).getTime()) / 86_400_000;
     if (ageDays < FRESH_DAYS) {
       console.log(`⏭  דילוג — יובא לפני ${ageDays.toFixed(0)} ימים (${last.rows_kept} כתובות מ-${last.resource_id}); --force כדי לייבא שוב`);
@@ -193,20 +207,21 @@ async function main(): Promise<number> {
     for await (const page of records(found.res)) {
       if (!cols) {
         const keys = Object.keys(page[0]).filter((k) => k !== "_id");
-        const det = detectColumns(keys);
+        const det = detectColumns(keys, { fixedCity: !!FIXED_CITY });
         if ("error" in det) throw new Error(det.error);
+        if (FIXED_CITY && !cityFold(FIXED_CITY)) throw new Error(`--city="${FIXED_CITY}" אינה עיר במאגר`);
         const sample = page.slice(0, 200).map((r) => [Number(String(r[det.x]).replace(/,/g, "")), Number(String(r[det.y]).replace(/,/g, ""))] as [number, number]);
         const crs = detectCrs(sample);
         if (typeof crs !== "string") throw new Error(crs.error);
         cols = { ...det, crs };
-        console.log(`   עמודות: יישוב=${cols.city} רחוב=${cols.street} בית=${cols.house} ${cols.crs === "itm" ? `X=${cols.x} Y=${cols.y} (ITM)` : `lon=${cols.x} lat=${cols.y} (WGS84)`}`);
+        console.log(`   עמודות: יישוב=${cols.city ?? `(קבוע: ${FIXED_CITY})`} רחוב=${cols.street} בית=${cols.house} ${cols.crs === "itm" ? `X=${cols.x} Y=${cols.y} (ITM)` : `lon=${cols.x} lat=${cols.y} (WGS84)`} · מקור=${SOURCE}`);
         if (DRY) { console.log("   --dry-run: עמודות זוהו, לא נכתב דבר."); return 0; }
       }
       for (const r of page) {
         rowsIn++;
-        const g = recordToGeocode(r, cols, cityFold);
+        const g = recordToGeocode(r, cols, cityFold, FIXED_CITY ? cityFold(FIXED_CITY) : null);
         if (!g) {
-          const raw = String(r[cols.city] ?? "").trim();
+          const raw = cols.city ? String(r[cols.city] ?? "").trim() : "";
           if (raw && !cityFold(raw)) { outsideCities++; unknownCities.set(raw, (unknownCities.get(raw) ?? 0) + 1); }
           else unusable++;
           continue;
@@ -243,12 +258,12 @@ async function main(): Promise<number> {
       const k = `${g.key.cityName}|${addressKeyString(g.key)}`;
       if (seen.has(k)) continue;
       seen.add(k);
-      const incoming: Geocode = { lon: g.lon, lat: g.lat, itmX: g.itmX, itmY: g.itmY, level: "house", source: "mapi", rawLabel: found.title };
+      const incoming: Geocode = { lon: g.lon, lat: g.lat, itmX: g.itmX, itmY: g.itmY, level: "house", source: SOURCE, rawLabel: found.title };
       const cur = existing.get(g.key.cityName, g.key.streetNorm, g.key.houseNorm) as
         { lon: number; lat: number; itm_x: number; itm_y: number; level: Geocode["level"]; source: Geocode["source"] } | undefined;
       const chosen = chooseGeocode(cur ? { lon: cur.lon, lat: cur.lat, itmX: cur.itm_x, itmY: cur.itm_y, level: cur.level, source: cur.source } : null, incoming);
       if (chosen !== incoming) { keptExisting++; continue; }
-      upsert.run(g.key.cityName, g.key.streetNorm, g.key.houseNorm, g.lon, g.lat, g.itmX, g.itmY, "house", "mapi", found.title);
+      upsert.run(g.key.cityName, g.key.streetNorm, g.key.houseNorm, g.lon, g.lat, g.itmX, g.itmY, "house", SOURCE, found.title);
       written++;
     }
     for (const [sk, pts] of byStreet) {
@@ -256,12 +271,13 @@ async function main(): Promise<number> {
       const c = streetCentroid(pts);
       if (!c) continue;
       const cur = existing.get(city, street, "") as { level: Geocode["level"]; source: Geocode["source"]; lon: number; lat: number; itm_x: number; itm_y: number } | undefined;
-      const incoming: Geocode = { lon: c.lon, lat: c.lat, itmX: null, itmY: null, level: "street", source: "mapi", rawLabel: `centroid of ${pts.length}` };
+      const incoming: Geocode = { lon: c.lon, lat: c.lat, itmX: null, itmY: null, level: "street", source: SOURCE, rawLabel: `centroid of ${pts.length}` };
       const chosen = chooseGeocode(cur ? { lon: cur.lon, lat: cur.lat, itmX: cur.itm_x, itmY: cur.itm_y, level: cur.level, source: cur.source } : null, incoming);
       if (chosen !== incoming) continue;
-      upsert.run(city, street, "", c.lon, c.lat, null, null, "street", "mapi", `centroid of ${pts.length}`);
+      upsert.run(city, street, "", c.lon, c.lat, null, null, "street", SOURCE, `centroid of ${pts.length}`);
       streets++;
     }
+    if (FIXED_CITY) return; // a municipal file must not mark the national import as done
     db.prepare(`INSERT INTO mapi_import_status (id, resource_id, package_title, rows_in, rows_kept, crs, imported_at)
       VALUES (1, ?, ?, ?, ?, ?, datetime('now'))
       ON CONFLICT(id) DO UPDATE SET resource_id=excluded.resource_id, package_title=excluded.package_title,

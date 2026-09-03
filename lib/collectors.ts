@@ -174,6 +174,20 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 40 * MINUTE,
   },
   {
+    id: "osm-addresses",
+    cmd: "npx",
+    args: ["tsx", "scripts/import-osm-addresses.ts", "--budget-min", "45"],
+    label: "מספרי בתים מ-OpenStreetMap → מיקומי בניינים",
+    why: "The bulk free source of building coordinates that actually exists: the data.gov.il scan (3.9.2026) found no national address file, so OSM's addr:housenumber tags — one Overpass query per city, the map's own frame where a map exists — fill address_geocodes with source 'osm'. Ranked below govmap and any surveyed file, so a better answer always replaces it. Per-city freshness (KARNAF_OSM_FRESH_DAYS, 60) and a 45-minute budget keep a night's share polite; the whole country takes a few nights and then is a no-op.",
+    host: "https://overpass-api.de",
+    probe: {
+      url: "https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3Bnode(1)%3Bout%3B",
+      method: "GET",
+      expectJson: true,
+    },
+    timeoutMs: 50 * MINUTE,
+  },
+  {
     id: "import-updates",
     cmd: "npx",
     args: ["tsx", "lib/import-updates.ts"],

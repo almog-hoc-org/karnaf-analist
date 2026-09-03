@@ -33,6 +33,8 @@ import { PIN_RAMP } from "@/lib/chartColors";
 import { addressSlug, parseAddressSlug, sameBuilding, yearStats, bucketBuildings, apartmentThreads, detectProject, addMonths, pctVs, medianOf, type AddressDeal } from "@/lib/buildingRules";
 import { suggestionUrl } from "@/lib/searchIndex";
 import { parseCsvLine, sniffSeparator, detectColumns, detectCrs, recordToGeocode, streetCentroid } from "@/lib/mapiAddresses";
+import { overpassAddressQuery, osmElementToGeocode, boxAround } from "@/lib/osmAddresses";
+import { SOURCE_RANK } from "@/lib/geocode";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
@@ -1586,5 +1588,49 @@ describe("national address file — columns, CRS and rows", () => {
     expect(src!.probe?.expectJson).toBe(true);
     expect(src!.host).toContain("data.gov.il");
     expect(PIPELINE.some((st) => /mapi|geocode/.test(st.script))).toBe(false);
+  });
+});
+
+describe("OpenStreetMap addresses and municipal files", () => {
+  const box = { minLon: 34.7, minLat: 32.0, maxLon: 34.85, maxLat: 32.15 };
+  const fold = (raw: string) => (raw.includes("רמת גן") ? "רמת גן" : raw.includes("תל אביב") ? "תל אביב-יפו" : null);
+
+  it("asks Overpass for every numbered address in the box, with centres for ways", () => {
+    const q = overpassAddressQuery(box);
+    expect(q).toContain('node(32,34.7,32.15,34.85)["addr:housenumber"]["addr:street"]');
+    expect(q).toContain("way(");
+    expect(q).toContain("out center tags");
+  });
+
+  it("turns nodes and ways into geocodes, credits addr:city when it is one of ours, drops the rest", () => {
+    const node = osmElementToGeocode({ type: "node", id: 1, lat: 32.08, lon: 34.78, tags: { "addr:street": "שד' רוטשילד", "addr:housenumber": "16" } }, "תל אביב-יפו", box, fold)!;
+    expect(node.key).toEqual({ cityName: "תל אביב-יפו", streetNorm: "שדרות רוטשילד", houseNorm: "16" });
+    expect(node.osmId).toBe("n1");
+    const way = osmElementToGeocode({ type: "way", id: 7, center: { lat: 32.08, lon: 34.81 }, tags: { "addr:street": "ביאליק", "addr:housenumber": "3", "addr:city": "רמת גן" } }, "תל אביב-יפו", box, fold)!;
+    expect(way.key.cityName).toBe("רמת גן");
+    expect(way.osmId).toBe("w7");
+    // a city we do not hold keeps the box's city — the box was drawn for it
+    expect(osmElementToGeocode({ type: "node", id: 2, lat: 32.08, lon: 34.78, tags: { "addr:street": "x", "addr:housenumber": "1", "addr:city": "גבעתיים" } }, "תל אביב-יפו", box, fold)!.key.cityName).toBe("תל אביב-יפו");
+    expect(osmElementToGeocode({ type: "node", id: 3, lat: 33.0, lon: 34.78, tags: { "addr:street": "x", "addr:housenumber": "1" } }, "תל אביב-יפו", box, fold)).toBeNull(); // outside
+    expect(osmElementToGeocode({ type: "way", id: 4, tags: { "addr:street": "x", "addr:housenumber": "1" } }, "תל אביב-יפו", box, fold)).toBeNull(); // no centre
+    expect(osmElementToGeocode({ type: "node", id: 5, lat: 32.08, lon: 34.78, tags: { "addr:street": "x" } }, "תל אביב-יפו", box, fold)).toBeNull(); // no number
+    const b = boxAround(32.08, 34.78);
+    expect(b.maxLat - b.minLat).toBeCloseTo(0.22, 6);
+  });
+
+  it("accepts a one-city file without a settlement column when the city is given", () => {
+    const cols = detectColumns(["שם_רחוב", "מספר_בית", "X", "Y"], { fixedCity: true });
+    expect(cols).toMatchObject({ city: null, street: "שם_רחוב", house: "מספר_בית", crs: "itm" });
+    expect("error" in detectColumns(["שם_רחוב", "מספר_בית", "X", "Y"])).toBe(true);
+    const g = recordToGeocode({ "שם_רחוב": "הרצל", "מספר_בית": "12", X: "180200", Y: "573500" }, cols as Exclude<typeof cols, { error: string }>, () => null, "באר שבע")!;
+    expect(g.key).toEqual({ cityName: "באר שבע", streetNorm: "הרצל", houseNorm: "12" });
+  });
+
+  it("ranks the surveyed sources above govmap, and govmap above OSM", () => {
+    expect(SOURCE_RANK.mapi).toBe(SOURCE_RANK.muni);
+    expect(SOURCE_RANK.muni).toBeGreaterThan(SOURCE_RANK.govmap);
+    expect(SOURCE_RANK.govmap).toBeGreaterThan(SOURCE_RANK.osm);
+    expect(SOURCE_RANK.osm).toBeGreaterThan(SOURCE_RANK.fixture);
+    expect(SOURCES.find((s) => s.id === "osm-addresses")?.probe?.expectJson).toBe(true);
   });
 });

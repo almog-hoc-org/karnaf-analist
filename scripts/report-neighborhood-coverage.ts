@@ -135,6 +135,9 @@ async function main(): Promise<number> {
     if (geoSummary.length > 30) console.log(`  … ועוד ${geoSummary.length - 30} ערים`);
     const gs = geoSummary.reduce((s, g) => ({ deals: s.deals + g.deals, placeable: s.placeable + g.placeable, house: s.house + g.houseLevel }), { deals: 0, placeable: 0, house: 0 });
     console.log(`  סה״כ: ברמת בית ${pct(gs.house, gs.deals)} · ניתנות למיקום ${pct(gs.placeable, gs.deals)} מכלל העסקאות`);
+    const bySource = await prisma.$queryRawUnsafe<Array<{ source: string; level: string; c: number }>>(
+      `SELECT source, level, COUNT(*) c FROM address_geocodes GROUP BY source, level ORDER BY source, level`).catch(() => []);
+    if (bySource.length) console.log(`  שורות לפי מקור: ${bySource.map((r) => `${r.source}/${r.level} ${Number(r.c).toLocaleString("he-IL")}`).join(" · ")}`);
     const geoStatus = await prisma.$queryRawUnsafe<Array<{ status: string; c: number; house: number }>>(
       `SELECT status, COUNT(*) c, SUM(house_level) house FROM govmap_geocode_status GROUP BY status`).catch(() => []);
     if (geoStatus.length) console.log(`  שארית govmap: ${geoStatus.map((r) => `${r.status} ${r.c} ערים (${Number(r.house).toLocaleString("he-IL")} בתים)`).join(" · ")}`);

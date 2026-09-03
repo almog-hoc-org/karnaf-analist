@@ -44,6 +44,14 @@ CREATE TABLE IF NOT EXISTS govmap_geocode_status (
   last_run DATETIME
 );
 
+CREATE TABLE IF NOT EXISTS osm_address_status (
+  city_name TEXT PRIMARY KEY,
+  fetched INTEGER,
+  kept INTEGER,
+  streets INTEGER,
+  imported_at DATETIME
+);
+
 CREATE TABLE IF NOT EXISTS mapi_import_status (
   id INTEGER PRIMARY KEY CHECK (id = 1),
   resource_id TEXT,
