@@ -44,6 +44,14 @@ CREATE TABLE IF NOT EXISTS govmap_geocode_status (
   last_run DATETIME
 );
 
+CREATE TABLE IF NOT EXISTS city_centres (
+  city_name TEXT PRIMARY KEY,
+  lat REAL NOT NULL,
+  lon REAL NOT NULL,
+  source TEXT,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS osm_address_status (
   city_name TEXT PRIMARY KEY,
   fetched INTEGER,

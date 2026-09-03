@@ -12,9 +12,15 @@
  *
  * WHERE THE BOX COMES FROM. A city that has a neighbourhood map gets the
  * exact box the map was drawn in (city_map_meta) — every pin then lands
- * inside the drawn frame. Any other city gets a generous box around its OSM
- * place node, the same reach scripts/collect-city-map.ts uses. An element
- * with `addr:city` naming another of our cities is credited to that city.
+ * inside the drawn frame. Any other city gets a box around its OSM place
+ * node.
+ *
+ * WHICH CITY AN ELEMENT BELONGS TO — the lesson of the first run. Crediting
+ * everything in the box to the box's city gave Bat Yam 63,000 addresses,
+ * which were Tel Aviv's. Now every element goes to its own `addr:city` when
+ * that is one of ours, else to the NEAREST of our city centres
+ * (lib/osmAddresses.assignCity). The centres come from one Overpass query
+ * over all of Israel, matched to our city names, cached in city_centres.
  *
  * OVERPASS MANNERS. Same endpoints, rounds and backoff as the map
  * collector; one query per city; a city imported within
@@ -32,7 +38,7 @@ import { ensureGeocodeTablesSync } from "../lib/geocodeDb";
 import { chooseGeocode, type Geocode } from "../lib/geocode";
 import { addressKeyString } from "../lib/addressKey";
 import { streetCentroid } from "../lib/mapiAddresses";
-import { boxAround, osmElementToGeocode, overpassAddressQuery, type OsmElement } from "../lib/osmAddresses";
+import { boxAround, osmElementToGeocode, overpassAddressQuery, type CityCentre, type OsmElement } from "../lib/osmAddresses";
 import type { BBox } from "../lib/geo";
 
 const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
@@ -101,6 +107,50 @@ out;`);
   return scored[0] ? { lat: scored[0].lat!, lon: scored[0].lon! } : null;
 }
 
+/**
+ * A centre point for every one of our cities: the map frame's centre where a
+ * map exists, else the OSM place node matched by name. One Overpass query
+ * for the whole country, then cached in city_centres for every later run.
+ */
+async function loadCentres(db: Database.Database, ourCities: string[], meta: Map<string, BBox>): Promise<CityCentre[]> {
+  const cached = new Map<string, CityCentre>();
+  for (const r of db.prepare("SELECT city_name, lat, lon FROM city_centres").all() as Array<{ city_name: string; lat: number; lon: number }>) {
+    cached.set(r.city_name, { city: r.city_name, lat: r.lat, lon: r.lon });
+  }
+  for (const [city, b] of meta) cached.set(city, { city, lat: (b.minLat + b.maxLat) / 2, lon: (b.minLon + b.maxLon) / 2 });
+  const missing = ourCities.filter((c) => !cached.has(c));
+  if (missing.length) {
+    console.log(`   מרכזי ערים: ${cached.size} ידועים, ${missing.length} נשלפים מ-OSM…`);
+    const nodes = await fetchOverpass(`[out:json][timeout:120];
+node(29.4,34.2,33.4,35.9)["place"~"^(city|town|village)$"]["name"];
+out;`);
+    const byKey = new Map<string, { lat: number; lon: number; rank: number }>();
+    const RANK: Record<string, number> = { city: 0, town: 1, village: 2 };
+    for (const el of nodes) {
+      const t = el.tags ?? {};
+      if (el.lat == null || el.lon == null) continue;
+      const rank = RANK[t.place ?? ""] ?? 3;
+      for (const n of [t.name, t["name:he"]]) {
+        if (!n) continue;
+        const k = normHoodKey(n);
+        const cur = byKey.get(k);
+        if (!cur || rank < cur.rank) byKey.set(k, { lat: el.lat, lon: el.lon, rank });
+      }
+    }
+    const ins = db.prepare("INSERT OR REPLACE INTO city_centres (city_name, lat, lon, source, updated_at) VALUES (?,?,?,'osm-place', datetime('now'))");
+    let found = 0;
+    for (const city of missing) {
+      const hit = byKey.get(normHoodKey(city)) ?? byKey.get(normHoodKey(city.split(/[-–—]/)[0].trim()));
+      if (!hit) continue;
+      cached.set(city, { city, lat: hit.lat, lon: hit.lon });
+      ins.run(city, hit.lat, hit.lon);
+      found++;
+    }
+    console.log(`   נמצאו ${found}; ${missing.length - found} ערים בלי נקודת מקום ב-OSM`);
+  }
+  return [...cached.values()];
+}
+
 async function main(): Promise<number> {
   console.log("🗺  OpenStreetMap → address_geocodes (מספרי בתים)");
   const db = new Database(DB);
@@ -125,6 +175,9 @@ async function main(): Promise<number> {
     }
   } catch { /* no maps yet */ }
   cities.sort((a, b) => Number(meta.has(b.city_name)) - Number(meta.has(a.city_name)) || b.n - a.n);
+  const ourCities = (db.prepare("SELECT city_name FROM cities").all() as Array<{ city_name: string }>).map((c) => c.city_name);
+  const centres = await loadCentres(db, ourCities, meta);
+  const centreOf = new Map(centres.map((c) => [c.city, c]));
 
   const status = db.prepare("SELECT imported_at FROM osm_address_status WHERE city_name=?");
   const existing = db.prepare("SELECT lon, lat, itm_x, itm_y, level, source FROM address_geocodes WHERE city_name=? AND street_norm=? AND house_norm=?");
@@ -150,8 +203,13 @@ async function main(): Promise<number> {
       let box = meta.get(city_name) ?? null;
       let how = "מסגרת המפה";
       if (!box) {
-        const c = await resolveCentre(city_name);
+        const c = centreOf.get(city_name) ?? (await resolveCentre(city_name));
         if (!c) { console.log(`${tag} אין נקודת מקום ב-OSM — מדלג`); failed++; continue; }
+        if (!centreOf.has(city_name)) {
+          centres.push({ city: city_name, lat: c.lat, lon: c.lon });
+          centreOf.set(city_name, { city: city_name, lat: c.lat, lon: c.lon });
+          db.prepare("INSERT OR REPLACE INTO city_centres (city_name, lat, lon, source, updated_at) VALUES (?,?,?,'osm-place', datetime('now'))").run(city_name, c.lat, c.lon);
+        }
         box = boxAround(c.lat, c.lon);
         how = "תיבה סביב נקודת המקום";
       }
@@ -160,9 +218,8 @@ async function main(): Promise<number> {
       const byStreet = new Map<string, Array<{ lon: number; lat: number }>>();
       let ours = 0;
       for (const el of elements) {
-        const g = osmElementToGeocode(el, city_name, box, cityFold);
+        const g = osmElementToGeocode(el, box, centres, cityFold);
         if (!g) continue;
-        if (g.key.cityName !== city_name && !byNorm.has(normalizeCity(g.key.cityName))) continue;
         const k = `${g.key.cityName}|${addressKeyString(g.key)}`;
         if (!seen.has(k)) seen.set(k, g);
         if (g.key.cityName === city_name) ours++;

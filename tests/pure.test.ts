@@ -33,7 +33,7 @@ import { PIN_RAMP } from "@/lib/chartColors";
 import { addressSlug, parseAddressSlug, sameBuilding, yearStats, bucketBuildings, apartmentThreads, detectProject, addMonths, pctVs, medianOf, type AddressDeal } from "@/lib/buildingRules";
 import { suggestionUrl } from "@/lib/searchIndex";
 import { parseCsvLine, sniffSeparator, detectColumns, detectCrs, recordToGeocode, streetCentroid } from "@/lib/mapiAddresses";
-import { overpassAddressQuery, osmElementToGeocode, boxAround } from "@/lib/osmAddresses";
+import { overpassAddressQuery, osmElementToGeocode, boxAround, assignCity } from "@/lib/osmAddresses";
 import { SOURCE_RANK } from "@/lib/geocode";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
@@ -1602,20 +1602,33 @@ describe("OpenStreetMap addresses and municipal files", () => {
     expect(q).toContain("out center tags");
   });
 
-  it("turns nodes and ways into geocodes, credits addr:city when it is one of ours, drops the rest", () => {
-    const node = osmElementToGeocode({ type: "node", id: 1, lat: 32.08, lon: 34.78, tags: { "addr:street": "שד' רוטשילד", "addr:housenumber": "16" } }, "תל אביב-יפו", box, fold)!;
+  const centres = [
+    { city: "תל אביב-יפו", lat: 32.08, lon: 34.78 },
+    { city: "בת ים", lat: 32.02, lon: 34.75 },
+    { city: "רמת גן", lat: 32.07, lon: 34.82 },
+  ];
+
+  it("credits an element to its own addr:city, else to the nearest of our centres — never to the box", () => {
+    // the bug that shipped: Bat Yam's 22 km box holds all of Tel Aviv
+    expect(assignCity(34.78, 32.08, undefined, centres, fold)).toBe("תל אביב-יפו");
+    expect(assignCity(34.75, 32.02, undefined, centres, fold)).toBe("בת ים");
+    expect(assignCity(34.75, 32.02, "רמת גן", centres, fold)).toBe("רמת גן"); // explicit tag wins over distance
+    expect(assignCity(34.75, 32.02, "גבעתיים", centres, fold)).toBe("בת ים"); // a city we do not hold → nearest
+    expect(assignCity(34.75, 32.02, undefined, [], fold)).toBeNull();
+  });
+
+  it("turns nodes and ways into geocodes and drops what cannot be one", () => {
+    const node = osmElementToGeocode({ type: "node", id: 1, lat: 32.08, lon: 34.78, tags: { "addr:street": "שד' רוטשילד", "addr:housenumber": "16" } }, box, centres, fold)!;
     expect(node.key).toEqual({ cityName: "תל אביב-יפו", streetNorm: "שדרות רוטשילד", houseNorm: "16" });
     expect(node.osmId).toBe("n1");
-    const way = osmElementToGeocode({ type: "way", id: 7, center: { lat: 32.08, lon: 34.81 }, tags: { "addr:street": "ביאליק", "addr:housenumber": "3", "addr:city": "רמת גן" } }, "תל אביב-יפו", box, fold)!;
-    expect(way.key.cityName).toBe("רמת גן");
+    const way = osmElementToGeocode({ type: "way", id: 7, center: { lat: 32.07, lon: 34.82 }, tags: { "addr:street": "ביאליק", "addr:housenumber": "3" } }, box, centres, fold)!;
+    expect(way.key.cityName).toBe("רמת גן"); // nearest centre, no tag needed
     expect(way.osmId).toBe("w7");
-    // a city we do not hold keeps the box's city — the box was drawn for it
-    expect(osmElementToGeocode({ type: "node", id: 2, lat: 32.08, lon: 34.78, tags: { "addr:street": "x", "addr:housenumber": "1", "addr:city": "גבעתיים" } }, "תל אביב-יפו", box, fold)!.key.cityName).toBe("תל אביב-יפו");
-    expect(osmElementToGeocode({ type: "node", id: 3, lat: 33.0, lon: 34.78, tags: { "addr:street": "x", "addr:housenumber": "1" } }, "תל אביב-יפו", box, fold)).toBeNull(); // outside
-    expect(osmElementToGeocode({ type: "way", id: 4, tags: { "addr:street": "x", "addr:housenumber": "1" } }, "תל אביב-יפו", box, fold)).toBeNull(); // no centre
-    expect(osmElementToGeocode({ type: "node", id: 5, lat: 32.08, lon: 34.78, tags: { "addr:street": "x" } }, "תל אביב-יפו", box, fold)).toBeNull(); // no number
+    expect(osmElementToGeocode({ type: "node", id: 3, lat: 33.0, lon: 34.78, tags: { "addr:street": "x", "addr:housenumber": "1" } }, box, centres, fold)).toBeNull(); // outside
+    expect(osmElementToGeocode({ type: "way", id: 4, tags: { "addr:street": "x", "addr:housenumber": "1" } }, box, centres, fold)).toBeNull(); // no centre
+    expect(osmElementToGeocode({ type: "node", id: 5, lat: 32.08, lon: 34.78, tags: { "addr:street": "x" } }, box, centres, fold)).toBeNull(); // no number
     const b = boxAround(32.08, 34.78);
-    expect(b.maxLat - b.minLat).toBeCloseTo(0.22, 6);
+    expect(b.maxLat - b.minLat).toBeCloseTo(0.13, 6);
   });
 
   it("accepts a one-city file without a settlement column when the city is given", () => {

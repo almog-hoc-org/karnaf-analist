@@ -194,6 +194,19 @@ bash scripts/push-geocodes.sh
 
 הקולקטור `mapi-addresses` נשאר רשום: אם יום אחד יעלה קובץ ארצי, הוא ייקלט לבד.
 
+**שיוך עיר ב-OSM** (`lib/osmAddresses.ts assignCity`): ל-OSM אין גבולות עירוניים
+בישראל, אז אלמנט נזקף ל-`addr:city` שלו כשהוא אחת מהערים שלנו, ואחרת למרכז
+העיר **הקרוב ביותר** (מרכזי הערים נשלפים פעם אחת ונשמרים ב-`city_centres`).
+הריצה הראשונה (3.9.2026) זקפה כל מה שבתיבה לעיר התיבה, ובת ים "קיבלה" 63 אלף
+בניינים של תל אביב. ניקוי אחרי תיקון כזה:
+
+```bash
+docker compose exec -T app node -e '
+const D=require("better-sqlite3"); const db=new D("/app/data/realestate.db");
+console.log(db.prepare("DELETE FROM address_geocodes WHERE source=\x27osm\x27").run());
+console.log(db.prepare("DELETE FROM osm_address_status").run());'
+```
+
 ## שני מקורות, בסדר הזה (התכנון המקורי — ראו למעלה מה קיים בפועל)
 
 ```bash
