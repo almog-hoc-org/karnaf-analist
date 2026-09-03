@@ -30,6 +30,8 @@ import { joinDealsToGeocodes, capPoints, pinBin, median, defaultWindow, clampWin
 import { hoodPointsQuery } from "@/lib/neighborhoodDeals";
 import { RULE_DEFS } from "@/lib/systemRules";
 import { PIN_RAMP } from "@/lib/chartColors";
+import { addressSlug, parseAddressSlug, sameBuilding, yearStats, bucketBuildings, apartmentThreads, detectProject, addMonths, pctVs, medianOf, type AddressDeal } from "@/lib/buildingRules";
+import { suggestionUrl } from "@/lib/searchIndex";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
@@ -1467,5 +1469,70 @@ describe("deal pins — join, cap, colour bins, window", () => {
   it("keeps the pin ramp off both existing scales", () => {
     expect(PIN_RAMP).toHaveLength(5);
     for (const c of PIN_RAMP) expect(MAP_FILLS).not.toContain(c);
+  });
+});
+
+describe("street and address pages — the pure rules", () => {
+  const deal = (id: number, over: Partial<AddressDeal> = {}): AddressDeal => ({
+    id, dealDate: "2024-05-01", dealYear: 2024, rooms: 4, area: 100, price: 4_000_000, priceSqm: 40_000,
+    yearBuilt: 2010, isSecondHand: true, floor: "3", street: "הרצל", houseNum: "12", neighborhood: "מרכז", luxury: false, ...over,
+  });
+
+  it("round-trips a building through its URL segment, and refuses a street with no number", () => {
+    expect(parseAddressSlug(addressSlug("שדרות רוטשילד", "16"))).toEqual({ street: "שדרות רוטשילד", house: "16" });
+    expect(parseAddressSlug("הרצל 12א")).toEqual({ street: "הרצל", house: "12א" });
+    expect(parseAddressSlug("הרצל 12-14")).toEqual({ street: "הרצל", house: "12" });
+    expect(parseAddressSlug("הרצל")).toBeNull();
+    expect(parseAddressSlug("דרך 90")).toEqual({ street: "דרך", house: "90" }); // the honest limit of the scheme
+    expect(sameBuilding({ street: "שד' רוטשילד", house: "16" }, { street: "שדרות רוטשילד", house: " 016" })).toBe(true);
+  });
+
+  it("counts luxury deals but never prices them", () => {
+    const ys = yearStats([deal(1), deal(2, { priceSqm: 90_000, luxury: true }), deal(3, { dealYear: 2023, dealDate: "2023-01-01", priceSqm: 30_000 })]);
+    expect(ys.map((y) => [y.year, y.n, y.medianSqm])).toEqual([[2023, 1, 30_000], [2024, 2, 40_000]]);
+  });
+
+  it("groups a street into buildings, busiest first, with the common spelling of the number", () => {
+    const b = bucketBuildings([deal(1, { houseNum: "12" }), deal(2, { houseNum: "12 " }), deal(3, { houseNum: "14" }), deal(4, { houseNum: null })]);
+    expect(b.map((x) => [x.house, x.n])).toEqual([["12", 2], ["14", 1]]);
+    expect(b[0].label).toBe("12");
+  });
+
+  it("finds the same flat sold twice and says how its ₪/m² moved", () => {
+    const t = apartmentThreads([
+      deal(1, { dealDate: "2019-02-01", dealYear: 2019, priceSqm: 30_000 }),
+      deal(2, { dealDate: "2024-02-01", dealYear: 2024, priceSqm: 39_000 }),
+      deal(3, { floor: "5" }),
+    ]);
+    expect(t).toHaveLength(1);
+    expect(t[0].deals.map((d) => d.id)).toEqual([1, 2]);
+    expect(t[0].changePct).toBeCloseTo(30, 5);
+    expect(t[0].yearsApart).toBe(5);
+    expect(apartmentThreads([deal(1, { area: 100 }), deal(2, { area: 101 })])).toHaveLength(1);
+    expect(apartmentThreads([deal(1, { area: 100 }), deal(2, { area: 120 })])).toHaveLength(0);
+  });
+
+  it("calls a building a project only when many NEW sales cluster in the window", () => {
+    const fresh = Array.from({ length: 10 }, (_, i) => deal(i, { isSecondHand: false, yearBuilt: 2022, dealDate: `2022-0${1 + (i % 9)}-01`, dealYear: 2022 }));
+    expect(detectProject(fresh, { minDeals: 8, months: 24 }).isProject).toBe(true);
+    const spread = fresh.map((d, i) => ({ ...d, dealDate: `${2016 + i}-01-01`, dealYear: 2016 + i }));
+    expect(detectProject(spread, { minDeals: 8, months: 24 }).isProject).toBe(false);
+    expect(detectProject(fresh.slice(0, 5), { minDeals: 8, months: 24 }).isProject).toBe(false);
+    expect(detectProject(fresh.map((d) => ({ ...d, isSecondHand: true })), { minDeals: 8, months: 24 }).isProject).toBe(false);
+    expect(addMonths("2021-03-14", 24)).toBe("2023-03-14");
+    expect(addMonths("2021-11-01", 3)).toBe("2022-02-01");
+  });
+
+  it("compares honestly: no reference, no percentage", () => {
+    expect(pctVs(44_000, 40_000)).toBeCloseTo(10, 5);
+    expect(pctVs(44_000, null)).toBeNull();
+    expect(pctVs(null, 40_000)).toBeNull();
+    expect(medianOf([null, 3, 1, 2])).toBe(2);
+  });
+
+  it("sends a street suggestion to the street page, a building to the address page", () => {
+    expect(suggestionUrl({ kind: "street", city: "חיפה", name: "הרצל", hood: "הדר" })).toBe("/city/%D7%97%D7%99%D7%A4%D7%94/street/%D7%94%D7%A8%D7%A6%D7%9C");
+    expect(suggestionUrl({ kind: "building", city: "חיפה", name: "הרצל 12", hood: "הדר" })).toContain("/address/");
+    expect(suggestionUrl({ kind: "hood", city: "חיפה", name: "הדר", hood: "הדר" })).toContain("/neighborhood/");
   });
 });

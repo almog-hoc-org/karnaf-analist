@@ -206,6 +206,16 @@ export default async function CheckPage({ searchParams }: Props) {
                   >
                     <Icon name="chat" size="1em" /> שיתוף בוואטסאפ
                   </TrackableOutboundLink>
+                  {comp.matchedStreet && (
+                    /* The full research page for the street the verdict was
+                       measured on: every building, every year, the map. */
+                    <Link
+                      href={`/city/${encodeURIComponent(city)}/street/${encodeURIComponent(comp.matchedStreet)}`}
+                      className="text-sm font-bold text-indigo-700 hover:underline"
+                    >
+                      כל העסקאות ברחוב {comp.matchedStreet} →
+                    </Link>
+                  )}
                   <Link
                     href={`/city/${encodeURIComponent(city)}`}
                     className="text-sm font-bold text-indigo-700 hover:underline"

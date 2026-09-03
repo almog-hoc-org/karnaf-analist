@@ -23,7 +23,7 @@ import { prisma } from "./db";
 import { cachedMarket } from "./cache";
 import { getRuleNum } from "./systemRules";
 import { makeProjector, type BBox } from "./geo";
-import { addressKeyString, normStreet } from "./addressKey";
+import { addressKeyString, normHouse, normStreet } from "./addressKey";
 import { loadCityMapGeometry } from "./cityMap";
 import type { DealScope } from "./neighborhoodDeals";
 
@@ -71,9 +71,16 @@ const EMPTY: HoodDealPoints = {
   medianSqm: null, years: null, capped: false, worthShowing: false,
 };
 
-async function loadHoodDealPointsUncached(
+/**
+ * The area is ONE of: a neighbourhood (Tax Authority spelling), or a street
+ * (any spelling — folded by normStreet), optionally narrowed to one house.
+ * Encoded as a string so the cache key stays a primitive.
+ */
+export type AreaKey = `hood:${string}` | `street:${string}` | `address:${string}|${string}`;
+
+async function loadAreaDealPointsUncached(
   cityName: string,
-  neighborhood: string,
+  area: string,
   scope: DealScope,
   from: number,
   to: number
@@ -84,12 +91,30 @@ async function loadHoodDealPointsUncached(
 
   let rows: DealRow[] = [];
   try {
-    rows = await prisma.$queryRawUnsafe<DealRow[]>(
-      `SELECT id, deal_date, deal_year, price_sqm, rooms, area, price, floor, street, house_num
-         FROM nadlan_transactions
-        WHERE city_name = ? AND neighborhood = ? AND COALESCE(excluded,0) = 0 ${scopeClause(scope)}`,
-      cityName, neighborhood
-    );
+    if (area.startsWith("hood:")) {
+      rows = await prisma.$queryRawUnsafe<DealRow[]>(
+        `SELECT id, deal_date, deal_year, price_sqm, rooms, area, price, floor, street, house_num
+           FROM nadlan_transactions
+          WHERE city_name = ? AND neighborhood = ? AND COALESCE(excluded,0) = 0 ${scopeClause(scope)}`,
+        cityName, area.slice(5)
+      );
+    } else {
+      const [kind, rest] = [area.slice(0, area.indexOf(":")), area.slice(area.indexOf(":") + 1)];
+      const [streetRaw, houseRaw] = kind === "address" ? rest.split("|") : [rest, ""];
+      const key = normStreet(streetRaw);
+      if (!key) return EMPTY;
+      // SQL narrows by the street's core word (LIKE); JS applies the exact key,
+      // so "שד' רוטשילד" and "שדרות רוטשילד" both land and "רוטשילד הקטן" does not.
+      const core = key.replace(/^שדרות /, "").split(" ").sort((a, b) => b.length - a.length)[0] ?? key;
+      const all = await prisma.$queryRawUnsafe<DealRow[]>(
+        `SELECT id, deal_date, deal_year, price_sqm, rooms, area, price, floor, street, house_num
+           FROM nadlan_transactions
+          WHERE city_name = ? AND street LIKE ? AND COALESCE(excluded,0) = 0 ${scopeClause(scope)}`,
+        cityName, `%${core}%`
+      );
+      const house = houseRaw ? normHouse(houseRaw).primary : "";
+      rows = all.filter((r) => normStreet(r.street) === key && (!house || normHouse(r.house_num).primary === house || normHouse(r.house_num).alts.includes(house)));
+    }
   } catch { return EMPTY; }
   rows = rows.map((r) => ({
     ...r, id: Number(r.id), deal_year: Number(r.deal_year),
@@ -121,8 +146,18 @@ async function loadHoodDealPointsUncached(
     houseLevel: joined.houseLevel, streetLevel: joined.streetLevel,
     medianSqm: median(inWindow.map((r) => r.price_sqm ?? 0)),
     years: window, capped,
-    worthShowing: pinsWorthShowing(counts, getRuleNum("deal_map_min_geocoded_ratio"), getRuleNum("deal_map_min_points")),
+    // One building is one pin — the "too few to be honest" floor exists for
+    // a neighbourhood's scatter, where a handful of dots would read as "only
+    // here sold". For an address the single dot IS the answer.
+    worthShowing: area.startsWith("address:")
+      ? joined.located > 0
+      : pinsWorthShowing(counts, getRuleNum("deal_map_min_geocoded_ratio"), getRuleNum("deal_map_min_points")),
   };
 }
 
-export const loadHoodDealPoints = cachedMarket(loadHoodDealPointsUncached, ["hood-deal-points"]);
+export const loadAreaDealPoints = cachedMarket(loadAreaDealPointsUncached, ["area-deal-points"]);
+
+/** The neighbourhood form, kept for the callers that only know a hood. */
+export function loadHoodDealPoints(cityName: string, neighborhood: string, scope: DealScope, from: number, to: number) {
+  return loadAreaDealPoints(cityName, `hood:${neighborhood}`, scope, from, to);
+}

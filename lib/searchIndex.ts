@@ -20,7 +20,7 @@ import { normalizeCitySearch } from "./citySearch";
  */
 
 export interface SearchIndexRow {
-  kind: "hood" | "street";
+  kind: "hood" | "street" | "building";
   city: string;
   /** display name — the hood itself, or the street */
   name: string;
@@ -88,4 +88,17 @@ export function normalizeStreetQuery(raw: string): string {
   const cleaned = raw.replace(/["'`]/g, "").replace(/\s+/g, " ").trim()
     .replace(/^(?:רחוב|רח'|רח׳|שדרות|שד'|שד׳)\s+/, "");
   return cleanStreetName(cleaned);
+}
+
+/**
+ * Where a suggestion leads. A street now has a page of its own and a
+ * building too — the hood used to be the only destination, and a street
+ * suggestion that landed on its neighbourhood answered a narrower question
+ * with a broader page.
+ */
+export function suggestionUrl(r: { kind: string; city: string; name: string; hood: string }): string {
+  const city = encodeURIComponent(r.city);
+  if (r.kind === "street") return `/city/${city}/street/${encodeURIComponent(r.name)}`;
+  if (r.kind === "building") return `/city/${city}/address/${encodeURIComponent(r.name)}`;
+  return `/city/${city}/neighborhood/${encodeURIComponent(r.hood)}`;
 }

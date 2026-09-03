@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { SITE_ORIGIN } from "@/lib/siteOrigin";
 import { ALIAS_NAMES } from "@/lib/cityAliases";
 import { SOURCES } from "@/lib/sources";
+import { getRuleNum } from "@/lib/systemRules";
 
 /**
  * The site has ~200 real URLs — 168 city pages, six rankings, six stats pages,
@@ -76,6 +77,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // table not created yet — the aggregation has not run with this stage
   }
 
+  // Streets and buildings with enough deals to be worth a crawler's visit —
+  // from the search index the pipeline builds, never from the deal table.
+  // The floors are admin rules; the index already excludes split streets.
+  let streetRows: Array<{ city_name: string; name: string }> = [];
+  let buildingRows: Array<{ city_name: string; name: string }> = [];
+  try {
+    streetRows = await prisma.$queryRawUnsafe(
+      `SELECT city_name, name FROM search_index WHERE kind = 'street' AND n >= ? ORDER BY n DESC LIMIT 20000`,
+      getRuleNum("street_page_min_deals")
+    );
+    buildingRows = await prisma.$queryRawUnsafe(
+      `SELECT city_name, name FROM search_index WHERE kind = 'building' AND n >= ? ORDER BY n DESC LIMIT 30000`,
+      getRuleNum("address_page_min_deals")
+    );
+  } catch { /* index not built */ }
+
   return [
     ...STATIC_PATHS.map(([path, priority, changeFrequency]) => ({
       url: `${SITE_ORIGIN}${path}`,
@@ -96,6 +113,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.6,
+    })),
+    ...streetRows.map((r) => ({
+      url: `${SITE_ORIGIN}/city/${encodeURIComponent(r.city_name)}/street/${encodeURIComponent(r.name)}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.5,
+    })),
+    ...buildingRows.map((r) => ({
+      url: `${SITE_ORIGIN}/city/${encodeURIComponent(r.city_name)}/address/${encodeURIComponent(r.name)}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.4,
     })),
     ...RANKING_TYPES.map((t) => ({
       url: `${SITE_ORIGIN}/rankings/${t}`,

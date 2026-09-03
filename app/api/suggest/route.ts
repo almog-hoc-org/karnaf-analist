@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
-import { searchNorm } from "@/lib/searchIndex";
+import { searchNorm, suggestionUrl } from "@/lib/searchIndex";
 
 /**
  * Hood/street suggestions for the search boxes — the site's first suggestion
@@ -19,7 +19,7 @@ import { searchNorm } from "@/lib/searchIndex";
 export const dynamic = "force-dynamic";
 
 export interface Suggestion {
-  kind: "hood" | "street";
+  kind: "hood" | "street" | "building";
   city: string;
   /** display name — the hood, or the street */
   name: string;
@@ -58,11 +58,11 @@ export async function GET(req: NextRequest) {
       "%" + like(norm) + "%"
     );
     const suggestions: Suggestion[] = rows.map((r) => ({
-      kind: r.kind as "hood" | "street",
+      kind: r.kind as Suggestion["kind"],
       city: r.city_name,
       name: r.name,
       hood: r.hood,
-      url: `/city/${encodeURIComponent(r.city_name)}/neighborhood/${encodeURIComponent(r.hood)}`,
+      url: suggestionUrl({ kind: r.kind, city: r.city_name, name: r.name, hood: r.hood }),
     }));
     return NextResponse.json({ suggestions });
   } catch {
