@@ -22,7 +22,14 @@ import { SOURCES, probeKeyFor } from "@/lib/collectors";
 import { insertIfAbsentSql } from "@/lib/dealKey";
 import { parseInlineDraft } from "@/components/InlineEdit";
 import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
-import { project, makeProjector, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
+import { project, makeProjector, makeUnprojector, pathBBox, zoomViewBox, viewBoxAttr, FULL_VIEW, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
+import { normStreet, normHouse, addressKey, addressKeyString } from "@/lib/addressKey";
+import { ITM, itmToWgs84, wgs84ToItm, looksLikeItm, looksLikeWgs84 } from "@/lib/itm";
+import { chooseGeocode, levelFromGovmapResult, parseWktPoint, type Geocode } from "@/lib/geocode";
+import { joinDealsToGeocodes, capPoints, pinBin, median, defaultWindow, clampWindow, ymOf, pinsWorthShowing, type DealRow, type GeoRow, type DealPoint } from "@/lib/dealPinTypes";
+import { hoodPointsQuery } from "@/lib/neighborhoodDeals";
+import { RULE_DEFS } from "@/lib/systemRules";
+import { PIN_RAMP } from "@/lib/chartColors";
 import { pctChange, type UsagePayload } from "@/lib/usagePayload";
 import { buildUsageInsights, rankInsights, type Insight } from "@/lib/usageInsights";
 import { selectMovers, explainEmpty, defaultMoversQuery, type GainSeries } from "@/lib/moversBoard";
@@ -783,6 +790,7 @@ const nb = (neighborhood: string, sqm: number) => ({
 const geo = (names: string[]): CityMapGeometry => ({
   shapes: names.map((n, i) => ({ neighborhood: n, normName: normHoodKey(n), path: "M0,0L1,1Z", cx: i, cy: i })),
   lines: [],
+  bbox: null,
 });
 
 describe("neighbourhood map bins and join", () => {
@@ -843,7 +851,7 @@ describe("neighbourhood map bins and join", () => {
   });
 
   it("refuses when the collector has not run for this city", () => {
-    expect(buildCityMap({ shapes: [], lines: [] }, [nb("א", 1)])).toBeNull();
+    expect(buildCityMap({ shapes: [], lines: [], bbox: null }, [nb("א", 1)])).toBeNull();
   });
 
   it("does not attach a price when the containment is ambiguous", () => {
@@ -1179,5 +1187,285 @@ describe("room-price table windows (pickWindow policy)", () => {
 
   it("a missing end year yields nothing — never a substitute year", () => {
     expect(pickWindow(cells, 3, 2025).to).toBeNull();
+  });
+});
+
+/* ───────────────────────── deal locations ───────────────────────── */
+
+describe("address key — one spelling for the Tax Authority, the address file and the user", () => {
+  it("folds prefixes, quotes and doubled letters the way the hood key does", () => {
+    expect(normStreet("שד' רוטשילד")).toBe("שדרות רוטשילד");
+    expect(normStreet("שדרות רוטשילד")).toBe("שדרות רוטשילד");
+    expect(normStreet("רח' הרצל")).toBe("הרצל");
+    expect(normStreet("רחוב  הרצל ")).toBe("הרצל");
+    expect(normStreet("אבן-גבירול")).toBe("אבן גבירול");
+    expect(normStreet("פתח תקווה")).toBe("פתח תקוה");
+  });
+
+  it("keeps שדרות as part of the name — it is a different street", () => {
+    // "שדרות ירושלים" and "ירושלים" are two streets in Tel Aviv.
+    expect(normStreet("שדרות ירושלים")).not.toBe(normStreet("ירושלים"));
+  });
+
+  it("does not let a glued house number make a street of its own", () => {
+    expect(normStreet("הרצל 14")).toBe("הרצל");
+    expect(normStreet("דרך השלום")).toBe("דרך השלום");
+  });
+
+  it("reads every house-number form the sources write", () => {
+    expect(normHouse("12")).toEqual({ primary: "12", alts: [] });
+    expect(normHouse(12)).toEqual({ primary: "12", alts: [] });
+    expect(normHouse(" 012 ")).toEqual({ primary: "12", alts: [] });
+    expect(normHouse("12 א")).toEqual({ primary: "12א", alts: [] });
+    expect(normHouse("12א")).toEqual({ primary: "12א", alts: [] });
+    expect(normHouse("12-14")).toEqual({ primary: "12", alts: ["14"] });
+    expect(normHouse("12 – 14")).toEqual({ primary: "12", alts: ["14"] });
+    expect(normHouse("12/3")).toEqual({ primary: "12", alts: [] });
+    expect(normHouse("0")).toEqual({ primary: "", alts: [] });
+    expect(normHouse("")).toEqual({ primary: "", alts: [] });
+    expect(normHouse(null)).toEqual({ primary: "", alts: [] });
+    expect(normHouse("ללא")).toEqual({ primary: "", alts: [] });
+  });
+
+  it("has no key without a street, and a street-level key without a number", () => {
+    expect(addressKey("תל אביב-יפו", null, "12")).toBeNull();
+    expect(addressKey("תל אביב-יפו", "", "12")).toBeNull();
+    const k = addressKey("תל אביב-יפו", "שד' רוטשילד", null)!;
+    expect(k.houseNorm).toBe("");
+    expect(addressKeyString(k)).toBe("שדרות רוטשילד|");
+    expect(addressKeyString(addressKey("x", "הרצל 14", "14")!)).toBe("הרצל|14");
+  });
+});
+
+describe("ITM ↔ WGS84 (EPSG:2039)", () => {
+  it("maps the projection origin to the false easting and northing exactly", () => {
+    // By definition of the grid — no external source needed.
+    const p = wgs84ToItm(ITM.lon0, ITM.lat0, { applyDatumShift: false });
+    expect(p.x).toBeCloseTo(ITM.falseEasting, 3);
+    expect(p.y).toBeCloseTo(ITM.falseNorthing, 3);
+  });
+
+  it("round-trips anywhere in Israel to better than a millimetre", () => {
+    const pts: LonLat[] = [];
+    for (let i = 0; i < 20; i++) pts.push([34.3 + (i * 0.0913) % 1.6, 29.6 + (i * 0.1731) % 3.6]);
+    for (const [lon, lat] of pts) {
+      const { x, y } = wgs84ToItm(lon, lat);
+      const [lon2, lat2] = itmToWgs84(x, y);
+      expect(lon2).toBeCloseTo(lon, 8);
+      expect(lat2).toBeCloseTo(lat, 8);
+    }
+  });
+
+  it("puts the big cities where the grid puts them (sign and axis check)", () => {
+    // Coarse — ±1.5 km — because the point is to catch a swapped axis or a
+    // wrong sign, not to certify the datum. That check happens on the Mac.
+    const near = (got: number, want: number) => Math.abs(got - want) < 1500;
+    const tlv = wgs84ToItm(34.7818, 32.0853);
+    expect(near(tlv.x, 179_700) && near(tlv.y, 665_800)).toBe(true);
+    const jlm = wgs84ToItm(35.2137, 31.7683);
+    expect(near(jlm.x, 220_400) && near(jlm.y, 630_700)).toBe(true);
+    const hfa = wgs84ToItm(34.9896, 32.7940);
+    expect(near(hfa.x, 199_400) && near(hfa.y, 744_400)).toBe(true);
+    const bsh = wgs84ToItm(34.7913, 31.2529);
+    expect(near(bsh.x, 180_200) && near(bsh.y, 573_500)).toBe(true);
+  });
+
+  it("applies a datum shift of tens of metres, not zero and not kilometres", () => {
+    const withShift = wgs84ToItm(34.7818, 32.0853);
+    const without = wgs84ToItm(34.7818, 32.0853, { applyDatumShift: false });
+    const d = Math.hypot(withShift.x - without.x, withShift.y - without.y);
+    expect(d).toBeGreaterThan(5);
+    expect(d).toBeLessThan(200);
+  });
+
+  it("tells the two coordinate systems apart on every vector", () => {
+    for (const [lon, lat] of [[34.7818, 32.0853], [35.2137, 31.7683], [34.9896, 32.794]] as LonLat[]) {
+      const { x, y } = wgs84ToItm(lon, lat);
+      expect(looksLikeItm(x, y)).toBe(true);
+      expect(looksLikeWgs84(x, y)).toBe(false);
+      expect(looksLikeWgs84(lon, lat)).toBe(true);
+      expect(looksLikeItm(lon, lat)).toBe(false);
+    }
+  });
+});
+
+describe("map geometry — pins share the shapes' projector", () => {
+  const bbox = { minLon: 34.7, minLat: 32.0, maxLon: 34.85, maxLat: 32.15 };
+
+  it("unprojects exactly what the projector projected", () => {
+    const p = makeProjector(bbox);
+    const u = makeUnprojector(bbox);
+    for (const pt of [[34.72, 32.02], [34.78, 32.08], [34.84, 32.14]] as LonLat[]) {
+      const [lon, lat] = u(p(pt));
+      // the projector rounds to 2 decimals of a view unit — ~0.1 px
+      expect(lon).toBeCloseTo(pt[0], 4);
+      expect(lat).toBeCloseTo(pt[1], 4);
+    }
+  });
+
+  it("lands the stored bbox corner at the default pad — the collector's call", () => {
+    // city_map_meta holds the PADDED bbox and the collector calls
+    // makeProjector(bbox) with the default pad. The server must make the same
+    // call, or every pin slides off its shape. (2% of 1000 = 20.)
+    // Aspect ratio is preserved, so only the LONGER axis touches the pad;
+    // the shorter one is centred and sits further in.
+    const p = makeProjector(bbox);
+    const [x, y] = p([bbox.minLon, bbox.minLat]);
+    const insetX = x, insetY = VIEW_SIZE - y;
+    expect(Math.min(insetX, insetY)).toBeCloseTo(20, 1);
+    expect(Math.max(insetX, insetY)).toBeGreaterThanOrEqual(20);
+  });
+
+  it("reads a shape's bounds back out of its path", () => {
+    expect(pathBBox("M40,40L224,40L224,331.5L40,331.5Z")).toEqual({ x: 40, y: 40, w: 184, h: 291.5 });
+    expect(pathBBox("M0,0")).toBeNull();
+    expect(pathBBox("")).toBeNull();
+  });
+
+  it("zooms to a square, padded, never tiny, never off the canvas", () => {
+    const v = zoomViewBox({ x: 40, y: 40, w: 184, h: 291.5 });
+    expect(v.w).toBe(v.h);
+    expect(v.w).toBeCloseTo(291.5 * 1.3, 1);
+    expect(v.x).toBeGreaterThanOrEqual(0);
+    expect(v.y).toBeGreaterThanOrEqual(0);
+    const tiny = zoomViewBox({ x: 500, y: 500, w: 4, h: 4 });
+    expect(tiny.w).toBe(120);
+    const edge = zoomViewBox({ x: 950, y: 950, w: 40, h: 40 });
+    expect(edge.x + edge.w).toBeLessThanOrEqual(VIEW_SIZE);
+    expect(edge.y + edge.h).toBeLessThanOrEqual(VIEW_SIZE);
+    expect(viewBoxAttr(FULL_VIEW)).toBe("0 0 1000 1000");
+  });
+});
+
+describe("geocode precedence and govmap parsing", () => {
+  const g = (level: Geocode["level"], source: Geocode["source"]): Geocode =>
+    ({ lon: 34.78, lat: 32.08, itmX: 179_700, itmY: 665_800, level, source });
+
+  it("never lets a street-level answer replace a house-level one", () => {
+    expect(chooseGeocode(g("house", "fixture"), g("street", "mapi")).level).toBe("house");
+    expect(chooseGeocode(g("street", "govmap"), g("house", "govmap")).level).toBe("house");
+    expect(chooseGeocode(g("house", "mapi"), g("none", "mapi")).level).toBe("house");
+  });
+
+  it("prefers the surveyed register at equal exactness, and the newer at equal source", () => {
+    expect(chooseGeocode(g("house", "govmap"), g("house", "mapi")).source).toBe("mapi");
+    expect(chooseGeocode(g("house", "mapi"), g("house", "govmap")).source).toBe("mapi");
+    const older = { ...g("house", "govmap"), rawLabel: "old" };
+    const newer = { ...g("house", "govmap"), rawLabel: "new" };
+    expect(chooseGeocode(older, newer).rawLabel).toBe("new");
+    expect(chooseGeocode(null, g("street", "govmap")).level).toBe("street");
+  });
+
+  it("folds govmap's label into a level, and an unknown label into none", () => {
+    expect(levelFromGovmapResult({ label: "כתובת", hasPoint: true })).toBe("house");
+    expect(levelFromGovmapResult({ type: "ADDRESS", hasPoint: true })).toBe("house");
+    expect(levelFromGovmapResult({ label: "רחוב", hasPoint: true })).toBe("street");
+    expect(levelFromGovmapResult({ label: "שכונה", hasPoint: true })).toBe("none");
+    expect(levelFromGovmapResult({ label: "כתובת", hasPoint: false })).toBe("none");
+  });
+
+  it("parses the WKT point govmap returns and rejects anything else", () => {
+    expect(parseWktPoint("POINT(179650.12 665812.9)")).toEqual({ x: 179650.12, y: 665812.9 });
+    expect(parseWktPoint("POINT (179650 665812)")).toEqual({ x: 179650, y: 665812 });
+    expect(parseWktPoint("POLYGON((1 2,3 4))")).toBeNull();
+    expect(parseWktPoint(null)).toBeNull();
+  });
+});
+
+describe("deal pins — join, cap, colour bins, window", () => {
+  const proj = (p: LonLat): Point => [Math.round(p[0] * 100) / 100, Math.round(p[1] * 100) / 100];
+  const geo = (street: string, house: string, level: GeoRow["level"], lon = 34.78, lat = 32.08): GeoRow =>
+    ({ street_norm: street, house_norm: house, lon, lat, level });
+  const deal = (id: number, street: string | null, house: string | null, extra: Partial<DealRow> = {}): DealRow =>
+    ({ id, deal_date: "2025-03-14", deal_year: 2025, price_sqm: 40_000, rooms: 4, area: 100, price: 4_000_000, floor: "3", street, house_num: house, ...extra });
+  const index = (rows: GeoRow[]) => new Map(rows.map((r) => [addressKeyString({ streetNorm: r.street_norm, houseNorm: r.house_norm }), r]));
+
+  it("places the exact house first, then the range's other number, then the street as a ring", () => {
+    const g = index([geo("הרצל", "12", "house", 34.71, 32.01), geo("הרצל", "14", "house", 34.72, 32.02), geo("הרצל", "", "street", 34.73, 32.03)]);
+    const out = joinDealsToGeocodes("x", [
+      deal(1, "רח' הרצל", "12"),      // exact
+      deal(2, "הרצל", "16-14"),      // primary 16 absent → alt 14
+      deal(3, "הרצל", "99"),         // no such house → street ring
+      deal(4, "הרצל", null),         // no number → street ring
+      deal(5, "אלנבי", "3"),         // street never geocoded → not located
+      deal(6, null, "3"),            // no street at all
+    ], g, proj);
+    expect(out.located).toBe(4);
+    expect(out.houseLevel).toBe(2);
+    expect(out.streetLevel).toBe(2);
+    expect(out.points.map((p) => [p.id, p.level, p.x])).toEqual([
+      [1, "house", 34.71], [2, "house", 34.72], [3, "street", 34.73], [4, "street", 34.73],
+    ]);
+    // the street name is sent once, referenced by index
+    expect(out.streets).toEqual(["רח' הרצל", "הרצל"]);
+    expect(out.points[1].streetIdx).toBe(1);
+  });
+
+  it("never lets a street-level row shadow a house-level one for the alt number", () => {
+    const g = index([geo("הרצל", "", "street"), geo("הרצל", "14", "house", 34.72, 32.02)]);
+    const out = joinDealsToGeocodes("x", [deal(1, "הרצל", "12-14")], g, proj);
+    expect(out.points[0].level).toBe("house");
+  });
+
+  it("caps to the newest and says so", () => {
+    const pts: DealPoint[] = [202301, 202506, 202412, 202503].map((ym, i) =>
+      ({ id: i, x: 0, y: 0, priceSqm: null, ym, rooms: null, area: null, price: null, floor: null, streetIdx: 0, houseNum: null, level: "house" }));
+    const c = capPoints(pts, 2);
+    expect(c.capped).toBe(true);
+    expect(c.points.map((p) => p.ym)).toEqual([202506, 202503]);
+    expect(capPoints(pts, 10)).toEqual({ points: pts, capped: false });
+  });
+
+  it("bins around the neighbourhood's median, and sits in the middle when it cannot say", () => {
+    expect(pinBin(30_000, 40_000)).toBe(0);
+    expect(pinBin(35_000, 40_000)).toBe(1);
+    expect(pinBin(40_000, 40_000)).toBe(2);
+    expect(pinBin(45_000, 40_000)).toBe(3);
+    expect(pinBin(60_000, 40_000)).toBe(4);
+    expect(pinBin(null, 40_000)).toBe(2);
+    expect(pinBin(40_000, null)).toBe(2);
+    expect(pinBin(40_000, 0)).toBe(2);
+    expect(median([3, 1, 2])).toBe(2);
+    expect(median([4, 1, 3, 2])).toBe(2.5);
+    expect(median([0, -1])).toBeNull();
+  });
+
+  it("derives the default window from the deals, not from today", () => {
+    expect(defaultWindow([2019, 2024, 2022], 3)).toEqual([2022, 2024]);
+    expect(defaultWindow([2024], 1)).toEqual([2024, 2024]);
+    expect(defaultWindow([], 3)).toBeNull();
+    expect(clampWindow([2016, 2100], [2019, 2025, 2022])).toEqual([2019, 2025]);
+    expect(clampWindow([2023, 2024], [2019, 2025])).toEqual([2023, 2024]);
+    expect(clampWindow([2030, 2031], [2019, 2025])).toBeNull();
+    expect(ymOf("2025-03-14", 2025)).toBe(202503);
+    expect(ymOf("garbage", 2025)).toBe(202501);
+  });
+
+  it("hides the layer below the rules' floor", () => {
+    expect(pinsWorthShowing({ total: 100, located: 4 }, 0.3, 5)).toBe(false);
+    expect(pinsWorthShowing({ total: 100, located: 20 }, 0.3, 5)).toBe(false);
+    expect(pinsWorthShowing({ total: 100, located: 40 }, 0.3, 5)).toBe(true);
+    expect(pinsWorthShowing({ total: 0, located: 0 }, 0.3, 5)).toBe(false);
+  });
+
+  it("asks for points with the Tax Authority spelling, never the shape's", () => {
+    const n = { neighborhood: "פלורנטין (OSM)", summary: nb("פלורנטין", 40_000) };
+    const q = hoodPointsQuery(n, "sh", { from: 2022, to: 2024 })!;
+    expect(q.get("neighborhood")).toBe("פלורנטין");
+    expect(q.get("scope")).toBe("sh");
+    expect(q.get("from")).toBe("2022");
+    expect(hoodPointsQuery({ neighborhood: "x", summary: null }, "sh")).toBeNull();
+    expect(hoodPointsQuery(n, "all")!.has("from")).toBe(false);
+  });
+
+  it("declares every rule the layer reads", () => {
+    for (const k of ["deal_map_min_geocoded_ratio", "deal_map_min_points", "deal_map_max_points", "deal_map_default_years"]) {
+      expect(RULE_DEFS.some((r) => r.key === k)).toBe(true);
+    }
+  });
+
+  it("keeps the pin ramp off both existing scales", () => {
+    expect(PIN_RAMP).toHaveLength(5);
+    for (const c of PIN_RAMP) expect(MAP_FILLS).not.toContain(c);
   });
 });

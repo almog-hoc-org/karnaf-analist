@@ -58,6 +58,9 @@ export interface CityGraphData {
 }
 
 export interface NadlanDeal {
+  /** row id — what a pin on the map points at. Optional: the series loaders
+   *  that never show a single deal do not select it. */
+  id?: number;
   dealDate: string;
   dealYear: number;
   rooms: number | null;

@@ -58,6 +58,7 @@ async function reportCity(city: string): Promise<void> {
       kind: l.kind as "road" | "water" | "coast", rank: Number(l.rank),
       name: l.name, path: l.path_d, length: Number(l.length ?? 0),
     })),
+    bbox: null,
   };
 
   const view = buildCityMap(geometry, summary.rows);

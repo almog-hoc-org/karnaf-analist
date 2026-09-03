@@ -19,6 +19,10 @@
 import Database from "better-sqlite3";
 import path from "path";
 import { normHoodKey } from "../lib/hoodKey";
+import { makeUnprojector, pathBBox } from "../lib/geo";
+import { wgs84ToItm } from "../lib/itm";
+import { addressKey } from "../lib/addressKey";
+import { ensureGeocodeTablesSync } from "../lib/geocodeDb";
 
 const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
 const DEFAULT_CITY = "תל אביב-יפו";
@@ -83,6 +87,8 @@ function main(): number {
       city_name TEXT PRIMARY KEY, min_lon REAL, min_lat REAL, max_lon REAL, max_lat REAL,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP);
   `);
+
+  ensureGeocodeTablesSync(db);
 
   // Columns production has that an old dev DB may not — the schema drift the
   // Prisma model documents ("added by hand, never here"). Idempotent ALTERs so
@@ -204,7 +210,52 @@ function main(): number {
   });
   write();
 
-  console.log(`✓ פיקסצ׳ר ל${city}: ${cells.length} שכונות, 2 כבישים, מים${priced.c === 0 ? ", מחירים ועסקאות סינתטיים" : ""}`);
+  /* Locations for the fixture deals, so the pin layer can be looked at
+     offline. Placed INSIDE each hood's rectangle in view units, then sent
+     backwards through the same projector the map uses — so the stored lon/lat
+     is a real-looking coordinate that projects back onto the drawn shape.
+     Of the 40 numbers per street: four are absent (17, 27, 37, 47), and only
+     every other hood has a street-level row — so the page shows filled pins,
+     hollow street-level rings AND deals that cannot be placed, all at once. */
+  const meta = db.prepare(
+    "SELECT min_lon, min_lat, max_lon, max_lat FROM city_map_meta WHERE city_name=?"
+  ).get(city) as { min_lon: number; min_lat: number; max_lon: number; max_lat: number };
+  const unproject = makeUnprojector({
+    minLon: meta.min_lon, minLat: meta.min_lat, maxLon: meta.max_lon, maxLat: meta.max_lat,
+  });
+  const seedGeocodes = db.transaction(() => {
+    db.prepare("DELETE FROM address_geocodes WHERE city_name=? AND source='fixture'").run(city);
+    const ins = db.prepare(
+      `INSERT OR REPLACE INTO address_geocodes
+         (city_name, street_norm, house_norm, lon, lat, itm_x, itm_y, level, source, raw_label)
+       VALUES (?,?,?,?,?,?,?,?, 'fixture', 'fixture')`
+    );
+    let houses = 0, streets = 0;
+    cells.forEach((c, i) => {
+      if (i >= cells.length - 2) return;
+      const b = pathBBox(c.path)!;
+      const street = `שדרות ${c.name}`;
+      const put = (house: string | null, vx: number, vy: number, level: "house" | "street") => {
+        const k = addressKey(city, street, house)!;
+        const [lon, lat] = unproject([vx, vy]);
+        const { x, y } = wgs84ToItm(lon, lat);
+        ins.run(k.cityName, k.streetNorm, k.houseNorm, lon, lat, x, y, level);
+      };
+      for (let d = 0; d < 40; d++) {
+        if (d % 10 === 7) continue; // absent on purpose
+        const col = d % 8, row = Math.floor(d / 8);
+        const vx = b.x + b.w * (0.1 + 0.8 * (col + 0.5) / 8);
+        const vy = b.y + b.h * (0.1 + 0.8 * (row + 0.5) / 5);
+        put(String(10 + d), vx, vy, "house");
+        houses++;
+      }
+      if (i % 2 === 0) { put(null, b.x + b.w / 2, b.y + b.h / 2, "street"); streets++; }
+    });
+    return { houses, streets };
+  });
+  const seeded = seedGeocodes();
+
+  console.log(`✓ פיקסצ׳ר ל${city}: ${cells.length} שכונות, 2 כבישים, מים${priced.c === 0 ? ", מחירים ועסקאות סינתטיים" : ""}, ${seeded.houses} כתובות ממוקמות + ${seeded.streets} רחובות`);
   console.log("  (שרטוט סינתטי לפיתוח בלבד — לא נתונים)");
   return 0;
 }

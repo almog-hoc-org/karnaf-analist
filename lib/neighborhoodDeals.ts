@@ -48,7 +48,7 @@ export const NEIGHBORHOOD_DEALS_PAGE = 10;
 export function neighborhoodDealsQuery(
   n: Pick<MappedNeighborhood, "neighborhood" | "summary">,
   scope: DealScope,
-  opts: { offset?: number; limit?: number } = {}
+  opts: { offset?: number; limit?: number; from?: number | null; to?: number | null } = {}
 ): URLSearchParams | null {
   if (!n.summary) return null;
   const q = new URLSearchParams({
@@ -57,5 +57,47 @@ export function neighborhoodDealsQuery(
     limit: String(opts.limit ?? NEIGHBORHOOD_DEALS_PAGE),
     offset: String(opts.offset ?? 0),
   });
+  // The same window the pins are drawn for — the list and the map must
+  // describe one population, or the count under one contradicts the other.
+  if (opts.from) q.set("from", String(opts.from));
+  if (opts.to) q.set("to", String(opts.to));
   return q;
+}
+
+/**
+ * The query behind the pins: every located deal of the neighbourhood in a
+ * year window — not a page. Same rule as above, pinned by the same test:
+ * the Tax Authority spelling from the price row, never the shape's name.
+ */
+export function hoodPointsQuery(
+  n: Pick<MappedNeighborhood, "neighborhood" | "summary">,
+  scope: DealScope,
+  range: { from?: number | null; to?: number | null } = {}
+): URLSearchParams | null {
+  if (!n.summary) return null;
+  const q = new URLSearchParams({ neighborhood: n.summary.neighborhood, scope });
+  if (range.from) q.set("from", String(range.from));
+  if (range.to) q.set("to", String(range.to));
+  return q;
+}
+
+/**
+ * The year presets the panel offers. "Default" is the rules' window
+ * (deal_map_default_years back from the neighbourhood's latest year), and
+ * the server derives it — the client sends nothing. The others are relative
+ * to the latest year the server reported, so "5 years" on a feed that
+ * stopped in 2024 is 2020–2024, not five empty years.
+ */
+export type YearPreset = "default" | "5y" | "all";
+export const YEAR_PRESETS: Array<{ id: YearPreset; label: string }> = [
+  { id: "default", label: "3 שנים" },
+  { id: "5y", label: "5 שנים" },
+  { id: "all", label: "כל השנים" },
+];
+export const EARLIEST_YEAR = 2016;
+
+export function presetRange(preset: YearPreset, latestYear: number | null): { from: number | null; to: number | null } {
+  if (preset === "default" || !latestYear) return { from: null, to: null };
+  if (preset === "5y") return { from: latestYear - 4, to: latestYear };
+  return { from: EARLIEST_YEAR, to: latestYear };
 }

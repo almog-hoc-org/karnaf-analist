@@ -1,16 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import type { MappedNeighborhood, MapLine } from "@/lib/cityMap";
 import {
   MAP_FILLS, MAP_NO_DATA, MAP_WATER, MAP_COAST, MAP_ROAD, MAP_ROAD_LABEL, MAP_SELECTED,
 } from "@/lib/chartColors";
+import { FULL_VIEW, VIEW_SIZE, viewBoxAttr, type ViewBox } from "@/lib/geo";
+import { useAnimatedViewBox } from "@/lib/useAnimatedViewBox";
 
 /**
  * The city, drawn.
  *
  * Four layers in one <svg>, in this order for a reason:
- *   water → neighbourhoods → streets → labels
+ *   water → neighbourhoods → streets → (pins) → labels
  * Streets sit OVER the fills, in white. They used to sit under them, which
  * only worked because the fills were half-transparent — and half-transparent
  * over a near-white page is a hard ceiling on how dark any colour can get, so
@@ -22,6 +24,16 @@ import {
  * by scripts/collect-city-map.ts and stored as path strings, so this component
  * only ever prints numbers into `d` attributes — and a visitor's browser makes
  * ZERO requests to anyone else to see this page.
+ *
+ * ZOOM IS A viewBox, NOT A TRANSFORM. When a neighbourhood is pinned the
+ * parent hands in the box around it and the svg shows that box — the same
+ * paths, the same numbers, animated by lib/useAnimatedViewBox. Every stroke
+ * and font here is multiplied by `k` (box width / 1000) so that zooming in
+ * does not turn hairline roads into ribbons.
+ *
+ * `children` is the layer between the streets and the labels: the deal pins.
+ * They live in the same coordinate space as the shapes, by construction
+ * (lib/dealPins.ts), so they are simply drawn.
  *
  * ⚠ direction="ltr" on the <svg> is not decoration. SVG inherits the page's
  * RTL, and this project has already been bitten by it once: chart axis labels
@@ -40,6 +52,8 @@ export default function CityMap({
   active,
   onHover,
   onPin,
+  viewBox,
+  children,
   className = "",
 }: {
   neighborhoods: MappedNeighborhood[];
@@ -48,8 +62,15 @@ export default function CityMap({
   active: string | null;
   onHover: (name: string | null) => void;
   onPin: (name: string | null) => void;
+  /** the part of the canvas to show — the whole city when omitted */
+  viewBox?: ViewBox;
+  /** drawn between the streets and the labels: the deal pins */
+  children?: ReactNode;
   className?: string;
 }) {
+  const vb = useAnimatedViewBox(viewBox ?? FULL_VIEW);
+  const k = vb.w / VIEW_SIZE;
+
   const water = useMemo(() => lines.filter((l) => l.kind === "water"), [lines]);
   const coast = useMemo(() => lines.filter((l) => l.kind === "coast"), [lines]);
   const roads = useMemo(() => lines.filter((l) => l.kind === "road"), [lines]);
@@ -68,7 +89,7 @@ export default function CityMap({
 
   return (
     <svg
-      viewBox="0 0 1000 1000"
+      viewBox={viewBoxAttr(vb)}
       direction="ltr"
       role="img"
       aria-label="מפת שכונות העיר, צבועה לפי מחיר למ״ר"
@@ -80,9 +101,9 @@ export default function CityMap({
             no priced cell must never be mistaken for "cheapest", and a
             distinction that rests on colour alone can always collide with the
             lightest step of the ramp — it already did, at ΔE 4.16. */}
-        <pattern id="map-nodata" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <rect width="6" height="6" fill={MAP_NO_DATA} />
-          <line x1="0" y1="0" x2="0" y2="6" stroke="#cbd5e1" strokeWidth="1.4" />
+        <pattern id="map-nodata" width={6 * k} height={6 * k} patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width={6 * k} height={6 * k} fill={MAP_NO_DATA} />
+          <line x1="0" y1="0" x2="0" y2={6 * k} stroke="#cbd5e1" strokeWidth={1.4 * k} />
         </pattern>
       </defs>
 
@@ -92,7 +113,7 @@ export default function CityMap({
         <path key={`w${i}`} d={w.path} fill={MAP_WATER} stroke="none" />
       ))}
       {coast.map((c, i) => (
-        <path key={`c${i}`} d={c.path} fill="none" stroke={MAP_COAST} strokeWidth={1.5} />
+        <path key={`c${i}`} d={c.path} fill="none" stroke={MAP_COAST} strokeWidth={1.5 * k} />
       ))}
 
       {/* The data layer. Opaque: the declared colour is the rendered colour. */}
@@ -102,7 +123,7 @@ export default function CityMap({
           d={n.path}
           fill={n.bin == null ? "url(#map-nodata)" : MAP_FILLS[n.bin]}
           stroke="#ffffff"
-          strokeWidth={0.9}
+          strokeWidth={0.9 * k}
           className="cursor-pointer"
           onMouseEnter={() => onHover(n.neighborhood)}
           onClick={() => onPin(n.neighborhood)}
@@ -122,7 +143,7 @@ export default function CityMap({
         strokeLinecap="round" strokeLinejoin="round" pointerEvents="none"
       >
         {roads.map((r, i) => (
-          <path key={`r${i}`} d={r.path} strokeWidth={ROAD_WIDTH[r.rank] ?? 0.55} />
+          <path key={`r${i}`} d={r.path} strokeWidth={(ROAD_WIDTH[r.rank] ?? 0.55) * k} />
         ))}
       </g>
 
@@ -138,18 +159,20 @@ export default function CityMap({
             d={n.path}
             fill="none"
             stroke={MAP_SELECTED}
-            strokeWidth={2.4}
+            strokeWidth={2.4 * k}
             strokeLinejoin="round"
             pointerEvents="none"
           />
         ))}
 
+      {children}
+
       {/* Street names under the shapes' labels, so a neighbourhood name is never
           hidden behind a road name. The halo is what keeps them legible over
           the deep end of the ramp. */}
       <g
-        fill={MAP_ROAD_LABEL} fontSize="11" fontWeight="700" textAnchor="middle"
-        stroke="#ffffff" strokeWidth={2.6} paintOrder="stroke" pointerEvents="none"
+        fill={MAP_ROAD_LABEL} fontSize={11 * k} fontWeight="700" textAnchor="middle"
+        stroke="#ffffff" strokeWidth={2.6 * k} paintOrder="stroke" pointerEvents="none"
       >
         {roadLabels.map((r, i) => (
           <text key={`rl${i}`} x={r.x} y={r.y}>{r.name}</text>
@@ -158,33 +181,39 @@ export default function CityMap({
 
       {/* Only the ACTIVE neighbourhood is named. Labelling all of them at once
           is unreadable at this size, and the table beside the map already lists
-          every one. */}
+          every one. Zoomed in, the name moves to the top of the box so it does
+          not sit on the pins it is describing. */}
       {neighborhoods
         .filter((n) => n.neighborhood === active)
-        .map((n) => (
-          <g key={`l${n.neighborhood}`} pointerEvents="none">
-            <text
-              x={n.cx} y={n.cy}
-              textAnchor="middle"
-              fontSize="15" fontWeight="800"
-              fill={MAP_SELECTED}
-              stroke="#ffffff" strokeWidth={3.5} paintOrder="stroke"
-            >
-              {n.neighborhood}
-            </text>
-            {n.summary && (
+        .map((n) => {
+          const zoomed = k < 0.6;
+          const lx = zoomed ? vb.x + vb.w / 2 : n.cx;
+          const ly = zoomed ? vb.y + 22 * k : n.cy;
+          return (
+            <g key={`l${n.neighborhood}`} pointerEvents="none">
               <text
-                x={n.cx} y={n.cy + 17}
+                x={lx} y={ly}
                 textAnchor="middle"
-                fontSize="13" fontWeight="700"
-                fill={MAP_FILLS[4]}
-                stroke="#ffffff" strokeWidth={3.5} paintOrder="stroke"
+                fontSize={15 * k} fontWeight="800"
+                fill={MAP_SELECTED}
+                stroke="#ffffff" strokeWidth={3.5 * k} paintOrder="stroke"
               >
-                ₪{Math.round(n.summary.sqm).toLocaleString("he-IL")}
+                {n.neighborhood}
               </text>
-            )}
-          </g>
-        ))}
+              {n.summary && (
+                <text
+                  x={lx} y={ly + 17 * k}
+                  textAnchor="middle"
+                  fontSize={13 * k} fontWeight="700"
+                  fill={MAP_FILLS[4]}
+                  stroke="#ffffff" strokeWidth={3.5 * k} paintOrder="stroke"
+                >
+                  ₪{Math.round(n.summary.sqm).toLocaleString("he-IL")}
+                </text>
+              )}
+            </g>
+          );
+        })}
     </svg>
   );
 }

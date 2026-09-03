@@ -18,6 +18,7 @@ import { cachedMarket } from "./cache";
 import { normHoodKey } from "./hoodKey";
 import { getRuleNum } from "./systemRules";
 import type { NeighborhoodSummary } from "./neighborhoods";
+import type { BBox } from "./geo";
 
 export interface MapShape {
   neighborhood: string;
@@ -38,6 +39,14 @@ export interface MapLine {
 export interface CityMapGeometry {
   shapes: MapShape[];
   lines: MapLine[];
+  /**
+   * The PADDED lon/lat box the collector handed to makeProjector — the one
+   * transform every stored path went through. A deal's lon/lat projected
+   * through makeProjector(bbox) with the default pad lands exactly on the
+   * shapes; through anything else it slides off them. null when the
+   * collector has not written city_map_meta (older fixtures).
+   */
+  bbox: BBox | null;
 }
 
 /** A shape joined to its price row, ready to draw. */
@@ -98,7 +107,17 @@ async function loadGeometryUncached(cityName: string): Promise<CityMapGeometry> 
       length: Number(r.length ?? 0),
     }));
   } catch { /* collector has not run */ }
-  return { shapes, lines };
+  let bbox: BBox | null = null;
+  try {
+    const rows = await prisma.$queryRawUnsafe<Array<{
+      min_lon: number | null; min_lat: number | null; max_lon: number | null; max_lat: number | null;
+    }>>(`SELECT min_lon, min_lat, max_lon, max_lat FROM city_map_meta WHERE city_name = ?`, cityName);
+    const m = rows[0];
+    if (m && m.min_lon != null && m.min_lat != null && m.max_lon != null && m.max_lat != null) {
+      bbox = { minLon: Number(m.min_lon), minLat: Number(m.min_lat), maxLon: Number(m.max_lon), maxLat: Number(m.max_lat) };
+    }
+  } catch { /* collector has not run */ }
+  return { shapes, lines, bbox };
 }
 
 export const loadCityMapGeometry = cachedMarket(loadGeometryUncached, ["city-map-geometry"]);

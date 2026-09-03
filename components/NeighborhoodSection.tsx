@@ -1,33 +1,46 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Icon from "@/components/Icon";
 import InfoTip from "@/components/InfoTip";
 import CityMap from "@/components/CityMap";
+import DealPins, { PinLegend, pinFacts, pinPercent } from "@/components/DealPins";
 import { useIsMobile } from "@/lib/useIsMobile";
 import { withBasePath } from "@/lib/basePath";
 import NeighborhoodPrices from "@/components/NeighborhoodPrices";
 import NeighborhoodDetail from "@/components/NeighborhoodDetail";
 import { MAP_FILLS, MAP_NO_DATA } from "@/lib/chartColors";
+import { FULL_VIEW, pathBBox, zoomViewBox, type ViewBox } from "@/lib/geo";
+import { hoodPointsQuery, presetRange, type DealScope, type YearPreset } from "@/lib/neighborhoodDeals";
 import type { CityMapView } from "@/lib/cityMap";
+import type { DealPoint, HoodDealPoints } from "@/lib/dealPinTypes";
 import type { NeighborhoodSummary } from "@/lib/neighborhoods";
 
 /**
  * "Which part of this city is expensive" — the table that answers it, and the
- * map that says where.
+ * map that says where. And, one click deeper, WHICH BUILDINGS.
  *
  * ONE PIECE OF STATE FOR BOTH. The map and the table are two views of the same
  * rows, so the highlight has to live above them: hovering a shape lights its
  * row, hovering a row lights its shape. Two independent hover states would let
  * the two disagree about what the reader is pointing at.
  *
- * A CLICK OPENS. Hover alone is unusable for reading a number — the moment the
- * pointer leaves the shape to reach the row, the highlight is gone — so a
- * click pins the neighbourhood AND swaps the table out for that one
- * neighbourhood's own figures and its deals. Hover deliberately does neither:
- * it only highlights, so that crossing the map with the pointer cannot swap
- * the panel out from under the reader, and cannot fire a request per shape.
+ * A CLICK OPENS — AND ZOOMS. Hover alone is unusable for reading a number —
+ * the moment the pointer leaves the shape to reach the row, the highlight is
+ * gone — so a click pins the neighbourhood, swaps the table out for that one
+ * neighbourhood's own figures and its deals, and zooms the map to it. At that
+ * zoom the located deals are drawn as pins (components/DealPins), and the
+ * same pattern repeats one level down: hovering a pin lights its row in the
+ * deals table, hovering a row lights its pin. Hover deliberately never
+ * fetches: it only highlights, so crossing the map with the pointer cannot
+ * swap the panel out from under the reader, and cannot fire a request per
+ * shape.
+ *
+ * THE SCOPE AND THE YEARS LIVE HERE, not in the panel, because the pins and
+ * the deals list must describe ONE population — the list says "30 deals",
+ * the map draws those 30. The panel used to own the scope; it moved up the
+ * day the map got pins.
  *
  * THE NUMBERS LIVE IN THE TABLE. The map shows the name and ₪/m² of whatever
  * is active and nothing else. Repeating change, vs-city and deal count on the
@@ -58,6 +71,13 @@ export default function NeighborhoodSection({
   const [hovered, setHovered] = useState<string | null>(null);
   const [pinned, setPinned] = useState<string | null>(null);
   const [map, setMap] = useState<CityMapView | null>(null);
+  const [scope, setScope] = useState<DealScope>("sh");
+  const [preset, setPreset] = useState<YearPreset>("default");
+  const [pins, setPins] = useState<HoodDealPoints | null>(null);
+  const [latestYear, setLatestYear] = useState<number | null>(null);
+  const [hoveredPin, setHoveredPin] = useState<DealPoint | null>(null);
+  const [activeDealId, setActiveDealId] = useState<number | null>(null);
+  const [clickedPin, setClickedPin] = useState<DealPoint | null>(null);
   const active = hovered ?? pinned;
   const narrow = useIsMobile(1023); // Tailwind lg — the width the map needs
 
@@ -73,6 +93,40 @@ export default function NeighborhoodSection({
     return () => { cancelled = true; };
   }, [cityName, hasMap, narrow]);
 
+  /* The pinned shape, resolved to the mapped row. Resolved from `pinned` and
+     never from `active`: `active` follows the pointer, and a panel that
+     followed the pointer would be unreadable. */
+  const openHood = pinned && map ? map.neighborhoods.find((n) => n.neighborhood === pinned) ?? null : null;
+  const range = presetRange(preset, latestYear);
+
+  /* The pins, fetched when a priced hood is pinned and again when the scope
+     or the window changes. One request per click, cached an hour upstream. */
+  const pointsKey = openHood?.summary ? `${cityName}|${openHood.summary.neighborhood}|${scope}|${range.from ?? ""}|${range.to ?? ""}` : null;
+  useEffect(() => {
+    setHoveredPin(null); setActiveDealId(null); setClickedPin(null);
+    if (!pointsKey || !openHood) { setPins(null); return; }
+    const q = hoodPointsQuery(openHood, scope, range);
+    if (!q) { setPins(null); return; }
+    let cancelled = false;
+    fetch(withBasePath(`/api/city-map/${encodeURIComponent(cityName)}/deals?${q}`))
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((j: HoodDealPoints) => {
+        if (cancelled) return;
+        setPins(j);
+        // the latest year the server served becomes the anchor for the presets
+        if (j.years && preset === "default") setLatestYear(j.years[1]);
+      })
+      .catch(() => { if (!cancelled) setPins(null); });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pointsKey]);
+
+  const viewBox: ViewBox = useMemo(() => {
+    if (!openHood) return FULL_VIEW;
+    const b = pathBBox(openHood.path);
+    return b ? zoomViewBox(b) : FULL_VIEW;
+  }, [openHood]);
+
   if (!rows.length) return null;
 
   if (!hasMap || narrow || !map) {
@@ -85,13 +139,12 @@ export default function NeighborhoodSection({
   }
 
   const fmt = (v: number) => `₪${Math.round(v).toLocaleString("he-IL")}`;
-  const togglePin = (name: string | null) =>
+  const togglePin = (name: string | null) => {
     setPinned((cur) => (cur === name ? null : name));
-
-  /* The pinned shape, resolved to the mapped row. Resolved from `pinned` and
-     never from `active`: `active` follows the pointer, and a panel that
-     followed the pointer would be unreadable. */
-  const openHood = pinned ? map.neighborhoods.find((n) => n.neighborhood === pinned) ?? null : null;
+    setLatestYear(null); setPreset("default");
+  };
+  const showPins = !!pins && pins.worthShowing;
+  const tooltip = hoveredPin && pins ? { ...pinFacts(hoveredPin, pins.streets), pos: pinPercent(hoveredPin, viewBox) } : null;
 
   return (
     <section className="mb-10">
@@ -110,11 +163,11 @@ export default function NeighborhoodSection({
                 map.unmatchedPriced.length
                   ? `${map.unmatchedPriced.length} שכונות מופיעות בטבלה ואין להן גבול משורטט: ${map.unmatchedPriced.join(", ")}.`
                   : "לכל השכונות שבטבלה יש גבול משורטט."
-              }`}
+              } לחיצה על שכונה מקרבת אליה ומציגה את העסקאות שלה כנקודות — כל נקודה היא בניין שדווחה בו עסקה.`}
             />
           </h2>
           <p className="mt-1 truncate text-xs text-slate-500">
-            {map.matched} שכונות על המפה · לחצו על שכונה כדי לפתוח אותה ואת העסקאות שלה
+            {map.matched} שכונות על המפה · לחצו על שכונה כדי להתקרב אליה ולראות את העסקאות שלה על המפה
           </p>
         </div>
       </div>
@@ -123,16 +176,50 @@ export default function NeighborhoodSection({
           below lg: this section is exactly the table it has always been. */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)]">
         <div>
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+          <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white">
             <CityMap
               neighborhoods={map.neighborhoods}
               lines={map.lines}
               active={active}
               onHover={setHovered}
               onPin={togglePin}
-            />
+              viewBox={viewBox}
+            >
+              {showPins && pins && (
+                <DealPins
+                  data={pins}
+                  scale={viewBox.w / 1000}
+                  activeId={activeDealId ?? hoveredPin?.id ?? null}
+                  onHover={(p) => { setHoveredPin(p); setActiveDealId(p?.id ?? clickedPin?.id ?? null); }}
+                  onClick={(p) => { setClickedPin(p); setActiveDealId(p.id); }}
+                />
+              )}
+            </CityMap>
+            {tooltip && (
+              <div
+                className="pointer-events-none absolute z-10 w-max max-w-[220px] -translate-x-1/2 -translate-y-[calc(100%+10px)] rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-2xs leading-snug text-slate-700 shadow-lg"
+                style={{ left: tooltip.pos.left, top: tooltip.pos.top }}
+                dir="rtl"
+              >
+                <div className="font-extrabold text-slate-900">{tooltip.title}</div>
+                {tooltip.lines.map((l, i) => <div key={i}>{l}</div>)}
+              </div>
+            )}
+            {openHood && (
+              <button
+                type="button"
+                onClick={() => togglePin(null)}
+                className="absolute right-2 top-2 rounded-lg border border-slate-300 bg-white/90 px-2 py-1 text-2xs font-bold text-slate-600 shadow-sm backdrop-blur hover:bg-white"
+              >
+                ← כל העיר
+              </button>
+            )}
           </div>
-          <Legend edges={map.binEdges} fmt={fmt} />
+          {openHood ? (
+            <PinsCaption pins={pins} showPins={showPins} />
+          ) : (
+            <Legend edges={map.binEdges} fmt={fmt} />
+          )}
         </div>
 
         {/* No max-height and no overflow here. A scroll box in this column
@@ -144,7 +231,15 @@ export default function NeighborhoodSection({
             <NeighborhoodDetail
               cityName={cityName}
               hood={openHood}
-              onBack={() => setPinned(null)}
+              onBack={() => togglePin(null)}
+              scope={scope} onScope={setScope}
+              preset={preset} onPreset={setPreset}
+              range={range}
+              activeDealId={activeDealId}
+              onHoverDeal={(id) => setActiveDealId(id ?? clickedPin?.id ?? null)}
+              clickedPin={clickedPin}
+              pinStreets={pins?.streets ?? []}
+              servedYears={pins?.years ?? null}
             />
           ) : (
             <NeighborhoodPrices
@@ -162,6 +257,36 @@ export default function NeighborhoodSection({
         {" "}<Link href="/methodology" className="underline hover:text-indigo-700">מתודולוגיה →</Link>
       </p>
     </section>
+  );
+}
+
+/**
+ * What the pins mean and, first, HOW MANY of the neighbourhood's deals they
+ * are. A map that shows a third of the deals and says nothing reads as "only
+ * these sold" — the count is not decoration.
+ */
+export function PinsCaption({ pins, showPins }: { pins: HoodDealPoints | null; showPins: boolean }) {
+  if (!pins) return <p className="mt-2 text-2xs text-slate-400">טוען את מיקומי העסקאות…</p>;
+  const years = pins.years ? (pins.years[0] === pins.years[1] ? `${pins.years[0]}` : `${pins.years[0]}–${pins.years[1]}`) : "";
+  if (!showPins) {
+    return (
+      <p className="mt-2 text-2xs leading-relaxed text-slate-500">
+        {pins.total === 0
+          ? `אין עסקאות בהיקף הזה${years ? ` (${years})` : ""}.`
+          : `${pins.located.toLocaleString("he-IL")} מתוך ${pins.total.toLocaleString("he-IL")} העסקאות בשכונה${years ? ` (${years})` : ""} ניתנות למיקום על המפה — מעט מדי כדי להציג נקודות בלי להטעות. הרשימה משמאל מלאה.`}
+      </p>
+    );
+  }
+  return (
+    <div>
+      <p className="mt-2 text-2xs leading-relaxed text-slate-500">
+        <b className="text-slate-700">{pins.located.toLocaleString("he-IL")} מתוך {pins.total.toLocaleString("he-IL")}</b> העסקאות בשכונה{years ? ` (${years})` : ""} ממוקמות על המפה
+        {pins.streetLevel > 0 ? ` · ${pins.streetLevel.toLocaleString("he-IL")} ברמת רחוב בלבד` : ""}
+        {pins.capped ? ` · מוצגות ${pins.points.length.toLocaleString("he-IL")} האחרונות` : ""}
+        {pins.located < pins.total ? " · השאר דווחו ללא כתובת שניתן למקם" : ""}
+      </p>
+      <PinLegend median={pins.medianSqm} streetLevel={pins.streetLevel} />
+    </div>
   );
 }
 

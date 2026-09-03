@@ -85,7 +85,7 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
   try {
     const [rows, countRow] = await Promise.all([
       prisma.$queryRawUnsafe<Array<Record<string, unknown>>>(
-        `SELECT deal_date, deal_year, rooms, room_bucket, area, price, price_sqm, year_built,
+        `SELECT id, deal_date, deal_year, rooms, room_bucket, area, price, price_sqm, year_built,
                 is_secondhand, source, COALESCE(luxury,0) luxury,
                 street, house_num, neighborhood, floor
          FROM nadlan_transactions WHERE ${clause}
@@ -95,6 +95,7 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
     ]);
 
     const deals: NadlanDeal[] = rows.map((r) => ({
+      id: Number(r.id),
       dealDate: String(r.deal_date),
       dealYear: Number(r.deal_year),
       rooms: r.rooms == null ? null : Number(r.rooms),

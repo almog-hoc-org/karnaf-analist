@@ -108,6 +108,80 @@ function round2(n: number): number {
 }
 
 /**
+ * The exact inverse of makeProjector(bbox, pad): view units → lon/lat.
+ *
+ * Nothing on a live page needs this — pins are placed by projecting, not the
+ * other way round. It exists so the fixture can invent a deal INSIDE a drawn
+ * rectangle and store a real-looking lon/lat for it, and so a test can prove
+ * that a point sent through both functions comes back where it started.
+ */
+export function makeUnprojector(bbox: BBox, pad = 0.02): (p: Point) => LonLat {
+  const [x0, y0] = project([bbox.minLon, bbox.minLat]);
+  const [x1, y1] = project([bbox.maxLon, bbox.maxLat]);
+  const w = x1 - x0;
+  const h = y1 - y0;
+  if (!(w > 0) || !(h > 0)) return () => [bbox.minLon, bbox.minLat];
+  const inner = VIEW_SIZE * (1 - pad * 2);
+  const scale = Math.min(inner / w, inner / h);
+  const offX = (VIEW_SIZE - w * scale) / 2;
+  const offY = (VIEW_SIZE - h * scale) / 2;
+  return ([vx, vy]: Point) => {
+    const px = x0 + (vx - offX) / scale;
+    const py = y0 + (VIEW_SIZE - vy - offY) / scale;
+    const lon = (px * 180) / Math.PI;
+    const lat = ((2 * Math.atan(Math.exp(py)) - Math.PI / 2) * 180) / Math.PI;
+    return [lon, lat];
+  };
+}
+
+/** Axis-aligned bounds in view units. */
+export interface ViewBox { x: number; y: number; w: number; h: number }
+
+/**
+ * Bounds of a stored path string ("M1,2L3,4Z…"). Reads the numbers back out
+ * of the `d` the collector wrote — the same trick components/CityMap.tsx uses
+ * to place a road label — so a shape's extent never has to be stored twice.
+ */
+export function pathBBox(pathD: string): ViewBox | null {
+  const nums = pathD.match(/-?\d+(?:\.\d+)?/g);
+  if (!nums || nums.length < 4) return null;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (let i = 0; i + 1 < nums.length; i += 2) {
+    const x = parseFloat(nums[i]), y = parseFloat(nums[i + 1]);
+    if (x < x0) x0 = x;
+    if (x > x1) x1 = x;
+    if (y < y0) y0 = y;
+    if (y > y1) y1 = y;
+  }
+  if (!Number.isFinite(x0) || !Number.isFinite(y0)) return null;
+  return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+}
+
+/**
+ * The viewBox to zoom a map to one shape: square (so pins keep their aspect),
+ * padded so the outline is not glued to the frame, never smaller than `min`
+ * (a tiny shape zoomed to fill the canvas would show one street at a scale
+ * where every pin is a boulder), and clamped to the 0..VIEW_SIZE canvas.
+ */
+export function zoomViewBox(b: ViewBox, opts: { pad?: number; min?: number } = {}): ViewBox {
+  const pad = opts.pad ?? 0.15;
+  const min = opts.min ?? 120;
+  const side = Math.min(VIEW_SIZE, Math.max(min, Math.max(b.w, b.h) * (1 + pad * 2)));
+  const cx = b.x + b.w / 2;
+  const cy = b.y + b.h / 2;
+  const x = Math.max(0, Math.min(VIEW_SIZE - side, cx - side / 2));
+  const y = Math.max(0, Math.min(VIEW_SIZE - side, cy - side / 2));
+  return { x: round2(x), y: round2(y), w: round2(side), h: round2(side) };
+}
+
+/** The whole canvas — what the map shows when nothing is pinned. */
+export const FULL_VIEW: ViewBox = { x: 0, y: 0, w: VIEW_SIZE, h: VIEW_SIZE };
+
+export function viewBoxAttr(v: ViewBox): string {
+  return `${v.x} ${v.y} ${v.w} ${v.h}`;
+}
+
+/**
  * Ramer–Douglas–Peucker: drop the points that do not change the line's shape
  * by more than `tolerance`, in the projected 0..1000 space.
  *

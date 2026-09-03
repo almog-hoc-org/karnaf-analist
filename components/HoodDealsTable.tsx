@@ -18,7 +18,7 @@ import type { NadlanDeal } from "@/lib/nadlanTransactionSeries";
  * already learned the other.
  */
 export default function HoodDealsTable({
-  cityName, neighborhood, scope, initialDeals, total,
+  cityName, neighborhood, scope, initialDeals, total, activeDealId = null, onHoverDeal,
 }: {
   cityName: string;
   /** Tax Authority spelling — the string the deals table stores */
@@ -26,6 +26,9 @@ export default function HoodDealsTable({
   scope: "secondhand" | "all";
   initialDeals: NadlanDeal[];
   total: number;
+  /** the deal whose pin is hovered on the map beside the table, if any */
+  activeDealId?: number | null;
+  onHoverDeal?: (id: number | null) => void;
 }) {
   const [deals, setDeals] = useState(initialDeals);
   const [loading, setLoading] = useState(false);
@@ -83,8 +86,14 @@ export default function HoodDealsTable({
               d.priceSqm == null ? null : `${fmt(d.priceSqm)}/מ״ר`,
               d.yearBuilt ? `נבנה ${d.yearBuilt}` : null,
             ].filter(Boolean).join(" · ");
+            const isActive = d.id != null && d.id === activeDealId;
             return (
-              <tr key={`${d.dealDate}-${i}`} className="border-b border-slate-100 last:border-0">
+              <tr
+                key={`${d.id ?? d.dealDate}-${i}`}
+                onMouseEnter={() => d.id != null && onHoverDeal?.(d.id)}
+                onMouseLeave={() => onHoverDeal?.(null)}
+                className={`border-b border-slate-100 last:border-0 transition-colors ${isActive ? "bg-sky-100" : onHoverDeal ? "hover:bg-sky-50" : ""}`}
+              >
                 <td className="whitespace-nowrap px-3 py-1.5 text-center tabular-nums text-slate-500">{d.dealDate}</td>
                 <td className="px-3 py-1.5 text-center leading-tight">
                   {addr ? (

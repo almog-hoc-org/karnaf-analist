@@ -98,3 +98,24 @@ export const MAP_ROAD_LABEL = "#475569"; // slate-600 — needs a white halo ove
  *  fills there is no alpha left to signal with, and INK is visible over all
  *  five steps. */
 export const MAP_SELECTED = INK;
+
+/**
+ * Deal pins on the neighbourhood map — a DIVERGING ramp around the
+ * neighbourhood's own median ₪/m²: two steps below, one at, two above.
+ *
+ * Not the trend greens/reds: those mean CHANGE everywhere on the site, and a
+ * dearer flat is not "up". Not the map's blues: a blue dot on a blue
+ * choropleth vanishes. Orange↔violet is orthogonal to both scales, keeps
+ * its order for the common colour-vision deficiencies, and every step reads
+ * over every fill with the white stroke.
+ */
+export const PIN_RAMP: string[] = [
+  "#c2410c", // orange-700 — well below the median
+  "#fb923c", // orange-400 — below
+  "#475569", // slate-600 — around the median
+  "#a78bfa", // violet-400 — above
+  "#6d28d9", // violet-700 — well above
+];
+export const PIN_STROKE = "#ffffff";
+/** A street-level location: a hollow ring, never a filled pin. */
+export const PIN_STREET = SLATE;

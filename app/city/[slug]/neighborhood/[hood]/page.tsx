@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Icon from "@/components/Icon";
 import InfoTip from "@/components/InfoTip";
 import HoodTrendStudio from "@/components/HoodTrendStudio";
-import HoodDealsTable from "@/components/HoodDealsTable";
+import HoodMapAndDeals from "@/components/HoodMapAndDeals";
 import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth";
 import { getRuleBool, getRuleText } from "@/lib/systemRules";
@@ -12,6 +12,7 @@ import { anonId, isAnonCityUnlocked } from "@/lib/anonAccess";
 import { canonicalCityName } from "@/lib/cityAliases";
 import { neighborhoodMinDeals, neighborhoodSummary } from "@/lib/neighborhoods";
 import { loadHoodPage, loadHoodDeals, loadHoodSeries } from "@/lib/neighborhoodPage";
+import { buildCityMap, loadCityMapGeometry } from "@/lib/cityMap";
 
 /**
  * A city page, one level down: one neighbourhood's price history and deals.
@@ -120,10 +121,15 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     );
   }
 
-  const [firstDeals, series] = await Promise.all([
+  const [firstDeals, series, geometry, summary] = await Promise.all([
     loadHoodDeals(cityName, data.neighborhood, scope),
     loadHoodSeries(cityName, data.neighborhood),
+    loadCityMapGeometry(cityName),
+    neighborhoodSummary(cityName, { scope, years: 3 }),
   ]);
+  // One boolean travels with the HTML; the geometry itself is fetched by the
+  // browser — the same rule as the city page (app/city/[slug]/page.tsx).
+  const hasMap = buildCityMap(geometry, summary.rows) !== null;
   const cityHref = `/city/${encodeURIComponent(cityName)}`;
 
   return (
@@ -179,12 +185,13 @@ export default async function NeighborhoodPage({ params }: PageProps) {
             </p>
           );
         })()}
-        <HoodDealsTable
+        <HoodMapAndDeals
           cityName={cityName}
           neighborhood={data.neighborhood}
           scope={scope}
           initialDeals={firstDeals.deals}
           total={firstDeals.total}
+          hasMap={hasMap}
         />
       </section>
 
