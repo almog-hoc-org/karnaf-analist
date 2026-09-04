@@ -85,6 +85,19 @@ export function buildQueryPayload(tok: NadlanToken, extra: Record<string, unknow
   };
 }
 
+/**
+ * The request body the site sends today: the signed string under "##".
+ * MEASURED, NOT ASSUMED (4.9.2026): the first capture run sent the bare
+ * signed string with application/json — the shape scripts/fill-city-years.ts
+ * used when it was written — and got 184 empty answers in a row. The page's
+ * own request, and the nightly collector that works, wrap it as {"##": …}
+ * with text/plain. Pinned in tests so the shape cannot drift twice.
+ */
+export function buildFetchBody(signed: string): string {
+  return JSON.stringify({ "##": signed });
+}
+export const DEAL_DATA_HEADERS: Record<string, string> = { "content-type": "text/plain" };
+
 export interface DealDataMeta { totalRows: number | null; totalFetch: number | null }
 
 /** The item list out of a decoded response, whichever envelope the API used. */

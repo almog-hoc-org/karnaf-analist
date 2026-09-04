@@ -173,7 +173,8 @@ function main(): number {
     for (const it of items) { const y = Number(String(it.dealDate ?? "").slice(0, 4)); if (y > 1990) { min = Math.min(min, y); max = Math.max(max, y); } }
     return min === Infinity ? null : `${min}–${max}`;
   })();
-  upsertStatus.run(city, METHOD, "ok", items.length, filledStreet, filledHood, filledParcel, ambiguous, unmatched, notInDb, yearsOf);
+  // an empty capture is not a finished city — the push script must pick it up again
+  upsertStatus.run(city, METHOD, items.length ? "ok" : "empty", items.length, filledStreet, filledHood, filledParcel, ambiguous, unmatched, notInDb, yearsOf);
   console.log(`${city}: ${items.length.toLocaleString("en")} נלכדו (${usable.toLocaleString("en")} עם כתובת/גוש) · ${targets.length.toLocaleString("en")} שורות חסרות · ${matched.toLocaleString("en")} הותאמו · +${filledStreet.toLocaleString("en")} רחוב · +${filledHood.toLocaleString("en")} שכונה · +${filledParcel.toLocaleString("en")} גוש-חלקה · ${ambiguous} דו-משמעי · ${unmatched.toLocaleString("en")} ללא התאמה · ${notInDb.toLocaleString("en")} עסקאות באתר שאינן במאגר · שנים ${yearsOf ?? "—"}`);
   db.close();
   return 0;

@@ -33,7 +33,7 @@ import fs from "fs";
 import path from "path";
 import puppeteerCore from "puppeteer-core";
 import type { Browser, Page } from "puppeteer-core";
-import { buildQueryPayload, decodeDealData, parseHarvestedPost, responseItems, responseMeta, signBody, type NadlanToken } from "../lib/nadlanSession";
+import { buildFetchBody, buildQueryPayload, DEAL_DATA_HEADERS, decodeDealData, parseHarvestedPost, responseItems, responseMeta, signBody, type NadlanToken } from "../lib/nadlanSession";
 import { mergeItems, sliceQueries, yearSpan, type CaptureFile, type RawItem } from "../lib/nadlanCapture";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -78,6 +78,8 @@ async function main(): Promise<number> {
     try { cap = JSON.parse(fs.readFileSync(file, "utf8")) as CaptureFile; } catch { /* start over */ }
     if (!Array.isArray(cap.slicesDone)) cap.slicesDone = [];
     if (!Array.isArray(cap.items)) cap.items = [];
+    // a file with windows "done" but nothing in them is a failed run, not progress
+    if (cap.items.length === 0) cap.slicesDone = [];
   }
   const done = new Set(cap.slicesDone);
   const save = () => {
@@ -117,16 +119,31 @@ async function main(): Promise<number> {
     return lastPost ? parseHarvestedPost(lastPost) : null;
   };
 
+  let firstAnswerShown = false;
+  let emptyStreak = 0;
   const runQ = async (tok: NadlanToken, extra: Record<string, unknown>): Promise<{ items: RawItem[]; totalRows: number | null }> => {
-    const body = signBody(buildQueryPayload(tok, extra));
-    const txt: string = await page.evaluate(async (b: string) => {
-      const r = await fetch("https://api.nadlan.gov.il/deal-data", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(b) });
+    // the page's own body shape ({"##": signed}, text/plain) — see lib/nadlanSession.buildFetchBody
+    const body = buildFetchBody(signBody(buildQueryPayload(tok, extra)));
+    const txt: string = await page.evaluate(async (b: string, headers: Record<string, string>) => {
+      const r = await fetch("https://api.nadlan.gov.il/deal-data", { method: "POST", headers, body: b, redirect: "follow" });
       if (r.status === 401) return "__401__";
       return await r.text();
-    }, body).catch(() => "");
+    }, body, DEAL_DATA_HEADERS).catch(() => "");
     if (txt === "__401__") throw new BlockedError("401 מ-deal-data — הסשן נחסם או פג; להתחיל כרום מחדש");
     const d = decodeDealData(txt);
-    return { items: responseItems(d), totalRows: responseMeta(d).totalRows };
+    const items = responseItems(d);
+    const meta = responseMeta(d);
+    if (!firstAnswerShown) {
+      // a failure must explain itself on the first answer, not after the budget
+      firstAnswerShown = true;
+      const raw = txt.length > 160 ? `${txt.slice(0, 160)}…` : txt;
+      console.log(`   תשובה ראשונה: ${items.length} פריטים · total_rows=${meta.totalRows ?? "—"} · גולמי: ${JSON.stringify(raw)}`);
+    }
+    emptyStreak = items.length ? 0 : emptyStreak + 1;
+    if (emptyStreak >= 20 && cap.items.length === 0) {
+      throw new Error("20 תשובות ריקות ברצף ואף פריט — ה-API לא מחזיר עסקאות לבקשות שלנו; לבדוק את 'תשובה ראשונה' למעלה");
+    }
+    return { items, totalRows: meta.totalRows };
   };
 
   const settlementUrl = `https://www.nadlan.gov.il/?view=settlement&id=${code}&page=deals`;
@@ -136,7 +153,17 @@ async function main(): Promise<number> {
   /** Walk every slice for one base (city or neighbourhood) with one token. */
   const walkBase = async (baseLabel: string, getToken: () => Promise<NadlanToken | null>): Promise<void> => {
     let tok = await getToken();
+    let tokAt = Date.now();
     if (!tok) { console.log(`   ${baseLabel}: אין טוקן — מדלג`); return; }
+    // an empty answer from a token younger than a minute is an empty window,
+    // not an expired token — refreshing costs a full page navigation
+    const freshen = async () => {
+      if (Date.now() - tokAt < 60_000) return false;
+      const t2 = await getToken();
+      if (!t2) return false;
+      tok = t2; tokAt = Date.now();
+      return true;
+    };
     const slices = sliceQueries(years, nowY).filter((s) => !done.has(`${baseLabel}|${s.label}`));
     let added = 0;
     for (const s of slices) {
@@ -145,10 +172,8 @@ async function main(): Promise<number> {
         let r = await runQ(tok, { ...s.extra, fetch_number });
         requests++;
         await sleep(rnd(700, 1400));
-        if (r.items.length === 0 && fetch_number === 1) {
-          // an expired token answers empty — refresh once, then trust the answer
-          const t2 = await getToken();
-          if (t2) { tok = t2; r = await runQ(tok, { ...s.extra, fetch_number }); requests++; await sleep(rnd(700, 1400)); }
+        if (r.items.length === 0 && fetch_number === 1 && (await freshen())) {
+          r = await runQ(tok, { ...s.extra, fetch_number }); requests++; await sleep(rnd(700, 1400));
         }
         if (r.items.length === 0) break;
         added += mergeItems(cap, r.items);

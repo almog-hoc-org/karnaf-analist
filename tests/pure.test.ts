@@ -15,7 +15,7 @@ import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
 import { sliceQueries, horizonMonths, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
-import { signBody, parseHarvestedPost, buildQueryPayload, decodeDealData, responseItems, responseMeta } from "@/lib/nadlanSession";
+import { signBody, parseHarvestedPost, buildQueryPayload, buildFetchBody, DEAL_DATA_HEADERS, decodeDealData, responseItems, responseMeta } from "@/lib/nadlanSession";
 import { NADLAN_ADDRESS_COLUMN_ALTERS } from "@/lib/addressBackfillDb";
 import { gzipSync } from "zlib";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
@@ -1715,6 +1715,14 @@ describe("nadlan address campaign — slicing, identity, donation", () => {
     expect(parseHarvestedPost("garbage")).toBeNull();
     const p = buildQueryPayload(tok, { fetch_number: 2, room_num: "3" }, 1000);
     expect(p).toMatchObject({ base_id: 5000, sk: "abc", token: "t0k", exp: 1110, fetch_number: 2, room_num: "3", type_order: "dealDate_down" });
+  });
+
+  it("sends the body the page itself sends: the signed string under '##', as text/plain", () => {
+    // 4.9.2026: the bare-string shape got 184 empty answers; the page's own
+    // request (the one the token is harvested from) wraps it this way
+    expect(JSON.parse(buildFetchBody("abc"))).toEqual({ "##": "abc" });
+    expect(parseHarvestedPost(buildFetchBody(signBody({ base_id: 1, base_name: "settlement", sk: "s", token: "t" })))).toEqual({ base_id: 1, base_name: "settlement", sk: "s", token: "t" });
+    expect(DEAL_DATA_HEADERS["content-type"]).toBe("text/plain");
   });
 
   it("decodes both response envelopes: plain JSON and base64 gzip, items or AllResults", () => {
