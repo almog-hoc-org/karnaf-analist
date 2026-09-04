@@ -216,11 +216,17 @@ async function main(): Promise<number> {
     const key = (s: SliceQuery) => `${baseLabel}|${s.label}`;
     let added = 0;
     const lines: string[] = [];
+    // MEASURED (4.9.2026, Tel Aviv, 69 neighbourhoods): the 12/6/3-month
+    // windows added 0 deals every single time — a larger window that did not
+    // saturate already held everything the smaller ones can show. So the
+    // smaller horizons run only when the larger one filled up.
+    let needSmaller = true;
     for (const h of orderHorizons(horizons)) {
       if (overBudget()) { stopped = "תקציב הזמן"; break; }
       const primary = primarySlice(h);
       const doneKey = `${baseLabel}|h${h}:done`;
       if (done.has(doneKey)) continue;
+      if (!needSmaller) { done.add(doneKey); lines.push(`${h} חוד': דולג (הגדול הכיל הכול)`); continue; }
       let hAdded = 0;
       const seen: RawItem[] = [];
       let queue: SliceQuery[] = done.has(key(primary)) ? expansionSlices(h) : [primary];
@@ -238,6 +244,7 @@ async function main(): Promise<number> {
       if (stopped) break;
       done.add(doneKey);
       added += hAdded;
+      needSmaller = expanded;
       const sp = yearSpan(seen);
       lines.push(`${h} חוד': +${hAdded}${expanded ? " (רווי, הורחב)" : ""} · ${sp ? `${sp.min}–${sp.max}` : "ריק"}`);
       if (done.size % 10 === 0) save();
@@ -278,7 +285,8 @@ async function main(): Promise<number> {
       for (const it of cap.items) {
         const id = it.neighborhoodId != null ? String(it.neighborhoodId) : "";
         const name = typeof it.neighborhoodName === "string" ? it.neighborhoodName : id;
-        if (id && !hoodIds.has(id)) hoodIds.set(id, name);
+        // id 0 = the site's "no neighbourhood" bucket; it has no page of its own
+        if (id && id !== "0" && !hoodIds.has(id)) hoodIds.set(id, name);
       }
       console.log(`   ${hoodIds.size} שכונות זוהו מהפריטים`);
       let tried = false;
