@@ -31,3 +31,21 @@ export function ensureSourceDealIdColumnSync(db: { exec: (q: string) => unknown 
     /* already exists — the normal case */
   }
 }
+
+/**
+ * The two columns the nadlan address campaign adds (4.9.2026): the parcel
+ * (gush-helka-tat, e.g. "7242-126-6") that ties a deal to its building even
+ * when the street is spelled differently, and the building's floor count.
+ * Same guarded-ALTER discipline as source_deal_id.
+ */
+export const NADLAN_ADDRESS_COLUMN_ALTERS = [
+  "ALTER TABLE nadlan_transactions ADD COLUMN parcel_num TEXT",
+  "ALTER TABLE nadlan_transactions ADD COLUMN building_floors INTEGER",
+] as const;
+
+export function ensureNadlanAddressColumnsSync(db: { exec: (q: string) => unknown }): void {
+  ensureSourceDealIdColumnSync(db);
+  for (const q of NADLAN_ADDRESS_COLUMN_ALTERS) {
+    try { db.exec(q); } catch { /* already exists — the normal case */ }
+  }
+}

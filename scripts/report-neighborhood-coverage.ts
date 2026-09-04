@@ -141,6 +141,15 @@ async function main(): Promise<number> {
     const geoStatus = await prisma.$queryRawUnsafe<Array<{ status: string; c: number; house: number }>>(
       `SELECT status, COUNT(*) c, SUM(house_level) house FROM govmap_geocode_status GROUP BY status`).catch(() => []);
     if (geoStatus.length) console.log(`  שארית govmap: ${geoStatus.map((r) => `${r.status} ${r.c} ערים (${Number(r.house).toLocaleString("he-IL")} בתים)`).join(" · ")}`);
+    // The nadlan address campaign (scripts/push-nadlan-addresses.sh): the
+    // source of streets for the rows govmap never had.
+    const nadlanCampaign = await prisma.$queryRawUnsafe<Array<{ c: number; street: number; parcel: number; not_in_db: number }>>(
+      `SELECT COUNT(*) c, SUM(filled_street) street, SUM(filled_parcel) parcel, SUM(not_in_db) not_in_db
+         FROM nadlan_address_backfill_status WHERE status = 'ok'`).catch(() => []);
+    const nc = nadlanCampaign[0];
+    console.log(nc && Number(nc.c) > 0
+      ? `  קמפיין nadlan: ${nc.c} ערים · +${Number(nc.street).toLocaleString("he-IL")} רחובות · +${Number(nc.parcel).toLocaleString("he-IL")} גוש-חלקה · ${Number(nc.not_in_db).toLocaleString("he-IL")} עסקאות באתר שאינן במאגר`
+      : "  קמפיין nadlan: טרם רץ (scripts/push-nadlan-addresses.sh מהמק)");
   } catch (e) {
     console.log(`  (אין טבלת גיאוקוד עדיין — ${e instanceof Error ? e.message.split("\n")[0] : e})`);
   }

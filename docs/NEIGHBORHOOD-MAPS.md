@@ -256,6 +256,46 @@ bash scripts/push-geocodes.sh                         # ייצוא → שאיל�
 
 לבניין יחיד (עמוד כתובת) הסף לא חל — נקודה אחת היא התשובה.
 
+## מקור הכתובות שחסרות: nadlan.gov.il (נמדד, 4.9.2026)
+
+**הממצא.** כל שורה במאגר שיש לה רחוב יש לה גם מספר בית. הפער הוא שורות בלי
+רחוב בכלל — 807k — וכולן מערוץ nadlan: 371k לפני 2016 (ל-govmap אין שם כלום)
+ו-436k מ-2016. קמפיין govmap (`push-addresses.sh`) הוסיף להן ~3,000 בלבד.
+תשובת `api.nadlan.gov.il/deal-data` שנלכדה מכרום מכילה לכל עסקה:
+`address` ("יצחק צוקרמן 23"), `parcelNum` (גוש-חלקה-תת, "7242-126-6"), `floor`,
+`buildingFloors`, `assetId`, `neighborhoodId`, `streetCode`. הקולקטור כבר קורא
+את `address` (lib/nadlanAddress.ts) — ההיסטוריה פשוט נאספה לפניו.
+
+**המגבלה.** סשן אנונימי מקבל ≤500 פריטים ל-`fetch_number` ושני fetch-ים לחלון.
+החלון נקבע ע"י הסינונים של העמוד עצמו: `room_num`, אופק `deal_date` בחודשים
+אחורה, `type_order` עולה/יורד. `lib/nadlanCapture.sliceQueries` מפצל כל שנה
+ל-8 חלונות (עולה/יורד × ללא-חדרים/3/4/5); עמוד שכונה, אם הוא מנפיק טוקן
+משלו, הופך כל שכונה לבסיס נפרד (נמדד בריצה הראשונה ונרשם בקובץ הלכידה).
+אין עקיפת תקרה: אותו טוקן שהעמוד הנפיק, אותם סינונים, 0.7–1.4 שניות בין
+בקשות, עצירה על 401.
+
+**הריצה (מהמק, כרום עם דיבאג על 9222):**
+
+```bash
+bash scripts/bootstrap_nadlan_chrome.sh            # פעם אחת; לפתוח 'עסקאות' של עיר כלשהי
+bash scripts/push-nadlan-addresses.sh              # כל הערים, הפער הגדול קודם
+KARNAF_NADLAN_BUDGET_MIN=40 bash scripts/push-nadlan-addresses.sh "תל אביב-יפו"
+```
+
+לכל עיר: `capture-nadlan-addresses.ts` (מק) → `data/nadlan_addr/<עיר>.json`
+(resumable לפי `slicesDone`) → scp → `backfill-nadlan-addresses.ts` (שרת) →
+מחיקה. הצד השרתי הוא **UPDATE בלבד**: רחוב, מספר, קומה, שכונה, ושתי עמודות
+חדשות `parcel_num` ו-`building_floors` (ALTER שמור, lib/addressBackfillDb.ts),
+עם COALESCE — ערך קיים לא נדרס. לעולם לא INSERT: הרחוב הוא חלק ממפתח הזהות
+(lib/dealKey.ts), והכנסת עותק עם רחוב ליד שורה ישנה בלי רחוב יוצרת כפילות.
+עסקאות שיש באתר ואין במאגר נספרות ומדווחות ("לא במאגר"); הכנסתן היא שלב
+נפרד, אחרי שהשורות הישנות מולאו.
+
+**מה מודדים אחרי ריצה:** `backfill-nadlan-addresses.ts --status` (לפי עיר),
+ובדוח הכיסוי שורת "קמפיין nadlan". השאלה הפתוחה היחידה היא כמה אחורה מגיע
+אופק `deal_date` (fill-city-years השתמש ב-10 שנים בלבד); עמודת "שנים" בסטטוס
+עונה עליה לכל עיר.
+
 ## פריטים פתוחים שדורשים את המק
 
 1. `import-mapi-addresses.ts --dry-run` על השרת: לאשר שהגילוי בחר את הקובץ

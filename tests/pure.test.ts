@@ -14,6 +14,10 @@ import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
+import { sliceQueries, horizonMonths, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
+import { signBody, parseHarvestedPost, buildQueryPayload, decodeDealData, responseItems, responseMeta } from "@/lib/nadlanSession";
+import { NADLAN_ADDRESS_COLUMN_ALTERS } from "@/lib/addressBackfillDb";
+import { gzipSync } from "zlib";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
 import { compMatchNote, compWhere, compHow, type StreetComp } from "@/lib/compTypes";
 import { strictKey, looseKey, chooseDonation, orderCitiesByGap, floorText, SOFT_AREA_TOLERANCE_SQM } from "@/lib/addressBackfill";
@@ -1645,5 +1649,88 @@ describe("OpenStreetMap addresses and municipal files", () => {
     expect(SOURCE_RANK.govmap).toBeGreaterThan(SOURCE_RANK.osm);
     expect(SOURCE_RANK.osm).toBeGreaterThan(SOURCE_RANK.fixture);
     expect(SOURCES.find((s) => s.id === "osm-addresses")?.probe?.expectJson).toBe(true);
+  });
+});
+
+describe("nadlan address campaign — slicing, identity, donation", () => {
+  it("slices every year into up/down windows per room count, newest year first", () => {
+    const s = sliceQueries([2019, 2024, 2024, 1980, 2030], 2026);
+    // 1980 is below the floor, 2030 is in the future, 2024 once: two years × 4 rooms × 2 directions
+    expect(s).toHaveLength(16);
+    expect(s[0].year).toBe(2024);
+    expect(s[0].extra).toEqual({ type_order: "dealDate_up", deal_date: String(horizonMonths(2024, 2026)) });
+    expect(s[1].extra).toEqual({ type_order: "dealDate_down", deal_date: "24" });
+    expect(s[2].extra).toMatchObject({ room_num: "3", type_order: "dealDate_up" });
+    expect(new Set(s.map((q) => q.label)).size).toBe(16); // labels are unique — they key the resume file
+  });
+
+  it("anchors the ascending window just before the year", () => {
+    // fill-city-years' rule: (now - year) * 12 + 6 months back, ascending sort
+    expect(horizonMonths(2026, 2026)).toBe(6);
+    expect(horizonMonths(2016, 2026)).toBe(126);
+    expect(horizonMonths(2027, 2026)).toBe(0);
+  });
+
+  it("identifies an item exactly the way the collector dedupes it", () => {
+    expect(itemKey({ dealDate: "2026-08-13T00:00:00", dealAmount: 2530000, assetArea: 111.92, roomNum: 4 })).toBe("2026-08-13|2530000|111.92|4");
+    expect(itemKey({ dealDate: "2026-08-13", dealAmount: 1 })).toBe("2026-08-13|1||");
+  });
+
+  it("keeps only the fields the server needs, and drops empties", () => {
+    const picked = pickCaptureFields({ dealDate: "2026-08-13", address: "יצחק צוקרמן 23", parcelNum: "7242-126-6", trend: { rate: 0 }, ownership: [], floor: "", row_id: 1 });
+    expect(picked).toEqual({ dealDate: "2026-08-13", address: "יצחק צוקרמן 23", parcelNum: "7242-126-6" });
+  });
+
+  it("turns one captured item into a donor: street+number from `address`, parcel, floors, asset id", () => {
+    // the exact item shape captured from the site on 4.9.2026
+    const d = donorFromItem({
+      address: "יצחק צוקרמן 23", floor: "קומה ‎2‏", parcelNum: "7242-126-6", buildingFloors: 9,
+      assetId: 80982315.0, neighborhoodName: "כפר שלם מזרח נווה אליעזר",
+    }, "תל אביב-יפו");
+    expect(d).toEqual({
+      street: "יצחק צוקרמן", house_num: "23", floor: "קומה 2", neighborhood: "כפר שלם מזרח נווה אליעזר",
+      parcel_num: "7242-126-6", building_floors: 9, asset_id: "80982315",
+    });
+    // no address at all → nulls, never a throw (the row keeps what it has)
+    expect(donorFromItem({ dealDate: "2020-01-01" }, "לוד")).toEqual({
+      street: null, house_num: null, floor: null, neighborhood: null, parcel_num: null, building_floors: null, asset_id: null,
+    });
+  });
+
+  it("merges captured items by identity and reports the year span honestly", () => {
+    const file: CaptureFile = { city: "לוד", cbsCode: "7000", capturedAt: "", neighborhoodWindow: null, slicesDone: [], items: [] };
+    const a = { dealDate: "2019-03-01", dealAmount: 1000000, assetArea: 80, roomNum: 3, address: "הרצל 1" };
+    expect(mergeItems(file, [a, { ...a }, { ...a, dealDate: "2024-05-05" }])).toBe(2);
+    expect(mergeItems(file, [a])).toBe(0);
+    expect(yearSpan(file.items)).toEqual({ min: 2019, max: 2024 });
+    expect(yearSpan([])).toBeNull();
+  });
+
+  it("reads the token out of the page's own POST body and signs a query with it", () => {
+    const tok = { base_id: 5000, base_name: "settlement", sk: "abc", token: "t0k" };
+    // build the body exactly as the page does, then parse it back
+    const body = signBody({ ...tok, exp: 1, domain: "www.nadlan.gov.il" });
+    expect(parseHarvestedPost(JSON.stringify({ "##": body }))).toEqual(tok);
+    expect(parseHarvestedPost(`"${body}"`)).toEqual(tok);
+    expect(parseHarvestedPost("garbage")).toBeNull();
+    const p = buildQueryPayload(tok, { fetch_number: 2, room_num: "3" }, 1000);
+    expect(p).toMatchObject({ base_id: 5000, sk: "abc", token: "t0k", exp: 1110, fetch_number: 2, room_num: "3", type_order: "dealDate_down" });
+  });
+
+  it("decodes both response envelopes: plain JSON and base64 gzip, items or AllResults", () => {
+    const plain = JSON.stringify({ data: { items: [{ a: 1 }], total_rows: 5 } });
+    expect(responseItems(decodeDealData(plain))).toEqual([{ a: 1 }]);
+    expect(responseMeta(decodeDealData(plain))).toEqual({ totalRows: 5, totalFetch: null });
+    const gz = gzipSync(Buffer.from(JSON.stringify({ AllResults: [{ b: 2 }] }))).toString("base64");
+    expect(responseItems(decodeDealData(gz))).toEqual([{ b: 2 }]);
+    expect(responseItems(decodeDealData(""))).toEqual([]);
+    expect(responseItems(decodeDealData("not-base64!!"))).toEqual([]);
+  });
+
+  it("the nadlan columns are added with the same guarded-ALTER discipline as source_deal_id", () => {
+    expect(NADLAN_ADDRESS_COLUMN_ALTERS).toEqual([
+      "ALTER TABLE nadlan_transactions ADD COLUMN parcel_num TEXT",
+      "ALTER TABLE nadlan_transactions ADD COLUMN building_floors INTEGER",
+    ]);
   });
 });
