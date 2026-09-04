@@ -11,15 +11,16 @@
  * (scripts/backfill-nadlan-addresses.ts) donates the fields onto the rows
  * that exist — UPDATE only, never insert.
  *
- * HOW THE WINDOW IS WALKED (lib/nadlanCapture.ts sliceQueries). An
- * anonymous session sees ≤500 items per fetch_number, two fetches per
- * query. Each query is one window shaped by the page's own filters: a
- * date horizon in months back, ascending or descending, and a room count.
- * Year × direction × rooms gives ~8 windows per year per base; a stopped
- * run resumes from the file's `slicesDone`. Neighbourhood pages are TRIED
- * first: if a neighbourhood's page yields its own token, every
- * neighbourhood becomes its own base and the same slices reach ~10× more
- * deals in a big city. The file records what was measured.
+ * HOW THE WINDOW IS WALKED (lib/nadlanCapture.ts). An anonymous session
+ * sees ≤500 items per fetch_number, two fetches per query. Each query is
+ * one window shaped by the page's own filters: a period (`deal_date`,
+ * months back — a FIXED MENU the run probes first, see HORIZON_CANDIDATES),
+ * ascending or descending, and a room count. Every horizon starts with one
+ * ascending unfiltered window (its oldest deals); only a horizon that fills
+ * both fetches gets the seven expansion windows. A stopped run resumes from
+ * the file's `slicesDone`. Neighbourhood pages are TRIED: if a page yields
+ * its own token, every neighbourhood becomes its own base. The file records
+ * what was measured.
  *
  * MANNERS. The page's own token, the page's own query shapes, 0.7–1.4 s
  * between requests, a hard stop on 401 / the user-limit modal. Nothing
@@ -27,17 +28,17 @@
  *
  * Usage (needs the debuggable Chrome on :9222 — scripts/bootstrap_nadlan_chrome.sh):
  *   npx tsx scripts/capture-nadlan-addresses.ts "תל אביב-יפו" --out=data/nadlan_addr
- *   [--years 2010,2011] [--from-year 2000] [--budget-min 30] [--no-hoods] [--force]
+ *   [--horizons 6,12,24,36,60] [--budget-min 30] [--no-hoods] [--force]
  *   npx tsx scripts/capture-nadlan-addresses.ts "תל אביב-יפו" --probe
- *     (six requests: how far back does the site answer? prints per anchor year
- *      the years actually returned — run this before a long night)
+ *     (one request per candidate period: which `deal_date` values the site
+ *      accepts, and which years each one reaches — run this before a night)
  */
 import fs from "fs";
 import path from "path";
 import puppeteerCore from "puppeteer-core";
 import type { Browser, Page } from "puppeteer-core";
-import { buildFetchBody, buildQueryPayload, DEAL_DATA_HEADERS, decodeDealData, parseHarvestedPost, responseItems, responseMeta, signBody, type NadlanToken } from "../lib/nadlanSession";
-import { expansionSlices, mergeItems, orderYears, primarySlice, saturated, yearSpan, type CaptureFile, type RawItem, type SliceQuery } from "../lib/nadlanCapture";
+import { buildFetchBody, buildQueryPayload, DEAL_DATA_HEADERS, decodeDealData, parseHarvestedPost, responseError, responseItems, responseMeta, signBody, type NadlanToken } from "../lib/nadlanSession";
+import { expansionSlices, HORIZON_CANDIDATES, mergeItems, orderHorizons, primarySlice, saturated, yearSpan, type CaptureFile, type RawItem, type SliceQuery } from "../lib/nadlanCapture";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const rnd = (a: number, b: number) => Math.floor(a + Math.random() * (b - a));
@@ -58,7 +59,7 @@ function arg(name: string): string | undefined {
 async function main(): Promise<number> {
   const argv = process.argv.slice(2);
   // positional = not a flag and not the value of a preceding "--flag value"
-  const VALUE_FLAGS = new Set(["--out", "--years", "--from-year", "--budget-min"]);
+  const VALUE_FLAGS = new Set(["--out", "--horizons", "--budget-min"]);
   const cityName = argv.find((a, i) => !a.startsWith("--") && !(i > 0 && VALUE_FLAGS.has(argv[i - 1])));
   if (!cityName) { console.error('usage: capture-nadlan-addresses.ts "עיר" --out=data/nadlan_addr [--years 2010,2011] [--budget-min 30]'); return 1; }
   const outDir = arg("out") ?? "data/nadlan_addr";
@@ -66,10 +67,7 @@ async function main(): Promise<number> {
   const noHoods = argv.includes("--no-hoods");
   const force = argv.includes("--force");
   const probe = argv.includes("--probe");
-  const nowY = new Date().getFullYear();
-  const fromYear = Number(arg("from-year") ?? 2000);
-  const years = arg("years")?.split(",").map((s) => Number(s.trim())).filter(Boolean)
-    ?? Array.from({ length: nowY - fromYear + 1 }, (_, i) => fromYear + i);
+  const givenHorizons = arg("horizons")?.split(",").map((s) => Number(s.trim())).filter((n) => Number.isInteger(n) && n > 0);
 
   const codes = JSON.parse(fs.readFileSync(path.resolve("data/city_cbs_codes.json"), "utf8")) as Record<string, number>;
   const code = String(codes[cityName.trim()] ?? "");
@@ -125,7 +123,7 @@ async function main(): Promise<number> {
 
   let firstAnswerShown = false;
   let emptyStreak = 0;
-  const runQ = async (tok: NadlanToken, extra: Record<string, unknown>): Promise<{ items: RawItem[]; totalRows: number | null }> => {
+  const runQ = async (tok: NadlanToken, extra: Record<string, unknown>): Promise<{ items: RawItem[]; totalRows: number | null; error: string | null }> => {
     // the page's own body shape ({"##": signed}, text/plain) — see lib/nadlanSession.buildFetchBody
     const body = buildFetchBody(signBody(buildQueryPayload(tok, extra)));
     const txt: string = await page.evaluate(async (b: string, headers: Record<string, string>) => {
@@ -137,6 +135,7 @@ async function main(): Promise<number> {
     const d = decodeDealData(txt);
     const items = responseItems(d);
     const meta = responseMeta(d);
+    const error = responseError(d);
     if (!firstAnswerShown) {
       // a failure must explain itself on the first answer, not after the budget
       firstAnswerShown = true;
@@ -145,9 +144,9 @@ async function main(): Promise<number> {
     }
     emptyStreak = items.length ? 0 : emptyStreak + 1;
     if (emptyStreak >= 20 && cap.items.length === 0) {
-      throw new Error("20 תשובות ריקות ברצף ואף פריט — ה-API לא מחזיר עסקאות לבקשות שלנו; לבדוק את 'תשובה ראשונה' למעלה");
+      throw new Error(`20 תשובות ריקות ברצף ואף פריט — ה-API לא מחזיר עסקאות לבקשות שלנו${error ? ` (אחרונה: ${error})` : ""}; לבדוק את 'תשובה ראשונה' למעלה`);
     }
-    return { items, totalRows: meta.totalRows };
+    return { items, totalRows: meta.totalRows, error };
   };
 
   const settlementUrl = `https://www.nadlan.gov.il/?view=settlement&id=${code}&page=deals`;
@@ -173,11 +172,35 @@ async function main(): Promise<number> {
   };
 
   /**
-   * Walk one base (the city, or one neighbourhood) year by year, newest
-   * first. Each year starts with the unfiltered ascending window; only a
-   * year that fills both fetches gets the seven expansion windows.
+   * Which periods the site accepts, measured: one ascending fetch per
+   * candidate. A candidate is accepted when the API does not refuse it;
+   * an accepted-but-empty window is still accepted (a small town can have
+   * no deals in the last month). Prints the menu with the years each
+   * period reaches, so the log answers "how far back" by itself.
    */
-  const walkBase = async (baseLabel: string, getToken: () => Promise<NadlanToken | null>): Promise<void> => {
+  const probeHorizons = async (tok: NadlanToken, verbose: boolean): Promise<number[]> => {
+    const ok: number[] = [];
+    for (const h of HORIZON_CANDIDATES) {
+      const r = await runQ(tok, { ...primarySlice(h).extra, fetch_number: 1 });
+      requests++;
+      await sleep(rnd(500, 900));
+      const sp = yearSpan(r.items);
+      if (verbose || r.error == null) {
+        console.log(`   deal_date=${String(h).padStart(3)}: ${r.error ? `נדחה (${r.error})` : `${r.items.length} פריטים · total_rows=${r.totalRows ?? "—"} · שנים ${sp ? `${sp.min}–${sp.max}` : "ריק"}`}`);
+      }
+      if (r.error == null) ok.push(h);
+    }
+    emptyStreak = 0; // the refusals above are the menu being measured, not a dead session
+    return orderHorizons(ok);
+  };
+
+  /**
+   * Walk one base (the city, or one neighbourhood) horizon by horizon,
+   * largest first. Each horizon starts with its unfiltered ascending window
+   * (the oldest deals it can see); only a horizon that fills both fetches
+   * gets the seven expansion windows.
+   */
+  const walkBase = async (baseLabel: string, horizons: number[], getToken: () => Promise<NadlanToken | null>): Promise<void> => {
     let tok = await getToken();
     let tokAt = Date.now();
     if (!tok) { console.log(`   ${baseLabel}: אין טוקן — מדלג`); return; }
@@ -192,65 +215,61 @@ async function main(): Promise<number> {
     };
     const key = (s: SliceQuery) => `${baseLabel}|${s.label}`;
     let added = 0;
-    const yearLines: string[] = [];
-    for (const y of orderYears(years, nowY)) {
+    const lines: string[] = [];
+    for (const h of orderHorizons(horizons)) {
       if (overBudget()) { stopped = "תקציב הזמן"; break; }
-      const primary = primarySlice(y, nowY);
-      const yearDoneKey = `${baseLabel}|${y}:done`;
-      if (done.has(yearDoneKey)) continue;
-      let yearAdded = 0;
+      const primary = primarySlice(h);
+      const doneKey = `${baseLabel}|h${h}:done`;
+      if (done.has(doneKey)) continue;
+      let hAdded = 0;
       const seen: RawItem[] = [];
-      let queue: SliceQuery[] = done.has(key(primary)) ? expansionSlices(y, nowY) : [primary];
+      let queue: SliceQuery[] = done.has(key(primary)) ? expansionSlices(h) : [primary];
       let expanded = done.has(key(primary));
       while (queue.length) {
         if (overBudget()) { stopped = "תקציב הזמן"; break; }
         const s = queue.shift()!;
         if (done.has(key(s))) continue;
         const r = await runSlice(tok!, s, freshen);
-        yearAdded += mergeItems(cap, r.items);
+        hAdded += mergeItems(cap, r.items);
         seen.push(...r.items);
         done.add(key(s));
-        if (!expanded && s.label === primary.label && saturated(r.pages)) { expanded = true; queue = expansionSlices(y, nowY); }
+        if (!expanded && s.label === primary.label && saturated(r.pages)) { expanded = true; queue = expansionSlices(h); }
       }
       if (stopped) break;
-      done.add(yearDoneKey);
-      added += yearAdded;
-      // the log itself must show whether a 2010 window returns 2010 deals or 2021 ones
+      done.add(doneKey);
+      added += hAdded;
       const sp = yearSpan(seen);
-      yearLines.push(`${y}: +${yearAdded}${expanded ? " (רווי, הורחב)" : ""} · בתשובה ${sp ? `${sp.min}–${sp.max}` : "ריק"}`);
+      lines.push(`${h} חוד': +${hAdded}${expanded ? " (רווי, הורחב)" : ""} · ${sp ? `${sp.min}–${sp.max}` : "ריק"}`);
       if (done.size % 10 === 0) save();
     }
     const span = yearSpan(cap.items);
     console.log(`   ${baseLabel}: +${added.toLocaleString("en")} · סה״כ ${cap.items.length.toLocaleString("en")} · שנים ${span ? `${span.min}–${span.max}` : "—"}`);
-    if (yearLines.length) console.log(`     ${yearLines.join(" · ")}`);
+    if (lines.length) console.log(`     ${lines.join(" · ")}`);
   };
 
-  /** --probe: six unfiltered ascending windows, fetch 1 only — how far back does the site answer? */
-  const probeHorizon = async (): Promise<void> => {
-    const tok = await harvest(settlementUrl);
-    if (!tok) { console.log("   אין טוקן — הכרום פתוח? נפתחו 'עסקאות' פעם אחת?"); return; }
-    for (const y of [nowY - 1, nowY - 5, nowY - 8, nowY - 11, nowY - 14, nowY - 18]) {
-      const s = primarySlice(y, nowY);
-      const r = await runQ(tok, { ...s.extra, fetch_number: 1 });
-      requests++;
-      const sp = yearSpan(r.items);
-      console.log(`   עוגן ${y} (${s.extra.deal_date} חודשים אחורה): ${r.items.length} פריטים · total_rows=${r.totalRows ?? "—"} · שנים בתשובה ${sp ? `${sp.min}–${sp.max}` : "ריק"}`);
-      await sleep(rnd(700, 1400));
-    }
-  };
-
+  let horizons: number[] = [];
   try {
     if (probe) {
-      console.log(`🔎 ${cityName}: בדיקת אופק — כמה אחורה האתר עונה`);
-      await probeHorizon();
-      await page.close().catch(() => {});
-      try { browser.disconnect(); } catch { /* gone */ }
+      console.log(`🔎 ${cityName}: אילו תקופות (deal_date) האתר מקבל, ועד איזו שנה כל אחת מגיעה`);
+      const tok = await harvest(settlementUrl);
+      if (!tok) { console.log("   אין טוקן — הכרום פתוח? נפתחו 'עסקאות' פעם אחת?"); return 1; }
+      horizons = await probeHorizons(tok, true);
+      console.log(`   מתקבלות: ${horizons.length ? horizons.join(", ") : "אף אחת"}`);
       return 0;
     }
-    console.log(`🏙  ${cityName} (למ"ס ${code}) · ${years.length} שנים · תקציב ${budgetMin || "∞"} דק' · קובץ ${file}${cap.items.length ? ` (המשך: ${cap.items.length.toLocaleString("en")} פריטים, ${done.size} חלונות)` : ""}`);
+    console.log(`🏙  ${cityName} (למ"ס ${code}) · תקציב ${budgetMin || "∞"} דק' · קובץ ${file}${cap.items.length ? ` (המשך: ${cap.items.length.toLocaleString("en")} פריטים, ${done.size} חלונות)` : ""}`);
+
+    // 0. the period menu — from the flag, from the file's last probe, else measured now
+    const cityTok = await harvest(settlementUrl);
+    if (!cityTok) throw new Error("אין טוקן מעמוד העיר — הכרום פתוח על :9222? נפתחו 'עסקאות' פעם אחת?");
+    if (givenHorizons?.length) horizons = orderHorizons(givenHorizons);
+    else if (cap.horizons?.length) horizons = orderHorizons(cap.horizons);
+    else { horizons = await probeHorizons(cityTok, false); cap.horizons = horizons; }
+    if (!horizons.length) throw new Error("האתר לא קיבל אף ערך deal_date — ראו 'תשובה ראשונה' למעלה");
+    console.log(`   תקופות: ${horizons.join(", ")} חודשים אחורה`);
 
     // 1. the city itself — also the source of neighbourhood ids
-    await walkBase("city", () => harvest(settlementUrl));
+    await walkBase("city", horizons, () => harvest(settlementUrl));
     save();
 
     // 2. neighbourhoods, if their pages carry a token of their own (measured once, recorded)
@@ -275,7 +294,7 @@ async function main(): Promise<number> {
           console.log(`   חלון שכונה: ${own ? "כן — כל שכונה היא חלון משלה" : "לא — נשארים בפיצול עירוני"}`);
           if (!own) break;
         }
-        await walkBase(`hood:${id}`, () => harvest(url));
+        await walkBase(`hood:${id}`, horizons, () => harvest(url));
         console.log(`     ↳ ${name}`);
         save();
       }

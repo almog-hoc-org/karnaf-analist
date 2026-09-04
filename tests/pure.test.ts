@@ -14,8 +14,8 @@ import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
-import { sliceQueries, primarySlice, expansionSlices, saturated, orderYears, horizonMonths, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
-import { signBody, parseHarvestedPost, buildQueryPayload, buildFetchBody, DEAL_DATA_HEADERS, decodeDealData, responseItems, responseMeta } from "@/lib/nadlanSession";
+import { sliceQueries, primarySlice, expansionSlices, saturated, orderHorizons, HORIZON_CANDIDATES, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
+import { signBody, parseHarvestedPost, buildQueryPayload, buildFetchBody, DEAL_DATA_HEADERS, decodeDealData, responseItems, responseMeta, responseError } from "@/lib/nadlanSession";
 import { NADLAN_ADDRESS_COLUMN_ALTERS } from "@/lib/addressBackfillDb";
 import { gzipSync } from "zlib";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
@@ -1653,34 +1653,29 @@ describe("OpenStreetMap addresses and municipal files", () => {
 });
 
 describe("nadlan address campaign — slicing, identity, donation", () => {
-  it("orders years newest first and drops the impossible ones", () => {
-    expect(orderYears([2019, 2024, 2024, 1980, 2030], 2026)).toEqual([2024, 2019]);
+  it("orders horizons largest first — the oldest deals come first — and drops junk", () => {
+    expect(orderHorizons([6, 60, 60, 12, 0, -3, 2.5])).toEqual([60, 12, 6]);
+    // the menu is probed, never assumed: 6 and 60 answered on 4.9.2026, 18/66/102 were refused
+    expect(HORIZON_CANDIDATES).toContain(6);
+    expect(HORIZON_CANDIDATES).toContain(60);
   });
 
-  it("every year starts with one unfiltered ascending window; only a saturated year expands", () => {
-    const p = primarySlice(2024, 2026);
-    expect(p).toEqual({ label: "2024:up:all", year: 2024, extra: { type_order: "dealDate_up", deal_date: String(horizonMonths(2024, 2026)) } });
-    const ex = expansionSlices(2024, 2026);
-    expect(ex.map((s) => s.label)).toEqual(["2024:up:3", "2024:up:4", "2024:up:5", "2024:down:all", "2024:down:3", "2024:down:4", "2024:down:5"]);
-    expect(ex[3].extra).toEqual({ type_order: "dealDate_down", deal_date: "24" });
+  it("every horizon starts with one unfiltered ascending window; only a saturated one expands", () => {
+    expect(primarySlice(60)).toEqual({ label: "h60:up:all", horizon: 60, extra: { type_order: "dealDate_up", deal_date: "60" } });
+    const ex = expansionSlices(60);
+    expect(ex.map((s) => s.label)).toEqual(["h60:up:3", "h60:up:4", "h60:up:5", "h60:down:all", "h60:down:3", "h60:down:4", "h60:down:5"]);
+    expect(ex[3].extra).toEqual({ type_order: "dealDate_down", deal_date: "60" });
     expect(ex[0].extra).toMatchObject({ room_num: "3", type_order: "dealDate_up" });
     // saturated = both fetches full; a short first page or a single page is not
     expect(saturated([500, 500])).toBe(true);
     expect(saturated([500, 120])).toBe(false);
     expect(saturated([500])).toBe(false);
     expect(saturated([0])).toBe(false);
-    // the full plan is primary + expansion per year, labels unique (they key the resume file)
-    const all = sliceQueries([2019, 2024, 2024, 1980, 2030], 2026);
+    // the full plan is primary + expansion per horizon, labels unique (they key the resume file)
+    const all = sliceQueries([12, 60, 60]);
     expect(all).toHaveLength(16);
-    expect(all[0].year).toBe(2024);
+    expect(all[0].horizon).toBe(60);
     expect(new Set(all.map((q) => q.label)).size).toBe(16);
-  });
-
-  it("anchors the ascending window just before the year", () => {
-    // fill-city-years' rule: (now - year) * 12 + 6 months back, ascending sort
-    expect(horizonMonths(2026, 2026)).toBe(6);
-    expect(horizonMonths(2016, 2026)).toBe(126);
-    expect(horizonMonths(2027, 2026)).toBe(0);
   });
 
   it("identifies an item exactly the way the collector dedupes it", () => {
@@ -1735,6 +1730,15 @@ describe("nadlan address campaign — slicing, identity, donation", () => {
     expect(JSON.parse(buildFetchBody("abc"))).toEqual({ "##": "abc" });
     expect(parseHarvestedPost(buildFetchBody(signBody({ base_id: 1, base_name: "settlement", sk: "s", token: "t" })))).toEqual({ base_id: 1, base_name: "settlement", sk: "s", token: "t" });
     expect(DEAL_DATA_HEADERS["content-type"]).toBe("text/plain");
+  });
+
+  it("surfaces the API's own refusal instead of reading it as an empty window", () => {
+    // the exact answer measured 4.9.2026 for deal_date=18
+    const refused = decodeDealData('{"statusCode": 400, "body": "{\\"message\\": \\"deal_date is invalid\\"}"}');
+    expect(responseError(refused)).toBe("400 deal_date is invalid");
+    expect(responseItems(refused)).toEqual([]);
+    expect(responseError(decodeDealData(JSON.stringify({ statusCode: 200, data: { items: [] } })))).toBeNull();
+    expect(responseError(null)).toBeNull();
   });
 
   it("decodes both response envelopes: plain JSON and base64 gzip, items or AllResults", () => {

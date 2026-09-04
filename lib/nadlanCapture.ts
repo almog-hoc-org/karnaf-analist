@@ -20,9 +20,9 @@
  * filters the page itself offers: `room_num`, a `deal_date` horizon in
  * months back, `type_order` up/down (scripts/fill-city-years.ts learned
  * that an ascending sort anchored N months back makes that year the START
- * of its own window). Slicing by year × rooms × direction reaches deep into
- * the history one window at a time; a neighbourhood page, when it yields a
- * token of its own, multiplies that again.
+ * of its own window). Slicing by horizon × rooms × direction reaches as
+ * deep as the site's own period menu allows, one window at a time; a
+ * neighbourhood page, when it yields a token of its own, multiplies that.
  */
 import { extractAddress } from "./nadlanAddress";
 import { floorText, type AddressDonor } from "./addressBackfill";
@@ -60,56 +60,64 @@ export function itemKey(it: { dealDate?: unknown; dealAmount?: unknown; assetAre
 export interface SliceQuery {
   /** stable id, recorded in the capture file so a stopped run resumes */
   label: string;
-  year: number;
+  /** the window's `deal_date` — months back, one of the values the API accepts */
+  horizon: number;
   extra: Record<string, unknown>;
-}
-
-/** Months back from now that put `year` at the start of an ascending window. */
-export function horizonMonths(year: number, nowYear: number): number {
-  return Math.max(0, (nowYear - year) * 12 + 6);
 }
 
 /** Items per fetch_number the anonymous window returns at most. */
 export const WINDOW_PAGE = 500;
 
-/** Years worth querying, newest first — if the run stops on budget, the
- *  years users look at most are the ones already captured. */
-export function orderYears(years: number[], nowYear: number): number[] {
-  return [...new Set(years)].filter((y) => Number.isInteger(y) && y > 1990 && y <= nowYear).sort((a, b) => b - a);
-}
+/**
+ * `deal_date` is NOT free-form. MEASURED 4.9.2026: 18, 66, 102 … months
+ * back all answered `400 deal_date is invalid`, while 6 answered with 500
+ * deals and the 60-month window brought 2021 deals — so the site accepts a
+ * fixed menu of periods, the one its own filter offers. Which values are in
+ * the menu is probed at the start of every run (one fetch per candidate,
+ * ~20 s) and never assumed; these are the candidates worth asking about.
+ */
+export const HORIZON_CANDIDATES = [1, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72, 84, 96, 120, 180, 240, 360] as const;
 
-/** The one query every year starts with: ascending, unfiltered, anchored just before the year. */
-export function primarySlice(year: number, nowYear: number): SliceQuery {
-  return { label: `${year}:up:all`, year, extra: { type_order: "dealDate_up", deal_date: String(horizonMonths(year, nowYear)) } };
+/** Largest horizon first: the oldest deals — the ones nothing else reaches — come first. */
+export function orderHorizons(horizons: number[]): number[] {
+  return [...new Set(horizons)].filter((h) => Number.isInteger(h) && h > 0).sort((a, b) => b - a);
 }
 
 /**
- * The seven extra windows for a year whose primary window SATURATED (both
- * fetches came back full, i.e. ≥1,000 deals from the anchor onwards): the
- * same anchor per room count, and a descending window anchored at the
- * year's end, unfiltered and per room count. Measured 4.9.2026: most
- * neighbourhood-years hold fewer than 500 deals, so running these blindly
+ * The one query every horizon starts with: ascending from `horizon` months
+ * back, unfiltered — the OLDEST deals the window can see, which is exactly
+ * the slice no smaller horizon covers.
+ */
+export function primarySlice(horizon: number): SliceQuery {
+  return { label: `h${horizon}:up:all`, horizon, extra: { type_order: "dealDate_up", deal_date: String(horizon) } };
+}
+
+/**
+ * The seven extra windows for a horizon whose primary window SATURATED
+ * (both fetches full, i.e. ≥1,000 deals from the anchor onwards): the same
+ * anchor per room count, and the descending window (the newest deals within
+ * the horizon), unfiltered and per room count. Measured 4.9.2026: most
+ * neighbourhood windows hold fewer than 500 deals, so running these blindly
  * cost ~8× the requests for nothing.
  */
-export function expansionSlices(year: number, nowYear: number, rooms: string[] = ["3", "4", "5"]): SliceQuery[] {
-  const up = String(horizonMonths(year, nowYear));
-  const down = String(Math.max(0, (nowYear - year) * 12));
+export function expansionSlices(horizon: number, rooms: string[] = ["3", "4", "5"]): SliceQuery[] {
+  const h = String(horizon);
   const out: SliceQuery[] = [];
-  for (const room of rooms) out.push({ label: `${year}:up:${room}`, year, extra: { type_order: "dealDate_up", deal_date: up, room_num: room } });
-  out.push({ label: `${year}:down:all`, year, extra: { type_order: "dealDate_down", deal_date: down } });
-  for (const room of rooms) out.push({ label: `${year}:down:${room}`, year, extra: { type_order: "dealDate_down", deal_date: down, room_num: room } });
+  for (const room of rooms) out.push({ label: `h${horizon}:up:${room}`, horizon, extra: { type_order: "dealDate_up", deal_date: h, room_num: room } });
+  out.push({ label: `h${horizon}:down:all`, horizon, extra: { type_order: "dealDate_down", deal_date: h } });
+  for (const room of rooms) out.push({ label: `h${horizon}:down:${room}`, horizon, extra: { type_order: "dealDate_down", deal_date: h, room_num: room } });
   return out;
 }
 
-/** Did a window fill both fetches? Then the year needs the expansion slices. */
+/** Did a window fill both fetches? Then the horizon needs the expansion slices. */
 export function saturated(pageCounts: number[]): boolean {
   return pageCounts.length >= 2 && pageCounts.every((n) => n >= WINDOW_PAGE);
 }
 
-/** Every window a base could need — the primary and the expansion of every year. */
-export function sliceQueries(years: number[], nowYear: number): SliceQuery[] {
+/** Every window a base could need — the primary and the expansion of every accepted horizon. */
+export function sliceQueries(horizons: number[]): SliceQuery[] {
   const out: SliceQuery[] = [];
-  for (const y of orderYears(years, nowYear)) out.push(primarySlice(y, nowYear), ...expansionSlices(y, nowYear));
+  for (const h of orderHorizons(horizons)) out.push(primarySlice(h), ...expansionSlices(h));
   return out;
 }
 
@@ -144,6 +152,8 @@ export interface CaptureFile {
   capturedAt: string;
   /** measured on the first neighbourhood page: does it yield its own token? null = not tried */
   neighborhoodWindow: boolean | null;
+  /** the `deal_date` values the API accepted when this run probed them */
+  horizons?: number[];
   slicesDone: string[];
   items: CapturedItem[];
 }

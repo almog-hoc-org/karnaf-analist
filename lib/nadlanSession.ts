@@ -109,6 +109,19 @@ export function responseItems(decoded: unknown): Record<string, unknown>[] {
   return Array.isArray(list) ? (list as Record<string, unknown>[]) : [];
 }
 
+/** The API's own refusal, when the answer is one — e.g. {"statusCode":400,"body":"{\"message\":\"deal_date is invalid\"}"}. */
+export function responseError(decoded: unknown): string | null {
+  if (!decoded || typeof decoded !== "object") return null;
+  const d = decoded as Record<string, unknown>;
+  const code = Number(d.statusCode);
+  if (!Number.isFinite(code) || code < 400) return null;
+  let msg = "";
+  const body = d.body;
+  if (typeof body === "string") { try { msg = String((JSON.parse(body) as Record<string, unknown>).message ?? body); } catch { msg = body; } }
+  else if (body && typeof body === "object") msg = String((body as Record<string, unknown>).message ?? JSON.stringify(body));
+  return `${code}${msg ? ` ${msg}` : ""}`;
+}
+
 export function responseMeta(decoded: unknown): DealDataMeta {
   const data = (decoded as { data?: Record<string, unknown> } | null)?.data;
   const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) ? v : null);
