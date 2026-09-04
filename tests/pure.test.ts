@@ -14,7 +14,7 @@ import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
-import { sliceQueries, horizonMonths, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
+import { sliceQueries, primarySlice, expansionSlices, saturated, orderYears, horizonMonths, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
 import { signBody, parseHarvestedPost, buildQueryPayload, buildFetchBody, DEAL_DATA_HEADERS, decodeDealData, responseItems, responseMeta } from "@/lib/nadlanSession";
 import { NADLAN_ADDRESS_COLUMN_ALTERS } from "@/lib/addressBackfillDb";
 import { gzipSync } from "zlib";
@@ -1653,15 +1653,27 @@ describe("OpenStreetMap addresses and municipal files", () => {
 });
 
 describe("nadlan address campaign — slicing, identity, donation", () => {
-  it("slices every year into up/down windows per room count, newest year first", () => {
-    const s = sliceQueries([2019, 2024, 2024, 1980, 2030], 2026);
-    // 1980 is below the floor, 2030 is in the future, 2024 once: two years × 4 rooms × 2 directions
-    expect(s).toHaveLength(16);
-    expect(s[0].year).toBe(2024);
-    expect(s[0].extra).toEqual({ type_order: "dealDate_up", deal_date: String(horizonMonths(2024, 2026)) });
-    expect(s[1].extra).toEqual({ type_order: "dealDate_down", deal_date: "24" });
-    expect(s[2].extra).toMatchObject({ room_num: "3", type_order: "dealDate_up" });
-    expect(new Set(s.map((q) => q.label)).size).toBe(16); // labels are unique — they key the resume file
+  it("orders years newest first and drops the impossible ones", () => {
+    expect(orderYears([2019, 2024, 2024, 1980, 2030], 2026)).toEqual([2024, 2019]);
+  });
+
+  it("every year starts with one unfiltered ascending window; only a saturated year expands", () => {
+    const p = primarySlice(2024, 2026);
+    expect(p).toEqual({ label: "2024:up:all", year: 2024, extra: { type_order: "dealDate_up", deal_date: String(horizonMonths(2024, 2026)) } });
+    const ex = expansionSlices(2024, 2026);
+    expect(ex.map((s) => s.label)).toEqual(["2024:up:3", "2024:up:4", "2024:up:5", "2024:down:all", "2024:down:3", "2024:down:4", "2024:down:5"]);
+    expect(ex[3].extra).toEqual({ type_order: "dealDate_down", deal_date: "24" });
+    expect(ex[0].extra).toMatchObject({ room_num: "3", type_order: "dealDate_up" });
+    // saturated = both fetches full; a short first page or a single page is not
+    expect(saturated([500, 500])).toBe(true);
+    expect(saturated([500, 120])).toBe(false);
+    expect(saturated([500])).toBe(false);
+    expect(saturated([0])).toBe(false);
+    // the full plan is primary + expansion per year, labels unique (they key the resume file)
+    const all = sliceQueries([2019, 2024, 2024, 1980, 2030], 2026);
+    expect(all).toHaveLength(16);
+    expect(all[0].year).toBe(2024);
+    expect(new Set(all.map((q) => q.label)).size).toBe(16);
   });
 
   it("anchors the ascending window just before the year", () => {

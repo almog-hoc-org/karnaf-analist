@@ -28,13 +28,16 @@
  * Usage (needs the debuggable Chrome on :9222 — scripts/bootstrap_nadlan_chrome.sh):
  *   npx tsx scripts/capture-nadlan-addresses.ts "תל אביב-יפו" --out=data/nadlan_addr
  *   [--years 2010,2011] [--from-year 2000] [--budget-min 30] [--no-hoods] [--force]
+ *   npx tsx scripts/capture-nadlan-addresses.ts "תל אביב-יפו" --probe
+ *     (six requests: how far back does the site answer? prints per anchor year
+ *      the years actually returned — run this before a long night)
  */
 import fs from "fs";
 import path from "path";
 import puppeteerCore from "puppeteer-core";
 import type { Browser, Page } from "puppeteer-core";
 import { buildFetchBody, buildQueryPayload, DEAL_DATA_HEADERS, decodeDealData, parseHarvestedPost, responseItems, responseMeta, signBody, type NadlanToken } from "../lib/nadlanSession";
-import { mergeItems, sliceQueries, yearSpan, type CaptureFile, type RawItem } from "../lib/nadlanCapture";
+import { expansionSlices, mergeItems, orderYears, primarySlice, saturated, yearSpan, type CaptureFile, type RawItem, type SliceQuery } from "../lib/nadlanCapture";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const rnd = (a: number, b: number) => Math.floor(a + Math.random() * (b - a));
@@ -62,6 +65,7 @@ async function main(): Promise<number> {
   const budgetMin = Number(arg("budget-min") ?? process.env.KARNAF_NADLAN_BUDGET_MIN ?? 0);
   const noHoods = argv.includes("--no-hoods");
   const force = argv.includes("--force");
+  const probe = argv.includes("--probe");
   const nowY = new Date().getFullYear();
   const fromYear = Number(arg("from-year") ?? 2000);
   const years = arg("years")?.split(",").map((s) => Number(s.trim())).filter(Boolean)
@@ -150,7 +154,29 @@ async function main(): Promise<number> {
   let stopped: string | null = null;
   let requests = 0;
 
-  /** Walk every slice for one base (city or neighbourhood) with one token. */
+  /** One window: fetch 1, then 2 while full; returns the page counts and the raw items. */
+  const runSlice = async (tok: NadlanToken, s: SliceQuery, freshen: () => Promise<boolean>): Promise<{ pages: number[]; items: RawItem[] }> => {
+    const pages: number[] = [];
+    const items: RawItem[] = [];
+    for (const fetch_number of [1, 2]) {
+      let r = await runQ(tok, { ...s.extra, fetch_number });
+      requests++;
+      await sleep(rnd(700, 1400));
+      if (r.items.length === 0 && fetch_number === 1 && (await freshen())) {
+        r = await runQ(tok, { ...s.extra, fetch_number }); requests++; await sleep(rnd(700, 1400));
+      }
+      pages.push(r.items.length);
+      items.push(...r.items);
+      if (r.items.length < 500) break; // window exhausted
+    }
+    return { pages, items };
+  };
+
+  /**
+   * Walk one base (the city, or one neighbourhood) year by year, newest
+   * first. Each year starts with the unfiltered ascending window; only a
+   * year that fills both fetches gets the seven expansion windows.
+   */
   const walkBase = async (baseLabel: string, getToken: () => Promise<NadlanToken | null>): Promise<void> => {
     let tok = await getToken();
     let tokAt = Date.now();
@@ -164,29 +190,63 @@ async function main(): Promise<number> {
       tok = t2; tokAt = Date.now();
       return true;
     };
-    const slices = sliceQueries(years, nowY).filter((s) => !done.has(`${baseLabel}|${s.label}`));
+    const key = (s: SliceQuery) => `${baseLabel}|${s.label}`;
     let added = 0;
-    for (const s of slices) {
-      if (overBudget()) { stopped = "תקציב הזמן"; return; }
-      for (const fetch_number of [1, 2]) {
-        let r = await runQ(tok, { ...s.extra, fetch_number });
-        requests++;
-        await sleep(rnd(700, 1400));
-        if (r.items.length === 0 && fetch_number === 1 && (await freshen())) {
-          r = await runQ(tok, { ...s.extra, fetch_number }); requests++; await sleep(rnd(700, 1400));
-        }
-        if (r.items.length === 0) break;
-        added += mergeItems(cap, r.items);
-        if (r.items.length < 500) break; // window exhausted
+    const yearLines: string[] = [];
+    for (const y of orderYears(years, nowY)) {
+      if (overBudget()) { stopped = "תקציב הזמן"; break; }
+      const primary = primarySlice(y, nowY);
+      const yearDoneKey = `${baseLabel}|${y}:done`;
+      if (done.has(yearDoneKey)) continue;
+      let yearAdded = 0;
+      const seen: RawItem[] = [];
+      let queue: SliceQuery[] = done.has(key(primary)) ? expansionSlices(y, nowY) : [primary];
+      let expanded = done.has(key(primary));
+      while (queue.length) {
+        if (overBudget()) { stopped = "תקציב הזמן"; break; }
+        const s = queue.shift()!;
+        if (done.has(key(s))) continue;
+        const r = await runSlice(tok!, s, freshen);
+        yearAdded += mergeItems(cap, r.items);
+        seen.push(...r.items);
+        done.add(key(s));
+        if (!expanded && s.label === primary.label && saturated(r.pages)) { expanded = true; queue = expansionSlices(y, nowY); }
       }
-      done.add(`${baseLabel}|${s.label}`);
+      if (stopped) break;
+      done.add(yearDoneKey);
+      added += yearAdded;
+      // the log itself must show whether a 2010 window returns 2010 deals or 2021 ones
+      const sp = yearSpan(seen);
+      yearLines.push(`${y}: +${yearAdded}${expanded ? " (רווי, הורחב)" : ""} · בתשובה ${sp ? `${sp.min}–${sp.max}` : "ריק"}`);
       if (done.size % 10 === 0) save();
     }
     const span = yearSpan(cap.items);
     console.log(`   ${baseLabel}: +${added.toLocaleString("en")} · סה״כ ${cap.items.length.toLocaleString("en")} · שנים ${span ? `${span.min}–${span.max}` : "—"}`);
+    if (yearLines.length) console.log(`     ${yearLines.join(" · ")}`);
+  };
+
+  /** --probe: six unfiltered ascending windows, fetch 1 only — how far back does the site answer? */
+  const probeHorizon = async (): Promise<void> => {
+    const tok = await harvest(settlementUrl);
+    if (!tok) { console.log("   אין טוקן — הכרום פתוח? נפתחו 'עסקאות' פעם אחת?"); return; }
+    for (const y of [nowY - 1, nowY - 5, nowY - 8, nowY - 11, nowY - 14, nowY - 18]) {
+      const s = primarySlice(y, nowY);
+      const r = await runQ(tok, { ...s.extra, fetch_number: 1 });
+      requests++;
+      const sp = yearSpan(r.items);
+      console.log(`   עוגן ${y} (${s.extra.deal_date} חודשים אחורה): ${r.items.length} פריטים · total_rows=${r.totalRows ?? "—"} · שנים בתשובה ${sp ? `${sp.min}–${sp.max}` : "ריק"}`);
+      await sleep(rnd(700, 1400));
+    }
   };
 
   try {
+    if (probe) {
+      console.log(`🔎 ${cityName}: בדיקת אופק — כמה אחורה האתר עונה`);
+      await probeHorizon();
+      await page.close().catch(() => {});
+      try { browser.disconnect(); } catch { /* gone */ }
+      return 0;
+    }
     console.log(`🏙  ${cityName} (למ"ס ${code}) · ${years.length} שנים · תקציב ${budgetMin || "∞"} דק' · קובץ ${file}${cap.items.length ? ` (המשך: ${cap.items.length.toLocaleString("en")} פריטים, ${done.size} חלונות)` : ""}`);
 
     // 1. the city itself — also the source of neighbourhood ids

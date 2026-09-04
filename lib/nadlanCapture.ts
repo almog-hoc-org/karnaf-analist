@@ -69,23 +69,47 @@ export function horizonMonths(year: number, nowYear: number): number {
   return Math.max(0, (nowYear - year) * 12 + 6);
 }
 
+/** Items per fetch_number the anonymous window returns at most. */
+export const WINDOW_PAGE = 500;
+
+/** Years worth querying, newest first — if the run stops on budget, the
+ *  years users look at most are the ones already captured. */
+export function orderYears(years: number[], nowYear: number): number[] {
+  return [...new Set(years)].filter((y) => Number.isInteger(y) && y > 1990 && y <= nowYear).sort((a, b) => b - a);
+}
+
+/** The one query every year starts with: ascending, unfiltered, anchored just before the year. */
+export function primarySlice(year: number, nowYear: number): SliceQuery {
+  return { label: `${year}:up:all`, year, extra: { type_order: "dealDate_up", deal_date: String(horizonMonths(year, nowYear)) } };
+}
+
 /**
- * The query plan for one base (a city, or one neighbourhood): for every year,
- * an ascending window anchored just before it and a descending window
- * anchored at its end, each once unfiltered and once per room count.
- * Newest years first — if the run stops on budget, the years users look at
- * most are the ones already captured.
+ * The seven extra windows for a year whose primary window SATURATED (both
+ * fetches came back full, i.e. ≥1,000 deals from the anchor onwards): the
+ * same anchor per room count, and a descending window anchored at the
+ * year's end, unfiltered and per room count. Measured 4.9.2026: most
+ * neighbourhood-years hold fewer than 500 deals, so running these blindly
+ * cost ~8× the requests for nothing.
  */
-export function sliceQueries(years: number[], nowYear: number, rooms: string[] = ["", "3", "4", "5"]): SliceQuery[] {
+export function expansionSlices(year: number, nowYear: number, rooms: string[] = ["3", "4", "5"]): SliceQuery[] {
+  const up = String(horizonMonths(year, nowYear));
+  const down = String(Math.max(0, (nowYear - year) * 12));
   const out: SliceQuery[] = [];
-  const ordered = [...new Set(years)].filter((y) => Number.isInteger(y) && y > 1990 && y <= nowYear).sort((a, b) => b - a);
-  for (const y of ordered) {
-    for (const room of rooms) {
-      const roomExtra = room ? { room_num: room } : {};
-      out.push({ label: `${y}:up:${room || "all"}`, year: y, extra: { type_order: "dealDate_up", deal_date: String(horizonMonths(y, nowYear)), ...roomExtra } });
-      out.push({ label: `${y}:down:${room || "all"}`, year: y, extra: { type_order: "dealDate_down", deal_date: String(Math.max(0, (nowYear - y) * 12)), ...roomExtra } });
-    }
-  }
+  for (const room of rooms) out.push({ label: `${year}:up:${room}`, year, extra: { type_order: "dealDate_up", deal_date: up, room_num: room } });
+  out.push({ label: `${year}:down:all`, year, extra: { type_order: "dealDate_down", deal_date: down } });
+  for (const room of rooms) out.push({ label: `${year}:down:${room}`, year, extra: { type_order: "dealDate_down", deal_date: down, room_num: room } });
+  return out;
+}
+
+/** Did a window fill both fetches? Then the year needs the expansion slices. */
+export function saturated(pageCounts: number[]): boolean {
+  return pageCounts.length >= 2 && pageCounts.every((n) => n >= WINDOW_PAGE);
+}
+
+/** Every window a base could need — the primary and the expansion of every year. */
+export function sliceQueries(years: number[], nowYear: number): SliceQuery[] {
+  const out: SliceQuery[] = [];
+  for (const y of orderYears(years, nowYear)) out.push(primarySlice(y, nowYear), ...expansionSlices(y, nowYear));
   return out;
 }
 
