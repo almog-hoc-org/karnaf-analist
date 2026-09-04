@@ -54,11 +54,13 @@ else
   CITY_LIST=$(ssh "$SERVER" "cd $REMOTE_APP && docker compose exec -T app node -e '
     const D = require(\"better-sqlite3\");
     const db = new D(\"/app/data/realestate.db\", { readonly: true });
+    // no quotes inside the SQL: every string is a bound parameter (a literal in
+    // double quotes is an IDENTIFIER to SQLite, and this line crosses three shells)
     let done = new Set();
-    try { done = new Set(db.prepare(\"SELECT city_name FROM nadlan_address_backfill_status WHERE status=\\\"ok\\\"\").all().map(r => r.city_name)); } catch {}
+    try { done = new Set(db.prepare(\"SELECT city_name FROM nadlan_address_backfill_status WHERE status = ?\").all(\"ok\").map(r => r.city_name)); } catch {}
     const rows = db.prepare(\`SELECT city_name, COUNT(*) m FROM nadlan_transactions
-      WHERE COALESCE(source,\\\"nadlan\\\") = \\\"nadlan\\\" AND street IS NULL AND price>0 AND area>0
-      GROUP BY city_name ORDER BY m DESC\`).all();
+      WHERE COALESCE(source, ?) = ? AND street IS NULL AND price>0 AND area>0
+      GROUP BY city_name ORDER BY m DESC\`).all(\"nadlan\", \"nadlan\");
     for (const r of rows) if (!done.has(r.city_name)) console.log(r.city_name);
   ' </dev/null") || die "לא הצלחתי לשלוף את רשימת הערים מהשרת"
   CITIES=()
