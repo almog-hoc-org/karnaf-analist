@@ -48,6 +48,8 @@ export function cityFileName(city: string): string {
 }
 
 class BlockedError extends Error {}
+/** The session is alive but this base has no deals feed — skip it, do not stop the campaign. */
+class NoFeedError extends Error {}
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -137,6 +139,18 @@ async function main(): Promise<number> {
   };
   /** The one message every dead-session exit carries — the operator's fix is the same in all cases. */
   const DEAD_SESSION = "הכרום הפסיק לענות (אין טוקן גם אחרי 3 טעינות) — לסגור את הכרום, להפעיל מחדש דרך bootstrap_nadlan_chrome.sh ולהריץ שוב";
+  /**
+   * "Dead session" and "this city has no deals feed" look identical from one
+   * page (no token). Tell them apart with ONE load of a page known to work —
+   * Tel Aviv — only when a city or its neighbourhoods failed: alive means skip
+   * this base and go on; dead means exit 2 and let the operator restart Chrome.
+   */
+  const CONTROL_URL = "https://www.nadlan.gov.il/?view=settlement&id=5000&page=deals";
+  const assertSessionAlive = async (what: string): Promise<void> => {
+    console.log(`   ${what} — בודק עמוד בקרה (תל אביב) כדי להבחין בין סשן מת לעיר בלי פיד`);
+    if (await harvest(CONTROL_URL)) { console.log("   הסשן חי"); return; }
+    throw new BlockedError(`${what} — ${DEAD_SESSION}`);
+  };
 
   let firstAnswerShown = false;
   let emptyStreak = 0;
@@ -288,9 +302,12 @@ async function main(): Promise<number> {
 
     // 0. the period menu — from the flag, from the file's last probe, else measured now
     const cityTok = await harvest(settlementUrl);
-    // no token from the city page after three loads = the session is dead, not
-    // "this city has no deals": stop with exit 2 so the push script stops too
-    if (!cityTok) throw new BlockedError(`אין טוקן מעמוד העיר — ${DEAD_SESSION}`);
+    // no token from the city page after three loads: a dead session stops the
+    // campaign (exit 2); a live one means this city has no feed — skip it
+    if (!cityTok) {
+      await assertSessionAlive("אין טוקן מעמוד העיר");
+      throw new NoFeedError("לעיר אין עמוד עסקאות באתר — מדלג (קובץ ריק; השרת יסמן empty)");
+    }
     if (givenHorizons?.length) horizons = orderHorizons(givenHorizons);
     else if (cap.horizons?.length) horizons = orderHorizons(cap.horizons);
     else { horizons = await probeHorizons(cityTok, false); cap.horizons = horizons; }
@@ -325,7 +342,7 @@ async function main(): Promise<number> {
             // no answer at all says nothing about neighbourhood windows — measure on the next one
             hoodFails++;
             console.log(`   hood:${id}: אין טוקן — מדלג`);
-            if (hoodFails >= 3) throw new BlockedError(`${hoodFails} שכונות רצופות בלי טוקן — ${DEAD_SESSION}`);
+            if (hoodFails >= 3) { await assertSessionAlive(`${hoodFails} שכונות רצופות בלי טוקן`); break; }
             continue;
           }
           tried = true;
@@ -337,7 +354,8 @@ async function main(): Promise<number> {
         const hadToken = await walkBase(`hood:${id}`, horizons, () => harvest(url));
         if (!hadToken) {
           hoodFails++;
-          if (hoodFails >= 3) throw new BlockedError(`${hoodFails} שכונות רצופות בלי טוקן — ${DEAD_SESSION}`);
+          // alive but the hood pages give nothing: keep the city's items, skip the rest
+          if (hoodFails >= 3) { await assertSessionAlive(`${hoodFails} שכונות רצופות בלי טוקן`); console.log("   מדלג על שאר השכונות"); break; }
           continue;
         }
         hoodFails = 0;
@@ -347,6 +365,7 @@ async function main(): Promise<number> {
     }
   } catch (e) {
     if (e instanceof BlockedError) { stopped = e.message; blocked = true; }
+    else if (e instanceof NoFeedError) { stopped = e.message; }
     else { console.error("run aborted:", e instanceof Error ? e.message : e); process.exitCode = 1; }
   } finally {
     save();
