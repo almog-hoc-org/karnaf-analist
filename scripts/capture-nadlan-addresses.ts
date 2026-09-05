@@ -105,21 +105,38 @@ async function main(): Promise<number> {
   });
   page.on("response", (r) => { if (r.url().includes("api.nadlan.gov.il") && r.status() === 401) blocked = true; });
 
-  /** Open a page and take the token its first deal request carries. */
+  /**
+   * Open a page and take the token its first deal request carries.
+   * MEASURED 4–5.9.2026: one page load with three clicks was not enough —
+   * from city 41 onwards the SPA stopped firing its deal request, first
+   * intermittently, then for 100 cities in a row. So: up to three FULL page
+   * loads, each given ~12 s to fire, with about:blank between them so the
+   * SPA is torn down rather than re-clicked.
+   */
+  const HARVEST_LOADS = 3;
   const harvest = async (url: string): Promise<NadlanToken | null> => {
-    lastPost = "";
-    await page.goto(url, { waitUntil: "networkidle2", timeout: 60000 }).catch(() => {});
-    await sleep(2500);
-    for (let attempt = 0; attempt < 3 && !lastPost; attempt++) {
-      await page.evaluate(() => {
-        const hit = [...document.querySelectorAll("button,a,div,span")]
-          .find((el) => /^\s*עסקאות\s*$/.test((el.textContent || "").trim()) && (el as HTMLElement).offsetParent !== null);
-        (hit as HTMLElement | undefined)?.click();
-      }).catch(() => {});
-      for (let i = 0; i < 20 && !lastPost; i++) await sleep(400);
+    for (let load = 1; load <= HARVEST_LOADS; load++) {
+      lastPost = "";
+      if (load > 1) { await page.goto("about:blank").catch(() => {}); await sleep(1500); }
+      await page.goto(url, { waitUntil: "networkidle2", timeout: 60000 }).catch(() => {});
+      await sleep(2500);
+      for (let attempt = 0; attempt < 3 && !lastPost; attempt++) {
+        await page.evaluate(() => {
+          const hit = [...document.querySelectorAll("button,a,div,span")]
+            .find((el) => /^\s*עסקאות\s*$/.test((el.textContent || "").trim()) && (el as HTMLElement).offsetParent !== null);
+          (hit as HTMLElement | undefined)?.click();
+        }).catch(() => {});
+        for (let i = 0; i < 10 && !lastPost; i++) await sleep(400);
+      }
+      if (lastPost) {
+        const tok = parseHarvestedPost(lastPost);
+        if (tok) { if (load > 1) console.log(`   טוקן אחרי ניסיון ${load}`); return tok; }
+      }
     }
-    return lastPost ? parseHarvestedPost(lastPost) : null;
+    return null;
   };
+  /** The one message every dead-session exit carries — the operator's fix is the same in all cases. */
+  const DEAD_SESSION = "הכרום הפסיק לענות (אין טוקן גם אחרי 3 טעינות) — לסגור את הכרום, להפעיל מחדש דרך bootstrap_nadlan_chrome.sh ולהריץ שוב";
 
   let firstAnswerShown = false;
   let emptyStreak = 0;
@@ -200,10 +217,12 @@ async function main(): Promise<number> {
    * (the oldest deals it can see); only a horizon that fills both fetches
    * gets the seven expansion windows.
    */
-  const walkBase = async (baseLabel: string, horizons: number[], getToken: () => Promise<NadlanToken | null>): Promise<void> => {
+  const walkBase = async (baseLabel: string, horizons: number[], getToken: () => Promise<NadlanToken | null>): Promise<boolean> => {
+    // a base the file already finished needs no page load at all (resume is free)
+    if (orderHorizons(horizons).every((h) => done.has(`${baseLabel}|h${h}:done`))) return true;
     let tok = await getToken();
     let tokAt = Date.now();
-    if (!tok) { console.log(`   ${baseLabel}: אין טוקן — מדלג`); return; }
+    if (!tok) { console.log(`   ${baseLabel}: אין טוקן — מדלג`); return false; }
     // an empty answer from a token younger than a minute is an empty window,
     // not an expired token — refreshing costs a full page navigation
     const freshen = async () => {
@@ -252,6 +271,7 @@ async function main(): Promise<number> {
     const span = yearSpan(cap.items);
     console.log(`   ${baseLabel}: +${added.toLocaleString("en")} · סה״כ ${cap.items.length.toLocaleString("en")} · שנים ${span ? `${span.min}–${span.max}` : "—"}`);
     if (lines.length) console.log(`     ${lines.join(" · ")}`);
+    return true;
   };
 
   let horizons: number[] = [];
@@ -268,7 +288,9 @@ async function main(): Promise<number> {
 
     // 0. the period menu — from the flag, from the file's last probe, else measured now
     const cityTok = await harvest(settlementUrl);
-    if (!cityTok) throw new Error("אין טוקן מעמוד העיר — הכרום פתוח על :9222? נפתחו 'עסקאות' פעם אחת?");
+    // no token from the city page after three loads = the session is dead, not
+    // "this city has no deals": stop with exit 2 so the push script stops too
+    if (!cityTok) throw new BlockedError(`אין טוקן מעמוד העיר — ${DEAD_SESSION}`);
     if (givenHorizons?.length) horizons = orderHorizons(givenHorizons);
     else if (cap.horizons?.length) horizons = orderHorizons(cap.horizons);
     else { horizons = await probeHorizons(cityTok, false); cap.horizons = horizons; }
@@ -290,19 +312,35 @@ async function main(): Promise<number> {
       }
       console.log(`   ${hoodIds.size} שכונות זוהו מהפריטים`);
       let tried = false;
+      // three neighbourhoods in a row without a token = the session died mid-city
+      // (measured 4.9.2026 in רמת גן/רעננה: 11–16 hoods "skipped" that way)
+      let hoodFails = 0;
       for (const [id, name] of hoodIds) {
         if (stopped) break;
         if (overBudget()) { stopped = "תקציב הזמן"; break; }
         const url = `https://www.nadlan.gov.il/?view=neighborhood&id=${id}&page=deals`;
         if (!tried) {
-          tried = true;
           const probe = await harvest(url);
-          const own = !!probe && String(probe.base_id) !== String(code) && String(probe.base_id) !== "";
+          if (!probe) {
+            // no answer at all says nothing about neighbourhood windows — measure on the next one
+            hoodFails++;
+            console.log(`   hood:${id}: אין טוקן — מדלג`);
+            if (hoodFails >= 3) throw new BlockedError(`${hoodFails} שכונות רצופות בלי טוקן — ${DEAD_SESSION}`);
+            continue;
+          }
+          tried = true;
+          const own = String(probe.base_id) !== String(code) && String(probe.base_id) !== "";
           cap.neighborhoodWindow = own;
           console.log(`   חלון שכונה: ${own ? "כן — כל שכונה היא חלון משלה" : "לא — נשארים בפיצול עירוני"}`);
           if (!own) break;
         }
-        await walkBase(`hood:${id}`, horizons, () => harvest(url));
+        const hadToken = await walkBase(`hood:${id}`, horizons, () => harvest(url));
+        if (!hadToken) {
+          hoodFails++;
+          if (hoodFails >= 3) throw new BlockedError(`${hoodFails} שכונות רצופות בלי טוקן — ${DEAD_SESSION}`);
+          continue;
+        }
+        hoodFails = 0;
         console.log(`     ↳ ${name}`);
         save();
       }
@@ -319,7 +357,7 @@ async function main(): Promise<number> {
   const span = yearSpan(cap.items);
   const withAddr = cap.items.filter((i) => typeof i.address === "string" && i.address).length;
   console.log(`\n${stopped ? `⏹ נעצר: ${stopped} · ` : "✓ "}${cap.items.length.toLocaleString("en")} עסקאות בקובץ · ${withAddr.toLocaleString("en")} עם כתובת · שנים ${span ? `${span.min}–${span.max}` : "—"} · ${requests} בקשות · ${((Date.now() - t0) / 60000).toFixed(1)} דק'`);
-  if (blocked) { console.error("⛔ nadlan חסם את הסשן — לסגור את הכרום, להפעיל מחדש דרך bootstrap_nadlan_chrome.sh ולהריץ שוב (הקובץ נשמר, הריצה תמשיך מאותה נקודה)."); return 2; }
+  if (blocked) { console.error(`⛔ ${stopped} (הקובץ נשמר, הריצה תמשיך מאותה נקודה).`); return 2; }
   return 0;
 }
 

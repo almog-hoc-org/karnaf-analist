@@ -56,15 +56,31 @@ else
     const db = new D(\"/app/data/realestate.db\", { readonly: true });
     // no quotes inside the SQL: every string is a bound parameter (a literal in
     // double quotes is an IDENTIFIER to SQLite, and this line crosses three shells)
-    let done = new Set();
-    try { done = new Set(db.prepare(\"SELECT city_name FROM nadlan_address_backfill_status WHERE status = ?\").all(\"ok\").map(r => r.city_name)); } catch {}
+    let done = new Set(), empty = new Set();
+    try {
+      const st = db.prepare(\"SELECT city_name, status FROM nadlan_address_backfill_status\").all();
+      done = new Set(st.filter(r => r.status === \"ok\").map(r => r.city_name));
+      empty = new Set(st.filter(r => r.status === \"empty\").map(r => r.city_name));
+    } catch {}
     const rows = db.prepare(\`SELECT city_name, COUNT(*) m FROM nadlan_transactions
       WHERE COALESCE(source, ?) = ? AND street IS NULL AND price>0 AND area>0
       GROUP BY city_name ORDER BY m DESC\`).all(\"nadlan\", \"nadlan\");
-    for (const r of rows) if (!done.has(r.city_name)) console.log(r.city_name);
+    const todo = rows.filter(r => !done.has(r.city_name));
+    // first line = how many of these already failed once (a dead Chrome session
+    // marks a city empty, not ok — so they come back here on purpose)
+    console.log(\"retry:\" + todo.filter(r => empty.has(r.city_name)).length);
+    for (const r of todo) console.log(r.city_name);
   ' </dev/null") || die "לא הצלחתי לשלוף את רשימת הערים מהשרת"
   CITIES=()
-  while IFS= read -r c; do [ -n "$c" ] && CITIES+=("$c"); done <<< "$CITY_LIST"
+  RETRY_N=0
+  while IFS= read -r c; do
+    case "$c" in
+      retry:*) RETRY_N="${c#retry:}" ;;
+      "") ;;
+      *) CITIES+=("$c") ;;
+    esac
+  done <<< "$CITY_LIST"
+  [ "$RETRY_N" -gt 0 ] 2>/dev/null && warn "$RETRY_N ערים מריצה קודמת שנכשלה (סומנו empty) חוזרות לתור"
 fi
 [ "${#CITIES[@]}" -gt 0 ] || { ok "אין ערים עם כתובות חסרות — הקמפיין הושלם"; exit 0; }
 say "${#CITIES[@]} ערים בתור (הפערים הגדולים קודם)"
@@ -83,7 +99,9 @@ for city in "${CITIES[@]}"; do
   npx tsx scripts/capture-nadlan-addresses.ts "$city" --out="$OUT_DIR" ${KARNAF_NADLAN_BUDGET_MIN:+--budget-min "$KARNAF_NADLAN_BUDGET_MIN"}
   rc=$?
   set -e
-  if [ "$rc" -eq 2 ]; then die "nadlan חסם את הסשן — לסגור את הכרום, להפעיל מחדש דרך bootstrap_nadlan_chrome.sh ולהריץ שוב; הקובץ נשמר וההמשך מאותה נקודה"; fi
+  # exit 2 = the Chrome session is dead or nadlan blocked it (401, or no token after 3 page loads);
+  # continuing would only mark every remaining city "empty" (measured 4–5.9.2026: 100 cities in a row)
+  if [ "$rc" -eq 2 ]; then die "הסשן בכרום מת או נחסם — לסגור את הכרום, להפעיל מחדש דרך bootstrap_nadlan_chrome.sh (ולפתוח פעם אחת 'עסקאות'), ואז להריץ שוב; הקובץ נשמר וההמשך מאותה נקודה"; fi
   if [ "$rc" -ne 0 ]; then warn "הלכידה של $city נכשלה — ממשיך לעיר הבאה"; fail_n=$((fail_n + 1)); continue; fi
   if [ ! -f "$OUT_DIR/$fname" ]; then warn "אין קובץ לכידה — ממשיך"; continue; fi
 
