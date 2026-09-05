@@ -43,6 +43,14 @@ export const NADLAN_ADDRESS_COLUMN_ALTERS = [
   "ALTER TABLE nadlan_transactions ADD COLUMN building_floors INTEGER",
 ] as const;
 
+/** For prisma callers (the nightly nadlan collector, which now stores parcel/floors too). */
+export async function ensureNadlanAddressColumns(prisma: { $executeRawUnsafe: (q: string) => Promise<unknown> }): Promise<void> {
+  await ensureSourceDealIdColumn(prisma);
+  for (const q of NADLAN_ADDRESS_COLUMN_ALTERS) {
+    try { await prisma.$executeRawUnsafe(q); } catch { /* already exists — the normal case */ }
+  }
+}
+
 export function ensureNadlanAddressColumnsSync(db: { exec: (q: string) => unknown }): void {
   ensureSourceDealIdColumnSync(db);
   for (const q of NADLAN_ADDRESS_COLUMN_ALTERS) {

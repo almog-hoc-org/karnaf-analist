@@ -17,6 +17,7 @@ import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
 import { sliceQueries, primarySlice, expansionSlices, saturated, orderHorizons, HORIZON_CANDIDATES, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
 import { signBody, parseHarvestedPost, buildQueryPayload, buildFetchBody, DEAL_DATA_HEADERS, decodeDealData, responseItems, responseMeta, responseError } from "@/lib/nadlanSession";
 import { NADLAN_ADDRESS_COLUMN_ALTERS } from "@/lib/addressBackfillDb";
+import { buildNadlanRow, NADLAN_ROW_COLS, roomBucket, SECONDHAND_MIN_AGE } from "@/lib/nadlanRow";
 import { gzipSync } from "zlib";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
 import { compMatchNote, compWhere, compHow, type StreetComp } from "@/lib/compTypes";
@@ -1756,5 +1757,71 @@ describe("nadlan address campaign — slicing, identity, donation", () => {
       "ALTER TABLE nadlan_transactions ADD COLUMN parcel_num TEXT",
       "ALTER TABLE nadlan_transactions ADD COLUMN building_floors INTEGER",
     ]);
+  });
+});
+
+describe("nadlan row builder — one tuple for the collector and the insert step", () => {
+  // the shape captured from the site's own page, 4.9.2026
+  const item = {
+    dealDate: "2024-03-12T00:00:00", dealAmount: 3100000, assetArea: 84, roomNum: 3.5, priceSM: 36905,
+    address: "יצחק צוקרמן 23", floor: "קומה \u200e2\u200f", parcelNum: "7242-126-6", buildingFloors: 8,
+    assetId: 123456.0, neighborhoodName: " הצפון הישן ", yearBuilt: 1998, hokHamecher: 0, prevDeals: [{}, {}],
+  };
+  const byCol = (t: unknown[]) => Object.fromEntries(NADLAN_ROW_COLS.map((c, i) => [c, t[i]]));
+
+  it("binds exactly one value per column, in NADLAN_ROW_COLS order, with source bound as a parameter", () => {
+    const t = buildNadlanRow(item, "תל אביב-יפו", "5000")!;
+    expect(t).toHaveLength(NADLAN_ROW_COLS.length);
+    const r = byCol(t);
+    expect(r.city_name).toBe("תל אביב-יפו");
+    expect(r.cbs_code).toBe("5000");
+    expect(r.deal_date).toBe("2024-03-12");
+    expect(r.deal_year).toBe(2024);
+    expect(r.room_bucket).toBe("4");
+    expect(r.street).toBe("יצחק צוקרמן");
+    expect(r.house_num).toBe("23");
+    expect(r.floor).toBe("קומה 2");
+    expect(r.parcel_num).toBe("7242-126-6");
+    expect(r.building_floors).toBe(8);
+    expect(r.source_deal_id).toBe("123456");
+    expect(r.neighborhood).toBe("הצפון הישן");
+    expect(r.hok_hamecher).toBe(0);
+    expect(r.prev_deals).toBe(2);
+    expect(r.source).toBe("nadlan");
+    // the insert SQL can only compare key columns it is given; every DEAL_KEY_COL is in the tuple
+    expect(insertIfAbsentSql(NADLAN_ROW_COLS.join(","), 1)).toContain('"street"');
+  });
+
+  it("second-hand only when the deal is SECONDHAND_MIN_AGE years after the build year", () => {
+    expect(SECONDHAND_MIN_AGE).toBe(4);
+    expect(byCol(buildNadlanRow(item, "x", null)!).is_secondhand).toBe(1);                       // 2024 − 1998
+    expect(byCol(buildNadlanRow({ ...item, yearBuilt: 2022 }, "x", null)!).is_secondhand).toBe(0); // new build
+    expect(byCol(buildNadlanRow({ ...item, yearBuilt: 0 }, "x", null)!).is_secondhand).toBe(0);    // unknown → not claimed
+    expect(byCol(buildNadlanRow({ ...item, yearBuilt: 0 }, "x", null)!).year_built).toBeNull();
+  });
+
+  it("refuses what the collectors refuse: no date, no amount, pre-1991", () => {
+    expect(buildNadlanRow({ ...item, dealDate: undefined }, "x", null)).toBeNull();
+    expect(buildNadlanRow({ ...item, dealAmount: 0 }, "x", null)).toBeNull();
+    expect(buildNadlanRow({ ...item, dealDate: "1989-01-01" }, "x", null)).toBeNull();
+  });
+
+  it("absent optional fields store NULL, not empty strings or NaN", () => {
+    const r = byCol(buildNadlanRow({ dealDate: "2023-05-01", dealAmount: 1000000 }, "x", null)!);
+    expect(r.rooms).toBeNull();
+    expect(r.room_bucket).toBe("other");
+    expect(r.area).toBeNull();
+    expect(r.street).toBeNull();
+    expect(r.parcel_num).toBeNull();
+    expect(r.building_floors).toBeNull();
+    expect(r.source_deal_id).toBeNull();
+    expect(r.hok_hamecher).toBeNull();
+    expect(r.prev_deals).toBeNull();
+  });
+
+  it("roomBucket is the collectors' rule", () => {
+    expect(roomBucket(2.5)).toBe("3"); expect(roomBucket(3.4)).toBe("3");
+    expect(roomBucket(3.5)).toBe("4"); expect(roomBucket(4.5)).toBe("5"); expect(roomBucket(6)).toBe("5");
+    expect(roomBucket(2)).toBe("other"); expect(roomBucket(null)).toBe("other"); expect(roomBucket(NaN)).toBe("other");
   });
 });

@@ -30,10 +30,11 @@ import zlib from "zlib";
 import puppeteerCore from "puppeteer-core";
 import { prisma } from "../lib/db";
 import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
-import { extractAddress, describeRawItem } from "../lib/nadlanAddress";
+import { describeRawItem } from "../lib/nadlanAddress";
+import { buildNadlanRow, NADLAN_ROW_COLS } from "../lib/nadlanRow";
+import { ensureNadlanAddressColumns } from "../lib/addressBackfillDb";
 
 const SECRET = "90c3e620192348f1bd46fcd9138c3c68"; // HS256 key from the nadlan JS bundle (mixin_generateTokenForPayload)
-const SECONDHAND_MIN_AGE = 4;
 const FRESH_DAYS = 20;
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -64,14 +65,6 @@ interface RawItem {
    *  them under a name this code reads defensively (lib/nadlanAddress) */
   [k: string]: unknown;
 }
-function roomBucket(rn: number | undefined): string {
-  if (rn == null) return "other";
-  if (rn >= 2.5 && rn < 3.5) return "3";
-  if (rn >= 3.5 && rn < 4.5) return "4";
-  if (rn >= 4.5) return "5";
-  return "other";
-}
-
 function cityCodeMap(): Map<string, string> {
   const j = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "data/city_cbs_codes.json"), "utf8")) as Record<string, number>;
   return new Map(Object.entries(j).map(([k, v]) => [k.trim(), String(v)]));
@@ -154,39 +147,21 @@ async function collectCity(browser: import("puppeteer-core").Browser, city: stri
   // years of build-year data for a large city can only be reached by successive
   // passes adding to each other. Each pass was discarding the last one's work.
   await prisma.$executeRawUnsafe(DEAL_KEY_INDEX_SQL);
-  const rows = merged
-    .filter((d) => d.dealDate && d.dealAmount)
-    .map((d) => {
-      const dy = Number(String(d.dealDate).slice(0, 4));
-      const yb = Number(d.yearBuilt) || null;
-      const isSH = yb && yb > 0 && dy - yb >= SECONDHAND_MIN_AGE ? 1 : 0;
-      return { dy, yb, isSH, d };
-    })
-    .filter((r) => r.dy > 1990);
-
-  // 'nadlan' is bound as a parameter like every other column. It used to be
-  // spliced into the placeholder string with a regex, which meant the tuple
-  // shape and the parameter count were maintained in two places — the failure
-  // mode the sibling collector documents as "exactly how the v9 run failed".
-  // neighborhood was PARSED here from day one and never inserted — the column
-  // list simply omitted it, so months of collection stored NULLs while the
-  // value sat in memory. street/house_num are read defensively: the field
-  // name is unverified until the raw-keys log above confirms it, and an
-  // absent field stores NULL exactly as before.
-  const COLS = "city_name,cbs_code,deal_date,deal_year,rooms,room_bucket,area,price,price_sqm,year_built,is_secondhand,neighborhood,street,house_num,source";
-  const NCOLS = COLS.split(",").length;
-  const params: unknown[] = [];
-  for (const { dy, yb, isSH, d } of rows) {
-    const addr = extractAddress(d as Record<string, unknown>, city);
-    params.push(city, code, String(d.dealDate).slice(0, 10), dy, d.roomNum ?? null, roomBucket(d.roomNum),
-      d.assetArea ?? null, d.dealAmount ?? null, d.priceSM ?? null, yb, isSH,
-      d.neighborhoodName?.trim() || null, addr.street, addr.houseNum, "nadlan");
+  await ensureNadlanAddressColumns(prisma);
+  // One row builder for every nadlan writer (lib/nadlanRow.ts): deal_year,
+  // room bucket, second-hand verdict, address split, and — since the address
+  // campaign — parcel, building floors, floor text and the site's assetId.
+  // 'nadlan' is bound as a parameter like every other column.
+  const rows: Array<{ dy: number; tuple: unknown[] }> = [];
+  for (const d of merged) {
+    const tuple = buildNadlanRow(d as Record<string, unknown>, city, code);
+    if (tuple) rows.push({ dy: Number(String(d.dealDate).slice(0, 4)), tuple });
   }
+  const COLS = NADLAN_ROW_COLS.join(",");
   const CHUNK = 80;
   for (let i = 0; i < rows.length; i += CHUNK) {
-    const n = Math.min(CHUNK, rows.length - i);
-    const ps = params.slice(i * NCOLS, (i + n) * NCOLS);
-    await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, n), ...ps);
+    const slice = rows.slice(i, i + CHUNK);
+    await prisma.$executeRawUnsafe(insertIfAbsentSql(COLS, slice.length), ...slice.flatMap((r) => r.tuple));
   }
   const years = [...new Set(rows.map((r) => r.dy))].sort();
   return { n: rows.length, years: `${years[0]}–${years[years.length - 1]}` };

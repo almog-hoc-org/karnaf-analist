@@ -143,12 +143,17 @@ async function main(): Promise<number> {
     if (geoStatus.length) console.log(`  שארית govmap: ${geoStatus.map((r) => `${r.status} ${r.c} ערים (${Number(r.house).toLocaleString("he-IL")} בתים)`).join(" · ")}`);
     // The nadlan address campaign (scripts/push-nadlan-addresses.sh): the
     // source of streets for the rows govmap never had.
-    const nadlanCampaign = await prisma.$queryRawUnsafe<Array<{ c: number; street: number; parcel: number; not_in_db: number }>>(
-      `SELECT COUNT(*) c, SUM(filled_street) street, SUM(filled_parcel) parcel, SUM(not_in_db) not_in_db
-         FROM nadlan_address_backfill_status WHERE status = 'ok'`).catch(() => []);
+    // `inserted` exists only once the --insert-new step ran somewhere; before that, fall back to the older shape
+    const nadlanCampaign = await prisma.$queryRawUnsafe<Array<{ c: number; street: number; parcel: number; not_in_db: number; inserted: number | null; v2: number | null }>>(
+      `SELECT COUNT(*) c, SUM(filled_street) street, SUM(filled_parcel) parcel, SUM(not_in_db) not_in_db,
+              SUM(inserted) inserted, SUM(method_version = 'nadlan-addr-v2') v2
+         FROM nadlan_address_backfill_status WHERE status = 'ok'`)
+      .catch(() => prisma.$queryRawUnsafe<Array<{ c: number; street: number; parcel: number; not_in_db: number; inserted: number | null; v2: number | null }>>(
+        `SELECT COUNT(*) c, SUM(filled_street) street, SUM(filled_parcel) parcel, SUM(not_in_db) not_in_db, NULL inserted, NULL v2
+           FROM nadlan_address_backfill_status WHERE status = 'ok'`).catch(() => []));
     const nc = nadlanCampaign[0];
     console.log(nc && Number(nc.c) > 0
-      ? `  קמפיין nadlan: ${nc.c} ערים · +${Number(nc.street).toLocaleString("he-IL")} רחובות · +${Number(nc.parcel).toLocaleString("he-IL")} גוש-חלקה · ${Number(nc.not_in_db).toLocaleString("he-IL")} עסקאות באתר שאינן במאגר`
+      ? `  קמפיין nadlan: ${nc.c} ערים · +${Number(nc.street).toLocaleString("he-IL")} רחובות · +${Number(nc.parcel).toLocaleString("he-IL")} גוש-חלקה · ${Number(nc.not_in_db).toLocaleString("he-IL")} עסקאות באתר שאינן במאגר${nc.v2 != null && Number(nc.v2) > 0 ? ` · +${Number(nc.inserted ?? 0).toLocaleString("he-IL")} הוכנסו (${nc.v2} ערים)` : " · הכנסה טרם רצה"}`
       : "  קמפיין nadlan: טרם רץ (scripts/push-nadlan-addresses.sh מהמק)");
   } catch (e) {
     console.log(`  (אין טבלת גיאוקוד עדיין — ${e instanceof Error ? e.message.split("\n")[0] : e})`);

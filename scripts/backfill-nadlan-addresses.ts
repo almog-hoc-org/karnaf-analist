@@ -9,8 +9,18 @@
  * to its street-less legacy row would create a duplicate, not a match.
  * Updating in place also heals that trap: once the legacy row carries the
  * address, a future re-collection matches the full key and dedupes cleanly.
- * (Deals the site has and we do not are counted and reported — inserting
- * them is a later, separate step, after the legacy rows are filled.)
+ * (Deals the site has and we do not are counted and reported; with
+ * --insert-new they are inserted — see below.)
+ *
+ * --insert-new (5.9.2026, after the fill completed on all 164 cities). A
+ * captured item with no row at all is inserted through the same row builder
+ * the nightly collector uses (lib/nadlanRow.ts). "No row at all" is judged
+ * by the strict key and the soft key against EVERY row of the city, all
+ * sources — a govmap row of the same deal may spell the street differently
+ * or round the area, and insertIfAbsentSql's full-key comparison alone
+ * would let such a copy in. insertIfAbsentSql stays as the second guard.
+ * This is safe only now: before the fill, a street-ful item next to a
+ * street-less legacy row would have been inserted as a duplicate.
  *
  * MATCHING. A captured item and a nadlan row are the same deal when
  * (date, price, area, rooms) agree — the collector's own dedup key, so for
@@ -26,6 +36,7 @@
  *
  * Usage:
  *   npx tsx scripts/backfill-nadlan-addresses.ts "תל אביב-יפו" --from-file=/app/data/nadlan_addr/תל_אביב-יפו.json
+ *   npx tsx scripts/backfill-nadlan-addresses.ts "תל אביב-יפו" --from-file=… --insert-new
  *   npx tsx scripts/backfill-nadlan-addresses.ts --status      # per-city summary
  */
 import Database from "better-sqlite3";
@@ -34,8 +45,12 @@ import path from "path";
 import { strictKey, looseKey, chooseDonation, SOFT_AREA_TOLERANCE_SQM, type AddressDonor } from "../lib/addressBackfill";
 import { ensureNadlanAddressColumnsSync } from "../lib/addressBackfillDb";
 import { donorFromItem, type CaptureFile, type RawItem, type NadlanDonor } from "../lib/nadlanCapture";
+import { buildNadlanRow, NADLAN_ROW_COLS } from "../lib/nadlanRow";
+import { insertIfAbsentSql } from "../lib/dealKey";
 
 export const METHOD = "nadlan-addr-v1";
+/** The version a city carries once the insert step ran on it — the push script re-queues cities below it. */
+export const METHOD_INSERT = "nadlan-addr-v2";
 
 interface TargetRow {
   id: number; deal_date: string; price: number; area: number; rooms: number | null;
@@ -46,6 +61,7 @@ interface TargetRow {
 function main(): number {
   const argv = process.argv.slice(2);
   const fromFile = argv.find((a) => a.startsWith("--from-file="))?.slice("--from-file=".length) ?? null;
+  const insertNew = argv.includes("--insert-new");
   const names = argv.filter((a) => !a.startsWith("--"));
 
   const db = new Database(path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db"));
@@ -67,12 +83,15 @@ function main(): number {
     years TEXT,
     last_run DATETIME
   )`);
+  try { db.exec("ALTER TABLE nadlan_address_backfill_status ADD COLUMN inserted INTEGER NOT NULL DEFAULT 0"); } catch { /* exists */ }
 
   if (argv.includes("--status")) {
-    const rows = db.prepare(`SELECT city_name, status, captured, filled_street, filled_parcel, unmatched, not_in_db, years, last_run
+    const rows = db.prepare(`SELECT city_name, method_version, status, captured, filled_street, filled_parcel, unmatched, not_in_db, inserted, years, last_run
                                FROM nadlan_address_backfill_status ORDER BY filled_street DESC`).all() as Array<Record<string, unknown>>;
     if (!rows.length) console.log("הקמפיין טרם רץ.");
-    for (const r of rows) console.log(`${String(r.city_name).padEnd(18)} ${r.status} · נלכדו ${Number(r.captured).toLocaleString("en")} · +${Number(r.filled_street).toLocaleString("en")} רחוב · +${Number(r.filled_parcel).toLocaleString("en")} גוש-חלקה · ${Number(r.unmatched).toLocaleString("en")} ללא התאמה · ${Number(r.not_in_db).toLocaleString("en")} לא במאגר · ${r.years ?? "—"} · ${r.last_run}`);
+    for (const r of rows) console.log(`${String(r.city_name).padEnd(18)} ${r.status} · נלכדו ${Number(r.captured).toLocaleString("en")} · +${Number(r.filled_street).toLocaleString("en")} רחוב · +${Number(r.filled_parcel).toLocaleString("en")} גוש-חלקה · ${Number(r.unmatched).toLocaleString("en")} ללא התאמה · ${Number(r.not_in_db).toLocaleString("en")} לא במאגר · ${r.method_version === METHOD_INSERT ? `+${Number(r.inserted).toLocaleString("en")} הוכנסו` : "טרם הוכנסו"} · ${r.years ?? "—"} · ${r.last_run}`);
+    const tot = db.prepare(`SELECT SUM(filled_street) s, SUM(filled_parcel) p, SUM(not_in_db) n, SUM(inserted) i, SUM(method_version = ?) v2, COUNT(*) c FROM nadlan_address_backfill_status`).get(METHOD_INSERT) as Record<string, number>;
+    console.log(`סה"כ ${tot.c} ערים · +${Number(tot.s).toLocaleString("en")} רחוב · +${Number(tot.p).toLocaleString("en")} גוש-חלקה · ${Number(tot.n).toLocaleString("en")} לא במאגר · +${Number(tot.i).toLocaleString("en")} הוכנסו (${tot.v2} ערים עברו הכנסה)`);
     db.close();
     return 0;
   }
@@ -90,14 +109,14 @@ function main(): number {
 
   const upsertStatus = db.prepare(`
     INSERT INTO nadlan_address_backfill_status
-      (city_name, method_version, status, attempts, captured, filled_street, filled_hood, filled_parcel, ambiguous, unmatched, not_in_db, years, last_run)
-    VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      (city_name, method_version, status, attempts, captured, filled_street, filled_hood, filled_parcel, ambiguous, unmatched, not_in_db, inserted, years, last_run)
+    VALUES (?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
     ON CONFLICT(city_name) DO UPDATE SET
       method_version=excluded.method_version, status=excluded.status,
       attempts=nadlan_address_backfill_status.attempts+1, captured=excluded.captured,
       filled_street=excluded.filled_street, filled_hood=excluded.filled_hood, filled_parcel=excluded.filled_parcel,
       ambiguous=excluded.ambiguous, unmatched=excluded.unmatched, not_in_db=excluded.not_in_db,
-      years=excluded.years, last_run=excluded.last_run`);
+      inserted=nadlan_address_backfill_status.inserted+excluded.inserted, years=excluded.years, last_run=excluded.last_run`);
 
   // Targets: nadlan-channel rows missing any of the fields the campaign
   // donates. govmap rows already carry their address from the feed.
@@ -131,9 +150,14 @@ function main(): number {
   }
 
   // How many captured deals have no row at all — reported, not inserted (see header).
-  const ownKeys = new Set((db.prepare(
-    `SELECT deal_date || '|' || CAST(ROUND(price) AS INTEGER) || '|' || CAST(ROUND(area) AS INTEGER) || '|' || CAST(ROUND(COALESCE(rooms,0)) AS INTEGER) k
-       FROM nadlan_transactions WHERE city_name = ?`).all(city) as Array<{ k: string }>).map((r) => r.k));
+  const ownRows = db.prepare(`SELECT deal_date, price, area, rooms FROM nadlan_transactions WHERE city_name = ? AND price > 0 AND area > 0`)
+    .all(city) as Array<{ deal_date: string; price: number; area: number; rooms: number | null }>;
+  const ownKeys = new Set(ownRows.map((r) => strictKey(r)));
+  const ownLoose = new Map<string, number[]>();
+  for (const r of ownRows) (ownLoose.get(looseKey(r)) ?? ownLoose.set(looseKey(r), []).get(looseKey(r))!).push(r.area);
+  /** Does ANY row of the city (any source) already hold this deal — strictly, or softly within the area tolerance? */
+  const alreadyHave = (rec: { deal_date: string; price: number; area: number; rooms: number | null }): boolean =>
+    ownKeys.has(strictKey(rec)) || (ownLoose.get(looseKey(rec)) ?? []).some((a) => Math.abs(a - rec.area) <= SOFT_AREA_TOLERANCE_SQM);
   let notInDb = 0;
   for (const k of byStrict.keys()) if (!ownKeys.has(k)) notInDb++;
 
@@ -168,14 +192,41 @@ function main(): number {
     }
   })();
 
+  // --insert-new: the deals the site has and no row of ours holds, through the
+  // collector's own row builder; insertIfAbsentSql is the second guard.
+  let inserted = 0;
+  if (insertNew) {
+    const tuples: unknown[][] = [];
+    const seen = new Set<string>();
+    for (const it of items) {
+      const price = Number(it.dealAmount), area = Number(it.assetArea);
+      if (!(price > 0) || !(area > 0) || !it.dealDate) continue;
+      const rec = { deal_date: String(it.dealDate).slice(0, 10), price, area, rooms: it.roomNum == null ? null : Number(it.roomNum) };
+      const sk = strictKey(rec);
+      if (seen.has(sk) || alreadyHave(rec)) continue;
+      const tuple = buildNadlanRow(it as Record<string, unknown>, city, cap.cbsCode ? String(cap.cbsCode) : null);
+      if (!tuple) continue;
+      seen.add(sk);
+      tuples.push(tuple);
+    }
+    const COLS = NADLAN_ROW_COLS.join(",");
+    const CHUNK = 80;
+    db.transaction(() => {
+      for (let i = 0; i < tuples.length; i += CHUNK) {
+        const slice = tuples.slice(i, i + CHUNK);
+        inserted += Number(db.prepare(insertIfAbsentSql(COLS, slice.length)).run(...slice.flat()).changes);
+      }
+    })();
+  }
+
   const yearsOf = (() => {
     let min = Infinity, max = -Infinity;
     for (const it of items) { const y = Number(String(it.dealDate ?? "").slice(0, 4)); if (y > 1990) { min = Math.min(min, y); max = Math.max(max, y); } }
     return min === Infinity ? null : `${min}–${max}`;
   })();
   // an empty capture is not a finished city — the push script must pick it up again
-  upsertStatus.run(city, METHOD, items.length ? "ok" : "empty", items.length, filledStreet, filledHood, filledParcel, ambiguous, unmatched, notInDb, yearsOf);
-  console.log(`${city}: ${items.length.toLocaleString("en")} נלכדו (${usable.toLocaleString("en")} עם כתובת/גוש) · ${targets.length.toLocaleString("en")} שורות חסרות · ${matched.toLocaleString("en")} הותאמו · +${filledStreet.toLocaleString("en")} רחוב · +${filledHood.toLocaleString("en")} שכונה · +${filledParcel.toLocaleString("en")} גוש-חלקה · ${ambiguous} דו-משמעי · ${unmatched.toLocaleString("en")} ללא התאמה · ${notInDb.toLocaleString("en")} עסקאות באתר שאינן במאגר · שנים ${yearsOf ?? "—"}`);
+  upsertStatus.run(city, insertNew ? METHOD_INSERT : METHOD, items.length ? "ok" : "empty", items.length, filledStreet, filledHood, filledParcel, ambiguous, unmatched, notInDb, inserted, yearsOf);
+  console.log(`${city}: ${items.length.toLocaleString("en")} נלכדו (${usable.toLocaleString("en")} עם כתובת/גוש) · ${targets.length.toLocaleString("en")} שורות חסרות · ${matched.toLocaleString("en")} הותאמו · +${filledStreet.toLocaleString("en")} רחוב · +${filledHood.toLocaleString("en")} שכונה · +${filledParcel.toLocaleString("en")} גוש-חלקה · ${ambiguous} דו-משמעי · ${unmatched.toLocaleString("en")} ללא התאמה · ${notInDb.toLocaleString("en")} עסקאות באתר שאינן במאגר${insertNew ? ` · +${inserted.toLocaleString("en")} הוכנסו` : ""} · שנים ${yearsOf ?? "—"}`);
   db.close();
   return 0;
 }

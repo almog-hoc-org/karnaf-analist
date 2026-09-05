@@ -22,6 +22,12 @@
 #   bash scripts/push-nadlan-addresses.sh          # all pending cities, gap-first
 #   bash scripts/push-nadlan-addresses.sh "חיפה"   # specific cities only
 #   KARNAF_NADLAN_BUDGET_MIN=40 bash scripts/push-nadlan-addresses.sh   # per-city time cap
+#   KARNAF_NADLAN_INSERT=1 bash scripts/push-nadlan-addresses.sh        # also INSERT the deals the site has and we lack
+#
+# INSERT MODE (KARNAF_NADLAN_INSERT=1). Runs only after the fill completed on
+# every city (5.9.2026): the server side inserts captured deals no row of ours
+# holds (backfill --insert-new), marks the city nadlan-addr-v2, and the city
+# list re-queues every city still on v1 — all 164 once, ~4 hours.
 #
 # PREREQUISITES: npm install in this repo · key-based ssh to the server ·
 # Chrome with --remote-debugging-port=9222 (the bootstrap script), a city's
@@ -34,6 +40,9 @@ SERVER="${KARNAF_SERVER:-root@72.62.7.226}"
 REMOTE_DATA="/var/lib/karnaf/data"
 REMOTE_APP="/opt/karnaf"
 OUT_DIR="data/nadlan_addr"
+INSERT="${KARNAF_NADLAN_INSERT:-0}"
+# a city is finished when it carries the method version this mode produces
+WANT_METHOD="nadlan-addr-v1"; [ "$INSERT" = "1" ] && WANT_METHOD="nadlan-addr-v2"
 say()  { printf '\n\033[1m── %s ──\033[0m\n' "$1"; }
 ok()   { printf '\033[32m✓ %s\033[0m\n' "$1"; }
 warn() { printf '\033[33m⚠ %s\033[0m\n' "$1"; }
@@ -58,8 +67,9 @@ else
     // double quotes is an IDENTIFIER to SQLite, and this line crosses three shells)
     let done = new Set(), empty = new Set();
     try {
-      const st = db.prepare(\"SELECT city_name, status FROM nadlan_address_backfill_status\").all();
-      done = new Set(st.filter(r => r.status === \"ok\").map(r => r.city_name));
+      const st = db.prepare(\"SELECT city_name, status, method_version FROM nadlan_address_backfill_status\").all();
+      // ok at an OLDER method version (v1 when insert mode wants v2) is not done
+      done = new Set(st.filter(r => r.status === \"ok\" && (r.method_version === process.argv[1] || (process.argv[1] === \"nadlan-addr-v1\" && r.method_version === \"nadlan-addr-v2\"))).map(r => r.city_name));
       empty = new Set(st.filter(r => r.status === \"empty\").map(r => r.city_name));
     } catch {}
     const rows = db.prepare(\`SELECT city_name, COUNT(*) m FROM nadlan_transactions
@@ -70,7 +80,7 @@ else
     // marks a city empty, not ok — so they come back here on purpose)
     console.log(\"retry:\" + todo.filter(r => empty.has(r.city_name)).length);
     for (const r of todo) console.log(r.city_name);
-  ' </dev/null") || die "לא הצלחתי לשלוף את רשימת הערים מהשרת"
+  ' $WANT_METHOD </dev/null") || die "לא הצלחתי לשלוף את רשימת הערים מהשרת"
   CITIES=()
   RETRY_N=0
   while IFS= read -r c; do
@@ -84,6 +94,7 @@ else
 fi
 [ "${#CITIES[@]}" -gt 0 ] || { ok "אין ערים עם כתובות חסרות — הקמפיין הושלם"; exit 0; }
 say "${#CITIES[@]} ערים בתור (הפערים הגדולים קודם)"
+[ "$INSERT" = "1" ] && warn "מצב הכנסה: כל עיר שעוד לא עברה הכנסה (nadlan-addr-v1) חוזרת; העסקאות שבאתר ואינן במאגר יוכנסו"
 
 ssh "$SERVER" "mkdir -p $REMOTE_DATA/nadlan_addr"
 
@@ -107,7 +118,7 @@ for city in "${CITIES[@]}"; do
 
   # 2. upload + 3. apply on the server + 4. clean up
   if scp -q "$OUT_DIR/$fname" "$SERVER:$REMOTE_DATA/nadlan_addr/$fname" \
-     && ssh "$SERVER" "cd $REMOTE_APP && docker compose exec -T app npx tsx scripts/backfill-nadlan-addresses.ts $(printf '%q' "$city") --from-file=/app/data/nadlan_addr/$(printf '%q' "$fname") </dev/null && rm -f $REMOTE_DATA/nadlan_addr/$(printf '%q' "$fname")"; then
+     && ssh "$SERVER" "cd $REMOTE_APP && docker compose exec -T app npx tsx scripts/backfill-nadlan-addresses.ts $(printf '%q' "$city") --from-file=/app/data/nadlan_addr/$(printf '%q' "$fname") $([ "$INSERT" = "1" ] && echo --insert-new) </dev/null && rm -f $REMOTE_DATA/nadlan_addr/$(printf '%q' "$fname")"; then
     rm -f "$OUT_DIR/$fname"
     done_n=$((done_n + 1))
     ok "$city הושלמה ($done_n עד כה)"
