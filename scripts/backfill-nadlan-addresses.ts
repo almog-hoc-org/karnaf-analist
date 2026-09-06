@@ -42,7 +42,7 @@
 import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
-import { strictKey, looseKey, chooseDonation, SOFT_AREA_TOLERANCE_SQM, type AddressDonor } from "../lib/addressBackfill";
+import { strictKey, looseKey, chooseDonation, shiftDate, SOFT_AREA_TOLERANCE_SQM, NADLAN_DATE_SHIFT_DAYS, type AddressDonor } from "../lib/addressBackfill";
 import { ensureNadlanAddressColumnsSync } from "../lib/addressBackfillDb";
 import { donorFromItem, type CaptureFile, type RawItem, type NadlanDonor } from "../lib/nadlanCapture";
 import { buildNadlanRow, NADLAN_ROW_COLS } from "../lib/nadlanRow";
@@ -157,19 +157,24 @@ function main(): number {
   const ownKeys = new Set(ownRows.map((r) => strictKey(r)));
   const ownLoose = new Map<string, number[]>();
   for (const r of ownRows) (ownLoose.get(looseKey(r)) ?? ownLoose.set(looseKey(r), []).get(looseKey(r))!).push(r.area);
-  /** Does ANY row of the city (any source) already hold this deal — strictly, or softly within the area tolerance? */
-  const alreadyHave = (rec: { deal_date: string; price: number; area: number; rooms: number | null }): boolean =>
+  /** Does ANY row of the city (any source) already hold this deal — strictly, softly within the area tolerance, or dated one day later (lib/addressBackfill NADLAN_DATE_SHIFT_DAYS)? */
+  const haveAt = (rec: { deal_date: string; price: number; area: number; rooms: number | null }): boolean =>
     ownKeys.has(strictKey(rec)) || (ownLoose.get(looseKey(rec)) ?? []).some((a) => Math.abs(a - rec.area) <= SOFT_AREA_TOLERANCE_SQM);
+  const alreadyHave = (rec: { deal_date: string; price: number; area: number; rooms: number | null }): boolean =>
+    haveAt(rec) || haveAt({ ...rec, deal_date: shiftDate(rec.deal_date, NADLAN_DATE_SHIFT_DAYS) });
   let notInDb = 0;
   for (const k of byStrict.keys()) if (!ownKeys.has(k)) notInDb++;
 
   let filledStreet = 0, filledHood = 0, filledParcel = 0, ambiguous = 0, unmatched = 0, matched = 0;
-  const donorsOf = (t: TargetRow): NadlanDonor[] | null => {
+  const donorsAt = (t: TargetRow): NadlanDonor[] | null => {
     const strict = byStrict.get(strictKey(t));
     if (strict?.length) return strict;
     const loose = (byLoose.get(looseKey(t)) ?? []).filter((d) => Math.abs(d.area - t.area) <= SOFT_AREA_TOLERANCE_SQM).map((d) => d.donor);
     return loose.length ? loose : null;
   };
+  // the row's own date first; then the site's date one day earlier (the measured shift)
+  const donorsOf = (t: TargetRow): NadlanDonor[] | null =>
+    donorsAt(t) ?? donorsAt({ ...t, deal_date: shiftDate(t.deal_date, -NADLAN_DATE_SHIFT_DAYS) });
   db.transaction(() => {
     for (const t of targets) {
       const cands = donorsOf(t);

@@ -21,7 +21,7 @@ import { buildNadlanRow, NADLAN_ROW_COLS, roomBucket, SECONDHAND_MIN_AGE } from 
 import { gzipSync } from "zlib";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
 import { compMatchNote, compWhere, compHow, type StreetComp } from "@/lib/compTypes";
-import { strictKey, looseKey, chooseDonation, orderCitiesByGap, floorText, SOFT_AREA_TOLERANCE_SQM } from "@/lib/addressBackfill";
+import { strictKey, looseKey, chooseDonation, orderCitiesByGap, floorText, shiftDate, SOFT_AREA_TOLERANCE_SQM, NADLAN_DATE_SHIFT_DAYS } from "@/lib/addressBackfill";
 import { govmapWindows } from "@/lib/govmapDeals";
 import { SOURCES, probeKeyFor } from "@/lib/collectors";
 import { insertIfAbsentSql } from "@/lib/dealKey";
@@ -1823,5 +1823,20 @@ describe("nadlan row builder — one tuple for the collector and the insert step
     expect(roomBucket(2.5)).toBe("3"); expect(roomBucket(3.4)).toBe("3");
     expect(roomBucket(3.5)).toBe("4"); expect(roomBucket(4.5)).toBe("5"); expect(roomBucket(6)).toBe("5");
     expect(roomBucket(2)).toBe("other"); expect(roomBucket(null)).toBe("other"); expect(roomBucket(NaN)).toBe("other");
+  });
+});
+
+describe("nadlan date shift — the measured one-day twin", () => {
+  it("is one day, the direction the measurement found", () => {
+    expect(NADLAN_DATE_SHIFT_DAYS).toBe(1);
+  });
+  it("shifts across month, year and leap-day boundaries without timezone drift", () => {
+    expect(shiftDate("2025-11-10", 1)).toBe("2025-11-11");
+    expect(shiftDate("2025-01-31", 1)).toBe("2025-02-01");
+    expect(shiftDate("2025-12-31", 1)).toBe("2026-01-01");
+    expect(shiftDate("2024-02-28", 1)).toBe("2024-02-29");
+    expect(shiftDate("2026-01-01", -1)).toBe("2025-12-31");
+    expect(shiftDate("2025-11-10T00:00:00", 1)).toBe("2025-11-11");
+    expect(shiftDate(shiftDate("2025-03-01", 1), -1)).toBe("2025-03-01");
   });
 });

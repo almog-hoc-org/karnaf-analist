@@ -54,6 +54,25 @@ export function looseKey(r: { deal_date: string; price: number }): string {
 export const SOFT_AREA_TOLERANCE_SQM = 2;
 
 /**
+ * MEASURED 6.9.2026, after the insert step: of 101,030 deals inserted because
+ * no row held them, 11,945 had an older nadlan row for the same city, price,
+ * area and rooms dated exactly ONE DAY LATER — against 519 dated one day
+ * earlier. The symmetric ~500 is the background of identical units sold on
+ * consecutive days (developer projects); the one-sided surplus is a systematic
+ * shift between the date the collector stored years ago and the date the
+ * site returns today. So an existing row dated site-date + 1 day is the same
+ * deal: it receives the donation, and it blocks the insert.
+ */
+export const NADLAN_DATE_SHIFT_DAYS = 1;
+
+/** YYYY-MM-DD plus N days, in UTC arithmetic (no timezone drift on the way). */
+export function shiftDate(dateStr: string, days: number): string {
+  const [y, m, d] = dateStr.slice(0, 10).split("-").map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d + days));
+  return t.toISOString().slice(0, 10);
+}
+
+/**
  * Decide what a group of candidate donors gives — or null when they conflict
  * on the street (the ambiguous case: donate nothing, count it, move on).
  */
