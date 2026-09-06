@@ -38,7 +38,7 @@ import path from "path";
 import puppeteerCore from "puppeteer-core";
 import type { Browser, Page } from "puppeteer-core";
 import { buildFetchBody, buildQueryPayload, DEAL_DATA_HEADERS, decodeDealData, parseHarvestedPost, responseError, responseItems, responseMeta, signBody, type NadlanToken } from "../lib/nadlanSession";
-import { expansionSlices, HORIZON_CANDIDATES, mergeItems, orderHorizons, primarySlice, saturated, WINDOW_PAGE, yearSpan, type CaptureFile, type RawItem, type SliceQuery } from "../lib/nadlanCapture";
+import { deepSlices, expansionSlices, HORIZON_CANDIDATES, mergeItems, orderHorizons, primarySlice, saturated, WINDOW_PAGE, yearSpan, type CaptureFile, type RawItem, type SliceQuery } from "../lib/nadlanCapture";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const rnd = (a: number, b: number) => Math.floor(a + Math.random() * (b - a));
@@ -273,6 +273,8 @@ async function main(): Promise<number> {
         seen.push(...r.items);
         done.add(key(s));
         if (!expanded && s.label === primary.label && saturated(r.pages)) { expanded = true; queue = expansionSlices(h); }
+        // an expansion window that filled up too: split it by deal type
+        else if (expanded && saturated(r.pages)) queue.push(...deepSlices(s));
       }
       if (stopped) break;
       done.add(doneKey);

@@ -109,6 +109,22 @@ export function expansionSlices(horizon: number, rooms: string[] = ["3", "4", "5
   return out;
 }
 
+/**
+ * The second tier, for an expansion window that ITSELF filled both fetches
+ * (a neighbourhood with more than ~2,000 four-room deals in five years):
+ * the same window split by deal type — `hok_hamecher` 0/1, the filter
+ * fill-city-years already used. Two windows for one, each seeing its own
+ * oldest or newest 1,000. MEASURED 6.9.2026: ~15% of 2024–2025 rows in the
+ * biggest cities still had no street after the campaign — the middle of a
+ * saturated 60-month window that neither direction reaches. A slice that
+ * is already split, or the primary, gets nothing more.
+ */
+export function deepSlices(s: SliceQuery): SliceQuery[] {
+  if (s.extra.hok_hamecher != null) return [];
+  if (s.label.endsWith(":up:all")) return [];
+  return ["0", "1"].map((hok) => ({ label: `${s.label}:hok${hok}`, horizon: s.horizon, extra: { ...s.extra, hok_hamecher: hok } }));
+}
+
 /** Did a window fill both fetches? Then the horizon needs the expansion slices. */
 export function saturated(pageCounts: number[]): boolean {
   return pageCounts.length >= 2 && pageCounts.every((n) => n >= WINDOW_PAGE);
