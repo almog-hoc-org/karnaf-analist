@@ -101,7 +101,7 @@ async function main(): Promise<number> {
   // and the same normalisation the pin layer uses, so this number IS the
   // number the caption under the map will show.
   console.log(`\n── גיאוקוד: כמה מהעסקאות ניתנות למיקום על המפה ──`);
-  const geoSummary: Array<{ city: string; deals: number; withStreet: number; addresses: number; houseLevel: number; streetLevel: number; placeable: number }> = [];
+  const geoSummary: Array<{ city: string; deals: number; withStreet: number; addresses: number; houseLevel: number; streetLevel: number; placeable: number; recentDeals: number; recentPlaceable: number; hasMap: boolean }> = [];
   try {
     const mapi = await prisma.$queryRawUnsafe<Array<{ imported_at: string | null; rows_kept: number | null; package_title: string | null }>>(
       `SELECT imported_at, rows_kept, package_title FROM mapi_import_status WHERE id = 1`).catch(() => []);
@@ -115,26 +115,59 @@ async function main(): Promise<number> {
     const geos = await prisma.$queryRawUnsafe<Array<{ city_name: string; street_norm: string; house_norm: string; level: string }>>(
       `SELECT city_name, street_norm, house_norm, level FROM address_geocodes WHERE level IN ('house','street') ${onlyCity ? "AND city_name = ?" : ""}`, ...args);
     const have = new Set(geos.map((g) => `${g.city_name}|${g.street_norm}|${g.house_norm}`));
-    const perCity = new Map<string, { deals: number; withStreet: number; addresses: Set<string>; houseLevel: number; streetLevel: number }>();
-    for (const [city, c] of byCity) perCity.set(city, { deals: c.n, withStreet: c.with_street, addresses: new Set(), houseLevel: 0, streetLevel: 0 });
+    // Does the city have a drawn map at all? Without city_map_meta there is
+    // nothing to put a pin on, however well its addresses are geocoded.
+    const mapped = new Set((await prisma.$queryRawUnsafe<Array<{ city_name: string }>>(
+      `SELECT city_name FROM city_map_meta`).catch(() => [])).map((r) => r.city_name));
+    // The pins default to the last few years, and that is where the address
+    // campaign reached — so the recent share is the one the caption under
+    // the map will actually show. RECENT_FROM is the first year the nadlan
+    // campaign's 60-month window covers in full.
+    const RECENT_FROM = 2022;
+    const recentDeals = new Map((await prisma.$queryRawUnsafe<Array<{ city_name: string; n: number }>>(
+      `SELECT city_name, COUNT(*) n FROM nadlan_transactions WHERE deal_year >= ? AND COALESCE(excluded,0) = 0 ${onlyCity ? "AND city_name = ?" : ""} GROUP BY city_name`,
+      RECENT_FROM, ...args)).map((r) => [r.city_name, Number(r.n)]));
+    const recentPairs = await prisma.$queryRawUnsafe<Array<{ city_name: string; street: string; house_num: string | null; n: number }>>(
+      `SELECT city_name, street, house_num, COUNT(*) n FROM nadlan_transactions
+        WHERE deal_year >= ? AND street IS NOT NULL AND street != '' AND COALESCE(excluded,0) = 0 ${onlyCity ? "AND city_name = ?" : ""}
+        GROUP BY city_name, street, house_num`, RECENT_FROM, ...args);
+    const placeableOf = (p: { city_name: string; street: string; house_num: string | null; n: number }): "house" | "street" | null => {
+      const k = addressKey(p.city_name, p.street, p.house_num);
+      if (!k) return null;
+      if (k.houseNorm && have.has(`${p.city_name}|${k.streetNorm}|${k.houseNorm}`)) return "house";
+      if (have.has(`${p.city_name}|${k.streetNorm}|`)) return "street";
+      return null;
+    };
+    const perCity = new Map<string, { deals: number; withStreet: number; addresses: Set<string>; houseLevel: number; streetLevel: number; recentPlaceable: number }>();
+    for (const [city, c] of byCity) perCity.set(city, { deals: c.n, withStreet: c.with_street, addresses: new Set(), houseLevel: 0, streetLevel: 0, recentPlaceable: 0 });
     for (const p of pairs) {
       const k = addressKey(p.city_name, p.street, p.house_num);
       const c = perCity.get(p.city_name);
       if (!k || !c) continue;
       c.addresses.add(addressKeyString(k));
-      if (k.houseNorm && have.has(`${p.city_name}|${k.streetNorm}|${k.houseNorm}`)) c.houseLevel += Number(p.n);
-      else if (have.has(`${p.city_name}|${k.streetNorm}|`)) c.streetLevel += Number(p.n);
+      const lvl = placeableOf(p);
+      if (lvl === "house") c.houseLevel += Number(p.n);
+      else if (lvl === "street") c.streetLevel += Number(p.n);
+    }
+    for (const p of recentPairs) {
+      const c = perCity.get(p.city_name);
+      if (c && placeableOf(p)) c.recentPlaceable += Number(p.n);
     }
     for (const [city, c] of perCity) {
-      geoSummary.push({ city, deals: c.deals, withStreet: c.withStreet, addresses: c.addresses.size, houseLevel: c.houseLevel, streetLevel: c.streetLevel, placeable: c.houseLevel + c.streetLevel });
+      geoSummary.push({ city, deals: c.deals, withStreet: c.withStreet, addresses: c.addresses.size, houseLevel: c.houseLevel, streetLevel: c.streetLevel, placeable: c.houseLevel + c.streetLevel, recentDeals: recentDeals.get(city) ?? 0, recentPlaceable: c.recentPlaceable, hasMap: mapped.has(city) });
     }
     geoSummary.sort((a, b) => b.deals - a.deals);
     for (const g of geoSummary.slice(0, 30)) {
-      console.log(`  ${g.city.padEnd(18)} עסקאות ${String(g.deals).padStart(7)} · כתובות ייחודיות ${String(g.addresses).padStart(6)} · ברמת בית ${pct(g.houseLevel, g.deals).padStart(4)} · ברמת רחוב ${pct(g.streetLevel, g.deals).padStart(4)} · ניתנות למיקום ${pct(g.placeable, g.deals).padStart(4)}`);
+      console.log(`  ${g.city.padEnd(18)} מפה ${g.hasMap ? "✓" : "—"} · עסקאות ${String(g.deals).padStart(7)} · ברמת בית ${pct(g.houseLevel, g.deals).padStart(4)} · ברמת רחוב ${pct(g.streetLevel, g.deals).padStart(4)} · ניתנות למיקום ${pct(g.placeable, g.deals).padStart(4)} · מ-${RECENT_FROM}: ${pct(g.recentPlaceable, g.recentDeals).padStart(4)} מתוך ${String(g.recentDeals).padStart(6)}`);
     }
     if (geoSummary.length > 30) console.log(`  … ועוד ${geoSummary.length - 30} ערים`);
-    const gs = geoSummary.reduce((s, g) => ({ deals: s.deals + g.deals, placeable: s.placeable + g.placeable, house: s.house + g.houseLevel }), { deals: 0, placeable: 0, house: 0 });
-    console.log(`  סה״כ: ברמת בית ${pct(gs.house, gs.deals)} · ניתנות למיקום ${pct(gs.placeable, gs.deals)} מכלל העסקאות`);
+    const gs = geoSummary.reduce((s, g) => ({ deals: s.deals + g.deals, placeable: s.placeable + g.placeable, house: s.house + g.houseLevel, recent: s.recent + g.recentDeals, recentPlaceable: s.recentPlaceable + g.recentPlaceable }), { deals: 0, placeable: 0, house: 0, recent: 0, recentPlaceable: 0 });
+    console.log(`  סה״כ: ברמת בית ${pct(gs.house, gs.deals)} · ניתנות למיקום ${pct(gs.placeable, gs.deals)} מכלל העסקאות · ${pct(gs.recentPlaceable, gs.recent)} מהעסקאות מ-${RECENT_FROM}`);
+    const withMap = geoSummary.filter((g) => g.hasMap);
+    const noMap = geoSummary.filter((g) => !g.hasMap);
+    console.log(`  ערים עם מפה: ${withMap.length} מתוך ${geoSummary.length}${noMap.length ? ` · הגדולות בלי מפה: ${noMap.slice(0, 8).map((g) => g.city).join(", ")}` : ""}`);
+    const noPins = withMap.filter((g) => g.recentDeals >= 200 && g.recentPlaceable / Math.max(1, g.recentDeals) < 0.3);
+    if (noPins.length) console.log(`  מפה בלי מספיק נעצים (פחות מ-30% מהעסקאות מ-${RECENT_FROM} ניתנות למיקום): ${noPins.slice(0, 12).map((g) => `${g.city} ${pct(g.recentPlaceable, g.recentDeals)}`).join(" · ")}${noPins.length > 12 ? ` … ועוד ${noPins.length - 12}` : ""}`);
     const bySource = await prisma.$queryRawUnsafe<Array<{ source: string; level: string; c: number }>>(
       `SELECT source, level, COUNT(*) c FROM address_geocodes GROUP BY source, level ORDER BY source, level`).catch(() => []);
     if (bySource.length) console.log(`  שורות לפי מקור: ${bySource.map((r) => `${r.source}/${r.level} ${Number(r.c).toLocaleString("he-IL")}`).join(" · ")}`);
