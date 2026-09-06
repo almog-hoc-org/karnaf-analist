@@ -88,10 +88,12 @@ function main(): number {
   if (argv.includes("--status")) {
     const rows = db.prepare(`SELECT city_name, method_version, status, captured, filled_street, filled_parcel, unmatched, not_in_db, inserted, years, last_run
                                FROM nadlan_address_backfill_status ORDER BY filled_street DESC`).all() as Array<Record<string, unknown>>;
-    if (!rows.length) console.log("הקמפיין טרם רץ.");
-    for (const r of rows) console.log(`${String(r.city_name).padEnd(18)} ${r.status} · נלכדו ${Number(r.captured).toLocaleString("en")} · +${Number(r.filled_street).toLocaleString("en")} רחוב · +${Number(r.filled_parcel).toLocaleString("en")} גוש-חלקה · ${Number(r.unmatched).toLocaleString("en")} ללא התאמה · ${Number(r.not_in_db).toLocaleString("en")} לא במאגר · ${r.method_version === METHOD_INSERT ? `+${Number(r.inserted).toLocaleString("en")} הוכנסו` : "טרם הוכנסו"} · ${r.years ?? "—"} · ${r.last_run}`);
+    // totals FIRST — the push script shows the first 20 lines of this, and the one line that matters must be among them
     const tot = db.prepare(`SELECT SUM(filled_street) s, SUM(filled_parcel) p, SUM(not_in_db) n, SUM(inserted) i, SUM(method_version = ?) v2, COUNT(*) c FROM nadlan_address_backfill_status`).get(METHOD_INSERT) as Record<string, number>;
     console.log(`סה"כ ${tot.c} ערים · +${Number(tot.s).toLocaleString("en")} רחוב · +${Number(tot.p).toLocaleString("en")} גוש-חלקה · ${Number(tot.n).toLocaleString("en")} לא במאגר · +${Number(tot.i).toLocaleString("en")} הוכנסו (${tot.v2} ערים עברו הכנסה)`);
+    if (!rows.length) console.log("הקמפיין טרם רץ.");
+    for (const r of rows) console.log(`${String(r.city_name).padEnd(18)} ${r.status} · נלכדו ${Number(r.captured).toLocaleString("en")} · +${Number(r.filled_street).toLocaleString("en")} רחוב · +${Number(r.filled_parcel).toLocaleString("en")} גוש-חלקה · ${Number(r.unmatched).toLocaleString("en")} ללא התאמה · ${Number(r.not_in_db).toLocaleString("en")} לא במאגר · ${r.method_version === METHOD_INSERT ? `+${Number(r.inserted).toLocaleString("en")} הוכנסו` : "טרם הוכנסו"} · ${r.years ?? "—"} · ${r.last_run}`);
+
     db.close();
     return 0;
   }
