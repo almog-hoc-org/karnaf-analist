@@ -38,7 +38,7 @@ import path from "path";
 import puppeteerCore from "puppeteer-core";
 import type { Browser, Page } from "puppeteer-core";
 import { buildFetchBody, buildQueryPayload, DEAL_DATA_HEADERS, decodeDealData, parseHarvestedPost, responseError, responseItems, responseMeta, signBody, type NadlanToken } from "../lib/nadlanSession";
-import { expansionSlices, HORIZON_CANDIDATES, mergeItems, orderHorizons, primarySlice, saturated, yearSpan, type CaptureFile, type RawItem, type SliceQuery } from "../lib/nadlanCapture";
+import { expansionSlices, HORIZON_CANDIDATES, mergeItems, orderHorizons, primarySlice, saturated, WINDOW_PAGE, yearSpan, type CaptureFile, type RawItem, type SliceQuery } from "../lib/nadlanCapture";
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const rnd = (a: number, b: number) => Math.floor(a + Math.random() * (b - a));
@@ -318,8 +318,14 @@ async function main(): Promise<number> {
     await walkBase("city", horizons, () => harvest(settlementUrl));
     save();
 
-    // 2. neighbourhoods, if their pages carry a token of their own (measured once, recorded)
-    if (!stopped && !noHoods) {
+    // 2. neighbourhoods, if their pages carry a token of their own (measured once, recorded).
+    // MEASURED 5.9.2026 (טייבה: 143 deals, 25 neighbourhood pages, +0 each): a city
+    // whose 60-month window did not fill both fetches already gave every deal it
+    // has — its neighbourhoods can add nothing, and each of their page loads is
+    // what wears the reCAPTCHA session out. So the walk runs only past saturation.
+    const cityHoldsAll = cap.items.length < 2 * WINDOW_PAGE;
+    if (cityHoldsAll && !noHoods) console.log(`   העיר לא רוויה (${cap.items.length.toLocaleString("en")} < ${2 * WINDOW_PAGE}) — כל העסקאות כבר בחלון העירוני, מדלג על השכונות`);
+    if (!stopped && !noHoods && !cityHoldsAll) {
       const hoodIds = new Map<string, string>();
       for (const it of cap.items) {
         const id = it.neighborhoodId != null ? String(it.neighborhoodId) : "";
