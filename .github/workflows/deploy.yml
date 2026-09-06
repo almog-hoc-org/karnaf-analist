@@ -256,7 +256,7 @@ jobs:
           # lifetime, not one per deploy — which is both what OpenStreetMap's
           # usage policy expects and what makes it safe to leave here.
           echo "── מפת שכונות: איסוף לעיר הפיילוט ──"
-          docker compose exec -T app npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו" --force </dev/null || true
+          docker compose exec -T app npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו" </dev/null || true
 
           # And the number that decides whether the map is honest: how many of
           # the city's priced neighbourhoods actually got a shape. A collector

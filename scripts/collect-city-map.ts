@@ -300,12 +300,16 @@ function lineOf(el: OsmElement): LonLat[] | null {
   return el.geometry.map((p) => [p.lon, p.lat] as LonLat);
 }
 
+/** Seconds between cities in --all: one free Overpass, many cities. */
+const PAUSE_BETWEEN_CITIES_MS = 8_000;
+
 async function main(): Promise<number> {
   const city = arg("city");
+  const all = process.argv.includes("--all");
   const dry = process.argv.includes("--dry-run");
   const force = process.argv.includes("--force");
-  if (!city) {
-    console.error('חסר --city. דוגמה: npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו"');
+  if (!city && !all) {
+    console.error('חסר --city. דוגמה: npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו"  (או --all לכל הערים עם נתוני שכונות)');
     return 1;
   }
 
@@ -313,6 +317,37 @@ async function main(): Promise<number> {
   db.pragma("busy_timeout = 30000");
   ensureTables(db);
 
+  if (!all) return collectCity(db, city!, { dry, force });
+
+  // EVERY CITY THAT HAS SOMETHING TO DRAW. The deploy collected the pilot
+  // city only; a city page without shapes shows no map, whatever its deals
+  // and geocodes say (measured 6.9.2026: one mapped city out of 165). The
+  // list is derived — cities with priced neighbourhoods, biggest first —
+  // and a city that already has a map is skipped unless --force, so a
+  // stopped run resumes where it left off and a rerun costs Overpass nothing.
+  const cities = (db.prepare(
+    `SELECT s.city_name, COUNT(*) c FROM neighborhood_year_stats s GROUP BY s.city_name ORDER BY c DESC`
+  ).all() as Array<{ city_name: string; c: number }>).map((r) => r.city_name);
+  const mapped = new Set((db.prepare("SELECT city_name FROM city_map_meta").all() as Array<{ city_name: string }>).map((r) => r.city_name));
+  const todo = force ? cities : cities.filter((c) => !mapped.has(c));
+  console.log(`── מפות לכל הערים: ${todo.length} לאיסוף (${mapped.size} כבר ממופות, ${cities.length} עם נתוני שכונות) ──`);
+  let okN = 0, failN = 0;
+  const failed: string[] = [];
+  for (let i = 0; i < todo.length; i++) {
+    const c = todo[i];
+    console.log(`\n[${i + 1}/${todo.length}] ${c}`);
+    let code = 1;
+    try { code = await collectCity(db, c, { dry, force }); }
+    catch (e) { console.error(`✗ ${c}: ${e instanceof Error ? e.message : String(e)}`); }
+    if (code === 0) okN++; else { failN++; failed.push(c); }
+    if (i < todo.length - 1) await sleep(PAUSE_BETWEEN_CITIES_MS);
+  }
+  console.log(`\n── סיכום: ${okN} ערים נשמרו · ${failN} נכשלו${failed.length ? ` (${failed.slice(0, 20).join(" · ")}${failed.length > 20 ? " …" : ""})` : ""} ──`);
+  console.log("   עיר שנכשלה: בדרך כלל אין ל-OSM שכונות מתויגות בשמות שלנו, או שה-Overpass היה עמוס — ריצה חוזרת מנסה רק את מה שחסר.");
+  return failN && !okN ? 1 : 0;
+}
+
+async function collectCity(db: Database.Database, city: string, { dry, force }: { dry: boolean; force: boolean }): Promise<number> {
   if (!force && !dry) {
     const existing = db.prepare("SELECT COUNT(*) c FROM neighborhood_shapes WHERE city_name=?").get(city) as { c: number };
     if (existing.c > 0) {
