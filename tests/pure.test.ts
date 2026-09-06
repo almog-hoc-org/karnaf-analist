@@ -1739,6 +1739,16 @@ describe("OpenStreetMap addresses and municipal files", () => {
     expect(SOURCE_RANK.osm).toBeGreaterThan(SOURCE_RANK.fixture);
     expect(SOURCES.find((s) => s.id === "osm-addresses")?.probe?.expectJson).toBe(true);
   });
+
+  it("collects every city's map nightly, before the addresses that use its frame, under a budget", () => {
+    const ids = SOURCES.map((s) => s.id);
+    expect(ids.indexOf("city-maps")).toBeGreaterThanOrEqual(0);
+    expect(ids.indexOf("city-maps")).toBeLessThan(ids.indexOf("osm-addresses"));
+    const maps = SOURCES.find((s) => s.id === "city-maps")!;
+    expect(maps.args).toContain("--all");
+    expect(maps.args).toContain("--budget-min");
+    expect(maps.probe?.expectJson).toBe(true);
+  });
 });
 
 describe("nadlan address campaign — slicing, identity, donation", () => {

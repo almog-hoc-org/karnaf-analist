@@ -174,6 +174,20 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 40 * MINUTE,
   },
   {
+    id: "city-maps",
+    cmd: "npx",
+    args: ["tsx", "scripts/collect-city-map.ts", "--all", "--budget-min", "45"],
+    label: "מפות שכונות מ-OpenStreetMap → כל עיר עם נתוני שכונות",
+    why: "The deploy collected the pilot city only, so 164 cities had deals, geocodes and no map to put them on (measured 6.9.2026). --all walks the cities with priced neighbourhoods, biggest first, and skips every city that already has shapes — so the first nights do the work and afterwards it is one cheap query, not one per night. It runs BEFORE osm-addresses, which uses the map's frame when there is one.",
+    host: "https://overpass-api.de",
+    probe: {
+      url: "https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3Bnode(1)%3Bout%3B",
+      method: "GET",
+      expectJson: true,
+    },
+    timeoutMs: 50 * MINUTE,
+  },
+  {
     id: "osm-addresses",
     cmd: "npx",
     args: ["tsx", "scripts/import-osm-addresses.ts", "--budget-min", "45"],

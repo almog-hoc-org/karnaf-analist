@@ -251,12 +251,21 @@ jobs:
           echo "── שינוי 3 שנים: מה העמוד באמת מציג ──"
           docker compose exec -T app npx tsx scripts/probe-cities-table.ts </dev/null || true
 
-          # The neighbourhood map's geometry. The collector SKIPS a city that
-          # already has shapes, so this is one Overpass query in the pilot city's
-          # lifetime, not one per deploy — which is both what OpenStreetMap's
-          # usage policy expects and what makes it safe to leave here.
-          echo "── מפת שכונות: איסוף לעיר הפיילוט ──"
-          docker compose exec -T app npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו" </dev/null || true
+          # The neighbourhood maps' geometry, for EVERY city with priced
+          # neighbourhoods. The collector skips a city that already has shapes,
+          # so after the first full pass this is one cheap query per deploy, not
+          # a re-fetch — which is what OpenStreetMap's usage policy expects. It
+          # takes hours the first time, so it runs detached (nohup) and this
+          # step returns at once; the log is on the VPS. A pass already running
+          # is left alone. The nightly fan-out (lib/collectors.ts city-maps)
+          # finishes whatever a pass left behind.
+          echo "── מפות שכונות: איסוף לכל הערים, ברקע ──"
+          if pgrep -f "collect-city-map.ts --all" >/dev/null; then
+            echo "   כבר רץ — לא מתחיל שוב (יומן: /var/lib/karnaf/data/city-maps.log)"
+          else
+            nohup docker compose exec -T app npx tsx scripts/collect-city-map.ts --all </dev/null > /var/lib/karnaf/data/city-maps.log 2>&1 &
+            echo "   הופעל (יומן: /var/lib/karnaf/data/city-maps.log)"
+          fi
 
           # And the number that decides whether the map is honest: how many of
           # the city's priced neighbourhoods actually got a shape. A collector

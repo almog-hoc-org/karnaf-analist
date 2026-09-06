@@ -302,12 +302,17 @@ function lineOf(el: OsmElement): LonLat[] | null {
 
 /** Seconds between cities in --all: one free Overpass, many cities. */
 const PAUSE_BETWEEN_CITIES_MS = 8_000;
+const MINUTE = 60_000;
 
 async function main(): Promise<number> {
   const city = arg("city");
   const all = process.argv.includes("--all");
   const dry = process.argv.includes("--dry-run");
   const force = process.argv.includes("--force");
+  // --all only: stop starting new cities after this many minutes (the nightly
+  // fan-out's share); the cities left over are picked up the next night.
+  const budgetMin = Number(arg("budget-min") ?? 0);
+  const deadline = budgetMin > 0 ? Date.now() + budgetMin * MINUTE : Infinity;
   if (!city && !all) {
     console.error('חסר --city. דוגמה: npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו"  (או --all לכל הערים עם נתוני שכונות)');
     return 1;
@@ -335,6 +340,7 @@ async function main(): Promise<number> {
   const failed: string[] = [];
   for (let i = 0; i < todo.length; i++) {
     const c = todo[i];
+    if (Date.now() > deadline) { console.log(`\n⏸  תקציב הזמן (${budgetMin} דק׳) נגמר — ${todo.length - i} ערים יאספו בריצה הבאה`); break; }
     console.log(`\n[${i + 1}/${todo.length}] ${c}`);
     let code = 1;
     try { code = await collectCity(db, c, { dry, force }); }
