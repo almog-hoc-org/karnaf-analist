@@ -38,7 +38,7 @@ export const metadata = {
 
 interface Props {
   searchParams?: {
-    city?: string; street?: string; neighborhood?: string;
+    city?: string; street?: string; house?: string; neighborhood?: string;
     rooms?: string; size?: string; price?: string;
   };
 }
@@ -55,6 +55,7 @@ export default async function CheckPage({ searchParams }: Props) {
 
   const city = (searchParams?.city ?? "").trim();
   const street = (searchParams?.street ?? "").trim();
+  const house = (searchParams?.house ?? "").trim();
   const neighborhood = (searchParams?.neighborhood ?? "").trim();
   const rooms = num(searchParams?.rooms);
   const size = num(searchParams?.size);
@@ -64,7 +65,7 @@ export default async function CheckPage({ searchParams }: Props) {
   // different answer, and conflating them would tell someone their price is
   // unverifiable when in fact we never had their town.
   const knownCity = city ? cities.includes(city) : false;
-  const comp = knownCity ? await computeStreetComp(city, street || null, neighborhood || null, rooms, size) : null;
+  const comp = knownCity ? await computeStreetComp(city, street || null, neighborhood || null, rooms, size, house || null) : null;
 
   const askSqm = price && size ? price / size : null;
   const deltaPct = comp?.medianSqm && askSqm ? (askSqm / comp.medianSqm - 1) * 100 : null;
@@ -87,7 +88,7 @@ export default async function CheckPage({ searchParams }: Props) {
   const nis = (v: number | null) => (v == null ? "—" : `₪${Math.round(v).toLocaleString("he-IL")}`);
   const viewer = getCurrentUser();
   const selfPath = `/check?${new URLSearchParams(
-    Object.entries({ city, street, neighborhood, rooms: rooms ?? "", size: size ?? "", price: price ?? "" })
+    Object.entries({ city, street, house, neighborhood, rooms: rooms ?? "", size: size ?? "", price: price ?? "" })
       .filter(([, v]) => v !== "" && v != null)
       .map(([k, v]) => [k, String(v)])
   ).toString()}`;
@@ -104,7 +105,7 @@ export default async function CheckPage({ searchParams }: Props) {
 
       <CheckForm
         cities={cities}
-        initial={{ city, street, neighborhood, rooms: searchParams?.rooms ?? "", size: searchParams?.size ?? "", price: searchParams?.price ?? "" }}
+        initial={{ city, street, house, neighborhood, rooms: searchParams?.rooms ?? "", size: searchParams?.size ?? "", price: searchParams?.price ?? "" }}
       />
 
       {city && !knownCity && (
@@ -118,7 +119,7 @@ export default async function CheckPage({ searchParams }: Props) {
           <div className="glass-card p-5 sm:p-6">
             <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
               <h2 className="text-xl font-extrabold text-slate-900">
-                {street ? `${street}, ${city}` : city}
+                {street ? `${[street, house].filter(Boolean).join(" ")}, ${city}` : city}
               </h2>
               <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-2xs font-bold text-slate-500">
                 {compMatchNote(comp)} · {comp.n.toLocaleString("he-IL")} עסקאות · {comp.years} שנים
@@ -206,6 +207,16 @@ export default async function CheckPage({ searchParams }: Props) {
                   >
                     <Icon name="chat" size="1em" /> שיתוף בוואטסאפ
                   </TrackableOutboundLink>
+                  {comp.matchedAddress && (
+                    /* The building the circle is drawn around — its own
+                       page: every flat that sold there, and the map. */
+                    <Link
+                      href={`/city/${encodeURIComponent(city)}/address/${encodeURIComponent(comp.matchedAddress)}`}
+                      className="text-sm font-bold text-indigo-700 hover:underline"
+                    >
+                      הבניין {comp.matchedAddress} →
+                    </Link>
+                  )}
                   {comp.matchedStreet && (
                     /* The full research page for the street the verdict was
                        measured on: every building, every year, the map. */
@@ -231,7 +242,7 @@ export default async function CheckPage({ searchParams }: Props) {
 
       <p className="mt-8 max-w-3xl text-2xs leading-relaxed text-slate-400">
         <Icon name="source-own" size="1em" /> ההשוואה מבוססת על עסקאות שדווחו לרשות המסים, נאספו ונוקו במאגר שלנו.
-        המערכת מרחיבה את החיפוש בשלבים — רחוב ← שכונה ← יישוב, וגודל מדויק ← ±20% ← אותו מספר חדרים —
+        המערכת מרחיבה את החיפוש בשלבים — רחוב ← סביבת הבניין (כשהוזן מספר בית והבניין ממוקם במפה) ← שכונה ← יישוב, וגודל מדויק ← ±20% ← אותו מספר חדרים —
         ותמיד מציינת באיזה שלב נעצרה. זו אינה הערכת שמאי ואינה ייעוץ.
         {" "}<Link href="/methodology" className="underline hover:text-indigo-700">מתודולוגיה →</Link>
       </p>

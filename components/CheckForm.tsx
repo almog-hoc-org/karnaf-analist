@@ -15,7 +15,7 @@ export default function CheckForm({
   initial,
 }: {
   cities: string[];
-  initial: { city: string; street: string; neighborhood: string; rooms: string; size: string; price: string };
+  initial: { city: string; street: string; house: string; neighborhood: string; rooms: string; size: string; price: string };
 }) {
   const [city, setCity] = useState(initial.city);
 
@@ -36,9 +36,17 @@ export default function CheckForm({
             {cities.map((c) => <option key={c} value={c} />)}
           </datalist>
         </div>
-        <div>
-          <label className={label} htmlFor="check-street">רחוב</label>
-          <input id="check-street" name="street" defaultValue={initial.street} className={field} placeholder="למשל: הרצל" autoComplete="off" />
+        <div className="grid grid-cols-[1fr_5.5rem] gap-2">
+          <div>
+            <label className={label} htmlFor="check-street">רחוב</label>
+            <input id="check-street" name="street" defaultValue={initial.street} className={field} placeholder="למשל: הרצל" autoComplete="off" />
+          </div>
+          <div>
+            {/* With a number the ladder gains a rung: the deals within a few
+                hundred metres of THIS building, before the whole neighbourhood. */}
+            <label className={label} htmlFor="check-house">מס׳ בית</label>
+            <input id="check-house" name="house" defaultValue={initial.house} className={field} inputMode="numeric" placeholder="12" autoComplete="off" />
+          </div>
         </div>
         <div>
           <label className={label} htmlFor="check-neighborhood">שכונה</label>
@@ -63,7 +71,7 @@ export default function CheckForm({
           <Icon name="search" size="1em" /> בדיקת המחיר
         </button>
         <span className="text-2xs text-slate-400">
-          רחוב וגודל מדייקים את ההשוואה. בלעדיהם נקבל את רמת המחירים ביישוב.
+          רחוב וגודל מדייקים את ההשוואה; מספר בית מוסיף השוואה לבניינים שסביב. בלעדיהם נקבל את רמת המחירים ביישוב.
         </span>
       </div>
     </form>

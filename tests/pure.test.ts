@@ -14,20 +14,21 @@ import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
 import { extractAddress, splitAddress } from "@/lib/nadlanAddress";
-import { sliceQueries, primarySlice, expansionSlices, saturated, orderHorizons, HORIZON_CANDIDATES, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
+import { sliceQueries, primarySlice, expansionSlices, deepSlices, saturated, orderHorizons, HORIZON_CANDIDATES, itemKey, pickCaptureFields, donorFromItem, mergeItems, yearSpan, type CaptureFile } from "@/lib/nadlanCapture";
 import { signBody, parseHarvestedPost, buildQueryPayload, buildFetchBody, DEAL_DATA_HEADERS, decodeDealData, responseItems, responseMeta, responseError } from "@/lib/nadlanSession";
 import { NADLAN_ADDRESS_COLUMN_ALTERS } from "@/lib/addressBackfillDb";
 import { buildNadlanRow, NADLAN_ROW_COLS, roomBucket, SECONDHAND_MIN_AGE } from "@/lib/nadlanRow";
 import { gzipSync } from "zlib";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
-import { compMatchNote, compWhere, compHow, type StreetComp } from "@/lib/compTypes";
+import { compMatchNote, compWhere, compHow, type StreetComp, type CompDeal } from "@/lib/compTypes";
+import { housesWithin, streetCores, dealsWithin, similarDeals, type HouseGeocode } from "@/lib/radiusComps";
 import { strictKey, looseKey, chooseDonation, orderCitiesByGap, floorText, shiftDate, SOFT_AREA_TOLERANCE_SQM, NADLAN_DATE_SHIFT_DAYS } from "@/lib/addressBackfill";
 import { govmapWindows } from "@/lib/govmapDeals";
 import { SOURCES, probeKeyFor } from "@/lib/collectors";
 import { insertIfAbsentSql } from "@/lib/dealKey";
 import { parseInlineDraft } from "@/components/InlineEdit";
 import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
-import { project, makeProjector, makeUnprojector, pathBBox, zoomViewBox, viewBoxAttr, FULL_VIEW, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
+import { distanceM, bboxAroundM, project, makeProjector, makeUnprojector, pathBBox, zoomViewBox, viewBoxAttr, FULL_VIEW, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
 import { normStreet, normHouse, addressKey, addressKeyString } from "@/lib/addressKey";
 import { ITM, itmToWgs84, wgs84ToItm, looksLikeItm, looksLikeWgs84 } from "@/lib/itm";
 import { chooseGeocode, levelFromGovmapResult, parseWktPoint, type Geocode } from "@/lib/geocode";
@@ -1067,7 +1068,7 @@ describe("comp match note (honest labeling)", () => {
   const base: StreetComp = {
     level: "street", geoLevel: "street", matchLevel: "tight", label: "",
     medianSqm: 30000, n: 12, areaRange: [80, 92], rooms: 4, years: 5,
-    recent: [], matchedStreet: "הרצל", matchedHood: null, hoodInferred: false,
+    recent: [], matchedStreet: "הרצל", radiusM: null, matchedAddress: null, matchedHood: null, hoodInferred: false,
   };
 
   it("says WHAT the comparison is against, never 'התאמה מדויקת'", () => {
@@ -1087,6 +1088,93 @@ describe("comp match note (honest labeling)", () => {
 
   it("an empty comparison stays an empty answer", () => {
     expect(compMatchNote({ ...base, n: 0 })).toBe("אין עסקאות דומות");
+  });
+
+  it("names the circle by its size, in metres", () => {
+    const r: StreetComp = { ...base, geoLevel: "radius", matchedStreet: null, radiusM: 300, matchedAddress: "הרצל 12" };
+    expect(compWhere(r)).toBe("ברדיוס 300 מ׳");
+    expect(compMatchNote(r)).toBe("ברדיוס 300 מ׳ · דירות דומות");
+    expect(compWhere({ ...r, radiusM: null })).toBe("בסביבת הבניין");
+  });
+});
+
+describe("radius comps (the circle around the building)", () => {
+  // Tel Aviv: a degree of latitude ≈ 111.2 km, of longitude ≈ 94 km.
+  const centre: LonLat = [34.7700, 32.0650];
+  const houses: HouseGeocode[] = [
+    { street_norm: "הרצל", house_norm: "12", lon: 34.7700, lat: 32.0650 },         // 0 m
+    { street_norm: "הרצל", house_norm: "20", lon: 34.7710, lat: 32.0650 },         // ~94 m
+    { street_norm: "אלנבי", house_norm: "5", lon: 34.7700, lat: 32.0674 },         // ~267 m
+    { street_norm: "אלנבי", house_norm: "80", lon: 34.7700, lat: 32.0690 },        // ~445 m
+    { street_norm: "שדרות רוטשילד", house_norm: "", lon: 34.7701, lat: 32.0651 },  // street centroid — never a building
+  ];
+
+  it("distanceM: a known pair, symmetric, zero at the same point", () => {
+    expect(distanceM(centre, centre)).toBe(0);
+    const d = distanceM(centre, [34.7710, 32.0650]);
+    expect(d).toBeGreaterThan(90); expect(d).toBeLessThan(96);
+    expect(distanceM([34.7710, 32.0650], centre)).toBeCloseTo(d, 6);
+    // Tel Aviv → Jerusalem city centres, roughly 54 km
+    const far = distanceM([34.7818, 32.0853], [35.2137, 31.7683]);
+    expect(far).toBeGreaterThan(52_000); expect(far).toBeLessThan(56_000);
+  });
+
+  it("bboxAroundM contains the circle and is not absurdly larger", () => {
+    const b = bboxAroundM(centre, 300);
+    for (const [lon, lat] of [[34.7700, 32.0676], [34.7700, 32.0624], [34.7731, 32.0650], [34.7669, 32.0650]] as LonLat[]) {
+      expect(lon).toBeGreaterThanOrEqual(b.minLon); expect(lon).toBeLessThanOrEqual(b.maxLon);
+      expect(lat).toBeGreaterThanOrEqual(b.minLat); expect(lat).toBeLessThanOrEqual(b.maxLat);
+    }
+    expect(distanceM(centre, [b.maxLon, centre[1]])).toBeLessThan(330);
+    expect(distanceM(centre, [centre[0], b.maxLat])).toBeLessThan(330);
+  });
+
+  it("housesWithin keeps house-level buildings inside the circle only", () => {
+    const inside = housesWithin(centre, 300, houses);
+    expect([...inside.keys()].sort()).toEqual(["אלנבי|5", "הרצל|12", "הרצל|20"]);
+    expect(housesWithin(centre, 50, houses).size).toBe(1);
+  });
+
+  it("streetCores narrows by the longest word and drops the boulevard prefix", () => {
+    expect(streetCores(["שדרות רוטשילד", "הרצל", "אבן גבירול"]).sort()).toEqual(["אבן גבירול".split(" ")[1], "הרצל", "רוטשילד"].sort());
+  });
+
+  it("dealsWithin: exact house, a range's second number, and never a deal without a number", () => {
+    const inside = housesWithin(centre, 300, houses);
+    const deal = (street: string | null, house_num: string | null): CompDeal => ({
+      deal_date: "2025-01-01", area: 80, rooms: 3, price: 2_000_000, price_sqm: 25_000,
+      street, house_num, neighborhood: null, year_built: 1980,
+    });
+    const rows = [
+      deal("הרצל", "12"),              // in
+      deal("רח' הרצל", "20 "),         // in — prefix and spacing folded
+      deal("הרצל", "14-20"),           // in — the range's other number is inside
+      deal("אלנבי", "80"),             // out — 445 m
+      deal("הרצל", null),              // out — no building
+      deal("שדרות רוטשילד", "3"),      // out — the street centroid is not a building
+      deal(null, "12"),                // out
+    ];
+    expect(dealsWithin(rows, inside).map((r) => `${r.street} ${r.house_num}`)).toEqual(["הרצל 12", "רח' הרצל 20 ", "הרצל 14-20"]);
+  });
+
+  it("similarDeals mirrors the SQL grades: rooms ±0.25, area ±tight/±wide, any", () => {
+    const d = (rooms: number | null, area: number | null): CompDeal => ({
+      deal_date: "2025-01-01", area, rooms, price: 1, price_sqm: 1, street: "x", house_num: "1", neighborhood: null, year_built: null,
+    });
+    const rows = [d(4, 100), d(4, 93), d(4, 82), d(3.5, 100), d(null, 100), d(4, null)];
+    const pct = { tight: 7, wide: 20 };
+    expect(similarDeals(rows, "tight", 4, 100, pct)).toHaveLength(2);
+    expect(similarDeals(rows, "wide", 4, 100, pct)).toHaveLength(3);
+    expect(similarDeals(rows, "rooms", 4, 100, pct)).toHaveLength(4);
+    expect(similarDeals(rows, "any", 4, 100, pct)).toHaveLength(6);
+    expect(similarDeals(rows, "tight", 4, null, pct)).toEqual([]);
+    expect(similarDeals(rows, "rooms", null, 100, pct)).toEqual([]);
+  });
+
+  it("declares the radius rule in the comparison group", () => {
+    const r = RULE_DEFS.find((x) => x.key === "comp_radius_m");
+    expect(r?.group).toBe("השוואת עסקאות");
+    expect(r?.default).toBe(300);
   });
 });
 
@@ -1677,6 +1765,17 @@ describe("nadlan address campaign — slicing, identity, donation", () => {
     expect(all).toHaveLength(16);
     expect(all[0].horizon).toBe(60);
     expect(new Set(all.map((q) => q.label)).size).toBe(16);
+  });
+
+  it("a saturated expansion window splits once by deal type, never twice, never the primary", () => {
+    const [up3] = expansionSlices(60);
+    const deep = deepSlices(up3);
+    expect(deep.map((d) => d.label)).toEqual(["h60:up:3:hok0", "h60:up:3:hok1"]);
+    expect(deep[0].extra).toEqual({ type_order: "dealDate_up", deal_date: "60", room_num: "3", hok_hamecher: "0" });
+    expect(deep[1].extra.hok_hamecher).toBe("1");
+    expect(deepSlices(deep[0])).toEqual([]);
+    expect(deepSlices(primarySlice(60))).toEqual([]);
+    expect(deepSlices(expansionSlices(60)[3]).map((d) => d.label)).toEqual(["h60:down:all:hok0", "h60:down:all:hok1"]);
   });
 
   it("identifies an item exactly the way the collector dedupes it", () => {

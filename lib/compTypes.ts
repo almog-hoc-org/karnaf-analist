@@ -3,7 +3,10 @@
  * lib/streetComps.ts (server, touches sqlite) re-exports these, so client
  * components import from HERE and never pull the database into the bundle.
  */
-export type GeoLevel = "street" | "neighborhood" | "city";
+/** "radius" = a circle of comp_radius_m metres around the query building —
+ *  the rung between the street and the neighbourhood, present only when the
+ *  query address is geocoded at house level. */
+export type GeoLevel = "street" | "radius" | "neighborhood" | "city";
 export type MatchLevel = "tight" | "wide" | "rooms" | "any";
 
 export interface CompDeal {
@@ -48,6 +51,10 @@ export interface StreetComp {
   recent: CompDeal[];
   /** the street the rung actually matched on, when geoLevel === "street" */
   matchedStreet: string | null;
+  /** the circle's size in metres, when geoLevel === "radius" */
+  radiusM: number | null;
+  /** "רוטשילד 16" — the building the circle is centred on, when geoLevel === "radius" */
+  matchedAddress: string | null;
   /** the neighbourhood the rung matched on, when geoLevel === "neighborhood" */
   matchedHood: string | null;
   /** the hood was not typed by the user — it was looked up from the street's
@@ -63,6 +70,7 @@ export interface StreetComp {
  */
 export function compWhere(c: StreetComp): string {
   if (c.geoLevel === "street") return "ברחוב";
+  if (c.geoLevel === "radius") return c.radiusM ? `ברדיוס ${c.radiusM} מ׳` : "בסביבת הבניין";
   if (c.geoLevel === "neighborhood") return c.matchedHood ? `בשכונת ${c.matchedHood}` : "בשכונה";
   return "בכל העיר";
 }

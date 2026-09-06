@@ -309,3 +309,34 @@ export function ringCentroid(ring: Ring): Point {
   }
   return [round2(cx / (3 * a)), round2(cy / (3 * a))];
 }
+
+/* ───────────────────── distances on the ground ───────────────────── */
+
+const EARTH_RADIUS_M = 6_371_008.8;
+
+/**
+ * Great-circle distance in metres (haversine). Accurate to well under a
+ * metre at the few hundred metres the radius comparison uses, which is all
+ * the address geocodes themselves can promise.
+ */
+export function distanceM([lon1, lat1]: LonLat, [lon2, lat2]: LonLat): number {
+  const toRad = (d: number) => (d * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+  return 2 * EARTH_RADIUS_M * Math.asin(Math.min(1, Math.sqrt(a)));
+}
+
+/**
+ * The lon/lat box that contains every point within `radiusM` of the centre —
+ * the cheap SQL pre-filter before the exact haversine test. Slightly larger
+ * than the circle (a box always is), never smaller.
+ */
+export function bboxAroundM([lon, lat]: LonLat, radiusM: number): BBox {
+  const dLat = (radiusM / EARTH_RADIUS_M) * (180 / Math.PI);
+  const cosLat = Math.max(0.01, Math.cos((lat * Math.PI) / 180));
+  const dLon = dLat / cosLat;
+  return { minLon: lon - dLon, maxLon: lon + dLon, minLat: lat - dLat, maxLat: lat + dLat };
+}

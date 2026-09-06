@@ -70,7 +70,7 @@ export default async function DealsPage() {
   const comps: Record<number, StreetComp> = {};
   await Promise.all(
     deals.map(async (d) => {
-      comps[d.id] = await computeStreetComp(d.city, d.street, d.neighborhood, d.rooms, d.size);
+      comps[d.id] = await computeStreetComp(d.city, d.street, d.neighborhood, d.rooms, d.size, d.house_num);
     })
   );
 
