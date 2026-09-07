@@ -45,17 +45,32 @@ for c in "$@"; do CITY_ARGS="$CITY_ARGS --city $(printf '%q' "$c")"; done
 ssh "$SERVER" "mkdir -p $REMOTE_DATA/geocode_todo $REMOTE_DATA/geocode_done && cd $REMOTE_APP && docker compose exec -T app npx tsx scripts/export-geocode-residue.ts --out /app/data/geocode_todo $CITY_ARGS </dev/null" \
   || die "הייצוא בשרת נכשל"
 rsync -az --delete "$SERVER:$REMOTE_DATA/geocode_todo/" "$TODO_DIR/" || die "הורדת קובצי המשימות נכשלה"
-FILES=("$TODO_DIR"/*.json)
-[ -e "${FILES[0]}" ] || { ok "אין כתובות לגיאוקוד — הקמפיין הושלם"; exit 0; }
+# gap-first, as the server ordered them (order.txt); a glob would be alphabetical
+FILES=()
+if [ -f "$TODO_DIR/order.txt" ]; then
+  while IFS= read -r n; do [ -n "$n" ] && [ -f "$TODO_DIR/$n" ] && FILES+=("$TODO_DIR/$n"); done < "$TODO_DIR/order.txt"
+else
+  FILES=("$TODO_DIR"/*.json)
+fi
+[ "${#FILES[@]}" -gt 0 ] && [ -e "${FILES[0]}" ] || { ok "אין כתובות לגיאוקוד — הקמפיין הושלם"; exit 0; }
 say "${#FILES[@]} ערים בתור (הפערים הגדולים קודם)"
 
 # ── 2. this machine asks govmap ──────────────────────────────────────────
+# The budget is for the WHOLE run, not per city: a deadline is fixed here and
+# every city gets what is left of it. (Per-city budgets made a 4-hour night
+# a 4-hour-per-city night, 7.9.2026.)
+DEADLINE=0; [ "$BUDGET_MIN" -gt 0 ] 2>/dev/null && DEADLINE=$(( $(date +%s) + BUDGET_MIN * 60 ))
 done_n=0; fail_n=0
 for f in "${FILES[@]}"; do
   name=$(basename "$f")
+  left=0
+  if [ "$DEADLINE" -gt 0 ]; then
+    left=$(( (DEADLINE - $(date +%s)) / 60 ))
+    if [ "$left" -le 0 ]; then warn "תקציב הזמן נגמר — הריצה הבאה ממשיכה מכאן"; break; fi
+  fi
   say "$name"
   set +e
-  npx tsx scripts/geocode-govmap-residue.ts "$f" --out="$DONE_DIR" --budget-min "$BUDGET_MIN"
+  npx tsx scripts/geocode-govmap-residue.ts "$f" --out="$DONE_DIR" --budget-min "$left"
   rc=$?
   set -e
   if [ "$rc" -ne 0 ]; then

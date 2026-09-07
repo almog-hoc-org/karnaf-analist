@@ -79,6 +79,7 @@ function main(): number {
   }
 
   let exported = 0, files = 0;
+  const order: string[] = [];
   for (const c of orderCitiesByGap(perCity)) {
     if (exported >= BUDGET) break;
     const slice = c.todo.slice(0, Math.max(0, BUDGET - exported));
@@ -86,8 +87,12 @@ function main(): number {
     fs.writeFileSync(`${file}.tmp`, JSON.stringify({ city: c.city, method: GEOCODE_METHOD, addresses: slice }));
     fs.renameSync(`${file}.tmp`, file);
     exported += slice.length; files++;
+    order.push(path.basename(file));
     console.log(`${c.city}: ${slice.length.toLocaleString("en")} כתובות (${c.missing.toLocaleString("en")} עסקאות ללא מיקום) → ${file}`);
   }
+  // The order the Mac should ask in — gap first. A shell glob is alphabetical,
+  // and alphabetical put אבו גוש before באר שבע (7.9.2026).
+  fs.writeFileSync(path.join(OUT, "order.txt"), order.join("\n") + (order.length ? "\n" : ""));
   console.log(`\n--- ${files} ערים, ${exported.toLocaleString("en")} כתובות לגיאוקוד ב-${OUT} ---`);
   return 0;
 }
