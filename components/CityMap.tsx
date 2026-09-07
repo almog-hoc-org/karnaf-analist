@@ -95,7 +95,11 @@ export default function CityMap({
   const [userBox, setUserBox] = useState<ViewBox | null>(null);
   const [armed, setArmed] = useState(false);
   useEffect(() => { setUserBox(null); }, [baseKey]);
-  const vb = useAnimatedViewBox(userBox ?? base, userBox ? 0 : 350);
+  // The page's box is tweened; the reader's own box is applied as is — a
+  // wheel tick must land on the very next frame, and feeding it through the
+  // tween made the zoom stutter (and, with a zero duration, divide by zero).
+  const animated = useAnimatedViewBox(base);
+  const vb = userBox ?? animated;
   const k = vb.w / VIEW_SIZE;
 
   const svgRef = useRef<SVGSVGElement>(null);
@@ -124,12 +128,14 @@ export default function CityMap({
 
   const drag = useRef<{ x: number; y: number; box: ViewBox; moved: boolean } | null>(null);
   const draggedRef = useRef(false);
+  // No pointer capture: with it the click after a pointerup lands on the svg,
+  // never on the shape under the cursor, and a neighbourhood could not be
+  // pinned (7.9.2026). A drag that leaves the map simply ends.
   const onPointerDown = (e: ReactPointerEvent<SVGSVGElement>) => {
     if (e.button !== 0) return;
     draggedRef.current = false;
     setArmed(true);
     drag.current = { x: e.clientX, y: e.clientY, box: vbRef.current, moved: false };
-    e.currentTarget.setPointerCapture(e.pointerId);
   };
   const onPointerMove = (e: ReactPointerEvent<SVGSVGElement>) => {
     const d = drag.current;
@@ -141,10 +147,7 @@ export default function CityMap({
     const rect = e.currentTarget.getBoundingClientRect();
     setUserBox(clampBox({ ...d.box, x: d.box.x - (dx / rect.width) * d.box.w, y: d.box.y - (dy / rect.height) * d.box.h }));
   };
-  const onPointerUp = (e: ReactPointerEvent<SVGSVGElement>) => {
-    drag.current = null;
-    try { e.currentTarget.releasePointerCapture(e.pointerId); } catch { /* not captured */ }
-  };
+  const onPointerUp = () => { drag.current = null; };
   // a drag must not count as a click on the shape it ended over
   const pin = (name: string | null) => { if (!draggedRef.current) onPin(name); };
   const resetZoom = () => setUserBox(null);
@@ -214,8 +217,8 @@ export default function CityMap({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
-      onDoubleClick={resetZoom}
-      style={{ cursor: drag.current?.moved ? "grabbing" : "grab", touchAction: "none" }}
+      onPointerLeave={onPointerUp}
+      style={{ cursor: "grab", touchAction: "none" }}
       role="img"
       aria-label="מפת שכונות העיר, צבועה לפי מחיר למ״ר"
       className={`h-auto w-full ${className}`}

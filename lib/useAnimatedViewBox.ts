@@ -20,7 +20,7 @@ export function useAnimatedViewBox(target: ViewBox, ms = 350): ViewBox {
   useEffect(() => {
     const reduce = typeof window !== "undefined"
       && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || same(fromRef.current, target)) {
+    if (reduce || ms <= 0 || same(fromRef.current, target)) {
       fromRef.current = target;
       setCurrent(target);
       return;
@@ -28,7 +28,8 @@ export function useAnimatedViewBox(target: ViewBox, ms = 350): ViewBox {
     const from = fromRef.current;
     const started = performance.now();
     const step = (now: number) => {
-      const t = Math.min(1, (now - started) / ms);
+      // clamped at both ends: a frame timestamp can precede performance.now()
+      const t = Math.min(1, Math.max(0, (now - started) / ms));
       const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; // ease-in-out quad
       const box = {
         x: from.x + (target.x - from.x) * e,
