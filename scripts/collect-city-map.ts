@@ -36,6 +36,8 @@ import {
   type BBox, type LonLat, type Point, type Ring,
 } from "../lib/geo";
 import { normHoodKey } from "../lib/hoodKey";
+import { addressKey, addressKeyString } from "../lib/addressKey";
+import { buildHoodShapes, type HoodShape, type LabelledPoint } from "../lib/hoodRegions";
 
 const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
 
@@ -265,6 +267,74 @@ function keepOurs<T extends { name: string }>(
   return { kept, joined: kept.length };
 }
 
+/** The centre the OSM address import already resolved for this city (city_centres),
+ *  so the fallback box does not depend on Overpass spelling the city as we do
+ *  ("קריית אתא" vs OSM's "קרית אתא" failed the name lookup, 7.9.2026). */
+function centreFromDb(db: Database.Database, city: string): { lon: number; lat: number; name: string } | null {
+  try {
+    const row = db.prepare("SELECT lat, lon FROM city_centres WHERE city_name = ?").get(city) as { lat: number; lon: number } | undefined;
+    if (!row) return null;
+    const meta = db.prepare("SELECT min_lon, min_lat, max_lon, max_lat FROM city_map_meta WHERE city_name = ?").get(city) as
+      { min_lon: number; min_lat: number; max_lon: number; max_lat: number } | undefined;
+    if (meta) return { lon: (meta.min_lon + meta.max_lon) / 2, lat: (meta.min_lat + meta.max_lat) / 2, name: city };
+    return { lon: Number(row.lon), lat: Number(row.lat), name: city };
+  } catch { return null; }
+}
+
+/**
+ * THE DEALS AS A MAP SOURCE. Every placed building of this city, labelled with
+ * the neighbourhood its deals were reported under — one point per building,
+ * the majority neighbourhood when the reports disagree, and only the
+ * neighbourhoods the price data knows (the ones the map has to join to).
+ */
+function loadHoodBuildings(db: Database.Database, city: string, ourNames: Set<string>): Array<{ lon: number; lat: number; hood: string }> {
+  try {
+    const rows = db.prepare(
+      `SELECT street, house_num, neighborhood, COUNT(*) n FROM nadlan_transactions
+        WHERE city_name = ? AND neighborhood IS NOT NULL AND neighborhood != ''
+          AND street IS NOT NULL AND street != '' AND house_num IS NOT NULL AND house_num != ''
+          AND COALESCE(excluded,0) = 0
+        GROUP BY street, house_num, neighborhood`
+    ).all(city) as Array<{ street: string; house_num: string; neighborhood: string; n: number }>;
+    const geos = db.prepare(
+      `SELECT street_norm, house_norm, lon, lat FROM address_geocodes
+        WHERE city_name = ? AND level = 'house' AND lon IS NOT NULL AND lat IS NOT NULL`
+    ).all(city) as Array<{ street_norm: string; house_norm: string; lon: number; lat: number }>;
+    const at = new Map(geos.map((g) => [addressKeyString({ streetNorm: g.street_norm, houseNorm: g.house_norm }), g]));
+    // the most common spelling of each neighbourhood key, so the shape's name is the deals' own
+    const spelling = new Map<string, { name: string; n: number }>();
+    const best = new Map<string, { hood: string; n: number; lon: number; lat: number }>();
+    for (const r of rows) {
+      const key = addressKey(city, r.street, r.house_num);
+      if (!key || !key.houseNorm) continue;
+      const g = at.get(addressKeyString(key));
+      if (!g) continue;
+      const hk = normHoodKey(r.neighborhood);
+      if (!ourNames.has(hk)) continue;
+      const sp = spelling.get(hk);
+      if (!sp || Number(r.n) > sp.n) spelling.set(hk, { name: r.neighborhood, n: Number(r.n) });
+      const k = addressKeyString(key);
+      const cur = best.get(k);
+      if (!cur || Number(r.n) > cur.n) best.set(k, { hood: hk, n: Number(r.n), lon: Number(g.lon), lat: Number(g.lat) });
+    }
+    return [...best.values()].map((b) => ({ lon: b.lon, lat: b.lat, hood: spelling.get(b.hood)!.name }));
+  } catch { return []; }
+}
+
+/** The frame of a point cloud without its outliers: a building geocoded into
+ *  the next town must not stretch the whole map. 2nd–98th percentile per axis. */
+function robustBBox(pts: Array<{ lon: number; lat: number }>, trim = 0.02): BBox {
+  const lons = pts.map((p) => p.lon).sort((a, b) => a - b);
+  const lats = pts.map((p) => p.lat).sort((a, b) => a - b);
+  const lo = Math.floor(trim * (pts.length - 1)), hi = Math.ceil((1 - trim) * (pts.length - 1));
+  return { minLon: lons[lo], maxLon: lons[hi], minLat: lats[lo], maxLat: lats[hi] };
+}
+
+function padBBox(b: BBox, frac: number): BBox {
+  const padLon = (b.maxLon - b.minLon) * frac, padLat = (b.maxLat - b.minLat) * frac;
+  return { minLon: b.minLon - padLon, maxLon: b.maxLon + padLon, minLat: b.minLat - padLat, maxLat: b.maxLat + padLat };
+}
+
 /** The neighbourhood names this city's own price data knows about. */
 function ourNeighbourhoodKeys(db: Database.Database, city: string): Set<string> {
   try {
@@ -333,9 +403,24 @@ async function main(): Promise<number> {
   const cities = (db.prepare(
     `SELECT s.city_name, COUNT(*) c FROM neighborhood_year_stats s GROUP BY s.city_name ORDER BY c DESC`
   ).all() as Array<{ city_name: string; c: number }>).map((r) => r.city_name);
-  const mapped = new Set((db.prepare("SELECT city_name FROM city_map_meta").all() as Array<{ city_name: string }>).map((r) => r.city_name));
-  const todo = force ? cities : cities.filter((c) => !mapped.has(c));
-  console.log(`── מפות לכל הערים: ${todo.length} לאיסוף (${mapped.size} כבר ממופות, ${cities.length} עם נתוני שכונות) ──`);
+  // "Mapped" means mapped ENOUGH: shapes for at least half of the priced
+  // neighbourhoods (and at least 3). A city whose OSM polygons covered 8 of
+  // 39 neighbourhoods is re-collected, so that the deals-based regions get
+  // their chance; a city that neither source can draw better keeps being
+  // retried under the nightly budget, which is bounded and rare.
+  const shapeCounts = new Map((db.prepare(
+    "SELECT city_name, COUNT(*) c FROM neighborhood_shapes GROUP BY city_name").all() as Array<{ city_name: string; c: number }>)
+    .map((r) => [r.city_name, Number(r.c)]));
+  const hoodCounts = new Map((db.prepare(
+    "SELECT city_name, COUNT(DISTINCT neighborhood) c FROM neighborhood_year_stats GROUP BY city_name").all() as Array<{ city_name: string; c: number }>)
+    .map((r) => [r.city_name, Number(r.c)]));
+  const mappedEnough = (c: string) => {
+    const shapes = shapeCounts.get(c) ?? 0;
+    return shapes >= 3 && shapes >= 0.5 * (hoodCounts.get(c) ?? 0);
+  };
+  const mapped = cities.filter(mappedEnough);
+  const todo = force ? cities : cities.filter((c) => !mappedEnough(c));
+  console.log(`── מפות לכל הערים: ${todo.length} לאיסוף (${mapped.length} כבר ממופות מספיק, ${cities.length} עם נתוני שכונות) ──`);
   let okN = 0, failN = 0;
   const failed: string[] = [];
   for (let i = 0; i < todo.length; i++) {
@@ -343,7 +428,8 @@ async function main(): Promise<number> {
     if (Date.now() > deadline) { console.log(`\n⏸  תקציב הזמן (${budgetMin} דק׳) נגמר — ${todo.length - i} ערים יאספו בריצה הבאה`); break; }
     console.log(`\n[${i + 1}/${todo.length}] ${c}`);
     let code = 1;
-    try { code = await collectCity(db, c, { dry, force }); }
+    // a city in the list is there because its map is missing or thin — recollect it
+    try { code = await collectCity(db, c, { dry, force: true }); }
     catch (e) { console.error(`✗ ${c}: ${e instanceof Error ? e.message : String(e)}`); }
     if (code === 0) okN++; else { failN++; failed.push(c); }
     if (i < todo.length - 1) await sleep(PAUSE_BETWEEN_CITIES_MS);
@@ -372,14 +458,39 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
   }
   console.log(`  ${ourNames.size} שמות שכונות ידועים לנו ב${city}`);
 
-  console.log(`מחפש את ${city} ב-OpenStreetMap…`);
+  // ── the deals-based candidate (database only, no network) ──
+  // MEASURED 7.9.2026: OSM had usable neighbourhood polygons for 7 of 73
+  // cities. The deals themselves carry the neighbourhood in the site's own
+  // spelling, and the geocodes put a coordinate under them — lib/hoodRegions
+  // turns that into regions. Computed first, because when it works the frame
+  // is the city's own and the Overpass box shrinks from 22 km to the city.
+  const buildings = loadHoodBuildings(db, city, ourNames);
+  let dealFrame: BBox | null = null;
+  let dealShapes: HoodShape[] = [];
+  if (buildings.length >= 30) {
+    dealFrame = padBBox(robustBBox(buildings), 0.06);
+    const proj = makeProjector(dealFrame);
+    const hoods = [...new Set(buildings.map((b) => b.hood))];
+    const hoodIdx = new Map(hoods.map((h, i) => [h, i]));
+    const pts: LabelledPoint[] = buildings
+      .map((b) => { const [x, y] = proj([b.lon, b.lat]); return { x, y, hood: hoodIdx.get(b.hood)! }; })
+      .filter((p) => p.x >= 0 && p.x <= 1000 && p.y >= 0 && p.y <= 1000);
+    dealShapes = buildHoodShapes(pts, hoods);
+    console.log(`  מהעסקאות: ${buildings.length} בניינים ממוקמים ב-${hoods.length} שכונות → ${dealShapes.length} אזורים`);
+  } else {
+    console.log(`  מהעסקאות: רק ${buildings.length} בניינים ממוקמים — לא מספיק לאזורים`);
+  }
+  const dealsUsable = dealShapes.length >= 3;
+
   let elements: OsmElement[] = [];
-  let centre: { lon: number; lat: number; name: string } | null = null;
+  let centre: { lon: number; lat: number; name: string } | null = dealsUsable ? null : centreFromDb(db, city);
   let lastTransportError = "";
+  if (centre) console.log(`  מרכז העיר מהמאגר (${centre.lat.toFixed(4)}, ${centre.lon.toFixed(4)})`);
+  else if (!dealsUsable) console.log(`מחפש את ${city} ב-OpenStreetMap…`);
 
   // Rounds cover a busy Overpass, not a wrong name: a lookup that ANSWERS with
   // no match is final, and retrying it would only be ruder to a free service.
-  for (let round = 0; round < ROUNDS; round++) {
+  for (let round = 0; round < ROUNDS && !centre && !dealsUsable; round++) {
     if (round > 0) {
       console.log(`  אף נקודת קצה לא ענתה. ממתין ${BACKOFF_MS[round] / 1000}s וסבב ${round + 1}/${ROUNDS}…`);
       await sleep(BACKOFF_MS[round]);
@@ -398,17 +509,18 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
     console.error("  לא נכתב כלום — הרצה הבאה תנסה שוב.");
     return 1;
   }
-  if (!centre) {
+  if (!centre && !dealsUsable) {
     console.error(`✗ ל-OpenStreetMap אין נקודת מקום בשם שתואם ל״${city}״.`);
     console.error("  הרשימה למעלה היא מה שכן נמצא — בדקו ב-openstreetmap.org");
     return 1;
   }
 
-  const searchBox: BBox = {
-    minLon: centre.lon - BOX_LON, maxLon: centre.lon + BOX_LON,
-    minLat: centre.lat - BOX_LAT, maxLat: centre.lat + BOX_LAT,
-  };
-  console.log(`מושך תיבה סביב ${centre.name} (${centre.lat.toFixed(4)}, ${centre.lon.toFixed(4)})…`);
+  // The box: the city's own frame when the deals gave one (roads and any OSM
+  // polygons inside it), else the wide box around the centre as before.
+  const searchBox: BBox = dealsUsable
+    ? padBBox(dealFrame!, 0.05)
+    : { minLon: centre!.lon - BOX_LON, maxLon: centre!.lon + BOX_LON, minLat: centre!.lat - BOX_LAT, maxLat: centre!.lat + BOX_LAT };
+  console.log(dealsUsable ? `מושך כבישים ומים במסגרת העיר…` : `מושך תיבה סביב ${centre!.name} (${centre!.lat.toFixed(4)}, ${centre!.lon.toFixed(4)})…`);
   try {
     elements = await fetchOverpass(buildQuery(searchBox));
   } catch (e) {
@@ -416,7 +528,7 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
     return 1;
   }
   console.log(`התקבלו ${elements.length} אלמנטים`);
-  if (elements.length === 0) {
+  if (elements.length === 0 && !dealsUsable) {
     console.error("✗ אין בתיבה שכונות/כבישים מתויגים");
     return 1;
   }
@@ -429,14 +541,21 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
 
   const { kept, joined } = keepOurs(boxShapes, ourNames);
   console.log(`  שכונות בתיבה: ${boxShapes.length} · הותאמו לרשימה שלנו: ${joined} · נשמרות: ${kept.length}`);
-  if (joined < 3) {
+  // WHICH SOURCE DRAWS THE NEIGHBOURHOODS. OSM polygons when they cover at
+  // least as many of the city's neighbourhoods as the deals do (they are
+  // surveyed outlines, not inferred ones); otherwise the deals' regions.
+  const useOsm = joined >= 3 && joined >= dealShapes.length;
+  if (!useOsm && !dealsUsable) {
     console.error(`✗ רק ${joined} שכונות בתיבה מתאימות לשמות של ${city} — לא מספיק כדי לקבוע מה שייך לעיר`);
     console.error(`  שמות שנמצאו בתיבה: ${boxShapes.slice(0, 12).map((s) => s.name).join(" · ")}`);
     return 1;
   }
-  const keptEls = new Set(kept.map((k) => k.el));
+  const source: "osm" | "deals" = useOsm ? "osm" : "deals";
+  console.log(`  מקור השכונות: ${useOsm ? "OSM (מצולעים מסוקרים)" : "העסקאות (אזורים מחושבים מהבניינים הממוקמים)"} · OSM ${joined} · עסקאות ${dealShapes.length}`);
+  const keptEls = new Set(useOsm ? kept.map((k) => k.el) : []);
   // Everything that is not a neighbourhood (roads, water) stays; the
-  // neighbourhoods are cut down to the city's own.
+  // neighbourhoods are cut down to the city's own — or dropped entirely when
+  // the deals draw them.
   elements = elements.filter((el) => !(el.tags?.place && el.tags?.name) || keptEls.has(el));
 
   // ── pass 1: the frame ──
@@ -445,15 +564,15 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
   // the map on it would draw the city as a small blob in the middle of three
   // other municipalities' road networks.
   let bbox: BBox = emptyBBox();
-  for (const k of kept) for (const r of ringsOf(k.el)) for (const p of r) bbox = extendBBox(bbox, p);
-  if (bboxIsEmpty(bbox)) { console.error("✗ לא נמצאה גיאומטריה"); return 1; }
-  // A little air, so a neighbourhood does not touch the edge of the picture.
-  const padLon = (bbox.maxLon - bbox.minLon) * 0.06;
-  const padLat = (bbox.maxLat - bbox.minLat) * 0.06;
-  bbox = {
-    minLon: bbox.minLon - padLon, maxLon: bbox.maxLon + padLon,
-    minLat: bbox.minLat - padLat, maxLat: bbox.maxLat + padLat,
-  };
+  if (useOsm) {
+    for (const k of kept) for (const r of ringsOf(k.el)) for (const p of r) bbox = extendBBox(bbox, p);
+    if (bboxIsEmpty(bbox)) { console.error("✗ לא נמצאה גיאומטריה"); return 1; }
+    // A little air, so a neighbourhood does not touch the edge of the picture.
+    bbox = padBBox(bbox, 0.06);
+  } else {
+    // the frame the regions were computed in — the same projector, exactly
+    bbox = dealFrame!;
+  }
   const projectPoint = makeProjector(bbox);
 
   /* Anything entirely outside the frame is dropped rather than projected off
@@ -463,9 +582,15 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
     pts.some((p) => p[0] >= bbox.minLon && p[0] <= bbox.maxLon && p[1] >= bbox.minLat && p[1] <= bbox.maxLat);
 
   // ── pass 2: build the three layers ──
-  const shapes: Array<{ name: string; path: string; cx: number; cy: number; osmId: number; points: number }> = [];
+  const shapes: Array<{ name: string; path: string; cx: number; cy: number; osmId: number | null; points: number }> = [];
   const lines: Array<{ kind: string; rank: number; name: string | null; path: string; length: number }> = [];
   let rawPoints = 0, keptPoints = 0;
+  if (!useOsm) {
+    for (const d of dealShapes) {
+      shapes.push({ name: d.hood, path: ringsToPath(d.rings), cx: d.cx, cy: d.cy, osmId: null, points: d.points });
+      keptPoints += d.rings.reduce((n, r) => n + r.length, 0);
+    }
+  }
 
   for (const el of elements) {
     const tags = el.tags ?? {};
@@ -541,9 +666,9 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
     db.prepare("DELETE FROM city_map_lines WHERE city_name=?").run(city);
     const insShape = db.prepare(
       `INSERT INTO neighborhood_shapes (city_name, neighborhood, norm_name, path_d, cx, cy, osm_id, source, updated_at)
-       VALUES (?,?,?,?,?,?,?,'osm',CURRENT_TIMESTAMP)`
+       VALUES (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)`
     );
-    for (const s of shapes) insShape.run(city, s.name, normHoodKey(s.name), s.path, s.cx, s.cy, s.osmId);
+    for (const s of shapes) insShape.run(city, s.name, normHoodKey(s.name), s.path, s.cx, s.cy, s.osmId, source);
     const insLine = db.prepare(
       `INSERT INTO city_map_lines (city_name, kind, rank, name, path_d, length) VALUES (?,?,?,?,?,?)`
     );
@@ -559,7 +684,7 @@ async function collectCity(db: Database.Database, city: string, { dry, force }: 
   });
   write();
 
-  console.log(`✓ נשמר ל${city}`);
+  console.log(`✓ נשמר ל${city} (${shapes.length} שכונות, מקור: ${source})`);
   return 0;
 }
 

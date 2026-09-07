@@ -22,6 +22,7 @@ import { gzipSync } from "zlib";
 import { cleanStreetName, pickModalHood, searchNorm, normalizeStreetQuery } from "@/lib/searchIndex";
 import { compMatchNote, compWhere, compHow, type StreetComp, type CompDeal } from "@/lib/compTypes";
 import { housesWithin, streetCores, dealsWithin, similarDeals, type HouseGeocode } from "@/lib/radiusComps";
+import { labelGrid, traceRegions, smoothRing, buildHoodShapes, ringArea, defaultMaxDist, type LabelledPoint } from "@/lib/hoodRegions";
 import { strictKey, looseKey, chooseDonation, orderCitiesByGap, floorText, shiftDate, SOFT_AREA_TOLERANCE_SQM, NADLAN_DATE_SHIFT_DAYS } from "@/lib/addressBackfill";
 import { govmapWindows } from "@/lib/govmapDeals";
 import { SOURCES, probeKeyFor } from "@/lib/collectors";
@@ -1947,5 +1948,63 @@ describe("nadlan date shift — the measured one-day twin", () => {
     expect(shiftDate("2026-01-01", -1)).toBe("2025-12-31");
     expect(shiftDate("2025-11-10T00:00:00", 1)).toBe("2025-11-11");
     expect(shiftDate(shiftDate("2025-03-01", 1), -1)).toBe("2025-03-01");
+  });
+});
+
+describe("neighbourhood regions from the deals (lib/hoodRegions)", () => {
+  // two clusters side by side, a small third one, and one mis-geocoded building
+  let seed = 7;
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const pts: LabelledPoint[] = [];
+  for (let i = 0; i < 300; i++) pts.push({ x: 100 + rnd() * 300, y: 200 + rnd() * 400, hood: 0 });
+  for (let i = 0; i < 300; i++) pts.push({ x: 450 + rnd() * 350, y: 150 + rnd() * 500, hood: 1 });
+  for (let i = 0; i < 40; i++) pts.push({ x: 300 + rnd() * 100, y: 700 + rnd() * 100, hood: 2 });
+  for (let i = 0; i < 5; i++) pts.push({ x: 50 + rnd() * 20, y: 900 + rnd() * 20, hood: 3 }); // too few to draw
+  pts.push({ x: 700, y: 400, hood: 0 }); // one building geocoded into the other neighbourhood
+
+  it("labels cells by the majority of their nearest buildings and leaves the far corners empty", () => {
+    const g = labelGrid(pts, { size: 100 });
+    const at = (x: number, y: number) => g.labels[Math.floor(y / g.cell) * g.size + Math.floor(x / g.cell)];
+    expect(at(200, 400)).toBe(0);
+    expect(at(650, 400)).toBe(1);
+    expect(at(700, 400)).toBe(1);   // the lone mis-geocoded building is outvoted
+    expect(at(990, 990)).toBe(-1);  // nothing near the corner
+    expect(defaultMaxDist(pts)).toBeGreaterThanOrEqual(8);
+    expect(defaultMaxDist(pts)).toBeLessThanOrEqual(30);
+  });
+
+  it("traces closed clockwise outlines and drops speckle", () => {
+    const g = labelGrid(pts, { size: 100 });
+    const regions = traceRegions(g, 4);
+    expect(regions.has(0)).toBe(true);
+    expect(regions.has(1)).toBe(true);
+    const outer = regions.get(0)!.sort((a, b) => Math.abs(ringArea(b)) - Math.abs(ringArea(a)))[0];
+    expect(outer[0]).toEqual(outer[outer.length - 1]);
+    expect(ringArea(outer)).toBeGreaterThan(0); // clockwise in screen coordinates
+    const xs = outer.map((p) => p[0]);
+    expect(Math.min(...xs)).toBeLessThan(120);
+    expect(Math.max(...xs)).toBeLessThan(470);
+  });
+
+  it("smoothRing keeps the ring closed and doubles its points", () => {
+    const sq: [number, number][] = [[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]];
+    const sm = smoothRing(sq);
+    expect(sm.length).toBe(9);
+    expect(sm[0]).toEqual(sm[sm.length - 1]);
+    expect(sm[0]).toEqual([2.5, 0]);
+  });
+
+  it("buildHoodShapes: one shape per drawable neighbourhood, largest first, named", () => {
+    const shapes = buildHoodShapes(pts, ["מערב", "מזרח", "דרום", "זעיר"], { size: 120 });
+    expect(shapes.map((s) => s.hood)).toEqual(["מזרח", "מערב", "דרום"]);
+    for (const sh of shapes) {
+      expect(sh.rings[0].length).toBeGreaterThan(8);
+      expect(ringArea(sh.rings[0])).toBeGreaterThan(0);
+      expect(sh.cx).toBeGreaterThan(0); expect(sh.cx).toBeLessThan(1000);
+    }
+    const west = shapes.find((s) => s.hood === "מערב")!;
+    expect(west.cx).toBeLessThan(shapes.find((s) => s.hood === "מזרח")!.cx);
+    expect(west.points).toBe(301);
+    expect(buildHoodShapes([], ["x"])).toEqual([]);
   });
 });
