@@ -122,6 +122,34 @@ async function loadGeometryUncached(cityName: string): Promise<CityMapGeometry> 
 
 export const loadCityMapGeometry = cachedMarket(loadGeometryUncached, ["city-map-geometry"]);
 
+/** A local street (rank 6–7) with its extent, so a box on screen can pick its own. */
+export interface MapStreet extends MapLine {
+  minx: number; miny: number; maxx: number; maxy: number;
+}
+
+async function loadStreetsUncached(cityName: string): Promise<MapStreet[]> {
+  try {
+    const rows = await prisma.$queryRawUnsafe<Array<{
+      rank: number; name: string | null; path_d: string; length: number | null; minx: number; miny: number; maxx: number; maxy: number;
+    }>>(`SELECT rank, name, path_d, length, minx, miny, maxx, maxy FROM city_map_streets WHERE city_name = ?`, cityName);
+    return rows.map((r) => ({
+      kind: "road", rank: Number(r.rank), name: r.name, path: r.path_d, length: Number(r.length ?? 0),
+      minx: Number(r.minx), miny: Number(r.miny), maxx: Number(r.maxx), maxy: Number(r.maxy),
+    }));
+  } catch { return []; }
+}
+
+/** The whole city's local streets, cached; the route slices them per box. */
+export const loadCityStreets = cachedMarket(loadStreetsUncached, ["city-streets"]);
+
+/** The streets whose extent crosses the box — pure, so it is tested. */
+export function streetsInBox<T extends { minx: number; miny: number; maxx: number; maxy: number }>(
+  streets: T[], box: { x: number; y: number; w: number; h: number }
+): T[] {
+  const x1 = box.x + box.w, y1 = box.y + box.h;
+  return streets.filter((s) => s.maxx >= box.x && s.minx <= x1 && s.maxy >= box.y && s.miny <= y1);
+}
+
 /**
  * Five bins over the city's OWN neighbourhoods.
  *

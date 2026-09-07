@@ -25,6 +25,8 @@
  * happen once, here, and what is stored goes straight into an SVG path.
  *
  *   npx tsx scripts/collect-city-map.ts --city "תל אביב-יפו" [--dry-run] [--force]
+ *   npx tsx scripts/collect-city-map.ts --all [--budget-min N]            # every city with priced neighbourhoods
+ *   npx tsx scripts/collect-city-map.ts --streets --city "חיפה" | --streets --all   # local streets, into an existing map's frame
  *
  * See docs/NEIGHBORHOOD-MAPS.md for the full runbook.
  */
@@ -71,6 +73,21 @@ const MIN_ROAD_LENGTH = 4;
 const ROAD_RANKS: Record<string, number> = {
   motorway: 1, trunk: 2, primary: 3, secondary: 4, tertiary: 5,
 };
+/** The local streets — a separate layer (city_map_streets), fetched only for
+ *  the part of the city on screen, never in the whole-city payload. */
+const LOCAL_RANKS: Record<string, number> = {
+  residential: 6, unclassified: 6, living_street: 7, pedestrian: 7,
+};
+
+function buildStreetsQuery(box: BBox): string {
+  const kinds = Object.keys(LOCAL_RANKS).join("|");
+  const bb = `${box.minLat},${box.minLon},${box.maxLat},${box.maxLon}`;
+  return `[out:json][timeout:180];
+(
+  way(${bb})["highway"~"^(${kinds})$"]["name"];
+);
+out geom;`;
+}
 
 interface OsmElement {
   type: "node" | "way" | "relation";
@@ -377,6 +394,7 @@ const MINUTE = 60_000;
 async function main(): Promise<number> {
   const city = arg("city");
   const all = process.argv.includes("--all");
+  const streets = process.argv.includes("--streets");
   const dry = process.argv.includes("--dry-run");
   const force = process.argv.includes("--force");
   // --all only: stop starting new cities after this many minutes (the nightly
@@ -392,6 +410,7 @@ async function main(): Promise<number> {
   db.pragma("busy_timeout = 30000");
   ensureTables(db);
 
+  if (streets) return collectStreetsMain(db, city, all, { dry, force, budgetMin });
   if (!all) return collectCity(db, city!, { dry, force });
 
   // EVERY CITY THAT HAS SOMETHING TO DRAW. The deploy collected the pilot
@@ -437,6 +456,88 @@ async function main(): Promise<number> {
   console.log(`\n── סיכום: ${okN} ערים נשמרו · ${failN} נכשלו${failed.length ? ` (${failed.slice(0, 20).join(" · ")}${failed.length > 20 ? " …" : ""})` : ""} ──`);
   console.log("   עיר שנכשלה: בדרך כלל אין ל-OSM שכונות מתויגות בשמות שלנו, או שה-Overpass היה עמוס — ריצה חוזרת מנסה רק את מה שחסר.");
   return failN && !okN ? 1 : 0;
+}
+
+/**
+ * LOCAL STREETS, PER CITY THAT ALREADY HAS A MAP. The whole-city payload
+ * carries only the arteries (rank 1–5); zoomed into a neighbourhood the
+ * reader needs the residential streets and their names (user feedback,
+ * 7.9.2026: "hard to make out the streets"). They go to city_map_streets
+ * with a bounding box each, and /api/city-map/[city]/streets serves the
+ * ones that cross the box on screen — Tel Aviv's full set is ~500 KB,
+ * a neighbourhood's slice a few tens.
+ */
+async function collectStreetsMain(
+  db: Database.Database, city: string | undefined, all: boolean,
+  { dry, force, budgetMin }: { dry: boolean; force: boolean; budgetMin: number }
+): Promise<number> {
+  if (!all) return collectStreets(db, city!, { dry, force });
+  const deadline = budgetMin > 0 ? Date.now() + budgetMin * MINUTE : Infinity;
+  const mapped = (db.prepare("SELECT city_name FROM city_map_meta").all() as Array<{ city_name: string }>).map((r) => r.city_name);
+  const have = new Set((db.prepare("SELECT DISTINCT city_name FROM city_map_streets").all() as Array<{ city_name: string }>).map((r) => r.city_name));
+  const sizes = new Map((db.prepare("SELECT city_name, COUNT(*) c FROM neighborhood_year_stats GROUP BY city_name").all() as Array<{ city_name: string; c: number }>).map((r) => [r.city_name, Number(r.c)]));
+  const todo = (force ? mapped : mapped.filter((c) => !have.has(c))).sort((a, b) => (sizes.get(b) ?? 0) - (sizes.get(a) ?? 0));
+  console.log(`── רחובות מקומיים: ${todo.length} ערים לאיסוף (${have.size} כבר יש, ${mapped.length} עם מפה) ──`);
+  let okN = 0, failN = 0;
+  for (let i = 0; i < todo.length; i++) {
+    if (Date.now() > deadline) { console.log(`\n⏸  תקציב הזמן (${budgetMin} דק׳) נגמר — ${todo.length - i} ערים בריצה הבאה`); break; }
+    console.log(`\n[${i + 1}/${todo.length}] ${todo[i]}`);
+    let code = 1;
+    try { code = await collectStreets(db, todo[i], { dry, force: true }); } catch (e) { console.error(`✗ ${todo[i]}: ${e instanceof Error ? e.message : String(e)}`); }
+    if (code === 0) okN++; else failN++;
+    if (i < todo.length - 1) await sleep(PAUSE_BETWEEN_CITIES_MS);
+  }
+  console.log(`\n── סיכום רחובות: ${okN} ערים נשמרו · ${failN} נכשלו ──`);
+  return failN && !okN ? 1 : 0;
+}
+
+async function collectStreets(db: Database.Database, city: string, { dry, force }: { dry: boolean; force: boolean }): Promise<number> {
+  const meta = db.prepare("SELECT min_lon, min_lat, max_lon, max_lat FROM city_map_meta WHERE city_name = ?").get(city) as
+    { min_lon: number; min_lat: number; max_lon: number; max_lat: number } | undefined;
+  if (!meta) { console.error(`✗ ל${city} אין עדיין מפה — הרחובות נאספים לתוך המסגרת שלה`); return 1; }
+  if (!force && !dry) {
+    const existing = db.prepare("SELECT COUNT(*) c FROM city_map_streets WHERE city_name=?").get(city) as { c: number };
+    if (existing.c > 0) { console.log(`↷ ל${city} כבר יש ${existing.c} רחובות מקומיים. --force כדי לאסוף מחדש.`); return 0; }
+  }
+  const bbox: BBox = { minLon: meta.min_lon, minLat: meta.min_lat, maxLon: meta.max_lon, maxLat: meta.max_lat };
+  console.log(`מושך רחובות מקומיים במסגרת ${city}…`);
+  let elements: OsmElement[];
+  try { elements = await fetchOverpass(buildStreetsQuery(bbox)); }
+  catch (e) { console.error(`✗ משיכת הרחובות נכשלה. ${e instanceof Error ? e.message : String(e)}`); return 1; }
+  const projectPoint = makeProjector(bbox);
+  const rows: Array<{ rank: number; name: string; path: string; length: number; minx: number; miny: number; maxx: number; maxy: number }> = [];
+  let rawPoints = 0, keptPoints = 0;
+  for (const el of elements) {
+    const tags = el.tags ?? {};
+    const rank = tags.highway ? LOCAL_RANKS[tags.highway] : undefined;
+    if (rank === undefined || !tags.name) continue;
+    const raw = lineOf(el);
+    if (!raw) continue;
+    rawPoints += raw.length;
+    const simplified = simplify(raw.map(projectPoint), TOLERANCE_LINE);
+    if (simplified.length < 2) continue;
+    // entirely off the canvas: not this city's street
+    if (simplified.every((p) => p[0] < 0 || p[0] > 1000 || p[1] < 0 || p[1] > 1000)) continue;
+    keptPoints += simplified.length;
+    const xs = simplified.map((p) => p[0]), ys = simplified.map((p) => p[1]);
+    rows.push({
+      rank, name: tags.name, path: lineToPath(simplified), length: lineLength(simplified),
+      minx: Math.min(...xs), miny: Math.min(...ys), maxx: Math.max(...xs), maxy: Math.max(...ys),
+    });
+  }
+  const bytes = Buffer.byteLength(JSON.stringify(rows.map((r) => r.path)), "utf8");
+  console.log(`רחובות מקומיים: ${rows.length} · נקודות ${rawPoints.toLocaleString("he-IL")} → ${keptPoints.toLocaleString("he-IL")} · ${(bytes / 1024).toFixed(0)}KB`);
+  if (dry) { console.log("(--dry-run — לא נכתב כלום)"); return 0; }
+  if (!rows.length) { console.error("✗ אף רחוב מקומי במסגרת — לא נכתב כלום"); return 1; }
+  db.transaction(() => {
+    db.prepare("DELETE FROM city_map_streets WHERE city_name=?").run(city);
+    const ins = db.prepare(
+      `INSERT INTO city_map_streets (city_name, rank, name, path_d, length, minx, miny, maxx, maxy) VALUES (?,?,?,?,?,?,?,?,?)`
+    );
+    for (const r of rows) ins.run(city, r.rank, r.name, r.path, r.length, r.minx, r.miny, r.maxx, r.maxy);
+  })();
+  console.log(`✓ נשמרו ${rows.length} רחובות מקומיים ל${city}`);
+  return 0;
 }
 
 async function collectCity(db: Database.Database, city: string, { dry, force }: { dry: boolean; force: boolean }): Promise<number> {
@@ -715,6 +816,16 @@ function ensureTables(db: Database.Database) {
       length REAL
     );
     CREATE INDEX IF NOT EXISTS idx_maplines_city ON city_map_lines(city_name, rank);
+    CREATE TABLE IF NOT EXISTS city_map_streets (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      city_name TEXT NOT NULL,
+      rank INTEGER NOT NULL,
+      name TEXT,
+      path_d TEXT NOT NULL,
+      length REAL,
+      minx REAL, miny REAL, maxx REAL, maxy REAL
+    );
+    CREATE INDEX IF NOT EXISTS idx_mapstreets_city ON city_map_streets(city_name);
     CREATE TABLE IF NOT EXISTS city_map_meta (
       city_name TEXT PRIMARY KEY,
       min_lon REAL, min_lat REAL, max_lon REAL, max_lat REAL,

@@ -188,6 +188,20 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 50 * MINUTE,
   },
   {
+    id: "city-streets",
+    cmd: "npx",
+    args: ["tsx", "scripts/collect-city-map.ts", "--streets", "--all", "--budget-min", "30"],
+    label: "רחובות מקומיים מ-OpenStreetMap → לכל עיר עם מפה",
+    why: "The city map's payload carries the arteries only; zoomed into a neighbourhood the reader needs the residential streets and their names (user feedback 7.9.2026). One Overpass query per mapped city, into the map's own frame, stored with a bounding box per street so the page fetches only the box on screen. Skips a city that already has them; a 30-minute nightly share finishes the country in a few nights and is then a no-op.",
+    host: "https://overpass-api.de",
+    probe: {
+      url: "https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%3Bnode(1)%3Bout%3B",
+      method: "GET",
+      expectJson: true,
+    },
+    timeoutMs: 40 * MINUTE,
+  },
+  {
     id: "osm-addresses",
     cmd: "npx",
     args: ["tsx", "scripts/import-osm-addresses.ts", "--budget-min", "45"],

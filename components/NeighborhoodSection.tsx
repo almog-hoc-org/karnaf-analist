@@ -178,6 +178,7 @@ export default function NeighborhoodSection({
         <div>
           <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white">
             <CityMap
+              cityName={cityName}
               neighborhoods={map.neighborhoods}
               lines={map.lines}
               active={active}

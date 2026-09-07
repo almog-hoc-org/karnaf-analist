@@ -9,7 +9,7 @@ import { fromToText } from "@/components/FromTo";
 import { citySearch } from "@/lib/citySearch";
 import { labelForPath, sectionLabel } from "@/lib/pageLabels";
 import { reconcile, defaultOrder, PAGE_KEYS, PAGE_SECTIONS } from "@/lib/pageSections";
-import { priceBins, binOf, buildCityMap, type CityMapGeometry } from "@/lib/cityMap";
+import { priceBins, binOf, buildCityMap, type CityMapGeometry, streetsInBox } from "@/lib/cityMap";
 import { normHoodKey } from "@/lib/hoodKey";
 import { neighborhoodDealsQuery, DEAL_SCOPES } from "@/lib/neighborhoodDeals";
 import { resolveHoodName, hoodRank } from "@/lib/neighborhoodPage";
@@ -1745,6 +1745,9 @@ describe("OpenStreetMap addresses and municipal files", () => {
     const ids = SOURCES.map((s) => s.id);
     expect(ids.indexOf("city-maps")).toBeGreaterThanOrEqual(0);
     expect(ids.indexOf("city-maps")).toBeLessThan(ids.indexOf("osm-addresses"));
+    // the local streets need the map's frame, so they come after the maps
+    expect(ids.indexOf("city-streets")).toBeGreaterThan(ids.indexOf("city-maps"));
+    expect(SOURCES.find((s) => s.id === "city-streets")!.args).toContain("--streets");
     const maps = SOURCES.find((s) => s.id === "city-maps")!;
     expect(maps.args).toContain("--all");
     expect(maps.args).toContain("--budget-min");
@@ -1968,6 +1971,20 @@ describe("govmap answers in Web Mercator — the CRS is read off the numbers", (
     expect(anyToWgs84(93.3, 46.4)).toBeNull();
     expect(anyToWgs84(0, 0)).toBeNull();
     expect(anyToWgs84(NaN, 1)).toBeNull();
+  });
+});
+
+describe("local streets per box (lib/cityMap streetsInBox)", () => {
+  const st = (minx: number, miny: number, maxx: number, maxy: number) => ({ minx, miny, maxx, maxy });
+  it("keeps a street that crosses the box, drops one wholly outside", () => {
+    const box = { x: 100, y: 100, w: 200, h: 200 };
+    const inside = st(150, 150, 180, 160);
+    const crossing = st(50, 250, 400, 260);
+    const touching = st(300, 100, 350, 120);
+    const outside = st(400, 400, 500, 500);
+    const above = st(120, 10, 130, 90);
+    expect(streetsInBox([inside, crossing, touching, outside, above], box)).toEqual([inside, crossing, touching]);
+    expect(streetsInBox([], box)).toEqual([]);
   });
 });
 

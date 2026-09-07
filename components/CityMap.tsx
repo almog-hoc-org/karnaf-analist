@@ -6,6 +6,7 @@ import {
   MAP_FILLS, MAP_NO_DATA, MAP_WATER, MAP_COAST, MAP_ROAD, MAP_ROAD_ZOOMED, MAP_ROAD_LABEL, MAP_SELECTED,
 } from "@/lib/chartColors";
 import { FULL_VIEW, VIEW_SIZE, viewBoxAttr, type ViewBox } from "@/lib/geo";
+import { withBasePath } from "@/lib/basePath";
 import { useAnimatedViewBox } from "@/lib/useAnimatedViewBox";
 
 /**
@@ -44,7 +45,7 @@ import { useAnimatedViewBox } from "@/lib/useAnimatedViewBox";
  */
 
 /** Stroke width per road class (view-box units; the box is 1000 wide). */
-const ROAD_WIDTH: Record<number, number> = { 1: 1.9, 2: 1.5, 3: 1.1, 4: 0.8, 5: 0.55 };
+const ROAD_WIDTH: Record<number, number> = { 1: 1.9, 2: 1.5, 3: 1.1, 4: 0.8, 5: 0.55, 6: 0.42, 7: 0.32 };
 
 /** At most this many street names. Beyond it the map is a word cloud. */
 const MAX_ROAD_LABELS = 10;
@@ -66,10 +67,13 @@ export default function CityMap({
   onPin,
   viewBox,
   children,
+  cityName,
   className = "",
 }: {
   neighborhoods: MappedNeighborhood[];
   lines: MapLine[];
+  /** with it, the zoomed view fetches the local streets of the box on screen */
+  cityName?: string;
   /** the neighbourhood highlighted right now, from the shared section state */
   active: string | null;
   onHover: (name: string | null) => void;
@@ -154,7 +158,31 @@ export default function CityMap({
 
   const water = useMemo(() => lines.filter((l) => l.kind === "water"), [lines]);
   const coast = useMemo(() => lines.filter((l) => l.kind === "coast"), [lines]);
-  const roads = useMemo(() => lines.filter((l) => l.kind === "road"), [lines]);
+  const arteries = useMemo(() => lines.filter((l) => l.kind === "road"), [lines]);
+
+  // THE LOCAL STREETS, FETCHED FOR THE BOX ON SCREEN. The whole-city payload
+  // carries the arteries only; zoomed in, the residential streets and their
+  // names are what a reader orients by. One request per box, and a box that
+  // is still inside the last fetched one (fetched 1.6× larger) costs nothing.
+  const [local, setLocal] = useState<{ box: ViewBox; lines: MapLine[] } | null>(null);
+  useEffect(() => {
+    if (!zoomed || !cityName) return;
+    const inside = local && vb.x >= local.box.x && vb.y >= local.box.y
+      && vb.x + vb.w <= local.box.x + local.box.w && vb.y + vb.h <= local.box.y + local.box.h;
+    if (inside) return;
+    const side = vb.w * 1.6;
+    const box = { x: Math.max(0, vb.x - (side - vb.w) / 2), y: Math.max(0, vb.y - (side - vb.h) / 2), w: side, h: side };
+    let cancelled = false;
+    const t = setTimeout(() => {
+      const q = new URLSearchParams({ x: box.x.toFixed(1), y: box.y.toFixed(1), w: box.w.toFixed(1), h: box.h.toFixed(1) });
+      fetch(withBasePath(`/api/city-map/${encodeURIComponent(cityName)}/streets?${q}`))
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then((j: { lines: MapLine[] }) => { if (!cancelled) setLocal({ box, lines: j.lines ?? [] }); })
+        .catch(() => { if (!cancelled) setLocal({ box, lines: [] }); });
+    }, 200);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [zoomed, cityName, vb.x, vb.y, vb.w, vb.h, local]);
+  const roads = useMemo(() => (zoomed && local ? [...arteries, ...local.lines] : arteries), [arteries, local, zoomed]);
 
   /* The longest named arteries, one label each. Longest is the right proxy for
      "the road a reader orients by", and it needs no extra data. */
