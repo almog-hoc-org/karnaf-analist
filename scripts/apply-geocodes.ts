@@ -17,7 +17,7 @@ import fs from "fs";
 import path from "path";
 import { ensureGeocodeTablesSync } from "../lib/geocodeDb";
 import { chooseGeocode, type Geocode } from "../lib/geocode";
-import { itmToWgs84 } from "../lib/itm";
+import { anyToWgs84 } from "../lib/itm";
 import type { GeocodeAnswer } from "./geocode-govmap-residue";
 
 const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");
@@ -51,8 +51,12 @@ function main(): number {
           { lon: number; lat: number; itm_x: number; itm_y: number; level: Geocode["level"]; source: Geocode["source"] } | undefined;
         const curG: Geocode | null = cur ? { lon: cur.lon, lat: cur.lat, itmX: cur.itm_x, itmY: cur.itm_y, level: cur.level, source: cur.source } : null;
         let incoming: Geocode;
-        if (a.x != null && a.y != null && a.level !== "none") {
-          const [lon, lat] = itmToWgs84(a.x, a.y);
+        // The CRS is read off the numbers (ITM, Web Mercator or WGS84 — govmap's
+        // autocomplete answers in Web Mercator, measured 7.9.2026); a point that
+        // is none of them is not a location and is stored as no answer.
+        const wgs = a.x != null && a.y != null && a.level !== "none" ? anyToWgs84(a.x, a.y) : null;
+        if (wgs) {
+          const [lon, lat] = wgs;
           incoming = { lon, lat, itmX: a.x, itmY: a.y, level: a.level, source: "govmap", rawLabel: a.label };
         } else {
           incoming = { lon: null, lat: null, itmX: null, itmY: null, level: "none", source: "govmap", rawLabel: method };

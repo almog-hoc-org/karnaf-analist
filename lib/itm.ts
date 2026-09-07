@@ -185,3 +185,44 @@ export function looksLikeWgs84(lon: number, lat: number): boolean {
   return Number.isFinite(lon) && Number.isFinite(lat)
     && lon >= 34 && lon <= 36.2 && lat >= 29.3 && lat <= 33.5;
 }
+
+/* ───────────── Web Mercator (EPSG:3857) — what govmap's autocomplete returns ───────────── */
+
+const WEB_MERCATOR_R = 6378137;
+
+/**
+ * MEASURED 7.9.2026 (Bat Yam, 1,730 answers): govmap's search autocomplete
+ * gives `shape: POINT(3868879 3765962)` — that is Web Mercator metres
+ * (EPSG:3857), not ITM. Fed to the ITM inverse it became lon 93°, lat 46°:
+ * Mongolia. So the CRS of a point is DETECTED from its magnitude, never
+ * assumed per source — see anyToWgs84.
+ */
+export function webMercatorToWgs84(x: number, y: number): LonLat {
+  const lon = (x / WEB_MERCATOR_R) * (180 / Math.PI);
+  const lat = (2 * Math.atan(Math.exp(y / WEB_MERCATOR_R)) - Math.PI / 2) * (180 / Math.PI);
+  return [lon, lat];
+}
+
+/** Is this pair plausibly Web Mercator metres inside Israel? */
+export function looksLikeWebMercator(x: number, y: number): boolean {
+  return Number.isFinite(x) && Number.isFinite(y)
+    && x >= 3_780_000 && x <= 4_030_000 && y >= 3_400_000 && y <= 3_960_000;
+}
+
+/**
+ * A point in whichever of the three systems Israeli sources use, as WGS84 —
+ * or null when it is none of them (a source answered with something that is
+ * not a location in Israel). The three magnitude ranges do not overlap.
+ */
+export function anyToWgs84(x: number, y: number): LonLat | null {
+  if (looksLikeWgs84(x, y)) return [x, y];
+  if (looksLikeItm(x, y)) {
+    const p = itmToWgs84(x, y);
+    return looksLikeWgs84(p[0], p[1]) ? p : null;
+  }
+  if (looksLikeWebMercator(x, y)) {
+    const p = webMercatorToWgs84(x, y);
+    return looksLikeWgs84(p[0], p[1]) ? p : null;
+  }
+  return null;
+}

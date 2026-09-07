@@ -31,7 +31,7 @@ import { parseInlineDraft } from "@/components/InlineEdit";
 import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
 import { distanceM, bboxAroundM, project, makeProjector, makeUnprojector, pathBBox, zoomViewBox, viewBoxAttr, FULL_VIEW, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
 import { normStreet, normHouse, addressKey, addressKeyString } from "@/lib/addressKey";
-import { ITM, itmToWgs84, wgs84ToItm, looksLikeItm, looksLikeWgs84 } from "@/lib/itm";
+import { ITM, itmToWgs84, wgs84ToItm, looksLikeItm, looksLikeWgs84, webMercatorToWgs84, looksLikeWebMercator, anyToWgs84 } from "@/lib/itm";
 import { chooseGeocode, levelFromGovmapResult, parseWktPoint, type Geocode } from "@/lib/geocode";
 import { joinDealsToGeocodes, capPoints, pinBin, median, defaultWindow, clampWindow, ymOf, pinsWorthShowing, type DealRow, type GeoRow, type DealPoint } from "@/lib/dealPinTypes";
 import { hoodPointsQuery } from "@/lib/neighborhoodDeals";
@@ -1948,6 +1948,26 @@ describe("nadlan date shift — the measured one-day twin", () => {
     expect(shiftDate("2026-01-01", -1)).toBe("2025-12-31");
     expect(shiftDate("2025-11-10T00:00:00", 1)).toBe("2025-11-11");
     expect(shiftDate(shiftDate("2025-03-01", 1), -1)).toBe("2025-03-01");
+  });
+});
+
+describe("govmap answers in Web Mercator — the CRS is read off the numbers", () => {
+  it("converts the measured Bat Yam answer to Bat Yam, not Mongolia", () => {
+    const [lon, lat] = webMercatorToWgs84(3868879.2823295738, 3765962.7269321126);
+    expect(lon).toBeGreaterThan(34.74); expect(lon).toBeLessThan(34.77);
+    expect(lat).toBeGreaterThan(32.00); expect(lat).toBeLessThan(32.04);
+    expect(looksLikeWebMercator(3868879, 3765962)).toBe(true);
+    expect(looksLikeWebMercator(179700, 665800)).toBe(false);
+  });
+  it("anyToWgs84 dispatches by magnitude and refuses what is nowhere", () => {
+    expect(anyToWgs84(34.76, 32.05)).toEqual([34.76, 32.05]);
+    const itm = anyToWgs84(179700, 665800)!;
+    expect(itm[0]).toBeGreaterThan(34.7); expect(itm[1]).toBeGreaterThan(32.0);
+    const merc = anyToWgs84(3868879, 3765962)!;
+    expect(merc[0]).toBeGreaterThan(34.7); expect(merc[1]).toBeGreaterThan(32.0);
+    expect(anyToWgs84(93.3, 46.4)).toBeNull();
+    expect(anyToWgs84(0, 0)).toBeNull();
+    expect(anyToWgs84(NaN, 1)).toBeNull();
   });
 });
 
