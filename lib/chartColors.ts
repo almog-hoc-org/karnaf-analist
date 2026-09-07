@@ -92,6 +92,8 @@ export const MAP_COAST = "#b8c7d4";
 /** Streets, drawn OVER the opaque fills as a knockout — a white mesh on top
  *  reads as roads without tinting the colour underneath. */
 export const MAP_ROAD = "#ffffff";
+/** the road mesh once a neighbourhood is zoomed and the fills have faded — white would vanish */
+export const MAP_ROAD_ZOOMED = "#94a3b8"; // slate-400
 export const MAP_ROAD_LABEL = "#475569"; // slate-600 — needs a white halo over the deep end
 
 /** The pinned/hovered shape. An outline, not an opacity change: with opaque

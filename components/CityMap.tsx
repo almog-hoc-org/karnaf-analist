@@ -3,7 +3,7 @@
 import { useMemo, type ReactNode } from "react";
 import type { MappedNeighborhood, MapLine } from "@/lib/cityMap";
 import {
-  MAP_FILLS, MAP_NO_DATA, MAP_WATER, MAP_COAST, MAP_ROAD, MAP_ROAD_LABEL, MAP_SELECTED,
+  MAP_FILLS, MAP_NO_DATA, MAP_WATER, MAP_COAST, MAP_ROAD, MAP_ROAD_ZOOMED, MAP_ROAD_LABEL, MAP_SELECTED,
 } from "@/lib/chartColors";
 import { FULL_VIEW, VIEW_SIZE, viewBoxAttr, type ViewBox } from "@/lib/geo";
 import { useAnimatedViewBox } from "@/lib/useAnimatedViewBox";
@@ -19,6 +19,9 @@ import { useAnimatedViewBox } from "@/lib/useAnimatedViewBox";
  * the whole price ramp came out as pastels and the lightest step read as
  * white. The fills are opaque now; a white mesh on top reads as roads without
  * tinting the colour underneath, which is the actual information.
+ * The one exception is the zoomed view of a pinned neighbourhood: there the
+ * fill fades to a tint and the mesh turns grey, because inside one
+ * neighbourhood the pins and the street names are the information.
  *
  * No map library and no tiles. The geometry was projected and simplified once
  * by scripts/collect-city-map.ts and stored as path strings, so this component
@@ -70,6 +73,13 @@ export default function CityMap({
 }) {
   const vb = useAnimatedViewBox(viewBox ?? FULL_VIEW);
   const k = vb.w / VIEW_SIZE;
+  // ZOOMED IN, THE FILL STEPS BACK. At city scale the colour IS the
+  // information. Inside one neighbourhood the information is the pins, the
+  // streets and the names, and an opaque fill hid all three (user report,
+  // 7.9.2026, Bat Yam). So the fills fade to a tint, the pinned one a little
+  // stronger than its neighbours, and the road mesh turns from white knockout
+  // to a grey line — white over a pale tint is invisible.
+  const zoomed = k < 0.6;
 
   const water = useMemo(() => lines.filter((l) => l.kind === "water"), [lines]);
   const coast = useMemo(() => lines.filter((l) => l.kind === "coast"), [lines]);
@@ -122,7 +132,8 @@ export default function CityMap({
           key={n.neighborhood}
           d={n.path}
           fill={n.bin == null ? "url(#map-nodata)" : MAP_FILLS[n.bin]}
-          stroke="#ffffff"
+          fillOpacity={zoomed ? (n.neighborhood === active ? 0.3 : 0.14) : 1}
+          stroke={zoomed ? "#94a3b8" : "#ffffff"}
           strokeWidth={0.9 * k}
           className="cursor-pointer"
           onMouseEnter={() => onHover(n.neighborhood)}
@@ -139,7 +150,7 @@ export default function CityMap({
       {/* Streets ON TOP, as a white knockout. pointerEvents none so the mesh
           never steals a click meant for the shape underneath it. */}
       <g
-        stroke={MAP_ROAD} fill="none" strokeOpacity={0.55}
+        stroke={zoomed ? MAP_ROAD_ZOOMED : MAP_ROAD} fill="none" strokeOpacity={zoomed ? 0.85 : 0.55}
         strokeLinecap="round" strokeLinejoin="round" pointerEvents="none"
       >
         {roads.map((r, i) => (
@@ -186,7 +197,6 @@ export default function CityMap({
       {neighborhoods
         .filter((n) => n.neighborhood === active)
         .map((n) => {
-          const zoomed = k < 0.6;
           const lx = zoomed ? vb.x + vb.w / 2 : n.cx;
           const ly = zoomed ? vb.y + 22 * k : n.cy;
           return (
