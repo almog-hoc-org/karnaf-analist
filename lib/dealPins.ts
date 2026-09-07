@@ -23,7 +23,7 @@ import { prisma } from "./db";
 import { cachedMarket } from "./cache";
 import { getRuleNum } from "./systemRules";
 import { makeProjector, type BBox } from "./geo";
-import { addressKeyString, normHouse, normStreet } from "./addressKey";
+import { addressKey, addressKeyString, normHouse, normStreet } from "./addressKey";
 import { loadCityMapGeometry } from "./cityMap";
 import type { DealScope } from "./neighborhoodDeals";
 
@@ -156,6 +156,56 @@ async function loadAreaDealPointsUncached(
 }
 
 export const loadAreaDealPoints = cachedMarket(loadAreaDealPointsUncached, ["area-deal-points"]);
+
+export interface LocatedAddress {
+  x: number; y: number;
+  level: "house" | "street";
+  /** how many map units one metre is here — the radius circle is drawn from it */
+  unitsPerMetre: number;
+}
+
+/**
+ * One address as a point on the city's map — the query address of /check,
+ * the building a reader is standing in front of. House level first; the
+ * street centroid when that is all there is, and the caller says so.
+ */
+async function locateAddressUncached(cityName: string, street: string, house: string): Promise<LocatedAddress | null> {
+  const geometry = await loadCityMapGeometry(cityName);
+  if (!geometry.bbox) return null;
+  const key = addressKey(cityName, street, house);
+  if (!key) return null;
+  const candidates = [key.houseNorm, ...normHouse(house).alts].filter(Boolean);
+  let row: { lon: number; lat: number; level: string } | undefined;
+  try {
+    if (candidates.length) {
+      const rows = await prisma.$queryRawUnsafe<Array<{ lon: number; lat: number; level: string; house_norm: string }>>(
+        `SELECT lon, lat, level, house_norm FROM address_geocodes
+          WHERE city_name = ? AND street_norm = ? AND level = 'house' AND lon IS NOT NULL AND lat IS NOT NULL
+            AND house_norm IN (${candidates.map(() => "?").join(",")})`,
+        cityName, key.streetNorm, ...candidates
+      );
+      row = rows.find((r) => r.house_norm === key.houseNorm) ?? rows[0];
+    }
+    if (!row) {
+      const rows = await prisma.$queryRawUnsafe<Array<{ lon: number; lat: number; level: string }>>(
+        `SELECT lon, lat, level FROM address_geocodes
+          WHERE city_name = ? AND street_norm = ? AND house_norm = '' AND level = 'street' AND lon IS NOT NULL AND lat IS NOT NULL LIMIT 1`,
+        cityName, key.streetNorm
+      );
+      row = rows[0];
+    }
+  } catch { return null; }
+  if (!row) return null;
+  const project = makeProjector(geometry.bbox);
+  const lon = Number(row.lon), lat = Number(row.lat);
+  const [x, y] = project([lon, lat]);
+  // 100 m east of the point, projected: the local scale of this map
+  const dLon = (100 / 6_371_008.8) * (180 / Math.PI) / Math.cos((lat * Math.PI) / 180);
+  const [x2] = project([lon + dLon, lat]);
+  return { x, y, level: row.level === "house" ? "house" : "street", unitsPerMetre: Math.abs(x2 - x) / 100 };
+}
+
+export const locateAddress = cachedMarket(locateAddressUncached, ["locate-address"]);
 
 /** The neighbourhood form, kept for the callers that only know a hood. */
 export function loadHoodDealPoints(cityName: string, neighborhood: string, scope: DealScope, from: number, to: number) {

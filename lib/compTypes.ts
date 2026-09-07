@@ -57,6 +57,8 @@ export interface StreetComp {
   matchedAddress: string | null;
   /** the neighbourhood the rung matched on, when geoLevel === "neighborhood" */
   matchedHood: string | null;
+  /** the neighbourhood the query resolved to (typed or inferred), whatever rung answered — for the map */
+  hood: string | null;
   /** the hood was not typed by the user — it was looked up from the street's
    *  modal-majority assignment in search_index */
   hoodInferred: boolean;

@@ -221,6 +221,7 @@ export async function computeStreetComp(
       radiusM: geo === "radius" ? radiusM : null,
       matchedAddress: geo === "radius" ? centre!.label : null,
       matchedHood: geo === "neighborhood" ? nb : null,
+      hood: nb,
       hoodInferred: geo === "neighborhood" && hoodInferred,
     };
   }
@@ -229,6 +230,6 @@ export async function computeStreetComp(
     level: "city", geoLevel: "city", matchLevel: "any",
     label: `לא נמצאו עסקאות ${shOnly ? "יד-שנייה " : ""}להשוואה ב${city} ב-${years} השנים האחרונות`,
     medianSqm: null, n: 0, areaRange: null, rooms: hasRooms ? rooms! : null, years, recent: [],
-    matchedStreet: null, radiusM: null, matchedAddress: null, matchedHood: null, hoodInferred: false,
+    matchedStreet: null, radiusM: null, matchedAddress: null, matchedHood: null, hood: nb, hoodInferred: false,
   };
 }

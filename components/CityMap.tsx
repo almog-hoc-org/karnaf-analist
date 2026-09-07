@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import type { MappedNeighborhood, MapLine } from "@/lib/cityMap";
 import {
   MAP_FILLS, MAP_NO_DATA, MAP_WATER, MAP_COAST, MAP_ROAD, MAP_ROAD_ZOOMED, MAP_ROAD_LABEL, MAP_SELECTED,
@@ -48,6 +48,15 @@ const ROAD_WIDTH: Record<number, number> = { 1: 1.9, 2: 1.5, 3: 1.1, 4: 0.8, 5: 
 
 /** At most this many street names. Beyond it the map is a word cloud. */
 const MAX_ROAD_LABELS = 10;
+/** Zoomed in, more names fit and each one matters more. */
+const MAX_ROAD_LABELS_ZOOMED = 16;
+/** The narrowest box the wheel can reach: 12× the city. */
+const MIN_BOX = 80;
+
+const clampBox = (b: ViewBox): ViewBox => {
+  const w = Math.min(VIEW_SIZE, Math.max(MIN_BOX, b.w));
+  return { x: Math.max(0, Math.min(VIEW_SIZE - w, b.x)), y: Math.max(0, Math.min(VIEW_SIZE - w, b.y)), w, h: w };
+};
 
 export default function CityMap({
   neighborhoods,
@@ -71,8 +80,70 @@ export default function CityMap({
   children?: ReactNode;
   className?: string;
 }) {
-  const vb = useAnimatedViewBox(viewBox ?? FULL_VIEW);
+  // THE READER'S OWN ZOOM, ON TOP OF THE PAGE'S. The page decides the box
+  // (the whole city, a pinned neighbourhood); the wheel and a drag let the
+  // reader move inside it, and any new box from the page resets that. Wheel
+  // zoom arms only after a click on the map or with Ctrl/⌘ held, so a page
+  // scrolling past the map is never hijacked (user request, 7.9.2026:
+  // "continuous zoom in and out, hard to navigate").
+  const base = viewBox ?? FULL_VIEW;
+  const baseKey = `${base.x},${base.y},${base.w},${base.h}`;
+  const [userBox, setUserBox] = useState<ViewBox | null>(null);
+  const [armed, setArmed] = useState(false);
+  useEffect(() => { setUserBox(null); }, [baseKey]);
+  const vb = useAnimatedViewBox(userBox ?? base, userBox ? 0 : 350);
   const k = vb.w / VIEW_SIZE;
+
+  const svgRef = useRef<SVGSVGElement>(null);
+  const vbRef = useRef(vb);
+  vbRef.current = vb;
+  const armedRef = useRef(false);
+  armedRef.current = armed;
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!armedRef.current && !e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      const cur = vbRef.current;
+      const rect = el.getBoundingClientRect();
+      const w = Math.min(VIEW_SIZE, Math.max(MIN_BOX, cur.w * Math.exp(e.deltaY * 0.0012)));
+      const mx = cur.x + ((e.clientX - rect.left) / rect.width) * cur.w;
+      const my = cur.y + ((e.clientY - rect.top) / rect.height) * cur.h;
+      const r = w / cur.w;
+      setUserBox(clampBox({ x: mx - (mx - cur.x) * r, y: my - (my - cur.y) * r, w, h: w }));
+    };
+    // passive:false so preventDefault can stop the page scrolling under the zoom
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const drag = useRef<{ x: number; y: number; box: ViewBox; moved: boolean } | null>(null);
+  const draggedRef = useRef(false);
+  const onPointerDown = (e: ReactPointerEvent<SVGSVGElement>) => {
+    if (e.button !== 0) return;
+    draggedRef.current = false;
+    setArmed(true);
+    drag.current = { x: e.clientX, y: e.clientY, box: vbRef.current, moved: false };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e: ReactPointerEvent<SVGSVGElement>) => {
+    const d = drag.current;
+    if (!d) return;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (!d.moved && Math.hypot(dx, dy) < 4) return;
+    d.moved = true;
+    draggedRef.current = true;
+    const rect = e.currentTarget.getBoundingClientRect();
+    setUserBox(clampBox({ ...d.box, x: d.box.x - (dx / rect.width) * d.box.w, y: d.box.y - (dy / rect.height) * d.box.h }));
+  };
+  const onPointerUp = (e: ReactPointerEvent<SVGSVGElement>) => {
+    drag.current = null;
+    try { e.currentTarget.releasePointerCapture(e.pointerId); } catch { /* not captured */ }
+  };
+  // a drag must not count as a click on the shape it ended over
+  const pin = (name: string | null) => { if (!draggedRef.current) onPin(name); };
+  const resetZoom = () => setUserBox(null);
   // ZOOMED IN, THE FILL STEPS BACK. At city scale the colour IS the
   // information. Inside one neighbourhood the information is the pins, the
   // streets and the names, and an opaque fill hid all three (user report,
@@ -87,20 +158,36 @@ export default function CityMap({
 
   /* The longest named arteries, one label each. Longest is the right proxy for
      "the road a reader orients by", and it needs no extra data. */
+  const namedRoads = useMemo(
+    () => roads.filter((r) => r.name).map((r) => { const [x, y] = midPoint(r.path); return { name: r.name!, rank: r.rank, length: r.length, x, y }; }),
+    [roads]
+  );
   const roadLabels = useMemo(() => {
-    const named = roads.filter((r) => r.name && r.rank <= 3);
+    // Zoomed in: every named road whose midpoint is in view, the long ones
+    // first — inside a neighbourhood the small streets are the orientation.
+    // Zoomed out: the city's arteries only.
+    const inView = zoomed
+      ? namedRoads.filter((r) => r.x >= vb.x && r.x <= vb.x + vb.w && r.y >= vb.y && r.y <= vb.y + vb.h)
+      : namedRoads.filter((r) => r.rank <= 3);
     const seen = new Set<string>();
-    return [...named]
+    return [...inView]
       .sort((a, b) => b.length - a.length)
-      .filter((r) => (seen.has(r.name!) ? false : (seen.add(r.name!), true)))
-      .slice(0, MAX_ROAD_LABELS)
-      .map((r) => { const [x, y] = midPoint(r.path); return { name: r.name!, x, y }; });
-  }, [roads]);
+      .filter((r) => (seen.has(r.name) ? false : (seen.add(r.name), true)))
+      .slice(0, zoomed ? MAX_ROAD_LABELS_ZOOMED : MAX_ROAD_LABELS);
+  }, [namedRoads, zoomed, vb.x, vb.y, vb.w, vb.h]);
 
   return (
+    <div className="relative">
     <svg
+      ref={svgRef}
       viewBox={viewBoxAttr(vb)}
       direction="ltr"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+      onDoubleClick={resetZoom}
+      style={{ cursor: drag.current?.moved ? "grabbing" : "grab", touchAction: "none" }}
       role="img"
       aria-label="מפת שכונות העיר, צבועה לפי מחיר למ״ר"
       className={`h-auto w-full ${className}`}
@@ -137,7 +224,7 @@ export default function CityMap({
           strokeWidth={0.9 * k}
           className="cursor-pointer"
           onMouseEnter={() => onHover(n.neighborhood)}
-          onClick={() => onPin(n.neighborhood)}
+          onClick={() => pin(n.neighborhood)}
         >
           <title>
             {n.summary
@@ -225,6 +312,22 @@ export default function CityMap({
           );
         })}
     </svg>
+    {userBox && (
+      <button
+        type="button"
+        onClick={resetZoom}
+        className="absolute left-2 top-2 rounded-lg border border-slate-200 bg-white/90 px-2 py-1 text-2xs font-bold text-slate-600 shadow-sm hover:bg-white"
+        title="חזרה לתצוגה המלאה"
+      >
+        ⟲ איפוס
+      </button>
+    )}
+    {!armed && (
+      <div className="pointer-events-none absolute bottom-2 left-2 rounded-lg bg-white/85 px-2 py-1 text-2xs text-slate-500">
+        לחיצה על המפה, ואז גלגלת להתקרב וגרירה להזיז
+      </div>
+    )}
+    </div>
   );
 }
 

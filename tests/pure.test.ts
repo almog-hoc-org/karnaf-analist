@@ -1069,7 +1069,7 @@ describe("comp match note (honest labeling)", () => {
   const base: StreetComp = {
     level: "street", geoLevel: "street", matchLevel: "tight", label: "",
     medianSqm: 30000, n: 12, areaRange: [80, 92], rooms: 4, years: 5,
-    recent: [], matchedStreet: "הרצל", radiusM: null, matchedAddress: null, matchedHood: null, hoodInferred: false,
+    recent: [], matchedStreet: "הרצל", radiusM: null, matchedAddress: null, matchedHood: null, hood: null, hoodInferred: false,
   };
 
   it("says WHAT the comparison is against, never 'התאמה מדויקת'", () => {

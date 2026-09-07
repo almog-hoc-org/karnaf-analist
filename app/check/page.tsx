@@ -6,6 +6,8 @@ import { rowAddress } from "@/lib/compTypes";
 import { whatsappShareUrl } from "@/lib/share";
 import { getCurrentUser } from "@/lib/auth";
 import CheckForm from "@/components/CheckForm";
+import AreaMap from "@/components/AreaMap";
+import { loadCityMapGeometry } from "@/lib/cityMap";
 import TrackableOutboundLink from "@/components/TrackableOutboundLink";
 
 /**
@@ -66,6 +68,10 @@ export default async function CheckPage({ searchParams }: Props) {
   // unverifiable when in fact we never had their town.
   const knownCity = city ? cities.includes(city) : false;
   const comp = knownCity ? await computeStreetComp(city, street || null, neighborhood || null, rooms, size, house || null) : null;
+  // The map around the address: only when the city has one, and only with a
+  // street to stand on. The marker and the radius need a house number too;
+  // without it the map shows the neighbourhood's deals.
+  const hasMap = knownCity && street ? (await loadCityMapGeometry(city)).bbox !== null : false;
 
   const askSqm = price && size ? price / size : null;
   const deltaPct = comp?.medianSqm && askSqm ? (askSqm / comp.medianSqm - 1) * 100 : null;
@@ -237,6 +243,28 @@ export default async function CheckPage({ searchParams }: Props) {
               </>
             )}
           </div>
+        </section>
+      )}
+
+      {comp && hasMap && (
+        <section className="mt-6">
+          <h2 className="mb-2 text-lg font-extrabold text-slate-900">
+            {house ? `${street} ${house} על המפה` : `${street} על המפה`}
+          </h2>
+          <p className="mb-3 text-sm text-slate-600">
+            {house
+              ? "הבניין שהזנתם, העסקאות שנסגרו סביבו, והרדיוס שבו נמדדה ההשוואה. לחיצה על נקודה מציגה את העסקה; גלגלת להתקרב, גרירה להזיז."
+              : "העסקאות שנסגרו ברחוב. הוסיפו מספר בית כדי לסמן את הבניין ואת הסביבה הקרובה."}
+          </p>
+          <AreaMap
+            cityName={city}
+            hood={comp.hood}
+            street={street}
+            house={house || undefined}
+            hasMap={hasMap}
+            marker={!!house}
+            pinsOf={house ? "hood" : "street"}
+          />
         </section>
       )}
 
