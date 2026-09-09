@@ -26,7 +26,7 @@
 import fs from "fs";
 import path from "path";
 import { GOVMAP_BASE, REQUEST_DELAY_MS, govmapFetch, isGeoBlockError } from "../lib/govmapDeals";
-import { levelFromGovmapResult, parseWktPoint, type GeocodeLevel } from "../lib/geocode";
+import { levelFromGovmapResult, parseWktPoint, type GeocodeLevel, answerMentionsTown } from "../lib/geocode";
 import type { TodoAddress } from "./export-geocode-residue";
 
 const argv = process.argv.slice(2);
@@ -62,7 +62,10 @@ async function geocodeOne(city: string, a: TodoAddress): Promise<Omit<GeocodeAns
   for (const r of results) {
     const pt = parseWktPoint(r.shape);
     const label = String(r.text ?? r.name ?? r.type ?? "");
-    const mentionsCity = !label || label.includes(city.split(/[\s-]/)[0]);
+    // the town names of both sides folded to their consonant skeletons — see
+    // lib/geocode.answerMentionsTown; `originalText` is govmap echoing OUR query
+    const mentionsCity = answerMentionsTown(label, city)
+      || answerMentionsTown(String((r as { originalText?: unknown }).originalText ?? ""), city);
     const level = levelFromGovmapResult({ label, type: r.type, hasPoint: !!pt });
     if (pt && mentionsCity && level !== "none") return { x: pt.x, y: pt.y, level, label: `${r.type ?? ""}|${label}` };
   }

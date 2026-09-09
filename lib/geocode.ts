@@ -68,6 +68,44 @@ export function levelFromGovmapResult(r: {
   return "none";
 }
 
+/**
+ * Does this answer belong to the town we asked about?
+ *
+ * MEASURED 8.9.2026: govmap answered correctly for ריינה, עספיא, אכסאל,
+ * כסרא-סמיע and ג'דיידה-מכר, and every answer was thrown away — the check
+ * looked for our spelling inside govmap's ("א-רינה", "עיספייא", "איכסאל",
+ * "כיסרא-סמיע", "ג'דידה-מכר"). Hebrew transliteration of Arabic names
+ * varies exactly in the mater lectionis letters, so the comparison drops
+ * them: quotes, hyphens, and every א/ו/י go, and what remains is the
+ * consonant skeleton both spellings share.
+ *
+ * A skeleton shorter than three letters is not evidence of anything, so
+ * such a town accepts any labelled answer — the query already named it.
+ */
+export function townSkeleton(name: string): string {
+  return name
+    .replace(/["'`׳״]/g, "")
+    .replace(/[-–—]/g, " ")
+    .replace(/[אוי]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function answerMentionsTown(label: string | null | undefined, town: string): boolean {
+  if (!label || !label.trim()) return true; // an unlabelled answer is not evidence against
+  const skel = townSkeleton(town);
+  // the whole name first, then its longest word — govmap drops a suffix
+  // ("שגב שלום" for "שגב שלום (שוקייב א-סלאם)") more often than it renames
+  const parts = [skel, ...skel.split(" ").sort((a, b) => b.length - a.length)];
+  const hay = townSkeleton(label);
+  for (const p of parts) {
+    if (p.length < 3) continue;
+    if (hay.includes(p)) return true;
+  }
+  // nothing long enough to test against: accept, the query already named the town
+  return parts.every((p) => p.length < 3);
+}
+
 /** Parse govmap's WKT point. `POINT(179650.12 665812.9)` → {x, y}; else null. */
 export function parseWktPoint(shape: string | null | undefined): { x: number; y: number } | null {
   const m = shape?.match(/POINT\s*\(\s*([-\d.]+)\s+([-\d.]+)\s*\)/i);

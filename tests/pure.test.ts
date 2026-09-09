@@ -32,7 +32,7 @@ import { MAP_FILLS, MAP_NO_DATA, MAP_WATER } from "@/lib/chartColors";
 import { distanceM, bboxAroundM, project, makeProjector, makeUnprojector, pathBBox, zoomViewBox, viewBoxAttr, FULL_VIEW, simplify, simplifyRing, decimate, MAX_SIMPLIFY_POINTS, lineLength, ringCentroid, emptyBBox, extendBBox, bboxIsEmpty, VIEW_SIZE, type LonLat, type Point } from "@/lib/geo";
 import { normStreet, normHouse, addressKey, addressKeyString } from "@/lib/addressKey";
 import { ITM, itmToWgs84, wgs84ToItm, looksLikeItm, looksLikeWgs84, webMercatorToWgs84, looksLikeWebMercator, anyToWgs84 } from "@/lib/itm";
-import { chooseGeocode, levelFromGovmapResult, parseWktPoint, type Geocode } from "@/lib/geocode";
+import { chooseGeocode, levelFromGovmapResult, parseWktPoint, type Geocode, answerMentionsTown, townSkeleton } from "@/lib/geocode";
 import { joinDealsToGeocodes, capPoints, pinBin, median, defaultWindow, clampWindow, ymOf, pinsWorthShowing, type DealRow, type GeoRow, type DealPoint } from "@/lib/dealPinTypes";
 import { hoodPointsQuery } from "@/lib/neighborhoodDeals";
 import { RULE_DEFS } from "@/lib/systemRules";
@@ -1951,6 +1951,35 @@ describe("nadlan date shift — the measured one-day twin", () => {
     expect(shiftDate("2026-01-01", -1)).toBe("2025-12-31");
     expect(shiftDate("2025-11-10T00:00:00", 1)).toBe("2025-11-11");
     expect(shiftDate(shiftDate("2025-03-01", 1), -1)).toBe("2025-03-01");
+  });
+});
+
+describe("does a govmap answer belong to the town we asked about", () => {
+  it("accepts the spellings that were wrongly rejected (measured 8.9.2026)", () => {
+    // govmap's spelling on the left, ours on the right
+    expect(answerMentionsTown("אל-ג'בל 1 א-רינה", "ריינה")).toBe(true);
+    expect(answerMentionsTown("מעסרת אל-עד'אם 51 עיספייא", "עספיא")).toBe(true);
+    expect(answerMentionsTown("רח' 102 12 איכסאל", "אכסאל")).toBe(true);
+    expect(answerMentionsTown("רח' 12 1 כיסרא-סמיע", "כסרא-סמיע")).toBe(true);
+    expect(answerMentionsTown("רח' 1009 1 ג'דידה-מכר", "ג'דיידה-מכר")).toBe(true);
+    // and the ones that already worked
+    expect(answerMentionsTown("הרצל 20 חיפה", "חיפה")).toBe(true);
+    expect(answerMentionsTown("ניצן 24 אור יהודה", "אור יהודה")).toBe(true);
+    expect(answerMentionsTown("אל אנביא 51 שגב שלום", "שגב שלום (שוקייב א-סלאם)")).toBe(true);
+    expect(answerMentionsTown("יפיע (יאפת א-נאס'רה) 3", "יפיע")).toBe(true);
+  });
+
+  it("still refuses an answer from another town", () => {
+    expect(answerMentionsTown("הרצל 20 חיפה", "באר שבע")).toBe(false);
+    expect(answerMentionsTown("הדס 2 צור יגאל", "צור הדסה")).toBe(false);
+    expect(answerMentionsTown("רוטשילד 5 תל אביב-יפו", "רמת גן")).toBe(false);
+  });
+
+  it("an unlabelled answer is not evidence against, and the skeleton drops the vowel letters", () => {
+    expect(answerMentionsTown("", "חיפה")).toBe(true);
+    expect(answerMentionsTown(null, "חיפה")).toBe(true);
+    expect(townSkeleton("כיסרא-סמיע")).toBe(townSkeleton("כסרא-סמיע"));
+    expect(townSkeleton("עיספייא")).toBe(townSkeleton("עספיא"));
   });
 });
 
