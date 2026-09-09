@@ -7,6 +7,7 @@ import { whatsappShareUrl } from "@/lib/share";
 import { getCurrentUser } from "@/lib/auth";
 import CheckForm from "@/components/CheckForm";
 import AreaMap from "@/components/AreaMap";
+import { ADDRESS_COVERAGE_NOTE } from "@/lib/addressCoverage";
 import { loadCityMapGeometry } from "@/lib/cityMap";
 import TrackableOutboundLink from "@/components/TrackableOutboundLink";
 
@@ -271,7 +272,7 @@ export default async function CheckPage({ searchParams }: Props) {
       <p className="mt-8 max-w-3xl text-2xs leading-relaxed text-slate-400">
         <Icon name="source-own" size="1em" /> ההשוואה מבוססת על עסקאות שדווחו לרשות המסים, נאספו ונוקו במאגר שלנו.
         המערכת מרחיבה את החיפוש בשלבים — רחוב ← סביבת הבניין (כשהוזן מספר בית והבניין ממוקם במפה) ← שכונה ← יישוב, וגודל מדויק ← ±20% ← אותו מספר חדרים —
-        ותמיד מציינת באיזה שלב נעצרה. זו אינה הערכת שמאי ואינה ייעוץ.
+        ותמיד מציינת באיזה שלב נעצרה. {ADDRESS_COVERAGE_NOTE} זו אינה הערכת שמאי ואינה ייעוץ.
         {" "}<Link href="/methodology" className="underline hover:text-indigo-700">מתודולוגיה →</Link>
       </p>
     </main>

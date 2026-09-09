@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ADDRESS_COVERAGE_NOTE } from "@/lib/addressCoverage";
 import { redirect } from "next/navigation";
 import Icon from "@/components/Icon";
 import TrendValue from "@/components/TrendValue";
@@ -88,6 +89,7 @@ export default async function StreetPage({ params }: PageProps) {
           {data.hood ? ` · ${Math.round((data.hoodShare ?? 0) * 100)}% מהן בשכונת ${data.hood}` : ""}
           {data.spellings.length > 1 ? ` · מאוחד מ-${data.spellings.length} איותים` : ""}
         </p>
+        <p className="mt-1 text-2xs leading-relaxed text-slate-400">{ADDRESS_COVERAGE_NOTE}</p>
       </header>
 
       {/* ── headline ── */}

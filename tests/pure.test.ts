@@ -2074,3 +2074,11 @@ describe("neighbourhood regions from the deals (lib/hoodRegions)", () => {
     expect(buildHoodShapes([], ["x"])).toEqual([]);
   });
 });
+
+describe("addressCoverage", () => {
+  it("the note names the month addresses start from, so the UI and the docs cannot drift apart", async () => {
+    const { ADDRESS_COVERAGE_FROM, ADDRESS_COVERAGE_NOTE } = await import("../lib/addressCoverage");
+    expect(ADDRESS_COVERAGE_FROM).toBe("9/2021");
+    expect(ADDRESS_COVERAGE_NOTE).toContain(ADDRESS_COVERAGE_FROM);
+  });
+});

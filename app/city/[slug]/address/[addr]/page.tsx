@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ADDRESS_COVERAGE_NOTE } from "@/lib/addressCoverage";
 import { redirect } from "next/navigation";
 import Icon from "@/components/Icon";
 import TrendValue from "@/components/TrendValue";
@@ -52,6 +53,7 @@ export default async function AddressPage({ params }: PageProps) {
           <p className="mt-3 text-sm text-slate-600">
             {parsed ? `אין במאגר עסקאות בכתובת הזו ב${cityName}.` : "כתובת צריכה להיות בצורה ״רחוב מספר״, למשל ״הרצל 12״."}
           </p>
+          {parsed && <p className="mt-2 text-2xs leading-relaxed text-slate-500">{ADDRESS_COVERAGE_NOTE}</p>}
           {parsed && (
             <Link href={`${cityHref}/street/${encodeURIComponent(parsed.street)}`} className="mt-4 inline-block text-sm font-bold text-indigo-700 hover:underline">כל העסקאות ברחוב {parsed.street} →</Link>
           )}
@@ -97,6 +99,7 @@ export default async function AddressPage({ params }: PageProps) {
           {data.floors ? ` · ${data.floors} קומות עם עסקאות` : ""}
           {data.sizes ? ` · ${Math.round(data.sizes[0])}–${Math.round(data.sizes[1])} מ״ר` : ""}
         </p>
+        <p className="mt-1 text-2xs leading-relaxed text-slate-400">{ADDRESS_COVERAGE_NOTE}</p>
       </header>
 
       {data.project.isProject && (
