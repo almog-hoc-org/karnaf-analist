@@ -28,7 +28,15 @@ const OUT = path.resolve(arg("out") ?? path.join(process.env.KARNAF_DATA_DIR ?? 
 const BUDGET = Number(arg("budget") ?? 0) || Infinity;
 const ONLY = arg("city");
 /** bump when the geocoder's method changes and 'none' answers deserve another ask */
-export const GEOCODE_METHOD = "geocode-v1";
+/**
+ * Bumped to v2 on 9.9.2026: the town-name check rejected correct answers
+ * whose Hebrew spelling of an Arabic name differed from ours (lib/geocode
+ * answerMentionsTown), and every one of those addresses was recorded as
+ * "asked, no answer" — so a rerun would have skipped them. A new version
+ * re-asks exactly the addresses that came back empty, and nothing else:
+ * a house-level geocode is never re-asked, whatever the version.
+ */
+export const GEOCODE_METHOD = "geocode-v2";
 
 /** filesystem-safe city name — the same rule as capture-govmap-addresses.ts */
 export function cityFileName(city: string): string {
