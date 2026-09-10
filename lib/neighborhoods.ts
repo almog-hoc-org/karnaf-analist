@@ -1,6 +1,7 @@
 import { prisma } from "./db";
 import { cachedMarket } from "./cache";
 import { getRuleNum } from "./systemRules";
+import { pickReferenceYear } from "./referenceYear";
 
 /**
  * Neighbourhood price levels, from `neighborhood_year_stats` (written by the
@@ -101,8 +102,9 @@ export async function neighborhoodSummary(
   if (!usable.length) return { rows: [], year: null, citySqm: null };
 
   // The latest year the city as a whole has coverage in — not each
-  // neighbourhood's own latest, which would compare 2026 against 2021.
-  const refYear = Math.max(...usable.map((c) => c.year));
+  // neighbourhood's own latest, which would compare 2026 against 2021 — and
+  // not a year that has barely started: see pickReferenceYear.
+  const refYear = pickReferenceYear(usable, getRuleNum("neighborhood_ref_year_min_hoods", 3));
   const atRef = usable.filter((c) => c.year === refYear);
   if (!atRef.length) return { rows: [], year: null, citySqm: null };
 

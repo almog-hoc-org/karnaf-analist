@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { pickReferenceYear } from "@/lib/referenceYear";
 import { gradeTrend, pickWindow } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
@@ -2080,5 +2081,29 @@ describe("addressCoverage", () => {
     const { ADDRESS_COVERAGE_FROM, ADDRESS_COVERAGE_NOTE } = await import("../lib/addressCoverage");
     expect(ADDRESS_COVERAGE_FROM).toBe("9/2021");
     expect(ADDRESS_COVERAGE_NOTE).toContain(ADDRESS_COVERAGE_FROM);
+  });
+});
+
+describe("pickReferenceYear", () => {
+  const cell = (neighborhood: string, year: number) => ({ neighborhood, year });
+  it("steps back from a year that has barely started (טירת כרמל, September 2026)", () => {
+    const cells = [
+      cell("עמידר", 2026), cell("שז\"ר/דקר", 2026),
+      ...["שז\"ר/דקר", "גיורא", "עמידר", "נאות כרמל", "ביאליק", "רמב\"ם", "כהן", "כלניות", "רמת בגין"].map((h) => cell(h, 2025)),
+    ];
+    expect(pickReferenceYear(cells, 3)).toBe(2025);
+  });
+  it("keeps the newest year when it is wide enough", () => {
+    const cells = [cell("א", 2026), cell("ב", 2026), cell("ג", 2026), cell("א", 2025), cell("ב", 2025), cell("ג", 2025), cell("ד", 2025)];
+    expect(pickReferenceYear(cells, 3)).toBe(2026);
+  });
+  it("looks back at most `lookback` years, then falls back to the newest", () => {
+    const cells = [cell("א", 2026), cell("א", 2025), cell("א", 2024), cell("א", 2022), cell("ב", 2022), cell("ג", 2022)];
+    expect(pickReferenceYear(cells, 3)).toBe(2026);
+    expect(pickReferenceYear(cells, 3, 4)).toBe(2022);
+  });
+  it("counts neighbourhoods, not cells", () => {
+    const cells = [cell("א", 2026), cell("א", 2026), cell("א", 2026), cell("א", 2025), cell("ב", 2025), cell("ג", 2025)];
+    expect(pickReferenceYear(cells, 3)).toBe(2025);
   });
 });
