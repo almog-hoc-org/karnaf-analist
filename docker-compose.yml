@@ -31,6 +31,19 @@ services:
     container_name: karnaf-analist
     restart: unless-stopped
 
+    # Overrides the Dockerfile HEALTHCHECK (5s timeout, 3 retries). /api/health
+    # touches nothing, so a slow answer means a busy process, not a dead one;
+    # 5 seconds took the site out of rotation during night jobs (20.9.2026).
+    # A process that is really stuck still fails 5 probes in ~3 minutes, and
+    # deploy/karnaf-heal.timer restarts it — Docker itself never restarts an
+    # unhealthy container, only one that exits.
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS \"http://127.0.0.1:3000$${NEXT_PUBLIC_BASE_PATH:-}/api/health\" || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
     env_file:
       - .env.production
 

@@ -12,7 +12,7 @@ Description=Karnaf Analist — nightly pipeline schedule
 [Timer]
 # 02:30 Israel time. Quiet hours, and comfortably after the government sources
 # publish. The service inherits the system timezone.
-OnCalendar=*-*-* 02:30:00
+OnCalendar=*-*-* 02:30:00 Asia/Jerusalem
 
 # Up to 20 minutes of jitter. Nothing else here contends for the slot, but a
 # fixed instant is exactly when a retry storm would line up with something else.

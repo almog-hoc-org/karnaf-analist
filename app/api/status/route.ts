@@ -53,15 +53,26 @@ const STALE_AFTER_HOURS = 36;
  * work from this box, so the external monitor was permanently red and a real
  * failure would have looked identical to the background noise.
  */
-const GEO_RESTRICTED_SOURCES = new Set(["govmap", "prefetch-deals", "nadlan"]);
+// govmap-backfill shares govmap's probe, so it is skipped on exactly the same
+// nights; leaving it out held this endpoint at 503 around the clock.
+const GEO_RESTRICTED_SOURCES = new Set(["govmap", "govmap-backfill", "prefetch-deals", "nadlan"]);
 
 /**
- * Transactions arrive via the quarterly refresh from the operator's machine:
- * one quarter (~92 days) plus the tax-authority reporting lag. Beyond this,
- * the DATA is aging even though every nightly job is green — a warning the
- * operator acts on by running the refresh, not a server fault.
+ * New transactions used to be a quarterly job from the operator's machine, and
+ * this threshold matched it (130 days). The site presents prices as current,
+ * though, and a user reading "the market this month" deserves last month's
+ * deals, so the expectation is now weekly: a warning after three weeks means
+ * the weekly refresh was missed. Reporting lag at the tax authority is days,
+ * not months.
  */
-const TRANSACTIONS_STALE_AFTER_DAYS = 130;
+const TRANSACTIONS_STALE_AFTER_DAYS = 21;
+/**
+ * Past this the site is presenting old prices as current, which is a core
+ * failure, not a nuance. 130 days used to be the only threshold (a warning):
+ * the 13.8.2026 stall would have surfaced around 21.12. Now it warns after
+ * three weeks and fails after six and a half.
+ */
+const TRANSACTIONS_BROKEN_AFTER_DAYS = 45;
 
 /** Street-comparison cache follows the same quarterly rhythm. */
 const DEALS_CACHE_STALE_AFTER_DAYS = 130;
@@ -229,9 +240,28 @@ export async function GET() {
     const t = Date.parse(latestDealDate);
     return Number.isFinite(t) ? (Date.now() - t) / 86_400_000 : null;
   })();
-  if (latestDealAgeDays != null && latestDealAgeDays > TRANSACTIONS_STALE_AFTER_DAYS) {
-    warnings.push(`latest transaction is ${Math.round(latestDealAgeDays)} days old — time for the quarterly refresh from the operator's machine`);
+  if (latestDealAgeDays != null && latestDealAgeDays > TRANSACTIONS_BROKEN_AFTER_DAYS) {
+    problems.push(`latest transaction is ${Math.round(latestDealAgeDays)} days old — no new deals are arriving (run scripts/push-recent.sh from the Mac, or check the mekarkein source)`);
+  } else if (latestDealAgeDays != null && latestDealAgeDays > TRANSACTIONS_STALE_AFTER_DAYS) {
+    warnings.push(`latest transaction is ${Math.round(latestDealAgeDays)} days old — new deals are due`);
   }
+
+  // ── the web process itself ───────────────────────────────────────
+  // /api/health only proves the process answers; this says how it is coping.
+  // Event-loop lag is the direct evidence of a starved or blocked process —
+  // the state that made the 5-second health probe fail on 20.9.2026.
+  const lagMs = await new Promise<number>((resolve) => {
+    const t0 = performance.now();
+    setImmediate(() => resolve(performance.now() - t0));
+  });
+  const mem = process.memoryUsage();
+  const proc = {
+    rssMb: Math.round(mem.rss / 1048576),
+    heapUsedMb: Math.round(mem.heapUsed / 1048576),
+    uptimeSec: Math.round(process.uptime()),
+    eventLoopLagMs: Number(lagMs.toFixed(1)),
+  };
+  if (proc.eventLoopLagMs > 1000) warnings.push(`event loop lag ${proc.eventLoopLagMs}ms — the web process is starved or blocked`);
 
   const deals = cacheStats();
   const cacheAgeDays = (() => {
@@ -279,7 +309,9 @@ export async function GET() {
         latestDealDate,
         latestDealAgeDays: latestDealAgeDays != null ? Math.round(latestDealAgeDays) : null,
         transactionsStaleAfterDays: TRANSACTIONS_STALE_AFTER_DAYS,
+        transactionsBrokenAfterDays: TRANSACTIONS_BROKEN_AFTER_DAYS,
       },
+      process: proc,
       dealsCache: {
         files: deals.files,
         newestAt: deals.newestAt,

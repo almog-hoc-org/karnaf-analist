@@ -14,7 +14,7 @@
 Description=Karnaf Analist — nightly collection schedule
 
 [Timer]
-OnCalendar=*-*-* 00:30:00
+OnCalendar=*-*-* 00:30:00 Asia/Jerusalem
 
 # Government endpoints, not our own servers. A little jitter keeps us from
 # arriving at the same instant every night, which is the pattern rate limiters

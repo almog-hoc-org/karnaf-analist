@@ -25,6 +25,7 @@ Description=Karnaf Analist — nightly data collection
 Documentation=file:///opt/karnaf/lib/collectors.ts
 After=docker.service
 Requires=docker.service
+OnFailure=karnaf-alert@%n.service
 
 [Service]
 Type=oneshot
@@ -36,7 +37,12 @@ TimeoutStartSec=9000
 
 ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Service}}" | grep -qx app || { echo "app container is not running — skipping"; exit 1; }'
 
-ExecStart=/usr/bin/docker compose exec -T app npx tsx scripts/collect.ts --trigger=nightly --deadline=100
+# `nice` and the heap cap run INSIDE the container. The unit's own Nice= below
+# only lowers the docker CLI client on the host; the collector itself is a child
+# of containerd and competed with `next start` at full priority. That is how a
+# long night job could starve the web process past its 5-second health probe
+# (20.9.2026: unhealthy container, 404 for a week).
+ExecStart=/usr/bin/docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1024 app nice -n 15 npx tsx scripts/collect.ts --trigger=nightly --deadline=100
 
 # Exit 1 means at least one source failed while others succeeded — normal
 # operational noise for seven third-party government endpoints, and NOT a reason

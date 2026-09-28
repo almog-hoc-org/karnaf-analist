@@ -18,6 +18,7 @@ Description=Karnaf Analist — weekly followed-cities digest
 Documentation=file:///opt/karnaf/lib/digest.ts
 After=docker.service
 Requires=docker.service
+OnFailure=karnaf-alert@%n.service
 
 [Service]
 Type=oneshot

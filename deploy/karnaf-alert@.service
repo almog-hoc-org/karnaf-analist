@@ -1,0 +1,15 @@
+# Email the operator when a karnaf unit fails. Wired in by
+#   OnFailure=karnaf-alert@%n.service
+# on every karnaf-*.service. %i is the failed unit's name.
+#
+# Before this existed a failed collection, pipeline, backup or digest left a
+# line in journald and nothing else.
+
+[Unit]
+Description=Karnaf Analist — failure alert for %i
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/karnaf
+ExecStart=/usr/bin/bash scripts/alert.sh --unit %i
+TimeoutStartSec=2min

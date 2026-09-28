@@ -9,7 +9,7 @@
 Description=Karnaf Analist — weekly digest schedule
 
 [Timer]
-OnCalendar=Sun *-*-* 08:00:00
+OnCalendar=Sun *-*-* 08:00:00 Asia/Jerusalem
 RandomizedDelaySec=900
 Persistent=true
 

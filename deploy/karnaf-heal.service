@@ -1,0 +1,16 @@
+# Restart the app container when it is running but unhealthy, and email about it.
+# Docker's restart policy only reacts to an EXIT; see scripts/heal-container.sh.
+#
+# Install: bash /opt/karnaf/deploy/install-timers.sh
+# Watch:   journalctl -u karnaf-heal -f
+
+[Unit]
+Description=Karnaf Analist — restart an unhealthy app container
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/karnaf
+ExecStart=/usr/bin/bash scripts/heal-container.sh
+TimeoutStartSec=5min

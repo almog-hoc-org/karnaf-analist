@@ -16,6 +16,7 @@ Documentation=file:///opt/karnaf/lib/pipeline.ts
 # Docker must be up; the app container is checked by the script itself.
 After=docker.service
 Requires=docker.service
+OnFailure=karnaf-alert@%n.service
 
 [Service]
 Type=oneshot
@@ -30,7 +31,10 @@ ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Servi
 
 # -T disables the TTY: systemd has no terminal, and without it docker exec
 # fails with "the input device is not a TTY".
-ExecStart=/usr/bin/docker compose exec -T app npx tsx scripts/pipeline.ts --trigger=nightly
+# `nice` inside the container, for the reason in karnaf-collect.service. No heap
+# cap here: the aggregation loads ~1M rows into one array and needs more than
+# the collectors; the container's 3G ceiling is its limit.
+ExecStart=/usr/bin/docker compose exec -T app nice -n 15 npx tsx scripts/pipeline.ts --trigger=nightly
 
 # Exit code 2 means a VERIFICATION GATE failed: the data was written but does
 # not pass its own checks. That is a different problem from a crash and is
