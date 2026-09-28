@@ -2286,3 +2286,84 @@ describe("search that finds", () => {
     expect(searchNorm("פתח תקווה")).toBe(searchNorm("פתח תקוה"));
   });
 });
+
+// ── mekarkeinPromote ─────────────────────────────────────────────────────────
+import {
+  promoteSkipReason, knownIndex, isKnown, parseOverParcel, addressFor, ourParcelDonors, streetSpeller, promotedTuple,
+} from "@/lib/mekarkeinPromote";
+import { NADLAN_ROW_COLS as PROMOTE_COLS } from "@/lib/nadlanRow";
+
+describe("mekarkeinPromote", () => {
+  const base = { nature: "דירה בבית קומות", portion: 1, area: 90, amount: 2_000_000, dealDate: "2026-08-20" };
+
+  it("promotes only whole apartments with a plausible area and price", () => {
+    expect(promoteSkipReason(base)).toBeNull();
+    expect(promoteSkipReason({ ...base, nature: "מגורים" })).toBe("nature");
+    expect(promoteSkipReason({ ...base, nature: "חנות" })).toBe("nature");
+    expect(promoteSkipReason({ ...base, portion: 0.5 })).toBe("portion");
+    expect(promoteSkipReason({ ...base, portion: null })).toBe("portion");
+    expect(promoteSkipReason({ ...base, area: null })).toBe("area");
+    expect(promoteSkipReason({ ...base, area: 12 })).toBe("area");
+    expect(promoteSkipReason({ ...base, amount: 50_000 })).toBe("amount");
+    expect(promoteSkipReason({ ...base, dealDate: "1997-05-01" })).toBe("date");
+  });
+
+  it("treats a deal of ours within a day at the same amount, exact or to the thousand, as known", () => {
+    const idx = knownIndex([{ dealDate: "2026-08-21", price: 2_000_400 }, { dealDate: "2026-07-01", price: 1_500_000 }]);
+    expect(isKnown({ dealDate: "2026-08-20", amount: 2_000_400 }, idx)).toBe(true);  // +1 day, exact
+    expect(isKnown({ dealDate: "2026-08-22", amount: 2_000_000 }, idx)).toBe(true);  // -1 day, same thousand
+    expect(isKnown({ dealDate: "2026-08-25", amount: 2_000_400 }, idx)).toBe(false); // 4 days off
+    expect(isKnown({ dealDate: "2026-07-01", amount: 1_550_000 }, idx)).toBe(false); // other amount
+  });
+
+  it("parses over.org.il's parcel answer and refuses a gush-helka shared by several parcels", () => {
+    const one = parseOverParcel({ data: [{ identity: { addresses: [
+      { street: "אבימלך", house: 8, suffix: null }, { street: "אבימלך", house: 14 },
+    ] } }] });
+    expect(one).toEqual({ ambiguous: false, addresses: [{ street: "אבימלך", house: "8" }, { street: "אבימלך", house: "14" }] });
+    expect(parseOverParcel({ data: [{}, {}] }).ambiguous).toBe(true);
+    expect(parseOverParcel({ data: [] })).toEqual({ ambiguous: false, addresses: [] });
+    expect(parseOverParcel(null)).toEqual({ ambiguous: false, addresses: [] });
+  });
+
+  it("takes an address from our flat, then our parcel, then over.org.il, only when it is one address", () => {
+    const { bySub, byGh } = ourParcelDonors([
+      { parcelNum: "100-5-3", street: "הרצל", houseNum: "10" },
+      { parcelNum: "100-5-4", street: "הרצל", houseNum: "10" },
+      { parcelNum: "200-7-1", street: "א", houseNum: "1" },
+      { parcelNum: "200-7-2", street: "ב", houseNum: "2" },
+    ]);
+    expect(addressFor(100, 5, 3, bySub, byGh, null)).toEqual({ street: "הרצל", houseNum: "10", via: "sub" });
+    expect(addressFor(100, 5, 9, bySub, byGh, null)).toEqual({ street: "הרצל", houseNum: "10", via: "parcel" });
+    // two buildings on our side → ask over.org.il
+    expect(addressFor(200, 7, 5, bySub, byGh, null).via).toBeNull();
+    const twoEntrances = { ambiguous: false, addresses: [{ street: "אבימלך", house: "8" }, { street: "אבימלך", house: "14" }] };
+    expect(addressFor(300, 1, 1, bySub, byGh, twoEntrances)).toEqual({ street: "אבימלך", houseNum: null, via: "over-street" });
+    const corner = { ambiguous: false, addresses: [{ street: "החשמונאים", house: "96" }, { street: "קרליבך", house: "6" }] };
+    expect(addressFor(300, 1, 1, bySub, byGh, corner).via).toBeNull();
+    expect(addressFor(300, 1, 1, bySub, byGh, { ambiguous: false, addresses: [{ street: "יפו", house: "3" }] }))
+      .toEqual({ street: "יפו", houseNum: "3", via: "over" });
+    expect(addressFor(300, 1, 1, bySub, byGh, { ambiguous: true, addresses: [{ street: "יפו", house: "3" }] }).via).toBeNull();
+  });
+
+  it("writes over.org.il's street in our spelling when we already have that street", () => {
+    const spell = streetSpeller([{ street: "שדרות ירושלים", n: 40 }, { street: "שד' ירושלים", n: 3 }]);
+    expect(spell("שד' ירושלים")).toBe(spell("שדרות ירושלים"));
+    expect(spell("רחוב שאין לנו")).toBe("רחוב שאין לנו");
+  });
+
+  it("builds a full nadlan_transactions tuple tagged with its source and register id", () => {
+    const row = { id: "abc", settlement: "חולון", settlementCode: null, gush: 7100, helka: 20, sub: 4, dealDate: "2026-08-20",
+      amount: 2_000_000, declaredAmount: null, nature: "דירה בבית קומות", portion: 1, area: 80, rooms: 4, yearBuilt: 1990, firstSeen: null };
+    const t = promotedTuple(row, "חולון", "6600", { street: "סוקולוב", houseNum: "5", via: "over" });
+    expect(t.length).toBe(PROMOTE_COLS.length);
+    const at = (c: string) => t[PROMOTE_COLS.indexOf(c as (typeof PROMOTE_COLS)[number])];
+    expect(at("price_sqm")).toBe(25_000);
+    expect(at("is_secondhand")).toBe(1);
+    expect(at("room_bucket")).toBe("4");
+    expect(at("parcel_num")).toBe("7100-20-4");
+    expect(at("source")).toBe("mekarkein");
+    expect(at("source_deal_id")).toBe("abc");
+    expect(at("street")).toBe("סוקולוב");
+  });
+});

@@ -66,11 +66,12 @@ async function main() {
             OR price_sqm IS NULL OR price_sqm < ${MIN_SQM} OR price_sqm > ${MAX_SQM})`);
   console.log(`  excluded ${Number(sane).toLocaleString("en")} unusable rows (sanity).`);
 
-  // 3. active, priced deals in scope (nadlan feeds all price series). rooms_effective = area-corrected.
+  // 3. active, priced deals in scope (nadlan feeds all price series; the tax
+  //    register's promoted rows — source 'mekarkein' — are the same kind of row). rooms_effective = area-corrected.
   const rows = await prisma.$queryRawUnsafe<Row[]>(
     `SELECT id, city_name, neighborhood, deal_year, CAST(rooms_effective AS INT) rr, year_built, area, price_sqm
      FROM nadlan_transactions
-     WHERE COALESCE(excluded,0)=0 AND deal_year >= ${minYear} AND source='nadlan'
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ${minYear} AND source IN ('nadlan','mekarkein')
        AND rooms_effective > 0 AND price_sqm BETWEEN ${MIN_SQM} AND ${MAX_SQM} AND area BETWEEN ${MIN_AREA} AND ${MAX_AREA}`
   );
   console.log(`  scanning ${rows.length.toLocaleString("en")} deals…`);

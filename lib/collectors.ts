@@ -239,6 +239,20 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 30 * MINUTE,
   },
   {
+    id: "mekarkein-promote",
+    cmd: "npx",
+    args: ["tsx", "scripts/promote-mekarkein.ts", "--nightly"],
+    label: "עסקאות חדשות מפנקס מיסוי מקרקעין → לאתר, עם כתובת לפי חלקה",
+    why: "Register rows that are whole apartments and that no deal of ours reports (±1 day, same amount exact or to the thousand) become deals of ours, source 'mekarkein' — the months our own collectors cannot reach from this server. Address from our deals in the same flat or parcel, else from over.org.il's parcel↔address table, one parcel per call, rationed per run and cached. Off until KARNAF_MEKARKEIN_PROMOTE=1 (on top of KARNAF_MEKARKEIN_ENABLED). Runs after mekarkein-match. See lib/mekarkeinPromote.ts.",
+    host: "https://www.over.org.il",
+    probe: {
+      url: "https://www.over.org.il/api/nadlan/stats",
+      method: "GET",
+      expectJson: true,
+    },
+    timeoutMs: 45 * MINUTE,
+  },
+  {
     id: "import-updates",
     cmd: "npx",
     args: ["tsx", "lib/import-updates.ts"],

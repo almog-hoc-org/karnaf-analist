@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MEKARKEIN_ATTRIBUTION } from "@/lib/mekarkein";
 import {
   CATEGORIES,
   SOURCES,
@@ -220,6 +221,12 @@ export default function SourcesPage() {
           <li><strong>מחירים:</strong> חציון רבעוני מ-nadlan.gov.il; מחיר למ&quot;ר מוערך מ-75 מ&quot;ר ממוצע לדירה כאשר לא קיים נתון ישיר</li>
           <li><strong>בנייה:</strong> נתוני התחלות והיתרים ישירות מדוחות למ&quot;ס; גמרי בנייה מנתוני לחץ של למ&quot;ס</li>
           <li><strong>השוואת עסקאות שכונות:</strong> כל העסקאות מ-govmap.gov.il (אותו מאגר של רשות המסים), עם סינון חריגים של ±2 ס.ת.</li>
+          <li>
+            <strong>פנקס מיסוי מקרקעין:</strong> {MEKARKEIN_ATTRIBUTION}. משמש להשלמת גוש-חלקה לעסקאות שכבר במאגר,
+            ולהוספת עסקאות דירה שלמות שעוד לא הגיעו אלינו ממקור אחר. כתובת לעסקה כזו נלקחת מעסקאות אחרות באותה חלקה,
+            או מטבלת החלקות-כתובות של נדל״ן לעם, ורק כשהיא חד-משמעית.{" "}
+            <a href="https://www.over.org.il/projects/deals" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">over.org.il</a>
+          </li>
           <li><strong>פערים ושדות חסרים:</strong> תאים ריקים מוצגים כ-&ldquo;—&rdquo; ולא ממולאים בנתונים מומצאים</li>
           <li><strong>ניטור אוטומטי:</strong> סקריפט המנטר את עמודי הפרסום של למ&quot;ס וכלכלן ראשי, מזהה דוחות חדשים ושולח התראות</li>
         </ul>
