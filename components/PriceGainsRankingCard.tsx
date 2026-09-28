@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Disclosure from "@/components/ui/Disclosure";
 import Link from "next/link";
 import TrendValue from "@/components/TrendValue";
 import Icon from "@/components/Icon";
@@ -119,7 +120,9 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
               ▼ היורדות ביותר
             </button>
           </div>
-          {/* controls: scope pills + metric + year range */}
+          {/* controls: scope pills + metric + year range — folded (UX 9/2026):
+              the list answers the question as it opens; these refine it. */}
+          <Disclosure label="התאמה" summary={`${SCOPES.find((x) => x.key === scope)?.label} · ${metric === 0 ? "ממוצע" : "חציון"} · ${yearLabel(fromY)}←${yearLabel(toY)}`}>
           <div className="flex flex-wrap items-center gap-1.5 text-2xs font-bold">
             {SCOPES.map((s) => (
               <button key={s.key} type="button" onClick={() => setScope(s.key)}
@@ -147,6 +150,7 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
             </select>
             <span className="text-2xs text-slate-400">10+ עסקאות בכל שנה</span>
           </div>
+          </Disclosure>
         </div>
 
         {/* A TABLE, not a list of flex rows (operator, 8/2026).

@@ -10,6 +10,7 @@ import AreaMap from "@/components/AreaMap";
 import { ADDRESS_COVERAGE_NOTE } from "@/lib/addressCoverage";
 import { loadCityMapGeometry } from "@/lib/cityMap";
 import TrackableOutboundLink from "@/components/TrackableOutboundLink";
+import Button, { buttonClass } from "@/components/ui/Button";
 
 /**
  * "בדיקת מחיר" — is this apartment priced above or below its own street?
@@ -92,6 +93,14 @@ export default async function CheckPage({ searchParams }: Props) {
     };
   })();
 
+  // The deepest page this answer can stand on: the building, else the street,
+  // else nothing beyond the city link that is always there.
+  const nextStep = comp?.matchedAddress
+    ? { href: `/city/${encodeURIComponent(city)}/address/${encodeURIComponent(comp.matchedAddress)}`, label: `כל העסקאות בבניין ${comp.matchedAddress}` }
+    : comp?.matchedStreet
+      ? { href: `/city/${encodeURIComponent(city)}/street/${encodeURIComponent(comp.matchedStreet)}`, label: `כל העסקאות ברחוב ${comp.matchedStreet}` }
+      : null;
+
   const nis = (v: number | null) => (v == null ? "—" : `₪${Math.round(v).toLocaleString("he-IL")}`);
   const viewer = getCurrentUser();
   const selfPath = `/check?${new URLSearchParams(
@@ -134,7 +143,13 @@ export default async function CheckPage({ searchParams }: Props) {
             </div>
 
             {comp.n === 0 ? (
-              <p className="mt-3 text-sm text-slate-600">{comp.label}</p>
+              <>
+                <p className="mt-3 text-sm text-slate-600">{comp.label}</p>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <Button href={`/city/${encodeURIComponent(city)}`} size="lg">רמת המחירים ב{city} ←</Button>
+                  <span className="text-2xs text-slate-500">או נסו רחוב סמוך, או השאירו את הרחוב ריק כדי להשוות לכל היישוב.</span>
+                </div>
+              </>
             ) : (
               <>
                 <div className="mt-4 grid gap-4 sm:grid-cols-3">
@@ -200,46 +215,28 @@ export default async function CheckPage({ searchParams }: Props) {
                   </div>
                 )}
 
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <TrackableOutboundLink
-                    href={whatsappShareUrl(
-                      selfPath,
-                      viewer?.id,
-                      verdict ? `בדקתי מחיר דירה ב${city} — ${verdict.text}:` : `רמת המחירים ב${city} לפי עסקאות אמת:`
-                    )}
-                    eventName="share_click"
-                    subject={city}
-                    detail="check_result"
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-emerald-700"
-                  >
-                    <Icon name="chat" size="1em" /> שיתוף בוואטסאפ
-                  </TrackableOutboundLink>
-                  {comp.matchedAddress && (
-                    /* The building the circle is drawn around — its own
-                       page: every flat that sold there, and the map. */
-                    <Link
-                      href={`/city/${encodeURIComponent(city)}/address/${encodeURIComponent(comp.matchedAddress)}`}
-                      className="text-sm font-bold text-indigo-700 hover:underline"
-                    >
-                      הבניין {comp.matchedAddress} →
-                    </Link>
+                {/* ONE next step (UX 9/2026). This row used to hold four
+                    actions of equal weight — a green share button and three
+                    arrow links — so nothing said where to go. The deepest
+                    page the answer can stand on is the primary; the city is
+                    a quiet way back; sharing waits until there is a verdict
+                    worth sending. */}
+                <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">
+                  {nextStep && (
+                    <Button href={nextStep.href} size="lg" className="!whitespace-normal text-center">{nextStep.label} ←</Button>
                   )}
-                  {comp.matchedStreet && (
-                    /* The full research page for the street the verdict was
-                       measured on: every building, every year, the map. */
-                    <Link
-                      href={`/city/${encodeURIComponent(city)}/street/${encodeURIComponent(comp.matchedStreet)}`}
-                      className="text-sm font-bold text-indigo-700 hover:underline"
+                  {verdict && (
+                    <TrackableOutboundLink
+                      href={whatsappShareUrl(selfPath, viewer?.id, `בדקתי מחיר דירה ב${city} — ${verdict.text}:`)}
+                      eventName="share_click"
+                      subject={city}
+                      detail="check_result"
+                      className={buttonClass("secondary", "md")}
                     >
-                      כל העסקאות ברחוב {comp.matchedStreet} →
-                    </Link>
+                      <Icon name="chat" size="1em" /> שיתוף התוצאה
+                    </TrackableOutboundLink>
                   )}
-                  <Link
-                    href={`/city/${encodeURIComponent(city)}`}
-                    className="text-sm font-bold text-indigo-700 hover:underline"
-                  >
-                    כל הנתונים על {city} →
-                  </Link>
+                  <Button href={`/city/${encodeURIComponent(city)}`} variant="ghost" size="md">כל הנתונים על {city}</Button>
                 </div>
               </>
             )}

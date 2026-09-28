@@ -204,6 +204,11 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
   const [to, setTo] = useState(maxY); // default includes the latest collected year, even when partial
   const [selected, setSelected] = useState<string[]>(["adj", "med"]); // adj = mix-adjusted headline (יד-2 only; harmlessly absent elsewhere)
   const [view, setView] = useState<"overlay" | "grid">("overlay");
+  // UX 9/2026: the bar opens with the two choices most readers make — what to
+  // measure and over how long. Exact years, the chart layout, the deal-type /
+  // building / rooms filters and the series chips wait behind "התאמה אישית".
+  // Every control is still here, and state set inside survives closing it.
+  const [custom, setCustom] = useState(false);
   const govCity = useMemo(() => isGovmapCity(data), [data]);
   const seriesDefs = useMemo(() => buildSeries(dealType, minSample), [dealType, minSample]);
 
@@ -466,6 +471,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           </div>
           {/* row 2 (mobile): year range — ONE clean horizontal strip, no mid-button wrapping */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs sm:overflow-visible sm:pb-0">
+            <span className={custom ? "contents" : "hidden"}>
             <select value={from} onChange={(e) => setFrom(Number(e.target.value))} className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-1">
               {allYears.filter((y) => y < to).map((y) => <option key={y} value={y}>{y}</option>)}
             </select>
@@ -473,6 +479,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
             <select value={to} onChange={(e) => setTo(Number(e.target.value))} className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-1">
               {allYears.filter((y) => y > from).map((y) => <option key={y} value={y}>{y}</option>)}
             </select>
+            </span>
             <span className="mr-1 flex items-center gap-1">
               {([1, 3, 5, 10] as const).map((n) => (
                 <button key={n} onClick={() => quickWin(n)} className="shrink-0 whitespace-nowrap rounded-full border border-slate-200 bg-white px-2 py-1 text-2xs font-bold text-slate-500 hover:border-indigo-300 sm:py-0.5">{n} שנים</button>
@@ -481,7 +488,11 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
             </span>
           </div>
           {/* row 3 (mobile): view — two equal buttons */}
-          <div className="grid grid-cols-2 rounded-lg border border-slate-200 bg-white p-0.5 text-xs font-bold sm:mr-auto sm:inline-flex">
+          <button type="button" onClick={() => setCustom((c) => !c)} aria-expanded={custom}
+            className="self-start text-xs font-bold text-indigo-700 hover:underline sm:mr-auto sm:self-auto">
+            {custom ? "סגירת ההתאמה ▴" : "התאמה אישית ▾"}
+          </button>
+          <div className={`${custom ? "grid sm:inline-flex" : "hidden"} grid-cols-2 rounded-lg border border-slate-200 bg-white p-0.5 text-xs font-bold`}>
             <button onClick={() => setView("overlay")} className={`rounded-md px-2.5 py-1.5 sm:py-1 ${view === "overlay" ? "bg-indigo-600 text-white" : "text-slate-500"}`}>גרף משולב</button>
             <button onClick={() => setView("grid")} className={`rounded-md px-2.5 py-1.5 sm:py-1 ${view === "grid" ? "bg-indigo-600 text-white" : "text-slate-500"}`}>רשת גרפים</button>
           </div>
@@ -497,7 +508,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
               deal type, building, rooms — sit inline with divider bars instead
               of stacking three label rows. Mobile keeps the stacked rows: at
               343px the inline form is a horizontal scroll, not a saving. */}
-          <div className="min-w-0 space-y-1 sm:col-start-1 sm:row-start-1 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 sm:space-y-0 sm:self-center">
+          <div className={`${custom ? "" : "!hidden"} min-w-0 space-y-1 sm:col-start-1 sm:row-start-1 sm:flex sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-1 sm:space-y-0 sm:self-center`}>
             {/* flex-nowrap + compact pills: these three rows are the ones the
                 screenshot marks. At 375px the phone offers ~343px of row, and
                 a "min-w-16" label plus px-3 py-1.5 pills needed ~390-400px —
@@ -586,7 +597,7 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
         {/* series — derived from the hierarchy choice above; on laptop it is
             the second row of the same grid, under the filters and beside the
             change box */}
-        <div className="mt-1 flex flex-wrap items-center gap-1.5 border-t border-indigo-100 pt-1.5 sm:col-start-1 sm:row-start-2 sm:mt-2 sm:self-center sm:pt-2">
+        <div className={`${custom ? "flex" : "hidden"} mt-1 flex-wrap items-center gap-1.5 border-t border-indigo-100 pt-1.5 sm:col-start-1 sm:row-start-2 sm:mt-2 sm:self-center sm:pt-2`}>
           <span className="text-2xs font-bold text-slate-500">סדרות:</span>
           {chipDefs.map((s) => {
             const on = effectiveSelected.includes(s.key);

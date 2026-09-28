@@ -3,9 +3,11 @@ import { historyFromYear } from "@/lib/historyWindow";
 import { ALIAS_NAMES } from "@/lib/cityAliases";
 import RankingCard from "@/components/RankingCard";
 import HomeSearch from "@/components/HomeSearch";
+import CheckForm from "@/components/CheckForm";
 import HotCities from "@/components/HotCities";
 import { loadHotCities } from "@/lib/hotCities";
 import CourseBanner from "@/components/CourseBanner";
+import { getRuleBool } from "@/lib/systemRules";
 import RecentReportsSection from "@/components/RecentReportsSection";
 import { HeroKpiStrip, HeroKpiCards } from "@/components/HeroKpis";
 import PriceGainsRankingCard from "@/components/PriceGainsRankingCard";
@@ -314,16 +316,21 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <HotCities data={hotCities} />
+        {/* THE ONE ACTION (UX 9/2026): a price check for an address. The
+            operator's rule is one clear primary action per screen, and the
+            question most visitors arrive with is "is this price right?" —
+            which a city search answers only three clicks later. The city
+            search and the hot cities stay, one step quieter, below it. */}
+        <div className="mx-auto mt-3 max-w-2xl md:mt-6">
+          <CheckForm compact cities={allCities.map((c) => c.city_name)} initial={{ city: "", street: "", house: "", neighborhood: "", rooms: "", size: "", price: "" }} />
+        </div>
 
-        {/* Directly under the cards, still above the fold. */}
-        <div className="mx-auto mt-3 max-w-2xl md:mt-5">
+        <div className="mx-auto mt-5 max-w-2xl">
+          <p className="mb-1.5 text-center text-xs font-bold text-slate-400">או חפשו עיר, שכונה או רחוב · {cityCount} ערים במאגר</p>
           <HomeSearch cities={allCities} />
         </div>
-        <p className="mt-1.5 text-center text-slate-400" style={{ fontSize: 12 }}>
-          <span className="hidden md:inline">חפש עיר וקבל מחירים, מגמות והשוואות · </span>
-          {cityCount} ערים במאגר
-        </p>
+
+        <HotCities data={hotCities} />
 
         {/* PHONE ONLY: the three headline figures as one strip, directly under
             the search box (operator spec 8/2026). As three hero cards they were
@@ -424,7 +431,7 @@ export default async function HomePage() {
           see the note in CourseBanner. A research tool that opens with a pitch
           has already told the reader which of those it is. */}
       <div className="px-4 md:px-6">
-        <CourseBanner />
+        {getRuleBool("show_course_banner_home") && <CourseBanner />}
       </div>
     </main>
   );

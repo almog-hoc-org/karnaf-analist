@@ -1,6 +1,7 @@
 import { withBasePath } from "@/lib/basePath";
 import BrandMark from "./BrandMark";
 import CourseBanner from "./CourseBanner";
+import FeedbackOpenButton from "./FeedbackOpenButton";
 
 export default function SiteFooter() {
   return (
@@ -23,6 +24,8 @@ export default function SiteFooter() {
             spec 8/2026): reference material earns a footer slot, daily
             destinations earn the header. */}
         <nav aria-label="ניווט תחתון" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs font-semibold text-slate-500">
+          <a href={withBasePath("/check")} className="hover:text-indigo-600 hover:underline">בדיקת מחיר</a>
+          <span aria-hidden>·</span>
           <a href={withBasePath("/cities")} className="hover:text-indigo-600 hover:underline">ערים</a>
           <span aria-hidden>·</span>
           <a href={withBasePath("/compare")} className="hover:text-indigo-600 hover:underline">השוואה</a>
@@ -34,6 +37,10 @@ export default function SiteFooter() {
           <a href={withBasePath("/sources")} className="hover:text-indigo-600 hover:underline">מקורות הנתונים</a>
           <span aria-hidden>·</span>
           <a href={withBasePath("/deals")} className="hover:text-indigo-600 hover:underline">העסקאות שלי</a>
+          <span aria-hidden>·</span>
+          {/* opens the feedback panel (FeedbackWidget listens for the event);
+              the floating button is off by default, rule show_feedback_fab */}
+          <FeedbackOpenButton label="משוב" className="font-semibold hover:text-indigo-600 hover:underline" />
         </nav>
         {/* Course + WhatsApp, compact. On every page but below everything —
             see the note in CourseBanner on why this never sits above the data. */}

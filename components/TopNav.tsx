@@ -11,30 +11,39 @@ import { track, createSettledSearchTracker, trackSearchSelect } from "@/lib/trac
 import { suggestionLabel, type SuggestionKind } from "@/lib/searchIndex";
 import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
+/**
+ * The header, simplified 9/2026: ONE primary action and two destinations.
+ *
+ *  - "בדיקת מחיר" is the product's first question ("what is this apartment
+ *    worth?") and the only filled button in the bar. It used to be the third
+ *    item inside a "מחשבונים ▾" popup.
+ *  - "בית" is gone: the brand links home, as everywhere.
+ *  - Tools and reference pages share one "עוד ▾" menu.
+ *  - "העסקאות שלי" is shown to signed-in readers only (for a visitor it went
+ *    straight to a login screen, while being the most highlighted item);
+ *    rule nav_show_deals_anon brings it back for everyone.
+ */
+const CHECK_HREF = "/check";
 const NAV_ITEMS = [
-  { href: "/", label: "בית" },
   { href: "/cities", label: "ערים" },
   { href: "/national", label: "ארצי" },
-  // השוואה + בדיקת מחיר live under the מחשבונים popup (operator spec 8/2026)
-  // — three tool pages, one slot. See CALC_ITEMS + the popup button below.
-  // "מקורות" moved to the footer earlier for the same reason: the top bar
-  // earns its slots by frequency of use.
-  { href: "/deals", label: "העסקאות שלי", highlight: true },
 ];
 
-/** The tools group behind the "מחשבונים" popup. */
+/** The "עוד" menu. */
 const CALC_ITEMS = [
   { href: "/calculators", label: "מחשבונים" },
-  { href: "/compare", label: "השוואה" },
-  { href: "/check", label: "בדיקת מחיר" },
+  { href: "/compare", label: "השוואת ערים" },
+  { href: "/sources", label: "מקורות הנתונים" },
+  { href: "/methodology", label: "איך המספרים מחושבים" },
 ];
+const DEALS_ITEM = { href: "/deals", label: "העסקאות שלי" };
 
 interface CityHit {
   name: string;
   reason: CitySearchHit<{ city_name: string }>["reason"];
 }
 
-export default function TopNav({ cities, user, credits, unlimited = false, tracked = [] }: { cities: string[]; user?: { name: string } | null; credits?: number | null; tracked?: string[];
+export default function TopNav({ cities, user, credits, unlimited = false, tracked = [], showDealsToAnon = false }: { cities: string[]; user?: { name: string } | null; credits?: number | null; tracked?: string[]; showDealsToAnon?: boolean;
   /** account with no credit limit — the balance is meaningless and a number would misinform */
   unlimited?: boolean }) {
   const creditsLabel = unlimited ? "∞" : credits == null ? null : (Number.isInteger(credits) ? String(credits) : credits.toFixed(1));
@@ -148,7 +157,7 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
             without it the two-word labels broke onto second lines at
             in-between widths. */}
         <nav className="hidden items-center gap-1 md:flex" aria-label="ניווט ראשי">
-          {NAV_ITEMS.slice(0, 3).map((item) => (
+          {NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -178,10 +187,10 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              מחשבונים ▾
+              עוד ▾
             </button>
             {calcOpen && (
-              <div role="menu" className="absolute end-0 z-50 mt-1 w-40 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
+              <div role="menu" className="absolute end-0 z-50 mt-1 w-48 rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
                 {CALC_ITEMS.map((c) => (
                   <Link
                     key={c.href}
@@ -199,19 +208,16 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
             )}
           </div>
 
-          {NAV_ITEMS.slice(3).map((item) => (
+          {(user || showDealsToAnon) && (
             <Link
-              key={item.href}
-              href={item.href}
+              href={DEALS_ITEM.href}
               className={`whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
-                isActive(item.href)
-                  ? "bg-indigo-50 text-indigo-700"
-                  : "border border-indigo-200 bg-indigo-600/5 text-indigo-700 hover:bg-indigo-50"
+                isActive(DEALS_ITEM.href) ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
             >
-              {item.label}
+              {DEALS_ITEM.label}
             </Link>
-          ))}
+          )}
         </nav>
 
         {/* City search */}
@@ -259,6 +265,16 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
           )}
         </div>
 
+        {/* THE primary action of the whole header — the only filled button. */}
+        {!pathname.startsWith(CHECK_HREF) && (
+          <Link
+            href={CHECK_HREF}
+            className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-sm transition-colors hover:bg-indigo-700 md:inline-flex"
+          >
+            <Icon name="search" size="1em" /> בדיקת מחיר
+          </Link>
+        )}
+
         {/* Account chip — login is OPTIONAL: anonymous visitors keep full access */}
         <div className="hidden shrink-0 items-center gap-1.5 md:flex">
           {user ? (
@@ -291,7 +307,7 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
                 <Link
                   href="/account"
                   title="היתרה שלך — לחץ לפירוט ולהרווחת קרדיטים"
-                  className="flex items-center gap-1 rounded-full bg-indigo-600 px-3 py-1 text-xs font-black text-white shadow-sm transition-colors hover:bg-indigo-700"
+                  className="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-bold text-slate-700 transition-colors hover:border-indigo-300 hover:text-indigo-700"
                 >
                   🪙 {creditsLabel}
                   <span className="font-semibold opacity-80">קרדיטים</span>
@@ -356,7 +372,14 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
             className="absolute inset-x-0 top-full z-50 max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-t border-slate-100 bg-white px-4 py-2 shadow-lg md:hidden"
             aria-label="ניווט נייד"
           >
-            {NAV_ITEMS.slice(0, 3).map((item) => (
+            {/* the primary action first, and the only filled row */}
+            <Link
+              href={CHECK_HREF}
+              className="my-1 flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-3 py-3 text-sm font-bold text-white"
+            >
+              <Icon name="search" size="1em" /> בדיקת מחיר לדירה
+            </Link>
+            {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -370,7 +393,7 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
             {/* the tools group, FLAT on mobile — a popup-inside-a-drawer is
                 two dismissal gestures for one tap. A small heading and an
                 indent say "these belong together" at zero interaction cost. */}
-            <p className="px-3 pt-2 text-2xs font-black uppercase tracking-wide text-slate-400">מחשבונים וכלים</p>
+            <p className="px-3 pt-2 text-2xs font-black uppercase tracking-wide text-slate-400">עוד</p>
             {CALC_ITEMS.map((item) => (
               <Link
                 key={item.href}
@@ -382,17 +405,16 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
                 {item.label}
               </Link>
             ))}
-            {NAV_ITEMS.slice(3).map((item) => (
+            {(user || showDealsToAnon) && (
               <Link
-                key={item.href}
-                href={item.href}
+                href={DEALS_ITEM.href}
                 className={`block rounded-lg px-3 py-3 text-sm font-semibold ${
-                  isActive(item.href) ? "bg-indigo-50 text-indigo-700" : "text-slate-700"
+                  isActive(DEALS_ITEM.href) ? "bg-indigo-50 text-indigo-700" : "text-slate-700"
                 }`}
               >
-                {item.label}
+                {DEALS_ITEM.label}
               </Link>
-            ))}
+            )}
             {/* account — reachable on mobile too (was desktop-only and thus unreachable) */}
             <div className="mt-1 border-t border-slate-100 pt-1">
               {user ? (
@@ -400,7 +422,7 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
                   <Link href="/account" className="flex items-center gap-2 text-sm font-bold text-indigo-700">
                     שלום, {user.name}
                     {creditsLabel != null && (
-                      <span className="rounded-full bg-indigo-600 px-2.5 py-0.5 text-xs font-black text-white">🪙 {unlimited ? "ללא הגבלה" : `${creditsLabel} קרדיטים`}</span>
+                      <span className="rounded-full border border-slate-200 px-2.5 py-0.5 text-xs font-bold text-slate-700">🪙 {unlimited ? "ללא הגבלה" : `${creditsLabel} קרדיטים`}</span>
                     )}
                   </Link>
                   <form action={withBasePath("/logout")} method="post" className="inline">

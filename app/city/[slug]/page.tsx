@@ -37,6 +37,7 @@ import Link from "next/link";
 import SourceBadge from "@/components/SourceBadge";
 import InfoTip from "@/components/InfoTip";
 import { getSectionOrder } from "@/lib/sectionOrder";
+import Button, { buttonClass } from "@/components/ui/Button";
 import CoverageNotice from "@/components/CoverageNotice";
 import { assessCoverage } from "@/lib/coverage";
 import Icon from "@/components/Icon";
@@ -500,6 +501,18 @@ export default async function CityPage({ params, searchParams }: PageProps) {
      stray key falls to the end rather than jumping to the top. */
   const cityOrder = getSectionOrder("city");
   const ord = (key: string) => { const i = cityOrder.indexOf(key); return i < 0 ? 999 : i + 1; };
+  // FOLDS (UX 9/2026). Twenty-two sections were open at once, with no answer
+  // to "what do I do here". Five stay open — prices, the chart, neighbourhoods,
+  // prices by size, and the next step — and the rest sit in three closed groups
+  // the reader opens by name. Nothing was removed: each group keeps the
+  // dashboard's order inside it (base + ord), and moving a key between groups
+  // is one line in CITY_FOLDS. The open/closed state is a checkbox the CSS in
+  // globals.css reads with :has(), so it works before hydration and on a
+  // server component.
+  const sec = (key: string) => {
+    const group = CITY_FOLDS[key];
+    return { style: { order: (group ? FOLD_GROUPS[group].base : 0) + ord(key) }, "data-fold": group };
+  };
 
   // flex column, so a section's position can be a NUMBER instead of its place
   // in this file. The order comes from the dashboard (🧩 סדר אלמנטים); every
@@ -568,7 +581,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1: PRICES
           ═══════════════════════════════════════════════════════════ */}
-      <section data-track-section="market-prices" className="mb-10" style={{ order: ord("market-prices") }}>
+      <section data-track-section="market-prices" className="mb-10" {...sec("market-prices")}>
         <div className="section-header">
           <div className="section-header-icon">₪</div>
           <div>
@@ -623,7 +636,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           SECTION 1.5: YAD2 MARKET (moved up for visibility)
           ═══════════════════════════════════════════════════════════ */}
       {yad2Data && (
-        <section data-track-section="market-live" className="mb-10" style={{ order: ord("market-live") }}>
+        <section data-track-section="market-live" className="mb-10" {...sec("market-live")}>
           <div className="section-header flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="section-header-icon"><Icon name="building" size="1em" /></div>
@@ -738,7 +751,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* Says how much of the decade is actually behind the chart below.
           Derived from the series already loaded — no extra query, and no city
           named in code, so a locality that fills in loses its notice by itself. */}
-      <div data-track-section="chart-studio" style={{ order: ord("chart-studio") }}>
+      <div data-track-section="chart-studio" {...sec("chart-studio")}>
         {/* inside the block, so that moving the charts moves the notice that
             explains them instead of stranding it beside whatever took their
             place. */}
@@ -766,39 +779,32 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           actually quote, pulled out of the chart into plain text, right under
           the price graphs it summarizes. */}
       {cityGraphData && (
-        <div data-track-section="price-summary" style={{ order: ord("price-summary") }}>
+        <div data-track-section="price-summary" {...sec("price-summary")}>
           <RoomPriceSummary data={cityGraphData} classificationRate={classRate?.rate ?? null} />
         </div>
       )}
 
-      <section data-track-section="back-to-city" className="mb-10" style={{ order: ord("back-to-city") }}>
-        <div className="glass-card border-indigo-100 bg-indigo-50/30 p-4 md:p-5">
+      <section data-track-section="back-to-city" className="mb-10" {...sec("back-to-city")}>
+        {/* THE NEXT STEP (UX 9/2026). This card used to hold four equal chips —
+            follow, compare, share, feedback — under "want to come back later?".
+            Follow and share already sit in the header. What a reader who has
+            seen the city's prices wants next is their own apartment's price. */}
+        <div className="glass-card border-indigo-100 bg-indigo-50/40 p-5 md:p-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="min-w-0">
-              <h2 className="text-base font-black text-slate-900">רוצים לחזור ל{city.city_name} אחר כך?</h2>
+              <h2 className="text-lg font-black text-slate-900">מסתכלים על דירה ב{city.city_name}?</h2>
               <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                שמרו למעקב, השוו לעיר אחרת או שלחו לחבר שמתלבט על האזור. אם משהו בנתונים לא מסתדר, המשוב מגיע אלינו עם ההקשר של העמוד.
+                הזינו כתובת ומחיר, ותראו מול עסקאות אמת באותו רחוב אם המחיר גבוה או נמוך מהשוק.
               </p>
             </div>
-            <div className="flex flex-wrap gap-2 md:justify-end">
-              <TrackCityButton
-                cityName={city.city_name}
-                initiallyTracked={initiallyTracked}
-                signedIn={!!viewer}
-                action={cityTrackAction}
-              />
-              <Link
-                href={`/compare?cities=${encodeURIComponent(city.city_name)}`}
-                className="chip-action border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:text-indigo-700"
-              >
-                <Icon name="scale" size="1em" />
-                השוואה
-              </Link>
-              <CityShareButton
-                cityName={city.city_name}
-                href={whatsappShareUrl(`/city/${encodeURIComponent(city.city_name)}`, viewer?.id, `כדאי שתראה את הנתונים על ${city.city_name} — עסקאות אמת, מחירים ומגמות:`)}
-              />
-              <FeedbackOpenButton label="פידבק" className="chip-action border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100" />
+            <div className="flex flex-wrap items-center gap-2 md:justify-end">
+              <Button href={`/check?city=${encodeURIComponent(city.city_name)}`} size="lg" className="!whitespace-normal text-center">
+                בדיקת מחיר לכתובת ב{city.city_name} ←
+              </Button>
+              <Button href={`/compare?cities=${encodeURIComponent(city.city_name)}`} variant="ghost">
+                <Icon name="scale" size="1em" /> השוואה לעיר אחרת
+              </Button>
+              <FeedbackOpenButton label="משוב" className={buttonClass("ghost", "md")} />
             </div>
           </div>
         </div>
@@ -807,7 +813,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           NEW (CONTRACTOR) vs SECOND-HAND — CBS 047/2026 hard numbers
           ═══════════════════════════════════════════════════════════ */}
-      <div data-track-section="new-vs-secondhand" style={{ order: ord("new-vs-secondhand") }}>
+      <div data-track-section="new-vs-secondhand" {...sec("new-vs-secondhand")}>
         <NewVsSecondhandPanel
           cityName={city.city_name}
           yad2SecondhandListings={yad2Data?.secondhand_properties ?? undefined}
@@ -818,7 +824,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           POPULATION BY SOURCE — multi-source comparison
           ═══════════════════════════════════════════════════════════ */}
-      <div data-track-section="population-sources" style={{ order: ord("population-sources") }}>
+      <div data-track-section="population-sources" {...sec("population-sources")}>
         <PopulationBySource data={cityPopulationEstimates} cityName={city.city_name} />
       </div>
 
@@ -833,7 +839,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Population by Year */}
       {populationByYear.length > 2 && (
-        <section data-track-section="population" className="mb-10" style={{ order: ord("population") }}>
+        <section data-track-section="population" className="mb-10" {...sec("population")}>
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="chart" size="1em" /></div>
@@ -867,7 +873,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Price Trends */}
       {priceTrends.length > 2 && (
-        <section data-track-section="median-prices" className="mb-10" style={{ order: ord("median-prices") }}>
+        <section data-track-section="median-prices" className="mb-10" {...sec("median-prices")}>
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="money" size="1em" /></div>
@@ -899,18 +905,18 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       )}
 
       {/* Scattered facts from CBS / MoF Chief Economist reports */}
-      <div data-track-section="scattered-facts" style={{ order: ord("scattered-facts") }}>
+      <div data-track-section="scattered-facts" {...sec("scattered-facts")}>
         <ScatteredFactsSection facts={scattered.facts} timeSeries={scattered.timeSeries} />
       </div>
 
       {/* Real Deals Comparison */}
-      <div data-track-section="street-comparison" style={{ order: ord("street-comparison") }}>
+      <div data-track-section="street-comparison" {...sec("street-comparison")}>
         <CityDealsComparison cityName={city.city_name} />
       </div>
 
       {/* Sales Chart */}
       {salesData && (
-        <section data-track-section="new-sales" className="mb-10" style={{ order: ord("new-sales") }}>
+        <section data-track-section="new-sales" className="mb-10" {...sec("new-sales")}>
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="construction" size="1em" /></div>
@@ -930,7 +936,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Building Permits Chart */}
       {permitsData.length > 0 && (
-        <section data-track-section="permits" className="mb-10" style={{ order: ord("permits") }}>
+        <section data-track-section="permits" className="mb-10" {...sec("permits")}>
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="clipboard" size="1em" /></div>
@@ -960,7 +966,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Correlation Table */}
       {populationByYear.length > 2 && (
-        <section data-track-section="correlation" className="mb-10" style={{ order: ord("correlation") }}>
+        <section data-track-section="correlation" className="mb-10" {...sec("correlation")}>
           <div className="glass-card p-4 md:p-6">
             <div className="section-header mb-4">
               <div className="section-header-icon"><Icon name="link" size="1em" /></div>
@@ -1003,7 +1009,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Sales Inventory */}
       {salesData && (
-        <section data-track-section="inventory" className="mb-10" style={{ order: ord("inventory") }}>
+        <section data-track-section="inventory" className="mb-10" {...sec("inventory")}>
           <div className="section-header">
             <div className="section-header-icon"><Icon name="package" size="1em" /></div>
             <div>
@@ -1036,7 +1042,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         const dw = dwellingsFor(city.city_name);
         if (!dw) return null;
         return (
-          <div data-track-section="dwelling-stock" style={{ order: ord("dwelling-stock") }}>
+          <div data-track-section="dwelling-stock" {...sec("dwelling-stock")}>
             <DwellingStockCard
               cityName={city.city_name}
               row={dw}
@@ -1055,7 +1061,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
           standalone table that shipped before. Same data-track-section slug, so
           the dashboard's section-order editor and the visibility analytics keep
           working across the change. */}
-      <div data-track-section="neighborhoods" style={{ order: ord("neighborhoods") }}>
+      <div data-track-section="neighborhoods" {...sec("neighborhoods")}>
         <NeighborhoodSection
           cityName={cityName}
           rows={neighborhoods.rows}
@@ -1068,7 +1074,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       </div>
 
       {/* Urban Renewal — live district list when the collector has run, static snapshot otherwise */}
-      <div data-track-section="urban-renewal" style={{ order: ord("urban-renewal") }}>
+      <div data-track-section="urban-renewal" {...sec("urban-renewal")}>
         <UrbanRenewalSection
           projects={urbanRenewalProjects}
           staticStatus={city.urban_renewal_status}
@@ -1079,7 +1085,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
 
       {/* Insights */}
       {insightEntries.length > 0 && (
-        <section data-track-section="insights" className="mb-10" style={{ order: ord("insights") }}>
+        <section data-track-section="insights" className="mb-10" {...sec("insights")}>
           <div className="section-header">
             <div className="section-header-icon"><Icon name="idea" size="1em" /></div>
             <div>
@@ -1107,7 +1113,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           SECTION 3: SUPPLY & DEMAND (EXPANDED)
           ═══════════════════════════════════════════════════════════ */}
-      <section data-track-section="supply-demand" className="mb-10" style={{ order: ord("supply-demand") }}>
+      <section data-track-section="supply-demand" className="mb-10" {...sec("supply-demand")}>
         <div className="section-header">
           <div className="section-header-icon"><Icon name="scale" size="1em" /></div>
           <div>
@@ -1277,7 +1283,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
       {/* ═══════════════════════════════════════════════════════════
           SECTION 2: DEMOGRAPHICS
           ═══════════════════════════════════════════════════════════ */}
-      <section data-track-section="demography" className="mb-10" style={{ order: ord("demography") }}>
+      <section data-track-section="demography" className="mb-10" {...sec("demography")}>
         <div className="section-header">
           <div className="section-header-icon"><Icon name="users" size="1em" /></div>
           <div>
@@ -1306,7 +1312,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         />
       </section>
 
-      <section data-track-section="all-data" className="mb-10" style={{ order: ord("all-data") }}>
+      <section data-track-section="all-data" className="mb-10" {...sec("all-data")}>
         <div className="section-header">
           <div className="section-header-icon"><Icon name="clipboard" size="1em" /></div>
           <div>
@@ -1349,7 +1355,51 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         </div>
       </section>
 
+      {(Object.keys(FOLD_GROUPS) as FoldGroup[]).map((g) => (
+        <FoldToggle key={g} group={g} />
+      ))}
     </main>
+  );
+}
+
+// ── Folds ─────────────────────────────────────────────────────────────────────
+
+type FoldGroup = "trends" | "supply" | "data";
+
+const FOLD_GROUPS: Record<FoldGroup, { base: number; title: string; summary: string }> = {
+  trends: { base: 1000, title: "מגמות ושוק", summary: "מצב השוק, חדשות מול יד-שנייה, אוכלוסייה, חציונים, תובנות" },
+  supply: { base: 2000, title: "היצע ובנייה", summary: "מכירות חדשות, היתרים, מלאי, התחדשות עירונית, היצע מול ביקוש" },
+  data: { base: 3000, title: "כל הנתונים", summary: "דמוגרפיה, אוכלוסייה לפי מקור, השוואת רחובות, הטבלה המלאה" },
+};
+
+// A key not listed here stays open.
+const CITY_FOLDS: Record<string, FoldGroup> = {
+  "market-live": "trends", "new-vs-secondhand": "trends", population: "trends",
+  "median-prices": "trends", "scattered-facts": "trends", insights: "trends",
+  "new-sales": "supply", permits: "supply", correlation: "supply", inventory: "supply",
+  "dwelling-stock": "supply", "urban-renewal": "supply", "supply-demand": "supply",
+  demography: "data", "all-data": "data", "population-sources": "data", "street-comparison": "data",
+};
+
+function FoldToggle({ group }: { group: FoldGroup }) {
+  const g = FOLD_GROUPS[group];
+  return (
+    <div className="group mb-3" style={{ order: g.base }}>
+      <input type="checkbox" id={`fold-${group}`} className="peer sr-only" />
+      <label
+        htmlFor={`fold-${group}`}
+        className="glass-card flex cursor-pointer items-center justify-between gap-3 p-4 transition-colors hover:border-indigo-200 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-300"
+      >
+        <span className="min-w-0">
+          <span className="block text-base font-black text-slate-900">{g.title}</span>
+          <span className="mt-0.5 block text-xs text-slate-500">{g.summary}</span>
+        </span>
+        <span className="shrink-0 text-sm font-bold text-indigo-700">
+          <span className="group-has-[:checked]:hidden">הצגה ▾</span>
+          <span className="hidden group-has-[:checked]:inline">הסתרה ▴</span>
+        </span>
+      </label>
+    </div>
   );
 }
 

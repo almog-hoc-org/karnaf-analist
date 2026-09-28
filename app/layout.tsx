@@ -15,6 +15,7 @@ import { balance, isUnlimited } from "@/lib/credits";
 import { isAdminRequest } from "@/lib/adminAuth";
 import SiteFooter from "@/components/SiteFooter";
 import { prisma } from "@/lib/db";
+import { getRuleBool } from "@/lib/systemRules";
 
 // Rubik — the same family yad2 uses: excellent Hebrew, tight numerals.
 const rubik = Rubik({
@@ -131,7 +132,7 @@ export default async function RootLayout({
             backgroundSize: "48px 48px",
           }}
         />
-        <TopNav cities={cityNames} user={currentUser} credits={currentUser ? balance(currentUser.id) : null} unlimited={currentUser ? isUnlimited(currentUser.id) : false} tracked={currentUser ? listTrackedCities(currentUser.id) : []} />
+        <TopNav cities={cityNames} showDealsToAnon={getRuleBool("nav_show_deals_anon")} user={currentUser} credits={currentUser ? balance(currentUser.id) : null} unlimited={currentUser ? isUnlimited(currentUser.id) : false} tracked={currentUser ? listTrackedCities(currentUser.id) : []} />
         {/* The landmark the skip link targets. tabIndex={-1} lets it receive
             focus programmatically without entering the tab order itself. */}
         <div id="main-content" tabIndex={-1} className="relative">{children}</div>
@@ -140,7 +141,7 @@ export default async function RootLayout({
             so showing the button to everyone would only offer a 401. */}
         {isAdmin && <RefreshDataButton />}
         {/* bottom-start; RefreshDataButton holds bottom-end, and for an admin both show */}
-        <FeedbackWidget />
+        <FeedbackWidget showButton={getRuleBool("show_feedback_fab")} />
         {/* Inert until NEXT_PUBLIC_CLARITY_ID is set, and never loads on /deals
             or /admin — see the note in the component. */}
         <Analytics />

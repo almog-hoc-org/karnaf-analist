@@ -22,7 +22,7 @@ import Icon from "@/components/Icon";
  * automatically. The visitor supplies the one thing only they have: what they
  * think.
  */
-export default function FeedbackWidget() {
+export default function FeedbackWidget({ showButton = true }: { showButton?: boolean }) {
   const [open, setOpen] = useState(false);
 
   // Inline FeedbackBanners around the site open THIS widget — one feedback
@@ -91,8 +91,12 @@ export default function FeedbackWidget() {
 
   return (
     <>
-      {/* z-40 matches RefreshDataButton so neither can cover the other */}
-      <button
+      {/* z-40 matches RefreshDataButton so neither can cover the other.
+          Off by default since 9/2026 (rule show_feedback_fab): a filled button
+          on every page competed with each screen's one primary action. The
+          panel still opens from the footer link and the city page button,
+          both of which dispatch CREDIT_EVENT. */}
+      {showButton && <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label="שליחת משוב"
@@ -101,7 +105,7 @@ export default function FeedbackWidget() {
       >
         <span aria-hidden><Icon name="chat" size="1em" /></span>
         <span className="hidden sm:inline">משוב</span>
-      </button>
+      </button>}
 
       {open && (
         <div
@@ -120,7 +124,7 @@ export default function FeedbackWidget() {
               <div className="mb-3 flex items-start justify-between gap-2">
                 <div>
                   <h2 className="text-sm font-black text-slate-900">מה דעתך?</h2>
-                  <p className="mt-0.5 text-2xs text-slate-500">האתר בבנייה — כל הערה עוזרת</p>
+                  <p className="mt-0.5 text-2xs text-slate-500">מה חסר, מה לא ברור, מה נראה שגוי — כל הערה עוזרת</p>
                 </div>
                 <button type="button" onClick={() => setOpen(false)} aria-label="סגירה"
                   className="-me-1 -mt-1 h-7 w-7 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700"><Icon name="close" size="1em" /></button>
