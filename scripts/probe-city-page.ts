@@ -32,6 +32,7 @@
 import Database from "better-sqlite3";
 import crypto from "crypto";
 import path from "path";
+import { sessionKey } from "../lib/sessionToken";
 
 const BASE = process.env.PROBE_BASE_URL ?? "http://127.0.0.1:3000";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -80,8 +81,10 @@ async function main() {
         "INSERT INTO users (email, name, password_hash, salt, tier) VALUES (?, 'probe', '-', '-', 'free')"
       ).run(PROBE_EMAIL).lastInsertRowid
     );
+    // The table stores the hashed form (lib/sessionToken.ts); the cookie below
+    // carries the raw token, exactly as a real browser would.
     db.prepare("INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, datetime('now','+1 hour'))")
-      .run(token, userId);
+      .run(sessionKey(token), userId);
     const ins = db.prepare(
       "INSERT OR REPLACE INTO city_unlocks (user_id, city_name, expires_at) VALUES (?, ?, datetime('now','+1 hour'))"
     );
@@ -133,7 +136,7 @@ async function main() {
     const drop = (sql: string, arg: unknown) => {
       try { db.prepare(sql).run(arg as never); } catch { /* table may not exist yet */ }
     };
-    drop("DELETE FROM sessions WHERE token=?", token);
+    drop("DELETE FROM sessions WHERE token=?", sessionKey(token));
     if (userId != null) {
       drop("DELETE FROM city_unlocks WHERE user_id=?", userId);
       drop("DELETE FROM credits_ledger WHERE user_id=?", userId);

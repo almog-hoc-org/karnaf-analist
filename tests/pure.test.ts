@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { pickReferenceYear } from "@/lib/referenceYear";
+import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";
 import { gradeTrend, pickWindow } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
@@ -2105,5 +2106,29 @@ describe("pickReferenceYear", () => {
   it("counts neighbourhoods, not cells", () => {
     const cells = [cell("א", 2026), cell("א", 2026), cell("א", 2026), cell("א", 2025), cell("ב", 2025), cell("ג", 2025)];
     expect(pickReferenceYear(cells, 3)).toBe(2025);
+  });
+});
+
+describe("sessionToken", () => {
+  const token = "a".repeat(64);
+  it("stores a hash, never the token itself", () => {
+    const k = sessionKey(token);
+    expect(k.startsWith(SESSION_KEY_PREFIX)).toBe(true);
+    expect(k).not.toContain(token);
+    expect(k).toMatch(/^h1:[0-9a-f]{64}$/);
+  });
+  it("is deterministic, so a cookie finds its row", () => {
+    expect(sessionKey(token)).toBe(sessionKey(token));
+    expect(sessionKey(token)).not.toBe(sessionKey("b".repeat(64)));
+  });
+  it("tells a raw legacy row from a hashed one", () => {
+    expect(isLegacySessionKey(token)).toBe(true);
+    expect(isLegacySessionKey(sessionKey(token))).toBe(false);
+  });
+  it("a raw token copied from a leaked database does not authenticate", () => {
+    // A leaked row holds either a legacy raw token or a hash. Presenting the
+    // stored value as a cookie hashes it again, which matches nothing.
+    const stored = sessionKey(token);
+    expect(sessionKey(stored)).not.toBe(stored);
   });
 });

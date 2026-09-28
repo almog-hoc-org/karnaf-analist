@@ -16,6 +16,7 @@
  * personal data is reachable only by the account that owns it.
  */
 import { cookies } from "next/headers";
+import { sessionKey, SESSION_KEY_PREFIX } from "./sessionToken";
 import { redirect } from "next/navigation";
 import crypto from "crypto";
 import { appDb } from "./appDb";
@@ -69,6 +70,13 @@ function ensureAuthTables() {
     ensureColumn("referred_by", "referred_by INTEGER");         // user id of whoever referred them
     ensureColumn("ravmesser_synced_at", "ravmesser_synced_at DATETIME");
     ensureColumn("crm_synced_at", "crm_synced_at DATETIME");
+    // Sessions written before tokens were hashed (lib/sessionToken.ts) can no
+    // longer authenticate — lookups hash the cookie — but they still hold live
+    // raw tokens that a leaked copy of app.db would expose. Drop them once per
+    // process; the users behind them simply sign in again.
+    try {
+      appDb().prepare("DELETE FROM sessions WHERE token NOT LIKE ?").run(`${SESSION_KEY_PREFIX}%`);
+    } catch { /* never block auth over housekeeping */ }
     columnsEnsured = true;
   }
 }
@@ -188,9 +196,23 @@ export function findOrCreateGoogleUser(
 
   const byEmail = appDb().prepare("SELECT * FROM users WHERE email=?").get(em) as UserRow | undefined;
   if (byEmail) {
-    // First Google link also records mailing consent: the sign-in pages
-    // disclose that Google sign-in includes it (operator decision 9.8).
-    appDb().prepare("UPDATE users SET google_id=?, mailing_consent=1 WHERE id=?").run(gid, byEmail.id);
+    // Password sign-up never verified the email, so the account may have been
+    // registered by someone who is not the mailbox owner (a "pre-hijack":
+    // register the victim's address, wait for them to arrive through Google,
+    // keep the password). Google HAS verified the mailbox, so on the first link
+    // the Google identity wins: the password becomes unusable and every
+    // existing session ends. A legitimate owner simply keeps signing in with
+    // Google; the operator can issue a new password from the admin panel.
+    //
+    // Consent is left exactly as it was. The account already made a choice
+    // (sign-up records it); linking Google must not silently re-subscribe
+    // someone who opted out.
+    const salt = crypto.randomBytes(16).toString("hex");
+    const unusable = hashPassword(crypto.randomBytes(64).toString("hex"), salt);
+    appDb().transaction(() => {
+      appDb().prepare("UPDATE users SET google_id=?, password_hash=?, salt=? WHERE id=?").run(gid, unusable, salt, byEmail.id);
+      appDb().prepare("DELETE FROM sessions WHERE user_id=?").run(byEmail.id);
+    })();
     return { user: { id: `u${byEmail.id}`, email: byEmail.email, name: byEmail.name, tier: byEmail.tier }, created: false };
   }
 
@@ -275,7 +297,7 @@ export function createSession(user: AuthUser) {
   const token = crypto.randomBytes(32).toString("hex");
   const expires = new Date(Date.now() + SESSION_DAYS * 86400_000);
   appDb().prepare("INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)")
-    .run(token, Number(user.id.slice(1)), expires.toISOString());
+    .run(sessionKey(token), Number(user.id.slice(1)), expires.toISOString());
   cookies().set(SESSION_COOKIE, token, {
     httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production",
     maxAge: SESSION_DAYS * 86400, path: "/",
@@ -285,7 +307,7 @@ export function createSession(user: AuthUser) {
 export function destroySession() {
   const token = cookies().get(SESSION_COOKIE)?.value;
   if (token) {
-    try { appDb().prepare("DELETE FROM sessions WHERE token=?").run(token); } catch { /* ignore */ }
+    try { appDb().prepare("DELETE FROM sessions WHERE token=?").run(sessionKey(token)); } catch { /* ignore */ }
   }
   cookies().delete(SESSION_COOKIE);
 }
@@ -303,7 +325,7 @@ export function getCurrentUser(): AuthUser | null {
     const row = appDb().prepare(
       `SELECT u.id, u.email, u.name, u.tier FROM sessions s JOIN users u ON u.id = s.user_id
        WHERE s.token=? AND s.expires_at > datetime('now')`
-    ).get(token) as Pick<UserRow, "id" | "email" | "name" | "tier"> | undefined;
+    ).get(sessionKey(token)) as Pick<UserRow, "id" | "email" | "name" | "tier"> | undefined;
     return row ? { id: `u${row.id}`, email: row.email, name: row.name, tier: row.tier } : null;
   } catch (e) {
     // The catch is here for the DATABASE read — a missing table or a locked

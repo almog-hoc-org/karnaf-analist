@@ -53,11 +53,14 @@ ok "$DATA_ROOT/data     ← realestate.db, app.db"
 ok "$DATA_ROOT/reports  ← דוחות PDF"
 ok "$DATA_ROOT/backups  ← גיבויים"
 
-say "התקנת sqlite3 CLI (לגיבויים ולבדיקות)"
-if command -v sqlite3 >/dev/null 2>&1; then
+say "התקנת sqlite3 ו-age (לגיבויים ולבדיקות; age מצפין את נתוני המשתמשים בגיבוי)"
+MISSING=""
+command -v sqlite3 >/dev/null 2>&1 || MISSING="$MISSING sqlite3"
+command -v age >/dev/null 2>&1 || MISSING="$MISSING age"
+if [ -z "$MISSING" ]; then
   ok "כבר מותקן"
 else
-  apt-get update -qq && apt-get install -y -qq sqlite3 && ok "הותקן"
+  apt-get update -qq && apt-get install -y -qq $MISSING && ok "הותקן:$MISSING"
 fi
 
 say "חומת אש"

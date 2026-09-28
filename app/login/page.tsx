@@ -95,11 +95,6 @@ export default function LoginPage({ searchParams }: { searchParams?: { err?: str
         <p className="mt-2 text-center text-2xs text-slate-400">
           ההרשמה חינם ומקנה קרדיטים לפתיחת עמודי ערים
         </p>
-        <div className="mt-4 border-t border-slate-100 pt-3 text-center">
-          <Link href="/admin" className="text-2xs font-bold text-slate-400 hover:text-indigo-700">
-            <Icon name="cursor" size="1em" /> ניהול דאטה (מנהל מערכת)
-          </Link>
-        </div>
       </form>
     </main>
   );

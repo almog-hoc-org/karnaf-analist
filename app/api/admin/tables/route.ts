@@ -5,9 +5,17 @@ import { isAdminRequest } from "@/lib/adminAuth";
 
 export const dynamic = "force-dynamic";
 
-/** Tables that hold credentials or session tokens — never browsable, even by admin.
- *  The tables browser is for inspecting DATA, not secrets. */
-const SENSITIVE_TABLES = new Set(["users", "sessions", "_prisma_migrations"]);
+/** Tables that are never browsable, even by admin. The tables browser is for
+ *  inspecting DATA, not secrets or one person's private workspace:
+ *   - users, sessions: credentials and session keys;
+ *   - client_deals, tracked_cities: the privacy notice promises a saved deal
+ *     is visible only to the account that created it;
+ *   - credits_ledger: per-user balances and referral links (the admin users
+ *     panel shows the totals it needs). */
+const SENSITIVE_TABLES = new Set([
+  "users", "sessions", "_prisma_migrations",
+  "client_deals", "tracked_cities", "credits_ledger",
+]);
 
 /** Read-only browser over every table in both databases (analytics + app). */
 const norm = (rows: any[]) =>
