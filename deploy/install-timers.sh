@@ -8,6 +8,7 @@
 #   02:30      karnaf-pipeline  cleans, classifies, aggregates and verifies it
 #   Sun 04:30  karnaf-backup    publishes both databases to GitHub Releases
 #   Sun 08:00  karnaf-digest    emails followed-city summaries to opted-in users
+#   Sun 07:00  karnaf-ops-report emails the operator the weekly health + product report
 #   every 2m   karnaf-heal      restarts the app container if it is unhealthy
 #   on failure karnaf-alert@    emails the operator when any unit above fails
 #
@@ -31,7 +32,7 @@ command -v systemctl >/dev/null || { echo "✗ systemd לא זמין"; exit 1; }
 # own zone instead (OnCalendar=… Asia/Jerusalem). Until 28.9.2026 they did not,
 # and "00:30" was 03:30 in Israel.
 say "התקנת יחידות systemd"
-for u in karnaf-collect karnaf-pipeline karnaf-backup karnaf-digest karnaf-heal; do
+for u in karnaf-collect karnaf-pipeline karnaf-backup karnaf-digest karnaf-heal karnaf-ops-report; do
   install -m 0644 "$u.service" /etc/systemd/system/
   install -m 0644 "$u.timer"   /etc/systemd/system/
   ok "/etc/systemd/system/$u.{service,timer}"
@@ -54,6 +55,8 @@ systemctl enable --now karnaf-digest.timer
 ok "karnaf-digest   — ראשון 08:00 · סיכום שבועי לערים במעקב"
 systemctl enable --now karnaf-heal.timer
 ok "karnaf-heal     — כל 2 דקות · אתחול קונטיינר unhealthy + מייל"
+systemctl enable --now karnaf-ops-report.timer
+ok "karnaf-ops-report — ראשון 07:00 · דוח שבועי למפעיל"
 
 # alerts go by email from the host (scripts/alert.sh); say now if they cannot
 grep -q '^RESEND_API_KEY=.\+' /opt/karnaf/.env.production 2>/dev/null \
@@ -71,7 +74,7 @@ grep -q '^KARNAF_BACKUP_AGE_RECIPIENT=age1' /etc/karnaf/backup.env 2>/dev/null \
   || printf "  \033[33m⚠\033[0m חסר KARNAF_BACKUP_AGE_RECIPIENT ב-/etc/karnaf/backup.env — app.db לא יגובה (ראו scripts/publish-backup.sh)\n"
 
 say "מצב"
-systemctl list-timers karnaf-collect.timer karnaf-pipeline.timer karnaf-backup.timer karnaf-digest.timer karnaf-heal.timer --no-pager || true
+systemctl list-timers karnaf-collect.timer karnaf-pipeline.timer karnaf-backup.timer karnaf-digest.timer karnaf-heal.timer karnaf-ops-report.timer --no-pager || true
 
 cat <<'EOF'
 

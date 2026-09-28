@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { pickReferenceYear } from "@/lib/referenceYear";
 import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";
+import { buildOpsReport, opsAlerts, type OpsSnapshot } from "@/lib/opsReport";
 import { gradeTrend, pickWindow } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
@@ -2130,5 +2131,42 @@ describe("sessionToken", () => {
     // stored value as a cookie hashes it again, which matches nothing.
     const stored = sessionKey(token);
     expect(sessionKey(stored)).not.toBe(stored);
+  });
+});
+
+describe("opsReport", () => {
+  const base: OpsSnapshot = {
+    generatedAt: "2026-09-27T04:00:00Z",
+    health: { httpOk: true, problems: [], warnings: [], latestDealDate: "2026-09-20", latestDealAgeDays: 7, pipelineAgeHours: 5, collectionAgeHours: 7 },
+    users: { total: 39, new7: 1, new30: 9, consenting: 35, referred30: 0 },
+    usage7: { sessions: 392, signedInUsers: 13, pageViews: 481 },
+    funnel7: { checks: 40, verdicts: 0, unlocks: 2, signups: 1, shares: 1 },
+    credits: { granted30: 106, spent30: 24, outstanding: 314, usersWithBalance: 37 },
+    search7: { searches: 242, misses: 20, topMisses: [{ term: "המתמיד", n: 4 }] },
+    feedbackOpen: [],
+    topCities7: [{ city: "רמת גן", n: 10 }],
+  };
+  it("a quiet week says so in the subject and has nothing to do", () => {
+    const r = buildOpsReport(base);
+    expect(r.alerts).toEqual([]);
+    expect(r.subject).toContain("הכל תקין");
+  });
+  it("the 20.9 week raises every item that report raised by hand", () => {
+    const a = opsAlerts({
+      ...base,
+      health: { ...base.health, httpOk: false, latestDealAgeDays: 38 },
+      search7: { searches: 242, misses: 85, topMisses: [] },
+      feedbackOpen: [{ id: 3, kind: "wrong_data", city: "חדרה", message: "מתחם פאר", createdAt: "2026-09-01" }],
+      funnel7: { ...base.funnel7, shares: 0 },
+    });
+    expect(a.length).toBe(5);
+    expect(a.join(" ")).toContain("38 ימים");
+    expect(a.join(" ")).toContain("35%");
+  });
+  it("escapes user text in the HTML body", () => {
+    const r = buildOpsReport({ ...base, feedbackOpen: [{ id: 1, kind: "bug", city: null, message: "<script>x</script>", createdAt: "" }] });
+    expect(r.html).not.toContain("<script>");
+    expect(r.html).toContain("&lt;script&gt;");
+    expect(r.html).toContain('dir="rtl"');
   });
 });

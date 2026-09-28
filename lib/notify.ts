@@ -145,6 +145,36 @@ export function isNotifyConfigured(): boolean {
   return loadConfig().enabled;
 }
 
+/**
+ * Any operator email (the weekly ops report, alerts) — same config and the same
+ * console fallback as the two specialised senders above.
+ */
+export async function sendOperatorEmail(subject: string, html: string, text: string): Promise<{ sent: boolean; reason?: string }> {
+  const cfg = loadConfig();
+  if (!cfg.enabled) {
+    console.log(`📧 [NOTIFY:console] ${subject}\n${text}`);
+    return { sent: false, reason: "RESEND_API_KEY or NOTIFY_TO_EMAIL not set in env" };
+  }
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${cfg.apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from: cfg.fromEmail, to: cfg.toEmail, subject, html, text }),
+    });
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error(`📧 [NOTIFY:error] Resend API ${res.status}: ${errText}`);
+      return { sent: false, reason: `Resend API error: ${res.status}` };
+    }
+    console.log(`📧 [NOTIFY:sent] "${subject}" → ${cfg.toEmail}`);
+    return { sent: true };
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error(`📧 [NOTIFY:exception] ${msg}`);
+    return { sent: false, reason: msg };
+  }
+}
+
 /* ── feedback ─────────────────────────────────────────────────────────── */
 
 export interface FeedbackNotification {

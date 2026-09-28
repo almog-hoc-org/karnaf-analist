@@ -1,0 +1,18 @@
+# Weekly operator report: health, users, product funnel, credits, failed
+# searches, open feedback. See scripts/send-ops-report.ts and lib/opsReport.ts.
+#
+# Run now: systemctl start karnaf-ops-report.service
+# Preview: docker compose exec -T app npx tsx scripts/send-ops-report.ts --dry-run
+
+[Unit]
+Description=Karnaf Analist — weekly operator report
+After=docker.service
+Requires=docker.service
+OnFailure=karnaf-alert@%n.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/karnaf
+TimeoutStartSec=10min
+ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Service}}" | grep -qx app || { echo "app container is not running — skipping"; exit 1; }'
+ExecStart=/usr/bin/docker compose exec -T app nice -n 15 npx tsx scripts/send-ops-report.ts
