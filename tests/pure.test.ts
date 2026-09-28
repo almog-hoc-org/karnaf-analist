@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { pickReferenceYear } from "@/lib/referenceYear";
 import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";
 import { buildOpsReport, opsAlerts, type OpsSnapshot } from "@/lib/opsReport";
+import { parseRegisterRecord, registerDate, gushHelkaOf, cityResolver, matchCity, inheritAddresses, type MekarkeinRow, type OurDeal } from "@/lib/mekarkein";
 import { gradeTrend, pickWindow } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
 import { toVisualRtl } from "@/lib/rtlVisual";
@@ -2168,5 +2169,93 @@ describe("opsReport", () => {
     expect(r.html).not.toContain("<script>");
     expect(r.html).toContain("&lt;script&gt;");
     expect(r.html).toContain('dir="rtl"');
+  });
+});
+
+describe("mekarkein register", () => {
+  const rec = (o: Partial<Record<string, string>> = {}): Record<string, string> => ({
+    settlement: "חולון", settlement_code: "6600", gush: "7151", chelka: "316", sub_chelka: "010",
+    deal_date: "27/09/2006", deal_amount: "279600", declared_amount: "122700", deal_nature: "דירה בבית קומות",
+    portion: "1.000", asset_area: "97", room_num: "3", year_built: "1965", scraped_at: "x", first_seen: "2026-09-20 10:00:00", ...o,
+  });
+  it("parses a register row and normalises its date and sub-parcel", () => {
+    const r = parseRegisterRecord(rec())!;
+    expect(r.dealDate).toBe("2006-09-27");
+    expect(r.sub).toBe(10);
+    expect(r.declaredAmount).toBe(122700);
+    expect(r.portion).toBe(1);
+  });
+  it("rejects rows without parcel, date or amount, and never guesses a date", () => {
+    expect(parseRegisterRecord(rec({ gush: "" }))).toBeNull();
+    expect(parseRegisterRecord(rec({ deal_date: "2006-09-27" }))).toBeNull();
+    expect(parseRegisterRecord(rec({ deal_amount: "0" }))).toBeNull();
+    expect(registerDate("27.09.2006")).toBeNull();
+  });
+  it("hashes content, not scrape bookkeeping", () => {
+    expect(parseRegisterRecord(rec({ first_seen: "2026-01-01", scraped_at: "y" }))!.id).toBe(parseRegisterRecord(rec())!.id);
+    expect(parseRegisterRecord(rec({ deal_amount: "279601" }))!.id).not.toBe(parseRegisterRecord(rec())!.id);
+  });
+  it("reads gush-helka from our parcel_num in either form", () => {
+    expect(gushHelkaOf("7242-126-6")).toBe("7242-126");
+    expect(gushHelkaOf("07242-0126")).toBe("7242-126");
+    expect(gushHelkaOf("")).toBeNull();
+  });
+  it("maps settlement spellings onto our city names", () => {
+    const resolve = cityResolver(["קריית אתא", "תל אביב-יפו", "חולון"]);
+    expect(resolve("קרית אתא")).toBe("קריית אתא");
+    expect(resolve("תל אביב -יפו")).toBe("תל אביב-יפו");
+    expect(resolve("עכו")).toBeNull();
+  });
+
+  const reg = (o: Partial<MekarkeinRow>): MekarkeinRow => ({
+    id: Math.random().toString(36), settlement: "חולון", settlementCode: null, gush: 7151, helka: 316, sub: 10,
+    dealDate: "2023-05-01", amount: 1500000, declaredAmount: null, nature: null, portion: 1, area: 80, rooms: 3,
+    yearBuilt: null, firstSeen: null, ...o,
+  });
+  const ours = (o: Partial<OurDeal>): OurDeal => ({ id: 1, dealDate: "2023-05-01", price: 1500000, area: 80, rooms: 3, parcelNum: null, ...o });
+
+  it("matches on date and amount, then rounded amount, then a one-day shift", () => {
+    expect(matchCity([ours({})], [reg({})]).matches[0].level).toBe("exact");
+    expect(matchCity([ours({ price: 1500000 })], [reg({ amount: 1500321 })]).matches[0].level).toBe("rounded");
+    expect(matchCity([ours({ dealDate: "2023-05-02" })], [reg({})]).matches[0].level).toBe("shifted");
+    expect(matchCity([ours({})], [reg({})]).matches[0].parcel).toBe("7151-316-10");
+  });
+  it("ignores partial-share rows, whose amount pays for a share", () => {
+    expect(matchCity([ours({})], [reg({ portion: 0.5 })]).unmatched).toBe(1);
+  });
+  it("narrows by area, and refuses when two candidates remain", () => {
+    const two = [reg({ id: "a", area: 80, helka: 1 }), reg({ id: "b", area: 120, helka: 2 })];
+    expect(matchCity([ours({})], two).matches[0].parcel).toBe("7151-1-10");
+    const same = [reg({ id: "a", helka: 1 }), reg({ id: "b", helka: 2 })];
+    expect(matchCity([ours({})], same).ambiguous).toBe(1);
+  });
+  it("gives a register row claimed by two of our rows to neither", () => {
+    const r = matchCity([ours({ id: 1 }), ours({ id: 2 })], [reg({})]);
+    expect(r.matches.length).toBe(0);
+    expect(r.ambiguous).toBe(2);
+  });
+  it("uses an existing parcel_num as the control, never overwriting it", () => {
+    expect(matchCity([ours({ parcelNum: "7151-316-10" })], [reg({})]).confirmed).toBe(1);
+    const c = matchCity([ours({ parcelNum: "9999-1-1" })], [reg({})]);
+    expect(c.conflicts).toBe(1);
+    expect(c.matches.length).toBe(0);
+  });
+  it("inherits an address from the same flat, then the same parcel, only when unanimous", () => {
+    const r = inheritAddresses([
+      { id: 1, parcelNum: "7151-316-10", street: "סוקולוב", houseNum: "50" },
+      { id: 2, parcelNum: "7151-316-12", street: "סוקולוב", houseNum: "50" },
+      { id: 3, parcelNum: "7151-316-10", street: null, houseNum: null },
+      { id: 4, parcelNum: "7151-316-99", street: null, houseNum: null },
+      { id: 5, parcelNum: "7000-1-1", street: "הרצל", houseNum: "1" },
+      { id: 6, parcelNum: "7000-1-2", street: "הרצל", houseNum: "3" },
+      { id: 7, parcelNum: "7000-1-9", street: null, houseNum: null },
+      { id: 8, parcelNum: "8000-1-1", street: null, houseNum: null },
+    ]);
+    expect(r.fills).toEqual([
+      { id: 3, street: "סוקולוב", houseNum: "50", via: "sub" },
+      { id: 4, street: "סוקולוב", houseNum: "50", via: "parcel" },
+    ]);
+    expect(r.ambiguous).toBe(1);
+    expect(r.noDonor).toBe(1);
   });
 });
