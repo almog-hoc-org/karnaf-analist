@@ -7,7 +7,8 @@ import Icon from "@/components/Icon";
 import BrandMark from "./BrandMark";
 import { usePathname, useRouter } from "next/navigation";
 import { withBasePath } from "@/lib/basePath";
-import { track, trackSearch, trackSearchSelect } from "@/lib/track";
+import { track, createSettledSearchTracker, trackSearchSelect } from "@/lib/track";
+import { suggestionLabel, type SuggestionKind } from "@/lib/searchIndex";
 import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
 const NAV_ITEMS = [
@@ -50,7 +51,8 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
   const [hits, setHits] = useState<CityHit[]>([]);
   /** hood/street suggestions from /api/suggest — appended UNDER the cities in
    *  the same keyboard-navigable list */
-  const [hoodHits, setHoodHits] = useState<Array<{ kind: "hood" | "street"; city: string; name: string; hood: string; url: string }>>([]);
+  const [hoodHits, setHoodHits] = useState<Array<{ kind: SuggestionKind; city: string; name: string; hood: string; url: string }>>([]);
+  const reportSearch = useRef(createSettledSearchTracker("topnav")).current;
   const [focusIdx, setFocusIdx] = useState(-1);
   const boxRef = useRef<HTMLDivElement>(null);
 
@@ -74,13 +76,17 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
       // failed search was invisible to the user AND to us. It is also the more
       // used of the site's two search inputs, so measuring only the homepage one
       // would have missed most searches.
-      trackSearch(needle, matches.length, "topnav");
+      // Recorded once the user stops typing, cities AND hood/street
+      // suggestions counted (createSettledSearchTracker). This box used to
+      // record every keystroke as its own search, before suggestions returned.
       if (needle.length >= 2) {
         fetch(withBasePath(`/api/suggest?q=${encodeURIComponent(needle)}`))
           .then((r) => (r.ok ? r.json() : { suggestions: [] }))
-          .then((j: { suggestions?: Array<{ kind: "hood" | "street"; city: string; name: string; hood: string; url: string }> }) =>
-            setHoodHits(j.suggestions ?? []))
-          .catch(() => setHoodHits([]));
+          .then((j: { suggestions?: Array<{ kind: SuggestionKind; city: string; name: string; hood: string; url: string }> }) => {
+            setHoodHits(j.suggestions ?? []);
+            reportSearch(needle, matches.length + (j.suggestions?.length ?? 0));
+          })
+          .catch(() => { setHoodHits([]); reportSearch(needle, matches.length); });
       } else setHoodHits([]);
     }, 120);
     return () => clearTimeout(t);
@@ -115,7 +121,7 @@ export default function TopNav({ cities, user, credits, unlimited = false, track
     ...hits.map((h) => ({ label: h.name, name: h.name, reason: h.reason as string })),
     ...hoodHits.map((h) => ({
       label: h.name,
-      sub: h.kind === "street" ? `רחוב בשכונת ${h.hood} · ${h.city}` : `שכונה ב${h.city}`,
+      sub: suggestionLabel(h),
       name: `${h.city}/${h.hood}`,
       url: h.url,
     })),

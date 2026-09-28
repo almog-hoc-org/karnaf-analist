@@ -35,6 +35,7 @@ export function normalizeCitySearch(value: string): string {
     .replace(/ף/g, "פ")
     .replace(/ץ/g, "צ")
     .replace(/יי/g, "י")
+    .replace(/וו/g, "ו") // נווה ↔ נוה, תקווה ↔ תקוה
     .replace(/קרית/g, "קרית")
     .replace(/קריית/g, "קרית");
 }

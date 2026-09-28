@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { track, trackSearch, trackSearchSelect } from "@/lib/track";
+import { track, createSettledSearchTracker, trackSearchSelect } from "@/lib/track";
+import { suggestionLabel, type SuggestionKind } from "@/lib/searchIndex";
 import { withBasePath } from "@/lib/basePath";
 import { citySearch, type CitySearchHit } from "@/lib/citySearch";
 
@@ -31,7 +32,8 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [query, setQuery] = useState("");
   const [hits, setHits] = useState<Array<CitySearchHit<CityItem>>>([]);
-  const [hoodHits, setHoodHits] = useState<Array<{ kind: "hood" | "street"; city: string; name: string; hood: string; url: string }>>([]);
+  const [hoodHits, setHoodHits] = useState<Array<{ kind: SuggestionKind; city: string; name: string; hood: string; url: string }>>([]);
+  const reportSearch = useRef(createSettledSearchTracker("home")).current;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -60,17 +62,22 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
     }
     const next = citySearch(cities, query, 20);
     setHits(next);
-    trackSearch(query, next.length, "home");
 
     // Hoods and streets live server-side (thousands of rows, pre-normalised
     // index) — one debounced fetch per settled query, results appended UNDER
     // the city matches. A failed fetch degrades to cities-only, silently.
     if (query.trim().length < 2) { setHoodHits([]); return; }
     let cancelled = false;
+    // Recorded once the user stops typing, with cities AND hood/street
+    // suggestions counted — see createSettledSearchTracker.
     fetch(withBasePath(`/api/suggest?q=${encodeURIComponent(query.trim())}`))
       .then((r) => (r.ok ? r.json() : { suggestions: [] }))
-      .then((j: { suggestions?: typeof hoodHits }) => { if (!cancelled) setHoodHits(j.suggestions ?? []); })
-      .catch(() => { if (!cancelled) setHoodHits([]); });
+      .then((j: { suggestions?: typeof hoodHits }) => {
+        if (cancelled) return;
+        setHoodHits(j.suggestions ?? []);
+        reportSearch(query, next.length + (j.suggestions?.length ?? 0));
+      })
+      .catch(() => { if (!cancelled) { setHoodHits([]); reportSearch(query, next.length); } });
     return () => { cancelled = true; };
   }, [query, cities]);
 
@@ -208,8 +215,7 @@ export default function HomeSearch({ cities }: { cities: CityItem[] }) {
                         {h.name}
                       </span>
                       <span className="text-xs text-slate-500">
-                        {h.kind === "street" ? `רחוב בשכונת ${h.hood} · ` : "שכונה ב"}
-                        {h.city}
+                        {suggestionLabel(h)}
                       </span>
                     </Link>
                   ))}

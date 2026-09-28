@@ -198,6 +198,34 @@ export function trackSearch(term: string, resultCount: number, where: string): v
   if (resultCount === 0) track("search_no_results", { subject: where, detail: t });
 }
 
+/**
+ * A search tracker that records only what the user SETTLED on.
+ *
+ * MEASURED 20.9.2026: 85 of 242 searches "found nothing", and the top misses
+ * were fragments — "משכ", "משכנ", "קיסר", "קיסרי", "מצפה", "מצפה 3". The top
+ * search box recorded every 120ms-debounced keystroke, and counted a miss
+ * before the neighbourhood and street suggestions had even returned. So a
+ * search that DID find a street was a miss, three times over.
+ *
+ * Call report(term, count) whenever results change; it fires once, `settleMs`
+ * after the last call, with the final term and the final count (cities plus
+ * suggestions). A term shorter than 2 characters is never recorded.
+ */
+export function createSettledSearchTracker(where: string, settleMs = 1200): (term: string, resultCount: number) => void {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  let last = "";
+  return (term: string, resultCount: number) => {
+    if (timer) clearTimeout(timer);
+    const t = term.trim();
+    if (t.length < 2) return;
+    timer = setTimeout(() => {
+      if (t === last) return; // the same settled term reported twice
+      last = t;
+      trackSearch(t, resultCount, where);
+    }, settleMs);
+  };
+}
+
 
 /**
  * Start measuring time on the current page, and report it when the visitor

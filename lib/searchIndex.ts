@@ -96,9 +96,42 @@ export function normalizeStreetQuery(raw: string): string {
  * suggestion that landed on its neighbourhood answered a narrower question
  * with a broader page.
  */
-export function suggestionUrl(r: { kind: string; city: string; name: string; hood: string }): string {
+export function suggestionUrl(r: { kind: string; city: string; name: string; hood: string; house?: string }): string {
   const city = encodeURIComponent(r.city);
+  if (r.kind === "check") {
+    const q = new URLSearchParams({ city: r.city, street: r.name });
+    if (r.house) q.set("house", r.house);
+    return `/check?${q.toString()}`;
+  }
   if (r.kind === "street") return `/city/${city}/street/${encodeURIComponent(r.name)}`;
   if (r.kind === "building") return `/city/${city}/address/${encodeURIComponent(r.name)}`;
   return `/city/${city}/neighborhood/${encodeURIComponent(r.hood)}`;
+}
+
+/** Every kind a search box can offer. "check" is a price check at an address. */
+export type SuggestionKind = "hood" | "street" | "building" | "check";
+
+/**
+ * The grey line under a suggestion. One function for both search boxes: the
+ * two used to disagree, and a building was labelled "שכונה ב…".
+ */
+export function suggestionLabel(r: { kind: SuggestionKind | string; city: string; hood: string }): string {
+  if (r.kind === "check") return `בדיקת מחיר · ${r.city}`;
+  if (r.kind === "building") return `בניין · ${r.city}`;
+  if (r.kind === "street") return r.hood ? `רחוב בשכונת ${r.hood} · ${r.city}` : `רחוב · ${r.city}`;
+  return `שכונה ב${r.city}`;
+}
+
+/**
+ * "סוקולוב 50" → { street: "סוקולוב", house: "50" }; "מצפה 3" likewise.
+ * A query that is a street and a house number is someone looking at a
+ * specific apartment: the search offers the price check for it first. Only a
+ * trailing 1–4 digit number (optionally with a Hebrew letter) counts, the
+ * same rule as cleanStreetName, so "דרך 90" alone stays a street name.
+ */
+export function splitStreetHouse(raw: string): { street: string; house: string } | null {
+  const s = normalizeStreetQuery(raw);
+  const m = /^(.*?)\s+(\d{1,4}[א-ת]?)$/.exec(raw.replace(/["'`]/g, "").replace(/\s+/g, " ").trim());
+  if (!m || !s || s.length < 2) return null;
+  return { street: s, house: m[2] };
 }

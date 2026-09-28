@@ -60,12 +60,11 @@ function main(): number {
     let streetRows: Array<{ city_name: string; street: string; neighborhood: string; n: number }> = [];
     try {
       streetRows = db.prepare(
-        `SELECT city_name, street, neighborhood, COUNT(*) n
+        `SELECT city_name, street, COALESCE(neighborhood, '') neighborhood, COUNT(*) n
            FROM nadlan_transactions
           WHERE street IS NOT NULL AND street != ''
-            AND neighborhood IS NOT NULL AND neighborhood != ''
             AND COALESCE(excluded, 0) = 0
-          GROUP BY city_name, street, neighborhood`
+          GROUP BY city_name, street, COALESCE(neighborhood, '')`
       ).all() as typeof streetRows;
     } catch { /* table missing — dev DB */ }
 
@@ -81,14 +80,26 @@ function main(): number {
       counts.set(r.neighborhood, (counts.get(r.neighborhood) ?? 0) + Number(r.n));
     }
 
+    // Every street with enough deals is indexed. A street used to be indexed
+    // only when one neighbourhood held 70% of it, because the suggestion led
+    // to that neighbourhood. Streets have their own pages now, so a street
+    // that straddles neighbourhoods — or sits in one of the 92 cities with no
+    // neighbourhood data at all — is still a valid answer; it just carries no
+    // hood. That gap was a large share of "no results" (סוקולוב, המתמיד).
+    const minStreet = Number(process.env.KARNAF_STREET_INDEX_MIN_DEALS ?? 5);
     let streetKept = 0, streetSplit = 0, streetNoPage = 0;
     const streetOut: Array<{ city: string; name: string; hood: string; n: number }> = [];
     for (const [key, counts] of byStreet) {
       const [city, street] = key.split("|");
-      const modal = pickModalHood(counts);
-      if (!modal) { streetSplit++; continue; }
-      if (!hoodSet.has(`${city}|${modal.hood}`)) { streetNoPage++; continue; }
-      streetOut.push({ city, name: street, hood: modal.hood, n: modal.n });
+      const total = [...counts.values()].reduce((a, b) => a + b, 0);
+      if (total < minStreet) continue;
+      const named = new Map([...counts].filter(([h]) => h));
+      const modal = named.size ? pickModalHood(named) : null;
+      let hood = "";
+      if (!modal) streetSplit++;
+      else if (!hoodSet.has(`${city}|${modal.hood}`)) streetNoPage++;
+      else hood = modal.hood;
+      streetOut.push({ city, name: street, hood, n: total });
       streetKept++;
     }
 
@@ -140,7 +151,7 @@ function main(): number {
 
     console.log(
       `search-index: ${hoods.length} שכונות · ${streetKept} רחובות · ${buildingOut.length} בניינים (${minBuilding}+ עסקאות) ` +
-      `(נדחו: ${streetSplit} חצויים/דלים, ${streetNoPage} מצביעים על שכונה בלי עמוד)`
+      `(${streetSplit} בלי שכונה אחת, ${streetNoPage} בשכונה בלי עמוד — נכללו בלי שכונה)`
     );
     return 0;
   } finally {

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { pickReferenceYear } from "@/lib/referenceYear";
 import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";
 import { buildOpsReport, opsAlerts, type OpsSnapshot } from "@/lib/opsReport";
+import { splitStreetHouse, suggestionLabel, suggestionUrl, searchNorm } from "@/lib/searchIndex";
 import { parseRegisterRecord, registerDate, gushHelkaOf, cityResolver, matchCity, inheritAddresses, type MekarkeinRow, type OurDeal } from "@/lib/mekarkein";
 import { gradeTrend, pickWindow } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
@@ -2257,5 +2258,31 @@ describe("mekarkein register", () => {
     ]);
     expect(r.ambiguous).toBe(1);
     expect(r.noDonor).toBe(1);
+  });
+});
+
+describe("search that finds", () => {
+  it("reads a street and a house number, and leaves a bare street alone", () => {
+    expect(splitStreetHouse("סוקולוב 50")).toEqual({ street: "סוקולוב", house: "50" });
+    expect(splitStreetHouse("רח׳ הרצל 12א")).toEqual({ street: "הרצל", house: "12א" });
+    expect(splitStreetHouse("מצפה 3")).toEqual({ street: "מצפה", house: "3" });
+    expect(splitStreetHouse("סוקולוב")).toBeNull();
+    expect(splitStreetHouse("3")).toBeNull();
+  });
+  it("a price-check suggestion leads to /check with the address filled in", () => {
+    const u = suggestionUrl({ kind: "check", city: "חולון", name: "סוקולוב", hood: "", house: "50" });
+    expect(u.startsWith("/check?")).toBe(true);
+    const q = new URLSearchParams(u.slice("/check?".length));
+    expect([q.get("city"), q.get("street"), q.get("house")]).toEqual(["חולון", "סוקולוב", "50"]);
+  });
+  it("labels every kind, including a building and a street with no neighbourhood", () => {
+    expect(suggestionLabel({ kind: "building", city: "חולון", hood: "x" })).toBe("בניין · חולון");
+    expect(suggestionLabel({ kind: "street", city: "חולון", hood: "" })).toBe("רחוב · חולון");
+    expect(suggestionLabel({ kind: "street", city: "חולון", hood: "קריית שרת" })).toContain("קריית שרת");
+    expect(suggestionLabel({ kind: "check", city: "חולון", hood: "" })).toContain("בדיקת מחיר");
+  });
+  it("spells נווה and נוה the same, like קריית and קרית", () => {
+    expect(searchNorm("נווה מגן")).toBe(searchNorm("נוה מגן"));
+    expect(searchNorm("פתח תקווה")).toBe(searchNorm("פתח תקוה"));
   });
 });

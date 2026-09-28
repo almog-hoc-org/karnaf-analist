@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
-import { searchNorm, suggestionUrl } from "@/lib/searchIndex";
+import { searchNorm, suggestionUrl, splitStreetHouse, type SuggestionKind } from "@/lib/searchIndex";
 
 /**
  * Hood/street suggestions for the search boxes — the site's first suggestion
@@ -19,7 +19,7 @@ import { searchNorm, suggestionUrl } from "@/lib/searchIndex";
 export const dynamic = "force-dynamic";
 
 export interface Suggestion {
-  kind: "hood" | "street" | "building";
+  kind: SuggestionKind;
   city: string;
   /** display name — the hood, or the street */
   name: string;
@@ -64,6 +64,30 @@ export async function GET(req: NextRequest) {
       hood: r.hood,
       url: suggestionUrl({ kind: r.kind, city: r.city_name, name: r.name, hood: r.hood }),
     }));
+
+    // "סוקולוב 50", "מצפה 3": a street and a house number is someone looking
+    // at one apartment. The full string matches no street, so it used to end
+    // as "no results". Offer the price check at that address first, once per
+    // city that has the street, most deals first.
+    const sh = splitStreetHouse(q);
+    if (sh) {
+      const streets = await prisma.$queryRawUnsafe<Array<{ city_name: string; name: string; hood: string }>>(
+        `SELECT city_name, name, hood FROM search_index
+          WHERE kind = 'street' AND norm LIKE ? ESCAPE '\\'
+          ORDER BY CASE WHEN norm = ? THEN 0 ELSE 1 END, n DESC
+          LIMIT 3`,
+        like(searchNorm(sh.street)) + "%",
+        searchNorm(sh.street)
+      );
+      const checks: Suggestion[] = streets.map((st) => ({
+        kind: "check",
+        city: st.city_name,
+        name: `${st.name} ${sh.house}`,
+        hood: st.hood,
+        url: suggestionUrl({ kind: "check", city: st.city_name, name: st.name, hood: st.hood, house: sh.house }),
+      }));
+      return NextResponse.json({ suggestions: [...checks, ...suggestions].slice(0, 8) });
+    }
     return NextResponse.json({ suggestions });
   } catch {
     return NextResponse.json({ suggestions: [] }); // index not built yet
