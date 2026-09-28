@@ -30,6 +30,7 @@
 import { spawn } from "child_process";
 import Database from "better-sqlite3";
 import path from "path";
+import { ilFetch, needsIlEgress } from "../lib/ilFetch";
 import { SOURCES, SOURCE_IDS, selectSources, probeTargets, probeKeyFor, type CollectorSource, type ProbeTarget } from "../lib/collectors";
 
 const APP_DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "app.db");
@@ -71,7 +72,12 @@ function ensureRunLog(db: Database.Database) {
  */
 async function probe(t: ProbeTarget): Promise<{ ok: boolean; detail: string }> {
   try {
-    const res = await fetch(t.url, {
+    // Geo-restricted hosts are probed the way their collector reaches them:
+    // through the Israeli egress when KARNAF_IL_PROXY is set. With plain fetch
+    // the probe failed from the VPS even with a proxy configured, so the source
+    // was skipped before the proxy was ever used.
+    const get = needsIlEgress(t.url) ? ilFetch : fetch;
+    const res = await get(t.url, {
       method: t.method,
       headers: t.body ? { "Content-Type": "application/json" } : undefined,
       body: t.body ? JSON.stringify(t.body) : undefined,
