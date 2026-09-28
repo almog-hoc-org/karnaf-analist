@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { pickReferenceYear } from "@/lib/referenceYear";
 import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";
 import { buildOpsReport, opsAlerts, type OpsSnapshot } from "@/lib/opsReport";
-import { splitStreetHouse, suggestionLabel, suggestionUrl, searchNorm } from "@/lib/searchIndex";
+import { splitStreetHouse, suggestionLabel } from "@/lib/searchIndex";
 import { parseRegisterRecord, registerDate, gushHelkaOf, cityResolver, matchCity, inheritAddresses, type MekarkeinRow, type OurDeal } from "@/lib/mekarkein";
 import { gradeTrend, pickWindow } from "@/lib/confidence";
 import { canonicalCityName, normalizeCity, sameCity } from "@/lib/cityAliases";
