@@ -274,6 +274,11 @@ jobs:
             echo "   ⚠ age או המפתח חסרים — app.db לא יעלה לגיבוי (רק מאגר העסקאות)"
           fi
 
+          # The tax register (docs/MEKARKEIN.md): what the nightly import and
+          # match did, read from the database — no shell on the host needed.
+          echo "── מיסוי מקרקעין ──"
+          docker compose exec -T app npx tsx scripts/report-mekarkein.ts </dev/null || true
+
           # And the number that decides whether the map is honest: how many of
           # the city's priced neighbourhoods actually got a shape. A collector
           # that "succeeded" and a map covering four of twenty neighbourhoods

@@ -95,6 +95,14 @@ async function load(db: Database.Database | null, url: string, resolve: (s: stri
   return { read, fresh, unmapped, bad, lastSeen };
 }
 
+// The full load adds roughly 1GB to realestate.db. On a disk that cannot take
+// it, SQLite fails part-way and the whole site is on the same disk — so stop
+// before downloading anything, loudly (a non-zero exit mails the operator).
+const MIN_FREE_BYTES = 3 * 1024 ** 3;
+function freeBytes(dir: string): number | null {
+  try { const s = fs.statfsSync(dir); return s.bavail * s.bsize; } catch { return null; }
+}
+
 async function main() {
   const db = new Database(DB, dry ? { readonly: true } : undefined);
   if (!dry) {
@@ -123,6 +131,13 @@ async function main() {
     }
   }
   const mode = fileArg ? "file" : since ? "incremental" : "full";
+  if (mode === "full" && !dry) {
+    const free = freeBytes(DATA_DIR);
+    if (free != null && free < MIN_FREE_BYTES) {
+      console.error(`✗ רק ${(free / 1024 ** 3).toFixed(1)}GB פנויים ב-${DATA_DIR} — הטעינה המלאה צריכה לפחות 3GB. לא הורד דבר.`);
+      process.exit(1);
+    }
+  }
   console.log(`▸ מיסוי מקרקעין (over.org.il) · ${mode}${since ? ` מאז ${since}` : ""} · ${urls.length} בקשות${dry ? " · יבש" : ""}`);
 
   let tot = { read: 0, fresh: 0, unmapped: 0, bad: 0, lastSeen: null as string | null };

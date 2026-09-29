@@ -42,7 +42,12 @@ ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Servi
 # of containerd and competed with `next start` at full priority. That is how a
 # long night job could starve the web process past its 5-second health probe
 # (20.9.2026: unhealthy container, 404 for a week).
-ExecStart=/usr/bin/docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1024 app nice -n 15 npx tsx scripts/collect.ts --trigger=nightly --deadline=100
+#
+# KARNAF_MEKARKEIN_ENABLED=1 (29.9.2026): the tax register from over.org.il is
+# loaded and matched every night (docs/MEKARKEIN.md). Adding its deals to the
+# site is a second switch, KARNAF_MEKARKEIN_PROMOTE=1, turned on only after the
+# first night's match report has been read.
+ExecStart=/usr/bin/docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1024 -e KARNAF_MEKARKEIN_ENABLED=1 app nice -n 15 npx tsx scripts/collect.ts --trigger=nightly --deadline=100
 
 # Exit 1 means at least one source failed while others succeeded — normal
 # operational noise for seven third-party government endpoints, and NOT a reason
