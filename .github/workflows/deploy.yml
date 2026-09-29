@@ -263,6 +263,17 @@ jobs:
           echo "── טיימרים ויחידות ──"
           bash deploy/install-timers.sh >/dev/null && echo "   ✓ הותקנו" || echo "   ⚠ התקנת הטיימרים נכשלה — בדוק ידנית: bash deploy/install-timers.sh"
 
+          # The weekly backup encrypts app.db with age to deploy/backup-age-recipient.txt;
+          # without age on the host it publishes the deal archive only. Installed
+          # here so the key change reaches the host with no manual step.
+          echo "── גיבוי מוצפן ──"
+          command -v age >/dev/null || { apt-get install -y -qq age >/dev/null 2>&1 || true; }
+          if command -v age >/dev/null && grep -q '^age1' deploy/backup-age-recipient.txt 2>/dev/null; then
+            echo "   ✓ age מותקן, מפתח ציבורי $(grep -m1 '^age1' deploy/backup-age-recipient.txt | cut -c1-16)… — app.db יוצפן בגיבוי הבא"
+          else
+            echo "   ⚠ age או המפתח חסרים — app.db לא יעלה לגיבוי (רק מאגר העסקאות)"
+          fi
+
           # And the number that decides whether the map is honest: how many of
           # the city's priced neighbourhoods actually got a shape. A collector
           # that "succeeded" and a map covering four of twenty neighbourhoods

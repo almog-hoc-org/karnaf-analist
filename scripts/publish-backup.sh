@@ -40,6 +40,11 @@ DATA_DIR="${KARNAF_DATA_DIR:-/var/lib/karnaf/data}"
 KEEP="${KARNAF_BACKUP_KEEP:-8}"
 TAG="data-$(date +%Y%m%d)"
 AGE_RECIPIENT="${KARNAF_BACKUP_AGE_RECIPIENT:-}"
+# Fallback: the public key committed in deploy/ (a public key is safe to publish;
+# it only encrypts). /etc/karnaf/backup.env still wins when set.
+if [ -z "$AGE_RECIPIENT" ] && [ -f "$(dirname "$0")/../deploy/backup-age-recipient.txt" ]; then
+  AGE_RECIPIENT=$(grep -m1 '^age1' "$(dirname "$0")/../deploy/backup-age-recipient.txt" || true)
+fi
 DRY=0
 [ "${1:-}" = "--dry-run" ] && DRY=1
 

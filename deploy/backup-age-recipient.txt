@@ -1,0 +1,4 @@
+# Public half of the backup key (age). Encrypts app.db in the weekly backup;
+# only the private half, kept by the operator OFF this repository, decrypts it.
+# Rotate: age-keygen on your machine, replace the line below, deploy.
+age1dh5uy0dj7pu3rtyvtnyz0cd0fm22lq3x0ux02pd89l7x3jcgy48sl5d0lg
