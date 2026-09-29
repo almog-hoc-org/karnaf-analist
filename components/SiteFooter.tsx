@@ -39,7 +39,7 @@ export default function SiteFooter() {
           <a href={withBasePath("/deals")} className="hover:text-indigo-600 hover:underline">העסקאות שלי</a>
           <span aria-hidden>·</span>
           {/* opens the feedback panel (FeedbackWidget listens for the event);
-              the floating button is off by default, rule show_feedback_fab */}
+              also reachable when rule show_feedback_fab hides the floating button */}
           <FeedbackOpenButton label="משוב" className="font-semibold hover:text-indigo-600 hover:underline" />
         </nav>
         {/* Course + WhatsApp, compact. On every page but below everything —

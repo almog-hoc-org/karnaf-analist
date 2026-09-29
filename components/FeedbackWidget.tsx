@@ -92,8 +92,7 @@ export default function FeedbackWidget({ showButton = true }: { showButton?: boo
   return (
     <>
       {/* z-40 matches RefreshDataButton so neither can cover the other.
-          Off by default since 9/2026 (rule show_feedback_fab): a filled button
-          on every page competed with each screen's one primary action. The
+          On by default; rule show_feedback_fab turns it off, and then the
           panel still opens from the footer link and the city page button,
           both of which dispatch CREDIT_EVENT. */}
       {showButton && <button

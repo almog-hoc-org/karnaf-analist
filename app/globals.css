@@ -616,10 +616,3 @@ html.a11y-big-cursor * {
   background: #f8fafc; /* slate-50 — matches the header row */
   z-index: 2;
 }
-
-/* City page folds (app/city/[slug]/page.tsx, FoldToggle). A folded section is
-   hidden until the checkbox of its group is ticked. */
-[data-fold] { display: none; }
-main:has(#fold-trends:checked) [data-fold="trends"],
-main:has(#fold-supply:checked) [data-fold="supply"],
-main:has(#fold-data:checked) [data-fold="data"] { display: block; }

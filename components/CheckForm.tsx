@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Icon from "@/components/Icon";
-import Disclosure from "@/components/ui/Disclosure";
 import { buttonClass } from "@/components/ui/Button";
 
 /**
@@ -15,9 +14,9 @@ import { buttonClass } from "@/components/ui/Button";
  * Two shapes, one form:
  *  - `compact` (the home hero): the address and one big button. Nothing else to
  *    decide before the first answer; the result page asks for size and price.
- *  - full (/check): the address, then size and price — the two fields that turn
- *    a price level into a verdict — and rooms/neighbourhood folded away, since
- *    the ladder finds both on its own and most readers never need them.
+ *  - full (/check): the address, then size, price, rooms and neighbourhood,
+ *    all visible (a 9/2026 version folded the last two away; readers took
+ *    hidden fields for missing ones).
  */
 export default function CheckForm({
   cities,
@@ -74,12 +73,10 @@ export default function CheckForm({
     );
   }
 
-  const hasExtra = !!(initial.rooms || initial.neighborhood);
-
   return (
     <form method="GET" action="/check" className="glass-card p-5 sm:p-6">
       {address}
-      <div className="mt-4 grid grid-cols-2 gap-4 sm:max-w-md">
+      <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <div>
           <label className={label} htmlFor="check-size">גודל במ״ר</label>
           <input id="check-size" name="size" defaultValue={initial.size} className={field} inputMode="numeric" placeholder="100" />
@@ -88,20 +85,15 @@ export default function CheckForm({
           <label className={label} htmlFor="check-price">המחיר שמבקשים (₪)</label>
           <input id="check-price" name="price" defaultValue={initial.price} className={field} inputMode="numeric" placeholder="2,100,000" />
         </div>
-      </div>
-
-      <Disclosure className="mt-4" label="דיוק נוסף" summary="חדרים, שכונה — לא חובה" defaultOpen={hasExtra}>
-        <div className="grid grid-cols-2 gap-4 sm:max-w-md">
-          <div>
-            <label className={label} htmlFor="check-rooms">חדרים</label>
-            <input id="check-rooms" name="rooms" defaultValue={initial.rooms} className={field} inputMode="decimal" placeholder="4" />
-          </div>
-          <div>
-            <label className={label} htmlFor="check-neighborhood">שכונה</label>
-            <input id="check-neighborhood" name="neighborhood" defaultValue={initial.neighborhood} className={field} placeholder="אם ידועה" autoComplete="off" />
-          </div>
+        <div>
+          <label className={label} htmlFor="check-rooms">חדרים</label>
+          <input id="check-rooms" name="rooms" defaultValue={initial.rooms} className={field} inputMode="decimal" placeholder="4" />
         </div>
-      </Disclosure>
+        <div>
+          <label className={label} htmlFor="check-neighborhood">שכונה</label>
+          <input id="check-neighborhood" name="neighborhood" defaultValue={initial.neighborhood} className={field} placeholder="אם ידועה" autoComplete="off" />
+        </div>
+      </div>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <button type="submit" className={buttonClass("primary", "lg")}>

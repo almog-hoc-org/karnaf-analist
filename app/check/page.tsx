@@ -215,27 +215,32 @@ export default async function CheckPage({ searchParams }: Props) {
                   </div>
                 )}
 
-                {/* ONE next step (UX 9/2026). This row used to hold four
-                    actions of equal weight — a green share button and three
-                    arrow links — so nothing said where to go. The deepest
-                    page the answer can stand on is the primary; the city is
-                    a quiet way back; sharing waits until there is a verdict
-                    worth sending. */}
+                {/* The deepest page the answer stands on is the primary step;
+                    the street (when the building is primary), sharing and the
+                    city stay one click away — nothing the row used to offer
+                    is gone, it is only ranked. */}
                 <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">
                   {nextStep && (
                     <Button href={nextStep.href} size="lg" className="!whitespace-normal text-center">{nextStep.label} ←</Button>
                   )}
-                  {verdict && (
-                    <TrackableOutboundLink
-                      href={whatsappShareUrl(selfPath, viewer?.id, `בדקתי מחיר דירה ב${city} — ${verdict.text}:`)}
-                      eventName="share_click"
-                      subject={city}
-                      detail="check_result"
-                      className={buttonClass("secondary", "md")}
-                    >
-                      <Icon name="chat" size="1em" /> שיתוף התוצאה
-                    </TrackableOutboundLink>
+                  {comp.matchedAddress && comp.matchedStreet && (
+                    <Button href={`/city/${encodeURIComponent(city)}/street/${encodeURIComponent(comp.matchedStreet)}`} variant="secondary" size="md" className="!whitespace-normal text-center">
+                      כל העסקאות ברחוב {comp.matchedStreet}
+                    </Button>
                   )}
+                  <TrackableOutboundLink
+                    href={whatsappShareUrl(
+                      selfPath,
+                      viewer?.id,
+                      verdict ? `בדקתי מחיר דירה ב${city} — ${verdict.text}:` : `רמת המחירים ב${city} לפי עסקאות אמת:`
+                    )}
+                    eventName="share_click"
+                    subject={city}
+                    detail="check_result"
+                    className={buttonClass("secondary", "md")}
+                  >
+                    <Icon name="chat" size="1em" /> שיתוף בוואטסאפ
+                  </TrackableOutboundLink>
                   <Button href={`/city/${encodeURIComponent(city)}`} variant="ghost" size="md">כל הנתונים על {city}</Button>
                 </div>
               </>

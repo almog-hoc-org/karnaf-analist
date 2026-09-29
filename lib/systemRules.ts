@@ -211,8 +211,8 @@ export const RULE_DEFS: RuleDef[] = [
   // ── display: what is shown, never what exists ─────────────────────
   // The simplification of 9/2026 hid things rather than deleting them; each
   // switch here brings one back.
-  { key: "show_feedback_fab", label: "כפתור משוב צף בכל עמוד", group: "תצוגה", kind: "boolean", default: false, toggleOnly: true,
-    help: "כבוי: המשוב נפתח מקישור בפוטר ומכפתור בעמוד העיר. דלוק: חוזר הכפתור הצף הכחול בפינת כל עמוד — הוא מתחרה בכפתור הראשי של המסך, ולכן כבוי כברירת מחדל." },
+  { key: "show_feedback_fab", label: "כפתור משוב צף בכל עמוד", group: "תצוגה", kind: "boolean", default: true, toggleOnly: true,
+    help: "דלוק (ברירת מחדל): הכפתור הצף הכחול בפינת כל עמוד. כבוי: המשוב נפתח רק מהקישור בפוטר ומכפתור בעמוד העיר." },
   { key: "show_course_banner_home", label: "באנר הקורס בעמוד הבית", group: "תצוגה", kind: "boolean", default: false, toggleOnly: true,
     help: "כבוי: הקורס מופיע כקישור שקט בפוטר בלבד. דלוק: חוזר הבאנר בתחתית עמוד הבית, עם כפתור מלא שמתחרה בבדיקת המחיר." },
   { key: "nav_show_deals_anon", label: "\"העסקאות שלי\" בתפריט למבקר לא מחובר", group: "תצוגה", kind: "boolean", default: false, toggleOnly: true,

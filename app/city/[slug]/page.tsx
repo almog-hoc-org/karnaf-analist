@@ -501,18 +501,8 @@ export default async function CityPage({ params, searchParams }: PageProps) {
      stray key falls to the end rather than jumping to the top. */
   const cityOrder = getSectionOrder("city");
   const ord = (key: string) => { const i = cityOrder.indexOf(key); return i < 0 ? 999 : i + 1; };
-  // FOLDS (UX 9/2026). Twenty-two sections were open at once, with no answer
-  // to "what do I do here". Five stay open — prices, the chart, neighbourhoods,
-  // prices by size, and the next step — and the rest sit in three closed groups
-  // the reader opens by name. Nothing was removed: each group keeps the
-  // dashboard's order inside it (base + ord), and moving a key between groups
-  // is one line in CITY_FOLDS. The open/closed state is a checkbox the CSS in
-  // globals.css reads with :has(), so it works before hydration and on a
-  // server component.
-  const sec = (key: string) => {
-    const group = CITY_FOLDS[key];
-    return { style: { order: (group ? FOLD_GROUPS[group].base : 0) + ord(key) }, "data-fold": group };
-  };
+  // Every block's position, from the dashboard order (🧩 סדר אלמנטים).
+  const sec = (key: string) => ({ style: { order: ord(key) } });
 
   // flex column, so a section's position can be a NUMBER instead of its place
   // in this file. The order comes from the dashboard (🧩 סדר אלמנטים); every
@@ -1355,51 +1345,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
         </div>
       </section>
 
-      {(Object.keys(FOLD_GROUPS) as FoldGroup[]).map((g) => (
-        <FoldToggle key={g} group={g} />
-      ))}
     </main>
-  );
-}
-
-// ── Folds ─────────────────────────────────────────────────────────────────────
-
-type FoldGroup = "trends" | "supply" | "data";
-
-const FOLD_GROUPS: Record<FoldGroup, { base: number; title: string; summary: string }> = {
-  trends: { base: 1000, title: "מגמות ושוק", summary: "מצב השוק, חדשות מול יד-שנייה, אוכלוסייה, חציונים, תובנות" },
-  supply: { base: 2000, title: "היצע ובנייה", summary: "מכירות חדשות, היתרים, מלאי, התחדשות עירונית, היצע מול ביקוש" },
-  data: { base: 3000, title: "כל הנתונים", summary: "דמוגרפיה, אוכלוסייה לפי מקור, השוואת רחובות, הטבלה המלאה" },
-};
-
-// A key not listed here stays open.
-const CITY_FOLDS: Record<string, FoldGroup> = {
-  "market-live": "trends", "new-vs-secondhand": "trends", population: "trends",
-  "median-prices": "trends", "scattered-facts": "trends", insights: "trends",
-  "new-sales": "supply", permits: "supply", correlation: "supply", inventory: "supply",
-  "dwelling-stock": "supply", "urban-renewal": "supply", "supply-demand": "supply",
-  demography: "data", "all-data": "data", "population-sources": "data", "street-comparison": "data",
-};
-
-function FoldToggle({ group }: { group: FoldGroup }) {
-  const g = FOLD_GROUPS[group];
-  return (
-    <div className="group mb-3" style={{ order: g.base }}>
-      <input type="checkbox" id={`fold-${group}`} className="peer sr-only" />
-      <label
-        htmlFor={`fold-${group}`}
-        className="glass-card flex cursor-pointer items-center justify-between gap-3 p-4 transition-colors hover:border-indigo-200 peer-focus-visible:ring-2 peer-focus-visible:ring-indigo-300"
-      >
-        <span className="min-w-0">
-          <span className="block text-base font-black text-slate-900">{g.title}</span>
-          <span className="mt-0.5 block text-xs text-slate-500">{g.summary}</span>
-        </span>
-        <span className="shrink-0 text-sm font-bold text-indigo-700">
-          <span className="group-has-[:checked]:hidden">הצגה ▾</span>
-          <span className="hidden group-has-[:checked]:inline">הסתרה ▴</span>
-        </span>
-      </label>
-    </div>
   );
 }
 
