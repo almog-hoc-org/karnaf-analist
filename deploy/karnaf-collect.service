@@ -44,10 +44,12 @@ ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Servi
 # (20.9.2026: unhealthy container, 404 for a week).
 #
 # KARNAF_MEKARKEIN_ENABLED=1 (29.9.2026): the tax register from over.org.il is
-# loaded and matched every night (docs/MEKARKEIN.md). Adding its deals to the
-# site is a second switch, KARNAF_MEKARKEIN_PROMOTE=1, turned on only after the
-# first night's match report has been read.
-ExecStart=/usr/bin/docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1024 -e KARNAF_MEKARKEIN_ENABLED=1 app nice -n 15 npx tsx scripts/collect.ts --trigger=nightly --deadline=100
+# loaded and matched every night (docs/MEKARKEIN.md).
+# KARNAF_MEKARKEIN_PROMOTE=1 (30.9.2026, after the first night's report: 1.1%
+# contradictions): whole-apartment register deals we lack are added to the site,
+# for now only from KARNAF_MEKARKEIN_PROMOTE_SINCE on — the months our own
+# collectors missed. Dropping the SINCE (history) waits for its own measurement.
+ExecStart=/usr/bin/docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1024 -e KARNAF_MEKARKEIN_ENABLED=1 -e KARNAF_MEKARKEIN_PROMOTE=1 -e KARNAF_MEKARKEIN_PROMOTE_SINCE=2026-08-01 app nice -n 15 npx tsx scripts/collect.ts --trigger=nightly --deadline=100
 
 # Exit 1 means at least one source failed while others succeeded — normal
 # operational noise for seven third-party government endpoints, and NOT a reason

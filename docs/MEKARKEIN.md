@@ -83,6 +83,9 @@ Attribution wherever these rows are used:
    parcels current every night; `KARNAF_MEKARKEIN_PROMOTE=1` also adds the new
    deals (2,000 parcel lookups a night, newest first, cached in
    `over_parcel_cache`).
+   `KARNAF_MEKARKEIN_PROMOTE_SINCE=YYYY-MM-DD` limits the promotion to deals
+   from that date (stage 2a); without it every year is promoted (stage 2b).
+   Both are set on `deploy/karnaf-collect.service`, so the switch is in git.
 
 To undo the promotion entirely:
 `DELETE FROM nadlan_transactions WHERE source = 'mekarkein'`, then the pipeline.

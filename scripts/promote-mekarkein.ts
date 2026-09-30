@@ -7,7 +7,7 @@
  *   npx tsx scripts/promote-mekarkein.ts --city "חולון" --dry-run   measure, write nothing
  *   npx tsx scripts/promote-mekarkein.ts --city "חולון"             write one city
  *   npx tsx scripts/promote-mekarkein.ts                            every city
- *   --since 2026-01-01   only deals from that date
+ *   --since 2026-01-01   only deals from that date (or KARNAF_MEKARKEIN_PROMOTE_SINCE)
  *   --lookups 2000       over.org.il parcel lookups allowed this run (0 = none)
  *
  * ORDER. Runs after import-mekarkein-deals.ts and match-mekarkein.ts: the match
@@ -42,7 +42,14 @@ const args = process.argv.slice(2);
 const arg = (k: string) => (args.includes(k) ? args[args.indexOf(k) + 1] : null);
 const dry = args.includes("--dry-run");
 const cityArg = arg("--city");
-const since = arg("--since");
+// --since wins; the nightly unit sets KARNAF_MEKARKEIN_PROMOTE_SINCE instead, so the
+// first nights add only the months our own collectors missed and leave history
+// alone until it has been measured (docs/MEKARKEIN.md, stage 2a → 2b).
+const since = arg("--since") ?? (process.env.KARNAF_MEKARKEIN_PROMOTE_SINCE || null);
+if (since && !/^\d{4}-\d{2}-\d{2}$/.test(since)) {
+  console.error(`✗ תאריך התחלה לא תקין: "${since}" — צריך YYYY-MM-DD`);
+  process.exit(1);
+}
 const nightly = args.includes("--nightly");
 let lookupBudget = Number(arg("--lookups") ?? (nightly ? 2000 : 500));
 
