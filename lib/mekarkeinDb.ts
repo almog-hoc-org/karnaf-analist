@@ -46,4 +46,5 @@ export function ensureImportSourceColumn(db: { exec: (q: string) => unknown }): 
 
 export function ensureMekarkeinIdColumn(db: { exec: (q: string) => unknown }): void {
   try { db.exec("ALTER TABLE nadlan_transactions ADD COLUMN mekarkein_id TEXT"); } catch { /* already exists */ }
+  db.exec("CREATE INDEX IF NOT EXISTS idx_nadlan_tx_mekarkein ON nadlan_transactions(mekarkein_id)");
 }

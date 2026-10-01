@@ -520,7 +520,10 @@ jobs:
           ssh -o BatchMode=yes -o ServerAliveInterval=60 "$USER@$HOST" 'bash -s' <<'REMOTE'
           cd /opt/karnaf
           echo "── מדידה: קידום כל הפנקס (יבש) ──"
-          docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1536 app nice -n 15 npx tsx scripts/promote-mekarkein.ts --dry-run --lookups 0 </dev/null | tail -60
+          # Bounded: a read transaction held for hours keeps SQLite's WAL from
+          # checkpointing under the nightly writes. timeout runs INSIDE the
+          # container, so it ends the process even if this SSH session drops.
+          docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1536 app timeout 1500 nice -n 15 npx tsx scripts/promote-mekarkein.ts --dry-run --lookups 0 </dev/null | tail -60 || echo "⚠ המדידה נעצרה (זמן או שגיאה)"
           REMOTE
 
       # Optional: the govmap address-backfill campaign (workflow_dispatch +

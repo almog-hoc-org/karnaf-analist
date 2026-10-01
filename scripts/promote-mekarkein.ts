@@ -126,9 +126,14 @@ async function main() {
       m.amount, m.declared_amount declaredAmount, m.nature, m.portion, m.area, m.rooms, m.year_built yearBuilt, m.first_seen firstSeen
     FROM mekarkein_deals m
     WHERE m.city_name = ? AND m.deal_date >= ?
-      ${hasMekId ? "AND NOT EXISTS (SELECT 1 FROM nadlan_transactions t WHERE t.mekarkein_id = m.id)" : ""}
-      AND NOT EXISTS (SELECT 1 FROM nadlan_transactions t WHERE t.source = '${PROMOTE_SOURCE}' AND t.source_deal_id = m.id)
     ORDER BY m.deal_date DESC`);
+  // Register rows already claimed — matched to a deal of ours, or promoted
+  // earlier — read once per city through the city index and filtered in
+  // memory. A NOT EXISTS per register row on mekarkein_id (unindexed) was a
+  // scan of the whole deals table for each of up to millions of rows: the
+  // all-years dry run of 1.10.2026 never finished.
+  const loadClaimed = db.prepare(`SELECT ${hasMekId ? "mekarkein_id" : "NULL"} mid, source, source_deal_id sid
+    FROM nadlan_transactions WHERE city_name = ? AND (${hasMekId ? "mekarkein_id IS NOT NULL OR " : ""}source = '${PROMOTE_SOURCE}')`);
   const loadOurs = db.prepare(`SELECT deal_date dealDate, price, parcel_num parcelNum, street, house_num houseNum
     FROM nadlan_transactions WHERE city_name = ?`);
   const loadStreets = db.prepare(`SELECT street, COUNT(*) n FROM nadlan_transactions
@@ -148,7 +153,12 @@ async function main() {
   // that decides whether history — stage 2b — is turned on)
   const byYear = new Map<number, { cand: number; addr: number }>();
   for (const city of cities) {
-    const reg = loadReg.all(city, since ?? "0000") as MekarkeinRow[];
+    const claimed = new Set<string>();
+    for (const c of loadClaimed.all(city) as Array<{ mid: string | null; source: string; sid: string | null }>) {
+      if (c.mid) claimed.add(c.mid);
+      if (c.source === PROMOTE_SOURCE && c.sid) claimed.add(c.sid);
+    }
+    const reg = (loadReg.all(city, since ?? "0000") as MekarkeinRow[]).filter((r) => !claimed.has(r.id));
     const ours = loadOurs.all(city) as Array<{ dealDate: string; price: number | null; parcelNum: string | null; street: string | null; houseNum: string | null }>;
     const idx = knownIndex(ours);
     const { bySub, byGh } = ourParcelDonors(ours);
