@@ -60,4 +60,23 @@ function main() {
   }
 }
 
-try { main(); } catch (e) { console.log(`   ⚠ הדוח נכשל: ${e instanceof Error ? e.message : String(e)}`); }
+// Before/after of the promotion on the charts themselves: the published
+// median ₪/m² and deal count for a few large cities and years. Printed on every
+// deploy, so the run before a change is the baseline for the run after it.
+function statsSample() {
+  const db = new Database(DB, { readonly: true, fileMustExist: true });
+  const CITIES = ["תל אביב-יפו", "ירושלים", "חיפה", "חולון", "באר שבע", "נתניה"];
+  const YEARS = [2016, 2019, 2022, 2025];
+  const q = db.prepare(`SELECT n, median_sqm m FROM nadlan_year_room_stats
+    WHERE city_name = ? AND year = ? AND room_bucket = 'all' AND scope = 'all'`);
+  console.log(`   גרפים (חציון ₪/מ״ר · עסקאות) ${YEARS.join(" / ")}:`);
+  for (const c of CITIES) {
+    const cells = YEARS.map((y) => {
+      const r = q.get(c, y) as { n: number; m: number | null } | undefined;
+      return r ? `${r.m != null ? Math.round(r.m).toLocaleString("he-IL") : "—"} · ${n(r.n)}` : "—";
+    });
+    console.log(`     ${c}: ${cells.join("  /  ")}`);
+  }
+}
+
+try { main(); statsSample(); } catch (e) { console.log(`   ⚠ הדוח נכשל: ${e instanceof Error ? e.message : String(e)}`); }
