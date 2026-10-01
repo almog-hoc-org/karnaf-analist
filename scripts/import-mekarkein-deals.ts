@@ -26,8 +26,8 @@ import path from "path";
 import readline from "readline";
 import { Readable } from "stream";
 import { parseCsvLine } from "../lib/mapiAddresses";
-import { MEKARKEIN_CSV_URL, cityResolver, parseRegisterRecord, type MekarkeinRow } from "../lib/mekarkein";
-import { ensureMekarkeinTables } from "../lib/mekarkeinDb";
+import { MEKARKEIN_CSV_URL, MEKARKEIN_DATASET_URL, cityResolver, parseRegisterRecord, type MekarkeinRow } from "../lib/mekarkein";
+import { ensureMekarkeinTables, ensureImportSourceColumn } from "../lib/mekarkeinDb";
 
 const DATA_DIR = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data");
 const DB = path.join(DATA_DIR, "realestate.db");
@@ -109,6 +109,7 @@ async function main() {
     db.pragma("journal_mode = WAL");
     db.pragma("busy_timeout = 60000");
     ensureMekarkeinTables(db);
+    ensureImportSourceColumn(db);
   }
   const cities = (db.prepare("SELECT city_name FROM cities").all() as Array<{ city_name: string }>).map((r) => r.city_name);
   const resolve = cityResolver(cities);
@@ -131,6 +132,24 @@ async function main() {
     }
   }
   const mode = fileArg ? "file" : since ? "incremental" : "full";
+
+  // The publisher replaces the dataset about once a week, and every row of a
+  // version shares its first_seen day — so "since the last day we hold" asked
+  // for the whole current version again each night (1.35M rows, 0 new, on
+  // 30.9.2026). Ask the metadata first; an unchanged version is skipped.
+  let sourceModified: string | null = null;
+  try {
+    const res = await fetch(MEKARKEIN_DATASET_URL, { headers: { "User-Agent": UA, Accept: "application/json" } });
+    if (res.ok) sourceModified = ((await res.json()) as { last_modified?: string | null }).last_modified ?? null;
+  } catch { /* metadata is an optimisation; load as before without it */ }
+  if (mode === "incremental" && sourceModified) {
+    const prev = db.prepare("SELECT source_modified s FROM mekarkein_import_status WHERE source_modified IS NOT NULL ORDER BY id DESC LIMIT 1")
+      .get() as { s: string } | undefined;
+    if (prev?.s === sourceModified) {
+      console.log(`↷ המאגר של over.org.il לא התעדכן מאז ${sourceModified} — אין מה להוריד`);
+      return;
+    }
+  }
   if (mode === "full" && !dry) {
     const free = freeBytes(DATA_DIR);
     if (free != null && free < MIN_FREE_BYTES) {
@@ -151,8 +170,8 @@ async function main() {
   }
 
   if (!dry) {
-    db.prepare(`INSERT INTO mekarkein_import_status (mode, rows_read, rows_new, rows_unmapped, last_first_seen) VALUES (?, ?, ?, ?, ?)`)
-      .run(mode, tot.read, tot.fresh, tot.unmapped, tot.lastSeen);
+    db.prepare(`INSERT INTO mekarkein_import_status (mode, rows_read, rows_new, rows_unmapped, last_first_seen, source_modified) VALUES (?, ?, ?, ?, ?, ?)`)
+      .run(mode, tot.read, tot.fresh, tot.unmapped, tot.lastSeen, sourceModified);
   }
   const total = dry ? null : (db.prepare("SELECT COUNT(*) c FROM mekarkein_deals").get() as { c: number }).c;
   console.log(`✓ נקראו ${tot.read.toLocaleString("he-IL")} · חדשות ${tot.fresh.toLocaleString("he-IL")} · לא שויכו לעיר שלנו ${tot.unmapped.toLocaleString("he-IL")} · לא תקינות ${tot.bad.toLocaleString("he-IL")}${total != null ? ` · בטבלה ${total.toLocaleString("he-IL")}` : ""}`);

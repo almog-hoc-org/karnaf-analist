@@ -49,11 +49,17 @@ as price anomalies and 68 as double reports, like any other row.
    `mekarkein_deals` (never `nadlan_transactions`). First run: one streamed
    download of ~0.7GB, inside the publisher's 2GB/day per-IP budget. After that:
    only rows first seen since the last run.
+   A nightly run first reads the dataset's `last_modified` and skips the
+   download when it has not changed since the last load (versions come weekly).
 2. `match-mekarkein.ts` gives our deals the register's parcel, only when exactly
    one register row matches (whole-asset rows only; exact amount, then rounded to
    the thousand, then our known +1 day date shift). It never overwrites a parcel
    we hold; those rows are the accuracy control. A city whose contradiction rate
    is above 2% (with at least 50 control rows) is not written.
+   On later nights the control counts only new evidence — a register row
+   imported, or a deal of ours captured, since the city's last written run.
+   Conflicting pairs are never written, so they are met again every night;
+   counted again, they blocked Holon, Tel Aviv and Haifa on 30.9.2026.
 3. The same script fills street and house for deals with a parcel and no
    street, when every deal in the same flat (or, failing that, the same parcel)
    agrees. Otherwise the deal is left alone.

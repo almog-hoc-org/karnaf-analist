@@ -2224,6 +2224,23 @@ describe("mekarkein register", () => {
   it("ignores partial-share rows, whose amount pays for a share", () => {
     expect(matchCity([ours({})], [reg({ portion: 0.5 })]).unmatched).toBe(1);
   });
+  it("counts the accuracy control only on pairs not judged before", () => {
+    const conflict = { ours: [ours({ parcelNum: "9999-1-1", capturedAt: "2026-09-01 00:00:00" })], reg: [reg({ importedAt: "2026-09-29 21:40:00" })] };
+    // a first run (no isNew): the conflict counts, and is never written
+    const first = matchCity(conflict.ours, conflict.reg);
+    expect([first.conflicts, first.stale, first.matches.length]).toEqual([1, 0, 0]);
+    // the next night, the same pair is old evidence: not counted, still not written
+    const since = "2026-09-29 21:49:19";
+    const isNew = (d: OurDeal, r: MekarkeinRow) => (r.importedAt ?? "") > since || (d.capturedAt ?? "") > since;
+    const again = matchCity(conflict.ours, conflict.reg, 2, isNew);
+    expect([again.conflicts, again.stale, again.matches.length]).toEqual([0, 1, 0]);
+    // a pair with a newly imported register row is evidence again
+    const fresh = matchCity(conflict.ours, [reg({ importedAt: "2026-10-01 21:40:00" })], 2, isNew);
+    expect([fresh.conflicts, fresh.stale]).toEqual([1, 0]);
+    // agreement from old evidence is not counted either, but is still written
+    const agree = matchCity([ours({ parcelNum: "7151-316-10" })], [reg({ importedAt: "2026-09-29 21:40:00" })], 2, isNew);
+    expect([agree.confirmed, agree.matches.length]).toEqual([0, 1]);
+  });
   it("narrows by area, and refuses when two candidates remain", () => {
     const two = [reg({ id: "a", area: 80, helka: 1 }), reg({ id: "b", area: 120, helka: 2 })];
     expect(matchCity([ours({})], two).matches[0].parcel).toBe("7151-1-10");

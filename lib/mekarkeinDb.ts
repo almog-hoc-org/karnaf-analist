@@ -39,6 +39,11 @@ export function ensureMekarkeinTables(db: { exec: (q: string) => unknown }): voi
   `);
 }
 
+/** The source version a run loaded, so a nightly run can skip an unchanged one. */
+export function ensureImportSourceColumn(db: { exec: (q: string) => unknown }): void {
+  try { db.exec("ALTER TABLE mekarkein_import_status ADD COLUMN source_modified TEXT"); } catch { /* already exists */ }
+}
+
 export function ensureMekarkeinIdColumn(db: { exec: (q: string) => unknown }): void {
   try { db.exec("ALTER TABLE nadlan_transactions ADD COLUMN mekarkein_id TEXT"); } catch { /* already exists */ }
 }

@@ -32,6 +32,9 @@ import { shiftDate, NADLAN_DATE_SHIFT_DAYS } from "./addressBackfill";
 export const MEKARKEIN_DATASET_ID = "fd06f5ae-8a4f-4120-b275-8a514ad23499";
 export const MEKARKEIN_CSV_URL =
   `https://www.over.org.il/api/append/${MEKARKEIN_DATASET_ID}/download.csv`;
+/** The dataset's metadata; `last_modified` changes when a new version is published. */
+export const MEKARKEIN_DATASET_URL =
+  `https://www.over.org.il/api/v1/datasets/${MEKARKEIN_DATASET_ID}`;
 /** The attribution the publisher uses; shown wherever these rows are used. */
 export const MEKARKEIN_ATTRIBUTION = "עסקאות נדל\"ן — רשות המסים (מיסוי מקרקעין), דרך גרסאות לעם (over.org.il)";
 
@@ -53,6 +56,8 @@ export interface MekarkeinRow {
   rooms: number | null;
   yearBuilt: number | null;
   firstSeen: string | null;
+  /** when the row entered mekarkein_deals (loaded from the table only) */
+  importedAt?: string | null;
 }
 
 const int = (v: string | undefined): number | null => {
@@ -138,6 +143,8 @@ export interface OurDeal {
   area: number | null;
   rooms: number | null;
   parcelNum: string | null;
+  /** when our row was captured — tells new evidence from a pair already judged */
+  capturedAt?: string | null;
 }
 
 export type MatchLevel = "exact" | "rounded" | "shifted";
@@ -150,6 +157,8 @@ export interface MatchResult {
   conflicts: number;
   /** matched and agreeing with an existing parcel_num — the accuracy control */
   confirmed: number;
+  /** conflicting pairs already judged on an earlier written run, seen again and not counted */
+  stale: number;
   unmatched: number;
 }
 
@@ -169,7 +178,18 @@ const roundK = (n: number) => Math.round(n / 1000);
  * them; a match is taken only when exactly one survives. A register row that
  * two of our rows would take is given to neither.
  */
-export function matchCity(ours: OurDeal[], register: MekarkeinRow[], areaTolerance = 2): MatchResult {
+/**
+ * `isNew` limits the accuracy control to pairs not judged before. A conflicting
+ * pair is never written, so it stays in the pool and is met again every night;
+ * the agreeing pairs of the same city were written and left it. Counted again,
+ * the old conflicts end up as nearly the whole control and block a city whose
+ * first, real run was clean (Holon, Tel Aviv and Haifa on 30.9.2026). Without
+ * `isNew` every pair counts, as on a first run.
+ */
+export function matchCity(
+  ours: OurDeal[], register: MekarkeinRow[], areaTolerance = 2,
+  isNew?: (d: OurDeal, r: MekarkeinRow) => boolean,
+): MatchResult {
   const whole = register.filter((r) => r.portion == null || Math.abs(r.portion - 1) < 0.0005);
   const byExact = new Map<string, MekarkeinRow[]>();
   const byRounded = new Map<string, MekarkeinRow[]>();
@@ -212,14 +232,15 @@ export function matchCity(ours: OurDeal[], register: MekarkeinRow[], areaToleran
   const claims = new Map<string, number>();
   for (const p of proposals) claims.set(p.r.id, (claims.get(p.r.id) ?? 0) + 1);
 
-  const out: MatchResult = { matches: [], ambiguous, conflicts: 0, confirmed: 0, unmatched };
+  const out: MatchResult = { matches: [], ambiguous, conflicts: 0, confirmed: 0, stale: 0, unmatched };
   for (const p of proposals) {
     if ((claims.get(p.r.id) ?? 0) > 1) { out.ambiguous++; continue; }
     const parcel = parcelNum(p.r.gush, p.r.helka, p.r.sub);
     const held = gushHelkaOf(p.d.parcelNum);
     if (held) {
-      if (held === `${p.r.gush}-${p.r.helka}`) out.confirmed++;
-      else { out.conflicts++; continue; }
+      const fresh = isNew ? isNew(p.d, p.r) : true;
+      if (held === `${p.r.gush}-${p.r.helka}`) { if (fresh) out.confirmed++; }
+      else { if (fresh) out.conflicts++; else out.stale++; continue; }
     }
     out.matches.push({ ourId: p.d.id, regId: p.r.id, parcel, level: p.level });
   }

@@ -68,10 +68,23 @@ function main() {
   if (!cities.length) { console.log("✗ mekarkein_deals ריקה — להריץ קודם scripts/import-mekarkein-deals.ts"); return; }
   console.log(`▸ התאמה למיסוי מקרקעין · ${cities.length} ערים${dry ? " · יבש, לא נכתב דבר" : ""}\n`);
 
-  const loadOurs = db.prepare(`SELECT id, deal_date dealDate, price, area, rooms, parcel_num parcelNum
+  const loadOurs = db.prepare(`SELECT id, deal_date dealDate, price, area, rooms, parcel_num parcelNum, captured_at capturedAt
       FROM nadlan_transactions WHERE city_name = ? AND price > 0 AND mekarkein_id IS NULL`);
+  // The last run that wrote this city: pairs older than it were already judged
+  // there (lib/mekarkein.ts matchCity, isNew).
+  const lastWritten = db.prepare(`SELECT MAX(run_at) m FROM mekarkein_match_status
+      WHERE city_name = ? AND dry = 0 AND written = 1`);
+  // captured_at is a Prisma DateTime: epoch milliseconds when Prisma wrote the
+  // row, SQLite's "YYYY-MM-DD HH:MM:SS" when raw SQL took the column default.
+  // run_at / imported_at are the latter. Compare all three in that form (UTC).
+  const ts = (v: unknown): string => {
+    if (typeof v === "number" && Number.isFinite(v)) return new Date(v).toISOString().replace("T", " ").slice(0, 19);
+    if (typeof v === "string") return /^\d+$/.test(v) ? ts(Number(v)) : v.replace("T", " ").slice(0, 19);
+    return "";
+  };
   const loadReg = db.prepare(`SELECT id, settlement, settlement_code settlementCode, gush, helka, sub, deal_date dealDate,
-      amount, declared_amount declaredAmount, nature, portion, area, rooms, year_built yearBuilt, first_seen firstSeen
+      amount, declared_amount declaredAmount, nature, portion, area, rooms, year_built yearBuilt, first_seen firstSeen,
+      imported_at importedAt
       FROM mekarkein_deals WHERE city_name = ?`);
   const setParcel = db.prepare(`UPDATE nadlan_transactions SET parcel_num = COALESCE(parcel_num, ?), mekarkein_id = ? WHERE id = ?`);
   const loadAddr = db.prepare(`SELECT id, parcel_num parcelNum, street, house_num houseNum
@@ -88,7 +101,8 @@ function main() {
   for (const city of cities) {
     const ours = loadOurs.all(city) as OurDeal[];
     const reg = loadReg.all(city) as MekarkeinRow[];
-    const m = matchCity(ours, reg);
+    const since = (lastWritten.get(city) as { m: string | null }).m;
+    const m = matchCity(ours, reg, 2, since ? (d, r) => ts(r.importedAt) > since || ts(d.capturedAt) > since : undefined);
     const control = m.confirmed + m.conflicts;
     const conflictRate = control ? m.conflicts / control : 0;
     const blocked = control >= MIN_CONTROL && conflictRate > MAX_CONFLICT_RATE;
@@ -131,6 +145,7 @@ function main() {
       `${blocked ? "✗" : "✓"} ${city}: ${r.matched.toLocaleString("he-IL")} הותאמו מתוך ${r.ours.toLocaleString("he-IL")} (${pct(r.matched, r.ours)})` +
       ` · מדויק ${r.exact} · מעוגל ${r.rounded} · יום הזזה ${r.shifted}` +
       ` · בקרה: ${r.confirmed} אושרו, ${r.conflicts} סותרות (${pct(r.conflicts, control)})` +
+      (m.stale ? ` · ${m.stale} סתירות ישנות נראו שוב (לא נספרו)` : "") +
       ` · דו-משמעי ${r.ambiguous} · +${r.newParcels.toLocaleString("he-IL")} גוש-חלקה · +${r.inherited.toLocaleString("he-IL")} כתובות (${r.inheritAmbiguous} דו-משמעיות)` +
       (r.note ? `\n    ${r.note}` : "")
     );
