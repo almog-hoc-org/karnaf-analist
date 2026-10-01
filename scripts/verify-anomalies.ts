@@ -20,6 +20,7 @@ import fs from "fs";
 import { getRuleNum } from "../lib/systemRules";
 import { buildingAgeOf } from "../lib/roomClassification";
 import { historyFromYear } from "../lib/historyWindow";
+import { PRICE_SOURCES_SQL } from "../lib/dealSources";
 
 // Window comes from the shared history floor (lib/historyWindow) — every
 // stage must process the SAME range or later stages aggregate rows earlier
@@ -49,7 +50,7 @@ function main() {
     `SELECT id, city_name, neighborhood, deal_year, CAST(rooms_effective AS INT) rr, year_built, area, price_sqm,
             COALESCE(excluded,0) excluded, exclusion_reason reason
      FROM nadlan_transactions
-     WHERE deal_year >= ? AND source='nadlan' AND rooms_effective > 0
+     WHERE deal_year >= ? AND source IN ${PRICE_SOURCES_SQL} AND rooms_effective > 0
        AND (COALESCE(excluded,0)=0 OR exclusion_reason LIKE 'אנומליית מחיר%')
        AND price_sqm BETWEEN ? AND ? AND area BETWEEN ? AND ?`
   ).all(minYear, MIN_SQM, MAX_SQM, MIN_AREA, MAX_AREA) as Row[];

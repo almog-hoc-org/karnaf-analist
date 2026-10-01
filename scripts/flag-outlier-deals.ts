@@ -24,6 +24,7 @@ import { getRuleNum } from "../lib/systemRules";
 import { buildingAgeOf } from "../lib/roomClassification";
 import { ensureAuditLogPrisma } from "../lib/auditLog";
 import { historyFromYear } from "../lib/historyWindow";
+import { PRICE_SOURCES_SQL } from "../lib/dealSources";
 
 const adapter = new PrismaBetterSqlite3({ url: path.resolve("./data/realestate.db") });
 const prisma = new PrismaClient({ adapter });
@@ -71,7 +72,7 @@ async function main() {
   const rows = await prisma.$queryRawUnsafe<Row[]>(
     `SELECT id, city_name, neighborhood, deal_year, CAST(rooms_effective AS INT) rr, year_built, area, price_sqm
      FROM nadlan_transactions
-     WHERE COALESCE(excluded,0)=0 AND deal_year >= ${minYear} AND source IN ('nadlan','mekarkein')
+     WHERE COALESCE(excluded,0)=0 AND deal_year >= ${minYear} AND source IN ${PRICE_SOURCES_SQL}
        AND rooms_effective > 0 AND price_sqm BETWEEN ${MIN_SQM} AND ${MAX_SQM} AND area BETWEEN ${MIN_AREA} AND ${MAX_AREA}`
   );
   console.log(`  scanning ${rows.length.toLocaleString("en")} deals…`);
