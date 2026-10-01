@@ -45,6 +45,10 @@ on:
         description: "אחרי הפריסה: קמפיין השלמת כתובות מ-govmap (מעדכן רחוב/שכונה על עסקאות קיימות)"
         type: boolean
         default: false
+      measure_mekarkein:
+        description: "אחרי הפריסה: מדידה יבשה — כמה עסקאות מפנקס מיסוי המקרקעין היו מתווספות לכל שנה (לא כותב כלום)"
+        type: boolean
+        default: false
 
 # One deploy at a time. Two overlapping runs would race on the same working
 # copy and the same container, and the loser leaves the server in a state
@@ -499,6 +503,24 @@ jobs:
             exit 1
           fi
           if [ -n "${USAGE_FAILED:-}" ]; then exit 1; fi
+          REMOTE
+
+      # Optional, read-only: what promoting the whole tax register (every year,
+      # not only KARNAF_MEKARKEIN_PROMOTE_SINCE on) would add, per city and per
+      # deal year. Decides stage 2b in docs/MEKARKEIN.md. --dry-run opens the
+      # database read-only; --lookups 0 asks over.org.il nothing.
+      - name: measure register promotion (dry run)
+        if: github.event_name == 'workflow_dispatch' && inputs.measure_mekarkein
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          USER: ${{ secrets.VPS_USER }}
+        run: |
+          HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
+          USER=$(printf '%s' "$USER" | tr -d '[:space:]')
+          ssh -o BatchMode=yes -o ServerAliveInterval=60 "$USER@$HOST" 'bash -s' <<'REMOTE'
+          cd /opt/karnaf
+          echo "── מדידה: קידום כל הפנקס (יבש) ──"
+          docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1536 app nice -n 15 npx tsx scripts/promote-mekarkein.ts --dry-run --lookups 0 </dev/null | tail -60
           REMOTE
 
       # Optional: the govmap address-backfill campaign (workflow_dispatch +

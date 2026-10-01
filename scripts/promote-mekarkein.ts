@@ -144,6 +144,9 @@ async function main() {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 
   const reports: Report[] = [];
+  // per deal year, over every city: what promotion would add (the measurement
+  // that decides whether history — stage 2b — is turned on)
+  const byYear = new Map<number, { cand: number; addr: number }>();
   for (const city of cities) {
     const reg = loadReg.all(city, since ?? "0000") as MekarkeinRow[];
     const ours = loadOurs.all(city) as Array<{ dealDate: string; price: number | null; parcelNum: string | null; street: string | null; houseNum: string | null }>;
@@ -192,6 +195,10 @@ async function main() {
       const a = addressFor(c.gush, c.helka, c.sub, bySub, byGh, cache.get(`${c.gush}-${c.helka}`) ?? null);
       if (a.street && (a.via === "over" || a.via === "over-street")) a.street = spell(a.street);
       r.via[a.via ?? "none"]++;
+      const y = Number(c.dealDate.slice(0, 4));
+      const yy = byYear.get(y) ?? { cand: 0, addr: 0 };
+      yy.cand++; if (a.houseNum) yy.addr++;
+      byYear.set(y, yy);
       tuples.push(promotedTuple(c, city, cbs, a));
       if (!r.newest || c.dealDate > r.newest) r.newest = c.dealDate;
     }
@@ -234,6 +241,19 @@ async function main() {
   console.log(`\nסה״כ: ${tot((r) => r.candidates)} עסקאות חדשות${dry ? "" : ` · ${tot((r) => r.inserted)} נכתבו`} · ` +
     `${tot((r) => r.via.sub + r.via.parcel + r.via.over)} עם כתובת מלאה · ${tot((r) => r.via.none)} בלי כתובת${dry ? " · יבש" : ""}`);
   if (!dry && reports.some((r) => r.inserted)) console.log("הצינור הלילי יחשב מחדש את המחירים, הגרפים ועמודי הרחוב והבניין.");
+
+  if (byYear.size) {
+    // Against what the site already counts per year (active deals), so the
+    // effect on each year's statistics is read directly.
+    const ours = new Map((db.prepare(`SELECT deal_year y, COUNT(*) n FROM nadlan_transactions
+        WHERE COALESCE(excluded,0)=0 GROUP BY deal_year`).all() as Array<{ y: number; n: number }>).map((r) => [Number(r.y), r.n]));
+    console.log("\nלפי שנת עסקה — אצלנו (פעילות) · היו מתווספות · תוספת · מהן עם כתובת מלאה:");
+    for (const y of [...byYear.keys()].sort((a, b) => a - b)) {
+      const v = byYear.get(y)!; const o = ours.get(y) ?? 0;
+      const pct = o ? `+${((v.cand / o) * 100).toFixed(1)}%` : "—";
+      console.log(`  ${y}: ${o.toLocaleString("he-IL").padStart(9)} · ${v.cand.toLocaleString("he-IL").padStart(8)} · ${pct.padStart(7)} · ${v.addr.toLocaleString("he-IL")}`);
+    }
+  }
 }
 
 main().catch((e) => { console.error(`✗ ${e instanceof Error ? e.message : String(e)}`); process.exit(1); });
