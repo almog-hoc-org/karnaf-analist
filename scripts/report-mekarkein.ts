@@ -66,7 +66,7 @@ function main() {
 function statsSample() {
   const db = new Database(DB, { readonly: true, fileMustExist: true });
   const CITIES = ["תל אביב-יפו", "ירושלים", "חיפה", "חולון", "באר שבע", "נתניה"];
-  const YEARS = [2016, 2019, 2022, 2025];
+  const YEARS = [2005, 2010, 2014, 2016, 2019, 2022, 2025];
   const q = db.prepare(`SELECT n, median_sqm m FROM nadlan_year_room_stats
     WHERE city_name = ? AND year = ? AND room_bucket = 'all' AND scope = 'all'`);
   console.log(`   גרפים (חציון ₪/מ״ר · עסקאות) ${YEARS.join(" / ")}:`);
