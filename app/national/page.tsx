@@ -31,25 +31,30 @@ function fmt(n: number | null | undefined): string {
 
 export default async function NationalDashboard() {
   // ─── National construction series (already in DB) ───
-  const nat = await prisma.national_construction.findMany({ orderBy: { year: "asc" } });
+  const natRaw = await prisma.national_construction.findMany({ orderBy: { year: "asc" } });
   // ─── Building starts by city (CBS press releases, scripts/collect-cbs-starts.ts) ───
   const startsByCity = await getStartsByCity();
+  // The CBS revises starts upward for a year or more after first print; the
+  // releases table holds the newest vintage of the national total, so it
+  // overrides the older figure here — the KPIs, the chart and the city table
+  // then agree on one number per year.
+  const nat = natRaw.map((r) => ({ ...r, starts: startsByCity?.total?.years[r.year] ?? r.starts }));
 
-  // ─── Population (from cities table — sum of latest pop_2026 estimates) ───
-  const cities = await prisma.city.findMany({
-    select: { population_2021: true, population_2026: true, population_growth_abs: true },
-  });
-  const totalPop2026 = cities.reduce((s, c) => s + (c.population_2026 ?? 0), 0);
-
-  // ─── Decade totals from national_construction ───
-  const last10 = nat.filter((r) => r.year >= 2016 && r.year <= 2025);
+  // ─── Totals over the years all three series cover ───
+  // Summing each series over "2016-2025" compared 7 years of permits (the
+  // series starts in 2019) with 9 of starts and 10 of completions — permits
+  // looked LOWER than starts. Only years that have all three are summed.
+  const common = nat.filter((r) => r.year >= 2016 && r.year <= 2025 && r.permits != null && r.starts != null && r.completions != null);
   const sum = (k: "permits" | "starts" | "completions") =>
-    last10.reduce((s, r) => s + (r[k] ?? 0), 0);
-  const totals10y = {
+    common.reduce((s, r) => s + (r[k] ?? 0), 0);
+  const totals = {
     permits: sum("permits"),
     starts: sum("starts"),
     completions: sum("completions"),
   };
+  const commonFrom = common[0]?.year;
+  const commonTo = common[common.length - 1]?.year;
+  const commonLabel = commonFrom != null ? `${commonFrom}-${commonTo} · ${common.length} שנים` : "—";
 
   // ─── Annual averages (last 4 years for comparison to committee targets) ───
   const last4 = nat.filter((r) => r.year >= 2021 && r.year <= 2024);
@@ -110,26 +115,21 @@ export default async function NationalDashboard() {
       </header>
 
       {/* ─── Mega KPIs ─── */}
-      <section className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-10 [&>*:nth-child(5)]:col-span-2 lg:[&>*:nth-child(5)]:col-span-1">
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
         <div className="kpi-card glow-indigo">
-          <div className="stat-label">אוכלוסייה 2026</div>
-          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totalPop2026)}</div>
-          <div className="text-2xs text-slate-500 mt-1">סכום {cities.length} הערים ב-DB</div>
+          <div className="stat-label">היתרי בנייה</div>
+          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals.permits)}</div>
+          <div className="text-2xs text-slate-500 mt-1">{commonLabel}</div>
         </div>
         <div className="kpi-card glow-indigo">
-          <div className="stat-label">היתרי בנייה 10 שנים</div>
-          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals10y.permits)}</div>
-          <div className="text-2xs text-slate-500 mt-1">2016-2025</div>
+          <div className="stat-label">התחלות בנייה</div>
+          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals.starts)}</div>
+          <div className="text-2xs text-slate-500 mt-1">{commonLabel}</div>
         </div>
         <div className="kpi-card glow-indigo">
-          <div className="stat-label">התחלות בנייה 10 שנים</div>
-          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals10y.starts)}</div>
-          <div className="text-2xs text-slate-500 mt-1">2016-2025</div>
-        </div>
-        <div className="kpi-card glow-indigo">
-          <div className="stat-label">גמר בנייה 10 שנים</div>
-          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals10y.completions)}</div>
-          <div className="text-2xs text-slate-500 mt-1">2016-2025</div>
+          <div className="stat-label">גמר בנייה</div>
+          <div className="stat-large text-slate-900 mt-2 tabular-nums">{fmtK(totals.completions)}</div>
+          <div className="text-2xs text-slate-500 mt-1">{commonLabel}</div>
         </div>
         <div className={`kpi-card ${annualShortfall < 0 ? "kpi-accent glow-red" : "kpi-accent glow-emerald"}`}>
           <div className="stat-label">פער שנתי מול יעד הוועדה</div>
@@ -141,6 +141,14 @@ export default async function NationalDashboard() {
           </div>
         </div>
       </section>
+      {commonFrom != null && (
+        <p className="text-2xs leading-relaxed text-slate-500 mb-10">
+          שלושת המדדים מסוכמים על אותן שנים ({commonFrom}-{commonTo}), כי סדרת ההיתרים מתחילה רק ב-{commonFrom}.
+          ההיתרים {totals.permits >= totals.starts ? "גבוהים מההתחלות" : "נמוכים מההתחלות"}: התחלת בנייה מגיעה בדרך כלל שנה-שנתיים
+          אחרי ההיתר, כך שהתחלות {commonFrom} נשענות גם על היתרים מ-{commonFrom - 1} ומלפני כן, שאינם בסכום — ולא כל היתר
+          מבשיל להתחלת בנייה. נתוני ההתחלות לפי הפרסום המעודכן ביותר של הלמ&quot;ס.
+        </p>
+      )}
 
       {/* ─── National construction 10y chart ─── */}
       <section className="glass-card overflow-hidden mb-10">
