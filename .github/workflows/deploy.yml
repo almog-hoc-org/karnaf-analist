@@ -49,6 +49,10 @@ on:
         description: "אחרי הפריסה: מדידה יבשה — כמה עסקאות מפנקס מיסוי המקרקעין היו מתווספות לכל שנה (לא כותב כלום)"
         type: boolean
         default: false
+      collect_source:
+        description: "אחרי הפריסה: להריץ מקור איסוף אחד עכשיו (מזהה מ-lib/collectors.ts, למשל cbs-starts)"
+        type: string
+        default: ""
 
 # One deploy at a time. Two overlapping runs would race on the same working
 # copy and the same container, and the loser leaves the server in a state
@@ -533,6 +537,27 @@ jobs:
           # checkpointing under the nightly writes. timeout runs INSIDE the
           # container, so it ends the process even if this SSH session drops.
           docker compose exec -T -e NODE_OPTIONS=--max-old-space-size=1536 app timeout 1500 nice -n 15 npx tsx scripts/promote-mekarkein.ts --dry-run --lookups 0 </dev/null | tail -60 || echo "⚠ המדידה נעצרה (זמן או שגיאה)"
+          REMOTE
+
+      # Optional: run one collector source now instead of waiting for the
+      # 00:30 nightly — e.g. the first fill of a new source. Same runner as the
+      # deploy (keyscan), the id is checked against a strict pattern before it
+      # reaches the remote shell, and collect.ts logs the run like any other.
+      - name: run one collector source on VPS
+        if: github.event_name == 'workflow_dispatch' && inputs.collect_source != ''
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          USER: ${{ secrets.VPS_USER }}
+          SOURCE_ID: ${{ inputs.collect_source }}
+        run: |
+          printf '%s' "$SOURCE_ID" | grep -Eq '^[a-z0-9-]{2,40}$' || { echo "✗ מזהה מקור לא תקין"; exit 1; }
+          HOST=$(printf '%s' "$HOST" | tr -d '[:space:]' | sed 's#^[a-zA-Z]*://##; s#^.*@##; s#/*$##')
+          USER=$(printf '%s' "$USER" | tr -d '[:space:]')
+          ssh -o BatchMode=yes -o ServerAliveInterval=60 "$USER@$HOST" "SOURCE_ID=$SOURCE_ID bash -s" <<'REMOTE'
+          set -e
+          cd /opt/karnaf
+          echo "── איסוף: $SOURCE_ID ──"
+          docker compose exec -T app npx tsx scripts/collect.ts --trigger=manual --only="$SOURCE_ID" </dev/null
           REMOTE
 
       # Optional: the govmap address-backfill campaign (workflow_dispatch +

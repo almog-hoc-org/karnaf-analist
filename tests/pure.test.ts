@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import * as XLSX from "xlsx";
+import { buildCityYearTable, cleanCityName, docxTables, docxXmlTables, findCityTable, isStartsReleaseTitle, latestVintage, NATIONAL_TOTAL, parseCount, parsePeriodLabel, parseStartsTable, type StartsRow } from "@/lib/cbsStarts";
 import { pickReferenceYear } from "@/lib/referenceYear";
 import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";
 import { buildOpsReport, opsAlerts, type OpsSnapshot } from "@/lib/opsReport";
@@ -2382,5 +2384,99 @@ describe("mekarkeinPromote", () => {
     expect(at("source")).toBe("mekarkein");
     expect(at("source_deal_id")).toBe("abc");
     expect(at("street")).toBe("סוקולוב");
+  });
+});
+
+describe("CBS building starts by city (press releases, lib/cbsStarts)", () => {
+  const xmlCell = (t: string) => `<w:tc><w:p><w:r><w:t>${t}</w:t></w:r></w:p></w:tc>`;
+  const xmlTable = (rows: string[][]) => `<w:tbl>${rows.map((r) => `<w:tr>${r.map(xmlCell).join("")}</w:tr>`).join("")}</w:tbl>`;
+  // layout of release 297/2026, "לוח א"
+  const T297 = [
+    ["יישוב", "יולי 2022-יוני 2023", "יולי 2023-יוני 2024", "יולי 2024-יוני 2025", "יולי 2025 - יוני 2026", "אחוז שינוייולי 2025-יוני 2026לעומתיולי 2024-יוני 2025"],
+    ["סך הכל ארצי", "63,550", "64,090", "81,760", "76,040", "7.0"],
+    ["תל אביב-יפו", "4,837", "5,529", "6,346", "7,611", "19.9"],
+    ["אלעד", "-", "326", "1,572", "1,183", "-24.7"],
+  ];
+
+  it("reads periods: calendar years, 12-month spans, and nothing else", () => {
+    expect(parsePeriodLabel("שנת 2017")).toEqual({ end: "2017-12", kind: "year", label: "2017" });
+    expect(parsePeriodLabel("2024")).toEqual({ end: "2024-12", kind: "year", label: "2024" });
+    expect(parsePeriodLabel("יולי 2025 - יוני 2026")).toEqual({ end: "2026-06", kind: "12m", label: "יולי 2025–יוני 2026" });
+    expect(parsePeriodLabel("אוקטובר 2023-ספטמבר 2024")?.end).toBe("2024-09");
+    expect(parsePeriodLabel("ינואר 2024-דצמבר 2024")).toEqual({ end: "2024-12", kind: "year", label: "2024" });
+    expect(parsePeriodLabel("ינואר 2024-יוני 2024")).toBeNull(); // not 12 months
+    expect(parsePeriodLabel("אחוז שינוי שנת 2020 לעומתשנת 2019")).toBeNull();
+  });
+
+  it("reads counts, and '-' / '..' as not published", () => {
+    expect(parseCount("4,837")).toBe(4837);
+    expect(parseCount("-")).toBeNull();
+    expect(parseCount("..")).toBeNull();
+    expect(parseCount("")).toBeNull();
+  });
+
+  it("folds the release spellings of a city into ours", () => {
+    expect(cleanCityName("תל אביב -יפו")).toBe("תל אביב-יפו");
+    expect(cleanCityName("מזה :תל אביב -יפו")).toBe("תל אביב-יפו");
+    expect(cleanCityName("מזה: ירושלים")).toBe("ירושלים");
+    expect(cleanCityName("מודיעין-מכבים-רעות*")).toBe("מודיעין-מכבים-רעות");
+    expect(cleanCityName("סך הכל ארצי")).toBe(NATIONAL_TOTAL);
+    expect(cleanCityName("מכבים רעות")).toBe("מודיעין-מכבים-רעות");
+  });
+
+  it("finds the city table in a .docx and parses its rows", () => {
+    const xml = `<w:document><w:body>${xmlTable([["לוח", "x"]])}${xmlTable(T297)}</w:body></w:document>`;
+    const zip = XLSX.CFB.utils.cfb_new();
+    XLSX.CFB.utils.cfb_add(zip, "word/document.xml", Buffer.from(xml, "utf8"));
+    const buf = XLSX.CFB.write(zip, { fileType: "zip", type: "buffer" }) as Buffer;
+    const table = findCityTable(docxTables(buf));
+    expect(table).toEqual(findCityTable(docxXmlTables(xml)));
+    const rows = parseStartsTable(table!, { no: "297/2026", date: "2026-09-17" });
+    expect(rows).toHaveLength(4 + 4 + 3); // אלעד has no first period; the % column is skipped
+    expect(rows.find((r) => r.city === "תל אביב-יפו" && r.periodEnd === "2026-06")?.starts).toBe(7611);
+    expect(rows.every((r) => r.periodKind === "12m")).toBe(true);
+  });
+
+  it("keeps the newest release's value when the CBS revises a period", () => {
+    const r = (releaseDate: string, starts: number) => ({ city: "ירושלים", periodEnd: "2024-12", releaseDate, starts });
+    expect(latestVintage([r("2025-03-20", 5183), r("2026-03-19", 6326), r("2025-12-18", 6000)])).toEqual([r("2026-03-19", 6326)]);
+  });
+
+  it("builds the city × year table with the latest 12 months beside the last year", () => {
+    const row = (releaseNo: string, releaseDate: string, city: string, periodEnd: string, periodKind: "year" | "12m", starts: number, periodLabel = periodEnd.slice(0, 4)): StartsRow =>
+      ({ releaseNo, releaseDate, city, cityRaw: city, periodEnd, periodKind, periodLabel, starts });
+    const t = buildCityYearTable([
+      row("089/2026", "2026-03-19", NATIONAL_TOTAL, "2024-12", "year", 69810),
+      row("089/2026", "2026-03-19", NATIONAL_TOTAL, "2025-12", "year", 76000),
+      row("091/2025", "2025-03-20", "ירושלים", "2024-12", "year", 5183),
+      row("089/2026", "2026-03-19", "ירושלים", "2024-12", "year", 6326),
+      row("089/2026", "2026-03-19", "ירושלים", "2025-12", "year", 6000),
+      row("297/2026", "2026-09-17", "ירושלים", "2025-06", "12m", 7788, "יולי 2024–יוני 2025"),
+      row("297/2026", "2026-09-17", "ירושלים", "2026-06", "12m", 5440, "יולי 2025–יוני 2026"),
+      row("297/2026", "2026-09-17", "תל אביב-יפו", "2026-06", "12m", 7611, "יולי 2025–יוני 2026"),
+      row("408/2025", "2025-12-18", "אבן יהודה", "2025-09", "12m", 520, "אוקטובר 2024–ספטמבר 2025"), // nothing to show
+    ]);
+    expect(t.years).toEqual([2024, 2025]);
+    expect(t.latestPeriod).toEqual({ end: "2026-06", label: "יולי 2025–יוני 2026" });
+    expect(t.total?.years).toEqual({ 2024: 69810, 2025: 76000 });
+    expect(t.cities.map((c) => c.city)).toEqual(["תל אביב-יפו", "ירושלים"]); // by the latest 12 months
+    const jer = t.cities.find((c) => c.city === "ירושלים")!;
+    expect(jer.years[2024]).toBe(6326);
+    expect([jer.latest, jer.latestPrev]).toEqual([5440, 7788]);
+    expect(t.releases).toBe(4);
+    expect(t.lastRelease).toEqual({ no: "297/2026", date: "2026-09-17" });
+  });
+
+  it("recognises the release titles across their wordings", () => {
+    expect(isStartsReleaseTitle("התחלות וגמר בנייה - יולי 2025 - יוני 2026")).toBe(true);
+    expect(isStartsReleaseTitle("התחלת הבנייה וגמר הבנייה בתקופה יולי 2019 - יוני 2020")).toBe(true);
+    expect(isStartsReleaseTitle("מכירת דירות חדשות")).toBe(false);
+  });
+
+  it("is a nightly collector source, not a pipeline stage", () => {
+    const s = SOURCES.find((x) => x.id === "cbs-starts");
+    expect(s?.host).toBe("https://www.cbs.gov.il");
+    expect(s?.args).toContain("scripts/collect-cbs-starts.ts");
+    expect(PIPELINE.some((p) => /collect-cbs-starts/.test(p.script))).toBe(false);
   });
 });

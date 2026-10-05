@@ -13,6 +13,9 @@ import ShortfallBarChart from "@/components/ShortfallBarChart";
 import PlanVsActualChart from "@/components/PlanVsActualChart";
 import SourceBadge from "@/components/SourceBadge";
 import Icon from "@/components/Icon";
+import StartsByCityTable from "@/components/national/StartsByCityTable";
+import { getStartsByCity } from "@/lib/cbsStartsData";
+import { CBS_STARTS_SUBJECT_URL } from "@/lib/cbsStarts";
 
 export const metadata = { title: 'דשבורד לאומי | קרנף אנליסט' };
 
@@ -29,6 +32,8 @@ function fmt(n: number | null | undefined): string {
 export default async function NationalDashboard() {
   // ─── National construction series (already in DB) ───
   const nat = await prisma.national_construction.findMany({ orderBy: { year: "asc" } });
+  // ─── Building starts by city (CBS press releases, scripts/collect-cbs-starts.ts) ───
+  const startsByCity = await getStartsByCity();
 
   // ─── Population (from cities table — sum of latest pop_2026 estimates) ───
   const cities = await prisma.city.findMany({
@@ -158,6 +163,39 @@ export default async function NationalDashboard() {
           />
         </div>
       </section>
+
+      {/* ─── Building starts by city — CBS press releases ─── */}
+      {startsByCity && startsByCity.cities.length > 0 && (
+        <section id="starts-by-city" className="glass-card overflow-hidden mb-10 scroll-mt-20">
+          <div className="px-5 py-3 border-b border-slate-100 flex flex-wrap items-center justify-between gap-y-1">
+            <div className="min-w-0">
+              <h2 className="text-base font-bold text-slate-900">התחלות בנייה לפי ערים</h2>
+              <p className="text-xs text-slate-500">
+                דירות שהחלה בנייתן, לפי שנה{startsByCity.latestPeriod ? ` ול-12 החודשים האחרונים (${startsByCity.latestPeriod.label})` : ""} •
+                מתוך {startsByCity.releases} הודעות לתקשורת של הלמ&quot;ס
+              </p>
+            </div>
+            <a href={CBS_STARTS_SUBJECT_URL} target="_blank" rel="noopener noreferrer" className="text-2xs text-indigo-700 hover:underline">
+              מקור: למ&quot;ס, התחלות וגמר בנייה ←
+            </a>
+          </div>
+          <div className="p-4">
+            <StartsByCityTable
+              years={startsByCity.years}
+              latestLabel={startsByCity.latestPeriod?.label ?? null}
+              total={startsByCity.total}
+              cities={startsByCity.cities}
+              pageName={startsByCity.pageName}
+            />
+            <p className="mt-3 text-2xs leading-relaxed text-slate-500">
+              כל הודעה של הלמ&quot;ס מפרטת רק יישובים שבהם החלה בנייתן של יותר מ-500 דירות בתקופה האחרונה שלה, ולכן
+              לערים קטנות יש שנים חסרות (—). הלמ&quot;ס מעדכן את המספרים כלפי מעלה גם שנה ויותר אחרי הפרסום הראשון,
+              ולכל שנה מוצג הערך מההודעה המאוחרת ביותר שפרסמה אותה.
+              {startsByCity.lastRelease ? ` הודעה אחרונה: ${startsByCity.lastRelease.no} (${startsByCity.lastRelease.date.split("-").reverse().join(".")}).` : ""}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* ─── Committee Report — Background banner ─── */}
       <section className="rounded-2xl bg-indigo-50/50 border border-indigo-100 p-6 mb-6">

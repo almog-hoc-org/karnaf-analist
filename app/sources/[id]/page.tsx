@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import { getStartsByCity } from "@/lib/cbsStartsData";
 import fs from "fs";
 import path from "path";
 import {
@@ -83,6 +84,24 @@ async function fetchSourceData(src: Source): Promise<React.ReactNode> {
           }))}
           headers={["שנה", "עיר", "התחלות"]}
           truncationNote={rows.length === 100 ? `מציג 100 רשומות אחרונות מתוך 243 בסה"כ` : undefined}
+        />
+      );
+    }
+    case "cbs-starts-releases": {
+      const t = await getStartsByCity();
+      if (!t || !t.cities.length) return null;
+      const y = t.years[t.years.length - 1];
+      return (
+        <DataTable
+          title={`התחלות בנייה לפי עיר — ${y}${t.latestPeriod ? ` ו-12 החודשים האחרונים (${t.latestPeriod.label})` : ""}`}
+          rows={t.cities.map((c) => ({
+            cells: [
+              t.pageName[c.city] ? { v: t.pageName[c.city], link: `/city/${encodeURIComponent(t.pageName[c.city])}` } : { v: c.city },
+              { v: c.years[y] ?? null, fmt: "n" },
+              { v: c.latest, fmt: "n" },
+            ],
+          }))}
+          headers={["עיר", String(y), "12 חודשים אחרונים"]}
         />
       );
     }

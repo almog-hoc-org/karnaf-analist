@@ -158,6 +158,18 @@ export const SOURCES: Source[] = [
     language: "he",
   },
   {
+    id: "cbs-starts-releases",
+    name: 'התחלות בנייה לפי ערים — הודעות לתקשורת (לוח א)',
+    organization: 'הלשכה המרכזית לסטטיסטיקה',
+    category: "cbs",
+    description: 'טבלת הערים מתוך ההודעות הרבעוניות "התחלות וגמר בנייה": דירות שהחלה בנייתן ביישובים עם יותר מ-500 התחלות, לפי שנה ולפי 12 חודשים מתגלגלים. נאסף אוטומטית מ-25 ההודעות האחרונות; לכל תקופה נשמר הערך המעודכן ביותר.',
+    url: 'https://www.cbs.gov.il/he/subjects/Pages/%D7%94%D7%AA%D7%97%D7%9C%D7%95%D7%AA-%D7%91%D7%A0%D7%99%D7%99%D7%94-%D7%95%D7%92%D7%9E%D7%A8-%D7%91%D7%A0%D7%99%D7%99%D7%94.aspx',
+    usedFor: 'טבלת התחלות הבנייה לפי ערים ושנים בדשבורד הארצי',
+    feedsTables: ['cbs_starts_release'],
+    publicationSchedule: { type: "quarterly", quartersOffsetDays: 80 },
+    language: "he",
+  },
+  {
     id: "cbs-housing-price-index",
     name: 'מדד מחירי דירות',
     organization: 'הלשכה המרכזית לסטטיסטיקה',

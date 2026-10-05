@@ -137,6 +137,15 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 45 * MINUTE,
   },
   {
+    id: "cbs-starts",
+    cmd: "npx",
+    args: ["tsx", "scripts/collect-cbs-starts.ts"],
+    label: "התחלות בנייה לפי ערים — הודעות הלמ״ס",
+    why: "The city table of the CBS releases 'התחלות וגמר בנייה' (לוח א, inside each release's b.docx — no attachment has it), for the city × year table on /national. Lists the releases through the CBS site's own SharePoint list API, downloads only releases it has not stored, keeps every release's numbers as published (the CBS revises starts upward; the page reads the newest vintage). Fails soft: an unreadable release is skipped and nothing stored is touched.",
+    host: "https://www.cbs.gov.il",
+    timeoutMs: 10 * MINUTE,
+  },
+  {
     id: "national-completions",
     cmd: "python3",
     args: ["scripts/import_national_completions.py"],
