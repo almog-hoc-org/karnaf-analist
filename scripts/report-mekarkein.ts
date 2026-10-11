@@ -42,18 +42,23 @@ function main() {
     city_name: string; ours: number; matched: number; confirmed: number; conflicts: number;
     new_parcels: number; inherited: number; written: number; note: string | null;
   }>;
-  const sum = (k: "ours" | "matched" | "confirmed" | "conflicts" | "new_parcels" | "inherited") => rows.reduce((a, r) => a + (r[k] || 0), 0);
+  // Written cities count only pairs new since their last written run; a city
+  // that has never been written is re-checked on its whole history each night
+  // (scripts/match-mekarkein.ts, lastWritten). Summed together the two give a
+  // contradiction rate that belongs to neither, so they are reported apart.
+  const written = rows.filter((r) => r.written), blocked = rows.filter((r) => !r.written);
+  const sum = (k: "ours" | "matched" | "confirmed" | "conflicts" | "new_parcels" | "inherited") => written.reduce((a, r) => a + (r[k] || 0), 0);
   const control = sum("confirmed") + sum("conflicts");
   const pct = (a: number, b: number) => (b ? `${((a / b) * 100).toFixed(1)}%` : "—");
-  console.log(`   התאמה (ריצה אחרונה ${last.m}): ${rows.length} ערים · הותאמו ${n(sum("matched"))} מתוך ${n(sum("ours"))} (${pct(sum("matched"), sum("ours"))})` +
-    ` · סתירות ${pct(sum("conflicts"), control)} · +${n(sum("new_parcels"))} גוש-חלקה · +${n(sum("inherited"))} כתובות` +
-    ` · נחסמו ${rows.filter((r) => !r.written).length}`);
+  console.log(`   התאמה (ריצה אחרונה ${last.m}): ${written.length} ערים נכתבו · הותאמו ${n(sum("matched"))} מתוך ${n(sum("ours"))} (${pct(sum("matched"), sum("ours"))})` +
+    ` · סתירות בזוגות החדשים ${pct(sum("conflicts"), control)} · +${n(sum("new_parcels"))} גוש-חלקה · +${n(sum("inherited"))} כתובות`);
   const holon = rows.find((r) => r.city_name === "חולון");
   if (holon) {
     console.log(`   חולון: הותאמו ${n(holon.matched)} מתוך ${n(holon.ours)} (${pct(holon.matched, holon.ours)}) · סתירות ${pct(holon.conflicts, holon.confirmed + holon.conflicts)}` +
       ` · +${n(holon.new_parcels)} גוש-חלקה · +${n(holon.inherited)} כתובות${holon.note ? ` · ${holon.note}` : ""}`);
   }
-  for (const r of rows.filter((x) => !x.written).slice(0, 10)) console.log(`   ✗ ${r.city_name}: ${r.note ?? "לא נכתבה"}`);
+  if (blocked.length) console.log(`   נחסמו ${blocked.length} ערים — נבדקות מחדש על כל ההיסטוריה בכל לילה, ולכן אותו שיעור עד שהנתונים משתנים:`);
+  for (const r of blocked.slice(0, 20)) console.log(`   ✗ ${r.city_name}: ${r.note ?? "לא נכתבה"}`);
   if (has("mekarkein_promote_status")) {
     const p = db.prepare("SELECT COUNT(*) c, SUM(inserted) ins FROM mekarkein_promote_status").get() as { c: number; ins: number | null };
     if (p.c) console.log(`   עסקאות חדשות מהפנקס: ${n(p.ins)} נוספו בסך הכל`);

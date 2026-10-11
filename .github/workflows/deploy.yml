@@ -291,6 +291,11 @@ jobs:
             echo "   ⚠ age או המפתח חסרים — app.db לא יעלה לגיבוי (רק מאגר העסקאות)"
           fi
 
+          # Last night's collection, source by source: start, status, minutes.
+          # Answers "why was X skipped" (the 100-minute deadline) from the log.
+          echo "── איסוף לילי ──"
+          docker compose exec -T app npx tsx scripts/report-collection.ts </dev/null || true
+
           # The tax register (docs/MEKARKEIN.md): what the nightly import and
           # match did, read from the database — no shell on the host needed.
           echo "── מיסוי מקרקעין ──"

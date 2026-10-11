@@ -1748,6 +1748,22 @@ describe("OpenStreetMap addresses and municipal files", () => {
     expect(SOURCES.find((s) => s.id === "osm-addresses")?.probe?.expectJson).toBe(true);
   });
 
+  it("runs the short local imports and the register before the Overpass budgets", () => {
+    // 3.10.2026: city-maps + city-streets + osm-addresses carry 45+30+45 minutes
+    // of budget — more than the night's 100 — and the big register promotion
+    // ran after them, so import-updates and import-yad2 were skipped on the
+    // deadline. Seconds-long and data-bearing steps go first.
+    const ids = SOURCES.map((s) => s.id);
+    const overpass = Math.min(ids.indexOf("city-maps"), ids.indexOf("city-streets"), ids.indexOf("osm-addresses"));
+    for (const id of ["import-updates", "import-yad2", "mekarkein-deals", "mekarkein-match", "mekarkein-promote"]) {
+      expect(ids.indexOf(id)).toBeGreaterThanOrEqual(0);
+      expect(ids.indexOf(id)).toBeLessThan(overpass);
+    }
+    expect(ids.indexOf("mekarkein-deals")).toBeLessThan(ids.indexOf("mekarkein-match"));
+    expect(ids.indexOf("mekarkein-match")).toBeLessThan(ids.indexOf("mekarkein-promote"));
+    expect(ids[ids.length - 1]).toBe("prefetch-deals");
+  });
+
   it("collects every city's map nightly, before the addresses that use its frame, under a budget", () => {
     const ids = SOURCES.map((s) => s.id);
     expect(ids.indexOf("city-maps")).toBeGreaterThanOrEqual(0);
