@@ -23,8 +23,14 @@
  *
  *   npx tsx scripts/probe-neighborhood-deals.ts [baseUrl] [city]
  */
+import { getRuleText } from "../lib/systemRules";
+
 const BASE = (process.argv[2] ?? "http://127.0.0.1:3000").replace(/\/+$/, "");
-const CITY = process.argv[3] ?? "תל אביב-יפו";
+// The demo city: the one city the deal routes answer to an anonymous caller
+// (lib/cityAccess.ts). Tel Aviv was the default until the routes were walled
+// (17.10.2026), and this probe then failed every deploy with 401.
+const demoCity = (() => { try { return getRuleText("demo_city", "חיפה"); } catch { return "חיפה"; } })();
+const CITY = process.argv[3] ?? demoCity;
 const UA = { "user-agent": "karnaf-probe/1.0" };
 
 type Mapped = { neighborhood: string; summary: { neighborhood: string; sqm: number; n: number } | null };
