@@ -14,6 +14,11 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH?.replace(/\/$/, "") || "";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   ...(basePath ? { basePath } : {}),
+  // The image optimizer is the component behind the advisory on this Next
+  // line (GHSA-2xp9), and the site has one <Image> — the logo. Serving it as
+  // is costs nothing and removes the exposed code path.
+  images: { unoptimized: true },
+  poweredByHeader: false,
   // The project lives inside iCloud Drive; iCloud evicting files from .next
   // causes random 500s ("Unknown system error -11"). A *.nosync dir is never
   // synced/evicted by iCloud, keeping build artifacts local and stable.
@@ -54,6 +59,8 @@ const nextConfig = {
           // Send the origin to other sites, the full path only to ourselves —
           // city names are in the path and are not other sites' business.
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          // Nothing here uses a camera, microphone or location.
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=()' },
         ],
       },
     ];

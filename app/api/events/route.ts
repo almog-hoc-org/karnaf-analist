@@ -22,19 +22,21 @@ import { getCurrentUser } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const NO_CONTENT = new NextResponse(null, { status: 204 });
+// a fresh object per request: Next mutates response headers (cookies), and a
+// shared instance would carry one caller's headers into the next reply
+const noContent = () => new NextResponse(null, { status: 204 });
 
 export async function POST(req: NextRequest) {
   // Generous enough for real browsing (a page view plus a few interactions per
   // page), small enough that no single client can flood the table.
   const gate = rateLimit(`events:${clientIp(req.headers)}`, 120, 60_000);
-  if (!gate.ok) return NO_CONTENT;
+  if (!gate.ok) return noContent();
 
   let body: unknown;
   try {
     body = await req.json();
   } catch {
-    return NO_CONTENT;
+    return noContent();
   }
 
   // The account is read HERE, from the session cookie, and never from the
@@ -64,5 +66,5 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  return NO_CONTENT;
+  return noContent();
 }

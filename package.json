@@ -12,7 +12,6 @@
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.5.0",
     "@prisma/client": "^7.5.0",
-    "@types/better-sqlite3": "^7.6.13",
     "better-sqlite3": "^12.8.0",
     "framer-motion": "^12.38.0",
     "next": "14.2.35",
@@ -20,11 +19,11 @@
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^3.8.0",
-    "ts-node": "^10.9.2",
     "undici": "^8.10.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

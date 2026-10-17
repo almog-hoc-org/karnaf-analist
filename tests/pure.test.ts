@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
 import * as XLSX from "xlsx";
+import { safeNext } from "@/lib/safeRedirect";
+import { buildWhere } from "@/app/api/admin/deals/route";
 import { buildCityYearTable, cleanCityName, docxTables, docxXmlTables, findCityTable, isStartsReleaseTitle, latestVintage, NATIONAL_TOTAL, parseCount, parsePeriodLabel, parseStartsTable, type StartsRow } from "@/lib/cbsStarts";
 import { pickReferenceYear } from "@/lib/referenceYear";
 import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";
@@ -2494,5 +2496,32 @@ describe("CBS building starts by city (press releases, lib/cbsStarts)", () => {
     expect(s?.host).toBe("https://www.cbs.gov.il");
     expect(s?.args).toContain("scripts/collect-cbs-starts.ts");
     expect(PIPELINE.some((p) => /collect-cbs-starts/.test(p.script))).toBe(false);
+  });
+});
+
+describe("safeNext — the login redirect target", () => {
+  it("keeps same-site paths with their query and hash", () => {
+    expect(safeNext("/city/חולון?ref=AB12#top")).toBe("/city/%D7%97%D7%95%D7%9C%D7%95%D7%9F?ref=AB12#top");
+    expect(safeNext("/deals")).toBe("/deals");
+  });
+  it("sends everything that would leave the site to the default", () => {
+    for (const bad of ["//evil.com", "/\\evil.com", "/\\/evil.com", "https://evil.com", "javascript:alert(1)", "", null, undefined, 42, "/a\u0000b"]) {
+      expect(safeNext(bad as unknown)).toBe("/deals");
+    }
+  });
+  it("honours a caller's own fallback", () => {
+    expect(safeNext(undefined, "/")).toBe("/");
+  });
+});
+
+describe("admin bulk mutation guard (buildWhere)", () => {
+  it("counts the conditions the WHERE carries, not the fields the caller sent", () => {
+    expect(buildWhere({}).conds).toBe(0);
+    expect(buildWhere({ yearFrom: 0, cls: "x" as never, excluded: "" }).conds).toBe(0); // the old guard passed these
+    expect(buildWhere({ city: "חולון" }).conds).toBe(1);
+    const w = buildWhere({ city: "חולון", yearFrom: 2020, cls: "secondhand" });
+    expect(w.conds).toBe(3);
+    expect(w.where).toBe("1=1 AND city_name = ? AND deal_year >= ? AND is_secondhand = 1");
+    expect(w.params).toEqual(["חולון", 2020]);
   });
 });

@@ -15,6 +15,7 @@ import { findOrCreateGoogleUser, createSession, OAUTH_COOKIE } from "@/lib/auth"
 import { grantSignupBonus, applyReferral, CREDIT_RULES } from "@/lib/credits";
 import { claimAnonUnlocks } from "@/lib/anonAccess";
 import { withBasePath } from "@/lib/basePath";
+import { safeNext } from "@/lib/safeRedirect";
 
 export const dynamic = "force-dynamic";
 
@@ -87,6 +88,6 @@ export async function GET(req: Request) {
   }
   createSession(result.user);
 
-  const next = saved.next && saved.next.startsWith("/") && !saved.next.startsWith("//") ? saved.next : "/deals";
+  const next = safeNext(saved.next);
   return NextResponse.redirect(new URL(withBasePath(next), siteUrl(req)));
 }

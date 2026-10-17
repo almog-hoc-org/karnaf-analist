@@ -41,6 +41,14 @@ function ensureAnonCookie(req: NextRequest, res: NextResponse): NextResponse {
   return res;
 }
 
+/** Length-independent, constant-time string equality (the edge runtime has no timingSafeEqual). */
+function sameSecret(a: string, b: string): boolean {
+  const n = Math.max(a.length, b.length);
+  let diff = a.length ^ b.length;
+  for (let i = 0; i < n; i++) diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
+  return diff === 0;
+}
+
 export function middleware(req: NextRequest) {
   const password = process.env.SITE_PASSWORD;
   if (!password) return ensureAnonCookie(req, NextResponse.next());
@@ -49,11 +57,12 @@ export function middleware(req: NextRequest) {
   const header = req.headers.get("authorization");
 
   if (header?.startsWith("Basic ")) {
-    const decoded = atob(header.slice(6));
+    let decoded = "";
+    try { decoded = atob(header.slice(6)); } catch { /* not base64 — treated as a wrong password, not a 500 */ }
     const idx = decoded.indexOf(":");
     const user = decoded.slice(0, idx);
     const pass = decoded.slice(idx + 1);
-    if (user === expectedUser && pass === password) {
+    if (sameSecret(user, expectedUser) && sameSecret(pass, password)) {
       return ensureAnonCookie(req, NextResponse.next());
     }
   }

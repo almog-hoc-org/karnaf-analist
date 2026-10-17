@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { getRuleNum } from "@/lib/systemRules";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { DRAWER_PAGE, type NadlanDeal } from "@/lib/nadlanTransactionSeries";
+import { cityAccess } from "@/lib/cityAccess";
 
 /**
  * Deals behind the city graph, for the year the user opened.
@@ -41,7 +42,14 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
     );
   }
 
-  const cityName = decodeURIComponent(params.cityName);
+  let cityName: string;
+  try { cityName = decodeURIComponent(params.cityName); } catch { return NextResponse.json({ deals: [], total: 0, offset: 0, limit: 0, error: "שם עיר לא תקין" }, { status: 400 }); }
+  // The page's wall, applied here too: without it the drawer's endpoint was
+  // the open side door to every city's deals (lib/cityAccess.ts).
+  const access = cityAccess(cityName);
+  if (!access.ok) {
+    return NextResponse.json({ deals: [], total: 0, offset: 0, limit: 0, error: access.error }, { status: access.status });
+  }
   const q = req.nextUrl.searchParams;
 
   const year = Number(q.get("year") ?? 0) || 0;          // 0 = the whole range
@@ -51,8 +59,10 @@ export async function GET(req: NextRequest, { params }: { params: { cityName: st
   const buildingAge = (["all", "modern", "old"].includes(q.get("buildingAge") ?? "") ? q.get("buildingAge") : "all") as Ba;
   const room = q.get("room") ?? "all";
   const neighborhood = (q.get("neighborhood") ?? "").trim();
-  const offset = Math.max(0, Number(q.get("offset") ?? 0) || 0);
-  const limit = Math.min(1000, Math.max(1, Number(q.get("limit") ?? DRAWER_PAGE) || DRAWER_PAGE));
+  // integers only: a fractional or 1e21 value reached the SQL text as written
+  // and SQLite answered with an error (a 500 for the drawer)
+  const offset = Math.min(1_000_000, Math.max(0, Math.floor(Number(q.get("offset")) || 0)));
+  const limit = Math.min(1000, Math.max(1, Math.floor(Number(q.get("limit")) || DRAWER_PAGE)));
 
   const modernMinYear = getRuleNum("modern_min_year", 2005);
 

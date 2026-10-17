@@ -118,6 +118,8 @@ jobs:
           HOST: ${{ secrets.VPS_HOST }}
           USER: ${{ secrets.VPS_USER }}
           KEY: ${{ secrets.VPS_SSH_KEY }}
+          DEPLOY_REF: ${{ github.ref_name }}
+          DEPLOY_SHA: ${{ github.sha }}
         run: |
           if [ -z "$HOST" ] || [ -z "$USER" ] || [ -z "$KEY" ]; then
             echo "::error::VPS_HOST / VPS_USER / VPS_SSH_KEY are not set in repository secrets."
@@ -184,8 +186,17 @@ jobs:
             exit 1
           fi
 
-          ssh -o BatchMode=yes "$USER@$HOST" \
-            "cd /opt/karnaf && git fetch --all --prune && git checkout -f '${{ github.ref_name }}' && git reset --hard 'origin/${{ github.ref_name }}' && bash scripts/deploy.sh"
+          # The commit the build gate tested — not the branch head, which a
+          # later push may have moved past a failing gate. ref/sha arrive
+          # through env, never pasted into the remote command line.
+          ssh -o BatchMode=yes "$USER@$HOST" "DEPLOY_REF=$DEPLOY_REF DEPLOY_SHA=$DEPLOY_SHA bash -s" <<'REMOTE'
+          set -e
+          cd /opt/karnaf
+          git fetch --all --prune
+          git checkout -f "$DEPLOY_REF"
+          git reset --hard "$DEPLOY_SHA"
+          bash scripts/deploy.sh --no-pull
+          REMOTE
 
       - name: confirm the site answers
         run: |

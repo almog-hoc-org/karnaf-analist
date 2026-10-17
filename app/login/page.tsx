@@ -5,15 +5,11 @@ import { verifyLogin, createSession } from "@/lib/auth";
 import { rateLimit, rateLimitReset, clientIp } from "@/lib/rateLimit";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
+import { safeNext } from "@/lib/safeRedirect";
 
 export const metadata = { title: "התחברות | קרנף אנליסט" };
 export const dynamic = "force-dynamic";
 
-/** Only same-site paths — never bounce a login to an attacker-supplied host. */
-function safeNext(raw: unknown): string {
-  const s = String(raw ?? "");
-  return s.startsWith("/") && !s.startsWith("//") ? s : "/deals";
-}
 
 async function doLogin(formData: FormData) {
   "use server";
@@ -23,7 +19,9 @@ async function doLogin(formData: FormData) {
 
   // Two budgets, because they stop different attacks: per-IP caps someone
   // spraying many accounts from one host, per-account caps a distributed run
-  // against one inbox. A successful login clears both.
+  // against one inbox. A successful login clears the ACCOUNT budget only:
+  // clearing the IP one too let a sprayer alternate guesses with logins to
+  // their own account and never run out.
   const ip = clientIp(headers());
   const acct = email.trim().toLowerCase().slice(0, 254);
   const byIp = rateLimit(`login-ip:${ip}`, 10, 15 * 60_000);
@@ -33,7 +31,6 @@ async function doLogin(formData: FormData) {
   const user = verifyLogin(email, password);
   if (!user) redirect(`/login?err=1&next=${encodeURIComponent(next)}`);
 
-  rateLimitReset(`login-ip:${ip}`);
   rateLimitReset(`login-acct:${acct}`);
   createSession(user);
   redirect(next);

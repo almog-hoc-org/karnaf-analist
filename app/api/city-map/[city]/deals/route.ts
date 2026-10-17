@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { loadAreaDealPoints } from "@/lib/dealPins";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import type { DealScope } from "@/lib/neighborhoodDeals";
+import { cityAccess } from "@/lib/cityAccess";
+import { historyFromYear } from "@/lib/historyWindow";
 
 /**
  * The located deals of one neighbourhood, as points in the city map's own
@@ -27,7 +29,10 @@ export async function GET(req: NextRequest, { params }: { params: { city: string
       { status: 429, headers: { "Retry-After": String(rl.retryAfter) } }
     );
   }
-  const city = decodeURIComponent(params.city);
+  let city: string;
+  try { city = decodeURIComponent(params.city); } catch { return NextResponse.json({ error: "שם עיר לא תקין" }, { status: 400 }); }
+  const access = cityAccess(city);
+  if (!access.ok) return NextResponse.json({ error: access.error }, { status: access.status });
   const q = req.nextUrl.searchParams;
   const neighborhood = (q.get("neighborhood") ?? "").trim();
   const street = (q.get("street") ?? "").trim();
@@ -36,8 +41,12 @@ export async function GET(req: NextRequest, { params }: { params: { city: string
   const area = neighborhood ? `hood:${neighborhood}` : street ? (house ? `address:${street}|${house}` : `street:${street}`) : null;
   if (!area) return NextResponse.json({ error: "חסר שם שכונה או רחוב" }, { status: 400 });
   const scope = (["sh", "new", "all"].includes(q.get("scope") ?? "") ? q.get("scope") : "sh") as DealScope;
-  const from = Number(q.get("from") ?? 0) || 0;
-  const to = Number(q.get("to") ?? 0) || 0;
+  // Clamped BEFORE they reach the cached loader: the values are part of its
+  // cache key, and an unclamped integer is an unbounded set of keys on disk.
+  const thisYear = new Date().getFullYear();
+  const clampYear = (v: string | null) => { const n = Math.floor(Number(v) || 0); return n ? Math.min(thisYear, Math.max(historyFromYear(), n)) : 0; };
+  const from = clampYear(q.get("from"));
+  const to = clampYear(q.get("to"));
 
   try {
     const data = await loadAreaDealPoints(city, area, scope, from, to);

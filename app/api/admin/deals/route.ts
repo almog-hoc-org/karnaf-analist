@@ -23,18 +23,15 @@ interface Filters {
 }
 
 /**
- * How many of the caller's filter fields actually narrow the query.
- *
  * buildWhere() seeds its condition list with "1=1", so a filter object with
  * nothing set produces `WHERE 1=1` — which the bulk UPDATE below would happily
- * apply to all ~1.35M rows, emptying the site in one request. A mutation must
- * therefore prove it is targeted before it is allowed to run.
+ * apply to every row, emptying the site in one request. A mutation must prove
+ * it is targeted, and the proof is `conds`: the number of conditions the WHERE
+ * really carries. An earlier guard counted the filter FIELDS instead, and
+ * `{yearFrom: 0}` or `{cls: "x"}` counted as a filter while adding no
+ * condition — `WHERE 1=1` with a passing guard.
  */
-function activeFilterCount(f: Filters): number {
-  return Object.values(f).filter((v) => v !== undefined && v !== null && v !== "").length;
-}
-
-function buildWhere(f: Filters): { where: string; params: unknown[] } {
+export function buildWhere(f: Filters): { where: string; params: unknown[]; conds: number } {
   const conds: string[] = ["1=1"];
   const params: unknown[] = [];
   if (f.city) { conds.push("city_name = ?"); params.push(f.city); }
@@ -56,7 +53,7 @@ function buildWhere(f: Filters): { where: string; params: unknown[] } {
   if (f.reason) { conds.push("exclusion_reason LIKE ?"); params.push(`%${f.reason}%`); }
   if (f.luxury === "yes") conds.push("COALESCE(luxury,0) = 1");
   else if (f.luxury === "no") conds.push("COALESCE(luxury,0) = 0");
-  return { where: conds.join(" AND "), params };
+  return { where: conds.join(" AND "), params, conds: conds.length - 1 };
 }
 
 function parseFilters(sp: URLSearchParams): Filters {
@@ -77,14 +74,17 @@ function parseFilters(sp: URLSearchParams): Filters {
   };
 }
 
+/** rows a filtered bulk mutation may touch without an explicit confirm */
+const BULK_CONFIRM_ABOVE = 50_000;
+
 const SORTABLE = new Set(["deal_date", "deal_year", "city_name", "street", "price", "price_sqm", "area", "rooms", "year_built", "source"]);
 
 export async function GET(req: NextRequest) {
   if (!isAdminRequest()) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const sp = req.nextUrl.searchParams;
   const { where, params } = buildWhere(parseFilters(sp));
-  const page = Math.max(1, Number(sp.get("page") ?? 1));
-  const per = Math.min(200, Math.max(10, Number(sp.get("per") ?? 50)));
+  const page = Math.max(1, Math.floor(Number(sp.get("page")) || 1));
+  const per = Math.min(200, Math.max(10, Math.floor(Number(sp.get("per")) || 50)));
   const sort = SORTABLE.has(sp.get("sort") ?? "") ? sp.get("sort") : "deal_date";
   const dir = sp.get("dir") === "asc" ? "ASC" : "DESC";
 
@@ -110,8 +110,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   if (!isAdminRequest()) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  const body = await req.json();
-  const action: "exclude" | "unexclude" = body.action;
+  let body: Record<string, any>;
+  try { body = await req.json(); } catch { return NextResponse.json({ error: "invalid JSON" }, { status: 400 }); }
+  if (!body || typeof body !== "object") return NextResponse.json({ error: "invalid JSON" }, { status: 400 });
+  const action = body.action === "unexclude" ? "unexclude" : body.action === "exclude" ? "exclude" : null;
+  if (!action) return NextResponse.json({ error: "action must be exclude or unexclude" }, { status: 400 });
   const reason: string = String(body.reason ?? "").slice(0, 300);
   const setVal = action === "exclude" ? 1 : 0;
 
@@ -127,16 +130,28 @@ export async function POST(req: NextRequest) {
     affected = Number(res);
     filterDesc = `ids: ${ids.length}`;
   } else if (body.filters) {
-    const filters = body.filters as Filters;
+    const filters = (body.filters && typeof body.filters === "object" ? body.filters : {}) as Filters;
     // An unfiltered bulk mutation is never a legitimate admin action — it is
     // either a mistake or an attack, and either way it would blank the archive.
-    if (activeFilterCount(filters) === 0) {
+    const { where, params, conds } = buildWhere(filters);
+    if (conds === 0) {
       return NextResponse.json(
-        { error: "פעולה גורפת ללא סינון נחסמה — יש לציין לפחות מסנן אחד" },
+        { error: "פעולה גורפת ללא סינון נחסמה — יש לציין לפחות מסנן אחד שמצמצם" },
         { status: 400 }
       );
     }
-    const { where, params } = buildWhere(filters);
+    // A targeted filter can still be wide (one city, one source). Above this
+    // many rows the caller has to say so explicitly.
+    const [cnt] = await prisma.$queryRawUnsafe<Array<{ c: bigint }>>(
+      `SELECT COUNT(*) c FROM nadlan_transactions WHERE ${where}`, ...params
+    );
+    const matching = Number(cnt?.c ?? 0);
+    if (matching > BULK_CONFIRM_ABOVE && body.confirm !== true) {
+      return NextResponse.json(
+        { error: `הסינון תופס ${matching.toLocaleString("he-IL")} עסקאות — לאישור יש לשלוח confirm:true`, matching, confirmRequired: true },
+        { status: 409 }
+      );
+    }
     const res = await prisma.$executeRawUnsafe(
       `UPDATE nadlan_transactions SET excluded=?, exclusion_reason=? WHERE ${where}`,
       setVal, setVal ? reason || null : null, ...params

@@ -7,15 +7,11 @@ import { claimAnonUnlocks } from "@/lib/anonAccess";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
+import { safeNext } from "@/lib/safeRedirect";
 
 export const metadata = { title: "הרשמה | קרנף אנליסט" };
 export const dynamic = "force-dynamic";
 
-/** Only same-site paths — never bounce a registration to an attacker-supplied host. */
-function safeNext(raw: unknown): string {
-  const s = String(raw ?? "");
-  return s.startsWith("/") && !s.startsWith("//") ? s : "/deals";
-}
 
 /** Referral codes are short alphanumerics — anything else is dropped, not errored. */
 function safeRef(raw: unknown): string {

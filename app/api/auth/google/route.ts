@@ -14,6 +14,7 @@ import { cookies } from "next/headers";
 import crypto from "crypto";
 import { withBasePath } from "@/lib/basePath";
 import { OAUTH_COOKIE } from "@/lib/auth";
+import { safeNext } from "@/lib/safeRedirect";
 
 export const dynamic = "force-dynamic";
 
@@ -27,8 +28,7 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Google sign-in is not configured" }, { status: 503 });
   }
   const url = new URL(req.url);
-  const nextRaw = url.searchParams.get("next") ?? "/deals";
-  const next = nextRaw.startsWith("/") && !nextRaw.startsWith("//") ? nextRaw : "/deals";
+  const next = safeNext(url.searchParams.get("next"));
   const refRaw = (url.searchParams.get("ref") ?? "").toUpperCase();
   const ref = /^[A-Z2-9]{4,16}$/.test(refRaw) ? refRaw : "";
 

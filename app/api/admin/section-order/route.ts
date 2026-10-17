@@ -25,7 +25,9 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   if (!isAdminRequest()) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  const body = await req.json();
+  let body: Record<string, any>;
+  try { body = await req.json(); } catch { return NextResponse.json({ error: "invalid JSON" }, { status: 400 }); }
+  if (!body || typeof body !== "object") return NextResponse.json({ error: "invalid JSON" }, { status: 400 });
   const page = String(body.page ?? "");
   if (!isPageKey(page)) return NextResponse.json({ error: "unknown page" }, { status: 400 });
 
