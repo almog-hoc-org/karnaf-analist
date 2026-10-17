@@ -106,7 +106,7 @@ app/sources/                 # /sources index + /sources/[id] detail pages
 ## Troubleshooting
 
 **No emails arriving?**
-- Check `cron.log` (the cron task output) for errors
+- Check the journal of the unit that sends it: `journalctl -u karnaf-ops-report` / `karnaf-digest` (systemd timers, not cron)
 - Verify `RESEND_API_KEY` is loaded — run the monitor manually and check console
 - Check Resend dashboard for delivery status
 - If using your own domain in `NOTIFY_FROM_EMAIL`, ensure DNS records (SPF, DKIM, DMARC) are configured per Resend's instructions

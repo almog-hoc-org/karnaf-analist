@@ -9,7 +9,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import { metricLabel } from "@/components/ScatteredFactsSection";
-import { buildWhere } from "@/app/api/admin/deals/route";
+import { buildWhere } from "@/lib/adminDealsFilters";
 import { buildCityYearTable, cleanCityName, docxTables, docxXmlTables, findCityTable, isStartsReleaseTitle, latestVintage, NATIONAL_TOTAL, parseCount, parsePeriodLabel, parseStartsTable, type StartsRow } from "@/lib/cbsStarts";
 import { pickReferenceYear } from "@/lib/referenceYear";
 import { sessionKey, isLegacySessionKey, SESSION_KEY_PREFIX } from "@/lib/sessionToken";

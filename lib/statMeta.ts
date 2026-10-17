@@ -45,7 +45,7 @@ export const METRIC_CONFIG: Record<
   },
   "total-population": {
     title: "אוכלוסיית הערים — לאורך השנים",
-    subtitle: "סך האוכלוסייה בכל 168 הערים במאגר",
+    subtitle: "סך האוכלוסייה בכל הערים במאגר",
     icon: "users",
     accent: "purple",
     source: 'הלשכה המרכזית לסטטיסטיקה (למ"ס)',

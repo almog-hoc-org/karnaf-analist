@@ -1,7 +1,7 @@
 #!/bin/bash
 # Restore both databases from a GitHub Release published by publish-backup.sh.
 #
-# realestate.db is 312MB — past GitHub's 100MB file limit — so it ships as a
+# realestate.db is ~2.3GB (~690MB gzipped) — past GitHub's 100MB file limit — so it ships as a
 # gzipped Release asset instead of living in the repo. This pulls it back and
 # verifies it before putting it in place.
 #

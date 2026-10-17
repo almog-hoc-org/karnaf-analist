@@ -36,7 +36,7 @@ const cityArg = args.includes("--city") ? args[args.indexOf("--city") + 1] : nul
 // The nightly collector passes --nightly. Until the operator turns the source
 // on (after writing to the publisher), a nightly run is a no-op that says so.
 if (args.includes("--nightly") && process.env.KARNAF_MEKARKEIN_ENABLED !== "1") {
-  console.log("↷ מיסוי מקרקעין כבוי — KARNAF_MEKARKEIN_ENABLED=1 ב-.env.production מפעיל אותו");
+  console.log("↷ מיסוי מקרקעין כבוי — KARNAF_MEKARKEIN_ENABLED=1 ב-deploy/karnaf-collect.service מפעיל אותו");
   process.exit(0);
 }
 const DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "realestate.db");

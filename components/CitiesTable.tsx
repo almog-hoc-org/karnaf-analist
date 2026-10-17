@@ -663,6 +663,7 @@ export default function CitiesTable({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="חיפוש עיר..."
+          aria-label="חיפוש עיר בטבלה"
           dir="rtl"
           className="rounded-lg bg-slate-50 border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-300 focus:border-indigo-400 w-full sm:w-48"
         />
@@ -880,7 +881,7 @@ export default function CitiesTable({
                       </span>
                       <select value={win[cc.metric]}
                         onChange={(e) => setWin((w) => ({ ...w, [cc.metric]: Number(e.target.value) as Win }))}
-                        onClick={(e) => e.stopPropagation()} title="בחר פרק זמן"
+                        onClick={(e) => e.stopPropagation()} title="בחר פרק זמן" aria-label={`פרק זמן — ${cc.label}`}
                         /* appearance-none on the phone: the native dropdown
                            arrow is ~18px of chrome per column, and with two
                            change columns that alone was the difference between
@@ -943,6 +944,7 @@ export default function CitiesTable({
             })}
           </tbody>
         </table>
+        <p className="px-3 py-2 text-2xs text-slate-500">— = אין נתון בפרסום או מדגם קטן מהרף; אף פעם לא אפס.</p>
       </div>
 
       {/* Provenance — memory rule: source • period • confidence under every metric block */}

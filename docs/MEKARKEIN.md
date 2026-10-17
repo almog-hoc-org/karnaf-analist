@@ -85,12 +85,13 @@ Attribution wherever these rows are used:
    docker compose exec -T app npx tsx scripts/promote-mekarkein.ts --city "חולון"
    docker compose exec -T app npx tsx scripts/pipeline.ts
    ```
-4. In `.env.production`: `KARNAF_MEKARKEIN_ENABLED=1` keeps the register and the
+4. In `deploy/karnaf-collect.service` (the `-e` flags on ExecStart; the container's
+   `.env.production` is not read by the nightly exec): `KARNAF_MEKARKEIN_ENABLED=1` keeps the register and the
    parcels current every night; `KARNAF_MEKARKEIN_PROMOTE=1` also adds the new
    deals (2,000 parcel lookups a night, newest first, cached in
    `over_parcel_cache`).
    `KARNAF_MEKARKEIN_PROMOTE_SINCE=YYYY-MM-DD` limits the promotion to deals
-   from that date (stage 2a); without it every year is promoted (stage 2b).
+   from that date; without it every year is promoted. Set to 1998-01-01 (the history floor) since 3.10.2026, i.e. the full register.
    Both are set on `deploy/karnaf-collect.service`, so the switch is in git.
 
 To undo the promotion entirely:

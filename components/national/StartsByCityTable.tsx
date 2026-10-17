@@ -21,6 +21,8 @@ interface Props {
 }
 
 const fmt = (n: number | null | undefined) => (n == null ? "—" : Math.round(n).toLocaleString("he-IL"));
+/** "—" is "not in the release", never zero */
+const DASH_TITLE = "לא פורסם — היישוב לא עבר את רף 500 הדירות בהודעה של אותה תקופה";
 const change = (r: StartsTableRow) => (r.latest != null && r.latestPrev ? ((r.latest - r.latestPrev) / r.latestPrev) * 100 : null);
 
 function value(r: StartsTableRow, k: SortKey): number | string | null {
@@ -84,6 +86,7 @@ export default function StartsByCityTable({ years, latestLabel, total, cities, p
     const a = v != null && m > 0 ? Math.min(1, v / m) : 0;
     return (
       <td
+        title={v == null ? DASH_TITLE : undefined}
         className={`py-2 px-2.5 text-left tabular-nums ${v == null ? "text-slate-300" : strong ? "font-bold text-slate-900" : "text-slate-700"}`}
         style={a ? { backgroundColor: `rgba(99, 102, 241, ${(0.04 + a * 0.26).toFixed(3)})` } : undefined}
       >

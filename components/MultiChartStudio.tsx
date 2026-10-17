@@ -466,11 +466,11 @@ export default function MultiChartStudio({ data, deals, dealCounts, cleaning, ci
           </div>
           {/* row 2 (mobile): year range — ONE clean horizontal strip, no mid-button wrapping */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs sm:overflow-visible sm:pb-0">
-            <select value={from} onChange={(e) => setFrom(Number(e.target.value))} className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-1">
+            <select value={from} onChange={(e) => setFrom(Number(e.target.value))} aria-label="משנה" className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-1">
               {allYears.filter((y) => y < to).map((y) => <option key={y} value={y}>{y}</option>)}
             </select>
             <span className="shrink-0 text-slate-400">–</span>
-            <select value={to} onChange={(e) => setTo(Number(e.target.value))} className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-1">
+            <select value={to} onChange={(e) => setTo(Number(e.target.value))} aria-label="עד שנה" className="shrink-0 rounded-md border border-slate-200 bg-white px-1.5 py-1">
               {allYears.filter((y) => y > from).map((y) => <option key={y} value={y}>{y}</option>)}
             </select>
             <span className="mr-1 flex items-center gap-1">

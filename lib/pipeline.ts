@@ -80,7 +80,7 @@ export const PIPELINE: PipelineStage[] = [
     id: "merge",
     script: "scripts/merge-cross-channel.ts",
     label: "מיזוג ערוצים",
-    why: "Must be first: it reconciles the same deal arriving from two sources and enriches addresses. Everything downstream counts rows, so duplicates across channels have to collapse before anything is measured.",
+    why: "First of the data stages (after the schema and dwellings prep): it reconciles the same deal arriving from two sources and enriches addresses. Everything downstream counts rows, so duplicates across channels have to collapse before anything is measured.",
     timeoutMs: 15 * MINUTE,
   },
   {

@@ -136,12 +136,12 @@ export default function PriceGainsRankingCard({ series, minYear, maxYear, partia
             </button>
           </div>
           <div className="mt-2 flex flex-wrap items-center gap-1.5 text-2xs">
-            <select value={fromY} onChange={(e) => setFromY(Number(e.target.value))}
+            <select value={fromY} onChange={(e) => setFromY(Number(e.target.value))} aria-label="משנה"
               className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 font-bold tabular-nums">
               {years.filter((y) => y < toY).map((y) => <option key={y} value={y}>{yearLabel(y)}</option>)}
             </select>
             <span className="text-slate-400">←</span>
-            <select value={toY} onChange={(e) => setToY(Number(e.target.value))}
+            <select value={toY} onChange={(e) => setToY(Number(e.target.value))} aria-label="עד שנה"
               className="rounded-md border border-slate-200 bg-white px-1.5 py-0.5 font-bold tabular-nums">
               {years.filter((y) => y > fromY).map((y) => <option key={y} value={y}>{yearLabel(y)}</option>)}
             </select>
