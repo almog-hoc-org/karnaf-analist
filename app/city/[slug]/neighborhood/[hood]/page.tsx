@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import Icon from "@/components/Icon";
 import InfoTip from "@/components/InfoTip";
 import HoodTrendStudio from "@/components/HoodTrendStudio";
@@ -13,6 +13,7 @@ import { canonicalCityName } from "@/lib/cityAliases";
 import { neighborhoodMinDeals, neighborhoodSummary } from "@/lib/neighborhoods";
 import { loadHoodPage, loadHoodDeals, loadHoodSeries } from "@/lib/neighborhoodPage";
 import { buildCityMap, loadCityMapGeometry } from "@/lib/cityMap";
+import { resolveCityName } from "@/lib/cityLookup";
 
 /**
  * A city page, one level down: one neighbourhood's price history and deals.
@@ -48,9 +49,10 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function NeighborhoodPage({ params }: PageProps) {
-  const requestedCity = decodeURIComponent(params.slug);
-  const cityName = canonicalCityName(requestedCity);
-  const hoodParam = decodeURIComponent(params.hood);
+  let requestedCity: string, hoodParam: string;
+  try { requestedCity = decodeURIComponent(params.slug); hoodParam = decodeURIComponent(params.hood); } catch { notFound(); }
+  const cityName = await resolveCityName(requestedCity);
+  if (!cityName) notFound();
 
   // ── access — the parent city's gate, only when the operator closed the rule ──
   if (!getRuleBool("neighborhood_pages_public", true)) {
@@ -84,10 +86,8 @@ export default async function NeighborhoodPage({ params }: PageProps) {
   if (!data) {
     // Not a 404 page: the visitor asked a reasonable question about a real
     // city, and the useful answer is which neighbourhoods DO have enough data.
-    const cityExists = await prisma.city
-      .findUnique({ where: { city_name: cityName }, select: { city_name: true } })
-      .catch(() => null);
-    const siblings = cityExists ? await neighborhoodSummary(cityName, { scope }) : null;
+    const cityExists = true; // resolved above
+    const siblings = await neighborhoodSummary(cityName, { scope });
     return (
       <main className="page-wrap py-16 text-center">
         <div className="glass-card mx-auto max-w-xl p-8">

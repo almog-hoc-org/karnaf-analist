@@ -16,6 +16,7 @@ import {
 import { getDocumentsForSource, type SourceDocument, type DocStatus } from "@/lib/source-documents";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
 interface PageProps {
   params: { id: string };
@@ -27,7 +28,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const src = getSourceById(params.id);
-  return { title: src ? `${src.name} | מקורות מידע` : "מקור" };
+  if (!src) return { title: "מקור", robots: { index: false, follow: false } };
+  return pageMeta({ path: `/sources/${encodeURIComponent(params.id)}`, title: `${src.name} | מקורות מידע`, description: src.description });
 }
 
 const accentClasses: Record<SourceColor, { bar: string; bg: string; text: string; bgSoft: string }> = {

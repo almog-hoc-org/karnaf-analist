@@ -8,10 +8,9 @@ import { computeAllInvestorMetrics } from "@/lib/investorMetrics";
 import { refYear } from "@/lib/refYear";
 import { loadCityTransactionPrices, loadActiveDealCounts, loadFourRoomPrices, loadPopulationGrowth10y } from "@/lib/cityTransactionPrices";
 import { getRuleNum } from "@/lib/systemRules";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: 'טבלת ערים | קרנף אנליסט',
-};
+export const metadata = pageMeta({ path: "/cities", title: "טבלת ערים", description: "כל הערים בטבלה אחת: מחיר למ״ר, שינוי מחירים, עסקאות, היתרי בנייה ואוכלוסייה — ממוינת וניתנת לסינון." });
 
 export default async function CitiesPage() {
   // ONE await for seven independent loaders. They were seven sequential

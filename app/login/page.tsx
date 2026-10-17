@@ -6,8 +6,9 @@ import { rateLimit, rateLimitReset, clientIp } from "@/lib/rateLimit";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
 import { safeNext } from "@/lib/safeRedirect";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: "התחברות | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/login", title: "התחברות", index: false });
 export const dynamic = "force-dynamic";
 
 

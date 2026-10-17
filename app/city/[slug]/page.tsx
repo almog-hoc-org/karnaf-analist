@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
-import { redirect } from "next/navigation";
-import { canonicalCityName } from "@/lib/cityAliases";
+import { redirect, notFound } from "next/navigation";
+import { resolveCityName } from "@/lib/cityLookup";
 import { cityClassificationRate } from "@/lib/classificationRate";
 import { cityUrbanRenewalProjects } from "@/lib/urbanRenewal";
 import { subsidizedWindowNote, citySubsidizedYears } from "@/lib/subsidizedYears";
@@ -117,10 +117,16 @@ function formatNumber(value: number | null, decimals = 0): string {
  * be invalidated, not a prerender that bakes in an auth state.
  */
 
+/** A malformed escape in the slug is a 404, not a 500. */
+function decodeSlug(seg: string): string {
+  try { return decodeURIComponent(seg); } catch { return "\u0000"; }
+}
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps) {
-  const cityName = decodeURIComponent(params.slug);
+  const cityName = decodeSlug(params.slug);
+  if (!(await resolveCityName(cityName))) return { title: "העיר לא נמצאה", robots: { index: false, follow: false } };
   // The title IS the query people type. "נתניה | קרנף אנליסט" answered nothing;
   // this one matches the search and the page's own h1.
   const title = `מחירי דירות ב${cityName} — מחיר למ״ר, עסקאות ומגמות`;
@@ -143,11 +149,14 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function CityPage({ params, searchParams }: PageProps) {
-  const cityName = decodeURIComponent(params.slug);
-  // An alias URL ("מכבים רעות") lands on the canonical city instead of an
-  // empty duplicate page — old shared links keep working after unification.
-  const canonical = canonicalCityName(cityName);
-  if (canonical !== cityName) redirect(`/city/${encodeURIComponent(canonical)}`);
+  const requested = decodeSlug(params.slug);
+  // BEFORE everything else: an alias ("מכבים רעות"), a spelling ("קרית גת",
+  // "תל אביב") or a typo. The first two land on the city's one URL; the
+  // third is a 404 — it used to be a "not found" screen with HTTP 200 and
+  // a full title, rendered after the page's ~20 queries had already run.
+  const cityName = await resolveCityName(requested);
+  if (!cityName) notFound();
+  if (cityName !== requested) redirect(`/city/${encodeURIComponent(cityName)}`);
   const activeWindow: "3y" | "5y" = DEFAULT_PRICE_WINDOW;
   // String() first — a repeated ?ref=&ref= arrives as an ARRAY, and calling
   // .toUpperCase() on it 500'd the whole page, demo city included.
@@ -346,25 +355,7 @@ export default async function CityPage({ params, searchParams }: PageProps) {
   // is all of them outside the pilot, and is a normal state and not a failure.
   const hasCityMap = buildCityMap(await loadCityMapGeometry(cityName), neighborhoods.rows) !== null;
 
-  if (!city) {
-    return (
-      <main className="min-h-screen flex flex-col items-center justify-center px-4">
-        <div className="text-center space-y-4">
-          <p className="text-5xl mb-4"><Icon name="search" size="1em" /></p>
-          <h1 className="text-2xl font-bold text-slate-900">העיר לא נמצאה</h1>
-          <p className="text-slate-500">
-            לא נמצאו נתונים עבור &ldquo;{cityName}&rdquo;
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-700 hover:border-indigo-300 hover:text-indigo-700 transition-all"
-          >
-            ← חזרה לדף הבית
-          </Link>
-        </div>
-      </main>
-    );
-  }
+  if (!city) notFound(); // resolved above; a race with a nightly rename is the only way here
 
   const permitsData = buildingPermits.map((p) => ({
     year: p.year,

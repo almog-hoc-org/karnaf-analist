@@ -8,8 +8,9 @@ import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { withBasePath } from "@/lib/basePath";
 import Icon from "@/components/Icon";
 import { safeNext } from "@/lib/safeRedirect";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: "הרשמה | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/register", title: "הרשמה" });
 export const dynamic = "force-dynamic";
 
 

@@ -47,6 +47,13 @@ if [ ! -s "$DATA_ROOT/data/realestate.db" ]; then
   read -rp "  להמשיך בכל זאת? [y/N] " a; [ "$a" = "y" ] || exit 1
 fi
 
+# ── report PDFs: in git, served from the bind mount ─────────────────
+# public/reports is bind-mounted from $DATA_ROOT/reports (docker-compose), so a
+# PDF that is in the repo but not in that folder is a 404 on the site. Copy
+# what the checkout has and the folder lacks; never overwrite.
+mkdir -p "$DATA_ROOT/reports"
+cp -n public/reports/*.pdf "$DATA_ROOT/reports/" 2>/dev/null || true
+
 # ── record where we can roll back to ────────────────────────────────
 PREV_SHA="$(git rev-parse --short HEAD 2>/dev/null || echo unknown)"
 

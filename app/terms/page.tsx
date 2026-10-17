@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BUSINESS } from "@/lib/legal";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
 /**
  * Terms of use.
@@ -14,7 +15,7 @@ import Icon from "@/components/Icon";
  * incomplete or wrong — is both the honest thing to do and the clause that
  * actually matters if anything goes wrong.
  */
-export const metadata = { title: "תנאי שימוש | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/terms", title: "תנאי שימוש" });
 
 const UPDATED = "3 באוגוסט 2026";
 

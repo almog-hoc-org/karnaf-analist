@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import NationalConstructionChart from "@/components/NationalConstructionChart";
 import { getCbsNationalSeries } from "@/lib/cbsNationalSeries";
 import { METRIC_CONFIG, type Metric } from "@/lib/statMeta";
+import { pageMeta } from "@/lib/seo";
 
 interface PageProps {
   params: { metric: string };
@@ -25,7 +26,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const cfg = METRIC_CONFIG[params.metric as Metric];
-  return { title: cfg ? `${cfg.title} | קרנף אנליסט` : "נתון" };
+  if (!cfg) return { title: "נתון", robots: { index: false, follow: false } };
+  return pageMeta({ path: `/stats/${encodeURIComponent(params.metric)}`, title: cfg.title });
 }
 
 function fmt(n: number | null, suffix = ""): string {

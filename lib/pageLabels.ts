@@ -57,7 +57,7 @@ const STATIC_LABELS: Record<string, { label: string; kind: PageLabel["kind"] }> 
 };
 
 /** A URL segment as a person wrote it — "%D7%97%D7%99%D7%A4%D7%94" is not a name. */
-function decodeSegment(seg: string): string {
+export function decodeSegment(seg: string): string {
   try {
     return decodeURIComponent(seg);
   } catch {

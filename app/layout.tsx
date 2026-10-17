@@ -39,6 +39,9 @@ export const metadata: Metadata = {
   },
   description: 'פורטל מחקר לשוק הנדל"ן בישראל — מחירי דירות לפי עיר, עסקאות אמת מרשות המסים, היצע וביקוש, היתרי בנייה ונתוני אוכלוסייה.',
   applicationName: 'קרנף אנליסט',
+  // The home page's own. Every other page sets its canonical through
+  // lib/seo.ts pageMeta — without that, Next hands this one down and the
+  // page declares itself a copy of the home page.
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -87,7 +90,7 @@ const ORG_JSONLD = {
 
 // Explicit (was relying on Next's default). Deliberately NO maximumScale —
 // pinch-zoom stays available; iOS focus-zoom is prevented by 16px mobile inputs.
-export const viewport: Viewport = { width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#4f46e5" };
 
 export default async function RootLayout({
   children,

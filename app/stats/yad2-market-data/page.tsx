@@ -1,8 +1,9 @@
 import { prisma } from "@/lib/db";
 import SortableTable, { type Yad2Row } from "./SortableTable";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: 'מצב שוק חי — לפי עיר | קרנף אנליסט' };
+export const metadata = pageMeta({ path: "/stats/yad2-market-data", title: "מצב שוק חי — לפי עיר" });
 
 function fmt(v: number | null | undefined): string {
   if (v === null || v === undefined) return "—";

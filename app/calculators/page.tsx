@@ -2,11 +2,9 @@ import Calculators from "@/components/Calculators";
 import FeedbackBanner from "@/components/FeedbackBanner";
 import { CREDIT_RULES } from "@/lib/credits";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: "מחשבונים | קרנף אנליסט",
-  description: "מחשבוני משכנתא, כדאיות השקעה, כדאיות שיפוץ וריבית דריבית — כלי תכנון מהירים לצד נתוני האמת.",
-};
+export const metadata = pageMeta({ path: "/calculators", title: "מחשבונים", description: "מחשבוני משכנתא, כדאיות השקעה, כדאיות שיפוץ וריבית דריבית — כלי תכנון מהירים לצד נתוני האמת." });
 
 export default function CalculatorsPage() {
   return (

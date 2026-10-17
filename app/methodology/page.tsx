@@ -3,8 +3,9 @@ import SourceBadge from "@/components/SourceBadge";
 import { RESIDENTIAL_TYPES } from "@/lib/methodologyFacts";
 import { getRuleNum } from "@/lib/systemRules";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: "מתודולוגיה — איך המספרים מחושבים | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/methodology", title: "מתודולוגיה — איך המספרים מחושבים", description: "מאיפה כל מספר מגיע, איך עסקאות מנוקות ומסווגות, ומה הרף למדגם מספיק." });
 export const dynamic = "force-dynamic";
 
 /** Public methodology page — the numbers here are imported FROM THE CODE. */

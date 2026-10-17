@@ -12,8 +12,9 @@ import { requireWorkspaceId } from "@/lib/auth";
 import { getRuleNum } from "@/lib/systemRules";
 import Icon from "@/components/Icon";
 import { fromToText } from "@/components/FromTo";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: 'ניהול והשוואת עסקאות | קרנף אנליסט' };
+export const metadata = pageMeta({ path: "/deals", title: "ניהול והשוואת עסקאות", index: false });
 export const dynamic = "force-dynamic";
 
 /** Summary card data for a tracked city — all from the independent repository. */

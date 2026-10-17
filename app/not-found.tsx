@@ -10,7 +10,9 @@ import Icon from "@/components/Icon";
  * no way back. The recovery links matter more than the apology: someone who
  * lands here was looking for a city, so hand them the search.
  */
-export const metadata = { title: "הדף לא נמצא · קרנף אנליסט" };
+// the layout's title template adds the brand; its robots:index must not
+// follow a 404 into the page
+export const metadata = { title: "הדף לא נמצא", robots: { index: false, follow: false } };
 
 export default function NotFound() {
   return (

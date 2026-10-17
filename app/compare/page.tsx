@@ -5,15 +5,14 @@ import {
   investorProvenance,
 } from "@/lib/investorMetrics";
 import { refYear } from "@/lib/refYear";
+import { pageMeta } from "@/lib/seo";
 import CompareView, {
   type CompareCityRow,
   type CompareMetrics,
   type CompareSeriesPoint,
 } from "@/components/CompareView";
 
-export const metadata = {
-  title: 'השוואת ערים | קרנף אנליסט',
-};
+export const metadata = pageMeta({ path: "/compare", title: "השוואת ערים", description: "השוואה של עד ארבע ערים זו מול זו: מחירים, מגמות, היצע ואוכלוסייה." });
 
 // searchParams drive the initial selection — must render per-request.
 export const dynamic = "force-dynamic";

@@ -4,8 +4,9 @@ import crypto from "crypto";
 import { ADMIN_COOKIE, adminToken, adminConfigured } from "@/lib/adminAuth";
 import { rateLimit, rateLimitReset, clientIp } from "@/lib/rateLimit";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: "כניסת מנהל | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/admin/login", title: "כניסת מנהל", index: false });
 export const dynamic = "force-dynamic";
 
 /** Constant-time compare that tolerates a length mismatch instead of throwing. */

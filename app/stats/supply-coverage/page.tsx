@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { computeAllCityGaps, describeSupplySource } from "@/lib/gap-analysis";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: 'כיסוי נתוני היצע ופער ביקוש לכל הערים | קרנף אנליסט' };
+export const metadata = pageMeta({ path: "/stats/supply-coverage", title: "כיסוי נתוני היצע ופער ביקוש לכל הערים" });
 
 function fmt(v: number | null | undefined): string {
   if (v === null || v === undefined) return "—";

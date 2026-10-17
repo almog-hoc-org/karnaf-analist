@@ -26,6 +26,17 @@ export const CITY_ALIASES: Record<string, string> = {
   // merged into מודיעין in 2003; CBS lists only the combined settlement
   "מכבים רעות": "מודיעין-מכבים-רעות",
   "מכבים-רעות": "מודיעין-מכבים-רעות",
+  // the short forms people type into a URL or the search box (spelling
+  // variants — קרית/קריית, הרצלייה — are folded by normalizeCity, not listed)
+  "תל אביב": "תל אביב-יפו",
+  "תל-אביב": "תל אביב-יפו",
+  "תל אביב יפו": "תל אביב-יפו",
+  "ת\"א": "תל אביב-יפו",
+  "מודיעין": "מודיעין-מכבים-רעות",
+  "ראשל\"צ": "ראשון לציון",
+  "ב\"ש": "באר שבע",
+  "פ\"ת": "פתח תקווה",
+  "כפ\"ס": "כפר סבא",
 };
 
 /** Resolve an alias to its canonical name (identity for everything else). */

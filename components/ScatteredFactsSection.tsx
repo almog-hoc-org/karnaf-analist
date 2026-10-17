@@ -83,12 +83,22 @@ function FactCard({ fact }: { fact: CityFact }) {
   );
 }
 
+/** The extractor's metric keys, in Hebrew. An unlisted key is shown with its underscores as spaces, never raw. */
+const METRIC_LABELS: Record<string, string> = {
+  construction_starts_annual: "התחלות בנייה שנתיות",
+  construction_completions_annual: "גמר בנייה שנתי",
+  building_permits_annual: "היתרי בנייה שנתיים",
+  population: "אוכלוסייה",
+  avg_price_sqm: "מחיר ממוצע למ״ר",
+};
+export const metricLabel = (key: string) => METRIC_LABELS[key] ?? key.replace(/_/g, " ");
+
 function TimeSeriesCard({ series }: { series: CityTimeSeries }) {
   return (
     <div className="glass-card p-5">
       <div className="flex flex-wrap gap-y-1 items-start justify-between mb-3">
         <div className="min-w-0">
-          <h3 className="text-sm font-bold text-slate-900">{series.metric}</h3>
+          <h3 className="text-sm font-bold text-slate-900">{metricLabel(series.metric)}</h3>
           <p className="text-2xs text-slate-500 mt-0.5">יחידה: {series.unit}</p>
         </div>
         <a

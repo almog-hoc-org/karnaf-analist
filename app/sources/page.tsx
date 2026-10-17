@@ -10,11 +10,9 @@ import {
 } from "@/lib/sources";
 import { COVERAGE_MATRIX, SOURCE_DOCUMENTS } from "@/lib/source-documents";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: 'מקורות מידע | קרנף אנליסט',
-  description: 'רשימה מלאה של כל המקורות, הדוחות והממשקים בהם השתמשנו',
-};
+export const metadata = pageMeta({ path: "/sources", title: "מקורות מידע", description: "רשימה מלאה של כל המקורות, הדוחות והממשקים בהם השתמשנו" });
 
 // Unified brand accent — every category renders the same indigo chrome.
 const INDIGO_ACCENT = {

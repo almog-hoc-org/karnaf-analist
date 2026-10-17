@@ -6,8 +6,9 @@ import { appDb } from "@/lib/appDb";
 import { balance, ledgerFor, unlockedCities, referralCodeFor, ensureStarterCredits, CREDIT_RULES, isUnlimited } from "@/lib/credits";
 import { shareUrlFor, whatsappShareUrl } from "@/lib/share";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: "החשבון שלי | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/account", title: "החשבון שלי", index: false });
 export const dynamic = "force-dynamic";
 
 const REASON_LABELS: Record<string, string> = {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { UserUsageRow, UserUsageDetail } from "@/lib/events";
+import { decodeSegment } from "@/lib/pageLabels";
 
 /**
  * Usage per registered user, with a per-user drill-down.
@@ -123,7 +124,7 @@ export default function AdminUserUsageTable({ rows, days }: { rows: UserUsageRow
                                   {d.pages.map((p) => (
                                     <tr key={p.path} className="border-t border-slate-200/70">
                                       <td className="max-w-[240px] truncate py-1 text-right text-slate-700" dir="ltr" title={p.path}>
-                                        {decodeURIComponent(p.path)}
+                                        {decodeSegment(p.path)}
                                       </td>
                                       <td className="py-1 text-left tabular-nums text-slate-500">{p.views}</td>
                                       <td className="py-1 text-left tabular-nums text-slate-600">{humanSeconds(p.avgSeconds)}</td>

@@ -57,6 +57,7 @@ function loadRecentFeedback(): AdminFeedbackRow[] {
 }
 
 import { cacheStats } from "@/lib/dealsCache";
+import { pageMeta } from "@/lib/seo";
 
 /** Sources that can only refresh from the operator's Israeli machine (geo-block / reCAPTCHA). */
 const QUARTERLY_SOURCES = new Set(["govmap", "prefetch-deals", "nadlan"]);
@@ -96,7 +97,7 @@ function loadCleaningVerification(): CleaningVerification | null {
   catch { return null; }
 }
 
-export const metadata = { title: "ניהול דאטה | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/admin", title: "ניהול דאטה", index: false });
 export const dynamic = "force-dynamic";
 
 

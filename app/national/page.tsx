@@ -16,8 +16,9 @@ import Icon from "@/components/Icon";
 import StartsByCityTable from "@/components/national/StartsByCityTable";
 import { getStartsByCity } from "@/lib/cbsStartsData";
 import { CBS_STARTS_SUBJECT_URL } from "@/lib/cbsStarts";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata = { title: 'דשבורד לאומי | קרנף אנליסט' };
+export const metadata = pageMeta({ path: "/national", title: "דשבורד לאומי", description: "בנייה ארצית: היתרים, התחלות וגמר בנייה לפי שנה, התחלות בנייה לפי ערים ויעדי הוועדה לפתרון משבר הדיור." });
 
 function fmtK(n: number | null | undefined): string {
   if (n === null || n === undefined) return "—";
@@ -103,7 +104,7 @@ export default async function NationalDashboard() {
             🇮🇱
           </div>
           <div className="flex-1">
-            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">National Overview</p>
+            <p className="text-2xs font-bold uppercase tracking-wider mb-1 text-indigo-700">מבט ארצי</p>
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight flex items-center gap-3 flex-wrap">
               שוק הדיור בישראל — מבט לאומי <SourceBadge kind="external" name='למ"ס + משרד האוצר' />
             </h1>

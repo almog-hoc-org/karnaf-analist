@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import * as XLSX from "xlsx";
 import { safeNext } from "@/lib/safeRedirect";
+import { matchCityName } from "@/lib/cityLookup";
+import { metricLabel } from "@/components/ScatteredFactsSection";
 import { buildWhere } from "@/app/api/admin/deals/route";
 import { buildCityYearTable, cleanCityName, docxTables, docxXmlTables, findCityTable, isStartsReleaseTitle, latestVintage, NATIONAL_TOTAL, parseCount, parsePeriodLabel, parseStartsTable, type StartsRow } from "@/lib/cbsStarts";
 import { pickReferenceYear } from "@/lib/referenceYear";
@@ -2523,5 +2525,31 @@ describe("admin bulk mutation guard (buildWhere)", () => {
     expect(w.conds).toBe(3);
     expect(w.where).toBe("1=1 AND city_name = ? AND deal_year >= ? AND is_secondhand = 1");
     expect(w.params).toEqual(["חולון", 2020]);
+  });
+});
+
+describe("matchCityName — a typed city name to the one we hold", () => {
+  const known = ["תל אביב-יפו", "קריית גת", "פתח תקווה", "הרצליה", "מודיעין-מכבים-רעות", "באר שבע"];
+  it("takes an exact name, an alias, or a spelling variant", () => {
+    expect(matchCityName("תל אביב-יפו", known)).toBe("תל אביב-יפו");
+    expect(matchCityName("תל אביב", known)).toBe("תל אביב-יפו");
+    expect(matchCityName('ת"א', known)).toBe("תל אביב-יפו");
+    expect(matchCityName("קרית גת", known)).toBe("קריית גת");
+    expect(matchCityName("פתח תקוה", known)).toBe("פתח תקווה");
+    expect(matchCityName("הרצלייה", known)).toBe("הרצליה");
+    expect(matchCityName("מכבים רעות", known)).toBe("מודיעין-מכבים-רעות");
+    expect(matchCityName("תל אביב -יפו", known)).toBe("תל אביב-יפו");
+  });
+  it("is null for what is not a city of ours", () => {
+    expect(matchCityName("xyz", known)).toBeNull();
+    expect(matchCityName("", known)).toBeNull();
+    expect(matchCityName("\u0000", known)).toBeNull();
+  });
+});
+
+describe("scattered-facts metric labels", () => {
+  it("shows Hebrew for the keys the extractor emits and never a raw key", () => {
+    expect(metricLabel("construction_starts_annual")).toBe("התחלות בנייה שנתיות");
+    expect(metricLabel("some_new_metric")).toBe("some new metric");
   });
 });

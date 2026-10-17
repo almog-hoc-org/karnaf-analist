@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BUSINESS } from "@/lib/legal";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
 /**
  * Accessibility statement.
@@ -15,7 +16,7 @@ import Icon from "@/components/Icon";
  * provided, and the areas known to still need work. Naming the gaps is what
  * makes the rest of the page credible.
  */
-export const metadata = { title: "הצהרת נגישות | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/accessibility", title: "הצהרת נגישות" });
 
 const UPDATED = "3 באוגוסט 2026";
 

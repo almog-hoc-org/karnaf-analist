@@ -14,6 +14,7 @@ interface PageProps {
 }
 
 import { RANKING_TITLES, type RankingType } from "@/lib/rankingMeta";
+import { pageMeta } from "@/lib/seo";
 
 // ── Ranking configurations ─────────────────────────────────────────
 // Titles live in lib/rankingMeta so the admin usage dashboard can label a
@@ -165,7 +166,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const cfg = RANKING_CONFIG[params.type as RankingType];
-  return { title: cfg ? `${cfg.title} | קרנף אנליסט` : "דירוג" };
+  if (!cfg) return { title: "דירוג", robots: { index: false, follow: false } };
+  return pageMeta({ path: `/rankings/${encodeURIComponent(params.type)}`, title: cfg.title });
 }
 
 export default async function RankingPage({ params }: PageProps) {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BUSINESS, RETENTION_HE } from "@/lib/legal";
 import Icon from "@/components/Icon";
+import { pageMeta } from "@/lib/seo";
 
 /**
  * Privacy notice. Reviewed and approved by counsel (August 2026).
@@ -14,7 +15,7 @@ import Icon from "@/components/Icon";
  * the same constants scripts/prune-retention.ts enforces nightly, so the stated
  * policy and the actual database cannot drift apart.
  */
-export const metadata = { title: "מדיניות פרטיות | קרנף אנליסט" };
+export const metadata = pageMeta({ path: "/privacy", title: "מדיניות פרטיות" });
 
 const UPDATED = "3 באוגוסט 2026";
 

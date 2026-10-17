@@ -120,7 +120,7 @@ export default function PopulationBySource({
         <div className="px-4 py-3 border-t border-slate-100 bg-slate-50/50 text-2xs text-slate-600 leading-relaxed">
           <strong className="text-slate-800">איך לקרוא את הטבלה:</strong> כל שנה מציגה את כל האומדנים הרשמיים שמצאנו עבור{" "}
           <strong>{cityName}</strong>. כשהמקורות מסכימים — &quot;אחיד&quot;. כשהם חלוקים — מוצגים גם הפער המוחלט וגם
-          ה-% (max-min relative to min). העמודה הימנית מציגה את המומלץ ביותר לפי דירוג איכות המקור:
+          ה-% (הפער בין הגבוה לנמוך, ביחס לנמוך). העמודה הימנית מציגה את המומלץ ביותר לפי דירוג איכות המקור:
           מפקד 2022 ← מרשם 2025 ← היתרים 2024 ← תחזיות.
         </div>
       </div>
