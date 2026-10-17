@@ -1,5 +1,6 @@
 import { prisma } from "./db";
 import { cachedMarket } from "./cache";
+import { isMissingTable } from "./db";
 
 /**
  * The three headline numbers on the home page: usable deals, deals in the last
@@ -31,9 +32,9 @@ async function loadDealTotalsUncached(): Promise<DealTotals> {
       deals12m: Number(recent?.n ?? 0),
       maxDealDate: totals?.maxd ?? null,
     };
-  } catch {
-    // table missing (fresh DB) — the tiles render "—" rather than crashing
-    return { totalDeals: 0, deals12m: 0, maxDealDate: null };
+  } catch (e) {
+    if (isMissingTable(e)) return { totalDeals: 0, deals12m: 0, maxDealDate: null }; // fresh DB — the tiles render "—"
+    throw e;
   }
 }
 

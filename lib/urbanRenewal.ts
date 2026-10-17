@@ -9,6 +9,7 @@
  */
 import { prisma } from "./db";
 import { cachedMap } from "./cache";
+import { isMissingTable } from "./db";
 
 export interface UrbanRenewalProject {
   siteName: string | null;
@@ -48,9 +49,9 @@ async function loadAllUncached(): Promise<Map<string, UrbanRenewalProject[]>> {
       map.set(r.city_name, list);
     }
     return map;
-  } catch {
-    // table not created yet — collector hasn't run since this shipped
-    return new Map();
+  } catch (e) {
+    if (isMissingTable(e)) return new Map(); // collector hasn't run since this shipped
+    throw e;
   }
 }
 

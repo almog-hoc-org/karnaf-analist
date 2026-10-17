@@ -343,17 +343,20 @@ export default async function CityPage({ params, searchParams }: PageProps) {
     loadCityCleaningCounts(cityName),
     cityClassificationRate(cityName),
   ]);
-  const urbanRenewalProjects = await cityUrbanRenewalProjects(cityName);
-  const subsidizedYears = await citySubsidizedYears(cityName);
+  const [urbanRenewalProjects, subsidizedYears, neighborhoods, mapGeometry] = await Promise.all([
+    cityUrbanRenewalProjects(cityName),
+    citySubsidizedYears(cityName),
   // Second-hand is the right lens for an intra-city comparison: new-build
   // supply is concentrated in whichever neighbourhood happens to be under
   // construction, so an "all deals" table would rank the building site first.
-  const neighborhoods = await neighborhoodSummary(cityName, { scope: "secondhand", years: 3 });
+    neighborhoodSummary(cityName, { scope: "secondhand", years: 3 }),
+    loadCityMapGeometry(cityName),
+  ]);
   // Does this city HAVE a drawable map? Only the answer travels with the page —
   // the geometry itself is fetched by the browser, and only on a screen wide
   // enough to draw it. False for every city the collector has not run on, which
   // is all of them outside the pilot, and is a normal state and not a failure.
-  const hasCityMap = buildCityMap(await loadCityMapGeometry(cityName), neighborhoods.rows) !== null;
+  const hasCityMap = buildCityMap(mapGeometry, neighborhoods.rows) !== null;
 
   if (!city) notFound(); // resolved above; a race with a nightly rename is the only way here
 

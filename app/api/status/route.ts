@@ -29,7 +29,8 @@
  *               quarterly refresh. Operator reads it in the admin panel.
  *   unhealthy — 503, ok:false, `problems` non-empty: core failure, page someone.
  */
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
 import { prisma } from "@/lib/db";
 import { appDb } from "@/lib/appDb";
 import { refYear } from "@/lib/refYear";
@@ -112,7 +113,11 @@ function hoursSince(iso: string | null | undefined): number | null {
   return (Date.now() - t) / 3_600_000;
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  // Public, and it COUNTs the deal table and stats the deals cache on every
+  // call: a budget that an uptime poller never meets and a loop does.
+  const rl = rateLimit(`status:${clientIp(req.headers)}`, 30, 60_000);
+  if (!rl.ok) return NextResponse.json({ ok: false, error: "rate limited" }, { status: 429, headers: { "Retry-After": String(rl.retryAfter) } });
   // problems ⇒ unhealthy (503): the site or its core data is actually broken.
   // warnings ⇒ degraded (200): worth an operator's glance, users unaffected.
   const problems: string[] = [];

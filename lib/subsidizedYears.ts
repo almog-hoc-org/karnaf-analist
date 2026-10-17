@@ -1,5 +1,6 @@
 import { prisma } from "./db";
 import { cachedMap } from "./cache";
+import { isMissingTable } from "./db";
 
 /**
  * City-years whose NEW-build price level is an administered price
@@ -47,8 +48,9 @@ async function loadAllUncached(): Promise<Map<string, SubsidizedCell[]>> {
       map.set(r.city_name, list);
     }
     return map;
-  } catch {
-    return new Map(); // stage has not run yet
+  } catch (e) {
+    if (isMissingTable(e)) return new Map(); // stage has not run yet
+    throw e;
   }
 }
 

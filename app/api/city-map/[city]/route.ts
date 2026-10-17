@@ -1,6 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { loadCityMapGeometry, buildCityMap } from "@/lib/cityMap";
 import { neighborhoodSummary } from "@/lib/neighborhoods";
+import { rateLimit, clientIp } from "@/lib/rateLimit";
+import { resolveCityName } from "@/lib/cityLookup";
 
 /**
  * The neighbourhood map's geometry, fetched by the browser only when there is a
@@ -18,8 +20,15 @@ import { neighborhoodSummary } from "@/lib/neighborhoods";
  */
 export const dynamic = "force-dynamic";
 
-export async function GET(_req: Request, { params }: { params: { city: string } }) {
-  const city = decodeURIComponent(params.city);
+export async function GET(req: NextRequest, { params }: { params: { city: string } }) {
+  // cheap per hit after the first, but the city string is a cache key: a
+  // budget and a known-city check keep the key space finite
+  const rl = rateLimit(`city-map:${clientIp(req.headers)}`, 60, 60_000);
+  if (!rl.ok) return NextResponse.json({ error: "יותר מדי בקשות — נסה שוב בעוד רגע" }, { status: 429, headers: { "Retry-After": String(rl.retryAfter) } });
+  let requested: string;
+  try { requested = decodeURIComponent(params.city); } catch { return NextResponse.json({ map: null }, { status: 400 }); }
+  const city = await resolveCityName(requested);
+  if (!city) return NextResponse.json({ map: null }, { status: 404 });
   const [geometry, summary] = await Promise.all([
     loadCityMapGeometry(city),
     neighborhoodSummary(city, { scope: "secondhand", years: 3 }),

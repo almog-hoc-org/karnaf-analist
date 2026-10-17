@@ -4,6 +4,19 @@ import { SITE_ORIGIN } from "@/lib/siteOrigin";
 import { ALIAS_NAMES } from "@/lib/cityAliases";
 import { SOURCES } from "@/lib/sources";
 import { getRuleNum } from "@/lib/systemRules";
+import { cached, TAGS } from "@/lib/cache";
+import { appDb } from "@/lib/appDb";
+
+/** The last successful pipeline run's end, from app.db; null before the first. */
+function lastPipelineSuccess(): Date | null {
+  try {
+    const r = appDb().prepare("SELECT finished_at f FROM pipeline_runs WHERE status = 'ok' ORDER BY id DESC LIMIT 1").get() as { f: string | null } | undefined;
+    const d = r?.f ? new Date(r.f) : null;
+    return d && !isNaN(d.getTime()) ? d : null;
+  } catch {
+    return null;
+  }
+}
 
 /**
  * The site has ~200 real URLs — 168 city pages, six rankings, six stats pages,
@@ -20,8 +33,13 @@ import { getRuleNum } from "@/lib/systemRules";
 // (the CI gate creates one just to compile), so a prerendered sitemap listed
 // zero cities — 48 URLs instead of ~200, verified in production. It has to be
 // generated per request, against the real data, and cached for a day.
+// Still dynamic (see above) — but the queries behind it run once a day, through
+// the market cache, instead of on every crawl: four table scans and a 10MB
+// document per fetch, for a list that changes nightly at most.
 export const dynamic = "force-dynamic";
-export const revalidate = 86_400; // a day; the city list moves once a quarter at most
+
+/** Sitemaps over 50,000 URLs are rejected whole; the long tail is capped to stay under it. */
+const MAX_URLS = 49_000;
 
 const STATIC_PATHS: Array<[string, number, MetadataRoute.Sitemap[number]["changeFrequency"]]> = [
   ["/", 1.0, "daily"],
@@ -49,8 +67,16 @@ const STAT_METRICS = [
   "apartments-needed", "construction-cost-index", "national-hpi",
 ];
 
+const loadEntries = cached(buildEntries, ["sitemap-entries"], TAGS.market, 86_400);
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
+  return loadEntries();
+}
+
+async function buildEntries(): Promise<MetadataRoute.Sitemap> {
+  // lastmod = when the data last changed (the pipeline's last publish), not
+  // "now": a lastmod that is always the fetch time is one crawlers learn to ignore
+  const now = lastPipelineSuccess() ?? new Date();
 
   let cityNames: string[] = [];
   let hoodPairs: Array<{ city_name: string; neighborhood: string }> = [];
@@ -92,6 +118,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       getRuleNum("address_page_min_deals")
     );
   } catch { /* index not built */ }
+  // the fixed and the city-level URLs always fit; streets and buildings take
+  // what is left, streets first (more deals per page)
+  const fixed = STATIC_PATHS.length + cityNames.length + hoodPairs.length + RANKING_TYPES.length + STAT_METRICS.length + SOURCES.length;
+  const room = Math.max(0, MAX_URLS - fixed);
+  streetRows = streetRows.slice(0, room);
+  buildingRows = buildingRows.slice(0, Math.max(0, room - streetRows.length));
 
   return [
     ...STATIC_PATHS.map(([path, priority, changeFrequency]) => ({

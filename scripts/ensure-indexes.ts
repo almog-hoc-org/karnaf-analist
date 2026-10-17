@@ -50,6 +50,16 @@ const INDEXES: Array<{ name: string; sql: string; why: string }> = [
     why: 'עסקאות של שכונה בודדת (פאנל השכונה במפה)',
   },
   {
+    name: "idx_nadlan_tx_city_date",
+    sql: "CREATE INDEX IF NOT EXISTS idx_nadlan_tx_city_date ON nadlan_transactions(city_name, deal_date)",
+    why: 'מגירת העסקאות של עיר, ממוינת לפי תאריך (api/city-transactions) — בלי זה כל עמוד במגירה ממיין את כל העיר',
+  },
+  {
+    name: "idx_nadlan_tx_city_street",
+    sql: "CREATE INDEX IF NOT EXISTS idx_nadlan_tx_city_street ON nadlan_transactions(city_name, street)",
+    why: 'עסקאות של רחוב או בניין (עמודי רחוב וכתובת, נעצי המפה)',
+  },
+  {
     name: "idx_stats_bucket_scope_year",
     sql: "CREATE INDEX IF NOT EXISTS idx_stats_bucket_scope_year ON nadlan_year_room_stats(room_bucket, scope, year)",
     why: 'סריקות חוצות-ערים (טבלת ערים, השוואה, דירוגים)',
@@ -64,6 +74,13 @@ function main() {
       (db.prepare("SELECT name FROM sqlite_master WHERE type='index'").all() as Array<{ name: string }>)
         .map((r) => r.name)
     );
+
+    // excluded is NULL on rows older than the flag; every hot query writes
+    // COALESCE(excluded,0)=0 for that reason, which no index can seek. With
+    // the NULLs gone a plain `excluded = 0` is correct and seekable. Cheap and
+    // idempotent (indexed column, zero rows once done).
+    const nulled = db.prepare("UPDATE nadlan_transactions SET excluded = 0 WHERE excluded IS NULL").run().changes;
+    if (nulled) console.log(`ensure-indexes: excluded NULL→0 על ${nulled.toLocaleString("he-IL")} שורות`);
 
     let created = 0;
     for (const ix of INDEXES) {

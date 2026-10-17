@@ -25,11 +25,20 @@ import { whatsappUrl } from "@/lib/brand";
 import Icon from "@/components/Icon";
 import OrderedSections from "@/components/OrderedSections";
 import { getSectionOrder } from "@/lib/sectionOrder";
+import { cachedMarket } from "@/lib/cache";
 
 function formatNumber(value: number | null): string {
   if (value === null) return "—";
   return value.toLocaleString("he-IL");
 }
+
+/** city × scope × year ₪/m² cells for the movers card — every city, every year since the history floor; nightly data, cached. */
+const loadGainRows = cachedMarket(
+  async () => prisma.$queryRawUnsafe<Array<{ city_name: string; scope: string; year: number; avg_sqm: number | null; median_sqm: number | null }>>(
+    `SELECT city_name, scope, year, avg_sqm, median_sqm FROM nadlan_year_room_stats
+     WHERE room_bucket='all' AND year >= ? AND n >= 10`, historyFromYear()),
+  ["home-gain-rows"],
+);
 
 export default async function HomePage() {
   // The home page did not know who was reading it. A returning user landed on
@@ -96,30 +105,34 @@ export default async function HomePage() {
       population_2026: true,
     },
   });
-  const sh3ForSearch = new Map((await loadSecondhandChanges(3)).map((c) => [c.city_name, c.pct]));
+  // one round trip for the independent loaders below — they were nine
+  // sequential awaits, and the page paid their sum
+  const [sh3Changes, rankEligible, marketInsights, dealTotals, subsidizedByCity, hotCities, txPricesForRank, gainRows] = await Promise.all([
+    loadSecondhandChanges(3),
+    loadRankingEligibleCities(),
+    computeMarketInsights().catch(() => []),
+    loadDealTotals(),
+    loadSubsidizedByCity(),
+    loadHotCities(3),
+    loadCityTransactionPrices(),
+    loadGainRows(),
+  ]);
+  const sh3ForSearch = new Map(sh3Changes.map((c) => [c.city_name, c.pct]));
   const allCities = allCitiesRaw.map((c) => ({ ...c, price_change_pct: sh3ForSearch.get(c.city_name) ?? null }));
 
   // ── Rankings ─────────────────────────────────────────────────────
   // Top movers = SECOND-HAND ONLY (user rule: overall averages are biased
   // upward the moment a new expensive neighborhood is built).
   // Normalization gate (user rule): rankings admit only cities with 10+ deals of EVERY type.
-  const rankEligible = await loadRankingEligibleCities();
-  const marketInsights = await computeMarketInsights().catch(() => []);
   const cbsSales = loadCbsSales();
   // reports the refresh engine discovered (fix #3: this file was written but never read)
   // Four, matching what the section renders — there is no point serialising
   // six more into the RSC payload for rows that are sliced off on arrival.
   const discoveredReports = loadDiscoveredReports(4);
-  const top3yGain = (await loadSecondhandChanges(3)).slice(0, 5);
+  const top3yGain = sh3Changes.slice(0, 5);
 
   // Compact per-city yearly series for the fully-filterable movers card:
   // city → scope → year → [avgSqm, medianSqm]; n≥10 cells only, 2015+.
-  const gainRows = await prisma.$queryRawUnsafe<
-    Array<{ city_name: string; scope: string; year: number; avg_sqm: number | null; median_sqm: number | null }>
-  >(
-    `SELECT city_name, scope, year, avg_sqm, median_sqm FROM nadlan_year_room_stats
-     WHERE room_bucket='all' AND year >= ${historyFromYear()} AND n >= 10`
-  );
   const gainSeries: Record<string, Record<string, Record<number, [number, number]>>> = {};
   for (const r of gainRows) {
     if (r.avg_sqm == null || r.median_sqm == null) continue;
@@ -142,15 +155,14 @@ export default async function HomePage() {
   // Two full scans of 1.35M rows that no index covers, once per render until
   // now — moved to lib/dealTotals.ts behind the market cache tag, so they are
   // recomputed when the pipeline says the data changed and not before.
-  const { totalDeals, deals12m, maxDealDate: dealsMaxDate } = await loadDealTotals();
-  const subsidizedByCity = await loadSubsidizedByCity();
+  const { totalDeals, deals12m, maxDealDate: dealsMaxDate } = dealTotals;
   const dealsUpdatedLabel = dealsMaxDate
     ? new Date(dealsMaxDate).toLocaleDateString("he-IL", { day: "numeric", month: "numeric", year: "2-digit" })
     : undefined;
 
   // National 3y KPI = median of the SECOND-HAND changes across cities
   // (already bounded + n≥10-gated inside loadSecondhandChanges).
-  const sh3all = (await loadSecondhandChanges(3)).map((c) => c.pct).sort((a, b) => a - b);
+  const sh3all = sh3Changes.map((c) => c.pct).sort((a, b) => a - b);
   const median3y = sh3all.length
     ? (sh3all[Math.floor((sh3all.length - 1) / 2)] + sh3all[Math.ceil((sh3all.length - 1) / 2)]) / 2
     : null;
@@ -168,10 +180,8 @@ export default async function HomePage() {
   // The three cards that now open the page. Loaded here rather than inside the
   // component so the section is server-rendered into the first paint — it is
   // the LCP element, and a client fetch would draw it after the fold is judged.
-  const hotCities = await loadHotCities(3);
 
   // Most-expensive = second-hand median ₪/m² from REAL transactions
-  const txPricesForRank = await loadCityTransactionPrices();
   const mostExpensiveTx = [...txPricesForRank.values()]
     .filter((p) => p.medianShSqm != null && rankEligible.has(p.cityName))
     .sort((a, b) => (b.medianShSqm ?? 0) - (a.medianShSqm ?? 0))

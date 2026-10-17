@@ -4,21 +4,17 @@ import { RESIDENTIAL_TYPES } from "@/lib/methodologyFacts";
 import { getRuleNum } from "@/lib/systemRules";
 import Icon from "@/components/Icon";
 import { pageMeta } from "@/lib/seo";
+import { cachedMarket } from "@/lib/cache";
 
 export const metadata = pageMeta({ path: "/methodology", title: "מתודולוגיה — איך המספרים מחושבים", description: "מאיפה כל מספר מגיע, איך עסקאות מנוקות ומסווגות, ומה הרף למדגם מספיק." });
 export const dynamic = "force-dynamic";
 
-/** Public methodology page — the numbers here are imported FROM THE CODE. */
-export default async function MethodologyPage() {
-  // live values from the admin rules — the page can never drift from reality
-  const SECONDHAND_MIN_AGE = getRuleNum("secondhand_min_age");
-  const MIN_N_PER_YEAR = getRuleNum("min_deals_per_year", 10);
-  const NB_MIN_DEALS = getRuleNum("neighborhood_min_deals", 8);
-  const RANKING_MIN_PER_SCOPE = getRuleNum("ranking_min_per_scope", 10);
-  const SANITY = {
-    MIN_AREA: getRuleNum("min_area", 20), MAX_AREA: getRuleNum("max_area", 500),
-    MIN_SQM: getRuleNum("min_sqm_price", 2000), MAX_SQM: getRuleNum("max_sqm_price", 200000),
-  };
+/**
+ * The five full-table scans below ran on EVERY request (3.5s to first byte,
+ * measured 12.10.2026) for numbers that change once a night. One cached
+ * loader; the market tag clears it when the pipeline publishes.
+ */
+const loadMethodologyCounts = cachedMarket(async (minNPerYear: number) => {
   const [totals] = await prisma.$queryRawUnsafe<Array<{ n: bigint; sh: bigint; nw: bigint; st: bigint; maxd: string | null }>>(
     `SELECT COUNT(*) n, SUM(is_secondhand) sh,
             SUM(CASE WHEN year_built IS NOT NULL AND is_secondhand=0 THEN 1 ELSE 0 END) nw,
@@ -66,7 +62,7 @@ export default async function MethodologyPage() {
             GROUP BY deal_year HAVING COUNT(*) >= ?)) covered
          FROM nadlan_transactions t1
         WHERE COALESCE(t1.excluded,0) = 0 AND t1.deal_year BETWEEN 2016 AND 2025
-        GROUP BY city_name)`, MIN_N_PER_YEAR
+        GROUP BY city_name)`, minNPerYear
   ).catch(() => [{ thin: BigInt(0), total: BigInt(0) }]);
   const thinCities = Number(thinCov?.thin ?? 0), coveredTotal = Number(thinCov?.total ?? 0);
 
@@ -74,6 +70,22 @@ export default async function MethodologyPage() {
     `SELECT COUNT(DISTINCT city_name) c FROM nadlan_year_room_stats WHERE scope='all_govmap'`
   ).catch(() => [{ c: BigInt(0) }]);
   const govCities = Number(govCov?.c ?? 0);
+  return { totals: { n, sh, nw, st, maxd: totals?.maxd ?? null }, runs, classified, nadlanN, unclassified, thinCities, coveredTotal, govCities };
+}, ["methodology-counts"]);
+
+/** Public methodology page — the numbers here are imported FROM THE CODE. */
+export default async function MethodologyPage() {
+  // live values from the admin rules — the page can never drift from reality
+  const SECONDHAND_MIN_AGE = getRuleNum("secondhand_min_age");
+  const MIN_N_PER_YEAR = getRuleNum("min_deals_per_year", 10);
+  const NB_MIN_DEALS = getRuleNum("neighborhood_min_deals", 8);
+  const RANKING_MIN_PER_SCOPE = getRuleNum("ranking_min_per_scope", 10);
+  const SANITY = {
+    MIN_AREA: getRuleNum("min_area", 20), MAX_AREA: getRuleNum("max_area", 500),
+    MIN_SQM: getRuleNum("min_sqm_price", 2000), MAX_SQM: getRuleNum("max_sqm_price", 200000),
+  };
+  const { totals, runs, classified, nadlanN, unclassified, thinCities, coveredTotal, govCities } = await loadMethodologyCounts(MIN_N_PER_YEAR);
+  const { n, sh, nw, st } = totals;
 
   const Section = ({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) => (
     <section className="glass-card mb-6 p-6">

@@ -19,6 +19,7 @@ import { normHoodKey } from "./hoodKey";
 import { getRuleNum } from "./systemRules";
 import type { NeighborhoodSummary } from "./neighborhoods";
 import type { BBox } from "./geo";
+import { isMissingTable } from "./db";
 
 export interface MapShape {
   neighborhood: string;
@@ -91,7 +92,7 @@ async function loadGeometryUncached(cityName: string): Promise<CityMapGeometry> 
       cx: Number(r.cx ?? 0),
       cy: Number(r.cy ?? 0),
     }));
-  } catch { /* collector has not run */ }
+  } catch (e) { if (!isMissingTable(e)) throw e; /* collector has not run */ }
   try {
     const rows = await prisma.$queryRawUnsafe<Array<{
       kind: string; rank: number; name: string | null; path_d: string; length: number | null;
@@ -106,7 +107,7 @@ async function loadGeometryUncached(cityName: string): Promise<CityMapGeometry> 
       path: r.path_d,
       length: Number(r.length ?? 0),
     }));
-  } catch { /* collector has not run */ }
+  } catch (e) { if (!isMissingTable(e)) throw e; /* collector has not run */ }
   let bbox: BBox | null = null;
   try {
     const rows = await prisma.$queryRawUnsafe<Array<{
@@ -116,7 +117,7 @@ async function loadGeometryUncached(cityName: string): Promise<CityMapGeometry> 
     if (m && m.min_lon != null && m.min_lat != null && m.max_lon != null && m.max_lat != null) {
       bbox = { minLon: Number(m.min_lon), minLat: Number(m.min_lat), maxLon: Number(m.max_lon), maxLat: Number(m.max_lat) };
     }
-  } catch { /* collector has not run */ }
+  } catch (e) { if (!isMissingTable(e)) throw e; /* collector has not run */ }
   return { shapes, lines, bbox };
 }
 
@@ -136,7 +137,7 @@ async function loadStreetsUncached(cityName: string): Promise<MapStreet[]> {
       kind: "road", rank: Number(r.rank), name: r.name, path: r.path_d, length: Number(r.length ?? 0),
       minx: Number(r.minx), miny: Number(r.miny), maxx: Number(r.maxx), maxy: Number(r.maxy),
     }));
-  } catch { return []; }
+  } catch (e) { if (isMissingTable(e)) return []; throw e; }
 }
 
 /** The whole city's local streets, cached; the route slices them per box. */

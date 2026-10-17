@@ -26,6 +26,7 @@ import { makeProjector, type BBox } from "./geo";
 import { addressKey, addressKeyString, normHouse, normStreet } from "./addressKey";
 import { loadCityMapGeometry } from "./cityMap";
 import type { DealScope } from "./neighborhoodDeals";
+import { isMissingTable } from "./db";
 
 export * from "./dealPinTypes";
 import {
@@ -62,7 +63,7 @@ async function loadGeocodes(cityName: string, streetNorms: string[]): Promise<Ma
         });
       }
     }
-  } catch { /* no address_geocodes yet — nothing is located, which is the honest state */ }
+  } catch (e) { if (!isMissingTable(e)) throw e; /* no address_geocodes yet — nothing is located, which is the honest state */ }
   return out;
 }
 
@@ -115,7 +116,7 @@ async function loadAreaDealPointsUncached(
       const house = houseRaw ? normHouse(houseRaw).primary : "";
       rows = all.filter((r) => normStreet(r.street) === key && (!house || normHouse(r.house_num).primary === house || normHouse(r.house_num).alts.includes(house)));
     }
-  } catch { return EMPTY; }
+  } catch (e) { if (isMissingTable(e)) return EMPTY; throw e; }
   rows = rows.map((r) => ({
     ...r, id: Number(r.id), deal_year: Number(r.deal_year),
     price_sqm: r.price_sqm == null ? null : Number(r.price_sqm),

@@ -10,6 +10,7 @@
  */
 import { prisma } from "./db";
 import { cachedMap } from "./cache";
+import { isMissingTable } from "./db";
 
 export interface CityClassificationRate {
   nadlanN: number;
@@ -27,9 +28,9 @@ async function loadClassificationRatesUncached(): Promise<Map<string, CityClassi
       classifiedN: Number(r.classified_n),
       rate: Number(r.rate),
     }]));
-  } catch {
-    // table not created yet (aggregation hasn't run since this shipped)
-    return new Map();
+  } catch (e) {
+    if (isMissingTable(e)) return new Map(); // aggregation hasn't run since this shipped
+    throw e;
   }
 }
 

@@ -2,6 +2,7 @@ import { prisma } from "./db";
 import { cachedMarket } from "./cache";
 import { getRuleNum } from "./systemRules";
 import { pickReferenceYear } from "./referenceYear";
+import { isMissingTable } from "./db";
 
 /**
  * Neighbourhood price levels, from `neighborhood_year_stats` (written by the
@@ -72,8 +73,9 @@ async function loadCellsUncached(
       avgPrice: r.avg_price === null ? null : Number(r.avg_price),
       n: Number(r.n),
     }));
-  } catch {
-    return []; // aggregation has not written the table yet
+  } catch (e) {
+    if (isMissingTable(e)) return []; // aggregation has not written the table yet
+    throw e;
   }
 }
 

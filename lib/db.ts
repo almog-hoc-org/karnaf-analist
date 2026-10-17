@@ -45,3 +45,16 @@ const globalForPrisma = globalThis as unknown as {
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+/**
+ * The ONE database error a read loader may answer with "empty": the table a
+ * collector or a pipeline stage creates has not been created yet. Everything
+ * else — SQLITE_BUSY after the busy timeout, a locked file, a disk error — is
+ * transient, and a loader that turns it into [] hands that [] to the cache
+ * for six hours ("no neighbourhoods", "no map") while the database was merely
+ * busy. A thrown error is not cached; the next request simply tries again.
+ */
+export function isMissingTable(e: unknown): boolean {
+  const msg = e instanceof Error ? e.message : String(e);
+  return /no such table/i.test(msg);
+}
