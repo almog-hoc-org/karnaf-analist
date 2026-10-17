@@ -38,6 +38,8 @@ async function main() {
   }
   const payload = JSON.parse(fs.readFileSync(filePath, "utf-8"));
   const rows: ScrapedRow[] = payload.cities ?? [];
+  const fetched = payload.fetchedAt ? new Date(payload.fetchedAt) : null;
+  const scrapedAt = fetched && !isNaN(fetched.getTime()) ? fetched : new Date();
 
   console.log(`📦 Importing ${rows.length} Yadata rows...`);
 
@@ -59,7 +61,9 @@ async function main() {
       avg_household_size: r.avg_household_size,
       market_gauge: r.market_gauge ?? null,
       compromise_index: r.compromise_index ?? null,
-      scraped_at: new Date(),
+      // the file's own date: a nightly re-import of the same file stamped it
+      // "today" every night, and the page showed a June scrape as fresh
+      scraped_at: scrapedAt,
     };
 
     const existing = await prisma.yad2_market_data.findUnique({

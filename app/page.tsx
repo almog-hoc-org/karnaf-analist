@@ -26,6 +26,7 @@ import Icon from "@/components/Icon";
 import OrderedSections from "@/components/OrderedSections";
 import { getSectionOrder } from "@/lib/sectionOrder";
 import { cachedMarket } from "@/lib/cache";
+import { refYear } from "@/lib/refYear";
 
 function formatNumber(value: number | null): string {
   if (value === null) return "—";
@@ -145,7 +146,7 @@ export default async function HomePage() {
   // year — but flag it, so the card can label it "חלקית" and never default to
   // it. (Operator request 8/2026: let the range reach 2026.)
   const currentYear = new Date().getFullYear();
-  const gainMaxYear = gainRows.reduce((m, r) => Math.max(m, Number(r.year)), 2025);
+  const gainMaxYear = gainRows.reduce((m, r) => Math.max(m, Number(r.year)), refYear());
   // The picker opens at the oldest year the stats actually carry (post
   // history-extension that reaches 1998) — not a hardcoded 2015.
   const gainMinYear = gainRows.reduce((m, r) => Math.min(m, Number(r.year)), 2015);
@@ -194,10 +195,10 @@ export default async function HomePage() {
     Promise.resolve([] as Array<{ city_name: string; price_change_pct: number | null }>),
     // Replaced the legacy "golden_pct" ranking (produced absurd values like
     // +1207% for tiny cities). The new ranking surfaces the cities with the
-    // highest absolute construction-starts in 2025 — a concrete fact.
+    // highest absolute construction-starts in the reference year — a concrete fact.
     prisma.construction_starts.findMany({
       where: {
-        year: 2025,
+        year: refYear(),
         starts: { gt: 0 },
         // Exclude the national aggregate row — we want cities only.
         NOT: { city_name: { in: ["ארצי", "סך הכל ארצי", "סך הכל"] } },
@@ -260,7 +261,7 @@ export default async function HomePage() {
     // NOTE: "עליית מחיר גבוהה ביותר" is now rendered by <PriceGainsRankingCard>
     // (a sibling of <RankingCard>) so it can host the 3y/5y toggle.
     {
-      title: "התחלות בנייה 2025 (לפי עיר)",
+      title: `התחלות בנייה ${refYear()} (לפי עיר)`,
       icon: "construction",
       detailHref: "/stats/national-construction",
       items: highestSurplus.map((c, i) => ({

@@ -1,4 +1,5 @@
 import type { CityGraphData } from "./nadlanTransactionSeries";
+import { refYear } from "./refYear";
 
 /**
  * How much of a city's decade we can actually show, and how loudly to say so.
@@ -33,9 +34,14 @@ import type { CityGraphData } from "./nadlanTransactionSeries";
  *  1998+): "is the recent decade complete" is a different question from "how
  *  far back does the archive go", and a city with perfect 1998-2008 coverage
  *  but nothing since is NOT well-covered. */
-export const COVERAGE_FROM = 2016;
-export const COVERAGE_TO = 2025;
-const SPAN = COVERAGE_TO - COVERAGE_FROM + 1;
+export const COVERAGE_SPAN = 10;
+/** The last full year of the decade — the reference year, which the operator moves each January. */
+export function coverageTo(): number {
+  try { return refYear(); } catch { return new Date().getFullYear() - 1; }
+}
+export function coverageFrom(): number {
+  return coverageTo() - COVERAGE_SPAN + 1;
+}
 
 export type CoverageLevel = "ok" | "partial" | "thin" | "sparse" | "none";
 
@@ -57,7 +63,8 @@ export interface Coverage {
  */
 export function assessCoverage(data: CityGraphData, minN: number): Coverage {
   const sh = data.nadlan.secondhand?.all ?? [];
-  const inWindow = (p: { year: number }) => p.year >= COVERAGE_FROM && p.year <= COVERAGE_TO;
+  const from = coverageFrom(), to = coverageTo(), SPAN = COVERAGE_SPAN;
+  const inWindow = (p: { year: number }) => p.year >= from && p.year <= to;
 
   const coveredYears = sh.filter((p) => inWindow(p) && p.n >= minN).length;
 

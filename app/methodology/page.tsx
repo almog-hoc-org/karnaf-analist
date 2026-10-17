@@ -5,6 +5,7 @@ import { getRuleNum } from "@/lib/systemRules";
 import Icon from "@/components/Icon";
 import { pageMeta } from "@/lib/seo";
 import { cachedMarket } from "@/lib/cache";
+import { coverageFrom, coverageTo } from "@/lib/coverage";
 
 export const metadata = pageMeta({ path: "/methodology", title: "מתודולוגיה — איך המספרים מחושבים", description: "מאיפה כל מספר מגיע, איך עסקאות מנוקות ומסווגות, ומה הרף למדגם מספיק." });
 export const dynamic = "force-dynamic";
@@ -14,7 +15,7 @@ export const dynamic = "force-dynamic";
  * measured 12.10.2026) for numbers that change once a night. One cached
  * loader; the market tag clears it when the pipeline publishes.
  */
-const loadMethodologyCounts = cachedMarket(async (minNPerYear: number) => {
+const loadMethodologyCounts = cachedMarket(async (minNPerYear: number, from: number, to: number) => {
   const [totals] = await prisma.$queryRawUnsafe<Array<{ n: bigint; sh: bigint; nw: bigint; st: bigint; maxd: string | null }>>(
     `SELECT COUNT(*) n, SUM(is_secondhand) sh,
             SUM(CASE WHEN year_built IS NOT NULL AND is_secondhand=0 THEN 1 ELSE 0 END) nw,
@@ -58,11 +59,11 @@ const loadMethodologyCounts = cachedMarket(async (minNPerYear: number) => {
          SELECT COUNT(*) FROM (
            SELECT deal_year FROM nadlan_transactions t2
             WHERE t2.city_name = t1.city_name AND t2.is_secondhand = 1
-              AND COALESCE(t2.excluded,0) = 0 AND t2.deal_year BETWEEN 2016 AND 2025
+              AND COALESCE(t2.excluded,0) = 0 AND t2.deal_year BETWEEN ? AND ?
             GROUP BY deal_year HAVING COUNT(*) >= ?)) covered
          FROM nadlan_transactions t1
-        WHERE COALESCE(t1.excluded,0) = 0 AND t1.deal_year BETWEEN 2016 AND 2025
-        GROUP BY city_name)`, minNPerYear
+        WHERE COALESCE(t1.excluded,0) = 0 AND t1.deal_year BETWEEN ? AND ?
+        GROUP BY city_name)`, from, to, minNPerYear, from, to
   ).catch(() => [{ thin: BigInt(0), total: BigInt(0) }]);
   const thinCities = Number(thinCov?.thin ?? 0), coveredTotal = Number(thinCov?.total ?? 0);
 
@@ -84,7 +85,7 @@ export default async function MethodologyPage() {
     MIN_AREA: getRuleNum("min_area", 20), MAX_AREA: getRuleNum("max_area", 500),
     MIN_SQM: getRuleNum("min_sqm_price", 2000), MAX_SQM: getRuleNum("max_sqm_price", 200000),
   };
-  const { totals, runs, classified, nadlanN, unclassified, thinCities, coveredTotal, govCities } = await loadMethodologyCounts(MIN_N_PER_YEAR);
+  const { totals, runs, classified, nadlanN, unclassified, thinCities, coveredTotal, govCities } = await loadMethodologyCounts(MIN_N_PER_YEAR, coverageFrom(), coverageTo());
   const { n, sh, nw, st } = totals;
 
   const Section = ({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) => (

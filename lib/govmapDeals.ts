@@ -26,7 +26,15 @@ export const RING_OFFSETS_M = [0, 2000, 4000, 6000];
 // 45 polygons dropped whole neighbourhoods in big cities (TLV kept only 36% of
 // deals) — 120 covers the full polygon list almost everywhere.
 export const MAX_POLYGONS = 120;
-export const GOVMAP_END_DATE = "2026-12";
+/**
+ * The end of the fetch window: the month after the current one, so the
+ * running month is inside it. This was the constant "2026-12" — every govmap
+ * collector would have stopped asking for new deals in January 2027.
+ */
+export function govmapEndDate(now: Date = new Date()): string {
+  const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+}
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -56,7 +64,7 @@ export function isResidentialApartment(nature: string | null | undefined): boole
  */
 export function govmapWindows(
   start: string,
-  end: string = GOVMAP_END_DATE,
+  end: string = govmapEndDate(),
   sliceMarks: string[] = ["2020-01", "2023-06"]
 ): ReadonlyArray<readonly [string, string]> {
   const marks = [start, ...sliceMarks.filter((m) => m > start && m < end), end];

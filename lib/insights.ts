@@ -8,6 +8,7 @@ import { prisma } from "./db";
 import { computeCityGap, describeSupplySource } from "./gap-analysis";
 import { cachedReference } from "./cache";
 import { nationalPersonsPerDwelling, dwellingsFor, dwellingRank } from "./dwellings";
+import { refYear } from "./refYear";
 
 export interface CityInsights {
   priceChange: string | null;
@@ -104,7 +105,7 @@ export async function getCityInsights(cityName: string): Promise<CityInsights> {
   // from the old Excel (a mixed measure) and only existed for ~36 cities.
   let supplyBalance: string | null = null;
   try {
-    const gap = await computeCityGap(cityName, { windowStart: 2020, windowEnd: 2024 });
+    const gap = await computeCityGap(cityName, { windowStart: refYear() - 5, windowEnd: refYear() - 1 });
     if (gap && gap.totals.demand !== null && gap.totals.chosenSupply !== null && gap.totals.demand !== 0) {
       const srcHe = describeSupplySource(gap.totals.chosenSource).he;
       const demandAbs = Math.abs(gap.totals.demand);

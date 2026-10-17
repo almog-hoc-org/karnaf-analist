@@ -35,6 +35,7 @@ import path from "path";
 import { getRuleNum, getRuleBool } from "../lib/systemRules";
 import { ensureAuditLog } from "../lib/auditLog";
 import { historyFromYear } from "../lib/historyWindow";
+import { sameSale, maxWindowDays } from "../lib/dupeRules";
 
 // Window comes from the shared history floor (lib/historyWindow) — every
 // stage must process the SAME range or later stages aggregate rows earlier
@@ -105,13 +106,8 @@ function main() {
 
   const exact = priceTol === 0 && areaTol === 0;
   let cappedScans = 0;
-  /** same sale? (the date bound is enforced by the sweep, not here) */
-  const compatible = (a: Row, b: Row) =>
-    Math.abs(b.area - a.area) <= areaTol &&
-    Math.abs(b.price - a.price) <= priceTol &&
-    (a.rooms ?? -1) === (b.rooms ?? -1) &&
-    // build-year: equal, or unknown on one side (the govmap↔nadlan case)
-    !(a.year_built != null && b.year_built != null && a.year_built !== b.year_built);
+  const tol = { priceTol, areaTol, windowDays };
+  const lookahead = maxWindowDays(tol);
 
   // 3b. How many of a cluster's rows are plausible SEPARATE sales?
   //     · different ADDRESSES  → different buildings → all of them are real, keep the cluster whole.
@@ -210,7 +206,10 @@ function main() {
     //    over the whole city, capped so a wide admin value can't hang the run.
     const blocks = new Map<string, Row[]>();
     for (const r of rows) {
-      const key = exact ? `${r.price}|${r.area}|${r.rooms ?? "?"}` : "*";
+      // price and rooms, not the area: the same-address rule (lib/dupeRules)
+      // admits a small area difference, and a block keyed on the area would
+      // never show it the pair
+      const key = exact ? `${r.price}|${r.rooms ?? "?"}` : "*";
       const a = blocks.get(key);
       if (a) a.push(r); else blocks.set(key, [r]);
     }
@@ -231,9 +230,9 @@ function main() {
       let linked = false;
       for (let i = 0; i < n; i++) {
         let seen = 0;
-        for (let j = i + 1; j < n && days[j] - days[i] <= windowDays; j++) {
+        for (let j = i + 1; j < n && days[j] - days[i] <= lookahead; j++) {
           if (++seen > MAX_LOOKAHEAD) { cappedScans++; break; }
-          if (!compatible(list[i], list[j])) continue;
+          if (!sameSale(list[i], list[j], days[j] - days[i], tol)) continue;
           union(i, j);
           linked = true;
         }

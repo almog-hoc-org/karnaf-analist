@@ -2,6 +2,7 @@ import Link from "next/link";
 import { computeAllCityGaps, describeSupplySource } from "@/lib/gap-analysis";
 import Icon from "@/components/Icon";
 import { pageMeta } from "@/lib/seo";
+import { refYear } from "@/lib/refYear";
 
 export const metadata = pageMeta({ path: "/stats/supply-coverage", title: "כיסוי נתוני היצע ופער ביקוש לכל הערים" });
 
@@ -17,7 +18,9 @@ function fmtPct(v: number | null | undefined): string {
 }
 
 export default async function SupplyCoveragePage() {
-  const gaps = await computeAllCityGaps({ windowStart: 2020, windowEnd: 2024 });
+  // the five full years before the reference year — permits lag a year
+  const windowStart = refYear() - 5, windowEnd = refYear() - 1;
+  const gaps = await computeAllCityGaps({ windowStart, windowEnd });
 
   // Aggregate counters
   let withCompletions = 0;
@@ -50,7 +53,7 @@ export default async function SupplyCoveragePage() {
             <h1 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">פער היצע-ביקוש לפי עיר</h1>
             <p className="text-slate-600 text-base mt-1">
               חישוב הפער עם סולם פולבק: <strong>גמר בנייה ← התחלות בנייה ← היתרי בנייה</strong>.
-              חלון: 2020-2024. {gaps.length} ערים בסה&quot;כ.
+              חלון: {windowStart}-{windowEnd}. {gaps.length} ערים בסה&quot;כ.
             </p>
           </div>
         </div>
@@ -155,7 +158,7 @@ export default async function SupplyCoveragePage() {
           <li><strong>דירות נדרשות (ביקוש)</strong> = גידול אוכלוסייה בחלון ÷ נפשות למשק בית. נפשות נלקח לפי עדיפות: מדדי לוחות (2026) ← מפקד 2022 (למ&quot;ס) ← ממוצע ארצי 3.27. קובץ המחקר הפנימי אינו משמש עוד לאמדן אוכלוסייה.</li>
           <li><strong>היצע</strong> נבחר פר שנה לפי סולם פולבק: <strong>גמר בנייה</strong> (איכותי ביותר) ← <strong>התחלות בנייה</strong> ← <strong>היתרי בנייה</strong>. הטבלה מציגה את כל שלושת המקורות כדי לראות שקיפות.</li>
           <li><strong>פער = היצע − ביקוש</strong>. מספר חיובי (ירוק) = עודף בנייה. מספר שלילי (אדום) = גרעון בנייה.</li>
-          <li>החלון הנוכחי הוא 2020-2024. נתוני היתרי בנייה זמינים עד 2024, התחלות עד 2025, גמר בנייה — חסר ברוב הערים (חוזרים לחישוב על התחלות).</li>
+          <li>החלון הנוכחי הוא {windowStart}-{windowEnd}. נתוני היתרי בנייה זמינים עד {windowEnd}, התחלות עד {windowEnd + 1}, גמר בנייה — חסר ברוב הערים (חוזרים לחישוב על התחלות).</li>
         </ul>
       </div>
     </main>

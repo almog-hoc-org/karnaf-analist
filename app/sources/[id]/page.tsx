@@ -566,9 +566,10 @@ export default async function SourceDetailPage({ params }: PageProps) {
 
   const cat = getCategoryByKey(src.category);
   const a = accentClasses[cat?.color ?? "cyan"];
-  const next = nextExpectedPublication(src);
+  // a hand-kept publicationDate cannot say a release is late (see /sources)
+  const expected = nextExpectedPublication(src);
+  const next = expected && expected > new Date() ? expected : null;
   const dataView = await fetchSourceData(src);
-  const isOverdue = next && next < new Date();
   const documents = getDocumentsForSource(src.id);
 
   return (
@@ -619,13 +620,9 @@ export default async function SourceDetailPage({ params }: PageProps) {
           )}
           {next && (
             <span
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
-                isOverdue
-                  ? "bg-amber-50 text-amber-700 border border-amber-200"
-                  : "bg-cyan-50 text-cyan-700 border border-cyan-200"
-              }`}
+              className="px-3 py-1.5 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-700 border border-cyan-200"
             >
-              <><Icon name={isOverdue ? "clock" : "calendar"} size="1em" />{isOverdue ? " עיכוב — היה צפוי " : " פרסום הבא צפוי "}</>
+              <><Icon name="calendar" size="1em" /> פרסום הבא צפוי </>
               {formatHeDate(next)}
             </span>
           )}

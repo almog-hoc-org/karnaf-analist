@@ -30,6 +30,7 @@ import type { Browser } from "puppeteer-core";
 import { prisma } from "../lib/db";
 import { DEAL_KEY_INDEX_SQL, insertIfAbsentSql } from "../lib/dealKey";
 import { ensureSourceDealIdColumn } from "../lib/addressBackfillDb";
+import { govmapEndDate } from "../lib/govmapDeals";
 
 const NADLAN_METHOD = "v9-saleflags"; // bumped: now stores hokHamecher + prevDeals, the
 // authority's OWN developer-vs-resale signals. They are present on every row, while
@@ -198,7 +199,7 @@ async function govmapCity(cityName: string): Promise<DealRow[]> {
   for (const pt of sweep) { try { const arr: { polygon_id: string; dealscount: string; settlementNameHeb: string }[] = await (await gf(`${GOVMAP_BASE}/real-estate/deals/${pt.x},${pt.y}/2500`)).json(); for (const p of arr ?? []) if (+p.dealscount > 0 && normalizeCity(p.settlementNameHeb) === cityKey && !polys.has(p.polygon_id)) polys.set(p.polygon_id, +p.dealscount); } catch { /* */ } await sleep(govDelay); }
   const picked = [...polys.entries()].sort((a, b) => b[1] - a[1]).slice(0, 45).map((e) => e[0]);
   const seen = new Set<string>(); const out: DealRow[] = [];
-  for (const pid of picked) for (const [s0, e0] of [["2015-01", "2020-06"], ["2020-06", "2026-12"]] as const) {
+  for (const pid of picked) for (const [s0, e0] of [["2015-01", "2020-06"], ["2020-06", govmapEndDate()]] as const) {
     try { const d: { data?: Record<string, unknown>[] } = await (await gf(`${GOVMAP_BASE}/real-estate/neighborhood-deals/${pid}?limit=2000&startDate=${s0}&endDate=${e0}`)).json();
       for (const deal of d.data ?? []) { if (normalizeCity(deal.settlementNameHeb as string) !== cityKey || !isResidential(deal.dealNatureDescription as string)) continue; const key = String(deal.dealId ?? `${deal.dealDate}-${deal.dealAmount}`); if (seen.has(key)) continue; seen.add(key); const area = (deal.assetArea as number) ?? 0, price = (deal.dealAmount as number) ?? 0, sqm = area > 0 ? price / area : 0, dy = Number(String(deal.dealDate).slice(0, 4)); if (dy > 1990 && area >= MIN_AREA && area <= MAX_AREA && sqm >= MIN_SQM && sqm <= MAX_SQM) out.push({ deal_date: String(deal.dealDate).slice(0, 10), deal_year: dy, rooms: (deal.assetRoomNum as number) ?? null, area, price, price_sqm: Math.round(sqm), year_built: null, is_secondhand: 0, neighborhood: (deal.neighborhood as string) ?? null, cbs_code: deal.settlementId ? String(deal.settlementId) : null, hok_hamecher: null, prev_deals: null, street: (deal.streetNameHeb as string)?.trim() || null, house_num: deal.houseNum != null ? String(deal.houseNum) : null, floor: deal.floorNo != null ? String(deal.floorNo) : null, source_deal_id: deal.dealId != null ? String(deal.dealId) : null }); }
     } catch { /* */ } await sleep(govDelay);

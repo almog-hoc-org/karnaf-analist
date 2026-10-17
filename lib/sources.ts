@@ -467,14 +467,21 @@ export function nextExpectedPublication(source: Source): Date | null {
 
   const schedule = source.publicationSchedule;
   const next = new Date(last);
+  // add months without the overflow of setMonth on a 31st (Jan 31 + 1 → Mar 3)
+  const addMonths = (d: Date, n: number) => {
+    const day = d.getDate();
+    d.setDate(1);
+    d.setMonth(d.getMonth() + n);
+    d.setDate(Math.min(day, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()));
+  };
 
   switch (schedule.type) {
     case "monthly":
-      next.setMonth(next.getMonth() + 1);
+      addMonths(next, 1);
       if (schedule.dayOfMonth) next.setDate(schedule.dayOfMonth);
       return next;
     case "quarterly":
-      next.setMonth(next.getMonth() + 3);
+      addMonths(next, 3);
       return next;
     case "annual":
       next.setFullYear(next.getFullYear() + 1);

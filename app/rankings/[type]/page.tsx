@@ -21,14 +21,20 @@ import { pageMeta } from "@/lib/seo";
 // ranking with the same words the page uses. Subtitles stay here because they
 // interpolate refYear(), which must not be frozen at module load.
 
-const RANKING_CONFIG: Record<RankingType, {
+type RankingConfig = Record<RankingType, {
   title: string;
   subtitle: string;
   icon: string;
   accent: "amber" | "rose" | "emerald" | "cyan" | "indigo";
   valueLabel: string;
   source: string;
-}> = {
+}>;
+
+// A FUNCTION: as a module-level const the refYear() calls below ran once per
+// process, and the comment above promised the opposite.
+function rankingConfig(): RankingConfig {
+  const y = refYear();
+  return {
   "new-premium": {
     title: RANKING_TITLES["new-premium"],
     subtitle: `ערים שבהן דירה חדשה קרובה במחירה ליד-שנייה (₪/מ"ר, לפי שנת בנייה, עד ${refYear()})`,
@@ -47,7 +53,7 @@ const RANKING_CONFIG: Record<RankingType, {
   },
   "highest-gain": {
     title: RANKING_TITLES["highest-gain"],
-    subtitle: `שינוי ממוצע ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2025 ← 2022, 10+ עסקאות בשתי השנים) — ללא הטיית דירות חדשות`,
+    subtitle: `שינוי ממוצע ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (${y} ← ${y - 3}, 10+ עסקאות בשתי השנים) — ללא הטיית דירות חדשות`,
     icon: "trend-up",
     accent: "rose",
     valueLabel: "שינוי יד-2 3 שנים",
@@ -55,7 +61,7 @@ const RANKING_CONFIG: Record<RankingType, {
   },
   "highest-gain-median": {
     title: RANKING_TITLES["highest-gain-median"],
-    subtitle: `שינוי חציון ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (2025 ← 2022, 10+ עסקאות בשתי השנים)`,
+    subtitle: `שינוי חציון ₪/מ"ר של עסקאות יד-שנייה, 3 שנים (${y} ← ${y - 3}, 10+ עסקאות בשתי השנים)`,
     icon: "chart",
     accent: "rose",
     valueLabel: "שינוי חציון יד-2 3 שנים",
@@ -71,13 +77,14 @@ const RANKING_CONFIG: Record<RankingType, {
   },
   "highest-inventory": {
     title: RANKING_TITLES["highest-inventory"],
-    subtitle: "כל הערים עם נתוני מלאי, מסודרות לפי מלאי דירות 2025",
+    subtitle: `כל הערים עם נתוני מלאי, מסודרות לפי מלאי דירות ${y}`,
     icon: "building",
     accent: "cyan",
     valueLabel: "מלאי דירות",
     source: 'למ"ס',
   },
-};
+  };
+}
 
 // Unified brand accent — all ranking pages share the same indigo chrome.
 // Values are neutral ink; trend rankings color the value per-row (emerald/red).
@@ -161,17 +168,18 @@ async function fetchData(type: RankingType): Promise<Array<{ city: string; value
 }
 
 export async function generateStaticParams() {
-  return Object.keys(RANKING_CONFIG).map((type) => ({ type }));
+  return Object.keys(RANKING_TITLES).map((type) => ({ type }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const cfg = RANKING_CONFIG[params.type as RankingType];
+  const cfg = rankingConfig()[params.type as RankingType];
   if (!cfg) return { title: "דירוג", robots: { index: false, follow: false } };
   return pageMeta({ path: `/rankings/${encodeURIComponent(params.type)}`, title: cfg.title });
 }
 
 export default async function RankingPage({ params }: PageProps) {
   const type = params.type as RankingType;
+  const RANKING_CONFIG = rankingConfig();
   const cfg = RANKING_CONFIG[type];
   if (!cfg) notFound();
 

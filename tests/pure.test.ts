@@ -3,6 +3,8 @@ import * as XLSX from "xlsx";
 import { safeNext } from "@/lib/safeRedirect";
 import { matchCityName } from "@/lib/cityLookup";
 import { lockAgeMs, acquire, release, waitFor } from "@/lib/nightLock";
+import { sameSale, maxWindowDays, SAME_ADDRESS } from "@/lib/dupeRules";
+import { govmapEndDate } from "@/lib/govmapDeals";
 import fs from "fs";
 import os from "os";
 import path from "path";
@@ -2574,5 +2576,39 @@ describe("nightLock — the collector holds, the pipeline waits", () => {
     const old = Date.now() + 4 * 60 * 60_000;
     expect(lockAgeMs(file, old)).toBeNull();
     release(file);
+  });
+});
+
+describe("sameSale — one sale reported twice (lib/dupeRules)", () => {
+  const tol = { priceTol: 0, areaTol: 0, windowDays: 7 };
+  const base = { price: 1_715_000, area: 53, rooms: 3, year_built: null as number | null, street: "הערבה", house_num: "1" };
+  it("the feed twin: identical within the window, whatever the address", () => {
+    expect(sameSale(base, { ...base, street: null, house_num: null }, 1, tol)).toBe(true);
+    expect(sameSale(base, { ...base, street: null, house_num: null }, 8, tol)).toBe(false);
+    expect(sameSale(base, { ...base, rooms: 4 }, 1, tol)).toBe(false);
+    expect(sameSale(base, { ...base, year_built: 1990 }, 1, tol)).toBe(true); // unknown on one side
+    expect(sameSale({ ...base, year_built: 1985 }, { ...base, year_built: 1990 }, 1, tol)).toBe(false);
+  });
+  it("the same-address twin: a small area difference across two sources (הערבה 1, 53 vs 48.3)", () => {
+    expect(sameSale(base, { ...base, area: 48.3 }, 0, tol)).toBe(true);
+    expect(sameSale(base, { ...base, area: 40 }, 0, tol)).toBe(false); // more than 10%
+    expect(sameSale(base, { ...base, area: 48.3, street: null }, 0, tol)).toBe(false); // no address, no evidence
+  });
+  it("the same-address twin: the same register row weeks apart (ויצמן 57, 19 days)", () => {
+    const w = { ...base, street: "ויצמן", house_num: "57", price: 1_900_000, area: 57 };
+    expect(sameSale(w, w, 19, tol)).toBe(true);
+    expect(sameSale(w, w, SAME_ADDRESS.windowDays + 1, tol)).toBe(false);
+    expect(sameSale(w, { ...w, house_num: "59" }, 19, tol)).toBe(false);
+  });
+  it("tells the sweep how far ahead to look", () => {
+    expect(maxWindowDays(tol)).toBe(21);
+    expect(maxWindowDays({ ...tol, windowDays: 30 })).toBe(30);
+  });
+});
+
+describe("govmapEndDate — the fetch window follows the calendar", () => {
+  it("is the month after the current one", () => {
+    expect(govmapEndDate(new Date("2026-10-17T00:00:00Z"))).toBe("2026-11");
+    expect(govmapEndDate(new Date("2026-12-03T00:00:00Z"))).toBe("2027-01");
   });
 });

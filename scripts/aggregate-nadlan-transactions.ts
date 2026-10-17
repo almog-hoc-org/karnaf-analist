@@ -226,7 +226,7 @@ async function main() {
 
       const cells = new Map<string, { nb: string; year: number; bucket: string; scope: string; rows: Row[] }>();
       const add = (nb: string, year: number, bucket: string, scope: string, r: Row) => {
-        const k = `${nb} ${year} ${bucket} ${scope}`;
+        const k = `${nb}\u0000${year}\u0000${bucket}\u0000${scope}`;
         let c = cells.get(k);
         if (!c) { c = { nb, year, bucket, scope, rows: [] }; cells.set(k, c); }
         c.rows.push(r);

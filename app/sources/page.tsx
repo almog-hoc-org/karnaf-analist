@@ -80,8 +80,11 @@ export default function SourcesPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {sources.map((src) => {
-                  const next = nextExpectedPublication(src);
-                  const isOverdue = next && next < new Date();
+                  // publicationDate is a hand-kept constant: a date in the past says
+                  // nothing about whether a newer release exists, so "delayed" is not
+                  // a claim this page can make. Only a future date is shown.
+                  const expected = nextExpectedPublication(src);
+                  const next = expected && expected > new Date() ? expected : null;
                   const detailHref = `/sources/${src.id}`;
                   return (
                     <Link
@@ -109,12 +112,10 @@ export default function SourcesPage() {
                         </span>
                         {next && (
                           <span
-                            className={`px-1.5 py-0.5 rounded font-semibold ${
-                              isOverdue ? "bg-slate-100 text-slate-600 border border-slate-300" : "bg-slate-50 text-slate-600 border border-slate-200"
-                            }`}
+                            className="px-1.5 py-0.5 rounded font-semibold bg-slate-50 text-slate-600 border border-slate-200"
                             title="פרסום הבא צפוי"
                           >
-                            <><Icon name={isOverdue ? "clock" : "calendar"} size="1em" />{isOverdue ? " עיכוב — צפוי " : " צפוי "}</>
+                            <><Icon name="calendar" size="1em" /> צפוי </>
                             {formatHeDate(next)}
                           </span>
                         )}
