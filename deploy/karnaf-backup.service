@@ -19,5 +19,7 @@ WorkingDirectory=/opt/karnaf
 Environment=KARNAF_DATA_DIR=/var/lib/karnaf/data
 EnvironmentFile=-/etc/karnaf/backup.env
 ExecStart=/usr/bin/bash scripts/publish-backup.sh
-# a full snapshot + upload of ~60MB compressed should never take this long
-TimeoutStartSec=30min
+# snapshot + integrity check + gzip + upload of ~690MB compressed (the deal
+# archive is 2.3GB raw since the tax register went in, 10.2026); the 30 minutes
+# this had were sized for 60MB
+TimeoutStartSec=90min

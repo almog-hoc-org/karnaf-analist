@@ -92,11 +92,13 @@ fi
 STAMP=$(date +%Y%m%d-%H%M%S)
 if [ -f "$DEST" ]; then
   mv "$DEST" "$DEST.replaced-$STAMP"
+  # the WAL holds the old file's last commits: it travels with the kept copy
+  # (deleting it, as this once did, lost them from the "kept" database)
+  [ -f "$DEST-wal" ] && mv "$DEST-wal" "$DEST.replaced-$STAMP-wal"
+  rm -f "$DEST-shm"
   echo "▸ previous database kept at $DEST.replaced-$STAMP"
 fi
 mv "$TMP/realestate.db" "$DEST"
-# stale -wal/-shm from the old file would be read against the new one
-rm -f "$DEST-wal" "$DEST-shm"
 echo "✓ restored $(printf "%'d" "$DEALS" 2>/dev/null || echo "$DEALS") deals → $DEST"
 
 if [ "$APP_READY" = 1 ]; then

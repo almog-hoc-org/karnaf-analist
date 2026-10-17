@@ -82,7 +82,9 @@ for db in realestate app; do
       || printf "  ! גיבוי %s נכשל — ממשיכים\n" "$db"
   fi
 done
-# Keep the last 10 of each; backups are insurance, not an archive.
+# Keep the last 3 of each; backups are insurance, not an archive — and at
+# 2.3GB a copy (10.2026) ten of them were 23GB of the same disk the site
+# runs on. The weekly off-server backup is the archive.
 #
 # The `|| true` is load-bearing. With `set -euo pipefail`, `ls` over a glob that
 # matches nothing exits non-zero, pipefail propagates that through the pipeline,
@@ -90,7 +92,7 @@ done
 # the very FIRST deploy when no backups exist yet. Housekeeping must never be
 # able to abort a deployment.
 prune_backups() {
-  ls -1t "$DATA_ROOT/backups"/"$1"-*.db 2>/dev/null | tail -n +11 | xargs -r rm -f || true
+  ls -1t "$DATA_ROOT/backups"/"$1"-*.db 2>/dev/null | tail -n +4 | xargs -r rm -f || true
 }
 prune_backups realestate
 prune_backups app

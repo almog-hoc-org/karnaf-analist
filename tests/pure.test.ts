@@ -2,6 +2,10 @@ import { describe, it, expect } from "vitest";
 import * as XLSX from "xlsx";
 import { safeNext } from "@/lib/safeRedirect";
 import { matchCityName } from "@/lib/cityLookup";
+import { lockAgeMs, acquire, release, waitFor } from "@/lib/nightLock";
+import fs from "fs";
+import os from "os";
+import path from "path";
 import { metricLabel } from "@/components/ScatteredFactsSection";
 import { buildWhere } from "@/app/api/admin/deals/route";
 import { buildCityYearTable, cleanCityName, docxTables, docxXmlTables, findCityTable, isStartsReleaseTitle, latestVintage, NATIONAL_TOTAL, parseCount, parsePeriodLabel, parseStartsTable, type StartsRow } from "@/lib/cbsStarts";
@@ -2551,5 +2555,24 @@ describe("scattered-facts metric labels", () => {
   it("shows Hebrew for the keys the extractor emits and never a raw key", () => {
     expect(metricLabel("construction_starts_annual")).toBe("התחלות בנייה שנתיות");
     expect(metricLabel("some_new_metric")).toBe("some new metric");
+  });
+});
+
+describe("nightLock — the collector holds, the pipeline waits", () => {
+  const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "karnaf-lock-")), ".collect.lock");
+  it("is free before acquire, held after, free after release", async () => {
+    expect(lockAgeMs(file)).toBeNull();
+    acquire(file);
+    expect(lockAgeMs(file)).toBeGreaterThanOrEqual(0);
+    expect(await waitFor(50, file, 10)).toBe(false); // still held at the bound
+    release(file);
+    expect(lockAgeMs(file)).toBeNull();
+    expect(await waitFor(50, file, 10)).toBe(true);
+  });
+  it("ignores a lock older than three hours (a killed writer)", () => {
+    acquire(file);
+    const old = Date.now() + 4 * 60 * 60_000;
+    expect(lockAgeMs(file, old)).toBeNull();
+    release(file);
   });
 });

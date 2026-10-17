@@ -57,6 +57,8 @@ const STALE_AFTER_HOURS = 36;
 // govmap-backfill shares govmap's probe, so it is skipped on exactly the same
 // nights; leaving it out held this endpoint at 503 around the clock.
 const GEO_RESTRICTED_SOURCES = new Set(["govmap", "govmap-backfill", "prefetch-deals", "nadlan"]);
+/** OpenStreetMap enrichment: shapes, local streets, house numbers. Decoration on pages that have their numbers either way. */
+const MAP_ENRICHMENT_SOURCES = new Set(["city-maps", "city-streets", "osm-addresses"]);
 
 /**
  * New transactions used to be a quarterly job from the operator's machine, and
@@ -210,11 +212,15 @@ export async function GET(req: NextRequest) {
   // "waiting for the quarterly refresh" state.
   const hardFailed = sourceStates.filter((s) => s.status === "failed");
   const unreachable = sourceStates.filter((s) => s.status === "skipped-unreachable" || s.status === "skipped-browser");
-  const unexpectedUnreachable = unreachable.filter((s) => !GEO_RESTRICTED_SOURCES.has(s.source));
+  const unexpectedUnreachable = unreachable.filter((s) => !GEO_RESTRICTED_SOURCES.has(s.source) && !MAP_ENRICHMENT_SOURCES.has(s.source));
+  const mapUnreachable = unreachable.filter((s) => MAP_ENRICHMENT_SOURCES.has(s.source));
   const expectedUnreachable = unreachable.filter((s) => GEO_RESTRICTED_SOURCES.has(s.source));
 
   if (hardFailed.length) problems.push(`sources failing: ${hardFailed.map((s) => s.source).join(", ")}`);
   if (unexpectedUnreachable.length) problems.push(`sources unreachable from the server: ${unexpectedUnreachable.map((s) => s.source).join(", ")}`);
+  // The maps are collected; a week of Overpass refusing the server costs no
+  // page a number. It kept the site at 503 for that week (10.2026).
+  if (mapUnreachable.length) warnings.push(`map enrichment sources unreachable (maps already collected): ${mapUnreachable.map((s) => s.source).join(", ")}`);
   if (expectedUnreachable.length) warnings.push(`geo-restricted sources waiting for the quarterly refresh: ${expectedUnreachable.map((s) => s.source).join(", ")}`);
 
   // ── data volume ──────────────────────────────────────────────────

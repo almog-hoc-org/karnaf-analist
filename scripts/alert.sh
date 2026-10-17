@@ -61,5 +61,6 @@ if [ "$code" -ge 200 ] 2>/dev/null && [ "$code" -lt 300 ]; then
   echo "  ✓ sent ($code)"
 else
   echo "  ✗ send failed (HTTP $code)"
+  exit 1 # visible in the journal as a failed alert unit, which is the one place left to look
 fi
 exit 0

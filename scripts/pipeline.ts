@@ -31,6 +31,7 @@ import { spawn } from "child_process";
 import Database from "better-sqlite3";
 import path from "path";
 import { PIPELINE, STAGE_IDS, stagesFrom, type PipelineStage } from "../lib/pipeline";
+import { lockAgeMs, waitFor } from "../lib/nightLock";
 
 const APP_DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "app.db");
 
@@ -58,7 +59,11 @@ function runStage(stage: PipelineStage): Promise<string> {
     const onData = (d: Buffer) => { const s = d.toString(); buf += s; process.stdout.write(s); };
     p.stdout.on("data", onData);
     p.stderr.on("data", onData);
-    const timer = setTimeout(() => { p.kill("SIGTERM"); reject(new Error(`timeout after ${stage.timeoutMs / 60000}min`)); }, stage.timeoutMs);
+    const timer = setTimeout(() => {
+      p.kill("SIGTERM");
+      setTimeout(() => { try { p.kill("SIGKILL"); } catch { /* gone */ } }, 30_000).unref();
+      reject(new Error(`timeout after ${stage.timeoutMs / 60000}min`));
+    }, stage.timeoutMs);
     p.on("close", (code) => {
       clearTimeout(timer);
       // NOTE: verify-anomalies.ts sets process.exitCode rather than calling
@@ -121,6 +126,14 @@ async function main() {
     return;
   }
 
+  // The collector may still be running (lib/nightLock.ts): aggregate a
+  // population that has stopped moving, or say so and go on after the bound.
+  if (lockAgeMs() != null) {
+    console.log("⏳ האיסוף הלילי עדיין רץ — ממתין (עד 30 דק׳)");
+    const free = await waitFor(30 * 60_000);
+    console.log(free ? "✓ האיסוף הסתיים" : "⚠ האיסוף עדיין רץ אחרי 30 דק׳ — ממשיך בכל זאת");
+  }
+
   const db = new Database(APP_DB);
   db.pragma("journal_mode = WAL");
   ensureRunLog(db);
@@ -145,6 +158,15 @@ async function main() {
       console.log(`✓ ${stage.id} — ${((Date.now() - s0) / 1000).toFixed(1)}s`);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
+      if (stage.report) {
+        // A report that could not be written is a report, not a broken
+        // archive: it used to fail the run, and a failed run skips the cache
+        // refresh — so a flaky audit hid a night of good data behind the
+        // previous day's cache.
+        console.error(`\n⚠ ${stage.id} (דוח) נכשל — הריצה ממשיכה: ${msg.slice(0, 200)}`);
+        done.push(`${stage.id}!`);
+        continue;
+      }
       const status = stage.gate ? "gate-failed" : "failed";
       db.prepare("UPDATE pipeline_runs SET finished_at=?, status=?, stages_run=?, failed_stage=?, error=? WHERE id=?")
         .run(new Date().toISOString(), status, done.join(","), stage.id, msg.slice(0, 1000), runId);

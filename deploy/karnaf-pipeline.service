@@ -34,7 +34,9 @@ ExecStartPre=/bin/bash -c 'docker compose ps --status running --format "{{.Servi
 # `nice` inside the container, for the reason in karnaf-collect.service. No heap
 # cap here: the aggregation loads ~1M rows into one array and needs more than
 # the collectors; the container's 3G ceiling is its limit.
-ExecStart=/usr/bin/docker compose exec -T app nice -n 15 npx tsx scripts/pipeline.ts --trigger=nightly
+# `timeout` inside the container for the same reason as in karnaf-collect:
+# the outer TimeoutStartSec only kills the docker client.
+ExecStart=/usr/bin/docker compose exec -T app timeout --kill-after=120 6900 nice -n 15 npx tsx scripts/pipeline.ts --trigger=nightly
 
 # Exit code 2 means a VERIFICATION GATE failed: the data was written but does
 # not pass its own checks. That is a different problem from a crash and is

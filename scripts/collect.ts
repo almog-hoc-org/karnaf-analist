@@ -32,6 +32,7 @@ import Database from "better-sqlite3";
 import path from "path";
 import { ilFetch, needsIlEgress } from "../lib/ilFetch";
 import { SOURCES, SOURCE_IDS, selectSources, probeTargets, probeKeyFor, type CollectorSource, type ProbeTarget } from "../lib/collectors";
+import * as nightLock from "../lib/nightLock";
 
 const APP_DB = path.resolve(process.env.KARNAF_DATA_DIR ?? "./data", "app.db");
 
@@ -70,6 +71,8 @@ function ensureRunLog(db: Database.Database) {
  * "Unexpected token '<'". A probe that cannot distinguish those two is not
  * telling you anything you needed to know.
  */
+const PROBE_UA = "karnaf-analist/1.0 (+https://analyst.karnafnadlan.com; nightly collector)";
+
 async function probe(t: ProbeTarget): Promise<{ ok: boolean; detail: string }> {
   try {
     // Geo-restricted hosts are probed the way their collector reaches them:
@@ -79,7 +82,9 @@ async function probe(t: ProbeTarget): Promise<{ ok: boolean; detail: string }> {
     const get = needsIlEgress(t.url) ? ilFetch : fetch;
     const res = await get(t.url, {
       method: t.method,
-      headers: t.body ? { "Content-Type": "application/json" } : undefined,
+      // Named, like the collectors themselves: overpass-api.de answers an
+      // anonymous client with 406 (five nights of "unreachable" maps, 10.2026)
+      headers: { "User-Agent": PROBE_UA, ...(t.body ? { "Content-Type": "application/json" } : {}) },
       body: t.body ? JSON.stringify(t.body) : undefined,
       signal: AbortSignal.timeout(20_000),
       redirect: t.expectJson ? "follow" : "manual",
@@ -151,6 +156,8 @@ function runSource(s: CollectorSource): Promise<void> {
     p.stderr.on("data", onData);
     const timer = setTimeout(() => {
       p.kill("SIGTERM");
+      // a collector mid-fetch can ignore TERM; the budget is not a suggestion
+      setTimeout(() => { try { p.kill("SIGKILL"); } catch { /* gone */ } }, 30_000).unref();
       reject(new Error(`timeout after ${Math.round(s.timeoutMs / 60000)}min`));
     }, s.timeoutMs);
     p.on("close", (code) => {
@@ -256,6 +263,7 @@ async function main() {
   let okCount = 0, failCount = 0, skipCount = 0;
   const t0 = Date.now();
   console.log(`\n▶ איסוף ריצה #${runId} — ${sources.length} מקורות${deadlineMin ? ` · תקציב ${deadlineMin} דק׳` : ""}\n`);
+  nightLock.acquire(); // the pipeline waits for this (lib/nightLock.ts)
 
   for (const [i, s] of sources.entries()) {
     const head = `[${i + 1}/${sources.length}] ${s.id}`;
@@ -306,6 +314,7 @@ async function main() {
     }
   }
 
+  nightLock.release();
   const status = failCount === 0 ? "ok" : okCount > 0 ? "partial" : "failed";
   db.prepare("UPDATE collection_runs SET finished_at=?, status=? WHERE id=?")
     .run(new Date().toISOString(), status, runId);
@@ -320,12 +329,16 @@ async function main() {
   }
   console.log(`${"═".repeat(60)}`);
 
-  process.exit(failCount > 0 ? 1 : 0);
+  // 0 all ok · 1 some failed (operational noise, the unit counts it as
+  // success) · 3 nothing succeeded — the code the unit alerts on, which this
+  // never actually produced before
+  process.exit(failCount > 0 ? (okCount > 0 ? 1 : 3) : 0);
 }
 
 main().catch((e) => {
   console.error("FATAL:", e);
-  process.exit(1);
+  nightLock.release();
+  process.exit(3);
 });
 
 // referenced in the --only/--skip error message

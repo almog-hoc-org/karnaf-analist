@@ -75,8 +75,11 @@ async function reportCity(city: string): Promise<void> {
   if (!view) {
     console.log(`  ✗ המפה לא תוצג — סף: ${mapMinNeighborhoods()} שכונות ו-${Math.round(mapMinMatchRatio() * 100)}% התאמה`);
   } else {
-    const pct = summary.rows.length ? Math.round((view.matched / summary.rows.length) * 100) : 0;
-    console.log(`  ✓ המפה תוצג · הותאמו ${view.matched}/${summary.rows.length} (${pct}%)`);
+    // view.matched counts SHAPES with a price row; two shapes can share one
+    // row, which printed 16/15 (107%). Count the priced rows that got a shape.
+    const matchedRows = summary.rows.length - view.unmatchedPriced.length;
+    const pct = summary.rows.length ? Math.round((matchedRows / summary.rows.length) * 100) : 0;
+    console.log(`  ✓ המפה תוצג · הותאמו ${matchedRows}/${summary.rows.length} (${pct}%)${view.matched !== matchedRows ? ` · ${view.matched} צורות` : ""}`);
     const shapeOnly = view.neighborhoods.filter((n) => !n.summary).map((n) => n.neighborhood);
     if (shapeOnly.length) console.log(`  צורה בלי מחיר (${shapeOnly.length}): ${shapeOnly.slice(0, 15).join(" · ")}`);
     if (view.unmatchedPriced.length) console.log(`  מחיר בלי צורה (${view.unmatchedPriced.length}): ${view.unmatchedPriced.slice(0, 15).join(" · ")}`);

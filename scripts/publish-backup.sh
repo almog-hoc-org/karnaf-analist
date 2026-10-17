@@ -83,15 +83,18 @@ ASSETS=("$TMP/realestate.db.gz")
 if [ ! -f "$DATA_DIR/app.db" ]; then
   echo "▸ app.db not present — publishing the deal archive only"
 elif [ -z "$AGE_RECIPIENT" ]; then
-  echo "⚠ KARNAF_BACKUP_AGE_RECIPIENT not set — app.db (user data) is NOT published."
-  echo "  Generate a key pair on YOUR machine: age-keygen -o karnaf-backup.key"
-  echo "  and put its public line (age1…) in /etc/karnaf/backup.env as KARNAF_BACKUP_AGE_RECIPIENT=…"
+  # The public key is committed in deploy/; its absence is a broken checkout,
+  # and a backup that quietly leaves the user data out is the failure mode
+  # nobody notices. Fail, so the unit's OnFailure= alert fires.
+  echo "✗ no age recipient (deploy/backup-age-recipient.txt or KARNAF_BACKUP_AGE_RECIPIENT) — app.db cannot be encrypted"
+  exit 1
 elif ! command -v age >/dev/null; then
-  echo "⚠ age not installed (apt install age) — app.db (user data) is NOT published."
+  echo "✗ age not installed (apt install age) — app.db cannot be encrypted; the deploy installs it"
+  exit 1
 else
   snapshot app.db
   gzip -f "$TMP/app.db"
-  age -r "$AGE_RECIPIENT" -o "$TMP/app.db.gz.age" "$TMP/app.db.gz"
+  age -r "$AGE_RECIPIENT" -o "$TMP/app.db.gz.age" "$TMP/app.db.gz" || { echo "✗ age encryption failed"; exit 1; }
   rm -f "$TMP/app.db.gz"
   ASSETS+=("$TMP/app.db.gz.age")
 fi
