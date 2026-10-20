@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MEKARKEIN_ATTRIBUTION } from "@/lib/mekarkein";
+import { PARCEL_ADDRESSES_ATTRIBUTION } from "@/lib/parcelAddresses";
 import {
   CATEGORIES,
   SOURCES,
@@ -225,6 +226,10 @@ export default function SourcesPage() {
             ולהוספת עסקאות דירה שלמות שעוד לא הגיעו אלינו ממקור אחר. כתובת לעסקה כזו נלקחת מעסקאות אחרות באותה חלקה,
             או מטבלת החלקות-כתובות של נדל״ן לעם, ורק כשהיא חד-משמעית.{" "}
             <a href="https://www.over.org.il/projects/deals" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-700">over.org.il</a>
+          </li>
+          <li>
+            <strong>כתובות ושכונות:</strong> {PARCEL_ADDRESSES_ATTRIBUTION}. עסקה בלי רחוב או שכונה מקבלת אותם מהעסקאות
+            שדווחו על אותה דירה או חלקה, או מעסקאות אחרות באותו בניין ורחוב — רק כשכל המקורות מסכימים, ובלי לדרוס ערך קיים.
           </li>
           <li><strong>פערים ושדות חסרים:</strong> תאים ריקים מוצגים כ-&ldquo;—&rdquo; ולא ממולאים בנתונים מומצאים</li>
           <li><strong>ניטור אוטומטי:</strong> סקריפט המנטר את עמודי הפרסום של למ&quot;ס וכלכלן ראשי, מזהה דוחות חדשים ושולח התראות</li>

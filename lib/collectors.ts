@@ -215,6 +215,24 @@ export const SOURCES: CollectorSource[] = [
     timeoutMs: 60 * MINUTE,
   },
   {
+    id: "over-addresses",
+    cmd: "npx",
+    args: ["tsx", "scripts/import-over-addresses.ts"],
+    label: "טבלת כתובות לפי חלקה (over.org.il)",
+    why: "Every address in the country tied to its gush-helka, republished several times a day; imported weekly. It replaces the per-parcel lookups the register promotion was rationed to (2,000 a night, largest city first), and is the only address source for a new project's parcel that no deal has been reported on yet.",
+    host: "https://www.over.org.il",
+    timeoutMs: 15 * MINUTE,
+  },
+  {
+    id: "govmap-mirror",
+    cmd: "npx",
+    args: ["tsx", "scripts/import-govmap-mirror.ts"],
+    label: "מראת עסקאות govmap (over.org.il) — כתובות ושכונות",
+    why: "govmap's deals layer as republished monthly by over.org.il (2.5M deals, each with gush-helka-sub, street, house, floor and neighbourhood). govmap itself is geo-blocked from the server; this restores what its address campaign used to donate, and gives the tax-register deals their street and neighbourhood by parcel. Runs only when a new version is out.",
+    host: "https://www.over.org.il",
+    timeoutMs: 40 * MINUTE,
+  },
+  {
     id: "mekarkein-match",
     cmd: "npx",
     args: ["tsx", "scripts/match-mekarkein.ts", "--nightly"],
@@ -228,7 +246,7 @@ export const SOURCES: CollectorSource[] = [
     cmd: "npx",
     args: ["tsx", "scripts/promote-mekarkein.ts", "--nightly"],
     label: "עסקאות חדשות מפנקס מיסוי מקרקעין → לאתר, עם כתובת לפי חלקה",
-    why: "Register rows that are whole apartments and that no deal of ours reports (±1 day, same amount exact or to the thousand) become deals of ours, source 'mekarkein' — the months our own collectors cannot reach from this server. Address from our deals in the same flat or parcel, else from over.org.il's parcel↔address table, one parcel per call, rationed per run and cached. Off until KARNAF_MEKARKEIN_PROMOTE=1 (on top of KARNAF_MEKARKEIN_ENABLED). Runs after mekarkein-match. See lib/mekarkeinPromote.ts.",
+    why: "Register rows that are whole apartments and that no deal of ours reports (±1 day, same amount exact or to the thousand) become deals of ours, source 'mekarkein' — the months our own collectors cannot reach from this server. Address from our deals in the same flat or parcel, else from the govmap mirror's agreed address per flat or parcel (parcel_addresses), else from the parcel→address table (over_parcel_addresses, collector over-addresses) — one unambiguous address only; per-parcel HTTP lookups only when that table is absent. Off until KARNAF_MEKARKEIN_PROMOTE=1 (on top of KARNAF_MEKARKEIN_ENABLED). Runs after mekarkein-match. See lib/mekarkeinPromote.ts.",
     host: "https://www.over.org.il",
     probe: {
       url: "https://www.over.org.il/api/nadlan/stats",

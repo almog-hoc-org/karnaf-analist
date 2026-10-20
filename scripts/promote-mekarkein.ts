@@ -13,13 +13,19 @@
  * ORDER. Runs after import-mekarkein-deals.ts and match-mekarkein.ts: the match
  * claims the register rows that ARE ours, and only unclaimed rows are candidates.
  *
- * ADDRESSES. First our own deals in the same flat or parcel; then over.org.il's
- * parcel↔address table (/api/nadlan/parcel/{gush}/{helka}, one parcel per call,
- * cached in over_parcel_cache so a parcel is asked once). Their bulk SQL export
- * needs an account, so the lookups are rationed per run (--lookups), newest
- * deals first; a row promoted without an address gets one on a later run, when
- * its parcel's turn comes. Rows without any address still count in the city and
- * neighbourhood-free statistics.
+ * ADDRESSES, in this order (lib/mekarkeinPromote.ts addressFor at each step):
+ *   1. our own deals in the same flat or parcel;
+ *   2. parcel_addresses — the govmap deals mirror's address per flat and per
+ *      parcel (scripts/import-govmap-mirror.ts);
+ *   3. over_parcel_addresses — the whole parcel→address table
+ *      (scripts/import-over-addresses.ts), which covers a new project's parcel
+ *      no deal has been reported on yet;
+ *   4. only when (3) has not been imported: over.org.il's per-parcel endpoint,
+ *      rationed per run (--lookups) and cached in over_parcel_cache. An empty
+ *      answer is re-asked after 14 days — a new project's addresses appear
+ *      in the register of addresses later than its first sale.
+ * The neighbourhood is filled by the `addresses` pipeline stage
+ * (scripts/enrich-addresses.ts), from the same tables.
  *
  * WHAT IT WRITES: INSERT into nadlan_transactions (never UPDATE of a row it did
  * not write), street/house on its own rows that had none, over_parcel_cache,
@@ -31,8 +37,10 @@ import path from "path";
 import type { MekarkeinRow } from "../lib/mekarkein";
 import {
   PROMOTE_SOURCE, promoteSkipReason, knownIndex, isKnown, parseOverParcel, addressFor, ourParcelDonors,
-  streetSpeller, promotedTuple, type OverParcel, type SkipReason, type AddressVia,
+  streetSpeller, promotedTuple, type OverParcel, type SkipReason, type AddressVia, type PromoteAddress,
 } from "../lib/mekarkeinPromote";
+import { overParcelFromRows, type OverAddressRow } from "../lib/parcelAddresses";
+import { normStreet } from "../lib/addressKey";
 import { NADLAN_ROW_COLS } from "../lib/nadlanRow";
 import { insertIfAbsentSql, DEAL_KEY_INDEX_SQL } from "../lib/dealKey";
 import { ensureMekarkeinTables, ensureMekarkeinIdColumn } from "../lib/mekarkeinDb";
@@ -51,7 +59,9 @@ if (since && !/^\d{4}-\d{2}-\d{2}$/.test(since)) {
   process.exit(1);
 }
 const nightly = args.includes("--nightly");
-let lookupBudget = Number(arg("--lookups") ?? (nightly ? 2000 : 500));
+// set after the tables are opened: no lookups at all when the whole
+// parcel→address table has been imported, unless asked for
+let lookupBudget = 0;
 
 // Enrichment (import + match) and promotion are switched on separately: the
 // operator measures a city with --dry-run before new rows reach the site.
@@ -104,13 +114,23 @@ async function main() {
         with_address INTEGER, street_only INTEGER, no_address INTEGER, backfilled INTEGER, newest TEXT);
       CREATE INDEX IF NOT EXISTS idx_nadlan_tx_source_deal ON nadlan_transactions(source, source_deal_id);`);
   }
-  const hasCache = !!db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='over_parcel_cache'").get();
+  const hasTable = (t: string) => !!db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?").get(t);
+  const hasCache = hasTable("over_parcel_cache");
   const cache = new Map<string, OverParcel>();
   if (hasCache) {
-    for (const r of db.prepare("SELECT gh, ambiguous, addresses FROM over_parcel_cache").all() as Array<{ gh: string; ambiguous: number; addresses: string }>) {
+    // an empty answer expires: the parcel may have addresses by now
+    for (const r of db.prepare(`SELECT gh, ambiguous, addresses FROM over_parcel_cache
+        WHERE NOT (addresses = '[]' AND ambiguous = 0 AND fetched_at < datetime('now', '-14 days'))`).all() as Array<{ gh: string; ambiguous: number; addresses: string }>) {
       cache.set(r.gh, { ambiguous: !!r.ambiguous, addresses: JSON.parse(r.addresses) });
     }
   }
+  const hasMirror = hasTable("parcel_addresses");
+  const hasOverTable = hasTable("over_parcel_addresses") &&
+    !!db.prepare("SELECT 1 FROM over_parcel_addresses LIMIT 1").get();
+  lookupBudget = Number(arg("--lookups") ?? (hasOverTable ? 0 : nightly ? 2000 : 500));
+  const cityGushes = "SELECT DISTINCT gush FROM mekarkein_deals WHERE city_name = ?";
+  const loadMirror = hasMirror ? db.prepare(`SELECT gush, helka, sub, street, house FROM parcel_addresses WHERE gush IN (${cityGushes})`) : null;
+  const loadOverTable = hasOverTable ? db.prepare(`SELECT gush, helka, suffix, street, house, hood FROM over_parcel_addresses WHERE gush IN (${cityGushes})`) : null;
   const putCache = dry ? null : db.prepare("INSERT OR REPLACE INTO over_parcel_cache (gh, ambiguous, addresses) VALUES (?, ?, ?)");
 
   const cities = cityArg
@@ -138,10 +158,15 @@ async function main() {
     FROM nadlan_transactions WHERE city_name = ?`);
   const loadStreets = db.prepare(`SELECT street, COUNT(*) n FROM nadlan_transactions
     WHERE city_name = ? AND street IS NOT NULL AND TRIM(street) <> '' GROUP BY street`);
-  const loadBare = db.prepare(`SELECT id, parcel_num parcelNum, deal_date dealDate FROM nadlan_transactions
-    WHERE city_name = ? AND source = '${PROMOTE_SOURCE}' AND (street IS NULL OR TRIM(street) = '') AND parcel_num IS NOT NULL`);
-  const setAddr = dry ? null : db.prepare(`UPDATE nadlan_transactions SET street = ?, house_num = ?
-    WHERE id = ? AND source = '${PROMOTE_SOURCE}' AND (street IS NULL OR TRIM(street) = '')`);
+  // rows of ours still missing a street OR a house number (a street-only
+  // answer used to be final: the house was never asked for again)
+  const loadBare = db.prepare(`SELECT id, parcel_num parcelNum, deal_date dealDate, street FROM nadlan_transactions
+    WHERE city_name = ? AND source = '${PROMOTE_SOURCE}' AND parcel_num IS NOT NULL
+      AND (street IS NULL OR TRIM(street) = '' OR house_num IS NULL OR TRIM(house_num) = '')`);
+  const setAddr = dry ? null : db.prepare(`UPDATE nadlan_transactions SET
+      street = CASE WHEN street IS NULL OR TRIM(street) = '' THEN ? ELSE street END,
+      house_num = CASE WHEN house_num IS NULL OR TRIM(house_num) = '' THEN ? ELSE house_num END
+    WHERE id = ? AND source = '${PROMOTE_SOURCE}'`);
   const setMekId = hasMekId && !dry ? db.prepare(`UPDATE nadlan_transactions SET mekarkein_id = source_deal_id
     WHERE city_name = ? AND source = '${PROMOTE_SOURCE}' AND mekarkein_id IS NULL`) : null;
   const logRun = dry ? null : db.prepare(`INSERT INTO mekarkein_promote_status
@@ -162,6 +187,30 @@ async function main() {
     const ours = loadOurs.all(city) as Array<{ dealDate: string; price: number | null; parcelNum: string | null; street: string | null; houseNum: string | null }>;
     const idx = knownIndex(ours);
     const { bySub, byGh } = ourParcelDonors(ours);
+    // the govmap mirror's addresses as a second donor set — consulted only when
+    // our own deals say nothing, so their spellings never compete
+    const mirror = loadMirror
+      ? ourParcelDonors((loadMirror.all(city) as Array<{ gush: number; helka: number; sub: number; street: string; house: string }>)
+          .map((m) => ({ parcelNum: m.sub > 0 ? `${m.gush}-${m.helka}-${m.sub}` : `${m.gush}-${m.helka}`, street: m.street, houseNum: m.house })))
+      : { bySub: new Map<string, Set<string>>(), byGh: new Map<string, Set<string>>() };
+    const overTable = new Map<string, OverParcel>();
+    if (loadOverTable) {
+      const groups = new Map<string, OverAddressRow[]>();
+      for (const o of loadOverTable.all(city) as Array<{ gush: number; helka: number; suffix: number; street: string; house: string; hood: string | null }>) {
+        const k = `${o.gush}-${o.helka}`;
+        const g = groups.get(k);
+        const row = { suffix: o.suffix, street: o.street, house: o.house, hood: o.hood };
+        if (g) g.push(row); else groups.set(k, [row]);
+      }
+      for (const [k, rows] of groups) overTable.set(k, overParcelFromRows(rows));
+    }
+    const resolve = (g: number, h: number, s: number): PromoteAddress => {
+      const own = addressFor(g, h, s, bySub, byGh, null);
+      if (own.via) return own;
+      const m = addressFor(g, h, s, mirror.bySub, mirror.byGh, null);
+      if (m.via) return m;
+      return addressFor(g, h, s, new Map(), new Map(), overTable.get(`${g}-${h}`) ?? cache.get(`${g}-${h}`) ?? null);
+    };
     const spell = streetSpeller(loadStreets.all(city) as Array<{ street: string; n: number }>);
     const r: Report = {
       city, register: reg.length, skipped: { nature: 0, portion: 0, area: 0, amount: 0, date: 0 }, known: 0, candidates: 0,
@@ -179,13 +228,14 @@ async function main() {
 
     // Parcels still without an address from our own deals, newest deal first;
     // plus our earlier promoted rows that are still bare.
-    const bare = dry ? [] : (loadBare.all(city) as Array<{ id: number; parcelNum: string; dealDate: string }>);
+    const bare = dry ? [] : (loadBare.all(city) as Array<{ id: number; parcelNum: string; dealDate: string; street: string | null }>);
     const need: Array<{ gh: string; date: string }> = [];
     const seen = new Set<string>();
     const wants = (g: number, h: number, s: number, date: string) => {
       const gh = `${g}-${h}`;
-      if (seen.has(gh) || cache.has(gh)) return;
-      if (addressFor(g, h, s, bySub, byGh, null).via) return;
+      if (seen.has(gh) || cache.has(gh) || overTable.has(gh)) return;
+      if (lookupBudget <= 0) return;
+      if (resolve(g, h, s).via) return;
       seen.add(gh); need.push({ gh, date });
     };
     for (const c of cands) wants(c.gush, c.helka, c.sub, c.dealDate);
@@ -202,7 +252,7 @@ async function main() {
     const cbs = codes[city] != null ? String(codes[city]) : null;
     const tuples: unknown[][] = [];
     for (const c of cands) {
-      const a = addressFor(c.gush, c.helka, c.sub, bySub, byGh, cache.get(`${c.gush}-${c.helka}`) ?? null);
+      const a = resolve(c.gush, c.helka, c.sub);
       if (a.street && (a.via === "over" || a.via === "over-street")) a.street = spell(a.street);
       r.via[a.via ?? "none"]++;
       const y = Number(c.dealDate.slice(0, 4));
@@ -224,9 +274,11 @@ async function main() {
         setMekId?.run(city);
         for (const b of bare) {
           const [g, h, s] = b.parcelNum.split("-").map(Number);
-          const a = addressFor(g, h, s || 0, bySub, byGh, cache.get(`${g}-${h}`) ?? null);
+          const a = resolve(g, h, s || 0);
           if (!a.street) continue;
           const street = a.via === "over" || a.via === "over-street" ? spell(a.street) : a.street;
+          // a row that already names a street takes a house only from that street
+          if (b.street?.trim() && normStreet(b.street) !== normStreet(street)) continue;
           r.backfilled += setAddr!.run(street, a.houseNum, b.id).changes;
         }
       })();

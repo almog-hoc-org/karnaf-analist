@@ -5,6 +5,7 @@ import { matchCityName } from "@/lib/cityLookup";
 import { lockAgeMs, acquire, release, waitFor } from "@/lib/nightLock";
 import { sameSale, maxWindowDays, SAME_ADDRESS } from "@/lib/dupeRules";
 import { govmapEndDate } from "@/lib/govmapDeals";
+import { parseParcelKey, cleanHood, overParcelFromRows, latestResource } from "@/lib/parcelAddresses";
 import fs from "fs";
 import os from "os";
 import path from "path";
@@ -2610,5 +2611,67 @@ describe("govmapEndDate — the fetch window follows the calendar", () => {
   it("is the month after the current one", () => {
     expect(govmapEndDate(new Date("2026-10-17T00:00:00Z"))).toBe("2026-11");
     expect(govmapEndDate(new Date("2026-12-03T00:00:00Z"))).toBe("2027-01");
+  });
+});
+
+describe("addresses by parcel (lib/parcelAddresses)", () => {
+  it("parses the table's parcel_key as gush-suffix-helka", () => {
+    expect(parseParcelKey("12693-0-18")).toEqual({ gush: 12693, suffix: 0, helka: 18 });
+    expect(parseParcelKey(" 6623-1-5 ")).toEqual({ gush: 6623, suffix: 1, helka: 5 });
+    expect(parseParcelKey("12693-18")).toBeNull();
+    expect(parseParcelKey("0-0-18")).toBeNull();
+    expect(parseParcelKey(null)).toBeNull();
+  });
+  it("strips the neighbourhood prefix the Tax Authority does not write", () => {
+    expect(cleanHood("שכונת קריית שמואל")).toBe("קריית שמואל");
+    expect(cleanHood("שכ' נווה שאנן")).toBe("נווה שאנן");
+    expect(cleanHood("  הדר   עליון ")).toBe("הדר עליון");
+    expect(cleanHood("")).toBeNull();
+    expect(cleanHood(null)).toBeNull();
+  });
+  it("one gush-helka under two gush suffixes is ambiguous — no address", () => {
+    const op = overParcelFromRows([
+      { suffix: 0, street: "הרצל", house: "5", hood: "הדר" },
+      { suffix: 1, street: "יפו", house: "7", hood: "העיר התחתית" },
+    ]);
+    expect(op).toEqual({ ambiguous: true, addresses: [], hood: null });
+  });
+  it("dedupes the same address and gives a neighbourhood only when unique", () => {
+    const one = overParcelFromRows([
+      { suffix: 0, street: "הרצל", house: "5", hood: "הדר" },
+      { suffix: 0, street: "רחוב הרצל", house: "5", hood: "הדר" },
+    ]);
+    expect(one.ambiguous).toBe(false);
+    expect(one.addresses).toHaveLength(1);
+    expect(one.hood).toBe("הדר");
+    const two = overParcelFromRows([
+      { suffix: 0, street: "הרצל", house: "5", hood: "הדר" },
+      { suffix: 0, street: "הרצל", house: "7", hood: "הדר עליון" },
+    ]);
+    expect(two.addresses).toHaveLength(2);
+    expect(two.hood).toBeNull();
+    expect(overParcelFromRows([])).toEqual({ ambiguous: false, addresses: [], hood: null });
+  });
+  it("finds the newest version's file by its extension", () => {
+    const v = [
+      { version_number: 3, resources: [{ download_url: "https://x/v3.csv" }] },
+      { version_number: 5, resources: [{ download_url: "https://x/v5.parquet" }, { download_url: "https://x/v5.csv" }] },
+      { version_number: 4, resources: [{ download_url: "https://x/v4.csv" }] },
+    ];
+    expect(latestResource(v, ".csv")).toEqual({ version: 5, url: "https://x/v5.csv" });
+    expect(latestResource(v, ".gpkg")).toBeNull();
+  });
+  it("both tables are collected before the register promotion reads them", () => {
+    const ids = SOURCES.map((s) => s.id);
+    const promote = ids.indexOf("mekarkein-match");
+    expect(ids.indexOf("over-addresses")).toBeGreaterThanOrEqual(0);
+    expect(ids.indexOf("over-addresses")).toBeLessThan(promote);
+    expect(ids.indexOf("govmap-mirror")).toBeLessThan(promote);
+  });
+  it("the addresses stage runs after merge and before anything counts neighbourhoods", () => {
+    const ids = PIPELINE.map((s) => s.id);
+    const at = ids.indexOf("addresses");
+    expect(at).toBeGreaterThan(ids.indexOf("merge"));
+    for (const later of ["dupes", "aggregate"]) if (ids.includes(later)) expect(at).toBeLessThan(ids.indexOf(later));
   });
 });

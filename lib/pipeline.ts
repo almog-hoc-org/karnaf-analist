@@ -84,6 +84,13 @@ export const PIPELINE: PipelineStage[] = [
     timeoutMs: 15 * MINUTE,
   },
   {
+    id: "addresses",
+    script: "scripts/enrich-addresses.ts",
+    label: "כתובות ושכונות",
+    why: "Fills a missing street, house and neighbourhood on every row the parcel tables (govmap mirror, parcel→address table) or our own deals on the same parcel, building or street can vouch for — never an overwrite, never a guess. Before it, tax-register deals had no neighbourhood at all and dropped out of every neighbourhood statistic; after merge (which donates across channels first) and before dupes (whose same-building rule reads the address).",
+    timeoutMs: 20 * MINUTE,
+  },
+  {
     id: "rooms",
     script: "scripts/reclassify-rooms-by-area.ts",
     label: "סיווג חדרים לפי שטח",
