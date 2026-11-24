@@ -231,7 +231,9 @@ export default function NeighborhoodDetail({
                       onMouseLeave={() => onHoverDeal(null)}
                       className={`border-b border-slate-100 last:border-0 transition-colors ${isActive ? "bg-sky-100" : "hover:bg-sky-50"}`}
                     >
-                      <td className="whitespace-nowrap px-2 py-1 text-right tabular-nums text-slate-500">{d.dealDate}</td>
+                      <td className="whitespace-nowrap px-2 py-1 text-right tabular-nums text-slate-500">
+                        {d.id != null ? <Link href={`/deal/${d.id}`} className="text-indigo-700 hover:underline" title="ניתוח העסקה">{d.dealDate}</Link> : d.dealDate}
+                      </td>
                       <td className="px-2 py-1 text-right leading-tight">
                         <span className="block truncate font-bold text-slate-800" title={addr || undefined}>
                           {addr || "—"}
@@ -273,6 +275,7 @@ function ClickedPinCard({ pin, streets }: { pin: DealPoint; streets: string[] })
       <div className="text-slate-500">העסקה שנבחרה על המפה</div>
       <div className="font-extrabold text-slate-900">{f.title}</div>
       {f.lines.map((l, i) => <div key={i}>{l}</div>)}
+      <Link href={`/deal/${pin.id}`} className="mt-1 inline-block font-bold text-indigo-700 hover:underline">ניתוח העסקה →</Link>
     </div>
   );
 }

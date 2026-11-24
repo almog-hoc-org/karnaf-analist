@@ -136,7 +136,7 @@ export default async function AddressPage({ params }: PageProps) {
                       </span>
                     </div>
                     <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-slate-600">
-                      {t.deals.map((d) => <span key={d.id} className="tabular-nums">{d.dealDate} — {nis(d.price)}{d.priceSqm ? ` (${nis(d.priceSqm)}/מ״ר)` : ""}</span>)}
+                      {t.deals.map((d) => <span key={d.id} className="tabular-nums"><Link href={`/deal/${d.id}`} className="hover:text-indigo-700 hover:underline">{d.dealDate}</Link> — {nis(d.price)}{d.priceSqm ? ` (${nis(d.priceSqm)}/מ״ר)` : ""}</span>)}
                     </div>
                   </div>
                 ))}
@@ -161,7 +161,7 @@ export default async function AddressPage({ params }: PageProps) {
                   const v = vsHood.get(d.id) ?? null;
                   return (
                     <tr key={d.id} className="border-b border-slate-100 last:border-0">
-                      <td className="whitespace-nowrap px-3 py-1.5 text-right tabular-nums text-slate-500">{d.dealDate}{!d.isSecondHand && <span className="mr-1 rounded bg-amber-100 px-1 text-2xs font-bold text-amber-800">חדשה</span>}{d.luxury && <span className="mr-1 rounded bg-slate-100 px-1 text-2xs font-bold text-slate-600">יוקרה</span>}</td>
+                      <td className="whitespace-nowrap px-3 py-1.5 text-right tabular-nums text-slate-500"><Link href={`/deal/${d.id}`} className="text-indigo-700 hover:underline" title="ניתוח העסקה">{d.dealDate}</Link>{!d.isSecondHand && <span className="mr-1 rounded bg-amber-100 px-1 text-2xs font-bold text-amber-800">חדשה</span>}{d.luxury && <span className="mr-1 rounded bg-slate-100 px-1 text-2xs font-bold text-slate-600">יוקרה</span>}</td>
                       <td className="px-2 py-1.5 text-center tabular-nums">{d.floor ?? "—"}</td>
                       <td className="px-2 py-1.5 text-center tabular-nums">{d.rooms ?? "—"}</td>
                       <td className="px-2 py-1.5 text-center tabular-nums">{d.area == null ? "—" : Math.round(d.area)}</td>
@@ -178,7 +178,7 @@ export default async function AddressPage({ params }: PageProps) {
         {hasMap && (
           <aside>
             <h2 className="mb-2 text-sm font-black uppercase tracking-wide text-slate-500">על המפה</h2>
-            <AreaMap cityName={cityName} hood={data.hood} street={data.street} house={data.house} hasMap={hasMap} />
+            <AreaMap cityName={cityName} hood={data.hood} street={data.street} house={data.house} hasMap={hasMap} marker />
           </aside>
         )}
       </div>

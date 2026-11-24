@@ -241,7 +241,7 @@ async function loadCityDealsUncached(cityName: string, limit = DRAWER_PAGE): Pro
     // only for what the drawer renders bounds that blast radius, and the
     // column-types pipeline stage keeps these ones honest.
     select: {
-      deal_date: true, deal_year: true, rooms: true, room_bucket: true,
+      id: true, deal_date: true, deal_year: true, rooms: true, room_bucket: true,
       area: true, price: true, price_sqm: true, year_built: true,
       is_secondhand: true, source: true, luxury: true,
       street: true, house_num: true, neighborhood: true, floor: true,
@@ -257,13 +257,14 @@ export const loadCityDeals = cachedMarket(loadCityDealsUncached, ["city-deals-pa
 
 // is_secondhand/luxury arrive as boolean through Prisma and as 0/1 through raw SQL
 function toDeal(r: {
-  deal_date: string; deal_year: number; rooms: number | null; room_bucket: string;
+  id?: number | null; deal_date: string; deal_year: number; rooms: number | null; room_bucket: string;
   area: number | null; price: number | null; price_sqm: number | null;
   year_built: number | null; is_secondhand: number | boolean; source: string | null;
   luxury?: number | boolean | null;
   street?: string | null; house_num?: string | null; neighborhood?: string | null; floor?: string | null;
 }): NadlanDeal {
   return {
+    ...(r.id != null ? { id: Number(r.id) } : {}),
     dealDate: r.deal_date,
     dealYear: r.deal_year,
     rooms: r.rooms,

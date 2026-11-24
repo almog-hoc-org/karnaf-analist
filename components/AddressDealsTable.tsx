@@ -25,7 +25,9 @@ export default function AddressDealsTable({ deals, cityName, street }: {
           const sub = [d.rooms == null ? null : `${d.rooms} חד׳`, d.floor ? `קומה ${d.floor}` : null, d.priceSqm == null ? null : `${nis(d.priceSqm)}/מ״ר`, d.isSecondHand ? null : "חדשה"].filter(Boolean).join(" · ");
           return (
             <tr key={d.id} className="border-b border-slate-100 last:border-0">
-              <td className="whitespace-nowrap px-3 py-1.5 text-right tabular-nums text-slate-500">{d.dealDate}</td>
+              <td className="whitespace-nowrap px-3 py-1.5 text-right tabular-nums text-slate-500">
+                <Link href={`/deal/${d.id}`} className="text-indigo-700 hover:underline" title="ניתוח העסקה">{d.dealDate}</Link>
+              </td>
               <td className="px-3 py-1.5 text-right leading-tight">
                 {d.houseNum ? (
                   <Link href={`/city/${encodeURIComponent(cityName)}/address/${encodeURIComponent(addressSlug(street, d.houseNum))}`} className="block truncate font-bold text-slate-800 hover:text-indigo-700 hover:underline">{street} {d.houseNum}</Link>

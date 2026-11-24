@@ -36,16 +36,16 @@ import {
 /** joins the spellings into one cache-key string — a control char no street contains */
 const SEP = "\u001f";
 
-interface RawDeal {
+export interface RawDeal {
   id: number; deal_date: string; deal_year: number; rooms: number | null; area: number | null;
   price: number | null; price_sqm: number | null; year_built: number | null; is_secondhand: number;
   floor: string | null; street: string | null; house_num: string | null; neighborhood: string | null; luxury: number | null;
 }
 
-const DEAL_COLS = `id, deal_date, deal_year, rooms, area, price, price_sqm, year_built, is_secondhand,
+export const DEAL_COLS = `id, deal_date, deal_year, rooms, area, price, price_sqm, year_built, is_secondhand,
                    floor, street, house_num, neighborhood, COALESCE(luxury,0) luxury`;
 
-function toDeal(r: RawDeal): AddressDeal {
+export function toDeal(r: RawDeal): AddressDeal {
   return {
     id: Number(r.id), dealDate: String(r.deal_date), dealYear: Number(r.deal_year),
     rooms: r.rooms == null ? null : Number(r.rooms), area: r.area == null ? null : Number(r.area),

@@ -5,6 +5,7 @@ import { matchCityName } from "@/lib/cityLookup";
 import { lockAgeMs, acquire, release, waitFor } from "@/lib/nightLock";
 import { sameSale, maxWindowDays, SAME_ADDRESS } from "@/lib/dupeRules";
 import { govmapEndDate } from "@/lib/govmapDeals";
+import { monthsApart, isComparable, pickComps, quantile, iqr, percentileOf, timeAdjust, timeAdjustAny, compStats, verdict, compConfidence, type DealLike } from "@/lib/dealAnalysis";
 import { parseParcelKey, cleanHood, overParcelFromRows, latestResource } from "@/lib/parcelAddresses";
 import fs from "fs";
 import os from "os";
@@ -2673,5 +2674,75 @@ describe("addresses by parcel (lib/parcelAddresses)", () => {
     const at = ids.indexOf("addresses");
     expect(at).toBeGreaterThan(ids.indexOf("merge"));
     for (const later of ["dupes", "aggregate"]) if (ids.includes(later)) expect(at).toBeLessThan(ids.indexOf(later));
+  });
+});
+
+describe("one deal against its comparables (lib/dealAnalysis)", () => {
+  const T: DealLike = { id: 1, dealDate: "2025-06-15", dealYear: 2025, rooms: 4, area: 100, priceSqm: 20000, isSecondHand: true, luxury: false };
+  const c = (o: Partial<DealLike>): DealLike => ({ ...T, id: Math.floor(Math.random() * 1e9) + 2, ...o });
+
+  it("counts months across years", () => {
+    expect(monthsApart("2025-06-15", "2024-06-01")).toBe(12);
+    expect(monthsApart("2025-01-31", "2024-12-01")).toBe(1);
+    expect(monthsApart("2025-06-01", "2025-06-30")).toBe(0);
+  });
+  it("a comparable is the same kind of flat, near in time, never the deal itself", () => {
+    expect(isComparable(T, T)).toBe(false);
+    expect(isComparable(T, c({}))).toBe(true);
+    expect(isComparable(T, c({ luxury: true }))).toBe(false);
+    expect(isComparable(T, c({ isSecondHand: false }))).toBe(false);
+    expect(isComparable(T, c({ dealDate: "2024-06-01" }))).toBe(true);
+    expect(isComparable(T, c({ dealDate: "2024-05-01" }))).toBe(false);
+    expect(isComparable(T, c({ rooms: 4.5 }))).toBe(false);
+    expect(isComparable(T, c({ rooms: null }))).toBe(false);
+    expect(isComparable(T, c({ area: 120 }))).toBe(true);
+    expect(isComparable(T, c({ area: 121 }))).toBe(false);
+    expect(isComparable(T, c({ area: null }))).toBe(true);
+    expect(isComparable(T, c({ priceSqm: null }))).toBe(false);
+  });
+  it("takes the first rung with enough, else the widest with any, flagged", () => {
+    const five = Array.from({ length: 5 }, () => c({}));
+    const two = [c({}), c({})];
+    const p = pickComps(T, [{ rung: "city", rows: five }, { rung: "building", rows: two }, { rung: "street", rows: five }]);
+    expect(p?.rung).toBe("street");
+    expect(p?.enough).toBe(true);
+    const few = pickComps(T, [{ rung: "building", rows: [two[0]] }, { rung: "street", rows: two }]);
+    expect(few).toMatchObject({ rung: "street", enough: false });
+    expect(few?.comps).toHaveLength(2);
+    expect(pickComps(T, [{ rung: "street", rows: [T] }])).toBeNull();
+    // the same row twice counts once
+    expect(pickComps(T, [{ rung: "street", rows: [two[0], two[0], two[0], two[0], two[0]] }])?.enough).toBe(false);
+  });
+  it("quantiles, the middle half and a percentile with ties at half", () => {
+    expect(quantile([1, 2, 3, 4], 0.5)).toBe(2.5);
+    expect(quantile([], 0.5)).toBeNull();
+    expect(iqr([10, 20, 30, 40, 50])).toEqual([20, 40]);
+    expect(percentileOf(30, [10, 20, 30, 40])).toBe(63);
+    expect(percentileOf(5, [10, 20])).toBe(0);
+    expect(percentileOf(5, [])).toBeNull();
+  });
+  it("moves a price between years by one series end to end", () => {
+    const hood = new Map([[2024, 100], [2025, 110]]);
+    const city = new Map([[2023, 80], [2025, 100]]);
+    expect(timeAdjust(1000, 2025, 2025, new Map())).toBe(1000);
+    expect(timeAdjust(1000, 2024, 2025, hood)).toBeCloseTo(1100);
+    expect(timeAdjust(1000, 2023, 2025, hood)).toBeNull();
+    expect(timeAdjustAny(1000, 2023, 2025, [hood, city])).toBeCloseTo(1250);
+    expect(timeAdjustAny(1000, 2022, 2025, [hood, city])).toBeNull();
+  });
+  it("leaves out a comparable no series can move, and counts it", () => {
+    const s = compStats([c({ dealYear: 2024, priceSqm: 10000 }), c({ priceSqm: 12000 }), c({ dealYear: 2023, priceSqm: 9000 })], 2025, [new Map([[2024, 100], [2025, 110]])]);
+    expect(s.n).toBe(2);
+    expect(s.unadjusted).toBe(1);
+    expect(s.medianSqm).toBeCloseTo(11500);
+  });
+  it("the verdict thresholds and the sample grades", () => {
+    expect(verdict(4.9)?.key).toBe("in");
+    expect(verdict(-6)).toMatchObject({ key: "below", strong: false });
+    expect(verdict(15)).toMatchObject({ key: "above", strong: true, text: "15% מעל השוק" });
+    expect(verdict(null)).toBeNull();
+    expect(compConfidence(5)).toBe("low");
+    expect(compConfidence(10)).toBe("medium");
+    expect(compConfidence(30)).toBe("high");
   });
 });

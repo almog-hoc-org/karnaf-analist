@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { withBasePath } from "@/lib/basePath";
 import type { NadlanDeal } from "@/lib/nadlanTransactionSeries";
 
@@ -94,7 +95,9 @@ export default function HoodDealsTable({
                 onMouseLeave={() => onHoverDeal?.(null)}
                 className={`border-b border-slate-100 last:border-0 transition-colors ${isActive ? "bg-sky-100" : onHoverDeal ? "hover:bg-sky-50" : ""}`}
               >
-                <td className="whitespace-nowrap px-3 py-1.5 text-center tabular-nums text-slate-500">{d.dealDate}</td>
+                <td className="whitespace-nowrap px-3 py-1.5 text-center tabular-nums text-slate-500">
+                  {d.id != null ? <Link href={`/deal/${d.id}`} className="text-indigo-700 hover:underline" title="ניתוח העסקה">{d.dealDate}</Link> : d.dealDate}
+                </td>
                 <td className="px-3 py-1.5 text-center leading-tight">
                   {addr ? (
                     <span className="block truncate font-bold text-slate-800" title={addr}>{addr}</span>

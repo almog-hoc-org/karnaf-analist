@@ -81,6 +81,9 @@ export function labelForPath(rawPath: string): PageLabel {
   if (seg[0] === "city" && seg[1]) {
     return { label: `עמוד עיר — ${decodeSegment(seg[1])}`, href: path, kind: "city" };
   }
+  if (seg[0] === "deal" && seg[1]) {
+    return { label: `ניתוח עסקה #${decodeSegment(seg[1])}`, href: path, kind: "tool" };
+  }
   if (seg[0] === "rankings" && seg[1]) {
     const title = RANKING_TITLES[decodeSegment(seg[1]) as RankingType];
     return { label: title ? `דירוג — ${title}` : `דירוג — ${humanizeSlug(seg[1])}`, href: path, kind: "ranking" };

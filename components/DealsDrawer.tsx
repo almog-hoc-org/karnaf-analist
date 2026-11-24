@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import type { NadlanDeal } from "@/lib/nadlanTransactionSeries";
 
 /**
@@ -90,8 +91,10 @@ export default function DealsDrawer({ deals, accent = "slate", total, onLoadMore
               </thead>
               <tbody>
                 {sorted.map((d, i) => (
-                  <tr key={i} className="border-b border-slate-100/70 hover:bg-white/60">
-                    <td className="py-1 px-2 text-right tabular-nums whitespace-nowrap">{d.dealDate}</td>
+                  <tr key={d.id ?? `i${i}`} className="border-b border-slate-100/70 hover:bg-white/60">
+                    <td className="py-1 px-2 text-right tabular-nums whitespace-nowrap">
+                      {d.id ? <Link href={`/deal/${d.id}`} className="text-indigo-700 hover:underline" title="ניתוח העסקה">{d.dealDate}</Link> : d.dealDate}
+                    </td>
                     <td className="max-w-[220px] truncate py-1 px-2 text-right" title={addressOf(d) || undefined}>
                       {addressOf(d) || <span className="text-slate-300">—</span>}
                       {d.floor && <span className="ms-1 text-slate-400">· קומה {d.floor}</span>}
