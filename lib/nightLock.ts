@@ -23,7 +23,9 @@ const STALE_MS = 3 * 60 * 60_000;
 /** Age of a live lock in ms, or null when there is none (or it is stale). */
 export function lockAgeMs(file = COLLECT_LOCK, now = Date.now()): number | null {
   try {
-    const age = now - fs.statSync(file).mtimeMs;
+    // a just-written file's mtime can read a fraction of a millisecond
+    // ahead of Date.now() (filesystem timestamp rounding) — that is age 0
+    const age = Math.max(0, now - fs.statSync(file).mtimeMs);
     return age < STALE_MS ? age : null;
   } catch {
     return null;
