@@ -10,7 +10,10 @@ export type GeoLevel = "street" | "radius" | "neighborhood" | "city";
 export type MatchLevel = "tight" | "wide" | "rooms" | "any";
 
 export interface CompDeal {
+  /** nadlan_transactions.id — each comparable links to its own deal page */
+  id: number;
   deal_date: string;
+  deal_year: number;
   area: number | null;
   rooms: number | null;
   price: number | null;
@@ -62,6 +65,18 @@ export interface StreetComp {
   /** the hood was not typed by the user — it was looked up from the street's
    *  modal-majority assignment in search_index */
   hoodInferred: boolean;
+  /**
+   * false = even the widest rung found fewer than comp_min_deals comparables:
+   * the numbers are shown as "few comparables", never as a verdict.
+   */
+  enough: boolean;
+  /** the comparables' ₪/m² moved to this year by the area's index; null = shown as reported (no index) */
+  adjustedTo: number | null;
+  /** the middle half of the (adjusted) comparables */
+  spread: [number, number] | null;
+  /** the (adjusted) ₪/m² of every comparable, for the asking price's percentile */
+  sqmValues: number[];
+  confidence: "high" | "medium" | "low";
 }
 
 /**

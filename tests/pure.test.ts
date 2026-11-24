@@ -1089,6 +1089,7 @@ describe("comp match note (honest labeling)", () => {
     level: "street", geoLevel: "street", matchLevel: "tight", label: "",
     medianSqm: 30000, n: 12, areaRange: [80, 92], rooms: 4, years: 5,
     recent: [], matchedStreet: "הרצל", radiusM: null, matchedAddress: null, matchedHood: null, hood: null, hoodInferred: false,
+    enough: true, adjustedTo: null, spread: null, sqmValues: [], confidence: "medium",
   };
 
   it("says WHAT the comparison is against, never 'התאמה מדויקת'", () => {
@@ -1162,7 +1163,7 @@ describe("radius comps (the circle around the building)", () => {
   it("dealsWithin: exact house, a range's second number, and never a deal without a number", () => {
     const inside = housesWithin(centre, 300, houses);
     const deal = (street: string | null, house_num: string | null): CompDeal => ({
-      deal_date: "2025-01-01", area: 80, rooms: 3, price: 2_000_000, price_sqm: 25_000,
+      id: 1, deal_date: "2025-01-01", deal_year: 2025, area: 80, rooms: 3, price: 2_000_000, price_sqm: 25_000,
       street, house_num, neighborhood: null, year_built: 1980,
     });
     const rows = [
@@ -1179,7 +1180,7 @@ describe("radius comps (the circle around the building)", () => {
 
   it("similarDeals mirrors the SQL grades: rooms ±0.25, area ±tight/±wide, any", () => {
     const d = (rooms: number | null, area: number | null): CompDeal => ({
-      deal_date: "2025-01-01", area, rooms, price: 1, price_sqm: 1, street: "x", house_num: "1", neighborhood: null, year_built: null,
+      id: 1, deal_date: "2025-01-01", deal_year: 2025, area, rooms, price: 1, price_sqm: 1, street: "x", house_num: "1", neighborhood: null, year_built: null,
     });
     const rows = [d(4, 100), d(4, 93), d(4, 82), d(3.5, 100), d(null, 100), d(4, null)];
     const pct = { tight: 7, wide: 20 };

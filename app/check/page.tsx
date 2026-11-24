@@ -4,6 +4,7 @@ import Icon from "@/components/Icon";
 import { computeStreetComp, compMatchNote } from "@/lib/streetComps";
 import { rowAddress } from "@/lib/compTypes";
 import { whatsappShareUrl } from "@/lib/share";
+import { verdict as verdictOf, verdictTone, percentileOf, CONFIDENCE_LABEL } from "@/lib/dealAnalysis";
 import { getCurrentUser } from "@/lib/auth";
 import CheckForm from "@/components/CheckForm";
 import AreaMap from "@/components/AreaMap";
@@ -76,22 +77,12 @@ export default async function CheckPage({ searchParams }: Props) {
   const hasMap = knownCity && street ? (await loadCityMapGeometry(city)).bbox !== null : false;
 
   const askSqm = price && size ? price / size : null;
-  const deltaPct = comp?.medianSqm && askSqm ? (askSqm / comp.medianSqm - 1) * 100 : null;
-
-  const verdict = (() => {
-    if (deltaPct == null) return null;
-    const abs = Math.abs(deltaPct);
-    if (abs < 5) return { text: "בטווח השוק", tone: "bg-slate-100 text-slate-700 border-slate-200" };
-    if (deltaPct > 0)
-      return {
-        text: `${abs.toFixed(0)}% מעל השוק`,
-        tone: abs >= 15 ? "bg-rose-100 text-rose-800 border-rose-200" : "bg-amber-100 text-amber-800 border-amber-200",
-      };
-    return {
-      text: `${abs.toFixed(0)}% מתחת לשוק`,
-      tone: abs >= 15 ? "bg-emerald-100 text-emerald-800 border-emerald-200" : "bg-teal-100 text-teal-800 border-teal-200",
-    };
-  })();
+  // A verdict needs comp_min_deals comparables (lib/streetComps); fewer is
+  // shown as what was found, without one. Thresholds: lib/dealAnalysis.
+  const deltaPct = comp?.enough && comp.medianSqm && askSqm ? (askSqm / comp.medianSqm - 1) * 100 : null;
+  const v = verdictOf(deltaPct);
+  const verdict = v ? { text: v.text, tone: verdictTone(v) } : null;
+  const askPercentile = comp?.enough && askSqm ? percentileOf(askSqm, comp.sqmValues) : null;
 
   // The deepest page this answer can stand on: the building, else the street,
   // else nothing beyond the city link that is always there.
@@ -171,9 +162,25 @@ export default async function CheckPage({ searchParams }: Props) {
                       <div className={`mt-1 inline-block rounded-xl border px-3 py-1.5 text-lg font-black ${verdict.tone}`}>
                         {verdict.text}
                       </div>
+                      {askPercentile != null && <div className="mt-1 text-2xs text-slate-500">יקר מ-{askPercentile}% מהעסקאות הדומות</div>}
+                    </div>
+                  )}
+                  {!comp.enough && askSqm && (
+                    <div>
+                      <div className="text-2xs font-bold uppercase tracking-wide text-slate-400">פסק דין</div>
+                      <div className="mt-1 inline-block rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-base font-black text-slate-700">
+                        מעט עסקאות להשוואה
+                      </div>
+                      <div className="mt-1 text-2xs text-slate-500">רק {comp.n} דומות — לא מספיק כדי לקבוע אם המחיר גבוה או נמוך</div>
                     </div>
                   )}
                 </div>
+
+                <p className="mt-3 text-2xs text-slate-500">
+                  {comp.spread ? `מחצית מהעסקאות הדומות בין ${nis(comp.spread[0])} ל-${nis(comp.spread[1])} למ״ר · ` : ""}
+                  {CONFIDENCE_LABEL[comp.confidence]} ({comp.n.toLocaleString("he-IL")} עסקאות)
+                  {comp.adjustedTo != null ? ` · מחירי עסקאות ישנות הותאמו ל-${comp.adjustedTo} לפי מדד האזור` : " · בלי התאמת זמן — אין מדד מספיק ליישוב"}
+                </p>
 
                 {!askSqm && (
                   <p className="mt-3 text-sm text-slate-500">
@@ -200,9 +207,11 @@ export default async function CheckPage({ searchParams }: Props) {
                         </tr>
                       </thead>
                       <tbody>
-                        {comp.recent.slice(0, 8).map((d, i) => (
-                          <tr key={i} className="border-t border-slate-100">
-                            <td className="whitespace-nowrap px-3 py-1.5 text-right tabular-nums">{d.deal_date}</td>
+                        {comp.recent.slice(0, 8).map((d) => (
+                          <tr key={d.id} className="border-t border-slate-100">
+                            <td className="whitespace-nowrap px-3 py-1.5 text-right tabular-nums">
+                              <Link href={`/deal/${d.id}`} className="text-indigo-700 hover:underline" title="ניתוח העסקה">{d.deal_date}</Link>
+                            </td>
                             <td className="px-3 py-1.5 text-right">{rowAddress(d) ?? "—"}</td>
                             <td className="px-3 py-1.5 text-right tabular-nums">{d.rooms ?? "—"}</td>
                             <td className="px-3 py-1.5 text-right tabular-nums">{d.area ?? "—"}</td>

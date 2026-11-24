@@ -17,6 +17,8 @@ import { bboxAroundM, type LonLat } from "./geo";
 import { normHouse, normStreet } from "./addressKey";
 import { dealsWithin, housesWithin, similarDeals, streetCores, type HouseGeocode, type RadiusCentre } from "./radiusComps";
 import type { GeoLevel, MatchLevel, CompDeal, StreetComp } from "./compTypes";
+import { areaSeries } from "./dealAnalysisDb";
+import { compConfidence, iqr, quantile, timeAdjustAny } from "./dealAnalysis";
 
 export type { GeoLevel, MatchLevel, CompDeal, StreetComp } from "./compTypes";
 export { compMatchNote, compWhere, compHow } from "./compTypes";
@@ -24,11 +26,6 @@ export { compMatchNote, compWhere, compHow } from "./compTypes";
 const norm = (s: string) => s.replace(/["'`]/g, "").replace(/\s+/g, " ").trim();
 const ROOM_TOLERANCE = 0.25; // matches 3.5 to 3.5 but never to 4
 
-function median(values: number[]): number {
-  const s = [...values].sort((a, b) => a - b);
-  const mid = Math.floor(s.length / 2);
-  return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
-}
 
 export async function computeStreetComp(
   city: string,
@@ -42,7 +39,7 @@ export async function computeStreetComp(
   const radiusM = Math.max(0, getRuleNum("comp_radius_m"));
   const tightPct = getRuleNum("comp_area_tight_pct", 7);
   const widePct = getRuleNum("comp_area_wide_pct", 20);
-  const minDeals = Math.max(1, getRuleNum("comp_min_deals", 1));
+  const minDeals = Math.max(1, getRuleNum("comp_min_deals", 5));
   const minSqmPrice = getRuleNum("min_sqm_price", 2000);
   const shOnly = getRuleBool("comp_secondhand_only", true);
   const shMinAge = getRuleNum("secondhand_min_age");
@@ -110,7 +107,7 @@ export async function computeStreetComp(
     const cores = streetCores(new Set([...inside.values()].map((g) => g.street_norm)));
     if (!cores.length) return (radiusRows = []);
     const rows = await prisma.$queryRawUnsafe<CompDeal[]>(
-      `SELECT deal_date, area, rooms, price, price_sqm, street, house_num, neighborhood, year_built
+      `SELECT id, deal_date, deal_year, area, rooms, price, price_sqm, street, house_num, neighborhood, year_built
          FROM nadlan_transactions
         WHERE ${baseConds.join(" AND ")} AND street IS NOT NULL AND (${cores.map(() => "street LIKE ?").join(" OR ")})
         ORDER BY deal_date DESC LIMIT 4000`,
@@ -159,7 +156,7 @@ export async function computeStreetComp(
     }
 
     return prisma.$queryRawUnsafe<CompDeal[]>(
-      `SELECT deal_date, area, rooms, price, price_sqm, street, house_num, neighborhood, year_built
+      `SELECT id, deal_date, deal_year, area, rooms, price, price_sqm, street, house_num, neighborhood, year_built
        FROM nadlan_transactions WHERE ${conds.join(" AND ")}
        ORDER BY deal_date DESC LIMIT 400`,
       ...params
@@ -188,9 +185,31 @@ export async function computeStreetComp(
     ["street", "any"], ["radius", "any"], ["neighborhood", "any"], ["city", "any"],
   ];
 
+  // THE INDEX (11/2026): a deal from four years ago is not today's price.
+  // Each comparable is moved to the latest year the area's index prices —
+  // the neighbourhood's series, else the city's (lib/dealAnalysis.ts) — and
+  // one that no series can move is left out rather than mixed in raw. A town
+  // with no index at all is compared as reported, and says so.
+  const series = await areaSeries(city, nb);
+  const seriesList = [series.hoodMap, series.cityMap];
+  const toYear = series.latest;
+
+  // Fewer than comp_min_deals on every rung is not "no comparables": the
+  // widest rung that found any is kept and shown as few comparables, with
+  // no verdict.
+  let fallback: StreetComp | null = null;
   for (const [geo, match] of ladder) {
-    const rows = await fetchRung(geo, match);
-    if (rows.length < minDeals) continue;
+    const raw = await fetchRung(geo, match);
+    if (!raw.length) continue;
+    const rows = raw.map((r) => ({ ...r, id: Number(r.id), deal_year: Number(r.deal_year), price_sqm: Number(r.price_sqm) }));
+    const values: number[] = [];
+    for (const r of rows) {
+      const v = toYear == null ? r.price_sqm : timeAdjustAny(r.price_sqm, r.deal_year, toYear, seriesList);
+      if (v != null) values.push(v);
+    }
+    if (!values.length) continue;
+    const enough = values.length >= minDeals;
+    if (!enough && fallback) continue; // keep the tightest rung that had any
 
     const pct = match === "tight" ? tightPct : match === "wide" ? widePct : null;
     const areaRange: [number, number] | null =
@@ -208,11 +227,11 @@ export async function computeStreetComp(
           ? `${rooms} חד׳ · כל השטחים`
           : "כל סוגי הדירות";
 
-    return {
+    const result: StreetComp = {
       level: geo, geoLevel: geo, matchLevel: match,
-      label: `${what} · ${where} · ${years} שנים אחרונות${shOnly ? " · יד-שנייה בלבד" : ""}`,
-      medianSqm: Math.round(median(rows.map((r) => Number(r.price_sqm)))),
-      n: rows.length,
+      label: `${what} · ${where} · ${years} שנים אחרונות${shOnly ? " · יד-שנייה בלבד" : ""}${toYear != null ? ` · מותאם למחירי ${toYear}` : " · ללא התאמת זמן"}`,
+      medianSqm: Math.round(quantile(values, 0.5)!),
+      n: values.length,
       areaRange,
       rooms: hasRooms ? rooms! : null,
       years,
@@ -223,13 +242,22 @@ export async function computeStreetComp(
       matchedHood: geo === "neighborhood" ? nb : null,
       hood: nb,
       hoodInferred: geo === "neighborhood" && hoodInferred,
+      enough,
+      adjustedTo: toYear,
+      spread: iqr(values),
+      sqmValues: values,
+      confidence: compConfidence(values.length),
     };
+    if (enough) return result;
+    fallback = result;
   }
+  if (fallback) return fallback;
 
   return {
     level: "city", geoLevel: "city", matchLevel: "any",
     label: `לא נמצאו עסקאות ${shOnly ? "יד-שנייה " : ""}להשוואה ב${city} ב-${years} השנים האחרונות`,
     medianSqm: null, n: 0, areaRange: null, rooms: hasRooms ? rooms! : null, years, recent: [],
     matchedStreet: null, radiusM: null, matchedAddress: null, matchedHood: null, hood: nb, hoodInferred: false,
+    enough: false, adjustedTo: null, spread: null, sqmValues: [], confidence: "low",
   };
 }

@@ -3,6 +3,7 @@ import { loadAreaDealPoints } from "@/lib/dealPins";
 import { rateLimit, clientIp } from "@/lib/rateLimit";
 import type { DealScope } from "@/lib/neighborhoodDeals";
 import { cityAccess } from "@/lib/cityAccess";
+import { getRuleBool } from "@/lib/systemRules";
 import { historyFromYear } from "@/lib/historyWindow";
 
 /**
@@ -31,8 +32,6 @@ export async function GET(req: NextRequest, { params }: { params: { city: string
   }
   let city: string;
   try { city = decodeURIComponent(params.city); } catch { return NextResponse.json({ error: "שם עיר לא תקין" }, { status: 400 }); }
-  const access = cityAccess(city);
-  if (!access.ok) return NextResponse.json({ error: access.error }, { status: access.status });
   const q = req.nextUrl.searchParams;
   const neighborhood = (q.get("neighborhood") ?? "").trim();
   const street = (q.get("street") ?? "").trim();
@@ -40,6 +39,15 @@ export async function GET(req: NextRequest, { params }: { params: { city: string
   // one area: a neighbourhood, a street, or a street + house
   const area = neighborhood ? `hood:${neighborhood}` : street ? (house ? `address:${street}|${house}` : `street:${street}`) : null;
   if (!area) return NextResponse.json({ error: "חסר שם שכונה או רחוב" }, { status: 400 });
+  // The pins are the map of a page that is public by its own rule
+  // (lib/areaPageGate.ts): while that rule is on, its pins are too — else a
+  // walled city's open street page showed a map with nothing on it. With the
+  // rule off, the city's wall, as before.
+  const pagePublic = getRuleBool(neighborhood ? "neighborhood_pages_public" : "street_pages_public", true);
+  if (!pagePublic) {
+    const access = cityAccess(city);
+    if (!access.ok) return NextResponse.json({ error: access.error }, { status: access.status });
+  }
   const scope = (["sh", "new", "all"].includes(q.get("scope") ?? "") ? q.get("scope") : "sh") as DealScope;
   // Clamped BEFORE they reach the cached loader: the values are part of its
   // cache key, and an unclamped integer is an unbounded set of keys on disk.

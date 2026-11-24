@@ -62,7 +62,8 @@ export default function DealsManager({ allCities, tracked, deals, comps, modernM
   const delta = (d: ClientDeal) => {
     const comp = comps[d.id];
     const s = sqm(d);
-    return comp?.medianSqm && s ? (s / comp.medianSqm - 1) * 100 : null;
+    // fewer than comp_min_deals comparables is shown, never turned into a Δ
+    return comp?.enough !== false && comp?.medianSqm && s ? (s / comp.medianSqm - 1) * 100 : null;
   };
 
   const visibleDeals = useMemo(() => {

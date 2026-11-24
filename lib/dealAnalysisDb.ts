@@ -107,6 +107,40 @@ async function citySeries(cityName: string): Promise<Map<number, { sqm: number; 
   return by.secondhand.size ? by.secondhand : by.all;
 }
 
+export interface AreaSeries {
+  hoodYears: Map<number, { sqm: number; n: number }>;
+  cityYears: Map<number, { sqm: number; n: number }>;
+  hoodMap: Map<number, number>;
+  cityMap: Map<number, number>;
+  /** the latest year either series prices */
+  latest: number | null;
+}
+
+/**
+ * The yearly ₪/m² series a price is moved through time by: the
+ * neighbourhood's second-hand cells (or all its deals where the split is
+ * unavailable), then the city's. Years with fewer than MIN_SERIES_N deals
+ * are not an index.
+ */
+export async function areaSeries(city: string, hood: string | null): Promise<AreaSeries> {
+  const [shCells, allCells, cityYears] = await Promise.all([
+    hood ? loadNeighborhoodCells(city, "secondhand") : Promise.resolve([]),
+    hood ? loadNeighborhoodCells(city, "all") : Promise.resolve([]),
+    citySeries(city),
+  ]);
+  const hoodSeries = (cells: typeof shCells) => {
+    const m = new Map<number, { sqm: number; n: number }>();
+    for (const c of cells) if (c.neighborhood === hood && c.sqm && c.n >= MIN_SERIES_N) m.set(c.year, { sqm: c.sqm, n: c.n });
+    return m;
+  };
+  const sh = hoodSeries(shCells);
+  const hoodYears = sh.size ? sh : hoodSeries(allCells);
+  const hoodMap = new Map([...hoodYears].map(([y, v]) => [y, v.sqm]));
+  const cityMap = new Map([...cityYears].map(([y, v]) => [y, v.sqm]));
+  const years = [...hoodMap.keys(), ...cityMap.keys()];
+  return { hoodYears, cityYears, hoodMap, cityMap, latest: years.length ? Math.max(...years) : null };
+}
+
 export async function analyzeDeal(id: number): Promise<DealAnalysis | null> {
   if (!Number.isInteger(id) || id <= 0) return null;
   const found = await loadDeal(id);
@@ -115,25 +149,12 @@ export async function analyzeDeal(id: number): Promise<DealAnalysis | null> {
   const city = deal.cityName;
   const house = normHouse(deal.houseNum).primary;
 
-  const [register, building, shCells, allCells, cityYears] = await Promise.all([
+  const [register, building] = await Promise.all([
     loadRegister(id),
     deal.street && house ? loadBuildingPage(city, deal.street, deal.houseNum!) : Promise.resolve(null),
-    loadNeighborhoodCells(city, "secondhand"),
-    loadNeighborhoodCells(city, "all"),
-    citySeries(city),
   ]);
   const hood = deal.neighborhood ?? building?.hood ?? null;
-
-  // the neighbourhood's second-hand series, or all its deals where the split is unavailable
-  const hoodSeries = (cells: typeof shCells) => {
-    const m = new Map<number, { sqm: number; n: number }>();
-    if (hood) for (const c of cells) if (c.neighborhood === hood && c.sqm && c.n >= MIN_SERIES_N) m.set(c.year, { sqm: c.sqm, n: c.n });
-    return m;
-  };
-  const shHood = hoodSeries(shCells);
-  const hoodYears = shHood.size ? shHood : hoodSeries(allCells);
-  const hoodMap = new Map([...hoodYears].map(([y, v]) => [y, v.sqm]));
-  const cityMap = new Map([...cityYears].map(([y, v]) => [y, v.sqm]));
+  const { hoodYears, cityYears, hoodMap, cityMap } = await areaSeries(city, hood);
   const seriesList = [hoodMap, cityMap];
 
   // ── comparables, rung by rung ──
